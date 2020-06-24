@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pengelola_Percetakan extends Model
+class ulasan extends Model
 {
-    protected $table = "pengelola_percetakan";
+    protected $table = "ulasan";
     //set nilai kolom db default
     protected $attributes = [
-        'rating_toko' => 5.0,
+        'rating' => 5.0,
      ];
-
-
 }

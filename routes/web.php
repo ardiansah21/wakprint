@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\StoreProductRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('member', 'MemberController@profil');
+//Route::get('member', 'MemberController@profil');
+
+//tessjson
+Route::get('/testjson', 'ProductController@index');
+Route::get('/testjson/tambah', 'ProductController@tambah');
+Route::post('/testjson/store','ProductController@store');
+
+
+

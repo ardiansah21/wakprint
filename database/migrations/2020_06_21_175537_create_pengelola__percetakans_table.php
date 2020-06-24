@@ -14,7 +14,7 @@ class CreatePengelolaPercetakansTable extends Migration
     public function up()
     {
 
-        Schema::create('pengelola__percetakans', function (Blueprint $table) {
+        Schema::create('pengelola_percetakan', function (Blueprint $table) {
             $table->increments('id_pengelola');
             $table->string('nama_lengkap',100);
             $table->string('email',320);
@@ -45,6 +45,6 @@ class CreatePengelolaPercetakansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengelola__percetakans');
+        Schema::dropIfExists('pengelola_percetakan');
     }
 }
