@@ -14,9 +14,9 @@ use Illuminate\Http\StoreProductRequest;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 //Route::get('member', 'MemberController@profil');
 
@@ -26,4 +26,19 @@ Route::get('/testjson/tambah', 'ProductController@tambah');
 Route::post('/testjson/store','ProductController@store');
 
 
+Route::redirect('/index', '/');
 
+Route::get('/', 'MemberController@index');
+Route::get('/member/login', 'MemberController@login');
+Route::get('/member/register', 'MemberController@register');
+Route::get('/member/{id_member?}/profil', 'MemberController@profil');
+Route::get('/member/{id_member?}/profil/edit', 'MemberController@profit_edit');
+Route::get('/member/{id_member?}/profil/pesanan', 'MemberController@pesanan');
+Route::get('/member/{id_member?}/profil/riwayat', 'MemberController@riwayat');
+Route::get('/member/{id_member?}/profil/saldo', 'MemberController@saldo');
+Route::get('/member/{id_member?}/profil/favorit', 'MemberController@favorit');
+Route::get('/member/{id_member?}/profil/ulasan', 'MemberController@ulasan');
+Route::get('/member/{id_member?}/profil/ulas', 'MemberController@ulas');
+
+
+// '{{ url('/member/'.$member->id_member.'/konfigurasi-pesanan') }}'
