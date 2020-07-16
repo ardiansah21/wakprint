@@ -202,5 +202,5 @@
 @endsection
 
 @section('footer')
-    @include('member.footer_member')
+    @include('member.footer')
 @endsection
