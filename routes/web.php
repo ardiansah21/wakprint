@@ -14,9 +14,9 @@ use Illuminate\Http\StoreProductRequest;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
 //Route::get('member', 'MemberController@profil');
 
@@ -42,3 +42,10 @@ Route::get('/member/{id_member?}/profil/ulas', 'MemberController@ulas');
 
 
 // '{{ url('/member/'.$member->id_member.'/konfigurasi-pesanan') }}'
+
+
+//start
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home'); 
+
+

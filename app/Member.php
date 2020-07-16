@@ -17,4 +17,8 @@ class Member extends Authenticable
     protected $guarded = ['id_member', 'created_at', 'updated_at'];
 
     protected $hidden = ['password','remember_token'];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

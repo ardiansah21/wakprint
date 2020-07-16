@@ -20,4 +20,7 @@ class Admin extends Authenticable
 
     protected $hidden = ['password','remember_token'];
     
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
