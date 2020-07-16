@@ -3,8 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticable;
+use Illuminate\Notifications\Notifiable;
 
-class Member extends Model
+class Member extends Authenticable
 {
+    use Notifiable;
+
     protected $table = "member";
+    
+    protected $guard = 'member';
+
+    protected $guarded = ['id_member', 'created_at', 'updated_at'];
+
+    protected $hidden = ['password','remember_token'];
 }

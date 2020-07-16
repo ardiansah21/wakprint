@@ -17,8 +17,12 @@ class CreatePengelolaPercetakansTable extends Migration
         Schema::create('pengelola_percetakan', function (Blueprint $table) {
             $table->increments('id_pengelola');
             $table->string('nama_lengkap',100);
-            $table->string('email',320);
-            $table->string('password',100);
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            // $table->string('email',320);
+            // $table->string('password',100);
             $table->integer('jumlah_saldo')->nullable();
             $table->string('nomor_hp',16);
             $table->string('nama_bank',100);
@@ -29,7 +33,7 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->json('alamat_toko');
             $table->string('url_google_maps');
             $table->enum('status_toko',['Buka','Tutup']);
-            $table->decimal('rating_toko',1,1);
+            $table->decimal('rating_toko',2,1);
             $table->time('jam_op_buka')->nullable();
             $table->time('jam_op_tutup')->nullable();
             $table->text('syarat kententuan')->nullable();
