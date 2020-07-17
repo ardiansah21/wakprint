@@ -13,39 +13,31 @@ class MemberController extends Controller
         $this->member->id_member = "123456789";
     }
 
-    public function index()
-    {
-        return view('member.homepage',['member'=>$this->member]);
-    }
-
-    public function login()
-    {
-        return view('member.login_member');
-    }
-
-    public function register()
-    {
-        return view('member.register_member');
-    }
-    
     public function profil()
     {
-        return view('member.profil_member',['member'=>$this->member]);
+        return view('member.profil');
     }
 
-    public function profil_edit()
+    // public function logout()
+    // {
+    //     Auth::guard('member')->logout();
+    //     return redirect()->route('member.login');
+    // }
+    public function logout(Request $request)
     {
-        return view('member.edit_profil_member',['member'=>$this->member]);
-    }
-    
-    public function pesanan()
-    {
-        return view('member.pesanan_member',['member'=>$this->member]);
-    }
+        Auth::guard('member')->logout();
 
-    public function ulasan()
-    {
-        return view('member.ulasan_member',['member'=>$this->member]);
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new Response('', 204)
+            : redirect('/member/login');
     }
     
     

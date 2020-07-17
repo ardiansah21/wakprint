@@ -18,6 +18,64 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::get('/', function () {
+    return view('member.homepage');
+});
+
+Route::redirect('/index', '/');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home'); 
+
+
+Route::get('coba', function () {
+    return view('layouts.member');
+});
+Route::get('cobaLogin', function () {
+    return view('member.auth.login');
+});
+
+// Route::group(base_path('routes/member.php'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Route::get('member', 'MemberController@profil');
 
 //tessjson
@@ -26,9 +84,9 @@ Route::get('/testjson/tambah', 'ProductController@tambah');
 Route::post('/testjson/store','ProductController@store');
 
 
-Route::redirect('/index', '/');
 
-Route::get('/', 'MemberController@index');
+
+// Route::get('/', 'MemberController@index');
 Route::get('/member/login', 'MemberController@login');
 Route::get('/member/register', 'MemberController@register');
 Route::get('/member/{id_member?}/profil', 'MemberController@profil');

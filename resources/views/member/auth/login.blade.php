@@ -1,75 +1,53 @@
-<!-- Menghubungkan dengan view template master -->
-@extends('master')
+@extends('layouts.member')
 
-@section('header')
-    @include('navbar.navbar')
-@endsection
+@section('content')
+    <div class="container">
+        <div class="col-md-6 ml-auto mr-auto">
+            <h1 class="font-weight-bold">{{__('Masuk')}}</h1>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="form-group">
+                <label for="email" class="">{{ __('E-Mail Address') }}</label>
 
-@section('konten')
-    <div class="container-fluid">
-        <div class="container-fluid pt-5 pb-5" style="margin-top:72px">
+                <div>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-            <div class="container mb-5">
-                <h1 class="font-weight-bold">Masuk</h1>
-            </div>
-
-            <form class="needs-validation" novalidate>
-                <div class="container mb-4">
-                    <label for="validationCustomEmail" class="font-weight-bold mb-2">Email</label>
-                    <div class="mb-3">
-                        <input id="validationCustomEmail" type="text" class="form-control form-control-lg"
-                            placeholder="wakprint@gmail.com" required>
-                        <div class="valid-feedback">
-                            Format email sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi email dengan format yang benar !
-                        </div>
-                    </div>
-
-                    <label for="validationCustomPassword" class="font-weight-bold mb-2">Password</label>
-                    <div class="input-group mb-3">
-                        <input required="true" id="validationCustomPassword" type="password" name="password"
-                            class="form-control form-control-lg" placeholder="Masukkan Kata Sandi" data-toggle="password">
-                        <div class="input-group-append" onclick="showPassword()">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
-                                    class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
-                        </div>
-                        <div class="valid-feedback">
-                            Format password sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi password dengan format yang benar !
-                        </div>
-                    </div>
-
-                    <small>
-                        <p class="mb-5 text-right"><a class="text-primary-purple"
-                                href="{{ url('http://www.wakprint.com/') }}">Lupa Kata Sandi ?</a>
-                        </p>
-                    </small>
-
-                    <button type="submit" class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold mb-0"
-                        onclick="window.location='{{ url('/index') }}'">Masuk</button>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-            </form>
-
-            <div class="container mb-5">
-
-                <p class="mb-4 text-center">Atau</p>
-                <button type="button" class="btn btn-outline-danger btn-lg btn-block font-weight-bold mb-4"
-                    style="border-radius:30px">Masuk dengan Google</button>
-                <button type="button" class="btn btn-outline-primary btn-lg btn-block font-weight-bold mb-4"
-                    style="border-radius:30px">Masuk dengan Facebook</button>
-                <p class="mb-4 text-center">Belum punya akun ? <a class="text-primary-purple"
-                        href="{{ url('/member/register') }}">Daftar</a></p>
             </div>
+
+            <div class="form-group">
+                <label for="password" class="">{{ __('Password') }}</label>
+
+                <div>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group">
+                @if (Route::has('password.request'))
+                        <a class="ml-0" href="{{ route('password.request') }}">
+                            {{__('Forgot Your Password?') }}
+                        </a>
+                @endif
+            </div>
+
+            <div class="form-group mb-0">
+                <button type="submit" class="btn btn-primary">
+                    {{ __('Login') }}
+                </button>
+            </div>
+        </form>
         </div>
     </div>
-@endsection
-
-@section('footer')
-    @include('member.footer')
 @endsection

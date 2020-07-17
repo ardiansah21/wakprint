@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
+class LoginMemberController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,14 +28,17 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::PROFIL;
 
-    public function showAdminLogin()
+    public function showMemberLogin()
     {
-        return view('member.auth.login_member');
+        return view('member.auth.login');
     }
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('member');
     }
+
+
+    
     // /**
     //  * Create a new controller instance.
     //  *

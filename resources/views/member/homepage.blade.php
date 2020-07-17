@@ -42,9 +42,9 @@
                 </div>
 
                 <div class="col">
-                    <a href="{{ url('/member/'.$member->id_member.'/profil') }}">
+                    
                         <img src="ambildokumen.png" class="img-responsive center mb-4" alt="" width="80px" height="80px">
-                    </a>
+                    
                     <h4 class="font-weight-bold text-center">Ambil Dokumen</h4>
                     <p class="text-center">Lakukan pembayaran dan ambil dokumen langsung di tempat percetakan</p>
                 </div>
