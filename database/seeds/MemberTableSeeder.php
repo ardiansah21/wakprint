@@ -14,7 +14,7 @@ class MemberTableSeeder extends Seeder
     {
         Member::create([
             'nama_lengkap' => 'member',
-            'email' => 'member1@wakprint.com',
+            'email' => 'member@wakprint.com',
             'password' => bcrypt(12345678),
             'nomor_hp' => '082210988781'
         ]);

@@ -13,11 +13,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application homepage.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -25,20 +25,25 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
 
-        $request->session()->invalidate();
+    // public function profile()
+    // {
+    //     return view('member.profil');
+    // }
+    // public function logout(Request $request)
+    // {
+    //     $this->guard()->logout();
 
-        $request->session()->regenerateToken();
+    //     $request->session()->invalidate();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
+    //     $request->session()->regenerateToken();
 
-        return $request->wantsJson()
-            ? new Response('', 204)
-            : redirect('/');
-    }
+    //     if ($response = $this->loggedOut($request)) {
+    //         return $response;
+    //     }
+
+    //     return $request->wantsJson()
+    //         ? new Response('', 204)
+    //         : redirect('/');
+    // }
 }
