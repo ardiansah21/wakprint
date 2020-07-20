@@ -89,6 +89,8 @@
 
 @extends('layouts.member')
 
+@section('title','Daftar')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

@@ -2,7 +2,6 @@
 @extends('layouts.member')
 
 @section('content')
-
 <div class="row pt-5 pb-5 img-responsive d-flex justify-content-center" style="background-image: url(img/bg-unggah.png);background-size: cover;">
         <div id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
             style="width:250px;height:250px;">
@@ -11,7 +10,6 @@
                 <label class="SemiBold my-auto"
                     style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
             </form>
-
         </div>
         <div id="kamuMauPrintApa">
             <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
