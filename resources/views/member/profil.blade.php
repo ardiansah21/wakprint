@@ -2,6 +2,7 @@
 @extends('layouts.member')
 
 @section('content')
+<div class="container">
     <div class="row mt-5 mb-5">
         <div class="col-md-5">
             <div class="bg-light-purple text-center"
@@ -176,4 +177,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
