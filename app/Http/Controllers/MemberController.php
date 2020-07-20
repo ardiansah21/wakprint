@@ -6,21 +6,28 @@ use Illuminate\Http\Request;
 use \stdClass;
 use Auth;
 use App\Member;
+use phpDocumentor\Reflection\Types\This;
 
 class MemberController extends Controller
 {
     private $member;
     private $id;
-    public function __construct() {
-        $id = Auth::User()->id_member;
-        $this->member= Member::where('id_member',$id)->get();
+    public function __construct()
+    {
+        if (Auth::check()) {
+            $this->member = Auth::User();         
+        }
+        else{
+            $this->member = null;
+        }
+        // $this->member = Member::where('id_member', $id)->get();
         //$this->member->id_member = "123456789";
         $this->middleware('auth');
     }
 
     public function profile()
     {
-        return view('member.profil',['m'=>$member]);
+        return view('member.profil', ['m' => $this->member]);
     }
 
     // public function profil()
@@ -49,6 +56,6 @@ class MemberController extends Controller
     //         ? new Response('', 204)
     //         : redirect('/member/login');
     // }
-    
-    
+
+
 }

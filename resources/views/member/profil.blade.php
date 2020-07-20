@@ -105,7 +105,10 @@
                     <div class="container col-md-6">
 
                         {{-- @foreach ($collection as $item) --}}
-                        <label class="mb-1" style="font-size: 24px;">{{$m->nama_lengkap}}</label>
+                        <label class="mb-1" style="font-size: 24px;">
+                        @auth
+                        {{Auth::User()->id}} @else asdasdasd
+                        @endauth</label>
                         <br>
                         <label class="mb-1" style="font-size: 24px;">{{__('21 Februari 1997') }}</label>
                         <br>

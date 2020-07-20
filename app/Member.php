@@ -12,9 +12,11 @@ class Member extends Authenticable
 
     protected $table = "member";
     
-    protected $guard = 'member';
+    // protected $guard = 'member';
+    protected $primaryKey = 'id_member';
 
-    protected $guarded = ['id_member', 'created_at', 'updated_at'];
+    protected $guarded = [];
+    // protected $guarded = ['id_member', 'created_at', 'updated_at'];
 
     protected $hidden = ['password','remember_token'];
 

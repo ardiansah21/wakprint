@@ -8,14 +8,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Wakprint') }}</title>
+    <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('dropzone/dist/min/dropzone.min.css')}}">
     
      <!-- Fonts -->
      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
@@ -31,7 +33,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a id="logo" class="navbar-brand wakprint" href="" style="font-size: 36px;">{{ __('Wakprint') }}</a>
+                <a id="logo" class="navbar-brand wakprint" href="/" style="font-size: 36px;">{{ __('Wakprint') }}</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -68,7 +70,7 @@
                             </li>
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}" style="display: flex; align-items:center; font-weight:bold; font-size: 24px;">
-                                    <span class="text-primary-purple mr-2">Rp. {{Auth::user()->nama}}</span>
+                                    <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span>
                                     <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png" width="50" height="50" alt="no logo">
                                 </a>
                             </li>
@@ -77,7 +79,7 @@
                 </div>
             </div>
         </nav>
-        <main class="container">
+        <main>
             @yield('content')
         </main>
         <footer class="footer">
@@ -118,5 +120,18 @@
                 </div>
         </footer>
     </div>
+     <!-- Script -->
+     <script>
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone(".dropzone",{ 
+            maxFilesize: 3,  // 3 mb
+            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+        });
+        myDropzone.on("sending", function(file, xhr, formData) {
+           formData.append("_token", CSRF_TOKEN);
+        }); 
+        </script>
 </body>
 </html>
