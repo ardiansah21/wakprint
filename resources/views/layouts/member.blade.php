@@ -12,10 +12,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('dropzone/dist/min/dropzone.min.css')}}">
     
      <!-- Fonts -->
      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
@@ -77,7 +79,7 @@
                 </div>
             </div>
         </nav>
-        <main class="container">
+        <main>
             @yield('content')
         </main>
         <footer class="footer">
@@ -118,5 +120,18 @@
                 </div>
         </footer>
     </div>
+     <!-- Script -->
+     <script>
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone(".dropzone",{ 
+            maxFilesize: 3,  // 3 mb
+            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+        });
+        myDropzone.on("sending", function(file, xhr, formData) {
+           formData.append("_token", CSRF_TOKEN);
+        }); 
+        </script>
 </body>
 </html>

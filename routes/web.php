@@ -28,6 +28,9 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::redirect('/home','/');
 
+//dropzone
+Route::post('/users/fileupload/','HomeController@fileupload')->name('users.fileupload');
+
 // Sudah Auth
 
 Route::get('/profil', 'MemberController@profile')->name('profile'); 
