@@ -31,7 +31,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a id="logo" class="navbar-brand wakprint" href="" style="font-size: 36px;">{{ __('Wakprint') }}</a>
+                <a id="logo" class="navbar-brand wakprint" href="/" style="font-size: 36px;">{{ __('Wakprint') }}</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
                             </li>
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}" style="display: flex; align-items:center; font-weight:bold; font-size: 24px;">
-                                    <span class="text-primary-purple mr-2">Rp. {{Auth::user()->nama}}</span>
+                                    <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span>
                                     <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png" width="50" height="50" alt="no logo">
                                 </a>
                             </li>
