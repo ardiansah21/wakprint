@@ -89,6 +89,10 @@ html, body {
     visibility: hidden;
 }
 
+.material-icons.md-12 {
+    font-size: 12px;
+}
+
 .material-icons.md-18 {
     font-size: 18px;
 }
@@ -413,9 +417,9 @@ html, body {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    width: 104%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 16px;
 }
 
 .scrolling-wrapper-2 {

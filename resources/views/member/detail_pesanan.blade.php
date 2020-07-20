@@ -1,12 +1,10 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="mb-5 mt-5">
-        <div>
+    <div class="mt-5 mb-5">
+        <div class="mb-5">
             <label class="font-weight-bold mb-5"
-                style="font-size:48px;">
-                {{__('Pesanan Kamu') }}
-            </label>
+            style="font-size: 48px;">Pesanan Kamu</label>
 
             {{-- @foreach ($collection as $item) --}}
             <div class="row justify-content-between mb-5">
@@ -232,7 +230,7 @@
                 </div>
                 <div class="row row-bordered">
                 </div>
-                <div class="row justify-content-between SemiBold mt-2">
+                <div class="row justify-content-between SemiBold mt-2 mb-4">
                     <div class="col-md-6 text-left">
                         <label>
                             {{__('Total Harga Pesanan') }}
@@ -244,19 +242,180 @@
                         </label>
                     </div>
                 </div>
+                <div class="row justify-content-between mb-5">
+                    <div class="col-md-10 text-left ml-0"
+                        style="font-size: 36px;">
+                        <label class="SemiBold">
+                            {{__('Status Pesanan') }}
+                        </label>
+                    </div>
+                    <div class="col-md-auto mr-0">
+                        <div class="text-center"
+                            style="font-size: 24px;">
+                            <label class="badge bg-primary-yellow pl-4 pr-4 pt-2 pb-2 font-weight-bold mt-3">
+                                {{__('Pending') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <label class="font-weight-bold"
+                    style="font-size: 36px;">
+                    {{__('Info Pesanan') }}
+                </label>
+                {{-- @foreach ($collection as $item) --}}
+                <div class="row justify-content-between text-right mt-4">
+                    <div class="col-md-6 text-left ml-0">
+                        <label>
+                            {{__('ID Pesanan') }}
+                        </label>
+                    </div>
+                    <div class="col-md-6 mr-0">
+                        <label class="font-weight-bold">
+                            {{__('Pending') }}
+                        </label>
+                    </div>
+                </div>
+                <div class="row justify-content-between text-right mt-1">
+                    <div class="col-md-6 text-left ml-0">
+                        <label>
+                            {{__('Nama Pemesan') }}
+                        </label>
+                    </div>
+                    <div class="col-md-6 mr-0">
+                        <label class="text-truncate-multiline font-weight-bold">
+                            {{__('Joko Anwarasd sadsadadsadsad dsadsadssadsadsad ssadsadsada ssadsad asdadasdas') }}
+                        </label>
+                    </div>
+                </div>
+                <div class="row justify-content-between text-right mt-1">
+                    <div class="col-md-6 text-left ml-0">
+                        <label>
+                            {{__('Metode Pengambilan') }}
+                        </label>
+                    </div>
+                    <div class="col-md-6 mr-0">
+                        <label class="font-weight-bold">
+                            {{__('Ambil di Tempat') }}
+                        </label>
+                    </div>
+                </div>
+                <div class="row justify-content-between text-right mt-1">
+                    <div class="col-md-6 text-left ml-0">
+                        <label>
+                            {{__('Alamat Tempat Percetakan') }}
+                        </label>
+                    </div>
+                    <div class="col-md-6 mr-0">
+                        <label class="font-weight-bold">
+                            {{__('Jalan Pengilar Medan Denai, Medan, Sumatera Utara, 20228 ') }}
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-end mb-5 mr-0">
-            <button class="btn btn-default btn-lg text-danger font-weight-bold mr-4"
-                style="border-radius:30px;
-                    font-size:24px;">
-                {{__('Batalkan Pemesanan') }}
-            </button>
-            <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-4 pr-4"
-                style="border-radius:30px;
-                    font-size:24px;">
-                {{__('Konfirmasi dan Lanjutkan') }}
-            </button>
+
+        {{-- kode pembayaran --}}
+        <div class="ml-0 mr-0">
+            <label class="font-weight-bold"
+                style="font-size: 48px;">
+                {{__('Menunggu Pembayaran') }}
+            </label>
+            <br>
+            <label class="mb-5" style="font-size: 18px;">
+                {{__('Nomor Pemesanan Kamu : 00000001') }}
+            </label>
+            <div class="row justify-content-between">
+                <div class="col-md-7 mb-5">
+                    <label class="SemiBold mt-2 mb-0"
+                        style="font-size: 18px;">
+                        {{__('Kode Pembayaran Kamu') }}
+                    </label>
+                    <br>
+                    <label class="font-weight-bold text-primary-success mb-4"
+                    style="font-size: 48px;">
+                        {{__('4324325232321321412') }}
+                    </label>
+                    <br>
+                    <label class="SemiBold mt-2 mb-0"
+                        style="font-size: 18px;">
+                        {{__('Kode Bayar akan Berakhir pada') }}
+                    </label>
+                    <br>
+                    <label class="text-primary-danger font-weight-bold"
+                        style="font-size: 48px;">
+                        {{__('00 : 15 : 00') }}
+                    </label>
+                    <br>
+                    <label class="mt-2"
+                        style="font-size: 18px;">
+                        {{__('Mohon menyelesaikan pembayaran sebelum 27 Jan 2020, 18:00 WIB') }}
+                    </label>
+                </div>
+                <div class=" col-md-5 mb-0">
+                    <div class="card pt-4 pb-4 pl-4 pr-4 mb-5">
+                        <label class="font-weight-bold mb-4 ml-0"
+                            style="font-size: 24px;">
+                            {{__('Panduan Pembayaran') }}
+                        </label>
+                        <p class="mb-2"
+                            style="font-size: 14px;">
+                            {{__('1. Pilih menu “lainnya” > Transfer > Rekening Tabungan > Rekening BNI
+                            762834629
+                            2. Masukkan jumlah pembayaran sesuai dengan jumlah transaksi
+                            3. Masukkan pilihan transaksi (optional)
+                            4. Konfirmasi pembayaran
+                            5. Bank Lain. Transfer ke Bank Lain > Kode BNI 009 > Isi nomor VA BNI > Nominal
+                            Pembayaran > Konfirmasi') }}
+                        </p>
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold mb-5"
+                    style="font-size: 24px;">
+                    {{__('Batalkan Pemesanan') }}
+                </button>
+            </div>
+        </div>
+
+        {{-- kode qr pesanan --}}
+        <div class="mb-5">
+            <div class="row justify-content-left no-gutters">
+                <div class="align-self-center col-md-auto mr-4">
+                    <img src="{{url('img/Qr-Code.png')}}"
+                        width="200"
+                        height="200"
+                        alt="no logo">
+                </div>
+                <div class="col-md-8 align-self-center">
+                    <label class="SemiBold mb-1"
+                        style="font-size: 36px;">
+                            {{__('Kode QR Pesanan kamu') }}
+                    </label>
+                    <label class="mb-2"
+                        style="font-size: 18px;">
+                        {{__('Kode ini dapat langsung di scan oleh pemilik toko melalui smartphone-nya untuk
+                        memastikan barang yang kamu pesan sudah sampai ditanganmu') }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-md-auto mb-4">
+                <button class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold"
+                    style="font-size: 24px;">
+                    {{__('Batalkan Pemesanan') }}
+                </button>
+            </div>
+            <div class="col-md-auto mb-4">
+                <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold pl-4 pr-4"
+                    style="font-size: 24px;">
+                    {{__('Chat Pengelola') }}
+                </button>
+            </div>
+            <div class="col-md-auto mb-4">
+                <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold pl-4 pr-4"
+                    style="font-size: 24px;">{{__('Pesanan Sudah Ditangan') }}
+                </button>
+            </div>
         </div>
     </div>
 @endsection

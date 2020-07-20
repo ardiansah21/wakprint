@@ -85,8 +85,6 @@ Route::get('/profil', 'MemberController@profile')->name('profile');
 // Route::get('pencarian', function () {
 //     return view('member.pencarian');
 // });
-// Route::group(base_path('routes/member.php'));
-
 
 
 
