@@ -49,7 +49,7 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('register'))
-                                <li class="nav-i, i8tem">
+                                <li class="nav-item">
                                     <a class="nav-link SemiBold text-primary-purple mr-4" href="{{ route('register') }}" style="color:#BC41BE; font-size: 24px;">{{__('Daftar')}}</a>
                                 </li>
                             @endif
@@ -70,7 +70,7 @@
                             </li>
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}" style="display: flex; align-items:center; font-weight:bold; font-size: 24px;">
-                                    <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span>
+                                    <span class="text-primary-purple mr-2">{{Auth::user()->email}}</span>
                                     <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png" width="50" height="50" alt="no logo">
                                 </a>
                             </li>
@@ -135,3 +135,4 @@
         </script>
 </body>
 </html>
+

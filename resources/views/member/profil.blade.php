@@ -1,54 +1,57 @@
+@auth
+    @php
+        $m = Auth::user();
+    @endphp
+@endauth
+
 <!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
+<div class="container">
     <div class="row mt-5 mb-5">
         <div class="col-md-5">
             <div class="bg-light-purple text-center"
                 style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                    class="img-responsive" alt=""
-                    width="300px" height="300px" style="border-radius:8px 8px 8px 8px;">
-                <div class="bg-dark" 
-                    style="position: absolute; 
+                    class="img-responsive" alt="" width="300px" height="300px" style="border-radius:8px 8px 8px 8px;">
+                <div class="bg-dark" style="position: absolute; 
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, 140%); opacity:80%;
                     color: white;
                     width:300px;
                     border-radius:0px 0px 8px 8px;">
-                    <label class="font-weight-bold text-truncate mx-auto" style="font-size: 30px; width:100%;">{{__('Raditya Dika Habibie') }}</label>
+                    <label class="font-weight-bold text-truncate mx-auto"
+                        style="font-size: 30px; width:100%;">{{__('Raditya Dika Habibie') }}</label>
                 </div>
             </div>
             <div class="mt-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab"
-                        data-toggle="pill" href="#v-pills-alamat" role="tab" aria-controls="v-pills-alamat"
-                        aria-selected="true" style="font-size: 24px;">
+                    <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" data-toggle="pill" href="#v-pills-alamat"
+                        role="tab" aria-controls="v-pills-alamat" aria-selected="true" style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">location_on</i>
                         {{__('Medan ID') }}
                     </a>
-                    <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill"
-                        href="#v-pills-saldo" role="tab" aria-controls="v-pills-saldo" aria-selected="false"
-                        style="font-size: 24px;">
+                    <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill" href="#v-pills-saldo"
+                        role="tab" aria-controls="v-pills-saldo" aria-selected="false" style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
                         {{__('Rp. 12.000') }}
                     </a>
-                    <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill" href="#v-pills-riwayat"
-                        role="tab" aria-controls="v-pills-riwayat" aria-selected="false"
+                    <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
+                        href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat" aria-selected="false"
                         style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">history</i>
                         {{__('Riwayat Transaksi') }}
                     </a>
-                    <a class="nav-link SemiBold mb-2"
-                        id="v-pills-konfigurasi-tab" data-toggle="pill" href="#v-pills-konfigurasi" role="tab"
-                        aria-controls="v-pills-konfigurasi" aria-selected="false"
+                    <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab" data-toggle="pill"
+                        href="#v-pills-konfigurasi" role="tab" aria-controls="v-pills-konfigurasi" aria-selected="false"
                         style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
                         {{__('Konfigurasi File') }}
                     </a>
-                    <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" data-toggle="pill" href="#v-pills-pesanan"
-                        role="tab" aria-controls="v-pills-pesanan" aria-selected="false"
+                    <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" data-toggle="pill"
+                        href="#v-pills-pesanan" role="tab" aria-controls="v-pills-pesanan" aria-selected="false"
                         style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
                         {{__('Pesanan') }}
@@ -60,14 +63,12 @@
                         {{__('Favorit') }}
                     </a>
                     <a class="nav-link SemiBold mb-4" id="v-pills-ulasan-tab" data-toggle="pill" href="#v-pills-ulasan"
-                        role="tab" aria-controls="v-pills-ulasan" aria-selected="false"
-                        style="font-size: 24px;">
+                        role="tab" aria-controls="v-pills-ulasan" aria-selected="false" style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">rate_review</i>
                         {{__('Ulasan') }}
                     </a>
-                    <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill" href="{{ route('logout') }}" role="tab"
-                        aria-controls="v-pills-keluar" aria-selected="true"
-                        style="font-size: 24px;"
+                    <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill" href="{{ route('logout') }}"
+                        role="tab" aria-controls="v-pills-keluar" aria-selected="true" style="font-size: 24px;"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="material-icons align-middle md-32 mr-2">exit_to_app</i>
                         {{__('Keluar') }}
@@ -85,9 +86,8 @@
                         <h1 class="font-weight-bold" style="font-size: 48px;">{{__('Profil Saya') }}</h1>
                     </div>
                     <div class="col-md-auto my-auto">
-                        <a class="align-self-center text-right text-primary-purple"
-                        href=""
-                        style="font-size: 18px;">{{__('Ubah Profil') }}</a>
+                        <a class="align-self-center text-right text-primary-purple" href=""
+                            style="font-size: 18px;">{{__('Ubah Profil') }}</a>
                     </div>
                 </div>
                 <div class="row mb-5">
@@ -105,16 +105,13 @@
                     <div class="container col-md-6">
 
                         {{-- @foreach ($collection as $item) --}}
-                        <label class="mb-1" style="font-size: 24px;">
-                        @auth
-                        {{Auth::User()->id}} @else asdasdasd
-                        @endauth</label>
+                        <label class="mb-1" style="font-size: 24px;">{{ $m->nama_lengkap }}</label>
                         <br>
                         <label class="mb-1" style="font-size: 24px;">{{__('21 Februari 1997') }}</label>
                         <br>
                         <label class="mb-1" style="font-size: 24px;">{{__('Laki-Laki') }}</label>
                         <br>
-                        <a class="mb-1 text-danger" style="font-size: 24px;" href="#">{{__('radit@gmail.com') }} 
+                        <a class="mb-1 text-danger" style="font-size: 24px;" href="#">{{__('radit@gmail.com') }}
                             <i class="fa fa-warning ml-2"></i>
                         </a>
                         <br>
@@ -145,7 +142,7 @@
                                 <td><a href="#">{{__('Skripsilageee.pdf') }}</a></td>
                                 <td>{{__('5 hour ago') }}</td>
                                 <td>{{__('Rp. 12.000') }}</td>
-                                <td>{{__('1h 5m') }} 
+                                <td>{{__('1h 5m') }}
                                     <span class="material-icons md-18 align-middle text-danger ml-2">
                                         delete
                                     </span>
@@ -176,4 +173,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

@@ -2,27 +2,52 @@
 @extends('layouts.member')
 
 @section('content')
-<div class="row pt-5 pb-5 img-responsive d-flex justify-content-center" style="background-image: url(img/bg-unggah.png);background-size: cover;">
-        <div id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
-            style="width:250px;height:250px;">
-            <!-- Dropzone -->
-            <form action="{{route('users.fileupload')}}" class='dropzone'>
-                <label class="SemiBold my-auto"
-                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
-            </form>
-        </div>
-        <div id="kamuMauPrintApa">
-            <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
-            <label class="SemiBold mb-4 ml-1"
-                style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
-            <br>
-            <button type="button"
-                class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center"
-                style="border-radius:30px; font-size: 24px;"><i
-                    class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
-                {{__('Unggah') }}
-            </button>
-        </div>
+
+<div class="pt-5 pb-5 img-responsive d-flex justify-content-center"
+    style="background-image: url(img/bg-unggah.png);background-size: cover;">
+    <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
+        style="width:250px;height:250px;">
+        <!-- Dropzone -->
+        <form action="{{route('upload.file.home')}}" class='dropzone' method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+            </div>
+            {{-- <label class="SemiBold my-auto"
+                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label> --}}
+        </form>
+
+    </div>
+    <div id="kamuMauPrintApa">
+        <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
+        <label class="SemiBold mb-4 ml-1"
+            style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
+        <br>
+        <button type="button"
+            class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center"
+            style="border-radius:30px; font-size: 24px;" onclick="openDialog()">
+            <i class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
+            {{__('Unggah') }}
+        </button>
+
+        <script>
+            function openDialog() {
+                    document.getElementById('fileid').click();
+                }
+            function submitForm() {
+                    document.getElementById('upload-form').submit();
+                }
+        </script>
+
+        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data" 
+            style="display: none;">
+            @csrf
+            <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf" hidden />
+        </form>
+
+
+
+    </div>
 </div>
 <div class="container">
     <div class="pt-5 pb-5">
@@ -159,7 +184,8 @@
         </div>
     </div>
 </div>
-<div id="areaDaftarPercetakan" class="img-responsive d-flex justify-content-center p-5 mb-0 mr-0" style="background-image: url(img/bg-daftarpercetakan.png); background-size: cover;">
+<div id="areaDaftarPercetakan" class="img-responsive d-flex justify-content-center p-5 mb-0 mr-0"
+    style="background-image: url(img/bg-daftarpercetakan.png); background-size: cover;">
     <div>
         <label class="font-weight-bold" style="font-size: 64px;">{{__('Daftarkan Percetakan Kamu') }}</label>
         <br>
@@ -172,26 +198,23 @@
             {{__('Daftar') }}
         </button>
     </div>
-    
+
 </div>
 @endsection
 
 {{-- @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
-
 <div class="card-body">
     @if (session('status'))
     <div class="alert alert-success" role="alert">
         {{ session('status') }}
     </div>
     @endif
-
     {{ __('You are logged in!') }}
 </div>
 </div>

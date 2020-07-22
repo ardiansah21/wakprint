@@ -1,11 +1,7 @@
 <!-- Menghubungkan dengan view template master -->
-@extends('master')
+@extends('layouts.member')
 
-@section('header')
-    @extends('navbar.pengelola.navbar_after_pengelola')
-@endsection
-
-@section('konten')
+@section('content')
     <div class="container-fluid">
         <div class="container" style="margin-top:72px">
             <div class="row">
