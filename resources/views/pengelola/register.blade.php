@@ -1,174 +1,250 @@
-<!-- Menghubungkan dengan view template master -->
-@extends('master')
+@extends('layouts.pengelola')
 
-@section('header')
-    @extends('navbar.navbar')
-@endsection
-
-@section('konten')
-    <div class="container-fluid">
-                
-        <div class="container-fluid pt-5 pb-5" style="margin-top:72px">
-            <div class="container mb-5">
-                <h1 class="font-weight-bold">Daftar sebagai Pengelola Percetakan</h1>
-            </div>
-            
-            <form class="needs-validation mb-4" novalidate>
-                <div class="container mb-4">
-                    <label for="validationCustomNama" class="font-weight-bold mb-2">Nama Lengkap</label>
-                    <div class="mb-3">
-                        <input id="validationCustomNama" type="text" class="form-control form-control-lg" placeholder="Masukkan Nama Lengkap" required>
-                        <div class="valid-feedback">
-                            Format nama sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi nama dengan format yang benar !
-                        </div>
-                    </div>
-    
-                    <label for="validationCustomEmail" class="font-weight-bold mb-2">Email</label> 
-                    <div class="mb-3">
-                        <input id="validationCustomEmail" type="text" class="form-control form-control-lg" placeholder="wakprint@gmail.com" required>
-                        <div class="valid-feedback">
-                            Format email sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi email dengan format yang benar !
-                        </div>
-                    </div>
-    
-                    <label for="validationCustomNoHP" class="font-weight-bold mb-2">Nomor HP</label> 
-                    <div class="mb-3">
-                        <input id="validationCustomNoHP" type="text" class="form-control form-control-lg" placeholder="Masukkan Nomor HP Anda" required>
-                        <div class="valid-feedback">
-                            Format Nomor HP sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi Nomor HP dengan format yang benar !
-                        </div>
-                    </div>
-    
-                    <div class="row justify-content-between mb-3">
-                        <div class="col-3">
-                            <label for="validationCustomBank" class="font-weight-bold mb-2">Nama Bank</label> 
-                            <div id="validationCustomBank" class="dropdown">
-                                <button class="btn btn-default btn-lg dropdown-toggle border border-gray pl-4 pr-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-required="true" aria-haspopup="true" aria-expanded="false">
-                                    Pilih Nama Bank
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">BRI</a>
-                                    <a class="dropdown-item" href="#">BNI</a>
-                                    <a class="dropdown-item" href="#">CIMB Niaga</a>
-                                </div>
-                            </div>
-                            <div class="valid-feedback">
-                                Format Nama Bank sudah benar
-                            </div>
-                            <div class="invalid-feedback">
-                                Silahkan pilih nama Bank Anda !
-                            </div>
-                        </div>
-                        
-                        <div class="col-9">
-                            <label for="validationCustomNoRek" class="font-weight-bold mb-2">Nomor Rekening</label> 
-                            <div class="mb-3">
-                                <input id="validationCustomNoRek" type="text" class="form-control form-control-lg" placeholder="Masukkan NomorRekening Anda" required>
-                                <div class="valid-feedback">
-                                    Format Nomor Rekening sudah benar
-                                </div>
-                                <div class="invalid-feedback">
-                                    Silahkan isi Nomor Rekening dengan format yang benar !
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label for="validationCustomNamaToko" class="font-weight-bold mb-2">Nama Tempat Percetakan</label> 
-                    <div class="mb-3">
-                        <input id="validationCustomNamaToko" type="text" class="form-control form-control-lg" placeholder="Masukkan Nama Tempat Percetakan Anda" required>
-                        <div class="valid-feedback">
-                            Format Nama Tempat Percetakan sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi Nama Tempat Percetakan dengan format yang benar !
-                        </div>
-                    </div>
-
-                    <label for="validationCustomDeskripsiToko" class="font-weight-bold mb-2">Deskripsi Tempat Percetakan</label> 
-                    <div class="mb-3">
-                        <textarea id="validationCustomDeskripsiToko" type="text" class="form-control form-control-lg" required></textarea>
-                        <div class="valid-feedback">
-                            Format Deskripsi Tempat Percetakan sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi Deskripsi Tempat Percetakan !
-                        </div>
-                    </div>
-
-                    <label for="validationCustomAlamatToko" class="font-weight-bold mb-2">Alamat Tempat Percetakan</label> 
-                    <div class="mb-3">
-                        <textarea id="validationCustomAlamatToko" type="text" class="form-control form-control-lg" required></textarea>
-                        <div class="valid-feedback">
-                            Format Alamat Tempat Percetakan sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi Alamat Tempat Percetakan !
-                        </div>
-                    </div>
-    
-                    <label for="validationCustomPassword" class="font-weight-bold mb-2">Password</label>   
-                    <div class="input-group mb-3">
-                        <input required="true" id="validationCustomPassword" type="password" name="password" class="form-control form-control-lg" placeholder="Masukkan Kata Sandi"
-                        data-toggle="password">
-                        <div class="input-group-append" onclick="showPassword()">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
-                        </div>
-                        <div class="valid-feedback">
-                            Format password sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi password dengan format yang benar !
-                        </div>
-                    </div>
-    
-                    <label for="validationCustomKonfirmasiPassword" class="font-weight-bold mb-2">Konfirmasi Password</label>   
-                    <div class="input-group mb-3">
-                        <input required="true" id="validationCustomKonfirmasiPassword" type="password" name="password" class="form-control form-control-lg"
-                        placeholder="Konfirmasi Kata Sandi"
-                        data-toggle="password">
-                        <div class="input-group-append" onclick="showPassword()">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
-                        </div>
-                        <div class="valid-feedback">
-                            Format password sudah benar
-                        </div>
-                        <div class="invalid-feedback">
-                            Silahkan isi password dengan format yang benar !
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="form-check custom-control custom-checkbox mb-5">
-                            <input id="termsCheck" type="checkbox" class="form-check-input custom-control-input" required>
-                            <label class="form-check-label custom-control-label" for="termsCheck">Saya sudah membaca dan setuju dengan Wakprint.com</label>
-                            <div class="invalid-feedback">
-                                Anda harus mencentang syarat dan ketentuan diatas
-                            </div>
-                        </div>
-                    </div>
-    
-                    <button type="submit" class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold" onclick="window.location='{{ url('/pengelola') }}'" style="border-radius:30px">Daftar</button>
-    
+@section('content')
+    <div class="container">
+        <div class="card shadow col-md-6 mx-auto pt-4 pl-4 pr-4 mt-5 mb-5"
+            style="border-radius: 10px;">
+            <label class="font-weight-bold text-center mb-4"
+                style="font-size: 36px;">
+                {{__('Daftar')}}
+            </label>
+            <form method="POST"
+                action="{{ route('register') }}"
+                style="font-size: 16px;">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label for="nama"
+                        class="mb-2">
+                        {{__('Nama Lengkap')}}
+                    </label>
+                    <br>
+                    <input id="nama"
+                        type="text"
+                        class="form-control form-control-lg @error('nama') is-invalid @enderror" 
+                        placeholder="Masukkan Nama Lengkap Anda"
+                        name="nama"
+                        value="{{ old('nama') }}"
+                        required
+                        autocomplete="nama"
+                        autofocus>
+                    @error('nama')
+                    <span class="invalid-feedback"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
+                <div class="form-group">
+                    <label for="email"
+                        class="mb-2">
+                        {{__('Email')}}
+                    </label>
+                    <input id="email"
+                        type="email"
+                        class="form-control form-control-lg @error('email') is-invalid @enderror"
+                        name="email"
+                        value="{{ old('email') }}"
+                        required autocomplete="email"
+                        placeholder="Masukkan Email Anda">
+                    @error('email')
+                    <span class="invalid-feedback"
+                        role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="nomor_hp"
+                        class="mb-2">
+                        {{__('Nomor HP')}}
+                    </label>
+                    <input id="nomor_hp"
+                        type="nomor_hp"
+                        class="form-control form-control-lg @error('nomor_hp') is-invalid @enderror" 
+                        name="nomor_hp"
+                        value="{{ old('nomor_hp') }}" 
+                        required 
+                        autocomplete="nomor_hp"
+                        placeholder="Masukkan Nomor HP Anda">
+                        @error('nomor_hp')
+                        <span class="invalid-feedback"
+                            role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                </div>
+                <div class="form-group row justify-content-between mb-0">
+                    <div class="col-md-5">
+                        <label for="namaBank"
+                            class="mb-2">
+                            {{__('Nama Bank')}}
+                        </label> 
+                        <div id="namaBank"
+                            class="dropdown">
+                            <button class="btn btn-default btn-lg dropdown-toggle border border-gray pl-3 pr-3"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-required="true"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                {{__('Pilih Nama Bank')}}
+                            </button>
+                            <div class="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item"
+                                    href="#">
+                                    {{__('BRI')}}
+                                </a>
+                                <a class="dropdown-item"
+                                    href="#">
+                                    {{__('BNI')}}
+                                </a>
+                                <a class="dropdown-item"
+                                    href="#">
+                                    {{__('CIMB Niaga')}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <label for="nomor-rekening"
+                            class="mb-2">
+                            {{__('Nomor Rekening')}}
+                        </label> 
+                        <div class="mb-3">
+                            <input id="nomor-rekening"
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="Masukkan Nomor Rekening Anda"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nama-percetakan"
+                        class="mb-2">
+                        {{__('Nama Tempat Percetakan')}}
+                    </label> 
+                    <div class="mb-3">
+                        <input id="nama-percetakan"
+                            type="text"
+                            class="form-control form-control-lg"
+                            placeholder="Masukkan Nama Tempat Percetakan Anda"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="deskripsi-percetakan"
+                        class="mb-2">
+                        {{__('Deskripsi Tempat Percetakan')}}
+                    </label> 
+                    <div class="mb-3">
+                        <textarea id="deskripsi-percetakan"
+                            type="text"
+                            placeholder="Masukkan Deskripsi Percetakan Anda"
+                            class="form-control form-control-lg"
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="alamat-percetakan"
+                        class="mb-2">
+                        {{__('Alamat Tempat Percetakan')}}
+                    </label> 
+                    <div class="mb-3">
+                        <textarea id="alamat-percetakan"
+                            type="text"
+                            placeholder="Masukkan Alamat Percetakan Anda"
+                            class="form-control form-control-lg"
+                            required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password"
+                        class="mb-2">{{__('Password')}}</label>
+                    <div class="input-group mb-3">
+                        <input id="password"
+                            type="password"
+                            class="form-control form-control-lg 
+                            @error('password') is-invalid 
+                            @enderror" 
+                            name="password"
+                            required 
+                            autocomplete="new-password"
+                            data-toggle="password"
+                            placeholder="Masukkan Kata Sandi">
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-white"
+                                style="border-radius: 0px 5px 5px 0px;">
+                                <i id="togglePassword" 
+                                toggle="#password-field" 
+                                class="fa fa-fw fa-eye field_icon toggle-password">
+                                </i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password-confirm"
+                        class="mb-2">
+                        {{__('Konfirmasi Password')}}
+                    </label>
+                    <div class="input-group mb-3">
+                        <input id="password-confirm" 
+                            required
+                            type="password"
+                            name="password_confirmation"
+                            class="form-control form-control-lg"
+                            placeholder="Konfirmasi Kata Sandi"
+                            data-toggle="password"
+                            autocomplete="new-password">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white"
+                                    style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword"
+                                        toggle="#password-field"
+                                        class="fa fa-fw fa-eye field_icon toggle-password">
+                                    </i>
+                                </span>
+                            </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check custom-checkbox mb-5 ml-1">
+                        <input id="termsCheck"
+                            type="checkbox"
+                            name="termsCheck"
+                            class="form-check-input custom-control-input"
+                            required
+                            autofocus>
+                        <label for="termsCheck"
+                            class="form-check-label custom-control-label"
+                            style="font-size: 14px;">
+                            {{__('Saya sudah membaca dan setuju dengan Wakprint.com')}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit"
+                        class="btn btn-primary-wakprint btn-lg btn-block SemiBold"
+                        style="font-size: 16px;">
+                        {{__('Daftar')}}
+                    </button>
+                </div>
+                <label class="row justify-content-center mb-4"
+                    style="font-size: 14px;">
+                    {{__('Sudah punya akun ?')}}
+                    <a class="text-primary-purple ml-2"
+                        href="">
+                        {{__('Masuk')}}
+                    </a>
+                </label>
             </form>
-            
-            <div class="container-fluid mb-5">
-                <p class="mb-4 text-center">Sudah punya akun ? <a class="text-primary-purple font-weight-bold" href="{{ url('/pengelola/login') }}">Masuk</a></p>
-            </div>
         </div>
     </div>
 @endsection

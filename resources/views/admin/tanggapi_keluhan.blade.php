@@ -1,53 +1,73 @@
-<!-- Menghubungkan dengan view template master -->
-@extends('master')
-
-@section('header')
-    @include('navbar.admin.navbar_after_admin')
-@endsection
-
-@section('konten')
-    <div class="container-fluid mt-4">
-        <div class="container" style="margin-top: 120px;">
-            <h1 class="font-weight-bold ml-0 mb-5">Tanggapi Keluhan</h1>
-
-            <div class="row mb-3">
-                <div class="container align-self-center col-md-auto" style="margin-right:-20px; margin-left:0px;">
-                    <img src="https://ptetutorials.com/images/user-profile.png" width="32" height="32" alt="no logo">
-                </div>
-
-                <div class="container col-md-auto align-self-center" style="margin-left:0px;">
-                    <small><p class="font-weight-bold mb-0">Ali Susi</p></small>
-                </div>
-            </div>
-
-            <div class="card shadow-sm mb-4 pl-3 pr-3 pt-2 pb-2" style="height:100px;">
-                <p class="mb-1">Puas banget bisa ngeprint disini ajiiiibbbbssss</p>
-            </div>
-            
-            <p class="mb-2">Tanggapan</p>
-            <div class="input-group mb-5" style="height:100px;">
-                <textarea type="text" class="form-control form-control-lg pt-2 pb-2"></textarea>
-            </div>
-
-            <div class="row justify-content-between">
-                            
-                <div class="container col text-right">
-                    <div class="container mb-3">
-                        <button type="button" class="btn btn-default text-primary-purple font-weight-bold pl-5 pr-5 mb-0" 
-                        onclick="window.location='{{ url('/admin/keluhan') }}'"
-                        style="border-radius:30px; margin-right:0px;">Batal</button>
+<div class="modal fade"
+    id="keluhanModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="keluhanModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md"
+        role="document">
+        <div class="modal-content"
+            style="border-radius: 10px;
+            font-size:18px;">
+            <div class="modal-body"
+                style="border-radius: 10px;">
+                <div class="mb-0">
+                    <button class="close material-icons md-32"
+                        data-dismiss="modal">
+                        close
+                    </button>
+                    <label class="font-weight-bold ml-0 mb-4"
+                        style="font-size: 36px;">
+                        {{__('Tanggapi Keluhan')}}
+                    </label>
+                    <div class="row justify-content-left mb-3 mr-0">
+                        <div class="col-md-1 align-self-center ml-0 mr-2">
+                            <img src="https://ptetutorials.com/images/user-profile.png"
+                                width="32"
+                                height="32"
+                                alt="no logo">
+                        </div>
+                        <div class="col-md-10 ml-0 mr-0">
+                            <label class="text-truncate font-weight-bold align-middle mt-2"
+                                style="width: 100%;">
+                                {{__('Ali Susiasdasdasdasdsadsaajiiiibbbbsssssadasdadsadadsadssasadsa')}}
+                            </label>
+                        </div>
                     </div>
-                </div>
-
-                <div class="container col-auto text-right">
-                    <div class="container mb-3">
-                        <button type="button" class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" 
-                        onclick="window.location='{{ url('/admin/keluhan') }}'"
-                        style="border-radius:30px; margin-right:-20px;">Kirim</button>
+                    <div class="card shadow-sm mb-4 pl-3 pr-3 pt-2 pb-2">
+                        <label class="mb-1"
+                            style="font-size:16px;">
+                            {{__('Puas banget bisa ngeprint disini ajiiiibbbbsssssadasdadsadadsadssasadsa')}}
+                        </label>
+                    </div>
+                    <label class="mb-2"
+                        style="font-size:16px;">
+                        {{__('Tanggapan')}}
+                    </label>
+                    <div class="form-group mb-5">
+                        <textarea type="text"
+                            class="form-control form-control-lg pt-2 pb-2"
+                            style="height:154px;"></textarea>
+                    </div>
+                    <div class="row justify-content-end mb-0"> 
+                        <div class="form-group mr-3">
+                            <button class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5 mb-0" 
+                                style="border-radius:30px;
+                                    font-size:18px;">
+                                {{__('Batal')}}
+                            </button>
+                        </div>
+                        <div class="form-group mr-3">
+                            <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5 mb-0"
+                                style="border-radius:30px;
+                                    font-size:18px;">
+                                {{__('Kirim')}}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+</div>
 

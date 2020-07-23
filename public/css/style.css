@@ -89,6 +89,10 @@ html, body {
     visibility: hidden;
 }
 
+.material-icons.md-8 {
+    font-size: 8px;
+}
+
 .material-icons.md-12 {
     font-size: 12px;
 }
@@ -407,7 +411,7 @@ html, body {
     position: relative;
     scrollbar-color: #BC41BE #F5F5F5;
     width: 100%;
-    height: 413px;
+    height: 422px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -418,18 +422,6 @@ html, body {
     overflow-y: hidden;
     white-space: nowrap;
     width: 100%;
-    padding-top: 0px;
-    padding-bottom: 16px;
-}
-
-.scrolling-wrapper-2 {
-    scrollbar-color: #BC41BE #F5F5F5;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 .table-scrollbar {
@@ -636,6 +628,7 @@ table {
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
+    font-weight: bold;
 }
 
 .slider:before {
@@ -674,7 +667,6 @@ input:checked+.slider:before {
     top: 50%;
     left: 50%;
     font-size: 16px;
-    font-weight: bold;
 }
 
 input:checked+.slider:after {

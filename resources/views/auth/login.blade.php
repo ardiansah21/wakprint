@@ -70,7 +70,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 {{-- @extends('layouts.app')
