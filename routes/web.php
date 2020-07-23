@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KonFileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\StoreProductRequest;
 
@@ -31,9 +32,24 @@ Route::redirect('/home','/');
 //dropzone
 Route::post('/users/fileupload/','HomeController@fileupload')->name('users.fileupload');
 
+
+
 // Sudah Auth
 
 Route::get('/profil', 'MemberController@profile')->name('profile'); 
+
+Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+
+///tempat nambah
+
+
+
+
+
+
+//test upload
+Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
+
 
 
 //
@@ -85,9 +101,9 @@ Route::get('/profil', 'MemberController@profile')->name('profile');
 //     return view('member.chat');
 // });
 
-// Route::get('pencarian', function () {
-//     return view('member.pencarian');
-// });
+Route::get('p', function () {
+    return view('pengelola.profil');
+});
 
 
 
