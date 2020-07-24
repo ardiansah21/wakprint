@@ -32,15 +32,21 @@ Route::post('/users/fileupload/','HomeController@fileupload')->name('users.fileu
 
 // Sudah Auth
 
-Route::get('/profil', 'MemberController@profile')->name('profile'); 
+Route::get('/profil', 'MemberController@profile')->name('profile');  
 
 Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
 Route::get('/konfigurasi-file/showPDF/{path}', 'MemberController@showPdf')->name('showPDF');
+
 ///tempat nambah
+// Route::get('/profil/edit/{id}', 'MemberController@editProfile')->name('profile.edit');
+
+Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
+Route::post('/profil/edit','MemberController@updateDataProfile');
 
 
+Route::get('/profil/alamat', 'MemberController@alamat')->name('alamat');
 
-
+Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
 
 //test upload
@@ -63,6 +69,37 @@ Route::prefix('partner')->name('partner.')->group(function(){
 
 
 
+// Route::get('pengelola/profil', function () {
+//     return view('pengelola.profil');
+// });
+
+// Route::get('pesanan/detail', function () {
+//     return view('pengelola.detail_pesanan_masuk');
+// });
+
+// Route::get('profil/edit', function () {
+//     return view('pengelola.edit_profil');
+// });
+
+// Route::get('atk/tambah', function () {
+//     return view('pengelola.tambah_atk');
+// });
+
+// Route::get('produk/tambah', function () {
+//     return view('pengelola.tambah_produk');
+// });
+
+// Route::get('promo/tambah', function () {
+//     return view('pengelola.tambah_promo');
+// });
+
+// Route::get('admin/login', function () {
+//     return view('admin.login');
+// });
+
+// Route::get('admin', function () {
+//     return view('admin.homepage');
+// });
 
 
 

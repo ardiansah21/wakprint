@@ -76,8 +76,8 @@
                     </div>
                 </div>
                 <div class="row float-right mr-0">
-                    <div class="form-group mb-3">
-                        <button class="btn btn-default font-weight-bold pl-4 pr-4"
+                    <div class="form-group mb-3 mr-3">
+                        <button class="btn btn-default text-primary-purple font-weight-bold pl-4 pr-4"
                         data-dismiss="modal" 
                         style="border-radius:30px; font-size:18px;">
                             {{__('Batal')}}

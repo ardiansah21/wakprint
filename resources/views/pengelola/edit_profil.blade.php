@@ -1,276 +1,307 @@
-<!-- Menghubungkan dengan view template master -->
-@extends('master')
+@extends('layouts.pengelola')
 
-@section('header')
-    @extends('navbar.pengelola.navbar_after_pengelola')
-@endsection
+@section('content')
+<div class="container mt-5 mb-5"
+    style="font-size: 16px;">
+    <label class="font-weight-bold mb-4"
+        style="font-size: 36px;">
+        {{__('Profil Tempat Percetakan') }}
+    </label>
+    <br>
+    <form>
+        <label class="mb-2"
+            style="font-size: 16px;">
+            {{__('Foto Tempat Percetakan') }}
+        </label>
 
-@section('konten')
-    <div class="container-fluid">
-        <div class="container" style="margin-top:120px;">
+        {{-- <div class="scrolling-wrapper mb-0"> --}}
+            <div class="row justify-content-left"
+                style="height:200px;">
+                <div class="col-md-auto"
+                    style="position: relative">
+                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                        class="img-responsive bg-light"
+                        style="width:250px;
+                            border-radius:10px;">
+                    <div class="mb-3">
+                        <button type="button"
+                            class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0"
+                            style="position: relative;
+                                font-size:16px;
+                                bottom: 50px;
+                                left:110px;
+                                right: 0px;
+                                border-radius:30px;">
+                                {{__('Pilih Foto') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-2 align-self-center mb-5">
+                    <button class="btn btn-circle shadow-sm"
+                        role="button">
+                        <i class="material-icons md-36 align-middle" 
+                        style="color: white; margin-left:-7px;">
+                            add
+                        </i>
+                    </button>
+                </div>
+            </div>
+        {{-- </div> --}}
+        
+        <label class="mb-2">
+            {{__('Nama Tempat Percetakan') }}
+        </label>
+        <div class="form-group mb-4">
+            <input type="text" 
+                class="form-control pt-2 pb-2"
+                placeholder="Masukkan Nama Tempat Percetakan" 
+                aria-label="Masukkan Nama Tempat Percetakan"
+                aria-describedby="inputGroup-sizing-sm"
+                style="font-size: 16px;">
+        </div>
+        <label class="mb-2">
+            {{__('Deskripsi Tempat Percetakan') }}
+        </label>
+        <div class="form-group mb-4">
+            <textarea class="form-control"
+                placeholder="Masukkan Deskripsi Tempat Percetakan"
+                aria-label="Deskripsi Percetakan"
+                style="font-size: 16px;"></textarea>
+        </div>
+        <label class="mb-2">
+            {{__('Alamat Tempat Percetakan') }}
+        </label>
+        <div class="form-group mb-4">
+            <textarea class="form-control"
+                placeholder="Masukkan Alamat Tempat Percetakan Anda"
+                aria-label="Alamat Tempat Percetakan"
+                style="font-size: 16px;"></textarea>
+        </div>
+        <label class="mb-2">
+            {{__('URL Google Maps') }}
+        </label>
+        <div class="form-group mb-4">
+            <input type="text" 
+                class="form-control pt-2 pb-2"
+                placeholder="Masukkan URL Titik Lokasi Anda"
+                aria-label="Masukkan URL Titik Lokasi Anda"
+                aria-describedby="inputGroup-sizing-sm"
+                style="font-size: 16px;">
+        </div>
+        <label class="mb-2">
+            {{__('Jam Operasional') }}
+        </label>
+        <br>
+        <label class="mb-4"> 
+            {{__('Buka') }}
+            <input type="text"
+                class="form-input mr-2 ml-2"
+                style="width:48px;
+                    font-size: 16px;"> 
+                :
+            <input type="text"
+                class="form-input mr-2 ml-2"
+                style="width:48px;
+                    font-size: 16px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{__('Tutup') }}
+            <input type="text"
+                class="form-input mr-2 ml-2"
+                style="width:48px;
+                    font-size: 16px;"> :
+            <input type="text"
+                class="form-input mr-2 ml-2"
+                style="width:48px;
+                    font-size: 16px;">
+        </label>
+        <br>
+        <label class="mb-2">
+            {{__('Syarat & Ketentuan') }}
+        </label>
+        <div class="form-group mb-4">
+            <textarea class="form-control"
+                aria-label="Syarat & Ketentuan"
+                placeholder="Masukkan Syarat & Ketentuan Percetakan Anda"
+                style="font-size: 16px;"></textarea>
+        </div>
             
-            <h1 class="font-weight-bold mb-5 mt-5">Profil Tempat Percetakan</h1>
-            
-            <label class="mb-2">Foto Tempat Percetakan</label>
-    
-            {{-- <div class="scrolling-wrapper"> --}}
+        <div class="row justify-content-between mb-5">
+            <div class="col-md-auto">
+                <label class="mb-2">
+                    {{__('Metode Pelayanan') }}
+                </label>
                 <div class="row justify-content-left mb-2">
-                    <div class="col-auto">
-                        <div class="row justify-content-left">
-                            <div class="col-auto">
-                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" class="img-responsive bg-light" style="width:250px; height:200px; border-radius:10px;">
-                                <div class="container mb-3">
-                                    <button type="button" class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0" style="position: absolute;
-                                    bottom: 30px;
-                                    right: 35px;
-                                    border-radius:30px;">Pilih Foto
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-auto align-self-center mb-3">
-                        <button class="btn btn-circle shadow-sm" role="button"><i class="material-icons md-36 align-middle" style="color: white; margin-left:-6px;">add</i></button>
-                    </div>
-                    
-                </div>
-            {{-- </div> --}}
-            
-                <label class="mb-2">Nama Tempat Percetakan</label>
-                <div class="col input-group mb-4" style="margin-left:-15px;">
-                    <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nama Tempat Percetakan" 
-                    aria-label="Masukkan Nama Tempat Percetakan" aria-describedby="inputGroup-sizing-sm">
-                </div>
-                
-                <label class="mb-2">Deskripsi Tempat Percetakan</label>
-                <div class="col input-group mb-4" style="margin-left:-15px;">
-                    <textarea class="form-control" aria-label="Deskripsi Percetakan"></textarea>
-                </div>
-    
-                <label class="mb-2">Alamat Tempat Percetakan</label>
-                <div class="col input-group mb-4" style="margin-left:-15px;">
-                    <textarea class="form-control" aria-label="Alamat Tempat Percetakan"></textarea>
-                </div>
-    
-                <label class="mb-2">URL Google Maps</label>
-                <div class="col input-group mb-4" style="margin-left:-15px;">
-                    <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan URL Titik Lokasi Anda" 
-                    aria-label="Masukkan URL Titik Lokasi Anda" aria-describedby="inputGroup-sizing-sm">
-                </div>
-    
-                <label class="mb-2">Jam Operasional</label>
-                    <div class="container col-6 mb-2" style="margin-left:-30px;"> 
-                        <label class="container"> 
-                            Buka
-                            <input type="text mr-4" class="form-input" style="width:48px;"> :
-                            <input type="text mr-4" class="form-input" style="width:48px;">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Tutup
-                            <input type="text mr-4" class="form-input" style="width:48px;"> :
-                            <input type="text mr-4" class="form-input" style="width:48px;">
+                    <div class="form-group custom-control custom-checkbox mt-2 ml-3"
+                        style="font-size: 16px;">
+                        <input type="checkbox"
+                            class="custom-control-input"
+                            id="checkboxAmbil">
+                        <label class="custom-control-label"
+                            for="checkboxAmbil">
+                            {{__('Ambil di Tempat') }}
                         </label>
                     </div>
-                
-                <label class="mb-2">Syarat & Ketentuan</label>
-                <div class="col input-group mb-4" style="margin-left:-15px;">
-                    <textarea class="form-control" aria-label="Syarat & Ketentuan"></textarea>
-                </div>
-                
-            <div class="row justify-content-between mb-5">
-                <div class="col-auto">
-                    <label class="mb-2">Metode Pelayanan</label>
-                    <div class="row justify-content-left mb-2">
-                        
-                        <div class="custom-control custom-checkbox mt-2 ml-3">
-                            <input type="checkbox" class="custom-control-input" id="checkboxAmbil">
-                            <label class="custom-control-label" for="checkboxAmbil">Ambil di Tempat</label>
-                        </div>
-    
-                        <div class="custom-control custom-checkbox mt-2 ml-4">
-                            <input type="checkbox" class="custom-control-input" id="checkboxDiantar">
-                            <label class="custom-control-label" for="checkboxDiantar">Diantar ke Tempat</label>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col-auto text-right" style="margin-right:30px;">
-                    <p class="mb-2">Akurasi Tingkat Keakuratan Deteksi Warna Halaman<button class="btn btn-default text-primary-purple ml-2" data-toggle="modal" data-target="#infoModal">Info</button></p>
-                    <div class="dropdown">
-                        <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray" type="button" id="dropdownMenuButton" 
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Akurasi Tingkat Keakuratan Deteksi Warna
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Penuh</a>
-                            <a class="dropdown-item" href="#">Tinggi</a>
-                            <a class="dropdown-item" href="#">Sedang</a>
-                            <a class="dropdown-item" href="#">Rendah</a>
-                            <a class="dropdown-item" href="#">Sangat Rendah</a>
-                        </div>
+                    <div class="form-group custom-control custom-checkbox mt-2 ml-4"
+                        style="font-size: 16px;">
+                        <input type="checkbox"
+                            class="custom-control-input"
+                            id="checkboxDiantar">
+                        <label class="custom-control-label"
+                            for="checkboxDiantar">
+                            {{__('Diantar ke Tempat') }}
+                        </label>
                     </div>
                 </div>
             </div>
-    
-            <div class="container col-auto text-right mb-5">
-                <div class="container">
-                    <button type="button" class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
-                    onclick="window.location='{{ url('pengelola/profil') }}'"
-                    style="border-radius:30px;">
-                        Simpan Perubahan
+            <div class="col-md-auto text-right">
+                <label class="mb-2">
+                    {{__('Akurasi Tingkat Keakuratan Deteksi Warna Halaman') }}
+                    <a class="text-primary-purple ml-2"
+                        href=""
+                        data-toggle="modal"
+                        data-target="#infoAtkdwhModal">
+                        {{__('Info') }}
+                    </a>
+                </label>
+                <div class="form-group dropdown">
+                    <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray" 
+                        id="dropdownATKDH" 
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        style="font-size: 16px;
+                            text-align:left;">
+                        {{__('Akurasi Tingkat Keakuratan Deteksi Warna') }}
                     </button>
-                </div>
-            </div>
-    
-            <div class="container" style="margin-left:-15px;">
-                <h1 class="font-weight-bold mb-5 mt-2">Profil Pemilik Tempat Percetakan</h1>
-            </div>
-    
-            <div class="row mb-5">
-                <div class="col-auto">
-                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" class="img-responsive bg-light" style="width:250px; height:250px; border-radius:10px;">
-                    <div class="container mb-3">
-                        <button type="button" class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0" style="position: absolute;
-                        bottom: 30px;
-                        right: 35px;
-                        border-radius:30px;">Pilih Foto</button>
-                    </div>
-                </div>
-    
-                <div class="col-9">
-                    <label class="mb-2">Nama Pemilik Tempat Percetakan</label>
-                    <div class="col input-group mb-3" style="margin-left:-15px;">
-                        <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nama Pemilik Tempat Percetakan" 
-                        aria-label="Masukkan Nama Pemilik Tempat Percetakan" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-                    <label class="mb-2">Nomor HP Pemilik Tempat Percetakan</label>
-                    <div class="col input-group mb-3" style="margin-left:-15px;">
-                        <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nomor HP Pemilik Tempat Percetakan" 
-                        aria-label="Masukkan Nomor HP Pemilik Tempat Percetakan" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col-5">
-                            <label class="mb-2">Nama Bank Pemilik Tempat Percetakan</label>
-                            <div class="dropdown" style="margin-left:0px;">
-                                <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray" type="button" id="dropdownMenuButton" 
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    BRI
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">BCA</a>
-                                    <a class="dropdown-item" href="#">Mandiri</a>
-                                    <a class="dropdown-item" href="#">BNI</a>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="col-7" style="">
-                            <label class="mb-2 ml-0">Nomor Rekening Pemilik Tempat Percetakan</label>
-                            <div class="col input-group mb-3" style="margin-left:-15px;">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nomor Rekening Pemilik Tempat Percetakan" 
-                                aria-label="Masukkan Nomor Rekening Pemilik Tempat Percetakan" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                        </div>
-                        
+                    <div class="dropdown-menu"
+                        aria-labelledby="dropdownATKDH"
+                        style="font-size: 16px;
+                        width:100%;">
+                            <a class="dropdown-item" href="#">{{__('Penuh') }}</a>
+                            <a class="dropdown-item" href="#">{{__('Tinggi') }}</a>
+                            <a class="dropdown-item" href="#">{{__('Sedang') }}</a>
+                            <a class="dropdown-item" href="#">{{__('Rendah') }}</a>
+                            <a class="dropdown-item" href="#">{{__('Sangat Rendah') }}</a>
                     </div>
                 </div>
             </div>
-    
-            <div class="container col-auto text-right mb-5">
-                <div class="container">
-                    <button type="button" class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
-                    onclick="window.location='{{ url('pengelola/profil') }}'"
-                    style="border-radius:30px; margin-right:0px;">
-                        Simpan Perubahan
-                    </button>
-                </div>
-            </div>
-        
-            {{-- pop up info --}}
-            <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
-                        <h1 id="infoModalLabel" class="font-weight-bold mb-5 mt-5">Akurasi Tingkat Keakuratan Deteksi Warna Halaman</h1>
-                        
-                        <div class="row justify-content-between mb-4">
-                            <div class="col-9">
-                                <p class="font-weight-bold mb-0 ml-0 mt-2">1. Penuh</p>
-                                <p class="mb-0 ml-0 mt-2">Ini juga cuma contoh penjelasan/deskripsi apa yang dimaksud dari kata penuh.
-                                tidak perlu dibaca sampai disini. Terimkasih</p>
-                            </div>
-            
-                            <div class="col-3">
-                                <label class="mb-0 ml-0 mt-2 mb-3">Contoh</label>
-                                <img src="{{url('Deteksi-Penuh.png')}}" class="img-responsive" style="width:250px; height:400px; border-radius:10px;">
-                            </div>
-                        </div>
-                        <div class="row justify-content-between mb-4">
-                            <div class="col-9">
-                                <p class="font-weight-bold mb-0 ml-0 mt-2">2. Tinggi</p>
-                                <p class="mb-0 ml-0 mt-2">Ini juga cuma contoh penjelasan/deskripsi apa yang dimaksud dari kata penuh.
-                                tidak perlu dibaca sampai disini. Terimkasih</p>
-                            </div>
-            
-                            <div class="col-3">
-                                <label class="mb-0 ml-0 mt-2 mb-3">Contoh</label>
-                                <img src="{{url('Deteksi-Tinggi.png')}}" class="img-responsive" style="width:250px; height:400px; border-radius:10px;">
-                            </div>
-                            
-                        </div>
-            
-                        <div class="row justify-content-between mb-4">
-                            <div class="col-9">
-                                <p class="font-weight-bold mb-0 ml-0 mt-2">3. Sedang</p>
-                                <p class="mb-0 ml-0 mt-2">Ini juga cuma contoh penjelasan/deskripsi apa yang dimaksud dari kata penuh.
-                                tidak perlu dibaca sampai disini. Terimkasih</p>
-                            </div>
-            
-                            <div class="col-3">
-                                <label class="mb-0 ml-0 mt-2 mb-3">Contoh</label>
-                                <img src="{{url('Deteksi-Sedang.png')}}" class="img-responsive" style="width:250px; height:400px; border-radius:10px;">
-                            </div>
-                            
-                        </div>
-            
-                        <div class="row justify-content-between mb-4">
-                            <div class="col-9">
-                                <p class="font-weight-bold mb-0 ml-0 mt-2">4. Rendah</p>
-                                <p class="mb-0 ml-0 mt-2">Ini juga cuma contoh penjelasan/deskripsi apa yang dimaksud dari kata penuh.
-                                tidak perlu dibaca sampai disini. Terimkasih</p>
-                            </div>
-            
-                            <div class="col-3">
-                                <label class="mb-0 ml-0 mt-2 mb-3">Contoh</label>
-                                <img src="{{url('Deteksi-Rendah.png')}}" class="img-responsive" style="width:250px; height:400px; border-radius:10px;">
-                            </div>
-                            
-                        </div>
-            
-                        <div class="row justify-content-between mb-4">
-                            <div class="col-9">
-                                <p class="font-weight-bold mb-0 ml-0 mt-2">5. Sangat Rendah</p>
-                                <p class="mb-0 ml-0 mt-2">Ini juga cuma contoh penjelasan/deskripsi apa yang dimaksud dari kata penuh.
-                                tidak perlu dibaca sampai disini. Terimkasih</p>
-                            </div>
-            
-                            <div class="col-3">
-                                <label class="mb-0 ml-0 mt-2 mb-3">Contoh</label>
-                                <img src="{{url('Deteksi-Sangat-Rendah.png')}}" class="img-responsive" style="width:250px; height:400px; border-radius:10px;">
-                            </div>
-                        </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
         </div>
-    </div>
+        <div class="form-group text-right mb-5">
+            <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
+                style="border-radius:30px;
+                    font-size: 18px;">
+                {{__('Simpan Perubahan') }}
+            </button>
+        </div>
+    </form>
+    <label class="font-weight-bold mb-5 mt-2"
+        style="font-size:36px;">
+        {{__('Profil Pemilik Tempat Percetakan') }}
+    </label>
+    <form>
+        <div class="row justify-content-between mb-0">
+            <div class="form-group col-md-3">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                    class="img-responsive bg-light"
+                    style="width:250px;
+                        height:250px;
+                        border-radius:10px;">
+                <div class="form-group mb-3">
+                    <button class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0"
+                        style="position: relative;
+                        font-size:16px;
+                        bottom: 50px;
+                        left:110px;
+                        right: 0px;
+                        border-radius:30px;">
+                        {{__('Pilih Foto') }}
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <label class="mb-2">
+                    {{__('Nama Pemilik Tempat Percetakan') }}
+                </label>
+                <div class="form-group ml-0 mr-0 mb-3">
+                    <input type="text"
+                        class="form-control pt-2 pb-2"
+                        placeholder="Masukkan Nama Pemilik Tempat Percetakan" 
+                        aria-label="Masukkan Nama Pemilik Tempat Percetakan"
+                        aria-describedby="inputGroup-sizing-sm"
+                        style="font-size:16px;">
+                </div>
+                <label class="mb-2">
+                    {{__('Nomor HP Pemilik Tempat Percetakan') }}
+                </label>
+                <div class="form-group ml-0 mr-0 mb-3">
+                    <input type="text"
+                        class="form-control pt-2 pb-2"
+                        placeholder="Masukkan Nomor HP Pemilik Tempat Percetakan" 
+                        aria-label="Masukkan Nomor HP Pemilik Tempat Percetakan"
+                        aria-describedby="inputGroup-sizing-sm"
+                        style="font-size:16px;">
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-md-5">
+                        <label class="mb-2">
+                            {{__('Nama Bank Pemilik Tempat Percetakan') }}
+                        </label>
+                        <div class="form-group dropdown">
+                            <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray"
+                                id="dropdownNamaBank"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                style="font-size:16px;
+                                    text-align:left;">
+                                {{__('BRI') }}
+                            </button>
+                            <div class="dropdown-menu"
+                                aria-labelledby="dropdownNamaBank"
+                                style="font-size:16px;
+                                    width:100%;">
+                                <a class="dropdown-item"
+                                    href="#">
+                                    {{__('BCA') }}
+                                </a>
+                                <a class="dropdown-item"
+                                    href="#">
+                                    {{__('Mandiri') }}
+                                </a>
+                                <a class="dropdown-item"
+                                    href="#">
+                                    {{__('BNI') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <label class="mb-2 ml-0">
+                            {{__('Nomor Rekening Pemilik Tempat Percetakan') }}
+                        </label>
+                        <div class="form-group ml-0 mr-0 mb-0">
+                            <input type="text"
+                                class="form-control pt-2 pb-2"
+                                placeholder="Masukkan Nomor Rekening Pemilik Tempat Percetakan" 
+                                aria-label="Masukkan Nomor Rekening Pemilik Tempat Percetakan"
+                                aria-describedby="inputGroup-sizing-sm"
+                                style="font-size:16px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-right mb-5">
+            <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
+                style="border-radius:30px;
+                    font-size:18px;">
+                {{__('Simpan Perubahan') }}
+            </button>
+        </div>
+    </form>
+
+    {{-- pop up info --}}
+    @include('pengelola.tingkat_akurasi')
+</div>
 @endsection
 

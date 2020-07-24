@@ -1,8 +1,25 @@
-<!-- Menghubungkan dengan view template master -->
+@auth
+    @php
+        $m = Auth::user();
+        $jenisKelamin = $m->jenis_kelamin;
+        // if(rbLK=checked){
+        //     $jenisKelamin = "Laki Laki"
+        // }
+        // elseif (rbPR=checked) {
+        //     $jenisKelamin = "Perempuan"
+        // }
+        // else {
+        //     $jenisKelamin = $m->jenis_kelamin;
+        // }
+    @endphp
+@endauth
+
+
 @extends('layouts.member')
 
 @section('content')
-    <div class="row mt-5 mb-5">
+<div class="container mt-5 mb-5">
+    <div class="row">
         <div class="col-md-5">
             <div class="bg-light-purple text-center"
                 style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
@@ -17,7 +34,11 @@
                     color: white;
                     width:300px;
                     border-radius:0px 0px 8px 8px;">
-                    <label class="font-weight-bold text-truncate mx-auto" style="font-size: 30px; width:100%;">{{__('Raditya Dika Habibie') }}</label>
+                    <label class="font-weight-bold text-truncate mx-auto"
+                        style="font-size: 30px;
+                            width:100%;">
+                        {{ $m->nama_lengkap }}
+                    </label>
                 </div>
             </div>
             <div class="mt-3">
@@ -96,136 +117,174 @@
                         edit
                     </i>
                 </div>
-    
-                <form>
-                    <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Biodata Diri') }}</label>
-                    <br>
-                    <div class="form-group mb-3">
-                        <label class="mb-2" style="font-size: 18px;">{{__('Nama Lengkap') }}</label>
-                        <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap"
-                        aria-label="Masukkan Nama Lengkap" aria-describedby="inputGroup-sizing-sm"
-                        style="font-size: 18px;">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mb-2" style="font-size: 18px;">{{__('Tanggal Lahir') }}</label>
-                        <div class="row">
-                            <div class="col-md-auto">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle border border-gray"
-                                        id="dropdownMenuButton" 
+                
+                {{-- @foreach ($member as $t) --}}
+                    <form action="{{ route('profile.edit') }}" method="POST">
+                        {{ csrf_field() }}
+                        
+                        {{-- {{ method_field('PUT') }} --}}
+                        <label class="SemiBold mb-1"
+                            style="font-size: 24px;">
+                            {{__('Biodata Diri') }}
+                        </label>
+                        <br>
+                        <div class="form-group mb-3">
+                            <label class="mb-2"
+                                style="font-size: 18px;">
+                                {{__('Nama Lengkap') }}
+                            </label>
+                            <input id="nama" 
+                                type="text"
+                                class="form-control"
+                                name="nama"
+                                value="{{ $m->nama_lengkap }}"
+                                placeholder="Masukkan Nama Lengkap"
+                                aria-label="Masukkan Nama Lengkap"
+                                aria-describedby="inputGroup-sizing-sm"
+                                style="font-size: 18px;">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="mb-2" style="font-size: 18px;">
+                                {{__('Tanggal Lahir') }}
+                            </label>
+                            <div class="row">
+                                <div class="col-md-auto">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle border border-gray"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            style="font-size: 18px;">
+                                            {{__('Tanggal') }}
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 18px;">
+                                            <a class="dropdown-item" href="#">{{__('1') }}</a>
+                                            <a class="dropdown-item" href="#">{{__('2') }}</a>
+                                            <a class="dropdown-item" href="#">{{__('3') }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle border border-gray"
+                                            id="dropdownMenuButton" 
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            style="font-size: 18px;"
+                                            aria-expanded="false">
+                                            {{__('Bulan') }}
+                                        </button>
+                                        <div class="dropdown-menu" 
+                                        aria-labelledby="dropdownMenuButton"
+                                        style="font-size: 18px;">
+                                            <a class="dropdown-item" href="#">{{__('Januari') }}</a>
+                                            <a class="dropdown-item" href="#">{{__('Februari') }}</a>
+                                            <a class="dropdown-item" href="#">{{__('Maret') }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle border border-gray"
+                                        style="font-size: 18px;"
+                                        id="dropdownMenuButton"
                                         data-toggle="dropdown" 
                                         aria-haspopup="true"
-                                        aria-expanded="false" 
-                                        style="font-size: 18px;">
-                                        {{__('Tanggal') }}
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-                                    style="font-size: 18px;">
-                                        <a class="dropdown-item" href="#">{{__('1') }}</a>
-                                        <a class="dropdown-item" href="#">{{__('2') }}</a>
-                                        <a class="dropdown-item" href="#">{{__('3') }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle border border-gray"
-                                        id="dropdownMenuButton" 
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        style="font-size: 18px;"
                                         aria-expanded="false">
-                                        {{__('Bulan') }}
-                                    </button>
-                                    <div class="dropdown-menu" 
-                                    aria-labelledby="dropdownMenuButton"
+                                        {{__('Tahun') }}
+                                        </button>
+                                        <div class="dropdown-menu"
+                                        style="font-size: 18px;"
+                                        aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">{{__('2000') }}</a>
+                                            <a class="dropdown-item" href="#">{{__('2001') }}</a>
+                                            <a class="dropdown-item" href="#">{{__('2002') }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-2" style="font-size: 18px;">
+                                {{__('Jenis Kelamin') }}
+                            </label>
+                            <div class="row ml-0" style="font-size: 18px;">
+                                <div class="form-group custom-control custom-radio col-md-3">
+                                    <input id="rbLK"
+                                        name="jk"
+                                        value="Laki-Laki"
+                                        {{ ($m-> jenis_kelamin == 'Laki-Laki') ? 'checked' : '' }}
+                                        class="custom-control-input"
+                                        type="radio">
+                                    <label class="custom-control-label"
+                                        for="rbLK">
+                                        {{__('Laki-Laki') }}
+                                    </label>
+                                </div>
+                                <div class="form-group custom-control custom-radio col-md-9">
+                                    <input id="rbPR"
+                                        value="Perempuan"
+                                        name="jk"
+                                        {{ ($m-> jenis_kelamin == 'Perempuan') ? 'checked' : '' }}
+                                        class="custom-control-input"
+                                        type="radio">
+                                    <label class="custom-control-label"
+                                        for="rbPR">
+                                        {{__('Perempuan') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="SemiBold mb-2" style="font-size: 24px;">{{__('Password') }}</label>
+                            <br>
+                            <label class="mb-2" style="font-size: 18px;">{{__('Password Lama') }}</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control pt-2 pb-2" placeholder="Masukkan Kata Sandi Lama"
+                                    aria-label="Masukkan Kata Sandi Lama" aria-describedby="inputGroup-sizing-sm"
                                     style="font-size: 18px;">
-                                        <a class="dropdown-item" href="#">{{__('Januari') }}</a>
-                                        <a class="dropdown-item" href="#">{{__('Februari') }}</a>
-                                        <a class="dropdown-item" href="#">{{__('Maret') }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle border border-gray"
-                                    style="font-size: 18px;"
-                                    id="dropdownMenuButton"
-                                    data-toggle="dropdown" 
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    {{__('Tahun') }}
-                                    </button>
-                                    <div class="dropdown-menu"
-                                    style="font-size: 18px;"
-                                    aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">{{__('2000') }}</a>
-                                        <a class="dropdown-item" href="#">{{__('2001') }}</a>
-                                        <a class="dropdown-item" href="#">{{__('2002') }}</a>
-                                    </div>
-                                </div>
+                                <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword" toggle="#password-field"
+                                        class="fa fa-fw fa-eye field_icon toggle-password"></i>
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group mb-4">
-                        <label class="mb-2" style="font-size: 18px;">{{__('Jenis Kelamin') }}</label>
-                        <div class="row ml-0" style="font-size: 18px;">
-                            <div class="custom-control custom-radio col-md-3">
-                                <input id="rbLK" name="radio" class="custom-control-input" type="radio">
-                                <label class="custom-control-label" for="rbLK">{{__('Laki-Laki') }}</label>
+                        <div class="form-group mb-3">
+                            <label class="mb-2" style="font-size: 18px;">{{__('Password Baru') }}</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control pt-2 pb-2" placeholder="Masukkan Kata Sandi Baru"
+                                    aria-label="Masukkan Kata Sandi Baru" aria-describedby="inputGroup-sizing-sm"
+                                    style="font-size: 18px;">
+                                <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword" toggle="#password-field"
+                                        class="fa fa-fw fa-eye field_icon toggle-password">
+                                    </i>
+                                </span>
                             </div>
-                            <div class="container custom-control custom-radio col-md-9">
-                                <input id="rbPR" name="radio" class="custom-control-input" type="radio">
-                                <label class="custom-control-label" for="rbPR">{{__('Perempuan') }}</label>
+                        </div>
+                        <div class="form-group mb-5">
+                            <label class="mb-2" style="font-size: 18px;">{{__('Konfirmasi Password Baru') }}</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control pt-2 pb-2" placeholder="Konfirmasi Kata Sandi Baru"
+                                    aria-label="Konfirmasi Kata Sandi Baru" aria-describedby="inputGroup-sizing-sm"
+                                    style="font-size: 18px;">
+                                <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword" toggle="#password-field"
+                                        class="fa fa-fw fa-eye field_icon toggle-password"></i>
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="SemiBold mb-2" style="font-size: 24px;">{{__('Password') }}</label>
-                        <br>
-                        <label class="mb-2" style="font-size: 18px;">{{__('Password Lama') }}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control pt-2 pb-2" placeholder="Masukkan Kata Sandi Lama"
-                                aria-label="Masukkan Kata Sandi Lama" aria-describedby="inputGroup-sizing-sm"
-                                style="font-size: 18px;">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
-                                    class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
+                        <div class="form-group mb-5">
+                            <input type="submit"
+                                value="{{__('Simpan Perubahan') }}"
+                                class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4"
+                                style="border-radius:30px; font-size: 24px;">
                         </div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mb-2" style="font-size: 18px;">{{__('Password Baru') }}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control pt-2 pb-2" placeholder="Masukkan Kata Sandi Baru"
-                                aria-label="Masukkan Kata Sandi Baru" aria-describedby="inputGroup-sizing-sm"
-                                style="font-size: 18px;">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
-                                    class="fa fa-fw fa-eye field_icon toggle-password">
-                                </i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group mb-5">
-                        <label class="mb-2" style="font-size: 18px;">{{__('Konfirmasi Password Baru') }}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control pt-2 pb-2" placeholder="Konfirmasi Kata Sandi Baru"
-                                aria-label="Konfirmasi Kata Sandi Baru" aria-describedby="inputGroup-sizing-sm"
-                                style="font-size: 18px;">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
-                                    class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group mb-5">
-                        <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4"
-                        style="border-radius:30px; font-size: 24px;">
-                            {{__('Simpan Perubahan') }}
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                {{-- @endforeach --}}
+                
             </div>
             <div class="tab-pane fade ml-2 mr-0" id="v-pills-saldo" role="tabpanel">
                 @include('member.topup_saldo')
@@ -244,4 +303,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
