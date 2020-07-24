@@ -110,8 +110,57 @@
                         </a>
                     </div>
                 </div>
-                
-                <div class="row mb-5">
+                <table class="table align-middle" style="font-size: 24px;">
+                    <tbody>
+                        <tr class=" mb-1">
+                            <td class="align-middle SemiBold">
+                                {{__('Nama Lengkap') }}
+                            </td>
+                            <td>
+                                {{ $m->nama_lengkap }}
+                            </td>
+                        </tr>
+                        <tr class="mb-1">
+                            <td class="SemiBold">
+                                {{__('Tanggal Lahir') }}
+                            </td>
+                            <td>
+                                {{__('21 Februari 1997') }}
+                            </td>
+                        </tr>
+                        <tr class="mb-1">
+                            <td class="SemiBold">
+                                {{__('Jenis Kelamin') }}
+                            </td>
+                            <td @if ($jenisKelamin == null)
+                                    value="-"
+                                @else{
+                                    value="{{$jenisKelamin}}"
+                                }
+                                @endif>
+                            </td>
+                        </tr>
+                        <tr class="mb-1">
+                            <td class="SemiBold">
+                                {{__('Email') }}
+                            </td>
+                            <td>
+                                <a class="text-danger text-truncate" style="font-size: 24px;" href="#">{{ $m->email }}
+                                    <i class="fa fa-warning ml-2"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="mb-1">
+                            <td class="SemiBold">
+                                {{__('Nomor HP') }}
+                            </td>
+                            <td>
+                                {{ $m->nomor_hp }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {{-- <div class="row mb-5">
                     <div class="col-md-5 ml-1">
                         <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Nama Lengkap') }}</label>
                         <br>
@@ -125,7 +174,6 @@
                     </div>
                     <div class="container col-md-6">
 
-                        {{-- @foreach ($member as $t) --}}
                             <label class="mb-1" style="font-size: 24px;">{{ $m->nama_lengkap }}</label>
                             <br>
                             <label class="mb-1" style="font-size: 24px;">{{__('21 Februari 1997') }}</label>
@@ -146,10 +194,10 @@
                             </a>
                             <br>
                             <label class="mb-1" style="font-size: 24px;">{{ $m->nomor_hp }}</label>
-                        {{-- @endforeach --}}
+                        
 
                     </div>
-                </div>
+                </div> --}}
                 <h1 class="font-weight-bold mb-5 ml-2" style="font-size: 48px;">{{__('Konfigurasi Terakhir') }}</h1>
                 <div class="table-scrollbar mb-5 mr-0">
                     <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
