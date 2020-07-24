@@ -39,7 +39,7 @@ Route::post('/users/fileupload/','HomeController@fileupload')->name('users.fileu
 Route::get('/profil', 'MemberController@profile')->name('profile');  
 
 Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
-
+Route::get('/konfigurasi-file/showPDF/{path}', 'MemberController@showPdf')->name('showPDF');
 ///tempat nambah
 // Route::get('/profil/edit/{id}', 'MemberController@editProfile')->name('profile.edit');
 

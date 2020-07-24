@@ -1,5 +1,6 @@
 <?php
 
+use App\Member;
 use App\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,13 @@ use function GuzzleHttp\Promise\all;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/member/{id}', function ($id) {
+    $member = Member::find($id);
+
+    return response(json_encode($member),200);
+    //return json_encode($member,201);
 });
 
 

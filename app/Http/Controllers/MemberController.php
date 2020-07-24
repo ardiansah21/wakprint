@@ -8,6 +8,10 @@ use Auth;
 use App\Member;
 use phpDocumentor\Reflection\Types\This;
 use App\konfigurasi_file;
+use imagick;
+use File;
+use Storage;
+use Response;
 
 class MemberController extends Controller
 {
@@ -25,14 +29,13 @@ class MemberController extends Controller
         //$this->member = Member::where('id_member', $id)->get();
         // $this->member = Member::where('id_member', $id)->get();
         //$this->member->id_member = "123456789";
-        $this->middleware('auth')->except('upload');
+        $this->middleware('auth')->except(['upload', 'showPDF']);
     }
 
     // public function profile()
     // {
-    //     $member = Member::all();
-    //     //return view('member.profil');
-    //     return view('member.profil',['member' => $member]);
+    //     dd(storage_path());
+    //     return view('member.profil');
     // }
 
 
@@ -52,33 +55,37 @@ class MemberController extends Controller
             'file' => 'required',
         ]);
         $file = $request->file('file');
-        konfigurasi_file::create([
+        $k = konfigurasi_file::insertGetId([
             'nama_file' => $file->getClientOriginalName(),
             'waktu'     => now(),
         ]);
-
+        $idd = $k;
         $path = $file->move(public_path('filenya/'), $file->getClientOriginalName());
-        $this->f = $file;
+        $pdf = $this->cekWarna($file, $path);
 
 
-
-        return view('member.konfigurasi_file_lanjutan', ['namafile' => $file->getClientOriginalName()]);
+        return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
     }
 
 
 
-    public function cekWarna(\Illuminate\Http\UploadedFile $file)
+    public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
     {
 
         $gray = 0;
         $notgray = 0;
         $RandomNum   = time();
-        $output_dir = public_path('tempCekwarna/');
         $FileName      = $file->getClientOriginalName();
-        $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($file), $dummy);
+        $output_dir = public_path('tempCekwarna/') . $FileName;
+        if (!File::exists(public_path('tempCekwarna/') . $FileName)) {
+            $output_dir = File::makeDirectory(public_path('tempCekwarna/') . $FileName, 0777, true);
+        }
+        $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
 
 
-        $name = $output_dir . $FileName;
+        // $name = $output_dir . $FileName;
+        $name = $path;
+
         // $location . " " .  $convert    = $location . " " . $name . " ".$nameto;
         // exec("convert ".$convert);
 
@@ -145,25 +152,32 @@ class MemberController extends Controller
                     $gray++;
                 }
             }
-
-            // if ($c == ($imgw*$imgh))
-            // {
-            //     $gray++;
-            //     //    echo "The image is grayscale.";
-            // }
-            // else
-            // {
-            //     $notgray++;
-            // //       echo "The image is NOT grayscale.";
-            // }
         }
+        $pdf = new stdClass();
+        $pdf->namaFile = $FileName;
+        $pdf->jumlahHalaman = $jumlahHal;
+        $pdf->jumlahHalBerwarna = $notgray;
+        $pdf->jumlahHalHitamPutih = $gray;
+        $pdf->path = $path;
 
-
-        $message = "Ciieeee PDF converted to JPEG sucessfully!!";
-        $jlhWarna = "persentase minimum = 1%; yang berwarna = " . $notgray . " \nyang hitam-putih= " . $gray . "";
+        return $pdf;
     }
 
+    public function showPDF($path)
+    {
+        // return Response::make($pdfContent, 200, [
+        //     'Content-Type'        => $type,
+        //     'Content-Disposition' => 'inline; filename="'.$fileName.'"'
+        //   ]);
+        // return response()->file($path);
+        
+        // $contentType = mime_content_type($path);
+        // return Response::make(file_get_contents($path), 200, [
 
+        //     'Content-Type' => $contentType,
+        //     'Content-Disposition' => 'inline; filename="' . $filename . '"'
+        // ]);
+    }
 
 
 
