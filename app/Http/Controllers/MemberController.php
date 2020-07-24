@@ -21,15 +21,19 @@ class MemberController extends Controller
         } else {
             // $this->member = null;
         }
+
+        //$this->member = Member::where('id_member', $id)->get();
         // $this->member = Member::where('id_member', $id)->get();
         //$this->member->id_member = "123456789";
         $this->middleware('auth')->except('upload');
     }
 
-    public function profile()
-    {
-        return view('member.profil');
-    }
+    // public function profile()
+    // {
+    //     $member = Member::all();
+    //     //return view('member.profil');
+    //     return view('member.profil',['member' => $member]);
+    // }
 
 
     public function konfigurasiFile()
@@ -193,4 +197,56 @@ class MemberController extends Controller
 
     ///tempat nambah
 
+    public function profile()
+    {
+        //$member = Member::all();
+        //return view('member.profil');
+        return view('member.profil');
+    }
+
+    public function profileEdit()
+    {
+        $member = Member::find(Auth::id())->get();
+        //$id = $member->id_member;
+        //$member = Member::find($id);
+        return view('member.edit_profil',['member'=>$member]);
+    }
+
+    public function updateDataProfile(Request $request){
+        //$member = Member::where('id_member',$request->id)->get();
+        //$member->nama_lengkap = $request->nama;
+        //$member->save();
+        // $member = Member::where('id_member',$request->id)->update([
+        //     'nama_lengkap' => $request->nama
+        // ]);
+        Member::find(Auth::id())->update([
+            'nama_lengkap' => $request->nama
+        ]);
+        // dd($request->nama);
+        //$member->save();
+
+        // $member = DB::table('member')->where('id_member',$request->id)->update([
+        //     'id_member' => $request->id,
+        //     'nama_lengkap' => $request->nama,
+        //     'tanggal_lahir' => $request->ttl,
+        //     'jenis_kelamin' => $request->jk
+        // ]);
+
+        //return view('member.profil',['member' => $member]);
+        return redirect()->route('profile')->with('success','Profil berhasil diubah');
+    }
+
+    public function alamat()
+    {
+        //$member = Member::all();
+        //return view('member.profil');
+        return view('member.alamat');
+    }
+
+    public function konfigurasiPesanan()
+    {
+        //$member = Member::all();
+        //return view('member.profil');
+        return view('member.konfigurasi_pesanan');
+    }
 }

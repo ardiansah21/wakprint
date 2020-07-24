@@ -36,15 +36,22 @@ Route::post('/users/fileupload/','HomeController@fileupload')->name('users.fileu
 
 // Sudah Auth
 
-Route::get('/profil', 'MemberController@profile')->name('profile'); 
+Route::get('/profil', 'MemberController@profile')->name('profile');  
 
 Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
 
 ///tempat nambah
+// Route::get('/profil/edit/{id}', 'MemberController@editProfile')->name('profile.edit');
+
+Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
+Route::post('/profil/edit','MemberController@updateDataProfile');
 
 
+Route::put('/profil/update','MemberController@updateDataProfile')->name('updateDataProfile');
 
+Route::get('/profil/alamat', 'MemberController@alamat')->name('alamat');
 
+Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
 
 //test upload
@@ -101,59 +108,59 @@ Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.
 //     return view('member.chat');
 // });
 
-Route::get('p', function () {
-    return view('pengelola.profil');
-});
+// Route::get('p', function () {
+//     return view('pengelola.profil');
+// });
 
 
 
-Route::get('masuk', function () {
-    return view('pengelola.login');
-});
+// Route::get('masuk', function () {
+//     return view('pengelola.login');
+// });
 
-Route::get('daftar', function () {
-    return view('pengelola.register');
-});
+// Route::get('daftar', function () {
+//     return view('pengelola.register');
+// });
 
-Route::get('pengelola', function () {
-    return view('pengelola.homepage');
-});
+// Route::get('pengelola', function () {
+//     return view('pengelola.homepage');
+// });
 
-Route::get('pengelola/chat', function () {
-    return view('pengelola.chat');
-});
+// Route::get('pengelola/chat', function () {
+//     return view('pengelola.chat');
+// });
 
-Route::get('pengelola/profil', function () {
-    return view('pengelola.profil');
-});
+// Route::get('pengelola/profil', function () {
+//     return view('pengelola.profil');
+// });
 
-Route::get('pesanan/detail', function () {
-    return view('pengelola.detail_pesanan_masuk');
-});
+// Route::get('pesanan/detail', function () {
+//     return view('pengelola.detail_pesanan_masuk');
+// });
 
-Route::get('profil/edit', function () {
-    return view('pengelola.edit_profil');
-});
+// Route::get('profil/edit', function () {
+//     return view('pengelola.edit_profil');
+// });
 
-Route::get('atk/tambah', function () {
-    return view('pengelola.tambah_atk');
-});
+// Route::get('atk/tambah', function () {
+//     return view('pengelola.tambah_atk');
+// });
 
-Route::get('produk/tambah', function () {
-    return view('pengelola.tambah_produk');
-});
+// Route::get('produk/tambah', function () {
+//     return view('pengelola.tambah_produk');
+// });
 
-Route::get('promo/tambah', function () {
-    return view('pengelola.tambah_promo');
-});
+// Route::get('promo/tambah', function () {
+//     return view('pengelola.tambah_promo');
+// });
 
-Route::get('admin/login', function () {
-    return view('admin.login');
-});
+// Route::get('admin/login', function () {
+//     return view('admin.login');
+// });
 
-Route::get('admin', function () {
-    return view('admin.homepage');
-});
+// Route::get('admin', function () {
+//     return view('admin.homepage');
+// });
 
 
 

@@ -70,7 +70,7 @@
                             </li>
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}" style="display: flex; align-items:center; font-weight:bold; font-size: 24px;">
-                                    <span class="text-primary-purple mr-2">{{Auth::user()->email}}</span>
+                                    <span class="text-primary-purple text-truncate mr-2" style="width: 250px;">{{Auth::user()->email}}</span>
                                     <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png" width="50" height="50" alt="no logo">
                                 </a>
                             </li>

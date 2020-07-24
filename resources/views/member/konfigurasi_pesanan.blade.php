@@ -1,7 +1,7 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="mt-5 mb-5">
+    <div class="container mt-5 mb-5">
         <label class="font-weight-bold"
             style="font-size:48px;">
             {{__('Konfigurasi Pesanan') }}

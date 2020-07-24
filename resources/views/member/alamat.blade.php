@@ -2,7 +2,7 @@
 @extends('layouts.member')
 
 @section('content')
-<div class="mt-4 mb-5">
+<div class="container mt-4 mb-5">
     <label class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Alamat Pengiriman')}}</label>
     <div class="mb-4">
         <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4" 
