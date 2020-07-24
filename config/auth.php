@@ -46,6 +46,16 @@ return [
             'provider' => 'members',
             'hash' => false,
         ],
+        'pengelola' => [
+            'driver' => 'session',
+            'provider' => 'pengelolas',
+        ],
+
+        'pengelolas-api' => [
+            'driver' => 'token',
+            'provider' => 'pengelolas',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -69,6 +79,10 @@ return [
         'members' => [
             'driver' => 'eloquent',
             'model' => App\Member::class,
+        ],
+        'pengelolas' => [
+            'driver' => 'eloquent',
+            'model' => App\Pengelola_Percetakan::class,
         ],
 
         // 'members' => [
@@ -95,6 +109,12 @@ return [
     'passwords' => [
         'members' => [
             'provider' => 'members',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'pengelolas' => [
+            'provider' => 'pengelolas',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

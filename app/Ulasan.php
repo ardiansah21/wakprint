@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ulasan extends Model
+class Ulasan extends Model
 {
     protected $table = "ulasan";
     //set nilai kolom db default

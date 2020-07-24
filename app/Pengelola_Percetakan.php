@@ -10,6 +10,8 @@ class Pengelola_Percetakan extends Authenticable
 {
     use Notifiable;
     protected $table = "pengelola_percetakan";
+    protected $primaryKey = 'id_pengelola';
+
     //set nilai kolom db default
     protected $attributes = [
         'rating_toko' => 5.0,
