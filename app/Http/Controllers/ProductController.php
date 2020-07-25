@@ -37,11 +37,17 @@ class ProductController extends Controller
         return redirect('/testjson');
     }
 
-    // public function update(UpdateProductRequest $request, Product $product)
-    // {
-    //     //$product = Product::find($id);
-    //     $product->update($request->all());
-    //     return redirect()->route('admin.products.index');
-    // }
+    public function updateShow($id)
+    {
+        $product = Product::find($id);
+        return view('testjsonedit',['product'=> $product]);
+    }
+
+    public function update($id, Request $request)
+    {
+        $product = Product::find($id);
+        $product->update($request->all());
+        return redirect('/testjson');
+    }
 
 }

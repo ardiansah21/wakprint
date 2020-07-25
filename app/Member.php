@@ -22,5 +22,6 @@ class Member extends Authenticable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'alamat' => 'array'
     ];
 }

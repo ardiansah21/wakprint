@@ -49,7 +49,9 @@ Route::post('/profil/edit','MemberController@updateDataProfile');
 
 Route::put('/profil/update','MemberController@updateDataProfile')->name('updateDataProfile');
 
-Route::get('/profil/alamat', 'MemberController@alamat')->name('alamat');
+Route::get('/alamat', 'MemberController@alamat')->name('alamat');
+Route::post('/alamat/update','MemberController@editAlamat')->name('alamat.edit');
+Route::post('/alamat/tambah','MemberController@tambahAlamat')->name('alamat.tambah');
 
 Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
@@ -57,175 +59,14 @@ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name(
 //test upload
 Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
 
-
-
-//
-// Route::get('masuk', function () {
-//     return view('member.auth.login');
-// });
-
-// Route::get('daftar', function () {
-//     return view('member.register');
-// });
-
-// Route::get('homepage', function () {
-//     return view('member.homepage');
-// });
-
-// Route::get('alamat', function () {
-//     return view('member.alamat');
-// });
-
-// Route::get('ulasan', function () {
-//     return view('member.ulasan');
-// });
-
-// Route::get('ulasan-saya', function () {
-//     return view('member.ulasan_saya');
-// });
-
-// Route::get('ulasan-produk', function () {
-//     return view('member.ulasan_produk_pengelola');
-// });
-
-// Route::get('ulas', function () {
-//     return view('member.ulas_produk');
-// });
-
-// Route::get('profil', function () {
-//     return view('member.profil');
-// });
-
-// Route::get('edit-profil', function () {
-//     return view('member.edit_profil');
-// });
-
-// Route::get('faq', function () {
-//     return view('member.faq');
-// });
-
-// Route::get('chat', function () {
-//     return view('member.chat');
-// });
-
-// Route::get('p', function () {
-//     return view('pengelola.profil');
-// });
-
-
-
-// Route::get('masuk', function () {
-//     return view('pengelola.login');
-// });
-
-// Route::get('daftar', function () {
-//     return view('pengelola.register');
-// });
-
-// Route::get('pengelola', function () {
-//     return view('pengelola.homepage');
-// });
-
-// Route::get('pengelola/chat', function () {
-//     return view('pengelola.chat');
-// });
-
-// Route::get('pengelola/profil', function () {
-//     return view('pengelola.profil');
-// });
-
-// Route::get('pesanan/detail', function () {
-//     return view('pengelola.detail_pesanan_masuk');
-// });
-
-// Route::get('profil/edit', function () {
-//     return view('pengelola.edit_profil');
-// });
-
-// Route::get('atk/tambah', function () {
-//     return view('pengelola.tambah_atk');
-// });
-
-// Route::get('produk/tambah', function () {
-//     return view('pengelola.tambah_produk');
-// });
-
-// Route::get('promo/tambah', function () {
-//     return view('pengelola.tambah_promo');
-// });
-
-// Route::get('admin/login', function () {
-//     return view('admin.login');
-// });
-
-// Route::get('admin', function () {
-//     return view('admin.homepage');
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //Route::get('member', 'MemberController@profil');
-
 // //tessjson
-// Route::get('/testjson', 'ProductController@index');
-// Route::get('/testjson/tambah', 'ProductController@tambah');
-// Route::post('/testjson/store','ProductController@store');
+Route::get('/testjson', 'ProductController@index');
+
+Route::get('/testjson/tambah/', 'ProductController@tambah');
+Route::post('/testjson/store','ProductController@store');
 
 
-
-
-// // Route::get('/', 'MemberController@index');
-// Route::get('/member/login', 'MemberController@login');
-// Route::get('/member/register', 'MemberController@register');
-// Route::get('/member/{id_member?}/profil', 'MemberController@profil');
-// Route::get('/member/{id_member?}/profil/edit', 'MemberController@profit_edit');
-// Route::get('/member/{id_member?}/profil/pesanan', 'MemberController@pesanan');
-// Route::get('/member/{id_member?}/profil/riwayat', 'MemberController@riwayat');
-// Route::get('/member/{id_member?}/profil/saldo', 'MemberController@saldo');
-// Route::get('/member/{id_member?}/profil/favorit', 'MemberController@favorit');
-// Route::get('/member/{id_member?}/profil/ulasan', 'MemberController@ulasan');
-// Route::get('/member/{id_member?}/profil/ulas', 'MemberController@ulas');
-
-
-// // '{{ url('/member/'.$member->id_member.'/konfigurasi-pesanan') }}'
-
-
-// //start
-// Auth::routes();
-// Route::get('/home', 'HomeController@index')->name('home'); 
+Route::get('/testjson/update/{id}', 'ProductController@updateShow');
+Route::post('/testjson/update/{id}', 'ProductController@update');
 
 

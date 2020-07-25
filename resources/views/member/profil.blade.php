@@ -191,6 +191,13 @@ $m = Auth::user();
                         </tbody>
                     </table>
                 </div>
+                <script>
+                    var msg = '{{Session::get('alert')}}';
+                    var exist = '{{Session::has('alert')}}';
+                    if(exist){
+                      alert(msg);
+                    }
+                  </script>
             </div>
             <div class="tab-pane fade ml-2 mr-0" id="v-pills-saldo" role="tabpanel">
                 @include('member.topup_saldo')

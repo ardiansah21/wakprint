@@ -38,7 +38,7 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill" href="#v-pills-saldo"
                         role="tab" aria-controls="v-pills-saldo" aria-selected="false" style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
-                        {{ __('Rp. 12.000') }}
+                        Rp. {{ $m->jumlah_saldo }}
                     </a>
                     <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
                         href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat" aria-selected="false"
@@ -177,40 +177,70 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <div class="form-group mb-3">
                         <label class="SemiBold mb-2" style="font-size: 24px;">{{ __('Password') }}</label>
                         <br>
-                        <label class="mb-2" style="font-size: 18px;">{{ __('Password Lama') }}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control pt-2 pb-2" placeholder="Masukkan Kata Sandi Lama"
-                                aria-label="Masukkan Kata Sandi Lama" aria-describedby="inputGroup-sizing-sm"
-                                style="font-size: 18px;">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
-                                    class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
+                        <label for="password" class="">{{ __('Password Lama') }}</label>
+                        <div class="input-group-append">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+                            <input id="current-password"
+                            type="password"
+                            class="form-control form-control-lg
+                            @error('password')
+                            is-invalid
+                            @enderror"
+                            name="current-password"
+                            autocomplete="current-password"
+                            placeholder="Masukkan Kata Sandi Lama">
+                            <span class="input-group-text bg-white"
+                                style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword" toggle="#password-field"
+                                    class="fa fa-fw fa-eye field_icon toggle-password">
+                                    </i>
+                                </span>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            
                         </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label class="mb-2" style="font-size: 18px;">{{ __('Password Baru') }}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control pt-2 pb-2" placeholder="Masukkan Kata Sandi Baru"
-                                aria-label="Masukkan Kata Sandi Baru" aria-describedby="inputGroup-sizing-sm"
-                                style="font-size: 18px;">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
+                    <div class="form-group">
+                        <label for="password" class="mb-2">{{__('Password Baru')}}</label>
+                        <div class="input-group mb-3">
+                            <input type="password"
+                            name="password"
+                            class="form-control form-control-lg"
+                            placeholder="Masukkan Kata Sandi Baru"
+                            data-toggle="password"
+                            autofocus>
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white"
+                                style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword" toggle="#password-field"
                                     class="fa fa-fw fa-eye field_icon toggle-password">
-                                </i>
-                            </span>
+                                    </i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group mb-5">
-                        <label class="mb-2" style="font-size: 18px;">{{ __('Konfirmasi Password Baru') }}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control pt-2 pb-2"
-                                placeholder="Konfirmasi Kata Sandi Baru" aria-label="Konfirmasi Kata Sandi Baru"
-                                aria-describedby="inputGroup-sizing-sm" style="font-size: 18px;">
-                            <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" toggle="#password-field"
-                                    class="fa fa-fw fa-eye field_icon toggle-password"></i>
-                            </span>
+                        <label for="confirm-password" class="mb-2">
+                            {{__('Konfirmasi Password Baru')}}
+                        </label>
+                        <div class="input-group mb-3">
+                            <input type="password"
+                            name="confirm-password"
+                            class="form-control form-control-lg"
+                            placeholder="Konfirmasi Kata Sandi Baru"
+                            data-toggle="password">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white" 
+                                style="border-radius: 0px 5px 5px 0px;">
+                                    <i id="togglePassword" 
+                                    toggle="#password-field"
+                                    class="fa fa-fw fa-eye field_icon toggle-password">
+                                    </i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group mb-5">
@@ -219,6 +249,13 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                             style="border-radius:30px; font-size: 24px;">
                     </div>
                 </form>
+                <script>
+                    var msg = '{{Session::get('alert')}}';
+                    var exist = '{{Session::has('alert')}}';
+                    if(exist){
+                      alert(msg);
+                    }
+                  </script>
                 {{-- @endforeach --}}
 
             </div>
