@@ -1,8 +1,10 @@
+{{-- isi popup tambah alamat --}}
 <div class="modal fade" id="alamatModal" tabindex="-1" role="dialog" aria-labelledby="alamatModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body">
-            <form action="" class="mb-3">
+        <form action="{{ route('alamat.tambah') }}" class="mb-3" method="POST">
+            {{ csrf_field() }}
                 <button class="close material-icons md-32" data-dismiss="modal">
                     close
                 </button>
@@ -12,32 +14,32 @@
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Nama Penerima')}}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nama Penerima" 
-                                aria-label="Masukkan Nama Penerima" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="alamat[{{ count(Auth::user()->alamat) }}][Nama Penerima]" class="form-control pt-2 pb-2" value=""
+                                placeholder="Masukkan Nama Penerima" aria-label="Masukkan Nama Penerima" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Nomor HP')}}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nomor HP Penerima" 
-                                aria-label="Masukkan Nomor HP Penerima" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="alamat[{{ count(Auth::user()->alamat) }}][Nomor HP]" class="form-control pt-2 pb-2" value=""
+                                placeholder="Masukkan Nomor HP Penerima" aria-label="Masukkan Nomor HP Penerima" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Provinsi')}}</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Provinsi" 
-                                aria-label="Masukkan Provinsi" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="provinsi" class="form-control pt-2 pb-2" value=""
+                                placeholder="Masukkan Provinsi" aria-label="Masukkan Provinsi" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Kabupaten / Kota')}}</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nama Kabupaten / Kota" 
-                                aria-label="Masukkan Nama Kabupaten / Kota" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="kota" class="form-control pt-2 pb-2" value=""
+                                placeholder="Masukkan Nama Kabupaten / Kota" aria-label="Masukkan Nama Kabupaten / Kota" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
@@ -46,31 +48,31 @@
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Kecamatan')}}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nama Kecamatan" 
-                                aria-label="Masukkan Nama Kecamatan" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="kecamatan" class="form-control pt-2 pb-2" value=""
+                                placeholder="Masukkan Nama Kecamatan" aria-label="Masukkan Nama Kecamatan" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Kelurahan')}}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Nama Kelurahan" 
-                                aria-label="Masukkan Nama Kelurahan" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="kelurahan" class="form-control pt-2 pb-2" value=""
+                                placeholder="Masukkan Nama Kelurahan" aria-label="Masukkan Nama Kelurahan" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Kode Pos')}}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control pt-2 pb-2" placeholder="Masukkan Kode Pos" 
-                                aria-label="Masukkan Kode Pos" aria-describedby="inputGroup-sizing-sm"
+                                <input type="text" name="kodepos" class="form-control pt-2 pb-2" value="" 
+                                placeholder="Masukkan Kode Pos" aria-label="Masukkan Kode Pos" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Alamat')}}</label>
                             <div class="input-group mb-3">
-                                <textarea class="form-control" aria-label="Alamat" style="font-size: 18px;"></textarea>
+                                <textarea class="form-control" type="text" name="alamatjalan" aria-label="Alamat" style="font-size: 18px;"></textarea>
                             </div>
                         </div>
                     </div>

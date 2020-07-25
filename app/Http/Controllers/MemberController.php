@@ -12,6 +12,8 @@ use imagick;
 use File;
 use Storage;
 use Response;
+use Validator;
+use Hash;
 
 class MemberController extends Controller
 {
@@ -213,54 +215,203 @@ class MemberController extends Controller
 
     public function profile()
     {
-        //$member = Member::all();
-        //return view('member.profil');
-        return view('member.profil');
+        //dd(getDateBorn());
+        return view('member.profil',['tanggalLahir'=>$this->getDateBorn()]);
+    }
+
+    public function credentialRules(array $data)
+    {
+        $messages = [
+            'current-password.required' => 'Please enter current password',
+            'password.required' => 'Please enter password',
+            'confirm-password.required' => 'Please confirm password',
+        ];
+
+        $validator = Validator::make($data, [
+            'current-password' => 'required',
+            'password' => 'required|same:password',
+            'confirm-password' => 'required|same:password',  
+        ], $messages);
+
+        return $validator;
+    }
+    // public function postCredentials(Request $request)
+    // {
+        
+    // }
+
+    public function getDateBorn()
+    {
+        if(empty(Auth::user()->tanggal_lahir)){
+            return "-";
+        }
+
+        else{
+            $monthName=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+            $date = Auth::user()->tanggal_lahir;
+            $tanggal = intval(substr($date,8,2));
+            $bulan = $monthName[intval(substr($date,5,2)-1)];
+            $tahun = substr($date,0,4);
+            return "$tanggal $bulan $tahun";
+        }
+        
     }
 
     public function profileEdit()
     {
         $member = Member::find(Auth::id())->get();
-        //$id = $member->id_member;
-        //$member = Member::find($id);
+        
         return view('member.edit_profil',['member'=>$member]);
     }
 
     public function updateDataProfile(Request $request){
-        //$member = Member::where('id_member',$request->id)->get();
-        //$member->nama_lengkap = $request->nama;
-        //$member->save();
-        // $member = Member::where('id_member',$request->id)->update([
-        //     'nama_lengkap' => $request->nama
-        // ]);
-        Member::find(Auth::id())->update([
-            'nama_lengkap' => $request->nama
-        ]);
-        // dd($request->nama);
-        //$member->save();
+        $date = $request->date;
+        $month = $request->month;
+        $year = $request->year;
 
-        // $member = DB::table('member')->where('id_member',$request->id)->update([
-        //     'id_member' => $request->id,
-        //     'nama_lengkap' => $request->nama,
-        //     'tanggal_lahir' => $request->ttl,
-        //     'jenis_kelamin' => $request->jk
-        // ]);
+        // $dateBorn = array(
+        //     'Tanggal' => $date,
+        //     'Bulan' => $month,
+        //     'Tahun' => $year,
+        // );
 
-        //return view('member.profil',['member' => $member]);
-        return redirect()->route('profile')->with('success','Profil berhasil diubah');
+        $dateBorn = date_create("$year-$month-$date");
+
+        if(empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))){
+            Member::find(Auth::id())->update([
+                'nama_lengkap' => $request->nama,
+                'jenis_kelamin' => $request->jk,
+                'tanggal_lahir' => $dateBorn
+            ]);
+            return redirect()->route('profile')->with('alert','Profil berhasil diubah');
+        }
+        else{
+            if(Auth::Check())
+            {
+                $request_data = $request->All();
+                $validator = $this->credentialRules($request_data);
+                if($validator->fails())
+                {
+                    //return response()->json(array('error' => $validator->getMessageBag()->toArray()), 400);
+    
+                    return redirect()->route('profile.edit')->with('alert', 'Ubah Password Gagal, Silahkan Periksa Kembali Password yang Anda Ubah');
+                }
+                else
+                {  
+                    $current_password = Auth::user()->password;         
+                    if(Hash::check($request_data['current-password'], $current_password))
+                    {           
+                        $member_id = Auth::user()->id_member;                       
+                        $member = Member::find($member_id);
+                        $member->update([
+                            'password' => Hash::make($request->password)
+                        ]);
+                        return redirect()->route('profile')->with('alert', 'Password telah berhasil diubah');
+                    }
+                    else
+                    {           
+                        // $error = array('current-password' => 'Please enter correct current password');
+                        // return response()->json(array('error' => $error), 400);
+
+                        return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
+                    }
+                }        
+            }
+            else
+            {   
+                Member::find(Auth::id())->update([
+                    'nama_lengkap' => $request->nama,
+                    'jenis_kelamin' => $request->jk,
+                    'tanggal_lahir' => $dateBorn
+                ]);
+                return redirect()->route('profile')->with('alert', 'Profil telah berhasil diubah');
+            }
+        }
     }
 
     public function alamat()
     {
+        //$member = Member::find(Auth::id())->get();
+        //$member = Member::find($id);
+        
         //$member = Member::all();
         //return view('member.profil');
-        return view('member.alamat');
+        //dd(count(Auth::user()->alamat));
+        return view('member.alamat',['member'=>Auth::user()]);
+    }
+
+    public function tambahAlamat(Request $request)
+    {
+
+        $member = Member::find(Auth::id());
+        
+        $namaPenerima = $request->namapenerima;
+        $nomorHP = $request->nomorhp;
+        $provinsi = $request->provinsi;
+        $kabKota = $request->kota;
+        $kecamatan = $request->kecamatan;
+        $kelurahan = $request->kelurahan;
+        $kodePos = $request->kodepos;
+        $alamatJalan = $request->alamatjalan;
+
+        
+        $alamat[] = array(
+            'Nama Penerima' => $request->namapenerima,
+            'Nomor HP' => $request->nomorhp,
+            'Provinsi' => $request->provinsi,
+            'Kabupaten Kota' => $request->kota,
+            'Kecamatan' => $request->kecamatan,
+            'Kelurahan' => $request->kelurahan,
+            'Kode Pos' => $request->kodepos,
+            'Alamat Jalan' => $request->alamatjalan
+        );
+
+        if(!$member->alamat==='[]'){
+            $count = count($member->alamat)+1;
+            $member->alamat[$count] = $alamat;
+            $member->save();    
+        }
+
+        else{
+            $member->alamat = $alamat; 
+            $member->save();
+        }
+        return redirect()->route('alamat');
+    }
+
+    public function editAlamat($id,Request $request)
+    {   
+        $member = Member::find($id);
+
+        $namaPenerima = $request->namapenerima;
+        $nomorHP = $request->nomorhp;
+        $provinsi = $request->provinsi;
+        $kabKota = $request->kota;
+        $kecamatan = $request->kecamatan;
+        $kelurahan = $request->kelurahan;
+        $kodePos = $request->kodepos;
+        $alamatJalan = $request->alamatjalan;
+
+        $alamat = array(
+            'Nama Penerima' => $request->namapenerima,
+            'Nomor HP' => $request->nomorhp,
+            'Provinsi' => $request->provinsi,
+            'Kabupaten Kota' => $request->kota,
+            'Kecamatan' => $request->kecamatan,
+            'Kelurahan' => $request->kelurahan,
+            'Kode Pos' => $request->kodepos,
+            'Alamat Jalan' => $request->alamatjalan
+        );
+
+        $member->update([
+            'alamat' => $alamat
+        ]);
+
+        return redirect()->to('alamat/'.$id);
     }
 
     public function konfigurasiPesanan()
     {
-        //$member = Member::all();
-        //return view('member.profil');
         return view('member.konfigurasi_pesanan');
     }
 }

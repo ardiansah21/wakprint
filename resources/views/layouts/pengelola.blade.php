@@ -44,7 +44,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a id="logo" class="navbar-brand wakprint" href="/" style="font-size: 24px;">{{ __('Wakprint') }}</a>
+                <a id="logo" class="navbar-brand wakprint" href="/partner" style="font-size: 24px;">{{ __('Wakprint') }}</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
                     data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -59,20 +59,21 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        
                     @guest
-                        @if (Route::has('register'))
-                            <li class="nav-i, i8tem">
-                                <a class="nav-link SemiBold text-primary-purple mr-4" href="{{route('partner.register')}}"
-                                    style="color:#BC41BE; font-size: 24px;">{{__('Daftar')}}</a>
-                            </li>
-                        @endif
+                        @if (Route::currentRouteName() == 'partner.login')
+                        <li class="nav-i, i8tem">
+                            <a class="nav-link SemiBold text-primary-purple mr-4" href="{{route('partner.register')}}"
+                                style="color:#BC41BE; font-size: 24px;">{{__('Daftar')}}</a>
+                        </li>
+                        @elseif(Route::currentRouteName() == 'partner.register')
                         <li class="nav-item">
                             <a class="nav-link btn btn-primary-wakprint btn-sm pt-2 pb-2 pl-5 pr-5 font-weight-bold"
                                 href="{{ route('partner.login') }}" style="border-radius:30px; font-size: 24px; color:white">
                                 {{ __('Masuk') }}
                             </a>
                         </li>
+                        @endif
+                        
                     @else
                         <li class="nav-item mr-2" style="display: flex; align-items:center;">
                             <a class="nav-link SemiBold" href="#"

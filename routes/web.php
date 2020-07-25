@@ -45,7 +45,10 @@ Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
 Route::post('/profil/edit','MemberController@updateDataProfile');
 
 
-Route::get('/profil/alamat', 'MemberController@alamat')->name('alamat');
+
+Route::get('/alamat', 'MemberController@alamat')->name('alamat');
+Route::post('/alamat/update','MemberController@editAlamat')->name('alamat.edit');
+Route::post('/alamat/tambah','MemberController@tambahAlamat')->name('alamat.tambah');
 
 Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
@@ -55,22 +58,7 @@ Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.
 
 
 
-
-
-
-//pengelola
-// Route::prefix('partner')->name('partner.')->group(function(){
-//     Route::get('/', function () {
-//         return view('pengelola.homepage');
-//     })->name('home');
-
-//     Route::get('login','Auth\PartnerLoginController@showLoginForm')->name('login');
-//     Route::post('login','Auth\PartnerLoginController@login');
-
-//     Route::get('register', 'PartnerLoginController@showRegisterPage')->name('register');
-//     Route::post('register', 'PartnerLoginController@register');
-// });
-
+//Pengelola percetakan
 Route::prefix('partner')->name('partner.')->group(function(){
 
     Route::get('login','Partner\Auth\LoginController@showLoginForm')->name('login');
@@ -88,81 +76,14 @@ Route::prefix('partner')->name('partner.')->group(function(){
 });
 
 
-
-// Route::get('pengelola/profil', function () {
-//     return view('pengelola.profil');
-// });
-
-// Route::get('pesanan/detail', function () {
-//     return view('pengelola.detail_pesanan_masuk');
-// });
-
-// Route::get('profil/edit', function () {
-//     return view('pengelola.edit_profil');
-// });
-
-// Route::get('atk/tambah', function () {
-//     return view('pengelola.tambah_atk');
-// });
-
-// Route::get('produk/tambah', function () {
-//     return view('pengelola.tambah_produk');
-// });
-
-// Route::get('promo/tambah', function () {
-//     return view('pengelola.tambah_promo');
-// });
-
-// Route::get('admin/login', function () {
-//     return view('admin.login');
-// });
-
-// Route::get('admin', function () {
-//     return view('admin.homepage');
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //Route::get('member', 'MemberController@profil');
-
 // //tessjson
-// Route::get('/testjson', 'ProductController@index');
-// Route::get('/testjson/tambah', 'ProductController@tambah');
-// Route::post('/testjson/store','ProductController@store');
+Route::get('/testjson', 'ProductController@index');
 
+Route::get('/testjson/tambah/', 'ProductController@tambah');
+Route::post('/testjson/store','ProductController@store');
+
+
+Route::get('/testjson/update/{id}', 'ProductController@updateShow');
+Route::post('/testjson/update/{id}', 'ProductController@update');
 
 

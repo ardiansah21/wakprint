@@ -17,7 +17,7 @@ class product extends Model
         $properties = [];
 
         foreach ($value as $array_item) {
-            if (!is_null($array_item['key'])) {
+            if (!is_null($array_item['desa'])) {
                 $properties[] = $array_item;
             }
         }

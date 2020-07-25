@@ -33,8 +33,11 @@
                     </td>
                     <td>
                         @foreach ($product->properties as $property)
-                            <b>{{ $property['key'] }}</b>: {{ $property['value'] }}<br />
+                            <b>{{ $property['desa'] }}</b>: {{ $property['kecamatan'] }}<br />
                         @endforeach
+                    </td>
+                    <td>
+                        <a href="/testjson/update/{{ $product->id }}">edit</a>
                     </td>
                 </tr>
             @endforeach
