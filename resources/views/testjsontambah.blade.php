@@ -35,19 +35,19 @@
             <label for="properties">Properties</label>
             <div class="row">
                 <div class="col-md-2">
-                    Key:
+                    Desa:
                 </div>
                 <div class="col-md-4">
-                    Value:
+                    Kecamatan:
                 </div>
             </div>
             @for ($i=0; $i <= 4; $i++)
             <div class="row">
                 <div class="col-md-2">
-                    <input type="text" name="properties[{{ $i }}][key]" class="form-control" value="{{ old('properties['.$i.'][key]') }}">
+                    <input type="text" name="properties[{{ $i }}][desa]" class="form-control" value="{{ old('properties['.$i.'][desa]') }}">
                 </div>
                 <div class="col-md-4">
-                    <input type="text" name="properties[{{ $i }}][value]" class="form-control" value="{{ old('properties['.$i.'][value]') }}">
+                    <input type="text" name="properties[{{ $i }}][kecamatan]" class="form-control" value="{{ old('properties['.$i.'][kecamatan]') }}">
                 </div>
             </div>
             @endfor

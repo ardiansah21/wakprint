@@ -1,8 +1,8 @@
 @auth
-    @php
-        $m = Auth::user();
-        $jenisKelamin = $m->jenis_kelamin;
-    @endphp
+@php
+$m = Auth::user();
+
+@endphp
 @endauth
 
 <!-- Menghubungkan dengan view template master -->
@@ -28,17 +28,9 @@
                 </div>
             </div>
             <div class="mt-3">
-                <div class="nav flex-column nav-pills"
-                    id="v-pills-tab"
-                    role="tablist"
-                    aria-orientation="vertical">
-                    <a class="nav-link SemiBold mb-4"
-                        id="v-pills-alamat-tab"
-                        data-toggle="link"
-                        href="{{ route('alamat') }}"
-                        role="tab"
-                        aria-controls="v-pills-alamat"
-                        aria-selected="true"
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" data-toggle="link"
+                        href="{{ route('alamat') }}" role="tab" aria-controls="v-pills-alamat" aria-selected="true"
                         style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">
                             location_on
@@ -48,7 +40,7 @@
                     <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill" href="#v-pills-saldo"
                         role="tab" aria-controls="v-pills-saldo" aria-selected="false" style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
-                        {{__('Rp. 12.000') }}
+                        Rp. {{ $m->jumlah_saldo }}
                     </a>
                     <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
                         href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat" aria-selected="false"
@@ -56,14 +48,9 @@
                         <i class="material-icons align-middle md-32 mr-2">history</i>
                         {{__('Riwayat Transaksi') }}
                     </a>
-                    <a class="nav-link SemiBold mb-2"
-                        id="v-pills-konfigurasi-tab"
-                        data-toggle="link"
-                        href="{{ route('konfigurasiPesanan') }}"
-                        role="tab"
-                        aria-controls="v-pills-konfigurasi"
-                        aria-selected="false"
-                        style="font-size: 24px;">
+                    <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab" data-toggle="link"
+                        href="{{ route('konfigurasiPesanan') }}" role="tab" aria-controls="v-pills-konfigurasi"
+                        aria-selected="false" style="font-size: 24px;">
                         <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
                         {{__('Konfigurasi File') }}
                     </a>
@@ -98,59 +85,68 @@
         </div>
         <div class="tab-content col-md-7">
             <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
-                <div class="row justify-content-between mb-2">
-                    <div class="col-md-auto">
-                        <h1 class="font-weight-bold" style="font-size: 48px;">{{__('Profil Saya') }}</h1>
+                <div class="row justify-content-between mb-2 ml-0 mr-0">
+                    <div class="">
+                        <label class="font-weight-bold" style="font-size: 48px;">
+                            {{__('Profil Saya') }}
+                        </label>
                     </div>
-                    <div class="col-md-auto my-auto">
-                        <a class="align-self-center text-right text-primary-purple"
-                            href="{{route('profile.edit')}}"
+                    <div class="my-auto">
+                        <a class="align-self-center text-right text-primary-purple" href="{{route('profile.edit')}}"
                             style="font-size: 18px;">
                             {{__('Ubah Profil') }}
                         </a>
                     </div>
                 </div>
-                <table class="table align-middle" style="font-size: 24px;">
-                    <tbody>
-                        <tr class=" mb-1">
-                            <td class="align-middle SemiBold">
+                <table class="table borderless align-middle" style="font-size: 24px;
+                    table-layout: fixed;
+                    word-wrap: break-word;
+                    border-collapse: separate;
+                    border-spacing: 0 0em;">
+                    <tbody class="ml-0 mr-0">
+                        <tr class="mb-0">
+                            <td class="SemiBold">
                                 {{__('Nama Lengkap') }}
                             </td>
                             <td>
                                 {{ $m->nama_lengkap }}
                             </td>
                         </tr>
-                        <tr class="mb-1">
+                        <tr>
                             <td class="SemiBold">
                                 {{__('Tanggal Lahir') }}
                             </td>
                             <td>
-                                {{__('21 Februari 1997') }}
+                                {{ $tanggalLahir }}
                             </td>
                         </tr>
-                        <tr class="mb-1">
+                        <tr>
                             <td class="SemiBold">
                                 {{__('Jenis Kelamin') }}
                             </td>
-                            <td @if ($jenisKelamin == null)
-                                    value="-"
+                            <td>
+                                @if ($m->jenis_kelamin === 'L')
+                                {{__('Laki-Laki') }}
+                                @elseif ($m->jenis_kelamin === 'P')
+                                {{__('Perempuan') }}
                                 @else{
-                                    value="{{$jenisKelamin}}"
+                                {{__('-') }}
                                 }
-                                @endif>
+                                @endif
                             </td>
                         </tr>
-                        <tr class="mb-1">
+                        <tr>
                             <td class="SemiBold">
                                 {{__('Email') }}
                             </td>
-                            <td>
-                                <a class="text-danger text-truncate" style="font-size: 24px;" href="#">{{ $m->email }}
-                                    <i class="fa fa-warning ml-2"></i>
+                            <td class="row justify-content-left text-danger ml-0">
+                                <a class="col-md-9 p-0 text-danger text-truncate" style="font-size: 24px;"
+                                    href="#">{{ $m->email }}
                                 </a>
+                                <i class="col-md-2 align-self-center fa fa-warning ml-2"></i>
                             </td>
                         </tr>
-                        <tr class="mb-1">
+                        <tr>
                             <td class="SemiBold">
                                 {{__('Nomor HP') }}
                             </td>
@@ -160,44 +156,6 @@
                         </tr>
                     </tbody>
                 </table>
-                {{-- <div class="row mb-5">
-                    <div class="col-md-5 ml-1">
-                        <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Nama Lengkap') }}</label>
-                        <br>
-                        <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Tanggal Lahir') }}</label>
-                        <br>
-                        <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Jenis Kelamin') }}</label>
-                        <br>
-                        <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Email') }}</label>
-                        <br>
-                        <label class="SemiBold mb-1" style="font-size: 24px;">{{__('Nomor HP') }}</label>
-                    </div>
-                    <div class="container col-md-6">
-
-                            <label class="mb-1" style="font-size: 24px;">{{ $m->nama_lengkap }}</label>
-                            <br>
-                            <label class="mb-1" style="font-size: 24px;">{{__('21 Februari 1997') }}</label>
-                            <br>
-                            <label class="mb-1" 
-                                @if ($jenisKelamin == null)
-                                    value="-"
-                                @else{
-                                    value="{{$jenisKelamin}}"
-                                }
-                                @endif
-                                style="font-size: 24px;">
-                                
-                            </label>
-                            <br>
-                            <a class="mb-1 text-danger text-truncate" style="font-size: 24px;" href="#">{{ $m->email }}
-                                <i class="fa fa-warning ml-2"></i>
-                            </a>
-                            <br>
-                            <label class="mb-1" style="font-size: 24px;">{{ $m->nomor_hp }}</label>
-                        
-
-                    </div>
-                </div> --}}
                 <h1 class="font-weight-bold mb-5 ml-2" style="font-size: 48px;">{{__('Konfigurasi Terakhir') }}</h1>
                 <div class="table-scrollbar mb-5 mr-0">
                     <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
@@ -233,6 +191,13 @@
                         </tbody>
                     </table>
                 </div>
+                <script>
+                    var msg = '{{Session::get('alert')}}';
+                    var exist = '{{Session::has('alert')}}';
+                    if(exist){
+                      alert(msg);
+                    }
+                  </script>
             </div>
             <div class="tab-pane fade ml-2 mr-0" id="v-pills-saldo" role="tabpanel">
                 @include('member.topup_saldo')

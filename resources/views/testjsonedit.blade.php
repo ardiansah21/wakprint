@@ -17,7 +17,7 @@
 <body>
 
     <br><br>
-    <form action="/testjson/store" method="POST">
+    <form action="/testjson/update/{{ $product->id }}" method="POST">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="name">Name</label>
@@ -53,21 +53,21 @@
             <label for="properties">Properties</label>
             <div class="row">
                 <div class="col-md-2">
-                    Key:
+                    Desa:
                 </div>
                 <div class="col-md-4">
-                    Value:
+                    Kecamatan:
                 </div>
             </div>
-            @for ($i=0; $i <= 4; $i++)
+            @for ($i=0; $i < count($product->properties); $i++)
                 <div class="row">
                     <div class="col-md-2">
-                        <input type="text" name="properties[{{ $i }}][key]" class="form-control"
-                          value="{{ $product->properties[$i]['key'] ?? '' }}">
+                        <input type="text" name="properties[{{ $i }}][desa]" class="form-control"
+                          value="{{ $product->properties[$i]['desa'] ?? '' }}">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="properties[{{ $i }}][value]" class="form-control"
-                          value="{{ $product->properties[$i]['value'] ?? '' }}">
+                        <input type="text" name="properties[{{ $i }}][kecamatan]" class="form-control"
+                          value="{{ $product->properties[$i]['kecamatan'] ?? '' }}">
                     </div>
                 </div>
             @endfor

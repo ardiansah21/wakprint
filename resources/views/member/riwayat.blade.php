@@ -1,6 +1,14 @@
 <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Riwayat Transaksi Saya') }}</h1>
 <div class="mb-4">
-    <div class="dropdown" style="font-size: 18px;">
+    <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="year" style="font-size: 18px;">
+        <option class="dropdown-item" value="">Terbaru</option>
+        <option value="">Harga Tertinggi</option>
+        <option value="">Harga Terendah</option>
+        <option value="">Saldo Masuk</option>
+        <option value="">Saldo Keluar</option>
+    </select>
+    
+    {{-- <div class="dropdown" style="font-size: 18px;">
         <button class="btn btn-default btn-lg shadow-sm dropdown-toggle border border-gray"
         id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
@@ -13,7 +21,7 @@
             <a class="dropdown-item" href="#">{{__('Tinggi ke Rendah') }}</a>
             <a class="dropdown-item" href="#">{{__('Rendah ke Tinggi') }}</a>
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="table-scrollbar mb-5 ml-1">
     <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
