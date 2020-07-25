@@ -110,12 +110,16 @@
                         href="#v-pills-keluar"
                         role="tab"
                         aria-controls="v-pills-keluar"
-                        aria-selected="true">
+                        aria-selected="true"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="material-icons text-primary-danger md-36 align-middle mr-2">
                             exit_to_app
                         </i>
                         {{__('Keluar')}}
                     </a>
+                    <form id="logout-form" action="{{ route('partner.logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
             </div>
             <div class="tab-content col-md-8">

@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 
 class Pengelola_Percetakan extends Authenticable
 {
     use Notifiable;
+ 
     protected $table = "pengelola_percetakan";
     protected $primaryKey = 'id_pengelola';
 
@@ -16,10 +16,8 @@ class Pengelola_Percetakan extends Authenticable
     protected $attributes = [
         'rating_toko' => 5.0,
      ];
-
-
-     protected $guard = 'pengelola';
-     protected $guarded = ['id_pengelola', 'created_at', 'updated_at'];
+    //  protected $guard = 'partner';
+     protected $guarded = [];
  
      protected $hidden = ['password','remember_token'];
 

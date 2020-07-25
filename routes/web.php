@@ -3,6 +3,7 @@
 use App\Http\Controllers\KonFileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\StoreProductRequest;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,14 +59,33 @@ Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.
 
 
 //pengelola
+// Route::prefix('partner')->name('partner.')->group(function(){
+//     Route::get('/', function () {
+//         return view('pengelola.homepage');
+//     })->name('home');
+
+//     Route::get('login','Auth\PartnerLoginController@showLoginForm')->name('login');
+//     Route::post('login','Auth\PartnerLoginController@login');
+
+//     Route::get('register', 'PartnerLoginController@showRegisterPage')->name('register');
+//     Route::post('register', 'PartnerLoginController@register');
+// });
+
 Route::prefix('partner')->name('partner.')->group(function(){
-    Route::get('/', function () {
-        return view('pengelola.homepage');
-    })->name('home');
+
+    Route::get('login','Partner\Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login','Partner\Auth\LoginController@login');
+    Route::post('logout', 'Partner\Auth\LoginController@logout')->name('logout');
+
+    Route::get('register', 'Partner\Auth\RegisterController@showRegisterPage')->name('register');
+    Route::post('register', 'Partner\Auth\RegisterController@register');
+
+    Route::middleware('auth:partner')->group(function(){
+        Route::get('/','PartnerController@index')->name('home');
+    });
+
+
 });
-
-
-
 
 
 

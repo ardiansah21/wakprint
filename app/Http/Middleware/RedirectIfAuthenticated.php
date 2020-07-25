@@ -31,8 +31,24 @@ class RedirectIfAuthenticated
         //         break;
         // }
 
-        if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+
+
+        // if (Auth::guard($guard)->check()) {
+        //     return redirect(RouteServiceProvider::HOME);
+        // }
+
+        switch ($guard) {
+            case 'partner':
+                if (Auth::guard($guard)->check()) {
+                    return redirect('/partner');
+                }
+                break;
+
+            default:
+                if (Auth::guard($guard)->check()) {
+                    return redirect('/');
+                }
+                break;
         }
 
         return $next($request);
