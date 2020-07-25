@@ -56,7 +56,11 @@ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name(
 //test upload
 Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
 
+// //tessjson
+Route::get('/testjson', 'ProductController@index');
 
+Route::get('/testjson/tambah/', 'ProductController@tambah');
+Route::post('/testjson/store','ProductController@store');
 
 //Pengelola percetakan
 Route::prefix('partner')->name('partner.')->group(function(){
