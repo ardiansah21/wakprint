@@ -213,9 +213,19 @@ class MemberController extends Controller
 
     public function profile()
     {
-        //$member = Member::all();
-        //return view('member.profil');
-        return view('member.profil');
+        return view('member.profil',['tanggalLahir'=>$this->getDateBorn()]);
+    }
+
+    public function getDateBorn()
+    {
+        $monthName=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+        $date = Auth::user()->tanggal_lahir;
+        $tanggal = intval(substr($date,8,2));
+        $bulan = $monthName[intval(substr($date,5,2))-1];
+        $tahun = substr($date,0,4);
+
+        return "$tanggal $bulan $tahun";
+        
     }
 
     public function profileEdit()
@@ -227,26 +237,23 @@ class MemberController extends Controller
     }
 
     public function updateDataProfile(Request $request){
-        //$member = Member::where('id_member',$request->id)->get();
-        //$member->nama_lengkap = $request->nama;
-        //$member->save();
-        // $member = Member::where('id_member',$request->id)->update([
-        //     'nama_lengkap' => $request->nama
-        // ]);
+        $date = $request->date;
+        $month = $request->month;
+        $year = $request->year;
+
+        // $dateBorn = array(
+        //     'Tanggal' => $date,
+        //     'Bulan' => $month,
+        //     'Tahun' => $year,
+        // );
+
+        $dateBorn = date_create("$year-$month-$date");
+        //dd($dateBorn);
         Member::find(Auth::id())->update([
-            'nama_lengkap' => $request->nama
+            'nama_lengkap' => $request->nama,
+            'jenis_kelamin' => $request->jk,
+            'tanggal_lahir' => $dateBorn
         ]);
-        // dd($request->nama);
-        //$member->save();
-
-        // $member = DB::table('member')->where('id_member',$request->id)->update([
-        //     'id_member' => $request->id,
-        //     'nama_lengkap' => $request->nama,
-        //     'tanggal_lahir' => $request->ttl,
-        //     'jenis_kelamin' => $request->jk
-        // ]);
-
-        //return view('member.profil',['member' => $member]);
         return redirect()->route('profile')->with('success','Profil berhasil diubah');
     }
 
