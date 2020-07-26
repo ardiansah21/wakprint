@@ -345,17 +345,21 @@ class MemberController extends Controller
 
         $member = Member::find(Auth::id());
         
-        $namaPenerima = $request->namapenerima;
-        $nomorHP = $request->nomorhp;
-        $provinsi = $request->provinsi;
-        $kabKota = $request->kota;
-        $kecamatan = $request->kecamatan;
-        $kelurahan = $request->kelurahan;
-        $kodePos = $request->kodepos;
-        $alamatJalan = $request->alamatjalan;
-
+        $alamatLama = $member->alamat;
         
-        $alamat[] = array(
+        if(empty($alamatLama)){
+            $alamatLama = array(
+                'IdAlamatUtama' => 0,
+                'alamat'=>array()
+            );
+            $id=0;
+        }
+        else{
+            $id = count($alamatLama['alamat']);
+        }
+        
+        $alamatBaru[] = array(
+            'id'=> $id,
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
@@ -364,18 +368,32 @@ class MemberController extends Controller
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
             'Alamat Jalan' => $request->alamatjalan
-        );
+        );        
+        
+        $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
+        $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'],$alamatBaru);
 
-        if(!$member->alamat==='[]'){
-            $count = count($member->alamat)+1;
-            $member->alamat[$count] = $alamat;
-            $member->save();    
-        }
+        //dd(json_encode($AlamatFinal));
+        $member->alamat = $AlamatFinal;
+        $member->save();
+    
+        // dd($member->alamat['IdAlamatUtama']);
+        
+        // //tampilan
+        // for($i=0 ; $i < count($alamatLama['alamat'])-1;i++ ){
+        //     if($member->alamat['IdAlamatUtama']==$i){
+        //         div aktif
+        //     }
+        //     else{
+        //         div biasa
+        //     }
+        // }
+        // //ubah alat utama
+        // $member->alamat['IdAlamatUtama'] = 2
+        // $member->save();
+        // return view('/alamat');
 
-        else{
-            $member->alamat = $alamat; 
-            $member->save();
-        }
+        // dd(json_encode($member->alamat));
         return redirect()->route('alamat');
     }
 
