@@ -46,9 +46,9 @@ Route::post('/profil/edit','MemberController@updateDataProfile');
 
 
 
-Route::get('/alamat', 'MemberController@alamat')->name('alamat');
-Route::post('/alamat/update','MemberController@editAlamat')->name('alamat.edit');
-Route::post('/alamat/tambah','MemberController@tambahAlamat')->name('alamat.tambah');
+Route::get('profil/alamat', 'MemberController@alamat')->name('alamat');
+Route::post('profil/alamat/update','MemberController@editAlamat')->name('alamat.edit');
+Route::post('profil/alamat/tambah','MemberController@tambahAlamat')->name('alamat.tambah');
 
 Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 

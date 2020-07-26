@@ -14,7 +14,7 @@
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Nama Penerima')}}</label>
                             <div class="input-group">
-                                <input type="text" name="alamat[{{ count(Auth::user()->alamat) }}][Nama Penerima]" class="form-control pt-2 pb-2" value=""
+                                <input type="text" name="namapenerima" class="form-control pt-2 pb-2" value=""
                                 placeholder="Masukkan Nama Penerima" aria-label="Masukkan Nama Penerima" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
@@ -22,7 +22,7 @@
                         <div class="form-group mb-3">
                             <label class="font-weight-bold mb-2" style="font-size: 18px;">{{__('Nomor HP')}}</label>
                             <div class="input-group">
-                                <input type="text" name="alamat[{{ count(Auth::user()->alamat) }}][Nomor HP]" class="form-control pt-2 pb-2" value=""
+                                <input type="text" name="nomorhp" class="form-control pt-2 pb-2" value=""
                                 placeholder="Masukkan Nomor HP Penerima" aria-label="Masukkan Nomor HP Penerima" aria-describedby="inputGroup-sizing-sm"
                                 style="font-size: 18px;">
                             </div>
