@@ -15,6 +15,7 @@ class Pengelola_Percetakan extends Authenticable
     //set nilai kolom db default
     protected $attributes = [
         'rating_toko' => 5.0,
+        'status_toko' => 'Buka'
      ];
     //  protected $guard = 'partner';
      protected $guarded = [];

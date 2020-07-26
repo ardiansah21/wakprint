@@ -48,9 +48,14 @@
                     <input required 
                     type="password"
                     name="confirm-password"
-                    class="form-control form-control-lg"
+                    class="form-control form-control-lg {{ $errors->has('confirm-password') ? ' is-invalid' : '' }}"
                     placeholder="Konfirmasi Kata Sandi"
                     data-toggle="password">
+                    @if ($errors->has('confirm-password'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('confirm-password') }}</strong>
+                        </span>
+                    @endif
                     <div class="input-group-append">
                         <span class="input-group-text bg-white" 
                         style="border-radius: 0px 5px 5px 0px;">
@@ -96,7 +101,7 @@
             <label class="row justify-content-center mb-4"
             style="font-size: 18px;">
                 {{__('Sudah punya akun ?')}}
-                <a class="text-primary-purple ml-2" href="">
+                <a class="text-primary-purple ml-2" href="{{ route('login') }}">
                     {{__('Masuk')}}
                 </a>
             </label>
