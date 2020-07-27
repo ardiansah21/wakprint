@@ -62,6 +62,16 @@ Route::get('/testjson', 'ProductController@index');
 Route::get('/testjson/tambah/', 'ProductController@tambah');
 Route::post('/testjson/store','ProductController@store');
 
+
+
+
+
+
+
+
+
+
+
 //Pengelola percetakan
 Route::prefix('partner')->name('partner.')->group(function(){
 
@@ -73,11 +83,23 @@ Route::prefix('partner')->name('partner.')->group(function(){
     Route::post('register', 'Partner\Auth\RegisterController@register');
 
     Route::middleware('auth:partner')->group(function(){
-        Route::get('/','PartnerController@index')->name('home');
+        Route::get('/','PartnerController@index')->name('home');    
     });
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // //tessjson

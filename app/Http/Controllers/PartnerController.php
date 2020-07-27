@@ -9,7 +9,6 @@ class PartnerController extends Controller
 {
     public function index()
     {
-        
         return view('pengelola.homepage');
     }
 
