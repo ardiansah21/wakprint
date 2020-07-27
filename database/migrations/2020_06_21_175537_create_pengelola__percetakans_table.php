@@ -32,7 +32,7 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->string('nama_toko',150);
             $table->text('deskripsi_toko')->nullable();
             $table->json('alamat_toko');
-            $table->string('url_google_maps');
+            $table->string('url_google_maps')->nullable();
             $table->enum('status_toko',['Buka','Tutup']);
             $table->decimal('rating_toko',2,1);
             $table->time('jam_op_buka')->nullable();

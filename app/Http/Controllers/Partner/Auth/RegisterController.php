@@ -48,7 +48,7 @@ class RegisterController extends Controller
 
     public function showRegisterPage()
     {
-        return view('pengelola.register');
+            return view('pengelola.register');
     }
 
     /**
@@ -63,6 +63,13 @@ class RegisterController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:pengelola_percetakan'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => 'required|same:password',
+            'nomor_hp' => ['required', 'string', 'min:11', 'max:12', 'unique:pengelola_percetakan'],
+            'nama_bank' => ['required', 'string', 'max:100'],
+            'nomor_rekening' => ['required', 'string', 'max:20'],
+            'nama_toko' => ['required', 'string', 'max:150'],
+            'deskripsi_toko' => ['required', 'string', 'max:255'],
+            'alamat_toko' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -78,22 +85,13 @@ class RegisterController extends Controller
             'nama_lengkap' => $data['nama'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'nomor_hp' => "asdasd",
-            'nama_bank' => "tes",
-            'nomor_rekening' => "tes",
-            'nama_toko' => "tes",
-            'alamat_toko' => json_encode("tess"),
-            'url_google_maps' => "tes",
-            'status_toko' => 'Buka',
-            'url_google_maps' => "tes",
-            'url_google_maps' => "tes",
+            'nomor_hp' => $data['nomor_hp'],
+            'nama_bank' => $data['nama_bank'],
+            'nomor_rekening' => $data['nomor_rekening'],
+            'nama_toko' => $data['nama_toko'],
+            'deskripsi_toko' => $data['deskripsi_toko'],
+            'alamat_toko' => json_encode($data['alamat_toko'])
         ]);
-
-        // return User::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($data['password']),
-        // ]);
     }
 
     protected function guard() 
@@ -101,20 +99,16 @@ class RegisterController extends Controller
         return Auth::guard('partner');
     }
 
-    // public function register(Request $request)
-    // {
-    //     $this->validator($request->all())->validate();
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
 
-    //     event(new Registered($partner = $this->create($request->all())));
+        event(new Registered($partner = $this->create($request->all())));
 
-    //     $this->guard()->login($partner);
+        $this->guard()->login($partner);
         
-    //     // if ($response = $this->registered($request, $user)) {
-    //     //     return $response;
-    //     // }
-
-    //     return $request->wantsJson()
-    //                 ? new Response('', 201)
-    //                 : redirect($this->redirectPath());
-    // }
+        return $request->wantsJson()
+                    ? new Response('', 201)
+                    : redirect($this->redirectPath());
+    }
 }

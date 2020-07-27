@@ -1,7 +1,7 @@
 @extends('layouts.pengelola')
 
 
-@section('content')
+{{-- @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -75,9 +75,9 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}
 
-{{-- @section('content')
+@section('content')
     <div class="container">
         <div class="card shadow col-md-6 mx-auto pt-4 pl-4 pr-4 mt-5 mb-5"
             style="border-radius: 10px;">
@@ -86,9 +86,9 @@
                 {{__('Daftar')}}
             </label>
             <form method="POST"
-                action="{{ route('register') }}"
+                action="{{ route('partner.register') }}"
                 style="font-size: 16px;">
-                {{ csrf_field() }}
+                @csrf
                 <div class="form-group">
                     <label for="nama"
                         class="mb-2">
@@ -97,19 +97,17 @@
                     <br>
                     <input id="nama"
                         type="text"
-                        class="form-control form-control-lg @error('nama') is-invalid @enderror" 
+                        class="form-control form-control-lg {{ $errors->has('nama') ? ' is-invalid' : '' }}" 
                         placeholder="Masukkan Nama Lengkap Anda"
                         name="nama"
                         value="{{ old('nama') }}"
-                        required
                         autocomplete="nama"
                         autofocus>
-                    @error('nama')
-                    <span class="invalid-feedback"
-                        role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    @if ($errors->has('nama'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('nama') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="email"
@@ -118,17 +116,16 @@
                     </label>
                     <input id="email"
                         type="email"
-                        class="form-control form-control-lg @error('email') is-invalid @enderror"
+                        class="form-control form-control-lg {{ $errors->has('email') ? ' is-invalid' : '' }}"
                         name="email"
                         value="{{ old('email') }}"
-                        required autocomplete="email"
+                        autocomplete="email"
                         placeholder="Masukkan Email Anda">
-                    @error('email')
-                    <span class="invalid-feedback"
-                        role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="nomor_hp"
@@ -137,103 +134,121 @@
                     </label>
                     <input id="nomor_hp"
                         type="nomor_hp"
-                        class="form-control form-control-lg @error('nomor_hp') is-invalid @enderror" 
+                        class="form-control form-control-lg {{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" 
                         name="nomor_hp"
-                        value="{{ old('nomor_hp') }}" 
-                        required 
+                        value="{{ old('nomor_hp') }}"
                         autocomplete="nomor_hp"
                         placeholder="Masukkan Nomor HP Anda">
-                        @error('nomor_hp')
-                        <span class="invalid-feedback"
-                            role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        @if ($errors->has('nomor_hp'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('nomor_hp') }}</strong>
+                            </span>
+                        @endif
                 </div>
-                <div class="form-group row justify-content-between mb-0">
-                    <div class="col-md-5">
-                        <label for="namaBank"
+                <div class="row justify-content-between mb-0">
+                    <div class="form-group col-md-5">
+                        <label for="nama_bank"
                             class="mb-2">
                             {{__('Nama Bank')}}
-                        </label> 
-                        <div id="namaBank"
-                            class="dropdown">
-                            <button class="btn btn-default btn-lg dropdown-toggle border border-gray pl-3 pr-3"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-required="true"
-                                aria-haspopup="true"
-                                aria-expanded="false">
-                                {{__('Pilih Nama Bank')}}
-                            </button>
-                            <div class="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item"
-                                    href="#">
+                        </label>
+                        <select id="nama_bank" class="btn btn-default dropdown dropdown-toggle custom-select select border border-gray {{ $errors->has('nama_bank') ? ' is-invalid' : '' }}"
+                            name="nama_bank" style="font-size: 18px;">
+                            {{-- @for($date = 1; $date < 32; $date++)  --}}
+                                <option value="BRI">
                                     {{__('BRI')}}
-                                </a>
-                                <a class="dropdown-item"
-                                    href="#">
+                                </option>
+                                <option value="BNI">
                                     {{__('BNI')}}
-                                </a>
-                                <a class="dropdown-item"
-                                    href="#">
-                                    {{__('CIMB Niaga')}}
-                                </a>
-                            </div>
-                        </div>
+                                </option>
+                                <option value="Mandiri">
+                                    {{__('Mandiri')}}
+                                </option>
+                                <option value="BCA">
+                                    {{__('BCA')}}
+                                </option>
+                            {{-- @endfor --}}
+                        </select>
+                        @if ($errors->has('nama_bank'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('nama_bank') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="col-md-7">
-                        <label for="nomor-rekening"
+                    <div class="form-group col-md-7">
+                        <label for="nomor_rekening"
                             class="mb-2">
                             {{__('Nomor Rekening')}}
                         </label> 
-                        <div class="mb-3">
-                            <input id="nomor-rekening"
+                        <input id="nomor_rekening"
                                 type="text"
-                                class="form-control form-control-lg"
+                                name="nomor_rekening"
+                                value="{{ old('nomor_rekening') }}" 
+                                class="form-control form-control-lg {{ $errors->has('nomor_rekening') ? ' is-invalid' : '' }}"
                                 placeholder="Masukkan Nomor Rekening Anda"
-                                required>
-                        </div>
+                                >
+                            @if ($errors->has('nomor_rekening'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('nomor_rekening') }}</strong>
+                                </span>
+                            @endif
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="nama-percetakan"
+                    <label for="nama_toko"
                         class="mb-2">
                         {{__('Nama Tempat Percetakan')}}
                     </label> 
                     <div class="mb-3">
-                        <input id="nama-percetakan"
+                        <input id="nama_toko"
                             type="text"
-                            class="form-control form-control-lg"
+                            name="nama_toko"
+                            value="{{ old('nama_toko') }}" 
+                            class="form-control form-control-lg {{ $errors->has('nama_toko') ? ' is-invalid' : '' }}"
                             placeholder="Masukkan Nama Tempat Percetakan Anda"
-                            required>
+                            >
+                        @if ($errors->has('nama_toko'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('nama_toko') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="deskripsi-percetakan"
+                    <label for="deskripsi_toko"
                         class="mb-2">
                         {{__('Deskripsi Tempat Percetakan')}}
                     </label> 
                     <div class="mb-3">
-                        <textarea id="deskripsi-percetakan"
+                        <textarea id="deskripsi_toko"
                             type="text"
+                            name="deskripsi_toko" 
+                            class="form-control form-control-lg {{ $errors->has('deskripsi_toko') ? ' is-invalid' : '' }}"
                             placeholder="Masukkan Deskripsi Percetakan Anda"
-                            class="form-control form-control-lg"
-                            required></textarea>
+                            >{{ old('deskripsi_toko') }}</textarea>
+                        @if ($errors->has('deskripsi_toko'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('deskripsi_toko') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="alamat-percetakan"
+                    <label for="alamat_percetakan"
                         class="mb-2">
                         {{__('Alamat Tempat Percetakan')}}
                     </label> 
                     <div class="mb-3">
-                        <textarea id="alamat-percetakan"
+                        <textarea id="alamat_toko"
                             type="text"
+                            name="alamat_toko"
+                            class="form-control form-control-lg {{ $errors->has('alamat_toko') ? ' is-invalid' : '' }}"
                             placeholder="Masukkan Alamat Percetakan Anda"
-                            class="form-control form-control-lg"
-                            required></textarea>
+                            >{{ old('alamat_toko') }}</textarea>
+                        @if ($errors->has('alamat_toko'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('alamat_toko') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group">
@@ -242,19 +257,17 @@
                     <div class="input-group mb-3">
                         <input id="password"
                             type="password"
-                            class="form-control form-control-lg 
-                            @error('password') is-invalid 
-                            @enderror" 
+                            class="form-control form-control-lg {{ $errors->has('password') ? ' is-invalid' : '' }}" 
                             name="password"
-                            required 
+                            
                             autocomplete="new-password"
                             data-toggle="password"
                             placeholder="Masukkan Kata Sandi">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            @if ($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                            @endif
                         <div class="input-group-append">
                             <span class="input-group-text bg-white"
                                 style="border-radius: 0px 5px 5px 0px;">
@@ -267,19 +280,24 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password-confirm"
+                    <label for="password_confirmation"
                         class="mb-2">
                         {{__('Konfirmasi Password')}}
                     </label>
                     <div class="input-group mb-3">
-                        <input id="password-confirm" 
-                            required
+                        <input id="password_confirmation" 
+                            
                             type="password"
                             name="password_confirmation"
-                            class="form-control form-control-lg"
+                            class="form-control form-control-lg {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                             placeholder="Konfirmasi Kata Sandi"
                             data-toggle="password"
                             autocomplete="new-password">
+                            @if ($errors->has('password_confirmation'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                            @endif
                             <div class="input-group-append">
                                 <span class="input-group-text bg-white"
                                     style="border-radius: 0px 5px 5px 0px;">
@@ -297,7 +315,7 @@
                             type="checkbox"
                             name="termsCheck"
                             class="form-check-input custom-control-input"
-                            required
+                            
                             autofocus>
                         <label for="termsCheck"
                             class="form-check-label custom-control-label"
@@ -317,11 +335,11 @@
                     style="font-size: 14px;">
                     {{__('Sudah punya akun ?')}}
                     <a class="text-primary-purple ml-2"
-                        href="">
+                        href="{{route('partner.login')}}">
                         {{__('Masuk')}}
                     </a>
                 </label>
             </form>
         </div>
     </div>
-@endsection --}}
+@endsection

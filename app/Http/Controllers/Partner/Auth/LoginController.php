@@ -37,7 +37,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:partner')->except('logout');
+        $this->middleware('guest')->except('logout');
     }
     
     public function showLoginForm() //Go web.php then you will find this route
