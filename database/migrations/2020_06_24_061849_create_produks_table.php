@@ -24,9 +24,9 @@ class CreateProduksTable extends Migration
             $table->boolean('hitam_putih');
             $table->text('deskripsi')->nullable();
             $table->enum('jenis_kertas',['A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr', 'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LeterHVS80gr']);
-            $table->enum('jenis_printer',['InkJet','LaserJet']);
+            $table->enum('jenis_printer',['Ink Jet','Laser Jet']);
             $table->decimal('rating',2,1);
-            $table->enum('status',['Tersedia','TidakTersedia'])->default('TidakTersedia');
+            $table->enum('status',['Tersedia','TidakTersedia'])->default('Tersedia');
             $table->string('foto_produk')->nullable();
             $table->json('fitur')->default(new Expression('(JSON_ARRAY())'))->nullable();
             $table->enum('status_diskon',['Tersedia','TidakTersedia'])->default('TidakTersedia');

@@ -83,11 +83,15 @@ Route::prefix('partner')->name('partner.')->group(function(){
     Route::post('register', 'Partner\Auth\RegisterController@register');
 
     Route::middleware('auth:partner')->group(function(){
-        Route::get('/','PartnerController@index')->name('home');    
+        Route::get('/','PartnerController@index')->name('home');
+        Route::get('/produk/tambah','PartnerController@produkTambah')->name('produk.tambah');
+        Route::post('/produk/tambah','PartnerController@produkTambahStore');
     });
 
 
 });
+Route::redirect('partner/promo','/partner');
+Route::redirect('partner/produk','/partner#v-pills-produk');
 
 
 
