@@ -84,18 +84,20 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <label
                         style="font-size: 18px;">{{ __('Kelola informasi pribadi kamu untuk mengobrol, melindungi, dan mengamankan akun') }}</label>
                 </div>
-                <div class="mb-4" style="position: relative; width: 100%;">
-                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                <div class="form-group mb-4" style="position: relative; width: 100%;">
+                    
+                    <input type="file" class="form-control-file" name="photoprofile" id="photoProfileFile" aria-describedby="fileHelp">
+                    <img src=""
                         class="img-responsive shadow-sm justify-content-center align-self-center center-block" alt=""
                         width="120px" height="120px" style="border-radius:8px 8px 8px 8px;">
-                    <i class="bg-light-purple material-icons" style="border-radius:3px;
-                                            position: absolute;
-                                            top: 55%; left:14%;
-                                            transform: translate(-20%, 100%); 
-                                            opacity:90%;
-                                            color: #BC41BE;">
+                    <a href="" class="bg-light-purple material-icons text-decorations-none" style="border-radius:3px;
+                        position: absolute;
+                        top: 55%; left:14%;
+                        transform: translate(-20%, 100%); 
+                        opacity:90%;
+                        color: #BC41BE;">
                         edit
-                    </i>
+                    </a>
                 </div>
 
                 {{-- @foreach($member as $t)

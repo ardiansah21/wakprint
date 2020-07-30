@@ -110,12 +110,16 @@
                     href="#v-pills-keluar"
                     role="tab"
                     aria-controls="v-pills-keluar"
-                    aria-selected="true">
+                    aria-selected="true"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="material-icons text-primary-danger md-36 align-middle mr-2">
                         exit_to_app
                     </i>
                     {{__('Keluar')}}
                 </a>
+                <form id="logout-form" action="{{ route('partner.logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
             </div>
         </div>
         <div class="tab-content col-md-8">
@@ -220,15 +224,15 @@
                     display: flex;">
                     <label class="font-weight-bold mb-5 ml-2"
                         style="font-size: 24px;">
-                        {{__('Percetakan IMAHA Productions')}}
+                        {{$partner->nama_toko}}
                     </label>
                     <div class="">
-                        <button class="btn btn-outline-yellow font-weight-bold pl-4 pr-4"
+                        <a href="{{ route('partner.profile.edit') }}" class="btn btn-outline-yellow font-weight-bold pl-4 pr-4"
                         style="border-radius:30px;
                             font-size: 16px;
                             float:right;">
                             {{__('Ubah Profil')}}
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="table-scrollbar"
@@ -238,7 +242,7 @@
                             {{__('Nama Pemilik')}}
                         </label>
                         <label class="col-8 SemiBold ml-0">
-                            {{__('Wayne Rooney')}}
+                            {{$partner->nama_lengkap}}
                         </label>
                     </div>
                     <div class="row justify-content-left mb-0">
@@ -246,7 +250,7 @@
                             {{__('Nomor HP')}}
                         </label>
                         <label class="col-8 SemiBold ml-0">
-                            {{__('+628314567382')}}
+                            {{$partner->nomor_hp}}
                         </label>
                     </div>
                     <div class="row justify-content-left mb-0">
@@ -254,7 +258,7 @@
                             {{__('Nama Bank')}}
                         </label>
                         <label class="col-8 SemiBold ml-0">
-                            {{__('BRI')}}
+                            {{$partner->nama_bank}}
                         </label>
                     </div>
                     <div class="row justify-content-left mb-0">
@@ -262,7 +266,7 @@
                             {{__('Nomor Rekening')}}
                         </label>
                         <label class="col-8 SemiBold ml-0">
-                            {{__('061235483222')}}
+                            {{$partner->nomor_rekening}}
                         </label>
                     </div>
                     <div class="row justify-content-left mb-2">
@@ -270,7 +274,7 @@
                             {{__('Alamat')}}
                         </label>
                         <label class="col-8 SemiBold ml-0">
-                            {{__('Jalan Seksama Medan Denai, Medan, Sumatera Utara (20228)')}}
+                            {{$partner->alamat_toko}}
                         </label>
                     </div>
                     <div class="row justify-content-left mb-4">
@@ -278,8 +282,7 @@
                             {{__('Deskripsi Tempat Percetakan')}}
                         </label>
                         <label class="col-8 SemiBold">
-                            {{__('Tempat percetakan yang sangat bersahabat di kantong para pelajar
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis temporibus aliquam quia illo! Tempore impedit eligendi quia fugit maiores eius saepe tempora, et distinctio, omnis iure quidem reiciendis, soluta enim?')}}
+                            {{$partner->deskripsi_toko}}
                         </label>
                     </div>
                 </div>

@@ -16,7 +16,13 @@
     </style>
     </head>
 <body>
-    <a href="/testjson/tambah" class="btn btn-warning" style="margin-top: 50px">tambah</a>
+    @php
+        $a = "aa";
+    @endphp
+    <button type='button' data-a="<?echo $fila['idPlaza'];?>" href='#editarUsuario' class='modalEditarUsuario btn btn-warning btn-xs' data-toggle='modal' data-backdrop='static' data-keyboard='false' title='Editar usuario'>
+        <img src='../images/edit.png' width='20px' height='20px'>
+    </button>
+    <a href="/testjson/tambah" id="tambah" class="btn btn-warning" style="margin-top: 50px">tambah</a>
     <br><br>
 
     <table class="table table-dark">
@@ -50,8 +56,34 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
+    <!-- MODAL EDITAR-->
+    <div id="editarUsuario" class="modal fade modal" role="dialog">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                
+            </div>
+            </div>
+        </div>
+    </div>
 
 
 
 </body>
+<script>
+    $(document).ready(function(){
+        $('.modalEditarUsuario').click(function(){
+            // alert('<?php $a ?>'}});
+        var ID=$(this).attr('data-a');
+        $.ajax({url:"public/NewPage.php"+ID,cache:false,success:function(result){
+            $(".modal-content").html(result);
+            }});                    `
+        });
+
+        $('#tambah').click(function(){
+            alert('ISINYA');
+        });
+    });
+    
+</script>
 </html>

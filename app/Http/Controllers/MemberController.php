@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \stdClass;
 use Auth;
 use App\Member;
+use App\Transaksi_saldo;
 use phpDocumentor\Reflection\Types\This;
 use App\konfigurasi_file;
 use imagick;
@@ -14,6 +15,8 @@ use Storage;
 use Response;
 use Validator;
 use Hash;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -33,13 +36,6 @@ class MemberController extends Controller
         //$this->member->id_member = "123456789";
         $this->middleware('auth')->except(['upload', 'showPDF']);
     }
-
-    // public function profile()
-    // {
-    //     dd(storage_path());
-    //     return view('member.profil');
-    // }
-
 
     public function konfigurasiFile()
     {
@@ -213,10 +209,61 @@ class MemberController extends Controller
 
     ///tempat nambah
 
+
+    public function produk()
+    {
+        //dd(getDateBorn());
+        return view('member.detail_produk');
+    }
+
     public function profile()
     {
         //dd(getDateBorn());
-        return view('member.profil',['tanggalLahir'=>$this->getDateBorn()]);
+        $member=Auth::user();
+        $transaksi_saldo = Transaksi_saldo::all();
+        
+        // foreach ($transaksi_saldo as $ts => $value) {
+        //     dd($value['kode_pembayaran']);    
+        // }
+
+        //dd($transaksiSaldo);
+
+        // $id = Transaksi_saldo::find(Auth::id());
+        
+        //dd($member);
+        return view('member.profil',[
+            'member' => $member,
+            'transaksi_saldo' => $transaksi_saldo,
+            'tanggalLahir'=>$this->getDateBorn()]
+        );
+    }
+
+    public function show(Request $request,$id)
+    {
+        $transaksiSaldo = Transaksi_saldo::find($id);
+        return view('member.profil',compact('transaksiSaldo'))->renderSections()['content'];
+    }
+
+    public function topUpSaldo(Request $request)
+    {
+        $member = Member::find(Auth::id());
+        $transaksiSaldo = Transaksi_saldo::all();
+        //$transaksiSaldo = transaks
+        
+        $transaksiSaldo->jenis_transaksi = 'TopUp';
+        $transaksiSaldo->status = 'Berhasil';
+        $transaksiSaldo->keterangan = 'Top Up Telah Berhasil Dilakukan';
+        $transaksiSaldo->waktu = Carbon::now()->format('Y:m:d H:i:s');
+        $jumlahSaldo = $request->jumlah_saldo;
+        $waktuTransaksi = $transaksiSaldo->waktu;
+        $jenisTransaksi = $transaksiSaldo->jenis_transaksi;
+        $statusTransaksi = $transaksiSaldo->status;
+        $keteranganTransaksi = $transaksiSaldo->keterangan;
+        dd($transaksiSaldo->id_transaksi);
+        
+        $transaksiSaldo->save();
+    
+        return redirect()->route('profile');
     }
 
     public function credentialRules(array $data)
@@ -260,11 +307,20 @@ class MemberController extends Controller
     public function profileEdit()
     {
         $member = Member::find(Auth::id())->get();
-        
-        return view('member.edit_profil',['member'=>$member]);
+        $transaksiSaldo=Transaksi_saldo::all();
+        return view('member.edit_profil',[
+            'member'=>$member,
+            'transaksi_saldo' => $transaksiSaldo
+        ]);
     }
 
     public function updateDataProfile(Request $request){
+        // $request->validate([
+        //     'foto_profil' => 'image|mimes:jpeg,png,jpg|max:2048',
+        // ]);
+
+        // $member = Member::find(Auth::user());
+        
         $date = $request->date;
         $month = $request->month;
         $year = $request->year;
@@ -283,6 +339,12 @@ class MemberController extends Controller
                 'jenis_kelamin' => $request->jk,
                 'tanggal_lahir' => $dateBorn
             ]);
+
+            // $photoName = $member->id_member.'_image'.time().'.'.request()->photoprofile->getClientOriginalExtension();
+            // $request->photoprofile->storeAs('img/photos',$photoName);
+            // $member->foto_profil = $photoName;
+            // $member->save();
+
             return redirect()->route('profile')->with('alert','Profil berhasil diubah');
         }
         else{
@@ -342,7 +404,6 @@ class MemberController extends Controller
 
     public function tambahAlamat(Request $request)
     {
-
         $member = Member::find(Auth::id());
         
         $alamatLama = $member->alamat;
@@ -360,76 +421,92 @@ class MemberController extends Controller
         
         $alamatBaru[] = array(
             'id'=> $id,
-            'Nama Penerima' => $request->namapenerima,
-            'Nomor HP' => $request->nomorhp,
+            'NamaPenerima' => $request->namapenerima,
+            'NomorHP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kota,
+            'KabupatenKota' => $request->kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
+            'KodePos' => $request->kodepos,
+            'AlamatJalan' => $request->alamatjalan
         );        
         
         $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
         $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'],$alamatBaru);
 
-        //dd(json_encode($AlamatFinal));
         $member->alamat = $AlamatFinal;
         $member->save();
     
-        // dd($member->alamat['IdAlamatUtama']);
-        
-        // //tampilan
-        // for($i=0 ; $i < count($alamatLama['alamat'])-1;i++ ){
-        //     if($member->alamat['IdAlamatUtama']==$i){
-        //         div aktif
-        //     }
-        //     else{
-        //         div biasa
-        //     }
-        // }
-        // //ubah alat utama
-        // $member->alamat['IdAlamatUtama'] = 2
-        // $member->save();
-        // return view('/alamat');
-
-        // dd(json_encode($member->alamat));
         return redirect()->route('alamat');
     }
 
-    public function editAlamat($id,Request $request)
+    public function editAlamat(Request $request)
     {   
-        $member = Member::find($id);
+        
+        $member = Member::find(Auth::id());
+        $alamat = $member->alamat;
 
-        $namaPenerima = $request->namapenerima;
-        $nomorHP = $request->nomorhp;
-        $provinsi = $request->provinsi;
-        $kabKota = $request->kota;
-        $kecamatan = $request->kecamatan;
-        $kelurahan = $request->kelurahan;
-        $kodePos = $request->kodepos;
-        $alamatJalan = $request->alamatjalan;
-
-        $alamat = array(
-            'Nama Penerima' => $request->namapenerima,
-            'Nomor HP' => $request->nomorhp,
+        $alamatBaru = array(
+            'id'=> $request->id,
+            'NamaPenerima' => $request->namapenerima,
+            'NomorHP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kota,
+            'KabupatenKota' => $request->kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
+            'KodePos' => $request->kodepos,
+            'AlamatJalan' => $request->alamatjalan
         );
 
-        $member->update([
-            'alamat' => $alamat
-        ]);
+        $alamat['alamat'][$request->id] = $alamatBaru;
+        $member->alamat = $alamat;
+        $member->save();
 
-        return redirect()->to('alamat/'.$id);
+        return redirect()->route('alamat');
+    }
+
+    public function hapusAlamat($id)
+    {   
+        
+        $member = Member::find(Auth::id());
+        $alamat = $member->alamat;
+        $new_array[] = array();
+        $i = 0;
+        foreach ($alamat['alamat'] as $key => $value) {
+            if($value['id'] != $id){
+                $new_array[$i] = $value;
+                $new_array[$i]['id'] = $i;
+                $i++; 
+            }
+        }
+        $alamat['alamat'] = $new_array; 
+        
+        if(empty($new_array['alamat'])){
+            
+            //unset($new_array['alamat']);
+            //unset($alamat['IdAlamatUtama']);
+            //unset($new_array['IdAlamatUtama']);
+            //dd($alamat['alamat']);
+        }
+        $member->alamat = $alamat;
+        $member->save();
+
+        return redirect()->route('alamat');
+        //return view('member.alamat',['member'=>Auth::user()]);
     }
 
     public function konfigurasiPesanan()
     {
         return view('member.konfigurasi_pesanan');
+    }
+
+    public function ulas()
+    {
+        return view('member.ulas_produk');
+    }
+
+    public function ulasanSaya()
+    {
+        return view('member.ulasan_saya');
     }
 }

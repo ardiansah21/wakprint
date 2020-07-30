@@ -1,3 +1,6 @@
+@php
+    $pengelola = DB::table('pengelola_percetakan')->get();
+@endphp
 <div class="row jusify-content-between mb-3 mr-0">
     <div class="col-md-10">
         <div class="form-group search-input">
@@ -50,53 +53,56 @@
         </div>
     </div>
 </div>
-<div class="table-scrollbar mb-5 pr-2" >
-    <table class="table table-hover">
-        <thead class="bg-primary-purple text-white"
-            style="border-radius:25px 25px 15px 15px;
-                font-size:16px;">
-            <tr>
-                <th scope="col-md-auto">
-                    {{__('ID')}}
-                </th>
-                <th scope="col-md-auto">
-                    {{__('Nama Tempat Percetakan')}}
-                </th>
-                <th scope="col-md-auto">
-                    {{__('Email Pemilik Percetakan')}}
-                </th>
-                <th scope="col-md-auto"></th>
-            </tr>
-        </thead>
-        <tbody style="font-size: 12px;">
-
-            {{-- @foreach ($collection as $item) --}}
-                <tr class="clickable-row" data-toggle="modal"
-                    data-target="#pengelolaModal">
-                    
-                    {{-- @foreach ($collection as $item) --}}
-                        <td scope="row">
-                            {{__('000001')}}
-                        </td>
-                        <td>
-                            {{__('Agus')}}
-                        </td>
-                        <td>
-                            {{__('agus@gmail.com')}}
-                        </td>
-                        <td>
-                            <i class="material-icons"
-                                style="color: red;"
-                                style="margin-left: -200px;">
-                                delete
-                            </i>
-                        </td>
-                    {{-- @endforeach --}}
-
+@if(!empty($pengelola))
+    <div class="table-scrollbar mb-5 pr-2" >
+        <table class="table table-hover">
+            <thead class="bg-primary-purple text-white"
+                style="border-radius:25px 25px 15px 15px;
+                    font-size:16px;">
+                <tr>
+                    <th scope="col-md-auto">
+                        {{__('ID')}}
+                    </th>
+                    <th scope="col-md-auto">
+                        {{__('Nama Tempat Percetakan')}}
+                    </th>
+                    <th scope="col-md-auto">
+                        {{__('Email Pemilik Percetakan')}}
+                    </th>
+                    <th scope="col-md-auto"></th>
                 </tr>
-            {{-- @endforeach --}}
+            </thead>
+            <tbody style="font-size: 12px;">
 
-        </tbody>
-    </table>
-</div>
-@include('admin.detail_pengelola')
+                @foreach($pengelola as $p)
+                    <tr class="clickable-row" data-toggle="modal"
+                        data-target="#pengelolaModal">
+                        
+                            <td scope="row">
+                                {{$p->id_pengelola}}
+                            </td>
+                            <td>
+                                {{$p->nama_lengkap}}
+                            </td>
+                            <td>
+                                {{$p->email}}
+                            </td>
+                            <td>
+                                <i class="material-icons"
+                                    style="color: red;"
+                                    style="margin-left: -200px;">
+                                    delete
+                                </i>
+                            </td>
+
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
+    @include('admin.detail_pengelola')
+@else
+    <label>Data Pengelola Kosong</label>
+@endif
+

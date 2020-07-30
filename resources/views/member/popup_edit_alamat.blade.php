@@ -1,23 +1,26 @@
 {{-- isi popup tambah alamat --}}
-<div class="modal fade" id="alamatModal" tabindex="-1" role="dialog" aria-labelledby="alamatModalLabel"
+
+<div class="modal fade" id="editAlamatModal" tabindex="-1" role="dialog" aria-labelledby="editAlamatModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="{{ route('alamat.tambah') }}" class="mb-3" method="POST">
+                
+                <form action="{{ route('alamat.edit') }}" class="mb-3" method="POST">
                     @csrf
+                    {{ $member->alamat['alamat'][$i]['id'] }}
                     <button class="close material-icons md-32" data-dismiss="modal">
                         close
                     </button>
                     <h1 id="alamatModalLabel" class="modal-title font-weight-bold ml-0 mb-5" style="font-size: 48px;">
-                        {{ __('Tambah Alamat Pengiriman') }}</h1>
+                        {{ __('Ubah Alamat Pengiriman') }}</h1>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold mb-2"
                                     style="font-size: 18px;">{{ __('Nama Penerima') }}</label>
                                 <div class="input-group">
-                                    <input type="text" name="namapenerima" class="form-control pt-2 pb-2" value=""
+                                    <input id="namaPenerima" type="text" name="namapenerima" class="form-control pt-2 pb-2 r"
                                         placeholder="Masukkan Nama Penerima" aria-label="Masukkan Nama Penerima"
                                         aria-describedby="inputGroup-sizing-sm" style="font-size: 18px;">
                                 </div>
@@ -103,8 +106,8 @@
                         </div>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>
-</div>
 </div>

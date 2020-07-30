@@ -1,7 +1,9 @@
 @auth
 @php
 $m = Auth::user();
-
+//$transaksiSaldo = Transaksi_saldo::all();
+//$transaksiSaldo = Transaksi_saldo::all();
+//$transaksiSaldo = Transaksi_saldo::find($id);
 @endphp
 @endauth
 

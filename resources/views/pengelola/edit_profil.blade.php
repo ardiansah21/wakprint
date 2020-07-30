@@ -8,7 +8,8 @@
         {{__('Profil Tempat Percetakan') }}
     </label>
     <br>
-    <form>
+    <form method="POST" action="{{ route('partner.profile.edit') }}">
+        @csrf
         <label class="mb-2"
             style="font-size: 16px;">
             {{__('Foto Tempat Percetakan') }}
@@ -52,11 +53,13 @@
             {{__('Nama Tempat Percetakan') }}
         </label>
         <div class="form-group mb-4">
-            <input type="text" 
+            <input type="text"
+                name="namapercetakan"
                 class="form-control pt-2 pb-2"
                 placeholder="Masukkan Nama Tempat Percetakan" 
                 aria-label="Masukkan Nama Tempat Percetakan"
                 aria-describedby="inputGroup-sizing-sm"
+                value="{{ $partner->nama_toko }}"
                 style="font-size: 16px;">
         </div>
         <label class="mb-2">
@@ -64,25 +67,29 @@
         </label>
         <div class="form-group mb-4">
             <textarea class="form-control"
+                name="deskripsi"
                 placeholder="Masukkan Deskripsi Tempat Percetakan"
                 aria-label="Deskripsi Percetakan"
-                style="font-size: 16px;"></textarea>
+                style="font-size: 16px;">{{ $partner->deskripsi_toko }}</textarea>
         </div>
         <label class="mb-2">
             {{__('Alamat Tempat Percetakan') }}
         </label>
         <div class="form-group mb-4">
             <textarea class="form-control"
+                name="alamat"
                 placeholder="Masukkan Alamat Tempat Percetakan Anda"
                 aria-label="Alamat Tempat Percetakan"
-                style="font-size: 16px;"></textarea>
+                style="font-size: 16px;">{{ $partner->alamat_toko }}</textarea>
         </div>
         <label class="mb-2">
             {{__('URL Google Maps') }}
         </label>
         <div class="form-group mb-4">
-            <input type="text" 
+            <input type="text"
+                name="urlmaps"
                 class="form-control pt-2 pb-2"
+                value="{{ $partner->url_google_maps }}"
                 placeholder="Masukkan URL Titik Lokasi Anda"
                 aria-label="Masukkan URL Titik Lokasi Anda"
                 aria-describedby="inputGroup-sizing-sm"
@@ -92,25 +99,37 @@
             {{__('Jam Operasional') }}
         </label>
         <br>
-        <label class="mb-4"> 
+        <label class="mb-4">
             {{__('Buka') }}
-            <input type="text"
+            <input type="datetime"
+                maxlength="2"
+                value="{{ $partner->jam_op_buka}}"
                 class="form-input mr-2 ml-2"
+                name="jambuka"
                 style="width:48px;
                     font-size: 16px;"> 
                 :
-            <input type="text"
+            <input type="datetime"
+                name="menitbuka"
+                maxlength="2"
+                value="{{ $partner->jam_op_buka }}"
                 class="form-input mr-2 ml-2"
                 style="width:48px;
                     font-size: 16px;">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{__('Tutup') }}
-            <input type="text"
+            <input type="datetime"
+                maxlength="2"
+                name="jamtutup"
                 class="form-input mr-2 ml-2"
+                value="{{ $partner->jam_op_tutup }}"
                 style="width:48px;
                     font-size: 16px;"> :
-            <input type="text"
+            <input type="datetime"
+                maxlength="2"
+                name="menittutup"
                 class="form-input mr-2 ml-2"
+                value="{{ $partner->jam_op_tutup }}"
                 style="width:48px;
                     font-size: 16px;">
         </label>
@@ -120,11 +139,11 @@
         </label>
         <div class="form-group mb-4">
             <textarea class="form-control"
+                name="skpercetakan"
                 aria-label="Syarat & Ketentuan"
                 placeholder="Masukkan Syarat & Ketentuan Percetakan Anda"
-                style="font-size: 16px;"></textarea>
+                style="font-size: 16px;">{{ $partner->syaratkententuan }}</textarea>
         </div>
-            
         <div class="row justify-content-between mb-5">
             <div class="col-md-auto">
                 <label class="mb-2">
@@ -134,7 +153,9 @@
                     <div class="form-group custom-control custom-checkbox mt-2 ml-3"
                         style="font-size: 16px;">
                         <input type="checkbox"
+                            name="ambiltempat"
                             class="custom-control-input"
+                            value="Ambil di Tempat"
                             id="checkboxAmbil">
                         <label class="custom-control-label"
                             for="checkboxAmbil">
@@ -144,7 +165,9 @@
                     <div class="form-group custom-control custom-checkbox mt-2 ml-4"
                         style="font-size: 16px;">
                         <input type="checkbox"
+                            name="antartempat"
                             class="custom-control-input"
+                            value="Diantar ke Tempat"
                             id="checkboxDiantar">
                         <label class="custom-control-label"
                             for="checkboxDiantar">
@@ -173,32 +196,44 @@
                             text-align:left;">
                         {{__('Akurasi Tingkat Keakuratan Deteksi Warna') }}
                     </button>
-                    <div class="dropdown-menu"
+                    <ul class="dropdown-menu"
+                        name="atkdwh"
                         aria-labelledby="dropdownATKDH"
                         style="font-size: 16px;
                         width:100%;">
-                            <a class="dropdown-item" href="#">{{__('Penuh') }}</a>
-                            <a class="dropdown-item" href="#">{{__('Tinggi') }}</a>
-                            <a class="dropdown-item" href="#">{{__('Sedang') }}</a>
-                            <a class="dropdown-item" href="#">{{__('Rendah') }}</a>
-                            <a class="dropdown-item" href="#">{{__('Sangat Rendah') }}</a>
-                    </div>
+                            <li class="dropdown-item" href="#" value="{{__('Penuh') }}">
+                                {{__('Penuh') }}
+                            </li>
+                            <li class="dropdown-item" href="#" value="{{__('Tinggi') }}">
+                                {{__('Tinggi') }}
+                            </li>
+                            <li class="dropdown-item" href="#" value="{{__('Sedang') }}">
+                                {{__('Sedang') }}
+                            </li>
+                            <li class="dropdown-item" href="#" value="{{__('Rendah') }}">
+                                {{__('Rendah') }}
+                            </li>
+                            <li class="dropdown-item" href="#" value="{{__('Sangat Rendah') }}">
+                                {{__('Sangat Rendah') }}
+                            </li>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="form-group text-right mb-5">
             <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
+                type="submit"
                 style="border-radius:30px;
                     font-size: 18px;">
                 {{__('Simpan Perubahan') }}
             </button>
         </div>
-    </form>
-    <label class="font-weight-bold mb-5 mt-2"
-        style="font-size:36px;">
-        {{__('Profil Pemilik Tempat Percetakan') }}
-    </label>
-    <form>
+    
+        <label class="font-weight-bold mb-5 mt-2"
+            style="font-size:36px;">
+            {{__('Profil Pemilik Tempat Percetakan') }}
+        </label>
+
         <div class="row justify-content-between mb-0">
             <div class="form-group col-md-3">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
@@ -224,7 +259,9 @@
                 </label>
                 <div class="form-group ml-0 mr-0 mb-3">
                     <input type="text"
+                        name="namapemilik"
                         class="form-control pt-2 pb-2"
+                        value="{{ $partner->nama_lengkap }}"
                         placeholder="Masukkan Nama Pemilik Tempat Percetakan" 
                         aria-label="Masukkan Nama Pemilik Tempat Percetakan"
                         aria-describedby="inputGroup-sizing-sm"
@@ -235,7 +272,9 @@
                 </label>
                 <div class="form-group ml-0 mr-0 mb-3">
                     <input type="text"
+                        name="nomorhp"
                         class="form-control pt-2 pb-2"
+                        value="{{ $partner->nomor_hp }}"
                         placeholder="Masukkan Nomor HP Pemilik Tempat Percetakan" 
                         aria-label="Masukkan Nomor HP Pemilik Tempat Percetakan"
                         aria-describedby="inputGroup-sizing-sm"
@@ -246,33 +285,63 @@
                         <label class="mb-2">
                             {{__('Nama Bank Pemilik Tempat Percetakan') }}
                         </label>
-                        <div class="form-group dropdown">
-                            <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray"
+                        <div class="form-group">
+                            @php
+                                $namaBank = array(
+                                    "BRI",
+                                    "BNI",
+                                    "Maybank",
+                                    "Mandiri"
+                                );
+                            @endphp
+                            {{-- <select class="btn btn-default btn-block dropdown dropdown-toggle border border-gray" name="namabank" style="font-size: 18px;">
+                                @foreach ($namaBank as $key => $value)
+                                    <option value="{{ $key }}"
+                                    @if ($key == old('namabank', $partner->nama_bank->option))
+                                        selected="selected"
+                                    @endif>
+                                    {{ $value }}
+                                </option>
+                                @endforeach
+                            </select> --}}
+                            <select class="btn btn-default btn-block dropdown dropdown-toggle border border-gray" name="namabank"
+                                aria-valuetext="{{$partner->nama_bank}}" style="font-size: 18px;">
+                                <option value="Maybank">{{__('Maybank')}}</option>
+                                <option value="BCA">{{__('BCA')}}</option>
+                                <option value="Mandiri">{{__('Mandiri')}}</option>
+                                <option value="BRI">{{__('BRI')}}</option>
+                            </select>
+                            {{-- <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray"
                                 id="dropdownNamaBank"
+                                value="{{$partner->nama_bank}}"
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false"
                                 style="font-size:16px;
                                     text-align:left;">
-                                {{__('BRI') }}
+                                {{$partner->nama_bank}}
                             </button>
-                            <div class="dropdown-menu"
+                            <ul class="dropdown-menu"
+                                name="namabank"
                                 aria-labelledby="dropdownNamaBank"
                                 style="font-size:16px;
                                     width:100%;">
-                                <a class="dropdown-item"
-                                    href="#">
+                                <li class="dropdown-item"
+                                    href="#"
+                                    value="BCA">
                                     {{__('BCA') }}
-                                </a>
-                                <a class="dropdown-item"
-                                    href="#">
+                                </li>
+                                <li class="dropdown-item"
+                                    href="#"
+                                    value="Mandiri">
                                     {{__('Mandiri') }}
-                                </a>
-                                <a class="dropdown-item"
-                                    href="#">
+                                </li>
+                                <li class="dropdown-item"
+                                    href="#"
+                                    value="BNI">
                                     {{__('BNI') }}
-                                </a>
-                            </div>
+                                </li>
+                            </ul> --}}
                         </div>
                     </div>
                     <div class="col-md-7">
@@ -281,7 +350,9 @@
                         </label>
                         <div class="form-group ml-0 mr-0 mb-0">
                             <input type="text"
+                                name="nomorrekening"
                                 class="form-control pt-2 pb-2"
+                                value="{{ $partner->nomor_rekening }}"
                                 placeholder="Masukkan Nomor Rekening Pemilik Tempat Percetakan" 
                                 aria-label="Masukkan Nomor Rekening Pemilik Tempat Percetakan"
                                 aria-describedby="inputGroup-sizing-sm"
@@ -299,6 +370,14 @@
             </button>
         </div>
     </form>
+
+    <script>
+        var msg = '{{Session::get('alert')}}';
+        var exist = '{{Session::has('alert')}}';
+        if(exist){
+          alert(msg);
+        }
+      </script>
 
     {{-- pop up info --}}
     @include('pengelola.tingkat_akurasi')

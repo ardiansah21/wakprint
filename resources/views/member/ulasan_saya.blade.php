@@ -2,7 +2,7 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="pt-4 pb-5 ml-0">
+    <div class="container pt-4 pb-5">
         <h1 class="font-weight-bold mb-0" style="font-size: 48px;">{{__('Ulasan Saya') }}</h1>
         <label class="mb-2" style="font-size: 18px;">{{__('Detail produk yang telah Anda ulas') }}</label>
 

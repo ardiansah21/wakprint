@@ -22,7 +22,7 @@ class CreateProduksTable extends Migration
             $table->text('deskripsi')->nullable();
             $table->enum('jenis_wana',['Berwarna','HitamPutih']);
             $table->enum('jenis_kertas',['A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr', 'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LeterHVS80gr']);
-            $table->enum('jenis_printer',['InkJet','LaserJet']);
+            $table->enum('jenis_printer',['Ink Jet','Laser Jet']);
             $table->decimal('rating',1,1);
             $table->enum('status',['Tersedia','TidakTersedia'])->default('TidakTersedia');
             $table->string('foto_produk')->nullable();

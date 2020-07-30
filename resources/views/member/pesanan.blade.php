@@ -1,22 +1,17 @@
 <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Pesanan Saya') }}</h1>
-<div class="row mb-3">
+<div class="row justify-content-between mb-3">
     <div class="col-md-3">
-        <div class="dropdown">
-            <button
-                class="btn btn-default btn-block btn-lg shadow-sm dropdown-toggle border border-gray"
-                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" style="font-size: 18px;">
-                {{__('Semua') }}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-            style="font-size: 18px;">
-                <a class="dropdown-item" href="#">{{__('Terbaru') }}</a>
-                <a class="dropdown-item" href="#">{{__('Tinggi ke Rendah') }}</a>
-                <a class="dropdown-item" href="#">{{__('Rendah ke Tinggi') }}</a>
-            </div>
-        </div>
+        <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="filterpesanan" style="font-size: 18px;">
+            <option value="Terbaru">{{__('Terbaru')}}</option>
+            <option value="Harga Tertinggi">{{__('Harga Tertinggi')}}</option>
+            <option value="Harga Terendah">{{__('Harga Terendah')}}</option>
+            <option value="Pending">{{__('Pending')}}</option>
+            <option value="Diproses">{{__('Diproses')}}</option>
+            <option value="Selesai">{{__('Selesai')}}</option>
+            <option value="Batal">{{__('Batal')}}</option>
+        </select>
     </div>
-    <div class="col-md-9 mb-4">
+    <div class="col-md-8 mb-4">
         <div class="search-input">
             <div class="main-search-input-item">
                 <input type="text" role="search" class="form-control" placeholder="Cari percetakan atau produk disini"

@@ -30,8 +30,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"> </script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     {{-- 
@@ -85,7 +84,7 @@
                             </a>
                         </li>
                         <li class="nav-item mr-0">
-                            <a class="nav-link" href="{{ route('partner.home') }}"
+                            <a class="nav-link" href="{{ route('partner.profile') }}"
                                 style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
                                 {{-- <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span> --}}
                                 <span class="text-primary-purple mr-2">{{__('Rp. 10.000')}}</span>
