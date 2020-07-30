@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Pengelola_Percetakan;
@@ -10,7 +11,6 @@ class PartnerController extends Controller
 {
     public function index()
     {
-        
         return view('pengelola.homepage');
     }
 

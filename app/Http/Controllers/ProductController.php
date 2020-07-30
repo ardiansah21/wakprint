@@ -34,6 +34,7 @@ class ProductController extends Controller
         // ]);
 
         $product = Product::create($request->all());
+        // dd($request->all());
         return redirect('/testjson');
     }
 

@@ -20,9 +20,11 @@
 <body>
 
     <br><br>
+    <button id="ss" value="sss" onclick=" alert('asdas')">asdasdas</button>
 
     <form action="/testjson/store" method="POST">
         {{ csrf_field() }}
+        <button id="ss" value="sss" onclick=" alert('asdas')">asdasdas</button>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control">

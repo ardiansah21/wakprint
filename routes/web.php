@@ -62,11 +62,8 @@ Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.u
 //test upload
 Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
 
-// //tessjson
-Route::get('/testjson', 'ProductController@index');
 
-Route::get('/testjson/tambah/', 'ProductController@tambah');
-Route::post('/testjson/store','ProductController@store');
+
 
 //Pengelola percetakan
 Route::prefix('partner')->name('partner.')->group(function(){
@@ -84,8 +81,26 @@ Route::prefix('partner')->name('partner.')->group(function(){
         Route::get('profil', 'PartnerController@profile')->name('profile');
         Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
         Route::post('profil/edit','PartnerController@profileUpdate');
+
+        Route::resource('produk', 'Partner\ProdukController');
+        
+        Route::post('produk/media', 'Partner\ProdukController@storeMedia')->name('projects.storeMedia');
     });
 
+});
+
+//Admin
+Route::prefix('admin')->name('admin.')->group(function(){
+
+    Route::get('login','Admin\Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login','Admin\Auth\LoginController@login');
+    Route::post('logout', 'Admin\Auth\LoginController@logout')->name('logout');
+
+    Route::middleware('auth:admin')->group(function(){
+        Route::get('/','Admin\AdminController@index')->name('home');
+
+
+    });
 
 });
 
@@ -111,6 +126,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 
 });
+
+
+
 
 
 // //tessjson

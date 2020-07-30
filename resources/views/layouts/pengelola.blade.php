@@ -12,8 +12,8 @@
     <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script> --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -37,13 +37,17 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" /> --}}
 
+    {{-- dropzone --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a id="logo" class="navbar-brand wakprint" href="/partner" style="font-size: 24px;">{{ __('Wakprint') }}</a>
+                <a id="logo" class="navbar-brand wakprint" href="/partner"
+                    style="font-size: 24px;">{{ __('Wakprint') }}</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
                     data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -58,7 +62,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                    @guest
+                        @guest
                         @if (Route::currentRouteName() == 'partner.login')
                         <li class="nav-i, i8tem">
                             <a class="nav-link SemiBold text-primary-purple mr-4" href="{{route('partner.register')}}"
@@ -67,13 +71,14 @@
                         @elseif(Route::currentRouteName() == 'partner.register')
                         <li class="nav-item">
                             <a class="nav-link btn btn-primary-wakprint btn-sm pt-2 pb-2 pl-5 pr-5 font-weight-bold"
-                                href="{{ route('partner.login') }}" style="border-radius:30px; font-size: 24px; color:white">
+                                href="{{ route('partner.login') }}"
+                                style="border-radius:30px; font-size: 24px; color:white">
                                 {{ __('Masuk') }}
                             </a>
                         </li>
                         @endif
-                        
-                    @else
+
+                        @else
                         <li class="nav-item mr-2" style="display: flex; align-items:center;">
                             <a class="nav-link SemiBold" href="#"
                                 style="color: black; font-size: 18px;">{{ __('Chat') }}</a>
@@ -92,7 +97,7 @@
                                     width="45" height="45" alt="no logo">
                             </a>
                         </li>
-                    @endguest
+                        @endguest
                     </ul>
                 </div>
             </div>
@@ -102,4 +107,11 @@
         </main>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+{{-- ...Some more scripts... --}}
+<script src="{{ asset('js/scriptPengelola.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+@yield('script')
+
 </html>

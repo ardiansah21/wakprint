@@ -56,6 +56,10 @@ return [
             'provider' => 'partners',
             'hash' => false,
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -83,6 +87,10 @@ return [
         'partners' => [
             'driver' => 'eloquent',
             'model' => App\Pengelola_Percetakan::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
 
         // 'members' => [
