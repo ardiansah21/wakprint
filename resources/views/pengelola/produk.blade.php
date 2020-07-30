@@ -1,4 +1,4 @@
-<button onclick="location.href='{{ route('partner.produk.tambah') }}'" class="btn btn-outline-purple font-weight-bold pl-5 pr-5 mb-4"
+<button onclick="location.href='{{ route('partner.produk.create') }}'" class="btn btn-outline-purple font-weight-bold pl-5 pr-5 mb-4"
     style="border-radius:30px;
         font-size:16px;">
     {{__('Tambah Produk')}}

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-5 mb-5" style="font-size: 16px;">
-    <form action="{{ route('partner.produk.tambah') }}" method="POST">
+    <form action="{{ route('partner.produk.store') }}" method="POST">
         @csrf
         <div class="row justify-content-between ml-0 mr-0">
             <label class="font-weight-bold mb-4" style="font-size:36px;">
@@ -15,12 +15,17 @@
             </label>
         </div>
 
-        <label class="mb-2 h4 font-weight-bold" style="font-size: 16px;">
+        <label class="mb-2 h4 font-weight-bold" style="font-size: 16px;" >
             {{__('Foto Produk') }}
         </label>
+        <div class="needsclick dropzone mb-3" id="document-dropzone">
+            <div class="dz-message" data-dz-message>
+                <span>klik atau tarik sini NJING</span><br> 
+            </div>
+        </div>
 
         {{-- <div class="scrolling-wrapper mb-0"> --}}
-        <div class="row justify-content-left" style="height:200px;">
+        <div class="row justify-content-left" style="height:200px;" hidden>
             <div class="col-md-auto" style="position: relative">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
                     class="img-responsive bg-light" style="width:250px;
@@ -298,3 +303,41 @@
 
 </script>
 @endsection
+@section('script')
+<script>
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+      url: '{{ route('projects.storeMedia') }}',
+      maxFilesize: 2, // MB
+      addRemoveLinks: true,
+      headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+      },
+      success: function (file, response) {
+        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+        uploadedDocumentMap[file.name] = response.name
+      },
+      removedfile: function (file) {
+        file.previewElement.remove()
+        var name = ''
+        if (typeof file.file_name !== 'undefined') {
+          name = file.file_name
+        } else {
+          name = uploadedDocumentMap[file.name]
+        }
+        $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+      },
+      init: function () {
+        @if(isset($project) && $project->document)
+          var files ={!! json_encode($project->document) !!}
+          for (var i in files) {
+            var file = files[i]
+            this.options.addedfile.call(this, file)
+            file.previewElement.classList.add('dz-complete')
+            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+          }
+        @endif
+      }
+    }
+  </script>
+@stop

@@ -56,19 +56,6 @@ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name(
 //test upload
 Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
 
-// //tessjson
-Route::get('/testjson', 'ProductController@index');
-
-Route::get('/testjson/tambah/', 'ProductController@tambah');
-Route::post('/testjson/store','ProductController@store');
-
-
-
-
-
-
-
-
 
 
 
@@ -84,21 +71,13 @@ Route::prefix('partner')->name('partner.')->group(function(){
 
     Route::middleware('auth:partner')->group(function(){
         Route::get('/','PartnerController@index')->name('home');
-        Route::get('/produk/tambah','PartnerController@produkTambah')->name('produk.tambah');
-        Route::post('/produk/tambah','PartnerController@produkTambahStore');
+
+        Route::resource('produk', 'Partner\ProdukController');
+        
+        Route::post('produk/media', 'Partner\ProdukController@storeMedia')->name('projects.storeMedia');
     });
 
-
 });
-Route::redirect('partner/promo','/partner');
-Route::redirect('partner/produk','/partner#v-pills-produk');
-
-
-
-
-
-
-
 
 
 
