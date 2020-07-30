@@ -6,10 +6,10 @@
             style="border-radius: 10px;">
             <label class="font-weight-bold text-primary-purple text-center mb-4"
                 style="font-size: 48px;">
-                {{__('WAKPRINT')}}
+                {{__('ADMIN')}}
             </label>
             <form method="POST"
-                action="{{ route('login') }}"
+                action="{{ route('admin.login') }}"
                 style="font-size: 18px;">
                 {{-- @csrf --}}
                 {{ csrf_field() }}
@@ -69,33 +69,10 @@
                             </div>
                     </div>
                 </div>
-                <div class="row justify-content-between ml-0 mr-0">
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox mb-5">
-                            <input id="termsCheck"
-                                type="checkbox"
-                                class="custom-control-input">
-                            <label class="custom-control-label"
-                                for="termsCheck"
-                                style="font-size: 14px;">
-                                {{__('Ingat Saya') }}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group text-right mb-5">
-                        @if (Route::has('password.request'))
-                        <a class="text-primary-purple ml-0"
-                            href="{{ route('password.request') }}"
-                            style="font-size: 14px;">
-                            {{__('Lupa kata sandi ?') }}
-                        </a>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group mb-4">
-                    <button type="submit"
-                        class="btn btn-primary-wakprint btn-block SemiBold"
-                        style="font-size: 18px;">
+                
+                <div class="form-group mb-4 mt-4">
+                    <button type="submit"class="btn btn-primary-wakprint btn-block SemiBold"
+                        style="font-size: 22px;">
                         {{ __('Masuk') }}
                     </button>
                 </div>

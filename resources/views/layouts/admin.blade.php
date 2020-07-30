@@ -60,21 +60,23 @@
                                 </a>
                             </li> --}}
                             {{-- @else --}}
-                            <li class="nav-item mr-0">
-                                <a class="nav-link"
-                                    href="{{ route('profile') }}"
-                                    style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
-                                    {{-- <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span> --}}
-                                    <span class="text-primary-purple mr-2">
-                                        {{__('Maria Admin')}}
-                                    </span>
-                                    <img class="align-middle ml-2"
-                                        src="https://ptetutorials.com/images/user-profile.png"
-                                        width="45"
-                                        height="45"
-                                        alt="no logo">
-                                </a>
-                            </li>
+                            @auth
+                                <li class="nav-item mr-0">
+                                    <a class="nav-link"
+                                        href="{{ route('profile') }}"
+                                        style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
+                                        {{-- <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span> --}}
+                                        <span class="text-primary-purple mr-2">
+                                            {{ auth()->user()->nama }}
+                                        </span>
+                                        <img class="align-middle ml-2"
+                                            src="https://ptetutorials.com/images/user-profile.png"
+                                            width="45"
+                                            height="45"
+                                            alt="no logo">
+                                    </a>
+                                </li>
+                            @endauth
                         {{-- @endguest --}}
                     </ul>
                 </div>

@@ -79,7 +79,20 @@ Route::prefix('partner')->name('partner.')->group(function(){
 
 });
 
+//Admin
+Route::prefix('admin')->name('admin.')->group(function(){
 
+    Route::get('login','Admin\Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login','Admin\Auth\LoginController@login');
+    Route::post('logout', 'Admin\Auth\LoginController@logout')->name('logout');
+
+    Route::middleware('auth:admin')->group(function(){
+        Route::get('/','Admin\AdminController@index')->name('home');
+
+
+    });
+
+});
 
 
 

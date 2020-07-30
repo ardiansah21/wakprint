@@ -42,13 +42,19 @@ class RedirectIfAuthenticated
                 if (Auth::guard($guard)->check()) {
                     return redirect('/partner');
                 }
-                break;
+            break;
+
+            case 'admin':
+                if (Auth::guard($guard)->check()) {
+                    return redirect('/admin');
+                }
+            break;
 
             default:
                 if (Auth::guard($guard)->check()) {
                     return redirect('/');
                 }
-                break;
+            break;
         }
 
         return $next($request);
