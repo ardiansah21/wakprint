@@ -7,7 +7,7 @@ use \stdClass;
 use Auth;
 use App\Member;
 use phpDocumentor\Reflection\Types\This;
-use App\konfigurasi_file;
+use App\Konfigurasi_file;
 use imagick;
 use File;
 use Storage;
@@ -22,25 +22,47 @@ class MemberController extends Controller
     private $f;
     public function __construct()
     {
-        if (Auth::check()) {
-            // $this->member = Auth::User();         
-        } else {
-            // $this->member = null;
-        }
-
-        //$this->member = Member::where('id_member', $id)->get();
-        // $this->member = Member::where('id_member', $id)->get();
-        //$this->member->id_member = "123456789";
-        $this->middleware('auth')->except(['upload', 'showPDF']);
     }
 
-    // public function profile()
-    // {
-    //     dd(storage_path());
-    //     return view('member.profil');
-    // }
+    public function index()
+    {
+      return view('home');
+    }
+
+    // temp dropzone
+    public function fileupload(Request $request)
+    {
+
+        if ($request->hasFile('file')) {
+
+            // Upload path
+            $destinationPath = 'files/';
+
+            // Create directory if not exists
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Get file extension
+            $extension = $request->file('file')->getClientOriginalExtension();
+
+            // Valid extensions
+            $validextensions = array("jpeg", "jpg", "png", "pdf");
+
+            // Check extension
+            if (in_array(strtolower($extension), $validextensions)) {
+
+                // Rename file 
+                $fileName = Str::slug(Carbon::now()->toDayDateTimeString()) . rand(11111, 99999) . '.' . $extension;
+
+                // Uploading file to given path
+                $request->file('file')->move($destinationPath, $fileName);
+            }
+        }
+    }
 
 
+    
     public function konfigurasiFile()
     {
         return view('member.konfigurasi_file_lanjutan', ['namafile' => $this->f]);
@@ -49,15 +71,12 @@ class MemberController extends Controller
 
     public function upload(Request $request)
     {
-        // $path = Storage::putFile(
-        //     'public/files',
-        //     $request->file('file'),
-        // );
+
         $this->validate($request, [
             'file' => 'required',
         ]);
         $file = $request->file('file');
-        $k = konfigurasi_file::insertGetId([
+        $k = Konfigurasi_file::insertGetId([
             'nama_file' => $file->getClientOriginalName(),
             'waktu'     => now(),
         ]);
@@ -73,6 +92,7 @@ class MemberController extends Controller
 
     public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
     {
+        //TODO merapikan struktur code dan storage
 
         $gray = 0;
         $notgray = 0;
@@ -84,12 +104,7 @@ class MemberController extends Controller
         }
         $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
 
-
-        // $name = $output_dir . $FileName;
         $name = $path;
-
-        // $location . " " .  $convert    = $location . " " . $name . " ".$nameto;
-        // exec("convert ".$convert);
 
         for ($i = 0; $i < $jumlahHal; $i++) {
             $nameto     = $output_dir . $RandomNum . '-' . $i . '.jpg';
@@ -105,7 +120,6 @@ class MemberController extends Controller
             $im->writeImage($nameto);
             $im->clear();
             $im->destroy();
-            //$display .= "<img src='$output_dir$RandomNum-$i.jpg' title='Page-$i' /><br>";
         }
         //cekWarna
         for ($h = 0; $h < $jumlahHal; $h++) {
@@ -165,58 +179,13 @@ class MemberController extends Controller
         return $pdf;
     }
 
-    public function showPDF($path)
-    {
-        // return Response::make($pdfContent, 200, [
-        //     'Content-Type'        => $type,
-        //     'Content-Disposition' => 'inline; filename="'.$fileName.'"'
-        //   ]);
-        // return response()->file($path);
-        
-        // $contentType = mime_content_type($path);
-        // return Response::make(file_get_contents($path), 200, [
-
-        //     'Content-Type' => $contentType,
-        //     'Content-Disposition' => 'inline; filename="' . $filename . '"'
-        // ]);
-    }
-
-
-
-    // public function profil()
-    // {
-    //     return view('member.profil');
-    // }
-
-    // public function logout()
-    // {
-    //     Auth::guard('member')->logout();
-    //     return redirect()->route('member.login');
-    // }
-    // public function logout(Request $request)
-    // {
-    //     Auth::guard('member')->logout();
-
-    //     $request->session()->invalidate();
-
-    //     $request->session()->regenerateToken();
-
-    //     if ($response = $this->loggedOut($request)) {
-    //         return $response;
-    //     }
-
-    //     return $request->wantsJson()
-    //         ? new Response('', 204)
-    //         : redirect('/member/login');
-    // }
-
 
     ///tempat nambah
 
     public function profile()
     {
         //dd(getDateBorn());
-        return view('member.profil',['tanggalLahir'=>$this->getDateBorn()]);
+        return view('member.profil', ['tanggalLahir' => $this->getDateBorn()]);
     }
 
     public function credentialRules(array $data)
@@ -230,41 +199,35 @@ class MemberController extends Controller
         $validator = Validator::make($data, [
             'current-password' => 'required',
             'password' => 'required|same:password',
-            'confirm-password' => 'required|same:password',  
+            'confirm-password' => 'required|same:password',
         ], $messages);
 
         return $validator;
     }
-    // public function postCredentials(Request $request)
-    // {
-        
-    // }
 
     public function getDateBorn()
     {
-        if(empty(Auth::user()->tanggal_lahir)){
+        if (empty(Auth::user()->tanggal_lahir)) {
             return "-";
-        }
-
-        else{
-            $monthName=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+        } else {
+            $monthName = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
             $date = Auth::user()->tanggal_lahir;
-            $tanggal = intval(substr($date,8,2));
-            $bulan = $monthName[intval(substr($date,5,2)-1)];
-            $tahun = substr($date,0,4);
+            $tanggal = intval(substr($date, 8, 2));
+            $bulan = $monthName[intval(substr($date, 5, 2) - 1)];
+            $tahun = substr($date, 0, 4);
             return "$tanggal $bulan $tahun";
         }
-        
     }
 
     public function profileEdit()
     {
         $member = Member::find(Auth::id())->get();
-        
-        return view('member.edit_profil',['member'=>$member]);
+
+        return view('member.edit_profil', ['member' => $member]);
     }
 
-    public function updateDataProfile(Request $request){
+    public function updateDataProfile(Request $request)
+    {
         $date = $request->date;
         $month = $request->month;
         $year = $request->year;
@@ -277,48 +240,38 @@ class MemberController extends Controller
 
         $dateBorn = date_create("$year-$month-$date");
 
-        if(empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))){
+        if (empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))) {
             Member::find(Auth::id())->update([
                 'nama_lengkap' => $request->nama,
                 'jenis_kelamin' => $request->jk,
                 'tanggal_lahir' => $dateBorn
             ]);
-            return redirect()->route('profile')->with('alert','Profil berhasil diubah');
-        }
-        else{
-            if(Auth::Check())
-            {
+            return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
+        } else {
+            if (Auth::Check()) {
                 $request_data = $request->All();
                 $validator = $this->credentialRules($request_data);
-                if($validator->fails())
-                {
+                if ($validator->fails()) {
                     //return response()->json(array('error' => $validator->getMessageBag()->toArray()), 400);
-    
+
                     return redirect()->route('profile.edit')->with('alert', 'Ubah Password Gagal, Silahkan Periksa Kembali Password yang Anda Ubah');
-                }
-                else
-                {  
-                    $current_password = Auth::user()->password;         
-                    if(Hash::check($request_data['current-password'], $current_password))
-                    {           
-                        $member_id = Auth::user()->id_member;                       
+                } else {
+                    $current_password = Auth::user()->password;
+                    if (Hash::check($request_data['current-password'], $current_password)) {
+                        $member_id = Auth::user()->id_member;
                         $member = Member::find($member_id);
                         $member->update([
                             'password' => Hash::make($request->password)
                         ]);
                         return redirect()->route('profile')->with('alert', 'Password telah berhasil diubah');
-                    }
-                    else
-                    {           
+                    } else {
                         // $error = array('current-password' => 'Please enter correct current password');
                         // return response()->json(array('error' => $error), 400);
 
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
                     }
-                }        
-            }
-            else
-            {   
+                }
+            } else {
                 Member::find(Auth::id())->update([
                     'nama_lengkap' => $request->nama,
                     'jenis_kelamin' => $request->jk,
@@ -333,33 +286,32 @@ class MemberController extends Controller
     {
         //$member = Member::find(Auth::id())->get();
         //$member = Member::find($id);
-        
+
         //$member = Member::all();
         //return view('member.profil');
         //dd(count(Auth::user()->alamat));
-        return view('member.alamat',['member'=>Auth::user()]);
+        return view('member.alamat', ['member' => Auth::user()]);
     }
 
     public function tambahAlamat(Request $request)
     {
 
         $member = Member::find(Auth::id());
-        
+
         $alamatLama = $member->alamat;
-        
-        if(empty($alamatLama)){
+
+        if (empty($alamatLama)) {
             $alamatLama = array(
                 'IdAlamatUtama' => 0,
-                'alamat'=>array()
+                'alamat' => array()
             );
-            $id=0;
-        }
-        else{
+            $id = 0;
+        } else {
             $id = count($alamatLama['alamat']);
         }
-        
+
         $alamatBaru[] = array(
-            'id'=> $id,
+            'id' => $id,
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
@@ -368,17 +320,17 @@ class MemberController extends Controller
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
             'Alamat Jalan' => $request->alamatjalan
-        );        
-        
+        );
+
         $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
-        $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'],$alamatBaru);
+        $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
 
         //dd(json_encode($AlamatFinal));
         $member->alamat = $AlamatFinal;
         $member->save();
-    
+
         // dd($member->alamat['IdAlamatUtama']);
-        
+
         // //tampilan
         // for($i=0 ; $i < count($alamatLama['alamat'])-1;i++ ){
         //     if($member->alamat['IdAlamatUtama']==$i){
@@ -397,8 +349,8 @@ class MemberController extends Controller
         return redirect()->route('alamat');
     }
 
-    public function editAlamat($id,Request $request)
-    {   
+    public function editAlamat($id, Request $request)
+    {
         $member = Member::find($id);
 
         $namaPenerima = $request->namapenerima;
@@ -425,7 +377,7 @@ class MemberController extends Controller
             'alamat' => $alamat
         ]);
 
-        return redirect()->to('alamat/'.$id);
+        return redirect()->to('alamat/' . $id);
     }
 
     public function konfigurasiPesanan()
