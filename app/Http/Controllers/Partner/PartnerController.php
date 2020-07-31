@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Partner;
 
+use App\Http\Controllers\Controller;
 use App\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
