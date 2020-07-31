@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+
+    
+ 
 </head>
 <body>
     <div id="app">
@@ -43,23 +46,8 @@
                      <ul class="navbar-nav mr-auto">
 
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        {{-- @guest --}}
-                            {{-- @if (Route::has('register')) --}}
-                                {{-- <li class="nav-i, i8tem">
-                                    <a class="nav-link SemiBold text-primary-purple mr-4" href="{{ route('register') }}" style="color:#BC41BE; font-size: 24px;">{{__('Daftar')}}</a>
-                                </li>
-                            @endif
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-primary-wakprint btn-sm pt-2 pb-2 pl-5 pr-5 font-weight-bold" 
-                                    href="{{ route('login') }}" style="border-radius:30px; font-size: 24px; color:white">
-                                    {{ __('Masuk') }}
-                                </a>
-                            </li> --}}
-                            {{-- @else --}}
                             @auth
                                 <li class="nav-item mr-0">
                                     <a class="nav-link"
@@ -82,9 +70,82 @@
                 </div>
             </div>
         </nav>
-        <main>
-            @yield('content')
-        </main>
+
+        @guest
+            <main>
+                @yield('content')
+            </main>
+        @endguest
+        
+        @auth
+            <main>
+                <div class="container mt-4 mb-5">
+                    @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active mb-2" id="v-pills-beranda-tab" data-toggle="pill" href="#v-pills-beranda"
+                                    role="tab" aria-controls="v-pills-beranda" aria-selected="true" style="font-size:18px;">
+                                    <i class="material-icons md-36 align-middle mr-2">
+                                        home
+                                    </i>
+                                    {{__('Beranda')}}
+                                </a>
+                                <a class="nav-link mb-2" id="v-pills-data-member-tab" data-toggle="pill" href="#v-pills-data-member"
+                                    role="tab" aria-controls="v-pills-data-member" aria-selected="true" style="font-size:18px;">
+                                    <i class="material-icons md-36 align-middle mr-2">
+                                        history_edu
+                                    </i>
+                                    {{__('Data Member')}}
+                                </a>
+                                <a class="nav-link mb-2" id="v-pills-data-pengelola-tab" data-toggle="pill"
+                                    href="#v-pills-data-pengelola" role="tab" aria-controls="v-pills-data-pengelola"
+                                    aria-selected="true" style="font-size:18px;">
+                                    <i class="material-icons md-36 align-middle mr-2">
+                                        print
+                                    </i>
+                                    {{__('Data Pengelola')}}
+                                </a>
+                                <a class="nav-link mb-2" id="v-pills-saldo-tab" data-toggle="pill" href="#v-pills-saldo" role="tab"
+                                    aria-controls="v-pills-saldo" aria-selected="true" style="font-size:18px;">
+                                    <i class="material-icons md-36 align-middle mr-2">
+                                        account_balance_wallet
+                                    </i>
+                                    {{__('Saldo')}}
+                                </a>
+                                <a class="nav-link mb-4" id="v-pills-keluhan-tab" data-toggle="pill" href="#v-pills-keluhan" role="tab"
+                                    aria-controls="v-pills-keluhan" aria-selected="true" style="font-size:18px;">
+                                    <i class="material-icons md-36 align-middle mr-2">
+                                        chat
+                                    </i>
+                                    {{__('Keluhan Pelanggan')}}
+                                </a>
+                                <a class="nav-link mb-2" id="v-pills-keluar-tab" data-toggle="pill" href="#v-pills-keluar" role="tab"
+                                    aria-controls="v-pills-keluar" aria-selected="true" style="font-size:18px;"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="material-icons text-primary-danger md-36 align-middle mr-2">
+                                        exit_to_app
+                                    </i>
+                                    {{__('Keluar')}}
+                                </a>
+                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-content col-md-8">
+                            @yield('content')
+                        </div>
+                    </div>
+                </div>
+            </main>
+        @endauth
+        
     </div>
+    @yield('script')
 </body>
 </html>

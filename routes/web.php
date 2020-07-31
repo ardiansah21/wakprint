@@ -83,6 +83,7 @@ Route::prefix('partner')->name('partner.')->group(function(){
         Route::post('profil/edit','PartnerController@profileUpdate');
 
         Route::resource('produk', 'Partner\ProdukController');
+        Route::get('produk/create', 'Partner\ProdukController@create')->name('produk.create');
         
         Route::post('produk/media', 'Partner\ProdukController@storeMedia')->name('projects.storeMedia');
     });
@@ -98,34 +99,40 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::middleware('auth:admin')->group(function(){
         Route::get('/','Admin\AdminController@index')->name('home');
+        Route::get('member/detail','Admin\AdminController@detailMember')->name('detail.member');
+        Route::get('partner/detail','Admin\AdminController@detailPartner')->name('detail.partner');
+        Route::get('saldo/tolak','Admin\AdminController@saldoTolak')->name('saldo.tolak');
+        Route::get('keluhan/detail','Admin\AdminController@detailKeluhan')->name('detail.keluhan');
+        //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
+        //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
-
+        Route::get('member/json','AdminController@json');
     });
 
 });
 
 //Pengelola percetakan
-Route::prefix('admin')->name('admin.')->group(function(){
+// Route::prefix('admin')->name('admin.')->group(function(){
 
-    Route::get('/','AdminController@index')->name('dashboard');
-    Route::get('cari/member','AdminController@cariMember')->name('cari_member');
-    // Route::get('login','Partner\Auth\LoginController@showLoginForm')->name('login');
-    // Route::post('login','Partner\Auth\LoginController@login');
-    // Route::post('logout', 'Partner\Auth\LoginController@logout')->name('logout');
+//     Route::get('/','AdminController@index')->name('dashboard');
+//     Route::get('cari/member','AdminController@cariMember')->name('cari_member');
+//     Route::get('login','Partner\Auth\LoginController@showLoginForm')->name('login');
+//     Route::post('login','Partner\Auth\LoginController@login');
+//     Route::post('logout', 'Partner\Auth\LoginController@logout')->name('logout');
 
-    // Route::get('register', 'Partner\Auth\RegisterController@showRegisterPage')->name('register');
-    // Route::post('register', 'Partner\Auth\RegisterController@register');
-
-
-    // Route::middleware('auth:partner')->group(function(){
-    //     Route::get('/','PartnerController@index')->name('home');
-    //     Route::get('profil', 'PartnerController@profile')->name('profile');
-    //     Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
-    //     Route::post('profil/edit','PartnerController@profileUpdate');
-    // });
+//     Route::get('register', 'Partner\Auth\RegisterController@showRegisterPage')->name('register');
+//     Route::post('register', 'Partner\Auth\RegisterController@register');
 
 
-});
+//     Route::middleware('auth:partner')->group(function(){
+//         Route::get('/','PartnerController@index')->name('home');
+//         Route::get('profil', 'PartnerController@profile')->name('profile');
+//         Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
+//         Route::post('profil/edit','PartnerController@profileUpdate');
+//     });
+
+
+// });
 
 
 
@@ -133,6 +140,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 // //tessjson
 Route::get('/testjson', 'ProductController@index');
+
+// Route::get('table', 'ProductController@table');
+Route::get('table', 'ProductController@table');
+Route::get('table/json','ProductController@json');
 
 Route::get('/testjson/tambah/', 'ProductController@tambah');
 Route::post('/testjson/store','ProductController@store');

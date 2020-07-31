@@ -219,7 +219,6 @@
                     id="v-pills-saldo"
                     role="tabpanel">
                     @include('pengelola.saldo')
-                    {{-- @include('pengelola.popup_detail_transaksi') --}}
                 </div>
                 <div class="tab-pane fade"
                     id="v-pills-produk"

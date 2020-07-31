@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\product;
+use DataTables;
+use App\Member;
 
 class ProductController extends Controller
 {
@@ -49,6 +51,15 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->update($request->all());
         return redirect('/testjson');
+    }
+
+    public function table(Request $request)
+    {
+        return view('table');
+    }
+
+    public function json(){
+        return Datatables::of(Member::all())->make(true);
     }
 
 }
