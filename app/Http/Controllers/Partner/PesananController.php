@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PromoController extends Controller
+class PesananController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class PromoController extends Controller
      */
     public function index()
     {
-        return view('pengelola.homepage');
+        // dd('Muncul');
+        return view('pengelola.detail_pesanan_masuk');
     }
 
     /**
@@ -24,7 +25,7 @@ class PromoController extends Controller
      */
     public function create()
     {
-        return view('pengelola.tambah_promo');
+        //
     }
 
     /**

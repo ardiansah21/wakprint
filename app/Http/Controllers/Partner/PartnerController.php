@@ -49,10 +49,8 @@ class PartnerController extends Controller
 
         $atkdwh = $request->atkdwh;
 
-        $opBuka = date_create("$jamBuka:$menitBuka");
-        //$opBuka->format('H:i');
-        $opTutup = date_create("$jamTutup:$menitTutup");
-        //$opTutup->format('H:i');
+        $opBuka = date_create("$jamBuka:$menitBuka")->format('H:i:s');
+        $opTutup = date_create("$jamTutup:$menitTutup")->format('H:i:s');
 
         $partner->nama_toko = $request->namapercetakan;
         $partner->deskripsi_toko = $request->deskripsi;
@@ -69,6 +67,18 @@ class PartnerController extends Controller
         $partner->save();
         
         return redirect()->route('partner.profile')->with('alert','Profil berhasil diubah');
+    }
+
+    public function riwayatTransaksi()
+    {
+        $partner = Auth::user();
+        return view('pengelola.detail_transaksi',['partner'=>$partner]);
+    }
+
+    public function tarikSaldo()
+    {
+        $partner = Auth::user();
+        return view('pengelola.tarik_saldo',['partner'=>$partner]);
     }
 
 }

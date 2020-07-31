@@ -21,15 +21,14 @@ Route::get('/welcome', function () {
 });
 Auth::routes();
 
-// temp dropzone
-Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fileupload');
+    // temp dropzone
+    Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fileupload');
 
-Route::get('/profil', 'MemberController@profile')->name('profile');
-Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
+    //Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
 
-//member
+    //member
 
-Route::get('/', 'MemberController@index')->name('home');
+    Route::get('/', 'MemberController@index')->name('home');
 
     Route::get('produk', 'MemberController@produk')->name('produk');
 
@@ -71,12 +70,24 @@ Route::namespace('Partner')->prefix('partner')->name('partner.')->group(function
         Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
         Route::post('profil/edit','PartnerController@profileUpdate');
 
-        Route::resource('produk', 'Partner\ProdukController');
-        Route::get('produk/create', 'Partner\ProdukController@create')->name('produk.create');
-        
+        Route::get('tarik/saldo', 'PartnerController@tarikSaldo')->name('tarik.saldo');
+
+        Route::resource('produk', 'ProdukController');
+        Route::get('produk/create', 'ProdukController@create')->name('produk.create');
+        Route::post('produk/store', 'ProdukController@store')->name('produk.store');
         Route::post('produk/media', 'ProdukController@storeMedia')->name('produk.storeMedia');
+        
+        Route::resource('pesanan', 'PesananController');
+        Route::get('pesanan', 'PesananController@index')->name('detail.pesanan');
+
+        Route::get('riwayat', 'PartnerController@riwayatTransaksi')->name('detail.riwayat');
+        
+        
         Route::resource('promo', 'PromoController');
+        Route::get('promo/create', 'PromoController@create')->name('promo.create');
+
         Route::resource('atk', 'AtkController');
+        Route::get('atk/create', 'AtkController@create')->name('atk.create');
     });
 }); 
 

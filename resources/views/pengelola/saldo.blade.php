@@ -16,8 +16,9 @@
                 </div>
                 <div class="col-md-4 align-self-center text-right mr-0">
                     <button class="btn btn-primary-yellow pl-5 pr-5 font-weight-bold"
-                        data-toggle="modal"
-                        data-target="#tarikSaldoModal"
+                        onclick="window.location.href='{{ route('partner.tarik.saldo') }}'"
+                        {{-- data-toggle="modal"
+                        data-target="#tarikSaldoModal" --}}
                         style="border-radius:30px
                             font-size: 16px;">
                         {{__('Tarik')}}
@@ -106,8 +107,10 @@
         <tbody style="font-size:12px;">
 
             {{-- @foreach ($collection as $item) --}}
-                <tr class="clickable-row" data-toggle="modal"
-                data-target="#detailTransaksiModal">
+                <tr class="clickable-row"
+                    {{-- data-toggle="modal"
+                    data-target="#detailTransaksiModal" --}}
+                    >
 
                     {{-- @foreach ($collection as $item) --}}
                         <td scope="row">{{__('1')}}</td>
@@ -115,7 +118,7 @@
                         <td>{{__('5/7/2020')}}</td>
                         <td>{{__('Masuk')}}</td>
                         <td>{{__('Rp. 20.000')}}</td>
-                        <td><a class="text-primary-purple" href="">{{__('Lihat')}}</a></td>
+                        <td><a class="text-primary-purple" href="{{ route('partner.detail.riwayat') }}">{{__('Lihat')}}</a></td>
                     {{-- @endforeach --}}
                     
                 </tr>

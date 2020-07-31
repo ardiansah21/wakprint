@@ -1,4 +1,5 @@
-<button class="btn btn-outline-purple font-weight-bold pl-5 pr-5 mb-4" 
+<button class="btn btn-outline-purple font-weight-bold pl-5 pr-5 mb-4"
+    onclick="window.location.href='{{ route('partner.atk.create') }}'"
     style="border-radius:30px;
         font-size:16px;">
     {{__('Tambah ATK')}}
