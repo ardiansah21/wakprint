@@ -15,9 +15,9 @@ class CreateTransaksiSaldosTable extends Migration
     {
         Schema::create('transaksi_saldo', function (Blueprint $table) {
             $table->increments('id_transaksi');
-            $table->integer('id_pesanan')->unsigned();$table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
-            $table->integer('id_pengelola')->unsigned();$table->foreign('id_pengelola')->references('id_pengelola')->on('pengelola_percetakan');
-            $table->integer('id_member')->unsigned();$table->foreign('id_member')->references('id_member')->on('member');
+            $table->integer('id_pesanan')->unsigned()->nullable();$table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
+            $table->integer('id_pengelola')->unsigned()->nullable();$table->foreign('id_pengelola')->references('id_pengelola')->on('pengelola_percetakan');
+            $table->integer('id_member')->unsigned()->nullable();$table->foreign('id_member')->references('id_member')->on('member');
             $table->enum('jenis_transaksi',['TopUp','Tarik','Pembayaran'])->nullable();
             $table->integer('jumlah_saldo')->nullable();
             $table->string('kode_pembayaran',20)->nullable();

@@ -37,7 +37,7 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->decimal('rating_toko',2,1);
             $table->time('jam_op_buka')->nullable();
             $table->time('jam_op_tutup')->nullable();
-            $table->text('syarat kententuan')->nullable();
+            $table->text('syaratkententuan')->nullable();
             $table->string('foto_toko')->nullable();
             $table->timestamps();
         });

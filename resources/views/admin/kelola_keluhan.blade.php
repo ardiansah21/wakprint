@@ -98,9 +98,7 @@
                             {{__('Pending')}}
                         </td>
                         <td>
-                            <a href=""
-                                data-toggle="modal"
-                                data-target="#keluhanModal">
+                            <a href="{{ route('admin.detail.keluhan') }}">
                                 <i class="material-icons"
                                     style="color: #BC41BE;">
                                     play_circle_filled
@@ -115,4 +113,4 @@
         </tbody>
     </table>
 </div>
-@include('admin.tanggapi_keluhan')
+{{-- @include('admin.tanggapi_keluhan') --}}

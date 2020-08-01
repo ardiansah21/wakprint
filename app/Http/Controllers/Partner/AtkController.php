@@ -7,5 +7,14 @@ use Illuminate\Http\Request;
 
 class AtkController extends Controller
 {
-    //
+    public function index()
+    {
+        return view('pengelola.homepage');
+    }
+
+    public function create()
+    {
+        return view('pengelola.tambah_atk');
+    }
+    
 }

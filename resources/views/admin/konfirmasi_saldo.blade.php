@@ -165,8 +165,7 @@
                                                     check_circle
                                                 </i>
                                             </a>
-                                            <a href="" data-toggle="modal"
-                                                data-target="#tolakModal">
+                                            <a href="{{ route('admin.saldo.tolak') }}">
                                                 <i class="material-icons"
                                                     style="color: #FF4949;">
                                                     cancel
@@ -233,8 +232,7 @@
                                                 check_circle
                                             </i>
                                         </a>
-                                        <a href="" data-toggle="modal"
-                                            data-target="#tolakModal">
+                                        <a href="{{ route('admin.saldo.tolak') }}">
                                             <i class="material-icons"
                                                 style="color: #FF4949;">
                                                 cancel
@@ -252,4 +250,4 @@
         </div>
     </div>
 </div>
-@include('admin.tolak_pengelola')
+{{-- @include('admin.tolak_pengelola') --}}

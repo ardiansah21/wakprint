@@ -148,8 +148,8 @@
             <br>
             <label class="text-dark font-weight-bold mb-4" style="font-size: 24px;">{{__('Jadilah percetakan terbaik di Indonesia melalui kami') }}</label>
             <br>
-            <button class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
-            style="font-size: 24px">
+            <button onclick="window.location.href='{{ route('partner.login') }}'" class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
+                style="font-size: 24px">
                 <i class="material-icons md-32 align-middle mr-1">exit_to_app</i>
                 {{__('Daftar') }}
             </button>

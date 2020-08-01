@@ -12,11 +12,12 @@
                         <label class="card-text text-muted">{{__('Dipesan pada: 21 Februari 2020 20:35 WIB') }}</label>
                     </div>
                     <div class="text-right col-md-3">
-                        <button class="btn btn-primary-wakprint btn-rounded
-                        ml-1 pt-1 pb-1 pl-4 pr-4
-                        font-weight-bold text-center"
-                        style="border-radius:30px">{{__('Ulas') }}
-                        </button>
+                        <a href="{{ route('ulasan.ulas') }}"
+                            class="btn btn-primary-wakprint btn-rounded
+                            ml-1 pt-1 pb-1 pl-4 pr-4
+                            font-weight-bold text-center"
+                            style="border-radius:30px">{{__('Ulas') }}
+                        </a>
                     </div>
                 </div>
             </div>

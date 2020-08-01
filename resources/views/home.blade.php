@@ -95,7 +95,7 @@
                     class="btn btn-primary-yellow btn-rounded shadow-sm ml-1 pt-1 pb-1 pl-5 pr-5 SemiBold text-center"
                     style="position: absolute; font-size:24px;
                         top: 50%; left: 92%;
-                        transform: translate(-50%, -50%); 
+                        transform: translate(-50%, -50%);
                         -ms-transform: translate(-50%, -50%);">
                     {{__('Cari') }}
                 </button>
@@ -191,10 +191,11 @@
         <label class="text-dark font-weight-bold mb-4"
             style="font-size: 24px;">{{__('Jadilah percetakan terbaik di Indonesia melalui kami') }}</label>
         <br>
-        <button class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
+        <button onclick="window.location.href='{{ route('partner.register') }}'"
+            class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
             style="font-size: 24px">
             <i class="material-icons md-32 align-middle mr-1">exit_to_app</i>
-            {{__('Daftar') }}
+                {{__('Daftar') }}
         </button>
     </div>
 </div>
@@ -202,20 +203,20 @@
 @section('script')
 <script>
     Dropzone.autoDiscover = false;
-        
-        var myDropzone = new Dropzone(".dropzone",{ 
+
+        var myDropzone = new Dropzone(".dropzone",{
             maxFilesize: 10,  // 3 mb
             maxFiles:1,
             acceptedFiles: ".pdf",
             clickable: true,
         });
-        myDropzone.on("addedfile", function(file) { 
+        myDropzone.on("addedfile", function(file) {
             // alert("Added file.");
             // location.href = ("{{ route('upload.file.home')}}")
             post({{ route('upload.file.home') }},{name:file.name});
 
          });
-        
+
         myDropzone.on("sending", function(file, xhr, formData) {
         formData.append("_token", CSRF_TOKEN);
         });

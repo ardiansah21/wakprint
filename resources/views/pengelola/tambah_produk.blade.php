@@ -18,9 +18,9 @@
         <label class="mb-2 h4 font-weight-bold" style="font-size: 16px;" >
             {{__('Foto Produk') }}
         </label>
-        <div class="needsclick dropzone mb-3" id="document-dropzone">
-            <div class="dz-message" data-dz-message>
-                <span>klik atau tarik sini NJING</span><br> 
+        <div class="needsclick dropzone mb-3" id="document-dropzone" style=" border:1px solid #EBD1EC; border-radius:10px; color: #BC41BE; background-color:#EBD1EC;">
+            <div class="dz-message" data-dz-message style="font-size: 18px;">
+                <span>{{__('Klik atau Tarik Foto Produk Anda Disini') }}</span> 
             </div>
         </div>
 
@@ -56,24 +56,21 @@
         </label>
         <div class="form-group mb-4">
             <input name="nama" type="text" class="form-control form-control-lg mr-0" placeholder="Masukkan Nama Produk"
-                aria-label="Masukkan Nama Produk" aria-describedby="inputGroup-sizing-sm" style="font-size:16px;">
+                aria-label="Masukkan Nama Produk" aria-describedby="inputGroup-sizing-sm" style="font-size:16px;" required>
         </div>
-        <div class="row justify-content-between">
+        <div class="row justify-content-between mb-4">
             <div class="col-md-6">
                 <label class="mb-2 h4 font-weight-bold">
                     {{__('Harga Produk') }}
                 </label>
                 <div class="row justify-content-left mb-2">
-                    <label class="col-md-1 mt-2 mb-2">
+                    <label class="col-md-1 mt-2 mb-2" style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <div class="col-md-9 form-group mb-4">
-                        <input name="harga" type="text" class="form-control form-control-lg"
-                            placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                            aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
-                    </div>
-                    <label class="col-md-1 mt-0 mb-2">
-                        {{__('/ Lembar') }}
+                    <input name="harga" type="number" step="50" min="0" class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0" placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
+                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
+                    <label class="col-md-2 align-middle mt-2 mb-2" style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                        {{__('/ Lbr') }}
                     </label>
                 </div>
             </div>
@@ -82,17 +79,13 @@
                     {{__('Harga Produk (Timbal Balik)') }}
                 </label>
                 <div class="row justify-content-left mb-2">
-                    <label class="col-md-1 mt-2 mb-2">
+                    <label class="col-md-1 mt-2 mb-2" style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <div class="col-md-9 form-group mb-4">
-                        <input name="harga_timbal_balik" type="text" class="form-control form-control-lg pt-2 pb-2"
-                            placeholder="Masukkan Harga Produk (Timbal Balik)"
-                            aria-label="Masukkan Harga Produk (Timbal Balik)" aria-describedby="inputGroup-sizing-sm"
-                            style="font-size: 16px;">
-                    </div>
-                    <label class="col-md-1 mt-0 mb-2">
-                        {{__('/ Halaman') }}
+                    <input name="harga_timbal_balik" type="number" step="50" min="0" class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0" placeholder="Masukkan Harga Produk (Timbal Balik)" aria-label="Masukkan Harga Produk"
+                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
+                    <label class="col-md-2 align-middle mt-2 mb-2" style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                        {{__('/ Lbr') }}
                     </label>
                 </div>
             </div>
@@ -182,7 +175,7 @@
         <label class="mb-3 h4 font-weight-bold">
             {{__('Paket Produk') }}
         </label>
-        <div class="row justify-content-between mb-2 ml-0">
+        <div class="row justify-content-between mb-2 ml-0 mr-0">
             <div class="form-group custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="checkboxKliping" onchange="document.getElementById('kliping').disabled=!this.checked;">
                 <label class="custom-control-label" for="checkboxKliping">
@@ -213,7 +206,7 @@
             $paket = array('Lem','Baut','Kawat','spiral');
         @endphp
         @foreach ($paket as $p)
-            <div class="form-group row justify-content-between mb-3 ml-2">
+            <div class="form-group row justify-content-between mb-3 ml-2 mr-0">
                 <div class="col-md-6 custom-control custom-checkbox ml-3">
                     <input name="" type="checkbox" class="custom-control-input" id="checkbox{{ $p }}" onchange="document.getElementById('{{ $p }}').disabled=!this.checked; ">
                     <label class="custom-control-label" for="checkbox{{$p}}">
@@ -240,7 +233,7 @@
             $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transparan','Kertas Jeruk');
         @endphp
         @foreach ($nonPaket as $np)
-            <div class="row justify-content-between mb-3 ml-0">
+            <div class="row justify-content-between mb-3 ml-0 mr-0">
                 <div class="col-md-6 custom-control custom-checkbox ml-0">
                     <input name="" type="checkbox" class="custom-control-input" id="checkbox{{ $np }}" onchange="document.getElementById('{{ $np }}').disabled=!this.checked; ">
                     <label class="custom-control-label" for="checkbox{{$np}}">
@@ -263,9 +256,9 @@
         <label class="mb-4 ml-0 h4 mt-2 font-weight-bold ">
             {{__('Paket Tambahan Anda') }}
         </label>
-        <ul id="areaTambah" class="ml-0 mr-0" style="text-decoration: none;">
+        <ul id="areaTambah" class="mr-0" style="margin-left:-50px;list-style-type: none;">
         </ul>
-        <button id="tambahPaket" type="button" class="btn btn-warning center mt-2 mb-2">
+        <button id="tambahPaket" type="button" class="btn btn-primary-yellow btn-block center SemiBold mt-2 mb-5">
             Tambah Paket
         </button>
         <div class="row justify-content-end mr-0 mb-5">
@@ -286,14 +279,14 @@
     </form>
 </div>
 
-<script>
+{{-- <script>
     $('#tes').on('click', function () {
     var APP_URL = {!! json_encode(url('/')) !!}
     alert(APP_URL);
 });
 
 
-</script>
+</script> --}}
 @endsection
 @section('script')
 <script>
@@ -317,19 +310,7 @@
         } else {
           name = uploadedDocumentMap[file.name]
         }
-        $('form').find('input[name="document[]"][value="' + name + '"]').remove()
-      },
-      init: function () {
-        @if(isset($project) && $project->document)
-          var files ={!! json_encode($project->document) !!}
-          for (var i in files) {
-            var file = files[i]
-            this.options.addedfile.call(this, file)
-            file.previewElement.classList.add('dz-complete')
-            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-          }
-        @endif
       }
     }
-  </script>
-@stop
+</script>
+@endsection

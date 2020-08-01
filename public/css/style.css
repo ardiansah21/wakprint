@@ -702,6 +702,11 @@ table {
     border-radius: 5px;
 }
 
+.border-red {
+    border: 2px solid red;
+    border-radius: 5px;
+}
+
 .switch {
     position: relative;
     display: inline-block;

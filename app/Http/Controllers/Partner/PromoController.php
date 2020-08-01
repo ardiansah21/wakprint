@@ -14,7 +14,7 @@ class PromoController extends Controller
      */
     public function index()
     {
-        //
+        return view('pengelola.homepage');
     }
 
     /**
@@ -24,7 +24,7 @@ class PromoController extends Controller
      */
     public function create()
     {
-        //
+        return view('pengelola.tambah_promo');
     }
 
     /**
