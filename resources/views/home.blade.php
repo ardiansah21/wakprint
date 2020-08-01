@@ -7,10 +7,9 @@
     style="background-image: url(img/bg-unggah.png);background-size: cover;">
     <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
         style="width:250px;height:250px; background-color:transparent !important;">
-        <form id="frm-upload" action="{{ route('upload.file.home') }}" class="dropzone"
+        <form action="{{ route('upload.pdf') }}" class="dropzone" method="POST" enctype="multipart/form-data"
             style="width:100% ;background-color:transparent !important;">
             @csrf
-
             <div class="dz-message" data-dz-message>
                 <label class="SemiBold my-auto"
                     style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
@@ -29,15 +28,6 @@
             <i class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
             {{__('Unggah') }}
         </button>
-
-        <script>
-            function openDialog() {
-                    document.getElementById('fileid').click();
-                }
-            function submitForm() {
-                    document.getElementById('upload-form').submit();
-                }
-        </script>
 
         <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data"
             style="display: none;">
@@ -195,13 +185,21 @@
             class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
             style="font-size: 24px">
             <i class="material-icons md-32 align-middle mr-1">exit_to_app</i>
-                {{__('Daftar') }}
+            {{__('Daftar') }}
         </button>
     </div>
 </div>
 @endsection
 @section('script')
-<script>
+<script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+    function openDialog() {
+        document.getElementById('fileid').click();
+    }
+    function submitForm() {
+        document.getElementById('upload-form').submit();
+    }
+
     Dropzone.autoDiscover = false;
 
         var myDropzone = new Dropzone(".dropzone",{
@@ -209,58 +207,24 @@
             maxFiles:1,
             acceptedFiles: ".pdf",
             clickable: true,
+            timeout:180000,
         });
-        myDropzone.on("addedfile", function(file) {
-            // alert("Added file.");
-            // location.href = ("{{ route('upload.file.home')}}")
-            post({{ route('upload.file.home') }},{name:file.name});
+        // myDropzone.on("success", function(pdf){
 
-         });
-
-        myDropzone.on("sending", function(file, xhr, formData) {
-        formData.append("_token", CSRF_TOKEN);
-        });
-
-        // myDropzone.on("success", function(file) {
-        //     // var a = file;
-        //     // alert(a)
-        //     // var idvar = $.trim(file.xhr.response);
-        //     //location.href = ("{{ route('konfigurasi.file',['pdf'=>"+file+"]) }}");
-        //     // myDropzone.removeFile(file);
+        //     // window.location.href = "{{route('konfigurasi.file',['pdf'=>"v"])}}";
+        //     // if (myDropzone.getUploadingFiles().length === 0 && myDropzone.getQueuedFiles().length === 0) {
+        //         alert('sukses'));
+        //     // }
+        //     // document.body.innerHTML += <form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"><input type="hidden" name="file" value="+pdf}}"></form>';
+        //     // document.getElementById("Form").submit();
         // });
-
-
-    /**
-    * sends a request to the specified url from a form. this will change the window location.
-    * @param {string} path the path to send the post request to
-    * @param {object} params the paramiters to add to the url
-    * @param {string} [method=post] the method to use on the form
-    */
-
-    function post(path, params, method='post') {
-
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
-    const form = document.createElement('form');
-    form.method = method;
-    form.action = path;
-
-    for (const key in params) {
-    if (params.hasOwnProperty(key)) {
-    const hiddenField = document.createElement('input');
-    hiddenField.type = 'hidden';
-    hiddenField.name = key;
-    hiddenField.value = params[key];
-
-    form.appendChild(hiddenField);
-    }
-    }
-
-    document.body.appendChild(form);
-    form.submit();
-    }
-
-
+        myDropzone.on("success", function(file, xhr, formData){
+                document.body.innerHTML += '<form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"> @csrf <input type="text" name="namaFile" value="'+xhr.pdf.namaFile+'"> <input type="text" name="jumlahHalaman" value="'+xhr.pdf.jumlahHalaman+'"> <input type="text" name="jumlahHalBerwarna" value="'+xhr.pdf.jumlahHalBerwarna+'"> <input type="text" name="jumlahHalHitamPutih" value="'+xhr.pdf.jumlahHalHitamPutih+'"> <input type="text" name="path" value="'+xhr.pdf.path+'"></form>';
+                 document.getElementById("Form").submit();
+        });
+    //     myDropzone.on("sending", function(file, xhr, formData) {
+    //         formData.append("filesize", file.size);
+    //    });
 
 
 </script>

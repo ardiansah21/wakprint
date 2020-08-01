@@ -2,31 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use \stdClass;
-use Auth;
+use App\Konfigurasi_file;
 use App\Member;
 use App\Transaksi_saldo;
+use App\Produk;
+use App\Pengelola_Percetakan;
 use phpDocumentor\Reflection\Types\This;
 use App\Konfigurasi_file;
 use imagick;
 use File;
-use Storage;
-use Response;
-use Validator;
 use Hash;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use imagick;
+use Validator;
+use \stdClass;
 
 class MemberController extends Controller
 {
-    private stdClass $member;
+
     private $id;
     private $f;
+
     public function __construct()
     {
 
     }
+
+////
+    public function uploadPdf(Request $request)
+    {
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+        $path = $file->move(public_path('tmp/upload'), $fileName);
+        $pdf = $this->cekWarna($file, $path);
+        $pdf->path = public_path('tmp/upload') . "/" . $fileName;
+        return response()->json(['pdf' => $pdf]);
+    }
+
+    public function uploadtes(Request $request)
+    {
+        $pdf = new stdClass();
+        $pdf->namaFile = $request->namaFile;
+        $pdf->jumlahHalaman = $request->jumlahHalaman;
+        $pdf->jumlahHalBerwarna = $request->jumlahHalBerwarna;
+        $pdf->jumlahHalBerwarna = $request->jumlahHalBerwarna;
+        $pdf->path = $request->path;
+
+        return view('member.konfigurasi_file_lanjutan', compact('pdf'));
+    }
+
+////
 
     public function index()
     {
@@ -36,7 +61,6 @@ class MemberController extends Controller
     // temp dropzone
     public function fileupload(Request $request)
     {
-
         if ($request->hasFile('file')) {
 
             // Upload path
@@ -67,8 +91,8 @@ class MemberController extends Controller
 
     public function konfigurasiFile($pdf)
     {
+        dd($pdf);
         return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
-
     }
 
     public function upload(Request $request)
@@ -79,10 +103,10 @@ class MemberController extends Controller
         $file = $request->file('file');
         $k = Konfigurasi_file::insertGetId([
             'nama_file' => $file->getClientOriginalName(),
-            'waktu'     => now(),
+            'waktu' => now(),
         ]);
         $idd = $k;
-        $path = $file->move(public_path('filenya/'), $file->getClientOriginalName());
+        $path = $file->move(public_path('tmp/upload'), $file->getClientOriginalName());
         $pdf = $this->cekWarna($file, $path);
 
         // return response()->json([
@@ -101,26 +125,24 @@ class MemberController extends Controller
         return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
     }
 
-
-
     public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
     {
         //TODO merapikan struktur code dan storage
 
         $gray = 0;
         $notgray = 0;
-        $RandomNum   = time();
-        $FileName      = $file->getClientOriginalName();
+        $RandomNum = time();
+        $FileName = $file->getClientOriginalName();
         $output_dir = public_path('tempCekwarna/') . $FileName;
-        if (!File::exists(public_path('tempCekwarna/') . $FileName)) {
-            $output_dir = File::makeDirectory(public_path('tempCekwarna/') . $FileName, 0777, true);
-        }
+        // if (!File::exists(public_path('tempCekwarna/') . $FileName)) {
+        //     $output_dir = File::makeDirectory(public_path('tempCekwarna/') . $FileName, 0777, true);
+        // }
         $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
 
         $name = $path;
 
         for ($i = 0; $i < $jumlahHal; $i++) {
-            $nameto     = $output_dir . $RandomNum . '-' . $i . '.jpg';
+            $nameto = $output_dir . $RandomNum . '-' . $i . '.jpg';
             $im = new imagick($name . '[' . $i . ']');
             // convert to jpg
             $im->setResolution(400, 565);
@@ -192,9 +214,7 @@ class MemberController extends Controller
         return $pdf;
     }
 
-
     ///tempat nambah
-
 
     public function produk()
     {
@@ -205,29 +225,33 @@ class MemberController extends Controller
     public function profile()
     {
         //dd(getDateBorn());
-        $member=Auth::user();
+        $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::all();
-        
+        $pengelola = Pengelola_Percetakan::all();
+        $produk = Produk::all();
+
         // foreach ($transaksi_saldo as $ts => $value) {
-        //     dd($value['kode_pembayaran']);    
+        //     dd($value['kode_pembayaran']);
         // }
 
         //dd($transaksiSaldo);
 
         // $id = Transaksi_saldo::find(Auth::id());
-        
+
         //dd($member);
         return view('member.profil',[
             'member' => $member,
             'transaksi_saldo' => $transaksi_saldo,
+            'pengelola_percetakan' => $pengelola,
+            'produk' => $produk,
             'tanggalLahir'=>$this->getDateBorn()]
         );
     }
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
         $transaksiSaldo = Transaksi_saldo::find($id);
-        return view('member.profil',compact('transaksiSaldo'))->renderSections()['content'];
+        return view('member.profil', compact('transaksiSaldo'))->renderSections()['content'];
     }
 
     public function topUpSaldo(Request $request)
@@ -235,7 +259,7 @@ class MemberController extends Controller
         $member = Member::find(Auth::id());
         $transaksiSaldo = Transaksi_saldo::all();
         //$transaksiSaldo = transaks
-        
+
         $transaksiSaldo->jenis_transaksi = 'TopUp';
         $transaksiSaldo->status = 'Berhasil';
         $transaksiSaldo->keterangan = 'Top Up Telah Berhasil Dilakukan';
@@ -246,9 +270,9 @@ class MemberController extends Controller
         $statusTransaksi = $transaksiSaldo->status;
         $keteranganTransaksi = $transaksiSaldo->keterangan;
         dd($transaksiSaldo->id_transaksi);
-        
+
         $transaksiSaldo->save();
-    
+
         // return redirect()->route('profile');
         return view('member.profil', ['tanggalLahir' => $this->getDateBorn()]);
     }
@@ -274,7 +298,8 @@ class MemberController extends Controller
     {
         if (empty(Auth::user()->tanggal_lahir)) {
             return "-";
-        } else {
+        }
+        else {
             $monthName = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
             $date = Auth::user()->tanggal_lahir;
             $tanggal = intval(substr($date, 8, 2));
@@ -297,22 +322,18 @@ class MemberController extends Controller
         $month = $request->month;
         $year = $request->year;
 
-        // $dateBorn = array(
-        //     'Tanggal' => $date,
-        //     'Bulan' => $month,
-        //     'Tahun' => $year,
-        // );
-
         $dateBorn = date_create("$year-$month-$date");
 
         if (empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))) {
             Member::find(Auth::id())->update([
                 'nama_lengkap' => $request->nama,
                 'jenis_kelamin' => $request->jk,
-                'tanggal_lahir' => $dateBorn
+                'tanggal_lahir' => $dateBorn,
             ]);
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
-        } else {
+        }
+
+        else {
             if (Auth::Check()) {
                 $request_data = $request->All();
                 $validator = $this->credentialRules($request_data);
@@ -320,27 +341,30 @@ class MemberController extends Controller
                     //return response()->json(array('error' => $validator->getMessageBag()->toArray()), 400);
 
                     return redirect()->route('profile.edit')->with('alert', 'Ubah Password Gagal, Silahkan Periksa Kembali Password yang Anda Ubah');
-                } else {
+                }
+                else {
                     $current_password = Auth::user()->password;
                     if (Hash::check($request_data['current-password'], $current_password)) {
                         $member_id = Auth::user()->id_member;
                         $member = Member::find($member_id);
                         $member->update([
-                            'password' => Hash::make($request->password)
+                            'password' => Hash::make($request->password),
                         ]);
                         return redirect()->route('profile')->with('alert', 'Password telah berhasil diubah');
-                    } else {
+                    }
+                    else {
                         // $error = array('current-password' => 'Please enter correct current password');
                         // return response()->json(array('error' => $error), 400);
 
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
                     }
                 }
-            } else {
+            }
+            else {
                 Member::find(Auth::id())->update([
                     'nama_lengkap' => $request->nama,
                     'jenis_kelamin' => $request->jk,
-                    'tanggal_lahir' => $dateBorn
+                    'tanggal_lahir' => $dateBorn,
                 ]);
                 return redirect()->route('profile')->with('alert', 'Profil telah berhasil diubah');
             }
@@ -367,7 +391,7 @@ class MemberController extends Controller
         if (empty($alamatLama)) {
             $alamatLama = array(
                 'IdAlamatUtama' => 0,
-                'alamat' => array()
+                'alamat' => array(),
             );
             $id = 0;
         } else {
@@ -383,7 +407,7 @@ class MemberController extends Controller
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
+            'Alamat Jalan' => $request->alamatjalan,
         );
 
         $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
@@ -433,7 +457,7 @@ class MemberController extends Controller
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
+            'Alamat Jalan' => $request->alamatjalan,
         );
 
         $alamat['alamat'][$request->id] = $alamatBaru;
@@ -444,23 +468,22 @@ class MemberController extends Controller
     }
 
     public function hapusAlamat($id)
-    {   
-        
+    {
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
         $new_array[] = array();
         $i = 0;
         foreach ($alamat['alamat'] as $key => $value) {
-            if($value['id'] != $id){
+            if ($value['id'] != $id) {
                 $new_array[$i] = $value;
                 $new_array[$i]['id'] = $i;
-                $i++; 
+                $i++;
             }
         }
-        $alamat['alamat'] = $new_array; 
-        
-        if(empty($new_array['alamat'])){
-            
+        $alamat['alamat'] = $new_array;
+
+        if (empty($new_array['alamat'])) {
+
             //unset($new_array['alamat']);
             //unset($alamat['IdAlamatUtama']);
             //unset($new_array['IdAlamatUtama']);
@@ -479,13 +502,14 @@ class MemberController extends Controller
         return view('member.konfigurasi_pesanan');
     }
 
-    public function saldoPembayaran()
+    public function saldoPembayaran($id)
     {
         $member=Auth::user();
-        $transaksi_saldo = Transaksi_saldo::all();
+        $transaksi_saldo = Transaksi_saldo::find($id);
+        $waktu = $transaksi_saldo->waktu;
 
         return view('member.pembayaran_topup', [
-            'member' => Auth::user(),
+            'member' => $member,
             'transaksi_saldo' => $transaksi_saldo
         ]);
     }
@@ -494,7 +518,7 @@ class MemberController extends Controller
     {
         // $member=Auth::user();
         // $transaksi_saldo = Transaksi_saldo::all();
-        
+
         return view('member.detail_pesanan');
     }
 
@@ -510,6 +534,6 @@ class MemberController extends Controller
 
     public function chat()
     {
-      return view('member.chat');
+        return view('member.chat');
     }
 }

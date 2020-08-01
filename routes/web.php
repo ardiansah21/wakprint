@@ -14,54 +14,62 @@ use Illuminate\Support\Facades\Auth;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/welcome', function () {
     return view('welcome');
 });
 Auth::routes();
 
-    // temp dropzone
-    Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fileupload');
+/////
+Route::post('/upload-pdf', 'MemberController@uploadPdf')->name('upload.pdf');
 
-    //Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
+Route::post('/uploaddd', 'MemberController@uploadtes')->name('upload.test');
+/////
 
-    //member
+// temp dropzone
+Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fileupload');
 
-    Route::get('/', 'MemberController@index')->name('home');
+//Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
 
-    Route::get('produk', 'MemberController@produk')->name('produk');
+//member
 
-    //test upload
-    Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
+Route::get('/', 'MemberController@index')->name('home');
 
     Route::middleware('auth')->group(function () {
         Route::get('chat', 'MemberController@chat')->name('chat');
         //TODO merapikan File Storage 2
         /*****/ Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
         /*****/ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
-        
+
         Route::get('/profil', 'MemberController@profile')->name('profile');
         Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
         Route::post('/profil/edit', 'MemberController@updateDataProfile');
 
-        Route::get('profil/alamat', 'MemberController@alamat')->name('alamat');
-        Route::post('profil/alamat/update', 'MemberController@editAlamat')->name('alamat.edit');
-        Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
-        Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
+//test upload
+Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
 
-        Route::get('saldo/pembayaran', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
+        Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran');
 
-        Route::get('riwayat/detail', 'MemberController@detailRiwayat')->name('detail.riwayat');
+    Route::get('/profil', 'MemberController@profile')->name('profile');
+    Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
+    Route::post('/profil/edit', 'MemberController@updateDataProfile');
 
-        Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
-        Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
-    });
+    Route::get('profil/alamat', 'MemberController@alamat')->name('alamat');
+    Route::post('profil/alamat/update', 'MemberController@editAlamat')->name('alamat.edit');
+    Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
+    Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
 
+    Route::get('saldo/pembayaran', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
+
+    Route::get('riwayat/detail', 'MemberController@detailRiwayat')->name('detail.riwayat');
+
+    Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
+    Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
+});
 
 //Pengelola percetakan
-Route::namespace('Partner')->prefix('partner')->name('partner.')->group(function () {
-
+Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(function () {
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\LoginController@login');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -69,51 +77,56 @@ Route::namespace('Partner')->prefix('partner')->name('partner.')->group(function
     Route::get('register', 'Auth\RegisterController@showRegisterPage')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
 
-    Route::middleware('auth:partner')->group(function(){
-        Route::get('/','PartnerController@index')->name('home');
+    Route::middleware('auth:partner')->group(function () {
+        Route::get('/', 'PartnerController@index')->name('home');
         Route::get('profil', 'PartnerController@profile')->name('profile');
         Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
-        Route::post('profil/edit','PartnerController@profileUpdate');
+        Route::post('profil/edit', 'PartnerController@profileUpdate');
 
-        Route::get('tarik/saldo', 'PartnerController@tarikSaldo')->name('tarik.saldo');
+        Route::get('saldo', 'PartnerController@saldo')->name('saldo');
+        Route::get('saldo/tarik', 'PartnerController@tarikSaldo')->name('saldo.tarik');
 
         Route::resource('produk', 'ProdukController');
+        Route::get('produk', 'ProdukController@index')->name('produk');
         Route::get('produk/create', 'ProdukController@create')->name('produk.create');
         Route::post('produk/store', 'ProdukController@store')->name('produk.store');
         Route::post('produk/media', 'ProdukController@storeMedia')->name('produk.storeMedia');
-        
-        Route::resource('pesanan', 'PesananController');
-        Route::get('pesanan', 'PesananController@index')->name('detail.pesanan');
+        Route::post('produk/duplicate', 'ProdukController@duplicate')->name('produk.duplicate');
 
-        Route::get('riwayat', 'PartnerController@riwayatTransaksi')->name('detail.riwayat');
-        
-        
+        Route::get('pesanan', 'PesananController@index')->name('pesanan');
+        Route::get('pesanan/detail', 'PesananController@detailPesanan')->name('detail.pesanan');
+
+        Route::get('riwayat/{id}', 'PartnerController@riwayatTransaksi')->name('riwayat.detail');
+
+
         Route::resource('promo', 'PromoController');
+        Route::get('promo', 'PromoController@index')->name('promo');
         Route::get('promo/create', 'PromoController@create')->name('promo.create');
 
         Route::resource('atk', 'AtkController');
+        Route::get('atk', 'AtkController@index')->name('atk');
         Route::get('atk/create', 'AtkController@create')->name('atk.create');
+
+        Route::get('info', 'PartnerController@info')->name('info');
     });
 });
 
-
 //Admin
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function (){
-
+Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\LoginController@login');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-    Route::middleware('auth:admin')->group(function(){
+    Route::middleware('auth:admin')->group(function () {
         Route::get('/', 'AdminController@index')->name('home');
-        Route::get('member/detail','Admin\AdminController@detailMember')->name('detail.member');
-        Route::get('partner/detail','Admin\AdminController@detailPartner')->name('detail.partner');
-        Route::get('saldo/tolak','Admin\AdminController@saldoTolak')->name('saldo.tolak');
-        Route::get('keluhan/detail','Admin\AdminController@detailKeluhan')->name('detail.keluhan');
+        Route::get('member/detail', 'Admin\AdminController@detailMember')->name('detail.member');
+        Route::get('partner/detail', 'Admin\AdminController@detailPartner')->name('detail.partner');
+        Route::get('saldo/tolak', 'Admin\AdminController@saldoTolak')->name('saldo.tolak');
+        Route::get('keluhan/detail', 'Admin\AdminController@detailKeluhan')->name('detail.keluhan');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
-        Route::get('member/json','AdminController@json');
+        Route::get('member/json', 'AdminController@json');
     });
 });
 
@@ -122,7 +135,7 @@ Route::get('/testjson', 'ProductController@index');
 
 // Route::get('table', 'ProductController@table');
 Route::get('table', 'ProductController@table');
-Route::get('table/json','ProductController@json');
+Route::get('table/json', 'ProductController@json');
 
 Route::get('/testjson/tambah/', 'ProductController@tambah');
 Route::post('/testjson/store', 'ProductController@store');

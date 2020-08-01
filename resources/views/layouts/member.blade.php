@@ -89,9 +89,141 @@
             </div>
         </nav>
         @guest
-            <main>
-                @yield('content')
-            </main>
+        <main>
+            @yield('content')
+        </main>
+        <footer class="footer">
+            <div class="shadow-sm" style="width: 100%"></div>
+            <div class="container pt-2 pb-5">
+                <div class="row">
+                    <div class="col-md-3 mt-0">
+                        <a id="logo" style="font-size: 36px;">{{ __('WAKPRINT') }}</a>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
+                        <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
+                        <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
+
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}</h4>
+                        <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                        <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
+                        <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
+                        <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
+                        <div class="row mb-2">
+                            <img src="{{url('img/instagram.png')}}" class="img-responsive ml-0" alt="" width="24"
+                                height="24">
+                            <img src="{{url('img/facebook.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                height="24">
+                            <img src="{{url('img/youtube.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                height="24">
+                            <img src="{{url('img/whatsapp.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                height="24">
+                        </div>
+                        <div class="row">
+                            <a>
+                                <i class="fa fa-copyright"
+                                    style="font-size: 16px;">{{__(' Copyright Wakprint 2020') }}</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        @endguest
+
+        @auth
+        <main>
+            @if (Route::currentRouteName() == 'profile')
+            <div class="container">
+                <div class="row mt-5 mb-5">
+                    <div class="col-md-5">
+                        <div class="bg-light-purple text-center"
+                            style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                                class="img-responsive" alt="" width="300px" height="300px"
+                                style="border-radius:8px 8px 8px 8px;">
+                            <div class="bg-dark" style="position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-50%, 140%); opacity:80%;
+                                        color: white;
+                                        width:300px;
+                                        border-radius:0px 0px 8px 8px;">
+                                <label class="font-weight-bold text-truncate mx-auto"
+                                    style="font-size: 30px; width:100%;">{{ $m->nama_lengkap }}</label>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" data-toggle="link"
+                                    href="{{ route('alamat') }}" role="tab" aria-controls="v-pills-alamat"
+                                    aria-selected="true" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">
+                                        location_on
+                                    </i>
+                                    {{__('Medan ID') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill"
+                                    href="#v-pills-saldo" role="tab" aria-controls="v-pills-saldo" aria-selected="false"
+                                    style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
+                                    Rp. {{ $m->jumlah_saldo }}
+                                </a>
+                                <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
+                                    href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">history</i>
+                                    {{__('Riwayat Transaksi') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab" data-toggle="link"
+                                    href="{{ route('konfigurasiPesanan') }}" role="tab"
+                                    aria-controls="v-pills-konfigurasi" aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
+                                    {{__('Konfigurasi File') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" data-toggle="pill"
+                                    href="#v-pills-pesanan" role="tab" aria-controls="v-pills-pesanan"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
+                                    {{__('Pesanan') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-2" id="v-pills-favorit-tab" data-toggle="pill"
+                                    href="#v-pills-favorit" role="tab" aria-controls="v-pills-favorit"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">favorite</i>
+                                    {{__('Favorit') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-4" id="v-pills-ulasan-tab" data-toggle="pill"
+                                    href="#v-pills-ulasan" role="tab" aria-controls="v-pills-ulasan"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">rate_review</i>
+                                    {{__('Ulasan') }}
+                                </a>
+                                <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill"
+                                    href="{{ route('logout') }}" role="tab" aria-controls="v-pills-keluar"
+                                    aria-selected="true" style="font-size: 24px;"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="material-icons align-middle md-32 mr-2">exit_to_app</i>
+                                    {{__('Keluar') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content col-md-7">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
             <footer class="footer">
                 <div class="shadow-sm" style="width: 100%"></div>
                 <div class="container pt-2 pb-5">
@@ -103,13 +235,15 @@
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
                             <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
                             <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
-    
+
                         </div>
                         <div class="col-md-3 mt-3">
-                            <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}</h4>
+                            <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
+                            </h4>
                             <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
                             <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
-                            <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
+                            <a class="row text-dark" href="#"
+                                style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
                             <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
                         </div>
                         <div class="col-md-3 mt-3">
@@ -134,360 +268,191 @@
                     </div>
                 </div>
             </footer>
-        @endguest
-
-        @auth
-            <main>
-                @if (Route::currentRouteName() == 'profile')
-                    <div class="container">
-                        <div class="row mt-5 mb-5">
-                            <div class="col-md-5">
-                                <div class="bg-light-purple text-center"
-                                    style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
-                                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                        class="img-responsive" alt="" width="300px" height="300px" style="border-radius:8px 8px 8px 8px;">
-                                    <div class="bg-dark" style="position: absolute; 
+            @elseif (Route::currentRouteName() == 'profile.edit')
+            <div class="container">
+                <div class="row mt-5 mb-5">
+                    <div class="col-md-5">
+                        <div class="bg-light-purple text-center"
+                            style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                                class="img-responsive" alt="" width="300px" height="300px"
+                                style="border-radius:8px 8px 8px 8px;">
+                            <div class="bg-dark" style="position: absolute;
                                         top: 50%;
                                         left: 50%;
                                         transform: translate(-50%, 140%); opacity:80%;
                                         color: white;
                                         width:300px;
                                         border-radius:0px 0px 8px 8px;">
-                                        <label class="font-weight-bold text-truncate mx-auto"
-                                            style="font-size: 30px; width:100%;">{{ $m->nama_lengkap }}</label>
-                                    </div>
-                                </div>
-                                <div class="mt-3">
-                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" data-toggle="link"
-                                            href="{{ route('alamat') }}" role="tab" aria-controls="v-pills-alamat" aria-selected="true"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">
-                                                location_on
-                                            </i>
-                                            {{__('Medan ID') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill" href="#v-pills-saldo"
-                                            role="tab" aria-controls="v-pills-saldo" aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
-                                            Rp. {{ $m->jumlah_saldo }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
-                                            href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat" aria-selected="false"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">history</i>
-                                            {{__('Riwayat Transaksi') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab" data-toggle="link"
-                                            href="{{ route('konfigurasiPesanan') }}" role="tab" aria-controls="v-pills-konfigurasi"
-                                            aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
-                                            {{__('Konfigurasi File') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" data-toggle="pill"
-                                            href="#v-pills-pesanan" role="tab" aria-controls="v-pills-pesanan" aria-selected="false"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
-                                            {{__('Pesanan') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-2" id="v-pills-favorit-tab" data-toggle="pill"
-                                            href="#v-pills-favorit" role="tab" aria-controls="v-pills-favorit" aria-selected="false"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">favorite</i>
-                                            {{__('Favorit') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-ulasan-tab" data-toggle="pill" href="#v-pills-ulasan"
-                                            role="tab" aria-controls="v-pills-ulasan" aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">rate_review</i>
-                                            {{__('Ulasan') }}
-                                        </a>
-                                        <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill" href="{{ route('logout') }}"
-                                            role="tab" aria-controls="v-pills-keluar" aria-selected="true" style="font-size: 24px;"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="material-icons align-middle md-32 mr-2">exit_to_app</i>
-                                            {{__('Keluar') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </div>
+                                <label class="font-weight-bold text-truncate mx-auto"
+                                    style="font-size: 30px; width:100%;">{{ $m->nama_lengkap }}</label>
                             </div>
-                            <div class="tab-content col-md-7">
-                                @yield('content')
+                        </div>
+                        <div class="mt-3">
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" data-toggle="link"
+                                    href="{{ route('alamat') }}" role="tab" aria-controls="v-pills-alamat"
+                                    aria-selected="true" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">
+                                        location_on
+                                    </i>
+                                    {{__('Medan ID') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill"
+                                    href="#v-pills-saldo" role="tab" aria-controls="v-pills-saldo" aria-selected="false"
+                                    style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
+                                    Rp. {{ $m->jumlah_saldo }}
+                                </a>
+                                <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
+                                    href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">history</i>
+                                    {{__('Riwayat Transaksi') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab" data-toggle="link"
+                                    href="{{ route('konfigurasiPesanan') }}" role="tab"
+                                    aria-controls="v-pills-konfigurasi" aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
+                                    {{__('Konfigurasi File') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" data-toggle="pill"
+                                    href="#v-pills-pesanan" role="tab" aria-controls="v-pills-pesanan"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
+                                    {{__('Pesanan') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-2" id="v-pills-favorit-tab" data-toggle="pill"
+                                    href="#v-pills-favorit" role="tab" aria-controls="v-pills-favorit"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">favorite</i>
+                                    {{__('Favorit') }}
+                                </a>
+                                <a class="nav-link SemiBold mb-4" id="v-pills-ulasan-tab" data-toggle="pill"
+                                    href="#v-pills-ulasan" role="tab" aria-controls="v-pills-ulasan"
+                                    aria-selected="false" style="font-size: 24px;">
+                                    <i class="material-icons align-middle md-32 mr-2">rate_review</i>
+                                    {{__('Ulasan') }}
+                                </a>
+                                <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill"
+                                    href="{{ route('logout') }}" role="tab" aria-controls="v-pills-keluar"
+                                    aria-selected="true" style="font-size: 24px;"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="material-icons align-middle md-32 mr-2">exit_to_app</i>
+                                    {{__('Keluar') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <footer class="footer">
-                        <div class="shadow-sm" style="width: 100%"></div>
-                        <div class="container pt-2 pb-5">
-                            <div class="row">
-                                <div class="col-md-3 mt-0">
-                                    <a id="logo" style="font-size: 36px;">{{ __('WAKPRINT') }}</a>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
-                                    <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
-                                    <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
-            
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}</h4>
-                                    <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
-                                    <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
-                                    <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                                    <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
-                                    <div class="row mb-2">
-                                        <img src="{{url('img/instagram.png')}}" class="img-responsive ml-0" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/facebook.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/youtube.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/whatsapp.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                    </div>
-                                    <div class="row">
-                                        <a>
-                                            <i class="fa fa-copyright"
-                                                style="font-size: 16px;">{{__(' Copyright Wakprint 2020') }}</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                @elseif (Route::currentRouteName() == 'profile.edit')
-                    <div class="container">
-                        <div class="row mt-5 mb-5">
-                            <div class="col-md-5">
-                                <div class="bg-light-purple text-center"
-                                    style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
-                                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                        class="img-responsive" alt="" width="300px" height="300px" style="border-radius:8px 8px 8px 8px;">
-                                    <div class="bg-dark" style="position: absolute; 
-                                        top: 50%;
-                                        left: 50%;
-                                        transform: translate(-50%, 140%); opacity:80%;
-                                        color: white;
-                                        width:300px;
-                                        border-radius:0px 0px 8px 8px;">
-                                        <label class="font-weight-bold text-truncate mx-auto"
-                                            style="font-size: 30px; width:100%;">{{ $m->nama_lengkap }}</label>
-                                    </div>
-                                </div>
-                                <div class="mt-3">
-                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" data-toggle="link"
-                                            href="{{ route('alamat') }}" role="tab" aria-controls="v-pills-alamat" aria-selected="true"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">
-                                                location_on
-                                            </i>
-                                            {{__('Medan ID') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" data-toggle="pill" href="#v-pills-saldo"
-                                            role="tab" aria-controls="v-pills-saldo" aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
-                                            Rp. {{ $m->jumlah_saldo }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3" data-toggle="pill"
-                                            href="#v-pills-riwayat" role="tab" aria-controls="v-pills-riwayat" aria-selected="false"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">history</i>
-                                            {{__('Riwayat Transaksi') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab" data-toggle="link"
-                                            href="{{ route('konfigurasiPesanan') }}" role="tab" aria-controls="v-pills-konfigurasi"
-                                            aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
-                                            {{__('Konfigurasi File') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" data-toggle="pill"
-                                            href="#v-pills-pesanan" role="tab" aria-controls="v-pills-pesanan" aria-selected="false"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
-                                            {{__('Pesanan') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-2" id="v-pills-favorit-tab" data-toggle="pill"
-                                            href="#v-pills-favorit" role="tab" aria-controls="v-pills-favorit" aria-selected="false"
-                                            style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">favorite</i>
-                                            {{__('Favorit') }}
-                                        </a>
-                                        <a class="nav-link SemiBold mb-4" id="v-pills-ulasan-tab" data-toggle="pill" href="#v-pills-ulasan"
-                                            role="tab" aria-controls="v-pills-ulasan" aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">rate_review</i>
-                                            {{__('Ulasan') }}
-                                        </a>
-                                        <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill" href="{{ route('logout') }}"
-                                            role="tab" aria-controls="v-pills-keluar" aria-selected="true" style="font-size: 24px;"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="material-icons align-middle md-32 mr-2">exit_to_app</i>
-                                            {{__('Keluar') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-content col-md-7">
-                                @yield('content')
-                            </div>
-                        </div>
+                    <div class="tab-content col-md-7">
+                        @yield('content')
                     </div>
-                    <footer class="footer">
-                        <div class="shadow-sm" style="width: 100%"></div>
-                        <div class="container pt-2 pb-5">
-                            <div class="row">
-                                <div class="col-md-3 mt-0">
-                                    <a id="logo" style="font-size: 36px;">{{ __('WAKPRINT') }}</a>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
-                                    <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
-                                    <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
-            
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}</h4>
-                                    <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
-                                    <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
-                                    <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                                    <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
-                                    <div class="row mb-2">
-                                        <img src="{{url('img/instagram.png')}}" class="img-responsive ml-0" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/facebook.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/youtube.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/whatsapp.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                    </div>
-                                    <div class="row">
-                                        <a>
-                                            <i class="fa fa-copyright"
-                                                style="font-size: 16px;">{{__(' Copyright Wakprint 2020') }}</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="shadow-sm" style="width: 100%"></div>
+                <div class="container pt-2 pb-5">
+                    <div class="row">
+                        <div class="col-md-3 mt-0">
+                            <a id="logo" style="font-size: 36px;">{{ __('WAKPRINT') }}</a>
                         </div>
-                    </footer>
-                {{-- @elseif (Route::currentRouteName() == 'saldo.pembayaran') --}}
+                        <div class="col-md-3 mt-3">
+                            <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
+                            <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
+                            <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
 
-                @else
-                    @yield('content')
-                    <footer class="footer">
-                        <div class="shadow-sm" style="width: 100%"></div>
-                        <div class="container pt-2 pb-5">
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
+                            </h4>
+                            <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                            <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
+                            <a class="row text-dark" href="#"
+                                style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
+                            <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
+                            <div class="row mb-2">
+                                <img src="{{url('img/instagram.png')}}" class="img-responsive ml-0" alt="" width="24"
+                                    height="24">
+                                <img src="{{url('img/facebook.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                    height="24">
+                                <img src="{{url('img/youtube.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                    height="24">
+                                <img src="{{url('img/whatsapp.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                    height="24">
+                            </div>
                             <div class="row">
-                                <div class="col-md-3 mt-0">
-                                    <a id="logo" style="font-size: 36px;">{{ __('WAKPRINT') }}</a>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
-                                    <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
-                                    <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
-            
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}</h4>
-                                    <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
-                                    <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
-                                    <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                                    <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
-                                </div>
-                                <div class="col-md-3 mt-3">
-                                    <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
-                                    <div class="row mb-2">
-                                        <img src="{{url('img/instagram.png')}}" class="img-responsive ml-0" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/facebook.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/youtube.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                        <img src="{{url('img/whatsapp.png')}}" class="img-responsive ml-4" alt="" width="24"
-                                            height="24">
-                                    </div>
-                                    <div class="row">
-                                        <a>
-                                            <i class="fa fa-copyright"
-                                                style="font-size: 16px;">{{__(' Copyright Wakprint 2020') }}</i>
-                                        </a>
-                                    </div>
-                                </div>
+                                <a>
+                                    <i class="fa fa-copyright"
+                                        style="font-size: 16px;">{{__(' Copyright Wakprint 2020') }}</i>
+                                </a>
                             </div>
                         </div>
-                    </footer>
-                @endif
-            </main>
+                    </div>
+                </div>
+            </footer>
+            {{-- @elseif (Route::currentRouteName() == 'saldo.pembayaran') --}}
+
+            @else
+            @yield('content')
+            <footer class="footer">
+                <div class="shadow-sm" style="width: 100%"></div>
+                <div class="container pt-2 pb-5">
+                    <div class="row">
+                        <div class="col-md-3 mt-0">
+                            <a id="logo" style="font-size: 36px;">{{ __('WAKPRINT') }}</a>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
+                            <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
+                            <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
+
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
+                            </h4>
+                            <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                            <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
+                            <a class="row text-dark" href="#"
+                                style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
+                            <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
+                            <div class="row mb-2">
+                                <img src="{{url('img/instagram.png')}}" class="img-responsive ml-0" alt="" width="24"
+                                    height="24">
+                                <img src="{{url('img/facebook.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                    height="24">
+                                <img src="{{url('img/youtube.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                    height="24">
+                                <img src="{{url('img/whatsapp.png')}}" class="img-responsive ml-4" alt="" width="24"
+                                    height="24">
+                            </div>
+                            <div class="row">
+                                <a>
+                                    <i class="fa fa-copyright"
+                                        style="font-size: 16px;">{{__(' Copyright Wakprint 2020') }}</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            @endif
+        </main>
         @endauth
-        
+
     </div>
     <!-- Script -->
-    <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
     @yield('script')
-
-    // var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-
-    // Dropzone.autoDiscover = false;
-
-    // var myDropzone = new Dropzone(".dropzone",{
-    // maxFilesize: 10, // 3 mb
-    // maxFiles:1,
-    // acceptedFiles: ".pdf",
-    // clickable: true,
-    // });
-    // myDropzone.on("sending", function(file, xhr, formData) {
-    // formData.append("_token", CSRF_TOKEN);
-    // });
-    // myDropzone.on("success", function(file) {
-    // var a = file;
-    // alert(a)
-    // // var idvar = $.trim(file.xhr.response);
-    // //location.href = ("{{ route('konfigurasi.file',['pdf'=>"+file+"]) }}");
-    // // myDropzone.removeFile(file);
-    // });
-
-    /**
-    * sends a request to the specified url from a form. this will change the window location.
-    * @param {string} path the path to send the post request to
-    * @param {object} params the paramiters to add to the url
-    * @param {string} [method=post] the method to use on the form
-    */
-
-    // function post(path, params, method='post') {
-
-    // // The rest of this code assumes you are not using a library.
-    // // It can be made less wordy if you use one.
-    // const form = document.createElement('form');
-    // form.method = method;
-    // form.action = path;
-
-    // for (const key in params) {
-    // if (params.hasOwnProperty(key)) {
-    // const hiddenField = document.createElement('input');
-    // hiddenField.type = 'hidden';
-    // hiddenField.name = key;
-    // hiddenField.value = params[key];
-
-    // form.appendChild(hiddenField);
-    // }
-    // }
-
-    // document.body.appendChild(form);
-    // form.submit();
-    // }
-
 </body>
 
 </html>

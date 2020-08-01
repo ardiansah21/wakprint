@@ -6,6 +6,7 @@ body {
     height: 100vh;
     font-family: 'Montserrat';
     margin: 0;
+    zoom: 85%;
 }
 
 .is-flex {

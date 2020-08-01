@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Produk;
+use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Pengelola_Percetakan;
@@ -12,18 +13,30 @@ class PartnerController extends Controller
 {
     public function index()
     {
-        return view('pengelola.homepage');
+        $produk = Produk::all();
+        $partner = Auth::user();
+        $transaksi_saldo = Transaksi_saldo::all();
+        return view('pengelola.homepage',[
+            'partner'=> $partner,
+            'produk' => $produk,
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
     }
 
     public function profile()
     {
         $partner = Auth::user();
-        return view('pengelola.profil',['partner'=>$partner]);
+        $produk = Produk::all();
+        $transaksi_saldo = Transaksi_saldo::all();
+        return view('pengelola.profil',[
+            'partner' => $partner,
+            'produk' => $produk,
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
     }
 
     public function profileEdit()
     {
-       
         $partner = Pengelola_Percetakan::find(Auth::id());
         return view('pengelola.edit_profil',['partner'=>$partner]);
     }
@@ -49,8 +62,8 @@ class PartnerController extends Controller
 
         $atkdwh = $request->atkdwh;
 
-        $opBuka = date_create("$jamBuka:$menitBuka")->format('H:i:s');
-        $opTutup = date_create("$jamTutup:$menitTutup")->format('H:i:s');
+        $opBuka = date_create("$jamBuka:$menitBuka")->format('H:i');
+        $opTutup = date_create("$jamTutup:$menitTutup")->format('H:i');
 
         $partner->nama_toko = $request->namapercetakan;
         $partner->deskripsi_toko = $request->deskripsi;
@@ -63,22 +76,49 @@ class PartnerController extends Controller
         $partner->nomor_hp = $request->nomorhp;
         $partner->nama_bank = $request->namabank;
         $partner->nomor_rekening = $request->nomorrekening;
-        
+
         $partner->save();
-        
+
         return redirect()->route('partner.profile')->with('alert','Profil berhasil diubah');
     }
 
-    public function riwayatTransaksi()
+    public function riwayatTransaksi($id)
     {
         $partner = Auth::user();
-        return view('pengelola.detail_transaksi',['partner'=>$partner]);
+        $produk = Produk::all();
+        $transaksi_saldo = Transaksi_saldo::find($id)->get();
+        // foreach ($transaksi_saldo as $ts) {
+            // dd($transaksi_saldo->id_transaksi);
+        // }
+        return view('pengelola.detail_transaksi',[
+            'partner'=> $partner,
+            'produk' => $produk,
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
+    }
+
+    public function saldo()
+    {
+        $transaksi_saldo = Transaksi_saldo::all();
+        return view('pengelola.saldo',[
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
     }
 
     public function tarikSaldo()
     {
         $partner = Auth::user();
-        return view('pengelola.tarik_saldo',['partner'=>$partner]);
+        $produk = Produk::all();
+        $transaksi_saldo = Transaksi_saldo::all();
+        return view('pengelola.tarik_saldo',[
+            'partner'=>$partner,
+            'produk' => $produk,
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
     }
 
+    public function info()
+    {
+        return view('pengelola.info_bantuan');
+    }
 }

@@ -36,7 +36,7 @@
                                     {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
                                     {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
                                     {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                                    {{ $member->alamat['alamat'][$i]['KabupatenKota'] }},
+                                    {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
                                     {{ $member->alamat['alamat'][$i]['Provinsi'] }},
                                     {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
                                 </td>
@@ -49,7 +49,7 @@
                                             data-nama-penerima="{{ $member->alamat['alamat'][$i]['Nama Penerima'] }}"
                                             data-nomor-hp="{{ $member->alamat['alamat'][$i]['Nomor HP'] }}"
                                             data-provinsi="{{ $member->alamat['alamat'][$i]['Provinsi'] }}"
-                                            data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['KabupatenKota'] }}"
+                                            data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }}"
                                             data-kecamatan="{{ $member->alamat['alamat'][$i]['Kecamatan'] }}"
                                             data-kelurahan="{{ $member->alamat['alamat'][$i]['Kelurahan'] }}"
                                             data-kode-pos="{{ $member->alamat['alamat'][$i]['Kode Pos'] }}"

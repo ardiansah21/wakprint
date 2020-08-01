@@ -21,7 +21,7 @@
                     width="515px" frameborder="0"/>
                     --}}
                     <embed
-                        src="{{url('filenya/',$pdf->namaFile)."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}"
+                        src="{{url('tmp/upload/',$pdf->namaFile ?? '')."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}"
                         type="application/pdf" height="515px" width="515px" frameborder="0" />
                     {{-- <div class="row bg-dark justify-content-between align-middle ml-0 mr-0 pl-2 pr-2 pt-4 pb-4" style="font-size:24px;
                         opacity:80%;
@@ -45,8 +45,8 @@
                     </div>
                 </div>
                 <div class="col-md-8 text-truncate align-self-center">
-                    <a class="" href="{{url('filenya/',$pdf->namaFile?? '')}}" target="_blank" style="font-size: 18px;">
-                        {{__('ajdosalkjdsaoldjasdasdasd asdasd aswdasdas asd asdas aoidjsoaid')}}
+                    <a class="" href="{{url('tmp/upload',$pdf->namaFile?? '')}}" target="_blank" style="font-size: 18px;">
+                        {{$pdf->namaFile ?? ''}}
                     </a>
                     <br>
                     <label class="text-muted" style="font-size: 12px;">
@@ -78,7 +78,7 @@
             </div>
 
             </form>
-            {{-- 
+            {{--
             <div class="bg-light-purple mb-4 p-2" style="border-radius:5px;">
                 <div class="row justify-content-between">
                     <div class="text-center align-self-center col-md-1">
@@ -365,7 +365,7 @@
                     <img class="img-responsive"
                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
                         style="width:100%; height:200px;">
-                    <label class="text-break font-weight-bold" style="position: absolute; 
+                    <label class="text-break font-weight-bold" style="position: absolute;
                                     top: 10%;
                                     left: 0%;
                                     width: 100%;
@@ -536,7 +536,7 @@
                     <img class="img-responsive"
                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
                         style="width:100%; height:200px;">
-                    <label class="text-break font-weight-bold" style="position: absolute; 
+                    <label class="text-break font-weight-bold" style="position: absolute;
                                     top: 10%;
                                     left: 0%;
                                     width: 100%;

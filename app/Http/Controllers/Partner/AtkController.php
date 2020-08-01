@@ -9,12 +9,12 @@ class AtkController extends Controller
 {
     public function index()
     {
-        return view('pengelola.homepage');
+        return view('pengelola.atk');
     }
 
     public function create()
     {
         return view('pengelola.tambah_atk');
     }
-    
+
 }
