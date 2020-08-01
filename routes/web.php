@@ -36,19 +36,16 @@ Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fi
 
 Route::get('/', 'MemberController@index')->name('home');
 
-    Route::middleware('auth')->group(function () {
-        Route::get('chat', 'MemberController@chat')->name('chat');
-        //TODO merapikan File Storage 2
-        /*****/ Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
-        /*****/ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
-
-        Route::get('/profil', 'MemberController@profile')->name('profile');
-        Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
-        Route::post('/profil/edit', 'MemberController@updateDataProfile');
+Route::get('produk', 'MemberController@produk')->name('produk');
 
 //test upload
 Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
 
+Route::middleware('auth')->group(function () {
+    Route::get('chat', 'MemberController@chat')->name('chat');
+    //TODO merapikan File Storage 2
+    /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+    /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
         Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran');
 
     Route::get('/profil', 'MemberController@profile')->name('profile');
