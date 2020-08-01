@@ -16,7 +16,7 @@
                         float: none;
                         display: table-cell;
                         vertical-align: bottom;">
-                    {{-- <embed src="{{ action('MemberController@showPDF', ['path'=> $pdf->path]) }}"
+                    {{-- <embed src="{{ action('MemberController@showPDF', ['path'=> $pdf ?? ''->path]) }}"
                     type="application/pdf" height="515px"
                     width="515px" frameborder="0"/>
                     --}}
@@ -45,12 +45,12 @@
                     </div>
                 </div>
                 <div class="col-md-8 text-truncate align-self-center">
-                    <a class="" href="{{url('filenya/',$pdf->namaFile)}}" target="_blank" style="font-size: 18px;">
+                    <a class="" href="{{url('filenya/',$pdf->namaFile?? '')}}" target="_blank" style="font-size: 18px;">
                         {{__('ajdosalkjdsaoldjasdasdasd asdasd aswdasdas asd asdas aoidjsoaid')}}
                     </a>
                     <br>
                     <label class="text-muted" style="font-size: 12px;">
-                        {{$pdf->jumlahHalaman }} {{ __('Halaman') }}
+                        {{$pdf ->jumlahHalaman ?? '' }} {{ __('Halaman') }}
                     </label>
                 </div>
                 <div class="col-md-3 align-self-center text-right p-0">
@@ -69,7 +69,8 @@
                     <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST"
                         enctype="multipart/form-data" style="display: none;">
                         @csrf
-                        <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf" hidden />
+                        <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf"
+                            hidden />
 
 
                 </div>
@@ -87,14 +88,14 @@
                     <div class="col-md-11">
                         <div class="row justify-content-between" width="100%">
                             <div class="col-md-5 ml-2">
-                                <a class="mb-0" href="{{url('filenya/',$pdf->namaFile)}}" target="_blank"
+                                <a class="mb-0" href="{{url('filenya/',$pdf ?? ''->namaFile)}}" target="_blank"
             style="font-size: 18px;">
 
             {{__('ajdosalkjdsaoldjaoidjsoaidjsoaidjsaoidjsajdoisdasoijdoisajdsoaioissjaoiadjsoaijd')}}
             </a>
             <br>
             <label class="text-muted" style="font-size: 12px;">
-                {{$pdf->jumlahHalaman }} {{ __('Halaman') }}
+                {{$pdf ?? ''->jumlahHalaman }} {{ __('Halaman') }}
             </label>
         </div>
         <div class="col-md-4 align-self-center mr-2">
@@ -127,11 +128,11 @@
 <div class="row justify-content-between">
     <div class="col-md-7">
         <label class="mb-0" style="font-size: 18px;">
-            {{$pdf->jumlahHalHitamPutih }}{{ __(' Halaman Hitam Putih') }}
+            {{$pdf->jumlahHalHitamPutih ?? '' }}{{ __(' Halaman Hitam Putih') }}
         </label>
         <br>
         <label class="mb-2" style="font-size: 18px;">
-            {{$pdf->jumlahHalBerwarna}} {{ __(' Halaman Berwarna') }}
+            {{$pdf->jumlahHalBerwarna ?? ''}} {{ __(' Halaman Berwarna') }}
         </label><br>
         <label class="text-muted mb-0" style="font-size: 12px;">
             {{__('*Hitam Putih Rp. 2K / lembar') }}

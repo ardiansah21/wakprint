@@ -288,16 +288,8 @@
 
 <script>
     $('#tes').on('click', function () {
-    // var a = "<?php echo $paket[0]; ?>";
-    // alert(a);
     var APP_URL = {!! json_encode(url('/')) !!}
     alert(APP_URL);
-
-    // $( "li" ).each(function(index, e) {
-    //         $("#nama").attr("name", "fitur[tambahan]["+index+"][nama]");
-    //         $("#harga").attr("name", "fitur[tambahan]["+index+"][harga]");
-    //         $("#deskripsi").attr("name", "fitur[tambahan]["+index+"][deskripsi]");
-    //     });
 });
 
 

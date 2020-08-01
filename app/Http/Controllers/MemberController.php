@@ -26,7 +26,7 @@ class MemberController extends Controller
 
     public function index()
     {
-      return view('home');
+        return view('home');
     }
 
     // temp dropzone
@@ -52,7 +52,7 @@ class MemberController extends Controller
             // Check extension
             if (in_array(strtolower($extension), $validextensions)) {
 
-                // Rename file 
+                // Rename file
                 $fileName = Str::slug(Carbon::now()->toDayDateTimeString()) . rand(11111, 99999) . '.' . $extension;
 
                 // Uploading file to given path
@@ -61,17 +61,14 @@ class MemberController extends Controller
         }
     }
 
-
-    
-    public function konfigurasiFile()
+    public function konfigurasiFile($pdf)
     {
-        return view('member.konfigurasi_file_lanjutan', ['namafile' => $this->f]);
-    }
+        return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
 
+    }
 
     public function upload(Request $request)
     {
-
         $this->validate($request, [
             'file' => 'required',
         ]);
@@ -84,6 +81,18 @@ class MemberController extends Controller
         $path = $file->move(public_path('filenya/'), $file->getClientOriginalName());
         $pdf = $this->cekWarna($file, $path);
 
+        // return response()->json([
+        //     'original_name' => $file->getClientOriginalName(),
+        //     'request' => $request,
+        // ]);
+
+        // if ($path) {
+        //     return Response::json([
+        //         'pdf'=> $pdf,
+        //     ], 200);
+        // } else {
+        //     return Response::json('error', 400);
+        // }
 
         return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
     }

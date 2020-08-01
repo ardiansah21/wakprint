@@ -6,23 +6,24 @@
 <div class="pt-5 pb-5 img-responsive d-flex justify-content-center pl-0 pr-0"
     style="background-image: url(img/bg-unggah.png);background-size: cover;">
     <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
-        style="width:250px;height:250px;">
-        <!-- Dropzone -->
-        <form action="{{route('upload.file.home')}}" class='dropzone' method="POST" enctype="multipart/form-data">
+        style="width:250px;height:250px; background-color:transparent !important;">
+        <form id="frm-upload" action="{{ route('upload.file.home') }}" class="dropzone"
+            style="width:100% ;background-color:transparent !important;">
             @csrf
-            <div class="fallback">
-                <input name="file" type="file" multiple />
+
+            <div class="dz-message" data-dz-message>
+                <label class="SemiBold my-auto"
+                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
             </div>
-            {{-- <label class="SemiBold my-auto"
-                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label> --}}
         </form>
     </div>
+    {{-- onclick="event.preventDefault(); document.getElementById('frm-upload').click() --}}
     <div id="kamuMauPrintApa">
         <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
         <label class="SemiBold mb-4 ml-1"
             style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
         <br>
-        <button type="button"
+        <button id="a" type="button"
             class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center"
             style="border-radius:30px; font-size: 24px;" onclick="openDialog()">
             <i class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
@@ -38,17 +39,14 @@
                 }
         </script>
 
-        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data" 
+        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data"
             style="display: none;">
             @csrf
             <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf" hidden />
         </form>
-
-
-
-        </div>
     </div>
-    
+</div>
+
 </div>
 <div class="container">
     <div class="pt-5 pb-5">
@@ -195,31 +193,75 @@
         <br>
         <button class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
             style="font-size: 24px">
-                <i class="material-icons md-32 align-middle mr-1">exit_to_app</i>
-                {{__('Daftar') }}
-            </button>
+            <i class="material-icons md-32 align-middle mr-1">exit_to_app</i>
+            {{__('Daftar') }}
+        </button>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    Dropzone.autoDiscover = false;
+        
+        var myDropzone = new Dropzone(".dropzone",{ 
+            maxFilesize: 10,  // 3 mb
+            maxFiles:1,
+            acceptedFiles: ".pdf",
+            clickable: true,
+        });
+        myDropzone.on("addedfile", function(file) { 
+            // alert("Added file.");
+            // location.href = ("{{ route('upload.file.home')}}")
+            post({{ route('upload.file.home') }},{name:file.name});
+
+         });
+        
+        myDropzone.on("sending", function(file, xhr, formData) {
+        formData.append("_token", CSRF_TOKEN);
+        });
+
+        // myDropzone.on("success", function(file) {
+        //     // var a = file;
+        //     // alert(a)
+        //     // var idvar = $.trim(file.xhr.response);
+        //     //location.href = ("{{ route('konfigurasi.file',['pdf'=>"+file+"]) }}");
+        //     // myDropzone.removeFile(file);
+        // });
+
+
+    /**
+    * sends a request to the specified url from a form. this will change the window location.
+    * @param {string} path the path to send the post request to
+    * @param {object} params the paramiters to add to the url
+    * @param {string} [method=post] the method to use on the form
+    */
+
+    function post(path, params, method='post') {
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    const form = document.createElement('form');
+    form.method = method;
+    form.action = path;
+
+    for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = key;
+    hiddenField.value = params[key];
+
+    form.appendChild(hiddenField);
+    }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+    }
+
+
+
+
+</script>
 
 @endsection
-
-{{-- @extends('layouts.app')
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-<div class="card-body">
-    @if (session('status'))
-    <div class="alert alert-success" role="alert">
-        {{ session('status') }}
-    </div>
-    @endif
-    {{ __('You are logged in!') }}
-</div>
-</div>
-</div>
-</div>
-</div>
-@endsection --}}

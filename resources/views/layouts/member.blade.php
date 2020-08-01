@@ -134,20 +134,60 @@
         </footer>
     </div>
     <!-- Script -->
-    <script>
-        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-    
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone(".dropzone",{ 
-            maxFilesize: 3,  // 3 mb
-            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
-        });
-        myDropzone.on("sending", function(file, xhr, formData) {
-           formData.append("_token", CSRF_TOKEN);
-        }); 
-    </script>
-
     <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
+    @yield('script')
+
+    // var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
+    // Dropzone.autoDiscover = false;
+
+    // var myDropzone = new Dropzone(".dropzone",{
+    // maxFilesize: 10, // 3 mb
+    // maxFiles:1,
+    // acceptedFiles: ".pdf",
+    // clickable: true,
+    // });
+    // myDropzone.on("sending", function(file, xhr, formData) {
+    // formData.append("_token", CSRF_TOKEN);
+    // });
+    // myDropzone.on("success", function(file) {
+    // var a = file;
+    // alert(a)
+    // // var idvar = $.trim(file.xhr.response);
+    // //location.href = ("{{ route('konfigurasi.file',['pdf'=>"+file+"]) }}");
+    // // myDropzone.removeFile(file);
+    // });
+
+    /**
+    * sends a request to the specified url from a form. this will change the window location.
+    * @param {string} path the path to send the post request to
+    * @param {object} params the paramiters to add to the url
+    * @param {string} [method=post] the method to use on the form
+    */
+
+    // function post(path, params, method='post') {
+
+    // // The rest of this code assumes you are not using a library.
+    // // It can be made less wordy if you use one.
+    // const form = document.createElement('form');
+    // form.method = method;
+    // form.action = path;
+
+    // for (const key in params) {
+    // if (params.hasOwnProperty(key)) {
+    // const hiddenField = document.createElement('input');
+    // hiddenField.type = 'hidden';
+    // hiddenField.name = key;
+    // hiddenField.value = params[key];
+
+    // form.appendChild(hiddenField);
+    // }
+    // }
+
+    // document.body.appendChild(form);
+    // form.submit();
+    // }
+
 </body>
 
 </html>

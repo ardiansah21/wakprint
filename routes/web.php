@@ -70,7 +70,7 @@ Route::namespace('Partner')->prefix('partner')->name('partner.')->group(function
         Route::resource('promo', 'PromoController');
         Route::resource('atk', 'AtkController');
     });
-}); 
+});
 
 
 //Admin

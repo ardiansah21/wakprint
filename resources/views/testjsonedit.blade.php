@@ -15,7 +15,6 @@
     </style>
 </head>
 <body>
-
     <br><br>
     <form action="/testjson/update/{{ $product->id }}" method="POST">
         {{ csrf_field() }}
