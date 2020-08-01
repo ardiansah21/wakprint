@@ -5,7 +5,7 @@
     <div class="card shadow col-md-6 mx-auto pt-4 pl-4 pr-4 mt-5 mb-5" style="border-radius: 10px;">
         <h1 class="font-weight-bold text-center" style="font-size: 48px;">{{__('Masuk')}}</h1>
         <form method="POST" action="{{ route('login') }}" style="font-size: 24px;">
-            {{-- @csrf --}}
+            @csrf
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="email" class="">{{ __('Email') }}</label>

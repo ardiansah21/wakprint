@@ -41,7 +41,7 @@
         <tbody style="font-size: 14px;">
 
             {{-- @foreach ($collection as $item) --}}
-            <tr>
+            <tr onclick="window.location.href='{{ route('detail.riwayat') }}'">
 
                 {{-- @foreach ($collection as $item) --}}
                 <td scope="row">{{__('00000001') }}</td>

@@ -25,6 +25,7 @@ class MemberController extends Controller
     private $f;
     public function __construct()
     {
+
     }
 
     public function index()
@@ -369,7 +370,7 @@ class MemberController extends Controller
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
-            'KabupatenKota' => $request->kota,
+            'Kabupaten Kota' => $request->kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
@@ -419,11 +420,11 @@ class MemberController extends Controller
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
-            'KabupatenKota' => $request->kota,
+            'Kabupaten Kota' => $request->kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'KodePos' => $request->kodepos,
-            'AlamatJalan' => $request->alamatjalan
+            'Kode Pos' => $request->kodepos,
+            'Alamat Jalan' => $request->alamatjalan
         );
 
         $alamat['alamat'][$request->id] = $alamatBaru;
@@ -469,6 +470,25 @@ class MemberController extends Controller
         return view('member.konfigurasi_pesanan');
     }
 
+    public function saldoPembayaran()
+    {
+        $member=Auth::user();
+        $transaksi_saldo = Transaksi_saldo::all();
+
+        return view('member.pembayaran_topup', [
+            'member' => Auth::user(),
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
+    }
+
+    public function detailRiwayat()
+    {
+        // $member=Auth::user();
+        // $transaksi_saldo = Transaksi_saldo::all();
+        
+        return view('member.detail_pesanan');
+    }
+
     public function ulas()
     {
         return view('member.ulas_produk');
@@ -477,5 +497,10 @@ class MemberController extends Controller
     public function ulasanSaya()
     {
         return view('member.ulasan_saya');
+    }
+
+    public function chat()
+    {
+      return view('member.chat');
     }
 }

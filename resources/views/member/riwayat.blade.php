@@ -23,27 +23,36 @@
         </div>
     </div> --}}
 </div>
-<div class="custom-scrollbar-ulasan mb-5 ml-1">
-    <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
-        <thead class="bg-primary-purple text-white">
-            <tr style="font-size: 18px;">
-                <th class="align-middle" scope="col">{{__('ID') }}</th>
-                <th class="align-middle" scope="col">{{__('Jenis Transaksi') }}</th>
-                <th class="align-middle" scope="col">{{__('Kapan') }}</th>
-                <th class="align-middle" scope="col">{{__('Biaya') }}</th>
-                <th class="align-middle" scope="col">{{__('Keterangan') }}</th>
-            </tr>
-        </thead>
-        <tbody style="font-size: 14px;">
-            @foreach ($transaksi_saldo as $ts)
-                <tr>
-                    <td class="align-middle" scope="row">{{ $ts->id_transaksi }}</td>
-                    <td class="align-middle">{{ $ts->jenis_transaksi }}</td>
-                    <td class="align-middle">{{ $ts->waktu }}</td>
-                    <td class="align-middle">Rp. {{ $ts->jumlah_saldo }}</td>
-                    <td class="align-middle">{{ $ts->keterangan }}</td>
+@if (!empty($transaksi_saldo))
+    <div class="custom-scrollbar-ulasan mb-5 ml-1">
+        <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
+            <thead class="bg-primary-purple text-white">
+                <tr style="font-size: 18px;">
+                    <th class="align-middle" scope="col">{{__('ID') }}</th>
+                    <th class="align-middle" scope="col">{{__('Jenis Transaksi') }}</th>
+                    <th class="align-middle" scope="col">{{__('Kapan') }}</th>
+                    <th class="align-middle" scope="col">{{__('Biaya') }}</th>
+                    <th class="align-middle" scope="col">{{__('Keterangan') }}</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody style="font-size: 14px;">
+                @foreach ($transaksi_saldo as $ts)
+                    <tr 
+                        @if ($ts->jenis_transaksi === 'TopUp')
+                            onclick="window.location.href='{{ route('saldo.pembayaran') }}'"
+                        @else
+                            onclick="window.location.href='{{ route('detail.riwayat') }}'"
+                        @endif>
+                        <td class="align-middle" scope="row">{{ $ts->id_transaksi }}</td>
+                        <td class="align-middle">{{ $ts->jenis_transaksi }}</td>
+                        <td class="align-middle">{{ $ts->waktu }}</td>
+                        <td class="align-middle">Rp. {{ $ts->jumlah_saldo }}</td>
+                        <td class="align-middle">{{ $ts->keterangan }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@else
+    <label>{{__('Belum ada riwayat transaksi')}}</label>
+@endif

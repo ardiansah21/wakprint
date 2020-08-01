@@ -30,30 +30,30 @@
                             <tr>
                                 {{-- <input type="number" id="id" name="id" hidden> --}}
                                 <td class="align-middle" name="namapenerima" scope="row">
-                                    {{ $member->alamat['alamat'][$i]['NamaPenerima'] }}
+                                    {{ $member->alamat['alamat'][$i]['Nama Penerima'] }}
                                 </td>
                                 <td class="align-middle" name="alamat">
-                                    {{ $member->alamat['alamat'][$i]['AlamatJalan'] }},
+                                    {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
                                     {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
                                     {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
                                     {{ $member->alamat['alamat'][$i]['KabupatenKota'] }},
                                     {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                                    {{ $member->alamat['alamat'][$i]['KodePos'] }}
+                                    {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
                                 </td>
-                                <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['NomorHP'] }}</td>
+                                <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] }}</td>
                                 <td>
                                     <span>
                                         <a href="" class="material-icons text-decoration-none mr-2" data-toggle="modal"
                                             data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
                                             data-id="{{ $member->alamat['alamat'][$i]['id'] }}"
-                                            data-nama-penerima="{{ $member->alamat['alamat'][$i]['NamaPenerima'] }}"
-                                            data-nomor-hp="{{ $member->alamat['alamat'][$i]['NomorHP'] }}"
+                                            data-nama-penerima="{{ $member->alamat['alamat'][$i]['Nama Penerima'] }}"
+                                            data-nomor-hp="{{ $member->alamat['alamat'][$i]['Nomor HP'] }}"
                                             data-provinsi="{{ $member->alamat['alamat'][$i]['Provinsi'] }}"
                                             data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['KabupatenKota'] }}"
                                             data-kecamatan="{{ $member->alamat['alamat'][$i]['Kecamatan'] }}"
                                             data-kelurahan="{{ $member->alamat['alamat'][$i]['Kelurahan'] }}"
-                                            data-kode-pos="{{ $member->alamat['alamat'][$i]['KodePos'] }}"
-                                            data-alamat-jalan="{{ $member->alamat['alamat'][$i]['AlamatJalan'] }}">
+                                            data-kode-pos="{{ $member->alamat['alamat'][$i]['Kode Pos'] }}"
+                                            data-alamat-jalan="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] }}">
                                             edit
                                         </a>
                                         <a href="alamat/hapus/{{$member->alamat['alamat'][$i]['id'] }}" text-decoration="none" class="material-icons text-decoration-none mr-2"
@@ -71,9 +71,7 @@
                                     </div>
                                 </td>
                             </tr>
-                        }
                         {{-- @endif --}}
-                        
                         @endfor
                 </tbody>
             </table>

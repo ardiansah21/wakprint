@@ -1,7 +1,7 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="mt-5 mb-5">
+    <div class="container mt-5 mb-5">
         <div class="mb-5">
             <label class="font-weight-bold mb-5"
             style="font-size: 48px;">Pesanan Kamu</label>
@@ -315,7 +315,7 @@
         </div>
 
         {{-- kode pembayaran --}}
-        <div class="ml-0 mr-0">
+        <div class="mb-5">
             <label class="font-weight-bold"
                 style="font-size: 48px;">
                 {{__('Menunggu Pembayaran') }}
@@ -351,13 +351,23 @@
                         {{__('Mohon menyelesaikan pembayaran sebelum 27 Jan 2020, 18:00 WIB') }}
                     </label>
                 </div>
-                <div class=" col-md-5 mb-0">
+                <div class="col-md-5 mb-0">
                     <div class="card pt-4 pb-4 pl-4 pr-4 mb-5">
                         <label class="font-weight-bold mb-4 ml-0"
                             style="font-size: 24px;">
                             {{__('Panduan Pembayaran') }}
                         </label>
-                        <p class="mb-2"
+                        <div class="mb-2" style="font-size: 14px; list-style:none">
+                            <li class="mb-2">{{__('1. Pilih menu “lainnya” > Transfer > Rekening Tabungan > Rekening BNI 762834629') }}</li>
+                            <li class="mb-2">{{__('2. Masukkan jumlah pembayaran sesuai dengan jumlah transaksi') }}</li>
+                            <li class="mb-2">{{__('3. Masukkan pilihan transaksi (optional)') }}</li>
+                            <li class="mb-2">{{__('4. Konfirmasi pembayaran') }}</li>
+                            <li>{{__('5. Bank Lain. Transfer ke Bank Lain > Kode BNI 009 > Isi nomor VA BNI > Nominal Pembayaran > Konfirmasi') }}</li>
+                        </div>
+                        {{-- <ul class="mb-2" style="font-size: 14px;"> --}}
+                            
+                        {{-- </ul> --}}
+                        {{-- <p class="mb-2"
                             style="font-size: 14px;">
                             {{__('1. Pilih menu “lainnya” > Transfer > Rekening Tabungan > Rekening BNI
                             762834629
@@ -366,13 +376,15 @@
                             4. Konfirmasi pembayaran
                             5. Bank Lain. Transfer ke Bank Lain > Kode BNI 009 > Isi nomor VA BNI > Nominal
                             Pembayaran > Konfirmasi') }}
-                        </p>
+                        </p> --}}
                     </div>
                 </div>
-                <button class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold mb-5"
-                    style="font-size: 24px;">
-                    {{__('Batalkan Pemesanan') }}
-                </button>
+                <div class="container ml-0 mr-0">
+                    <button class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold mb-5"
+                        style="font-size: 24px;">
+                        {{__('Batalkan Pemesanan') }}
+                    </button>
+                </div>
             </div>
         </div>
 

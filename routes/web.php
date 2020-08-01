@@ -36,6 +36,7 @@ Auth::routes();
     Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
 
     Route::middleware('auth')->group(function () {
+        Route::get('chat', 'MemberController@chat')->name('chat');
         //TODO merapikan File Storage 2
         /*****/ Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
         /*****/ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
@@ -48,6 +49,10 @@ Auth::routes();
         Route::post('profil/alamat/update', 'MemberController@editAlamat')->name('alamat.edit');
         Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
         Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
+
+        Route::get('saldo/pembayaran', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
+
+        Route::get('riwayat/detail', 'MemberController@detailRiwayat')->name('detail.riwayat');
 
         Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
         Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');

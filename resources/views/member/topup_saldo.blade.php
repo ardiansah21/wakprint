@@ -10,7 +10,8 @@
     </div>
     <div class="container pl-0 pr-0 mb-4">
         <button type="submit" class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold"
-            data-toggle="modal" data-target="#topUpModal"
+            onclick="window.location.href='{{ route('saldo.pembayaran') }}'"
+            {{-- data-toggle="modal" data-target="#topUpModal" --}}
             {{-- data-id="{{ $transaksi_saldo->id_transaksi }}"
             data-kode-pembayaran="{{ $transaksi_saldo->kode_pembayaran }}"
             data-waktu="{{ $transaksi_saldo->waktu }}" --}}
@@ -36,17 +37,23 @@
             </thead>
             <tbody style="font-size:14px;">
 
-                @foreach ($transaksi_saldo as $ts => $value)
+                @foreach ($transaksi_saldo as $ts)
                 <tr 
+                    @if ($ts->jenis_transaksi === 'TopUp')
+                        onclick="window.location.href='{{ route('saldo.pembayaran') }}'"
+                    @else
+                        onclick="window.location.href='{{ route('detail.riwayat') }}'"
+                    @endif
                     {{-- {{ action('MemberController@show', ['id'=>$ts->id_transaksi]) }} --}}
-                    data-toggle="modal" data-target="#topUpModal"
+                    {{-- data-toggle="modal" data-target="#topUpModal"
                     data-id="{{ $value['id_transaksi'] }}"
                     data-kode-pembayaran="{{ $value['kode_pembayaran'] }}"
-                    data-waktu="{{ $value['waktu'] }}">
-                    <td class="align-middle" scope="row">{{$value['id_transaksi']}}</td>
-                    <td class="align-middle">{{$value['jenis_transaksi']}}</td>
-                    <td class="align-middle">Rp. {{$value['jumlah_saldo']}}</td>
-                    <td class="align-middle">{{$value['keterangan']}}</td>
+                    data-waktu="{{ $value['waktu'] }}" --}}
+                    >
+                    <td class="align-middle" scope="row">{{$ts->id_transaksi}}</td>
+                    <td class="align-middle">{{$ts->jenis_transaksi}}</td>
+                    <td class="align-middle">Rp. {{$ts->jumlah_saldo}}</td>
+                    <td class="align-middle">{{$ts->keterangan}}</td>
                 </tr>
                 @endforeach
 
@@ -73,7 +80,7 @@
         //     });
         // });
     </script>
-    @include('member.popup_pembayaran_topup')
+    {{-- @include('member.popup_pembayaran_topup') --}}
 @else
     <label>Belum ada data</label>    
 @endif
