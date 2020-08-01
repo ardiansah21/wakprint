@@ -1,3 +1,17 @@
+//semua halaman
+
+function setTabActive(id) {
+    var element = document.getElementById(id);
+    element.classList.add("show");
+    element.classList.add("active");
+}
+
+function setLinkActive(id) {
+    var element = document.getElementById(id);
+    element.classList.add("active");
+}
+
+
 //halaman tambah produk
 $('#jenisPrinterList span').on('click', function () {
     $('#jenisPrinterButton').text($(this).text());
@@ -24,7 +38,7 @@ $(document).ready(function() {
 });
 
 
-   
+
 
 
 

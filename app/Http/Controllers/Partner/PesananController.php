@@ -15,7 +15,7 @@ class PesananController extends Controller
     public function index()
     {
         // dd('Muncul');
-        return view('pengelola.detail_pesanan_masuk');
+        return view('pengelola.pesanan');
     }
 
     /**
@@ -23,9 +23,9 @@ class PesananController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function detailPesanan()
     {
-        //
+        return view('pengelola.detail_pesanan_masuk');
     }
 
     /**

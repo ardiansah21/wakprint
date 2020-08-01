@@ -40,6 +40,7 @@
 </head>
 
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -108,7 +109,8 @@
 
         @auth
             <main>
-                @if (Route::currentRouteName() == 'partner.profile.edit')
+                @yield('content')
+                {{-- @if (Route::currentRouteName() == 'partner.profile.edit')
                     @yield('content')
                 @elseif(Route::currentRouteName() == 'partner.detail.pesanan')
                     @yield('content')
@@ -137,7 +139,7 @@
                                     role="tablist"
                                     aria-orientation="vertical"
                                     style="font-size: 18px;">
-                                    <a class="nav-link active mb-2"
+                                    <a class="nav-link mb-2"
                                         id="v-pills-beranda-tab"
                                         data-toggle="pill"
                                         href="#v-pills-beranda"
@@ -240,14 +242,14 @@
                                 </div>
                             </div>
                             <div class="tab-content col-md-8">
-                                
+
                                 @yield('content')
-                                
+
                             </div>
                         </div>
                     </div>
-                @endif
-                
+                @endif --}}
+
             </main>
         @endauth
     </div>

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class ProdukController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +17,10 @@ class ProdukController extends Controller
     public function index()
     {
         //TODO: Ubah view ke halaman produk @imaha7
-        return view('pengelola.homepage');
+        $produk = Produk::all();
+        return view('pengelola.produk',[
+            'produk' => $produk
+        ]);
     }
 
     /**
@@ -84,7 +87,9 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $partner = Pengelola_Percetakan::find(Auth::id());
+        // $produk = Produk::find(Auth::id());
+        // return view('pengelola.edit_profil',['partner'=>$partner]);
     }
 
     /**
@@ -135,11 +140,40 @@ class ProdukController extends Controller
         ]);
     }
 
+    // public function duplicate(Request $request)
+    // {
+    //     $fitur = $request->fitur;
+    //     if (!empty($fitur['tambahan']))
+    //         $fitur['tambahan'] =  array_values($request->fitur['tambahan']);
+    //     else
+    //         $fitur['tambahan'] =  array_values($fitur);
+
+    //     $produk = Produk::create([
+    //         'nama'                  => $request->nama,
+    //         'harga'                 => $request->harga,
+    //         'harga_timbal_balik'    => $request->harga_timbal_balik,
+    //         'berwarna'              => $request->berwarna == 'True' ? '0' : '1',
+    //         'hitam_putih'           => $request->hitam_putih == 'True' ? '0' : '1',
+    //         'deskripsi'             => $request->deskripsi,
+    //         'jenis_kertas'          => $request->jenis_kertas,
+    //         'jenis_printer'         => $request->jenis_printer,
+    //         'status'                => $request->status,
+    //         'fitur'                 => json_encode($fitur)
+    //     ]);
+
+    //     foreach ($request->input('document', []) as $file) {
+    //         //dd($file);
+    //         $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
+    //     }
+
+    //     return redirect()->route('partner.produk.index');
+    // }
+
 }
 /**
  * KEEP
- * 
- * **/ 
+ *
+ * **/
 // public function update(UpdateProdukRequest $request, Produk $produk)
 // {
 //     $produk->update($request->all());

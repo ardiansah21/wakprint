@@ -14,7 +14,7 @@ class PromoController extends Controller
      */
     public function index()
     {
-        return view('pengelola.homepage');
+        return view('pengelola.promo');
     }
 
     /**

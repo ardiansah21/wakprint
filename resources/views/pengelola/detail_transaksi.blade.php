@@ -97,7 +97,7 @@
                 <br>
                 <label class="mb-2"
                     style="font-size: 18px;">
-                    {{__('Agus')}}
+                    {{$partner->nama_lengkap}}
                 </label>
                 <br>
                 <label class="font-weight-bold mb-0"
@@ -107,7 +107,7 @@
                 <br>
                 <label class="mb-2"
                     style="font-size: 18px;">
-                    {{__('BRI')}}
+                    {{$partner->nama_bank}}
                 </label>
                 <br>
                 <label class="font-weight-bold mb-0"
@@ -117,7 +117,7 @@
                 <br>
                 <label class="mb-2"
                     style="font-size: 18px;">
-                    {{__('016748359004048')}}
+                    {{$partner->nomor_rekening}}
                 </label>
                 <br>
                 <label class="font-weight-bold mb-0"
@@ -127,7 +127,7 @@
                 <br>
                 <label class="mb-2"
                     style="font-size: 18px;">
-                    {{__('Berhasil')}}
+                    {{-- {{$transaksi_saldo->status}} --}}
                 </label>
             </div>
     

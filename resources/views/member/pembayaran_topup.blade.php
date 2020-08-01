@@ -13,25 +13,8 @@
             </label>
         </span>
         <br>
-        
-        @foreach ($transaksi_saldo as $ts => $value)
-            @if ($value['id_transaksi'] === $ts)
-                <dd>{{ true }}</dd>
-            @endif
-            {{ $value['id_transaksi'] }}
-        @endforeach
-        {{-- @for ($i = 0; $i < count($transaksi_saldo); $i++) --}}
-            {{-- {{ $transaksi_saldo[$i]->id_transaksi }} --}}
-            {{-- Nomor Pemesanan Kamu :{{$transaksi_saldo[$i]->id_transaksi}} --}}
-            {{-- <label class="mb-5" id="idTransaksi" name="id_transaksi" style="font-size: 18px;">
-                Nomor Pemesanan Kamu :{{$transaksi_saldo[$i]->id_transaksi}}
-            </label> --}}
-        {{-- @endfor --}}
-        {{-- @foreach ($transaksi_saldo as $ts)
-            
-        @endforeach --}}
         <label class="mb-5" id="idTransaksi" name="id_transaksi" style="font-size: 18px;">
-            {{-- Nomor Pemesanan Kamu :{{$transaksi_saldo->id_transaksi}} --}}
+            Nomor Pemesanan Kamu : {{$transaksi_saldo->id_transaksi}}
         </label>
         <div class="mb-5">
             <label class="SemiBold mt-2 mb-0" style="font-size: 18px;">
@@ -39,7 +22,7 @@
             </label>
             <br>
             <label class="font-weight-bold text-primary-success mb-4" id="kodePembayaran" name="kode_pembayaran" style="font-size: 48px;">
-                {{-- {{$transaksi_saldo->kode_pembayaran}} --}}
+                {{$transaksi_saldo->kode_pembayaran}}
             </label>
             <br>
             <label class="SemiBold mt-2 mb-0" style="font-size: 18px;">
@@ -47,11 +30,11 @@
             </label>
             <br>
             <label class="text-primary-danger font-weight-bold" id="waktuTransaksi" name="waktu" style="font-size: 48px;">
-                {{-- {{$transaksi_saldo->waktu}} --}}
+                {{date('l, d M Y H:i', strtotime($transaksi_saldo->waktu))}}
             </label>
             <br>
             <label class="mt-2" id="waktuTransaksi" name="waktu" style="font-size: 18px;">
-                {{-- {{__('Mohon menyelesaikan pembayaran sebelum') }} {{$transaksi_saldo->waktu}} --}}
+                {{__('Mohon menyelesaikan pembayaran sebelum') }} {{date('l, d M Y H:i', strtotime($transaksi_saldo->waktu))}}
             </label>
         </div>
         <div class="card pt-4 pb-4 pl-4 pr-4 mb-5">

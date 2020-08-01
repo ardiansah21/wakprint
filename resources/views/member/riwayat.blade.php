@@ -37,9 +37,10 @@
             </thead>
             <tbody style="font-size: 14px;">
                 @foreach ($transaksi_saldo as $ts)
+                @if ($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran')
                     <tr 
                         @if ($ts->jenis_transaksi === 'TopUp')
-                            onclick="window.location.href='{{ route('saldo.pembayaran') }}'"
+                            onclick="window.location.href='/saldo/pembayaran/{{ $ts->id_transaksi }}'"
                         @else
                             onclick="window.location.href='{{ route('detail.riwayat') }}'"
                         @endif>
@@ -49,6 +50,7 @@
                         <td class="align-middle">Rp. {{ $ts->jumlah_saldo }}</td>
                         <td class="align-middle">{{ $ts->keterangan }}</td>
                     </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>
