@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
     /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
-        Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran');
+    Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran');
 
     Route::get('/profil', 'MemberController@profile')->name('profile');
     Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
@@ -84,25 +84,17 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::get('saldo/tarik', 'PartnerController@tarikSaldo')->name('saldo.tarik');
 
         Route::resource('produk', 'ProdukController');
-        Route::get('produk', 'ProdukController@index')->name('produk');
-        Route::get('produk/create', 'ProdukController@create')->name('produk.create');
-        Route::post('produk/store', 'ProdukController@store')->name('produk.store');
         Route::post('produk/media', 'ProdukController@storeMedia')->name('produk.storeMedia');
-        Route::post('produk/duplicate', 'ProdukController@duplicate')->name('produk.duplicate');
+        Route::get('produk/duplicate/{id}', 'ProdukController@duplicate')->name('produk.duplicate');
 
         Route::get('pesanan', 'PesananController@index')->name('pesanan');
         Route::get('pesanan/detail', 'PesananController@detailPesanan')->name('detail.pesanan');
 
         Route::get('riwayat/{id}', 'PartnerController@riwayatTransaksi')->name('riwayat.detail');
 
-
         Route::resource('promo', 'PromoController');
-        Route::get('promo', 'PromoController@index')->name('promo');
-        Route::get('promo/create', 'PromoController@create')->name('promo.create');
 
         Route::resource('atk', 'AtkController');
-        Route::get('atk', 'AtkController@index')->name('atk');
-        Route::get('atk/create', 'AtkController@create')->name('atk.create');
 
         Route::get('info', 'PartnerController@info')->name('info');
     });
@@ -139,10 +131,10 @@ Route::post('/testjson/store', 'ProductController@store');
 Route::get('/testjson/update/{id}', 'ProductController@updateShow');
 Route::post('/testjson/update/{id}', 'ProductController@update');
 
-Route::get('/index', 'SiteController@index');
-Route::get('/index/create', 'SiteController@create');
-Route::get('/index/edit/{id}', 'SiteController@edit')->name('edit');
-Route::get('/index/show', 'SiteController@show')->name('show');
-Route::post('/index/store', 'SiteController@store')->name('store');
-Route::post('/index/update/{id}', 'SiteController@update')->name('update');
-Route::post('/index/destroy/{id}', 'SiteController@destroy')->name('destroy');
+// Route::get('/index', 'SiteController@index');
+// Route::get('/index/create', 'SiteController@create');
+// Route::get('/index/edit/{id}', 'SiteController@edit')->name('edit');
+// Route::get('/index/show', 'SiteController@show')->name('show');
+// Route::post('/index/store', 'SiteController@store')->name('store');
+// Route::post('/index/update/{id}', 'SiteController@update')->name('update');
+// Route::post('/index/destroy/{id}', 'SiteController@destroy')->name('destroy');

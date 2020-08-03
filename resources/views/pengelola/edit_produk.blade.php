@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container mt-5 mb-5" style="font-size: 16px;">
-    <form action="{{ route('partner.produk.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('partner.produk.store') }}" method="POST">
         @csrf
         <div class="row justify-content-between ml-0 mr-0">
             <label class="font-weight-bold mb-4" style="font-size:36px;">
-                {{__('Tambah Produk') }}
+                {{__('Edit Produk') }}
             </label>
             <!-- Rounded switch -->
             <label class="switch mb-5">
@@ -405,7 +405,7 @@ $(document).ready(function() {
         '                <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2" style="border-radius: 5px;"> edit'+
         '                </i>'+
         '            </a>'+
-        '            <input id="imgupload'+i+'" type="file" name="fitur[tambahan]['+i+'][foto_fitur]" hidden accept="image/png, image/jpeg"'+
+        '            <input id="imgupload'+i+'" type="file" name="fitur[tambahan]['+i+'][foto_produk]" hidden accept="image/png, image/jpeg"'+
         '                onchange="document.getElementById(\'blah'+i+'\').src=window.URL.createObjectURL(this.files[0]);" hidden>'+
         '        </div>'+
         '        <div class="col-md-9">'+
@@ -425,16 +425,7 @@ $(document).ready(function() {
         '            <label class="mb-2 "> Deskripsi Fitur </label>'+
         '            <div class="form-group mb-4 mr-0">'+
         '                <textarea id="deskripsi" name="fitur[tambahan]['+i+'][deskripsi]" class="form-control d-flex"'+
-        '                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda"></textarea>'+
-        '            </div>'+
-        '        </div>'+
-        '        <div class="col-md-auto align-self-center mr-0 mb-3">'+
-        '            <button id="hapus" class="btn btn-circle-trash shadow-sm" type="button" role="button">'+
-        '                <i class="fa fa-trash fa-2x" style="color: white" aria-hidden="true"></i>'+
-        '            </button>'+
-        '        </div>'+
-        '    </div>'+
-        '</li>'
+        '                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda">'
         );
         i++;
     });
