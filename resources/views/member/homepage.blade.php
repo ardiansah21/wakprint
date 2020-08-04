@@ -55,6 +55,7 @@
                         aria-label="Cari percetakan atau produk disini" aria-describedby="basic-addon2"
                         style="border:0px solid white; border-radius:30px; font-size:24px;">
                     <button class="btn btn-primary-yellow btn-rounded shadow-sm ml-1 pt-1 pb-1 pl-5 pr-5 SemiBold text-center"
+                        
                         style="position: absolute; font-size:24px;
                         top: 50%; left: 92%;
                         transform: translate(-50%, -50%); 

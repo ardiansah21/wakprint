@@ -55,7 +55,7 @@
             {{-- @endforeach --}}
             
         </div>
-        <div class="row justify-content-between">
+        <div class="row justify-content-between ml-0 mr-0">
             <div class="bg-light-purple col-md-4 p-3 mt-5"
                 style="border-radius:10px;">
                 <div class="text-center mb-4"

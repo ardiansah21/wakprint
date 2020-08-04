@@ -7,6 +7,7 @@ use Auth;
 use App\Admin;
 use App\Member;
 use App\Pengelola_Percetakan;
+use App\Transaksi_saldo;
 
 class AdminController extends Controller
 {
@@ -42,46 +43,130 @@ class AdminController extends Controller
 		$member = Member::all()
 		->where('pegawai_nama','like',"%".$cariMember."%")
 		->paginate();
- 
+
     		// mengirim data pegawai ke view index
 		//return view('index',['pegawai' => $pegawai]);
- 
+
     }
 
-    public function detailMember()
+    public function dataMember()
     {
-        
-        //$member = Member::find($id)->get();
-        $member = Member::find(Auth::id());
-        
-        // $idMember[$id] = $member->id_member;
-        // dd($idMember);
-        //$member[$id]->id_member = $idMember;
-        // $idMember = $member[$id]->id_member;
-        //dd($idMember[$id]);
-        
-        return view('admin.detail_member',[
+        $member = Member::all();
+
+        return view('admin.data_member',[
             'member' => $member
         ]);
     }
 
-    public function detailPartner()
+    public function memberJson(){
+        return datatables(Member::all())->make(true);
+    }
+
+    public function partnerJson(){
+        return datatables(Pengelola_Percetakan::all())->make(true);
+    }
+
+    public function detailMember(Request $request, $id)
     {
-        $pengelola = Pengelola_Percetakan::all();
-        
-        return view('admin.detail_pengelola',[
-            'pengelola_percetakan' => $pengelola
+
+        $member = Member::find($id);
+
+        $date = $request->date;
+        $month = $request->month;
+        $year = $request->year;
+
+        $dateBorn = date_create("$year-$month-$date");
+
+        $alamat = $member->alamat;
+
+        if (empty($alamat)) {
+            $alamat = array(
+                'IdAlamatUtama' => 0,
+                'alamat' => array()
+            );
+            $id = 0;
+        } else {
+            $id = count($alamat['alamat']);
+        }
+
+        $alamatBaru[] = array(
+            'Nama Penerima' => $request->namapenerima,
+            'Nomor HP' => $request->nomorhp,
+            'Provinsi' => $request->provinsi,
+            'Kabupaten Kota' => $request->kota,
+            'Kecamatan' => $request->kecamatan,
+            'Kelurahan' => $request->kelurahan,
+            'Kode Pos' => $request->kodepos,
+            'Alamat Jalan' => $request->alamatjalan
+        );
+
+        $member->alamat = $alamatBaru;
+
+        return view('admin.detail_member',[
+            'member' => $member,
+            'alamat' => $alamatBaru,
+            'tanggalLahir'=>$this->getDateBorn($id)
         ]);
+    }
+
+    public function getDateBorn($id)
+    {
+        $member = Member::find($id);
+        if (empty($member->tanggal_lahir)) {
+            return "-";
+        }
+        else {
+            $monthName = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+            $date = $member->tanggal_lahir;
+            $tanggal = intval(substr($date, 8, 2));
+            $bulan = $monthName[intval(substr($date, 5, 2) - 1)];
+            $tahun = substr($date, 0, 4);
+            return "$tanggal $bulan $tahun";
+        }
+    }
+
+    public function dataPartner()
+    {
+        $partner = Pengelola_Percetakan::all();
+
+        return view('admin.data_pengelola',compact('partner'));
+    }
+
+    public function detailPartner($id)
+    {
+        $partner = Pengelola_Percetakan::find($id);
+
+        return view('admin.detail_pengelola',compact('partner'));
+    }
+
+    public function dataSaldo()
+    {
+        $member = Member::all();
+        $partner = Pengelola_Percetakan::all();
+        $transaksi_saldo = Transaksi_saldo::all();
+
+        return view('admin.konfirmasi_saldo',compact('member','partner','transaksi_saldo'));
     }
 
     public function saldoTolak()
     {
         $pengelola = Pengelola_Percetakan::all();
         $member = Member::all();
-        
+
         return view('admin.tolak_pengelola',[
             'member' => $member,
             'pengelola_percetakan' => $pengelola
+        ]);
+    }
+
+    public function keluhan()
+    {
+        $member = Member::all();
+        $partner = Pengelola_Percetakan::all();
+
+        return view('admin.kelola_keluhan',[
+            'member' => $member,
+            'pengelola_percetakan' => $partner
         ]);
     }
 
@@ -89,16 +174,16 @@ class AdminController extends Controller
     {
         $pengelola = Pengelola_Percetakan::all();
         $member = Member::all();
-        
+
         return view('admin.tanggapi_keluhan',[
             'member' => $member,
             'pengelola_percetakan' => $pengelola
         ]);
     }
-    
-    public function tableDataMember(){
-        return Datatables::of(Member::all())->make(true);
-    }
+
+    // public function tableDataMember(){
+    //     return Datatables::of(Member::all())->make(true);
+    // }
 
     // public function memberByGroupDatatables(Request $request, $type, $param_id){
     //     // The columns variable is used for sorting
@@ -117,7 +202,7 @@ class AdminController extends Controller
     //     );
     //     $totalData = $member->count ();            //Total record
     //     $totalFiltered = $totalData;      // No filter at first so we can assign like this
-    //     // Here are the parameters sent from client for paging 
+    //     // Here are the parameters sent from client for paging
     //     $start = $request->input ( 'start' );           // Skip first start records
     //     $length = $request->input ( 'length' );   //  Get length record from start
     //     /*
@@ -166,7 +251,7 @@ class AdminController extends Controller
     //     }
     //     /*
     //     * This below structure is required by Datatables
-    //     */ 
+    //     */
     //     $tableContent = array (
     //             "draw" => intval ( $request->input ( 'draw' ) ), // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw.
     //             "recordsTotal" => intval ( $totalData ), // total number of records
@@ -195,7 +280,7 @@ class AdminController extends Controller
     //     );
     //     $totalData = $users->count ();            //Total record
     //     $totalFiltered = $totalData;      // No filter at first so we can assign like this
-    //     // Here are the parameters sent from client for paging 
+    //     // Here are the parameters sent from client for paging
     //     $start = $request->input ( 'start' );           // Skip first start records
     //     $length = $request->input ( 'length' );   //  Get length record from start
     //     /*
@@ -244,7 +329,7 @@ class AdminController extends Controller
     //     $nestedData [1] = '<small class="label bg-' . $user->display . '">' .  $user->email . '</small>';
     //     /*
     //     * This below structure is required by Datatables
-    //     */ 
+    //     */
     //     $tableContent = array (
     //             "draw" => intval ( $request->input ( 'draw' ) ), // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw.
     //             "recordsTotal" => intval ( $totalData ), // total number of records

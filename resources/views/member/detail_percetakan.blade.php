@@ -2,7 +2,7 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="mb-5 mt-5">
+    <div class="container mb-5 mt-5">
         <div class="row justify-content-between">
             <div class="col-md-10">
                 <label class="text-break font-weight-bold"
