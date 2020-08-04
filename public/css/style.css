@@ -326,30 +326,6 @@ body {
     background-color: #BC41BE;
 }
 
-/* .nav-link .border .border-wakprint-tab.active, .border-wakprint-tab:active {
-            background-color: #EBD1EC;
-            color: #BC41BE;
-        } */
-
-/* .nav-link .active a, .nav-link .active .a:hover, .nav-link .active .a:focus {
-            color: #BC41BE;
-            background-color: #EBD1EC;
-            border-color: #EBD1EC;
-        }
-        .nav-link {
-            background-color: #E5E5E5;
-            color: #BABABA;
-        } */
-
-.nav-pills .nav-item.active .nav-link,
-.nav-pills .nav-item .nav-link:active,
-.nav-pills .nav-item:focus .nav-link,
-.nav-pills .nav-item:hover .nav-link {
-    color: #BC41BE;
-    background-color: #EBD1EC;
-    border-color: #EBD1EC;
-}
-
 .nav-pills .nav-link.active,
 .nav-pills .nav-link:active,
 .nav-pills .nav-link:focus,
@@ -371,9 +347,43 @@ body {
     border-radius: 10px 10px 0px 0px;
 }
 
-#v-pills-saldo-tab {
+.nav-pills .nav-item .nav-link.active,
+.nav-pills .nav-item .nav-link:active,
+.nav-pills .nav-item .nav-link:focus,
+.nav-pills .nav-item .nav-link:hover {
     color: #BC41BE;
+    background-color: #EBD1EC;
+    border-color: #EBD1EC;
+    border-radius: 0px 10px 10px 0px;
 }
+
+.nav-pills .nav-item.active .nav-link,
+.nav-pills .nav-item .nav-link:active,
+.nav-pills .nav-item:focus .nav-link,
+.nav-pills .nav-item:hover .nav-link {
+    color: #BC41BE;
+    background-color: #EBD1EC;
+    border-color: #EBD1EC;
+}
+
+.carousel-inner .carousel-item-right.active,
+.carousel-inner .carousel-item-next {
+  transform: translateX(33.33%);
+}
+
+.carousel-inner .carousel-item-left.active,
+.carousel-inner .carousel-item-prev {
+  transform: translateX(-33.33%)
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left{
+  transform: translateX(0);
+}
+
+/* #v-pills-saldo-tab {
+    color: #BC41BE;
+} */
 
 #v-pills-keluar-tab {
     color: #FF4949;
@@ -389,6 +399,10 @@ body {
 
 .text-primary-purple {
     color: #BC41BE;
+}
+
+.text-light-gray {
+    color: #c1c1c1;
 }
 
 .text-primary-danger {
@@ -602,7 +616,7 @@ body {
 
 table {
     border-collapse: collapse;
-    border-radius: 15px;
+    border-radius: 15px 15px 0px 0px;
     overflow: hidden;
     border-top: 2px solid white;
 }
@@ -610,6 +624,11 @@ table {
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
     background-color: #F2FF58;
+}
+
+.table-hover tbody tr::selection td,
+.table-hover tbody tr::selection th {
+    background-color: #5869ff;
 }
 
 .table-hover>tbody>tr .material-icons {

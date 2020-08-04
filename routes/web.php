@@ -31,6 +31,8 @@ Auth::routes();
     Route::get('/', 'MemberController@index')->name('home');
 
     Route::get('produk', 'MemberController@produk')->name('produk');
+    Route::get('pencarian', 'MemberController@pencarian')->name('pencarian');
+    Route::get('partner/detail', 'MemberController@detailPartner')->name('detail.partner');
 
     //test upload
     Route::post('/konfigurasi/upload','MemberController@upload')->name('upload.file.home');
@@ -39,7 +41,6 @@ Auth::routes();
         Route::get('chat', 'MemberController@chat')->name('chat');
         //TODO merapikan File Storage 2
         /*****/ Route::get('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
-        /*****/ Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
         Route::get('/profil', 'MemberController@profile')->name('profile');
         Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
@@ -50,10 +51,21 @@ Auth::routes();
         Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
         Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
 
-        Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran');
+        Route::get('saldo', 'MemberController@saldo')->name('saldo');
+        Route::post('saldo/topup', 'MemberController@topUpSaldo')->name('saldo.topup');
+        Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
+        Route::get('saldo/riwayat/{id}', 'MemberController@riwayatSaldo')->name('riwayat.saldo');
 
-        Route::get('riwayat/detail', 'MemberController@detailRiwayat')->name('detail.riwayat');
+        Route::get('riwayat', 'MemberController@riwayat')->name('riwayat');
 
+        Route::get('konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
+
+        Route::get('pesanan', 'MemberController@pesanan')->name('pesanan');
+        Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('detail.pesanan');
+
+        Route::get('favorit', 'MemberController@favorit')->name('favorit');
+
+        Route::get('ulasan', 'MemberController@ulasan')->name('ulasan');
         Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
         Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
     });
@@ -113,14 +125,20 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function (){
 
     Route::middleware('auth:admin')->group(function(){
         Route::get('/', 'AdminController@index')->name('home');
-        Route::get('member/detail','Admin\AdminController@detailMember')->name('detail.member');
-        Route::get('partner/detail','Admin\AdminController@detailPartner')->name('detail.partner');
-        Route::get('saldo/tolak','Admin\AdminController@saldoTolak')->name('saldo.tolak');
-        Route::get('keluhan/detail','Admin\AdminController@detailKeluhan')->name('detail.keluhan');
+        Route::get('/member', 'AdminController@dataMember')->name('member');
+        Route::get('member/detail/{id}','AdminController@detailMember')->name('detail.member');
+        Route::get('/partner', 'AdminController@dataPartner')->name('partner');
+        Route::get('partner/detail/{id}','AdminController@detailPartner')->name('detail.partner');
+        Route::get('/saldo', 'AdminController@dataSaldo')->name('saldo');
+        Route::get('saldo/tolak','AdminController@saldoTolak')->name('saldo.tolak');
+        Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
+        Route::get('keluhan/detail','AdminController@detailKeluhan')->name('detail.keluhan');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
-        Route::get('member/json','AdminController@json');
+        Route::get('member/json','AdminController@memberJson')->name('member.json');
+        Route::get('partner/json','AdminController@partnerJson')->name('partner.json');
+        Route::get('member/json','AdminController@memberJson')->name('member.json');
     });
 });
 

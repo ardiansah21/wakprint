@@ -5,7 +5,7 @@
     <div class="card shadow-sm p-4 mt-5 mb-5">
         <span>
             <button class="close material-icons md-32"
-                onclick="window.location.href='{{ route('profile') }}'">
+                onclick="window.location.href='{{ route('saldo') }}'">
                 close
             </button>
             <label class="font-weight-bold" style="font-size: 48px;">
