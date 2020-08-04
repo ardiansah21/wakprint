@@ -6,46 +6,38 @@
 <div class="pt-5 pb-5 img-responsive d-flex justify-content-center pl-0 pr-0"
     style="background-image: url(img/bg-unggah.png);background-size: cover;">
     <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
-        style="width:250px;height:250px;">
-        <!-- Dropzone -->
-        <form action="{{route('upload.file.home')}}" class='dropzone' method="POST" enctype="multipart/form-data">
+        style="width:250px;height:250px; background-color:transparent !important;">
+        <form action="{{ route('upload.pdf') }}" class="dropzone" method="POST" enctype="multipart/form-data"
+            style="width:100% ;background-color:transparent !important;">
             @csrf
-            <div class="fallback">
-                <input name="file" type="file" multiple />
+            <div class="dz-message" data-dz-message>
+                <label class="SemiBold my-auto"
+                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
             </div>
-            {{-- <label class="SemiBold my-auto"
-                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label> --}}
         </form>
     </div>
+    {{-- onclick="event.preventDefault(); document.getElementById('frm-upload').click() --}}
     <div id="kamuMauPrintApa">
         <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
         <label class="SemiBold mb-4 ml-1"
             style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
         <br>
-        <button type="button"
+        <button id="a" type="button"
             class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center"
             style="border-radius:30px; font-size: 24px;" onclick="openDialog()">
             <i class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
             {{__('Unggah') }}
         </button>
 
-        <script>
-            function openDialog() {
-                    document.getElementById('fileid').click();
-                }
-            function submitForm() {
-                    document.getElementById('upload-form').submit();
-                }
-        </script>
-
-        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data" 
+        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data"
             style="display: none;">
             @csrf
             <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf" hidden />
         </form>
         </div>
     </div>
-    
+</div>
+
 </div>
 <div class="container">
     <div class="pt-5 pb-5">
@@ -95,7 +87,7 @@
                     onclick="window.location.href='{{route('pencarian')}}'"
                     style="position: absolute; font-size:24px;
                         top: 50%; left: 92%;
-                        transform: translate(-50%, -50%); 
+                        transform: translate(-50%, -50%);
                         -ms-transform: translate(-50%, -50%);">
                     {{__('Cari') }}
                 </button>
@@ -136,7 +128,7 @@
                                                     <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                             </div>
                                         </div>
-                                        <i class="fa fa-heart fa-2x fa-responsive" 
+                                        <i class="fa fa-heart fa-2x fa-responsive"
                                         style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                         </i>
                                         <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -150,7 +142,7 @@
                                             <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{$p->nama ?? ''}}</label>
                                             <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                             <div class="row justify-content-between ml-0 mr-0">
-                                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                                     {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                         {{__('Hitam-Putih')}}
                                                     @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -161,9 +153,9 @@
                                                         {{__('-')}}
                                                     @endif --}}
                                                 </label>
-                                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                                 <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                             </div>
                                         </div>
                                         <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -174,7 +166,7 @@
                                                         Rp. {{$p->harga ?? ''}}
                                                     </label>
                                                 </div>
-                                                
+
                                                 <div class="mr-0">
                                                     <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                         <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -215,7 +207,7 @@
                 <a class="btn btn-circle-navigation-left btn-xl shadow-sm" href="#multi-item-percetakan-pilihan"
                     role="button" data-slide="prev"><img src="img/arrow-left.png"></a>
             </span>
-            
+
             <!--Carousel Wrapper-->
             <div id="multi-item-percetakan-pilihan" class="carousel slide carousel-multi-item col-md-10"
                 data-ride="carousel">
@@ -243,7 +235,7 @@
                                                     <i class="material-icons md-24 mr-2 align-middle" style="color: #6081D7">location_on</i>
                                                     {{__('100 m') }}
                                                 </label>
-                                                
+
                                                 <label class="card-text mr-4 font-weight-bold" style="font-size: 18px;">
                                                     <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
                                                     {{__('5') }}
@@ -275,11 +267,11 @@
         <label class="text-dark font-weight-bold mb-4"
             style="font-size: 24px;">{{__('Jadilah percetakan terbaik di Indonesia melalui kami') }}</label>
         <br>
-        <button onclick="window.location.href='{{ route('partner.register') }}'" 
+        <button onclick="window.location.href='{{ route('partner.register') }}'"
             class="btn btn-primary-wakprint btn-rounded shadow pt-2 pb-2 pl-4 pr-4 font-weight-bold"
             style="font-size: 24px">
             <i class="material-icons md-32 align-middle mr-1">exit_to_app</i>
-                {{__('Daftar') }}
+            {{__('Daftar') }}
         </button>
     </div>
 </div>
@@ -300,7 +292,7 @@
                                             <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                     </div>
                                 </div>
-                                <i class="fa fa-heart fa-2x fa-responsive" 
+                                <i class="fa fa-heart fa-2x fa-responsive"
                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                 </i>
                                 <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -314,7 +306,7 @@
                                     <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{__('Nama Produk')}}</label>
                                     <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                             {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                 {{__('Hitam-Putih')}}
                                             @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -325,9 +317,9 @@
                                                 {{__('-')}}
                                             @endif --}}
                                         </label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -338,7 +330,7 @@
                                                 Rp. {{$p->harga ?? ''}}
                                             </label>
                                         </div>
-                                        
+
                                         <div class="mr-0">
                                             <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                 <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -363,7 +355,7 @@
                                             <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                     </div>
                                 </div>
-                                <i class="fa fa-heart fa-2x fa-responsive" 
+                                <i class="fa fa-heart fa-2x fa-responsive"
                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                 </i>
                                 <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -377,7 +369,7 @@
                                     <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{__('Nama Produk')}}</label>
                                     <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                             {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                 {{__('Hitam-Putih')}}
                                             @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -388,9 +380,9 @@
                                                 {{__('-')}}
                                             @endif --}}
                                         </label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -401,7 +393,7 @@
                                                 Rp. {{$p->harga ?? ''}}
                                             </label>
                                         </div>
-                                        
+
                                         <div class="mr-0">
                                             <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                 <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -426,7 +418,7 @@
                                             <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                     </div>
                                 </div>
-                                <i class="fa fa-heart fa-2x fa-responsive" 
+                                <i class="fa fa-heart fa-2x fa-responsive"
                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                 </i>
                                 <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -440,7 +432,7 @@
                                     <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{__('Nama Produk')}}</label>
                                     <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                             {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                 {{__('Hitam-Putih')}}
                                             @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -451,9 +443,9 @@
                                                 {{__('-')}}
                                             @endif --}}
                                         </label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -464,7 +456,7 @@
                                                 Rp. {{$p->harga ?? ''}}
                                             </label>
                                         </div>
-                                        
+
                                         <div class="mr-0">
                                             <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                 <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -489,7 +481,7 @@
                                             <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                     </div>
                                 </div>
-                                <i class="fa fa-heart fa-2x fa-responsive" 
+                                <i class="fa fa-heart fa-2x fa-responsive"
                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                 </i>
                                 <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -503,7 +495,7 @@
                                     <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{__('Nama Produk')}}</label>
                                     <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                             {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                 {{__('Hitam-Putih')}}
                                             @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -514,9 +506,9 @@
                                                 {{__('-')}}
                                             @endif --}}
                                         </label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -527,7 +519,7 @@
                                                 Rp. {{$p->harga ?? ''}}
                                             </label>
                                         </div>
-                                        
+
                                         <div class="mr-0">
                                             <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                 <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -552,7 +544,7 @@
                                             <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                     </div>
                                 </div>
-                                <i class="fa fa-heart fa-2x fa-responsive" 
+                                <i class="fa fa-heart fa-2x fa-responsive"
                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                 </i>
                                 <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -566,7 +558,7 @@
                                     <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{__('Nama Produk')}}</label>
                                     <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                             {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                 {{__('Hitam-Putih')}}
                                             @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -577,9 +569,9 @@
                                                 {{__('-')}}
                                             @endif --}}
                                         </label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -590,7 +582,7 @@
                                                 Rp. {{$p->harga ?? ''}}
                                             </label>
                                         </div>
-                                        
+
                                         <div class="mr-0">
                                             <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                 <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -615,7 +607,7 @@
                                             <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
                                     </div>
                                 </div>
-                                <i class="fa fa-heart fa-2x fa-responsive" 
+                                <i class="fa fa-heart fa-2x fa-responsive"
                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                 </i>
                                 <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
@@ -629,7 +621,7 @@
                                     <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{__('Nama Produk')}}</label>
                                     <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                             {{-- @if ($p->berwarna === 0 || $p->hitam_putih === 1)
                                                 {{__('Hitam-Putih')}}
                                             @elseif ($p->berwarna === 1 || $p->hitam_putih === 0)
@@ -640,9 +632,9 @@
                                                 {{__('-')}}
                                             @endif --}}
                                         </label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label> 
+                                        <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                     </div>
                                 </div>
                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
@@ -653,7 +645,7 @@
                                                 Rp. {{$p->harga ?? ''}}
                                             </label>
                                         </div>
-                                        
+
                                         <div class="mr-0">
                                             <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
                                                 <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
@@ -681,18 +673,21 @@
 
 @endsection
 
-<script>
+@section('script')
+<script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+
     $('#produkCarousel').carousel({
       interval: 10000
     })
-    
+
     $('.carousel .carousel-item').each(function(){
         var next = $(this).next();
         if (!next.length) {
         next = $(this).siblings(':first');
         }
         next.children(':first-child').clone().appendTo($(this));
-        
+
         if (next.next().length>0) {
         next.next().children(':first-child').clone().appendTo($(this));
         }
@@ -700,4 +695,38 @@
           $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
         }
     });
+
+    function openDialog() {
+        document.getElementById('fileid').click();
+    }
+    function submitForm() {
+        document.getElementById('upload-form').submit();
+    }
+
+    Dropzone.autoDiscover = false;
+
+        var myDropzone = new Dropzone(".dropzone",{
+            maxFilesize: 10,  // 3 mb
+            maxFiles:1,
+            acceptedFiles: ".pdf",
+            clickable: true,
+            timeout:180000,
+        });
+        // myDropzone.on("success", function(pdf){
+
+        //     // window.location.href = "{{route('konfigurasi.file',['pdf'=>"v"])}}";
+        //     // if (myDropzone.getUploadingFiles().length === 0 && myDropzone.getQueuedFiles().length === 0) {
+        //         alert('sukses'));
+        //     // }
+        //     // document.body.innerHTML += <form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"><input type="hidden" name="file" value="+pdf}}"></form>';
+        //     // document.getElementById("Form").submit();
+        // });
+        myDropzone.on("success", function(file, xhr, formData){
+                document.body.innerHTML += '<form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"> @csrf <input type="text" name="namaFile" value="'+xhr.pdf.namaFile+'"> <input type="text" name="jumlahHalaman" value="'+xhr.pdf.jumlahHalaman+'"> <input type="text" name="jumlahHalBerwarna" value="'+xhr.pdf.jumlahHalBerwarna+'"> <input type="text" name="jumlahHalHitamPutih" value="'+xhr.pdf.jumlahHalHitamPutih+'"> <input type="text" name="path" value="'+xhr.pdf.path+'"></form>';
+                 document.getElementById("Form").submit();
+        });
+    //     myDropzone.on("sending", function(file, xhr, formData) {
+    //         formData.append("filesize", file.size);
+    //    });
 </script>
+@endsection

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\Http\Controllers\Controller;
 use App\Produk;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ProdukController extends Controller
 {
@@ -16,10 +17,13 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //TODO: Ubah view ke halaman produk @imaha7
-        $produk = Produk::all();
-        return view('pengelola.produk',[
-            'produk' => $produk
+        //  $produk = Produk::first();
+        //  return $produk->getMedia('foto_produk');
+
+        // $produk = Produk::first()->with('media')->get();
+        $produk = Produk::orderByDesc('id_produk')->get();
+        return view('pengelola.produk', [
+            'produk' => $produk,
         ]);
     }
 
@@ -42,28 +46,61 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $fitur = $request->fitur;
-        if (!empty($fitur['tambahan']))
-            $fitur['tambahan'] =  array_values($request->fitur['tambahan']);
-        else
-            $fitur['tambahan'] =  array_values($fitur);
+        $rr = array();
+        foreach ($fitur['tambahan'] as $key => $value) {
+            $fitur['tambahan'][$key]['foto_fitur'] = $value['foto_fitur']->getClientOriginalName();
+            $rr = $fitur;
+        }
+        if (!empty($fitur['tambahan'])) {
+            $fitur['tambahan'] = array_values($request->fitur['tambahan']);
+        }
+        // else {
+        //     $fitur['tambahan'] = array_values($fitur);
+        // }
+        $fitur = $rr;
+        // $path = storage_path('tmp/uploads/fitur');
+
+        // if (!file_exists($path)) {
+        //     mkdir($path, 0777, true);
+        // }
+
+        // foreach ($request->file('fitur.tambahan.*.foto_fitur') as $file) {
+        //     $name = uniqid() . '_' . trim($file->getClientOriginalName());
+        //     $file->move($path, $name);
+        // }
+        // $file = $request->file('file');
+
+        // $produk = new Produk();
+        // $produk = $request->all();
+        // $produk->fitur = json_encode($fitur);
+        // $produk->foto_produk =
 
         $produk = Produk::create([
-            'nama'                  => $request->nama,
-            'harga'                 => $request->harga,
-            'harga_timbal_balik'    => $request->harga_timbal_balik,
-            'berwarna'              => $request->berwarna == 'True' ? '0' : '1',
-            'hitam_putih'           => $request->hitam_putih == 'True' ? '0' : '1',
-            'deskripsi'             => $request->deskripsi,
-            'jenis_kertas'          => $request->jenis_kertas,
-            'jenis_printer'         => $request->jenis_printer,
-            'status'                => $request->status,
-            'fitur'                 => json_encode($fitur)
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'harga_timbal_balik' => $request->harga_timbal_balik,
+            'berwarna' => $request->berwarna == 'True' ? '0' : '1',
+            'hitam_putih' => $request->hitam_putih == 'True' ? '0' : '1',
+            'deskripsi' => $request->deskripsi,
+            'jenis_kertas' => $request->jenis_kertas,
+            'jenis_printer' => $request->jenis_printer,
+            'status' => $request->status,
+            'fitur' => json_encode($fitur),
         ]);
 
+        // dd(count($request->fitur['tambahan']));
+
         foreach ($request->input('document', []) as $file) {
-            //dd($file);
             $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
         }
+        foreach ($request->file('fitur.tambahan.*.foto_fitur') as $file) {
+
+            $produk->addMedia($file)->toMediaCollection('foto_fitur');
+        }
+
+        $produk->foto_produk = $produk->getMedia('foto_produk');
+        $produk->save();
+        return $produk;
 
         return redirect()->route('partner.produk.index');
     }
@@ -87,9 +124,8 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        // $partner = Pengelola_Percetakan::find(Auth::id());
-        // $produk = Produk::find(Auth::id());
-        // return view('pengelola.edit_profil',['partner'=>$partner]);
+        $produk = Produk::find($id);
+        view('pengelola.edit_produk', compact('produk'));
     }
 
     /**
@@ -101,7 +137,7 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -112,10 +148,13 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produk = Produk::find($id);
+        $produk->clearMediaCollection();
+        $produk->delete();
+        return redirect()->back();
     }
 
-     /**
+    /**
      * Menyimpan sementara gambar yang di unggah.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -135,39 +174,32 @@ class ProdukController extends Controller
         $file->move($path, $name);
 
         return response()->json([
-            'name'          => $name,
+            'name' => $name,
             'original_name' => $file->getClientOriginalName(),
         ]);
     }
 
-    // public function duplicate(Request $request)
-    // {
-    //     $fitur = $request->fitur;
-    //     if (!empty($fitur['tambahan']))
-    //         $fitur['tambahan'] =  array_values($request->fitur['tambahan']);
-    //     else
-    //         $fitur['tambahan'] =  array_values($fitur);
+    /**
+     * Mengduplikasi produk.
+     *
+     * @param  int  $id
+     */
+    public function duplicate($id)
+    {
+        // Produk::find($id)->replicate()->save();
+        $produkA = Produk::find($id);
+        $produkB = $produkA->replicate();
+        $produkB->status = "TidakTersedia";
+        $produkB->nama = $produkA->nama . " [ SALINAN ]";
+        $produkB->save();
 
-    //     $produk = Produk::create([
-    //         'nama'                  => $request->nama,
-    //         'harga'                 => $request->harga,
-    //         'harga_timbal_balik'    => $request->harga_timbal_balik,
-    //         'berwarna'              => $request->berwarna == 'True' ? '0' : '1',
-    //         'hitam_putih'           => $request->hitam_putih == 'True' ? '0' : '1',
-    //         'deskripsi'             => $request->deskripsi,
-    //         'jenis_kertas'          => $request->jenis_kertas,
-    //         'jenis_printer'         => $request->jenis_printer,
-    //         'status'                => $request->status,
-    //         'fitur'                 => json_encode($fitur)
-    //     ]);
-
-    //     foreach ($request->input('document', []) as $file) {
-    //         //dd($file);
-    //         $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
-    //     }
-
-    //     return redirect()->route('partner.produk.index');
-    // }
+        $a = DB::table('media')->where('model_id', $id)->get();
+        // dd($a);
+        foreach ($a as $key => $value) {
+            dd($value->id);
+        }
+        return redirect()->back();
+    }
 
 }
 /**

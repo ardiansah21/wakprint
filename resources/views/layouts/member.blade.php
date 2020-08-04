@@ -392,10 +392,7 @@
         @endauth
 
     </div>
-
     <!-- Script -->
-    <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
     @yield('script')
 </body>
 
