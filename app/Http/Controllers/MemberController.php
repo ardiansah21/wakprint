@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Konfigurasi_file;
 use App\Member;
-use App\Transaksi_saldo;
-use App\Produk;
 use App\Pengelola_Percetakan;
-use phpDocumentor\Reflection\Types\This;
-use App\Konfigurasi_file;
-use imagick;
+use App\Produk;
+use App\Transaksi_saldo;
 use File;
 use Hash;
 use Illuminate\Http\Request;
@@ -239,12 +236,12 @@ class MemberController extends Controller
         // $id = Transaksi_saldo::find(Auth::id());
 
         //dd($member);
-        return view('member.profil',[
+        return view('member.profil', [
             'member' => $member,
             'transaksi_saldo' => $transaksi_saldo,
             'pengelola_percetakan' => $pengelola,
             'produk' => $produk,
-            'tanggalLahir'=>$this->getDateBorn()]
+            'tanggalLahir' => $this->getDateBorn()]
         );
     }
 
@@ -298,8 +295,7 @@ class MemberController extends Controller
     {
         if (empty(Auth::user()->tanggal_lahir)) {
             return "-";
-        }
-        else {
+        } else {
             $monthName = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
             $date = Auth::user()->tanggal_lahir;
             $tanggal = intval(substr($date, 8, 2));
@@ -331,9 +327,7 @@ class MemberController extends Controller
                 'tanggal_lahir' => $dateBorn,
             ]);
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
-        }
-
-        else {
+        } else {
             if (Auth::Check()) {
                 $request_data = $request->All();
                 $validator = $this->credentialRules($request_data);
@@ -341,8 +335,7 @@ class MemberController extends Controller
                     //return response()->json(array('error' => $validator->getMessageBag()->toArray()), 400);
 
                     return redirect()->route('profile.edit')->with('alert', 'Ubah Password Gagal, Silahkan Periksa Kembali Password yang Anda Ubah');
-                }
-                else {
+                } else {
                     $current_password = Auth::user()->password;
                     if (Hash::check($request_data['current-password'], $current_password)) {
                         $member_id = Auth::user()->id_member;
@@ -351,16 +344,14 @@ class MemberController extends Controller
                             'password' => Hash::make($request->password),
                         ]);
                         return redirect()->route('profile')->with('alert', 'Password telah berhasil diubah');
-                    }
-                    else {
+                    } else {
                         // $error = array('current-password' => 'Please enter correct current password');
                         // return response()->json(array('error' => $error), 400);
 
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
                     }
                 }
-            }
-            else {
+            } else {
                 Member::find(Auth::id())->update([
                     'nama_lengkap' => $request->nama,
                     'jenis_kelamin' => $request->jk,
@@ -504,13 +495,13 @@ class MemberController extends Controller
 
     public function saldoPembayaran($id)
     {
-        $member=Auth::user();
+        $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::find($id);
         $waktu = $transaksi_saldo->waktu;
 
         return view('member.pembayaran_topup', [
             'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 

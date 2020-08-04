@@ -9,6 +9,8 @@ body {
     zoom: 85%;
 }
 
+.pointer {cursor: pointer;}
+
 .is-flex {
     display: flex;
     justify-content: space-between;
