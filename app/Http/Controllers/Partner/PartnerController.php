@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Pengelola_Percetakan;
 
 class PartnerController extends Controller
 {
@@ -16,10 +16,10 @@ class PartnerController extends Controller
         $produk = Produk::all();
         $partner = Auth::user();
         $transaksi_saldo = Transaksi_saldo::all();
-        return view('pengelola.homepage',[
-            'partner'=> $partner,
+        return view('pengelola.homepage', [
+            'partner' => $partner,
             'produk' => $produk,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
@@ -28,20 +28,21 @@ class PartnerController extends Controller
         $partner = Auth::user();
         $produk = Produk::all();
         $transaksi_saldo = Transaksi_saldo::all();
-        return view('pengelola.profil',[
+        return view('pengelola.profil', [
             'partner' => $partner,
             'produk' => $produk,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
     public function profileEdit()
     {
         $partner = Pengelola_Percetakan::find(Auth::id());
-        return view('pengelola.edit_profil',['partner'=>$partner]);
+        return view('pengelola.edit_profil', ['partner' => $partner]);
     }
 
-    public function profileUpdate(Request $request){
+    public function profileUpdate(Request $request)
+    {
         // $request->validate([
         //     'foto_profil' => 'image|mimes:jpeg,png,jpg|max:2048',
         // ]);
@@ -79,7 +80,7 @@ class PartnerController extends Controller
 
         $partner->save();
 
-        return redirect()->route('partner.profile')->with('alert','Profil berhasil diubah');
+        return redirect()->route('partner.profile')->with('alert', 'Profil berhasil diubah');
     }
 
     public function riwayatTransaksi($id)
@@ -88,20 +89,20 @@ class PartnerController extends Controller
         $produk = Produk::all();
         $transaksi_saldo = Transaksi_saldo::find($id)->get();
         // foreach ($transaksi_saldo as $ts) {
-            // dd($transaksi_saldo->id_transaksi);
+        // dd($transaksi_saldo->id_transaksi);
         // }
-        return view('pengelola.detail_transaksi',[
-            'partner'=> $partner,
+        return view('pengelola.detail_transaksi', [
+            'partner' => $partner,
             'produk' => $produk,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
     public function saldo()
     {
         $transaksi_saldo = Transaksi_saldo::all();
-        return view('pengelola.saldo',[
-            'transaksi_saldo' => $transaksi_saldo
+        return view('pengelola.saldo', [
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
@@ -110,10 +111,10 @@ class PartnerController extends Controller
         $partner = Auth::user();
         $produk = Produk::all();
         $transaksi_saldo = Transaksi_saldo::all();
-        return view('pengelola.tarik_saldo',[
-            'partner'=>$partner,
+        return view('pengelola.tarik_saldo', [
+            'partner' => $partner,
             'produk' => $produk,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 

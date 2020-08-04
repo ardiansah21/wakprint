@@ -2,34 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use \stdClass;
-use Auth;
-use App\Member;
-use App\Transaksi_saldo;
-use App\Produk;
-use App\Pengelola_Percetakan;
-use phpDocumentor\Reflection\Types\This;
 use App\Konfigurasi_file;
-use imagick;
+use App\Member;
+use App\Pengelola_Percetakan;
+use App\Produk;
+use App\Transaksi_saldo;
 use File;
-use Storage;
-use Response;
-use Validator;
 use Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Str;
+use Illuminate\Http\Request;
+use imagick;
+use Validator;
+use \stdClass;
 
 class MemberController extends Controller
 {
-    private stdClass $member;
+
     private $id;
     private $f;
+
     public function __construct()
     {
 
     }
+
+////
+    public function uploadPdf(Request $request)
+    {
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+        $path = $file->move(public_path('tmp/upload'), $fileName);
+        $pdf = $this->cekWarna($file, $path);
+        $pdf->path = public_path('tmp/upload') . "/" . $fileName;
+        return response()->json(['pdf' => $pdf]);
+    }
+
+    public function uploadtes(Request $request)
+    {
+        $pdf = new stdClass();
+        $pdf->namaFile = $request->namaFile;
+        $pdf->jumlahHalaman = $request->jumlahHalaman;
+        $pdf->jumlahHalBerwarna = $request->jumlahHalBerwarna;
+        $pdf->jumlahHalBerwarna = $request->jumlahHalBerwarna;
+        $pdf->path = $request->path;
+
+        return view('member.konfigurasi_file_lanjutan', compact('pdf'));
+    }
+
+////
 
     public function index()
     {
@@ -40,7 +62,6 @@ class MemberController extends Controller
     // temp dropzone
     public function fileupload(Request $request)
     {
-
         if ($request->hasFile('file')) {
 
             // Upload path
@@ -69,9 +90,10 @@ class MemberController extends Controller
         }
     }
 
-    public function konfigurasiFile()
+    public function konfigurasiFile($pdf)
     {
-        return view('member.konfigurasi_file_lanjutan', ['namafile' => $this->f]);
+        dd($pdf);
+        return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
     }
 
     public function pencarian()
@@ -89,24 +111,33 @@ class MemberController extends Controller
 
     public function upload(Request $request)
     {
-
         $this->validate($request, [
             'file' => 'required',
         ]);
         $file = $request->file('file');
         $k = Konfigurasi_file::insertGetId([
             'nama_file' => $file->getClientOriginalName(),
-            'waktu'     => now(),
+            'waktu' => now(),
         ]);
         $idd = $k;
-        $path = $file->move(public_path('filenya/'), $file->getClientOriginalName());
+        $path = $file->move(public_path('tmp/upload'), $file->getClientOriginalName());
         $pdf = $this->cekWarna($file, $path);
 
+        // return response()->json([
+        //     'original_name' => $file->getClientOriginalName(),
+        //     'request' => $request,
+        // ]);
+
+        // if ($path) {
+        //     return Response::json([
+        //         'pdf'=> $pdf,
+        //     ], 200);
+        // } else {
+        //     return Response::json('error', 400);
+        // }
 
         return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
     }
-
-
 
     public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
     {
@@ -114,18 +145,18 @@ class MemberController extends Controller
 
         $gray = 0;
         $notgray = 0;
-        $RandomNum   = time();
-        $FileName      = $file->getClientOriginalName();
+        $RandomNum = time();
+        $FileName = $file->getClientOriginalName();
         $output_dir = public_path('tempCekwarna/') . $FileName;
-        if (!File::exists(public_path('tempCekwarna/') . $FileName)) {
-            $output_dir = File::makeDirectory(public_path('tempCekwarna/') . $FileName, 0777, true);
-        }
+        // if (!File::exists(public_path('tempCekwarna/') . $FileName)) {
+        //     $output_dir = File::makeDirectory(public_path('tempCekwarna/') . $FileName, 0777, true);
+        // }
         $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
 
         $name = $path;
 
         for ($i = 0; $i < $jumlahHal; $i++) {
-            $nameto     = $output_dir . $RandomNum . '-' . $i . '.jpg';
+            $nameto = $output_dir . $RandomNum . '-' . $i . '.jpg';
             $im = new imagick($name . '[' . $i . ']');
             // convert to jpg
             $im->setResolution(400, 565);
@@ -197,9 +228,7 @@ class MemberController extends Controller
         return $pdf;
     }
 
-
     ///tempat nambah
-
 
     public function produk()
     {
@@ -210,7 +239,7 @@ class MemberController extends Controller
     public function profile()
     {
         //dd(getDateBorn());
-        $member=Auth::user();
+        $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::all();
         $pengelola = Pengelola_Percetakan::all();
         $produk = Produk::all();
@@ -224,19 +253,19 @@ class MemberController extends Controller
         // $id = Transaksi_saldo::find(Auth::id());
 
         //dd($member);
-        return view('member.profil',[
+        return view('member.profil', [
             'member' => $member,
             'transaksi_saldo' => $transaksi_saldo,
             'pengelola_percetakan' => $pengelola,
             'produk' => $produk,
-            'tanggalLahir'=>$this->getDateBorn()]
+            'tanggalLahir' => $this->getDateBorn()]
         );
     }
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
         $transaksiSaldo = Transaksi_saldo::find($id);
-        return view('member.profil',compact('transaksiSaldo'))->renderSections()['content'];
+        return view('member.profil', compact('transaksiSaldo'))->renderSections()['content'];
     }
 
     public function topUpSaldo(Request $request)
@@ -326,7 +355,7 @@ class MemberController extends Controller
             Member::find(Auth::id())->update([
                 'nama_lengkap' => $request->nama,
                 'jenis_kelamin' => $request->jk,
-                'tanggal_lahir' => $dateBorn
+                'tanggal_lahir' => $dateBorn,
             ]);
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
         }
@@ -346,7 +375,7 @@ class MemberController extends Controller
                         $member_id = Auth::user()->id_member;
                         $member = Member::find($member_id);
                         $member->update([
-                            'password' => Hash::make($request->password)
+                            'password' => Hash::make($request->password),
                         ]);
                         return redirect()->route('profile')->with('alert', 'Password telah berhasil diubah');
                     }
@@ -362,7 +391,7 @@ class MemberController extends Controller
                 Member::find(Auth::id())->update([
                     'nama_lengkap' => $request->nama,
                     'jenis_kelamin' => $request->jk,
-                    'tanggal_lahir' => $dateBorn
+                    'tanggal_lahir' => $dateBorn,
                 ]);
                 return redirect()->route('profile')->with('alert', 'Profil telah berhasil diubah');
             }
@@ -382,7 +411,7 @@ class MemberController extends Controller
         if (empty($alamatLama)) {
             $alamatLama = array(
                 'IdAlamatUtama' => 0,
-                'alamat' => array()
+                'alamat' => array(),
             );
             $id = 0;
         } else {
@@ -398,7 +427,7 @@ class MemberController extends Controller
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
+            'Alamat Jalan' => $request->alamatjalan,
         );
 
         $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
@@ -430,7 +459,7 @@ class MemberController extends Controller
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
+            'Alamat Jalan' => $request->alamatjalan,
         );
 
         $alamat['alamat'][$request->id] = $alamatBaru;
@@ -442,14 +471,13 @@ class MemberController extends Controller
 
     public function hapusAlamat($id)
     {
-
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
         $new_array[] = array();
         $i = 0;
 
         foreach ($alamat['alamat'] as $key => $value) {
-            if($value['id'] != $id){
+            if ($value['id'] != $id) {
                 $new_array[$i] = $value;
                 $new_array[$i]['id'] = $i;
                 $i++;
@@ -502,13 +530,13 @@ class MemberController extends Controller
 
     public function saldoPembayaran($id)
     {
-        $member=Auth::user();
+        $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::find($id);
         $waktu = $transaksi_saldo->waktu;
 
         return view('member.pembayaran_topup', [
             'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
@@ -570,6 +598,6 @@ class MemberController extends Controller
 
     public function chat()
     {
-      return view('member.chat');
+        return view('member.chat');
     }
 }
