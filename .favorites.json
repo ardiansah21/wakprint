@@ -1,0 +1,26 @@
+[
+    {
+        "type": "File",
+        "name": "/home/ardiansah/CodeSkripsi/wakprint/routes/web.php",
+        "parent_id": null,
+        "workspaceRoot": "/home/ardiansah/CodeSkripsi/wakprint",
+        "workspacePath": "routes/web.php",
+        "id": "Q9vFaXt6ZbkocGOg"
+    },
+    {
+        "type": "File",
+        "name": "/home/ardiansah/CodeSkripsi/wakprint/app/Http/Controllers/PdfController.php",
+        "parent_id": null,
+        "workspaceRoot": "/home/ardiansah/CodeSkripsi/wakprint",
+        "workspacePath": "app/Http/Controllers/PdfController.php",
+        "id": "F4SdB8uwPoKDYqhH"
+    },
+    {
+        "type": "File",
+        "name": "/home/ardiansah/CodeSkripsi/wakprint/public/php/cek_warna.php",
+        "parent_id": null,
+        "workspaceRoot": "/home/ardiansah/CodeSkripsi/wakprint",
+        "workspacePath": "public/php/cek_warna.blade.php",
+        "id": "J4gEt9NAi7ZFR8vp"
+    }
+]

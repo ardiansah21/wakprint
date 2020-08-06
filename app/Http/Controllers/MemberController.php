@@ -9,9 +9,6 @@ use App\Produk;
 use App\Transaksi_saldo;
 use File;
 use Hash;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Str;
 use Illuminate\Http\Request;
 use imagick;
 use Validator;
@@ -55,8 +52,7 @@ class MemberController extends Controller
 
     public function index()
     {
-        $produk = Produk::all();
-        return view('home',compact('produk'));
+        return view('home');
     }
 
     // temp dropzone
@@ -95,19 +91,6 @@ class MemberController extends Controller
         dd($pdf);
         return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
     }
-
-    public function pencarian()
-    {
-        $produk = Produk::all();
-        $partner = Pengelola_Percetakan::all();
-        return view('member.pencarian',compact('produk','partner'));
-    }
-
-    public function detailPartner()
-    {
-      return view('member.detail_percetakan');
-    }
-
 
     public function upload(Request $request)
     {
@@ -272,37 +255,23 @@ class MemberController extends Controller
     {
         $member = Member::find(Auth::id());
         $transaksiSaldo = Transaksi_saldo::all();
+        //$transaksiSaldo = transaks
 
-        $jenisTransaksi = 'TopUp';
+        $transaksiSaldo->jenis_transaksi = 'TopUp';
+        $transaksiSaldo->status = 'Berhasil';
+        $transaksiSaldo->keterangan = 'Top Up Telah Berhasil Dilakukan';
+        $transaksiSaldo->waktu = Carbon::now()->format('Y:m:d H:i:s');
         $jumlahSaldo = $request->jumlah_saldo;
-        $kodePembayaran = Str::random(20);
-        $status = 'Pending';
-        $keterangan = 'Top Up Sedang Diproses';
-        $waktu = Carbon::now()->format('Y:m:d H:i:s');
+        $waktuTransaksi = $transaksiSaldo->waktu;
+        $jenisTransaksi = $transaksiSaldo->jenis_transaksi;
+        $statusTransaksi = $transaksiSaldo->status;
+        $keteranganTransaksi = $transaksiSaldo->keterangan;
+        dd($transaksiSaldo->id_transaksi);
 
-        // $transaksiSaldo->id_member = $member;
-        // $transaksiSaldo->jenis_transaksi = $jenisTransaksi;
-        // $transaksiSaldo->jumlah_saldo = $jumlahSaldo;
-        // $transaksiSaldo->kode_pembayaran = $kodePembayaran;
-        // $transaksiSaldo->status = $status;
-        // $transaksiSaldo->keterangan = $keterangan;
-        // $transaksiSaldo->waktu = $waktu;
+        $transaksiSaldo->save();
 
-        //dd($keterangan);
-
-        Transaksi_saldo::create([
-            'id_member' => $member->id_member,
-            'jenis_transaksi' => $jenisTransaksi,
-            'jumlah_saldo' => $jumlahSaldo,
-            'kode_pembayaran' => $kodePembayaran,
-            'status' => $status,
-            'keterangan' => $keterangan,
-            'waktu' => $waktu
-        ]);
-
-        //$transaksiSaldo->save();
-
-        return redirect()->route('saldo')->with('alert', 'Top Up Anda Sedang Diproses, Silahkan Periksa Riwayat Halaman Pembayaran ! ');;
+        // return redirect()->route('profile');
+        return view('member.profil', ['tanggalLahir' => $this->getDateBorn()]);
     }
 
     public function credentialRules(array $data)
@@ -338,7 +307,8 @@ class MemberController extends Controller
 
     public function profileEdit()
     {
-        $member=Auth::user();
+        $member = Member::find(Auth::id())->get();
+
         return view('member.edit_profil', ['member' => $member]);
     }
 
@@ -394,12 +364,19 @@ class MemberController extends Controller
 
     public function alamat()
     {
+        //$member = Member::find(Auth::id())->get();
+        //$member = Member::find($id);
+
+        //$member = Member::all();
+        //return view('member.profil');
+        //dd(count(Auth::user()->alamat));
         return view('member.alamat', ['member' => Auth::user()]);
     }
 
     public function tambahAlamat(Request $request)
     {
         $member = Member::find(Auth::id());
+
         $alamatLama = $member->alamat;
 
         if (empty($alamatLama)) {
@@ -429,6 +406,24 @@ class MemberController extends Controller
 
         $member->alamat = $AlamatFinal;
         $member->save();
+
+        // dd($member->alamat['IdAlamatUtama']);
+
+        // //tampilan
+        // for($i=0 ; $i < count($alamatLama['alamat'])-1;i++ ){
+        //     if($member->alamat['IdAlamatUtama']==$i){
+        //         div aktif
+        //     }
+        //     else{
+        //         div biasa
+        //     }
+        // }
+        // //ubah alat utama
+        // $member->alamat['IdAlamatUtama'] = 2
+        // $member->save();
+        // return view('/alamat');
+
+        // dd(json_encode($member->alamat));
         return redirect()->route('alamat');
     }
 
@@ -469,7 +464,6 @@ class MemberController extends Controller
         $alamat = $member->alamat;
         $new_array[] = array();
         $i = 0;
-
         foreach ($alamat['alamat'] as $key => $value) {
             if ($value['id'] != $id) {
                 $new_array[$i] = $value;
@@ -477,44 +471,21 @@ class MemberController extends Controller
                 $i++;
             }
         }
-
         $alamat['alamat'] = $new_array;
 
-        // if (empty($alamat)) {
-        //     $alamat = array();
-        // }
+        if (empty($new_array['alamat'])) {
 
-        // else {
-        //     $id = count($alamat['alamat']);
-        // }
-
-        // if($alamat = array('IdAlamatUtama' => 0,'alamat' => array())){
-        //     $alamat = array();
-        // }
-
+            //unset($new_array['alamat']);
+            //unset($alamat['IdAlamatUtama']);
+            //unset($new_array['IdAlamatUtama']);
+            //dd($alamat['alamat']);
+        }
         $member->alamat = $alamat;
         $member->save();
-        return redirect()->to('/profil/alamat/');
-    }
 
-    public function saldo()
-    {
-        $member=Auth::user();
-        $transaksi_saldo = Transaksi_saldo::all();
-        return view('member.topup_saldo',[
-            'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
-        ]);
-    }
-
-    public function riwayat()
-    {
-        $member=Auth::user();
-        $transaksi_saldo = Transaksi_saldo::all();
-        return view('member.riwayat',[
-            'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
-        ]);
+        //return redirect()->route('alamat');
+        //return view('member.alamat',['member'=>Auth::user()]);
+        return redirect()->to('alamat/' . $id);
     }
 
     public function konfigurasiPesanan()
@@ -534,50 +505,12 @@ class MemberController extends Controller
         ]);
     }
 
-    public function riwayatSaldo($id)
-    {
-        $member=Auth::user();
-        $transaksi_saldo = Transaksi_saldo::find($id);
-        $waktu = $transaksi_saldo->waktu;
-
-        return view('member.riwayat_topup', [
-            'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
-        ]);
-    }
-
-    public function detailPesanan()
+    public function detailRiwayat()
     {
         // $member=Auth::user();
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.detail_pesanan');
-    }
-
-    public function pesanan()
-    {
-        $member=Auth::user();
-        return view('member.pesanan',[
-            'member' => $member
-        ]);
-    }
-
-    public function favorit()
-    {
-        $member=Auth::user();
-        $produk = Produk::all();
-        return view('member.produk_favorit',[
-            'member' => $member,
-            'produk' => $produk
-        ]);
-    }
-
-    public function ulasan()
-    {
-        $member=Auth::user();
-        return view('member.ulasan',[
-            'member' => $member
-        ]);
     }
 
     public function ulas()

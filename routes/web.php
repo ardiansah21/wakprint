@@ -32,18 +32,15 @@ Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fi
 
 //Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
 
-    Route::get('produk', 'MemberController@produk')->name('produk');
-    Route::get('pencarian', 'MemberController@pencarian')->name('pencarian');
-    Route::get('partner/detail', 'MemberController@detailPartner')->name('detail.partner');
+Route::get('produk', 'MemberController@produk')->name('produk');
+Route::get('pencarian', 'MemberController@pencarian')->name('pencarian');
+Route::get('partner/detail', 'MemberController@detailPartner')->name('detail.partner');
 //member
 
 Route::get('/', 'MemberController@index')->name('home');
 
-<<<<<<< HEAD
 Route::get('produk', 'MemberController@produk')->name('produk');
 
-=======
->>>>>>> a85be665d231fbe2104f4ea76d174ac8edd476d9
 //test upload
 Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
 
@@ -52,10 +49,7 @@ Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
     /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
-<<<<<<< HEAD
     Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran');
-=======
->>>>>>> a85be665d231fbe2104f4ea76d174ac8edd476d9
 
     Route::get('/profil', 'MemberController@profile')->name('profile');
     Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
@@ -128,19 +122,19 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', 'AdminController@index')->name('home');
         Route::get('/member', 'AdminController@dataMember')->name('member');
-        Route::get('member/detail/{id}','AdminController@detailMember')->name('detail.member');
+        Route::get('member/detail/{id}', 'AdminController@detailMember')->name('detail.member');
         Route::get('/partner', 'AdminController@dataPartner')->name('partner');
-        Route::get('partner/detail/{id}','AdminController@detailPartner')->name('detail.partner');
+        Route::get('partner/detail/{id}', 'AdminController@detailPartner')->name('detail.partner');
         Route::get('/saldo', 'AdminController@dataSaldo')->name('saldo');
-        Route::get('saldo/tolak','AdminController@saldoTolak')->name('saldo.tolak');
+        Route::get('saldo/tolak', 'AdminController@saldoTolak')->name('saldo.tolak');
         Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
-        Route::get('keluhan/detail','AdminController@detailKeluhan')->name('detail.keluhan');
+        Route::get('keluhan/detail', 'AdminController@detailKeluhan')->name('detail.keluhan');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
-        Route::get('member/json','AdminController@memberJson')->name('member.json');
-        Route::get('partner/json','AdminController@partnerJson')->name('partner.json');
-        Route::get('member/json','AdminController@memberJson')->name('member.json');
+        Route::get('member/json', 'AdminController@memberJson')->name('member.json');
+        Route::get('partner/json', 'AdminController@partnerJson')->name('partner.json');
+        Route::get('member/json', 'AdminController@memberJson')->name('member.json');
     });
 });
 
@@ -163,3 +157,9 @@ Route::post('/testjson/update/{id}', 'ProductController@update');
 // Route::post('/index/store', 'SiteController@store')->name('store');
 // Route::post('/index/update/{id}', 'SiteController@update')->name('update');
 // Route::post('/index/destroy/{id}', 'SiteController@destroy')->name('destroy');
+
+Route::resource('pdf', 'PdfController');
+
+Route::get('tess', function () {
+    return view('pengujianTemp');
+});
