@@ -1,76 +1,140 @@
-@extends('layouts.pengelola')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    .progress {
-        position: relative;
-        width: 100%;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pengujian</title>
 
-    .bar {
-        background-color: #42b942;
-        width: 0%;
-        height: 30px;
-    }
+    <style>
+        .progress {
+            position: relative;
+            width: 100%;
+        }
 
-    .percent {
-        position: absolute;
-        display: inline-block;
-        left: 50%;
-        color: #4e5b95;
-        margin-top: 8px;
-    }
-</style>
-<div class="container">
-    <form action="{{route('pdf.store')}}" method="post" enctype="multipart/form-data">
-        @csrf
-        <label class="btn btn-primary mt-4" for="my-file-selector">
-            <input id="my-file-selector" name="file" type="file" accept="application/pdf" style="display:none"
-                onchange="$('#upload-file-info').html(this.files[0].name);">
-            Cari PDF
-        </label><span class='label label-info' id="upload-file-info"></span>
-        <div class="progress">
-            <div class="bar"></div>
-            <div class="percent">0%</div>
+        .bar {
+            background-color: #42b942;
+            width: 0%;
+            height: 30px;
+        }
+
+        .percent {
+            position: absolute;
+            display: inline-block;
+            left: 50%;
+            color: #4e5b95;
+            margin-top: 8px;
+        }
+
+        .table th {
+
+            text-align: center;
+
+        }
+
+        .table {
+            border-radius: 5px;
+            width: 50%;
+            margin: auto;
+            float: none;
+        }
+    </style>
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col-md-5">
+                <form action="{{route('pdf.store')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <label class="btn btn-primary mt-4" for="my-file-selector">
+                        <input id="my-file-selector" name="file" type="file" accept="application/pdf"
+                            style="display:none" onchange="
+                            $('#upload-file-info').html(this.files[0].name);
+                            ">
+                        Cari PDF
+                    </label><span class='label label-info' id="upload-file-info"></span>
+                    <div class="progress">
+                        <div class="bar"></div>
+                        <div class="percent">0%</div>
+                    </div>
+                    <div class="row mt-2">
+                        <label for="percenMin" class="mr-3 ml-3">Percentase minimum :</label>
+                        <input type="number" name="percenMin" step="any" id="percenMin" min="0" max="100"
+                            placeholder="masukkan persentase minimum" value="100">
+                        <label for="percenMin" class="ml-1">%</label>
+                    </div>
+                    <button type="submit" class="btn btn-danger mt-4">Proses</button>
+                </form>
+                <div id="loading">
+                    <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
+                    <div id="progressText" class="mx-auto d-block"></div>
+                </div>
+                <table class="table borderless my-3">
+                    <tr>
+                        <td>Nama file</td>
+                        <td id="namaFile"></td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Halaman</td>
+                        <td id="jumlahHalaman"></td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Halaman Berwarna</td>
+                        <td id="jumlahHalamanBerwarna"></td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Halaman Hitam Putih</td>
+                        <td id="jumlahHalamanHitamPutih"></td>
+                    </tr>
+                    <tr>
+                        <td>Warktu Eksekusi</td>
+                        <td id="waktuEksekusi"></td>
+                    </tr>
+                    <tr>
+                        <td>Total piksel Persentase Minimum</td>
+                        <td id="pixelPercenMin"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-md-7">
+                <div class="float-right col" style="height: 100%">
+                    <embed id="a" style="width: 100%; height: 100%" {{-- src="{{url('/pengujian/pdf/a.pdf')}}" --}}
+                        type="application/pdf" frameborder="0" />
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <input type="number" name="percenMin" id="percenMin">
-            <label for="percenMin">%</label>
+        <div id="placeTable" style="margin-top: 30px">
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table table-hover table-inverse mx-auto w-auto">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>Halaman</th>
+                                <th>Total Piksel</th>
+                                <th>Total Piksel Berwarna</th>
+                                <th>Total Piksel Hitam Putih</th>
+                                <th>Jenis Warna</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableData"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-danger mt-4">Proses</button>
-    </form>
-    <div id="loading">
-        <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
-        <div id="progressText" class="mx-auto d-block"></div>
     </div>
-    <div>
-        <table class="table table-hover table-inverse table-responsive mx-auto d-blok" >
-            <thead class="thead-inverse">
-                <tr>
-                    <th>Halaman</th>
-                    <th>Total Piksel</th>
-                    <th>Total Piksel Berwarna</th>
-                    <th>Total Piksel Hitam Putih</th>
-                    <th>Jenis Warna</th>
-                </tr>
-            </thead>
-            <tbody id="tableData"></tbody>
-        </table>
-    </div>
-</div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+    <script src="{{asset('js/pengujian.js')}}"></script>
+</body>
 
-
-
-@endsection
-
-@section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
-<script src="{{asset('js/pengujian.js')}}"></script>
-@endsection
-
-
+</html>
 
 
 {{-- <style>

@@ -29,14 +29,30 @@ $(function () {
                 // alert(xhr['path']);
                 // document.getElementsByClassName('aa').html(xhr.path)
 
+                bar.width('0%')
+                percent.html('0%');
                 var data = xhr.responseText;
                 var pdf = JSON.parse(data);
 
                 // $('#aa').html(pdf['namaFile']);
+                // xhr.addEventListener("load", () => {
+                //     console.log("transfer selesai");
+                //   });
 
-                $('.table').ready(function () {
+                $('#placeTable').ready(function () {
+
                     $('.table').show();
                     $('#loading').hide();
+
+                    $('#namaFile').text(pdf['namaFile']);
+                    $('#jumlahHalaman').text(pdf['jumlahHalaman']);
+                    $('#jumlahHalamanBerwarna').text(pdf['jumlahHalBerwarna']);
+                    $('#jumlahHalamanHitamPutih').text(pdf['jumlahHalHitamPutih']);
+                    $('#waktuEksekusi').text(pdf['waktuEksekusi']);
+                    $('#pixelPercenMin').text(pdf['pixelPercenMin']);
+                    // $('embed').src = '{{url(\'pengujian/pdf/\',)."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}';
+                    // $('embed').src =  "<?php {{url('/pengujian/pdf/"+pdf['namaFile']+"')}}?>";
+                    document.getElementById('a').setAttribute('src', 'pengujian/pdf/'+pdf["namaFile"])
                     var k = '<tbody>'
                     for (i = 0; i < pdf['halaman'].length; i++) {
                         if(pdf['halaman'][i].jenis_warna=="Berwarna")
@@ -52,6 +68,8 @@ $(function () {
                     }
                     k += '</tbody>';
                     document.getElementById('tableData').innerHTML = k;
+
+
                 });
             }
 

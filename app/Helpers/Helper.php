@@ -17,8 +17,9 @@ function set_active($uri, $output = 'active')
     }
 }
 
-function cekWarna($path, $percenMinimum = 0)
+function cekWarna($path, $percenMinimum = 100)
 {
+    $start = microtime(true);
 
     $totalPageGray = 0;
     $totalPageColor = 0;
@@ -29,10 +30,10 @@ function cekWarna($path, $percenMinimum = 0)
     $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
 
     for ($i = 0; $i < $jumlahHal; $i++) {
+        $jenisWarna[$i] = "";
         $totalPixel[$i] = 0;
         $totalPixelGray[$i] = 0;
         $totalPixelColor[$i] = 0;
-        $jenisWarna[$i] = "";
 
         $im = new imagick($path . '[' . $i . ']');
         // convert to jpg
@@ -42,7 +43,7 @@ function cekWarna($path, $percenMinimum = 0)
         $im->setCompressionQuality(60);
         $im->setImageFormat('jpeg');
         $im->setImageAlphaChannel(11); // Imagick::ALPHACHANNEL_REMOVE
-        $im->resizeImage(10, 5, Imagick::FILTER_LANCZOS, 1);
+        // $im->resizeImage(10, 5, Imagick::FILTER_LANCZOS, 1);
 
         for ($x = 0; $x < $im->getImageWidth(); $x++) {
             for ($y = 0; $y < $im->getImageHeight(); $y++) {
@@ -57,53 +58,23 @@ function cekWarna($path, $percenMinimum = 0)
         $totalPixelColor[$i] = $totalPixel[$i] - $totalPixelGray[$i];
         $percenMin = $percenMinimum * $totalPixel[$i] / 100;
 
-        // if ($totalPixelColor[$i] < $totalPixelGray[$i]) {
-        //     if ($totalPixelColor[$i] < $percenMin) {
-        //         $totalPageGray++;
-        //         $jenisWarna[$i] = "Hitam putih";
-        //     } else {
-        //         $totalPageColor++;
-        //         $jenisWarna[$i] = "Berwarna";
-        //     }
-        // } else {
-        //     if ($totalPixelGray[$i] < $percenMin) {
-        //         $totalPageColor++;
-        //         $jenisWarna[$i] = "Berwarna";
-        //     } else {
-        //         $totalPageGray++;
-        //         $jenisWarna[$i] = "Hitam putih";
-        //     }
-        // }
-
-        // if ($totalPixelColor[$i] < $totalPixelGray[$i]) { //color
-        //     if ($totalPixelColor[$i] < $percenMin) {
-        //         $totalPageGray++;
-        //         $jenisWarna[$i] = "Hitam putih";
-        //     } else {
-        //         $totalPageColor++;
-        //         $jenisWarna[$i] = "Berwarna";
-        //     }
-        // } else {
-        //     if ($totalPixelColor[$i] > $percenMin) { //
-        //         $totalPageColor++;
-        //         $jenisWarna[$i] = "Berwarna";
-        //     } else {
-        //         $totalPageGray++;
-        //         $jenisWarna[$i] = "Hitam putih";
-        //     }
-        // }
-
-        if ($totalPixelColor[$i] != 0) {
-            if ($totalPixelColor[$i] < $percenMin) {
+        if ($totalPixelColor[$i] < $totalPixelGray[$i]) {
+            if ($totalPixelColor[$i] <= $percenMin) {
+                $totalPageGray++;
                 $jenisWarna[$i] = "Hitam putih";
             } else {
+                $totalPageColor++;
                 $jenisWarna[$i] = "Berwarna";
             }
         } else {
-            $jenisWarna[$i] = "Hitam putih";
+            if ($totalPixelGray[$i] <= $percenMin) {
+                $totalPageColor++;
+                $jenisWarna[$i] = "Berwarna";
+            } else {
+                $totalPageGray++;
+                $jenisWarna[$i] = "Hitam putih";
+            }
         }
-
-        //$im->writeImage($nameto);
 
         $im->clear();
         $im->destroy();
@@ -120,10 +91,16 @@ function cekWarna($path, $percenMinimum = 0)
     $pdf->jumlahHalBerwarna = $totalPageColor;
     $pdf->jumlahHalHitamPutih = $totalPageGray;
     $pdf->path = $path;
+    $pdf->waktuEksekusi = (microtime(true) - $start);
+    $pdf->pixelPercenMin = $percenMin;
 
     // $pdf->jumlahPiksel = $totalPixel;
     // $pdf->jumlahPikselBerwarna = $totalPixelColor;
     // $pdf->jumlahPikselHitamPutih = $totalPixelGray;
 
+    Log::info("------------------");
+    Log::info($percenMin);
+    Log::info($percenMinimum);
+    Log::info("------------------");
     return $pdf;
 }

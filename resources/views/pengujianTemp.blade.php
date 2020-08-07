@@ -105,6 +105,8 @@
             $('#loading').hide();
              $(document).ready(function()
              {
+
+                <?php
                     var bar = $('.bar');
                     var percent = $('.percent');
 

@@ -36,9 +36,24 @@ class PdfController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $request->file('file')->storeAs('pdf', $request->file('file')->getClientOriginalName());
+        // 1 $path = $request->file('file')->storeAs('pdf', $request->file('file')->getClientOriginalName());
 
-        $path = storage_path("app/" . $path);
+        // 2 $path = $request->file('file')->storeAs(
+        //     'pdf',
+        //     $request->file('file')->getClientOriginalName(),
+        //     'public'
+        // );
+
+        //  dd($path);
+
+        //  1 $path = storage_path("app/" . $path);
+
+        $path = public_path('pengujian/pdf');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        $request->file('file')->move($path, $request->file('file')->getClientOriginalName());
+        $path = $path . '/' . $request->file('file')->getClientOriginalName();
 
         $percenMin = $request->percenMin;
 
