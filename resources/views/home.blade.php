@@ -749,7 +749,6 @@
 @section('script')
 <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
-
     function openDialog() {
         document.getElementById('fileid').click();
     }

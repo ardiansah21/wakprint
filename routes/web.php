@@ -46,7 +46,6 @@ Route::post('search', 'SearchController@search')->name('search');
 // Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('chat', 'MemberController@chat')->name('chat');
     //TODO merapikan File Storage 2
     /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
             Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
@@ -77,6 +76,8 @@ Route::middleware('auth')->group(function () {
     Route::get('ulasan', 'MemberController@ulasan')->name('ulasan');
     Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
     Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
+
+    Route::get('chat', 'MemberController@chat')->name('chat');
 });
 
 //Pengelola percetakan
@@ -129,13 +130,13 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', 'AdminController@index')->name('home');
         Route::get('/member', 'AdminController@dataMember')->name('member');
-        Route::get('member/detail/{id}','AdminController@detailMember')->name('detail.member');
+        Route::get('member/detail/{id}', 'AdminController@detailMember')->name('detail.member');
         Route::get('/partner', 'AdminController@dataPartner')->name('partner');
-        Route::get('partner/detail/{id}','AdminController@detailPartner')->name('detail.partner');
+        Route::get('partner/detail/{id}', 'AdminController@detailPartner')->name('detail.partner');
         Route::get('/saldo', 'AdminController@dataSaldo')->name('saldo');
-        Route::get('saldo/tolak','AdminController@saldoTolak')->name('saldo.tolak');
+        Route::get('saldo/tolak', 'AdminController@saldoTolak')->name('saldo.tolak');
         Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
-        Route::get('keluhan/detail','AdminController@detailKeluhan')->name('detail.keluhan');
+        Route::get('keluhan/detail', 'AdminController@detailKeluhan')->name('detail.keluhan');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
@@ -168,3 +169,9 @@ Route::get('foto', 'ProductController@foto');
 // Route::post('/index/store', 'SiteController@store')->name('store');
 // Route::post('/index/update/{id}', 'SiteController@update')->name('update');
 // Route::post('/index/destroy/{id}', 'SiteController@destroy')->name('destroy');
+
+Route::resource('pdf', 'PdfController');
+
+Route::get('tess', function () {
+    return view('pengujianTemp');
+});
