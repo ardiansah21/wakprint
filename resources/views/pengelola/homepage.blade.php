@@ -28,7 +28,7 @@
         <div class="col-md-4 bg-light-purple p-4 text-center" style="border-radius:10px;">
             <label class="font-weight-bold text-break text-truncate" style="font-size: 48px;
                                     width:100%;">
-                {{__('4.5')}}
+                {{$partner->rating_toko}}
             </label>
             <br>
             <label class="font-weight-bold text-break" style="font-size: 18px;
@@ -72,4 +72,8 @@
         </table>
     </div>
 </div>
+@endsection
+
+@section('script')
+
 @endsection

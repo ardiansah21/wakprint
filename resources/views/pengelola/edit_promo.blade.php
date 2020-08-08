@@ -61,6 +61,9 @@
                                                     <input type="checkbox"
                                                         name="checkbox_promo[]"
                                                         class=""
+                                                        @if($p->id_produk)
+                                                            checked
+                                                        @endif
                                                         value="{{ $p->id_produk }}"
                                                         id="checkboxPromo">
                                                 </div>
@@ -176,6 +179,7 @@
                                     class="form-control form-control-lg pt-2 pb-2"
                                     placeholder="300.000"
                                     aria-label="300.000"
+                                    value="{{ $produk->maksimal_diskon }}"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                     aria-describedby="inputGroup-sizing-sm"
                                     style="font-size: 16px;">
@@ -255,6 +259,7 @@
                                     class="form-control form-control-lg pt-2 pb-2"
                                     placeholder="10"
                                     aria-label="10"
+                                    value="{{ $produk->jumlah_diskon }}"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                     aria-describedby="inputGroup-sizing-sm"
                                     style="width:100%; font-size:16px;">
@@ -339,7 +344,7 @@
                     <div class="mr-0">
                         <button type="submit" class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5 mb-0"
                             style="border-radius:30px;">
-                            {{__('Tambah') }}
+                            {{__('Simpan') }}
                         </button>
                     </div>
                 </div>

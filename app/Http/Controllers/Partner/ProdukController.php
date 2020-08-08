@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Pengelola_Percetakan;
 use App\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProdukController extends Controller
@@ -21,9 +23,11 @@ class ProdukController extends Controller
         //  return $produk->getMedia('foto_produk');
 
         // $produk = Produk::first()->with('media')->get();
+        $partner = Auth::user();
         $produk = Produk::orderByDesc('id_produk')->get();
         return view('pengelola.produk', [
             'produk' => $produk,
+            'partner' => $partner
         ]);
     }
 
@@ -34,7 +38,8 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        return view('pengelola.tambah_produk');
+        $partner = Pengelola_Percetakan::find(Auth::id());
+        return view('pengelola.tambah_produk',compact('partner'));
     }
 
     /**
@@ -45,6 +50,7 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        $partner = Pengelola_Percetakan::find(Auth::id());
         $fitur = $request->fitur;
         $rr = array();
         foreach ($fitur['tambahan'] as $key => $value) {
@@ -76,11 +82,14 @@ class ProdukController extends Controller
         // $produk->foto_produk =
 
         $produk = Produk::create([
+            'id_pengelola' => $partner->id_pengelola,
             'nama' => $request->nama,
-            'harga' => $request->harga,
-            'harga_timbal_balik' => $request->harga_timbal_balik,
-            'berwarna' => $request->berwarna == 'True' ? '0' : '1',
-            'hitam_putih' => $request->hitam_putih == 'True' ? '0' : '1',
+            'harga_hitam_putih' => $request->harga_hitam_putih,
+            'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
+            'harga_berwarna' => $request->harga_berwarna,
+            'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
+            'berwarna' => $request->berwarna == 'True' ? '1' : '0',
+            'hitam_putih' => $request->hitam_putih == 'True' ? '1' : '0',
             'deskripsi' => $request->deskripsi,
             'jenis_kertas' => $request->jenis_kertas,
             'jenis_printer' => $request->jenis_printer,
@@ -195,9 +204,9 @@ class ProdukController extends Controller
 
         $a = DB::table('media')->where('model_id', $id)->get();
         // dd($a);
-        foreach ($a as $key => $value) {
-            dd($value->id);
-        }
+        // foreach ($a as $key => $value) {
+        //     dd($value->id);
+        // }
         return redirect()->back();
     }
 

@@ -34,18 +34,22 @@ Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fi
 
     Route::get('produk', 'MemberController@produk')->name('produk');
     Route::get('pencarian', 'MemberController@pencarian')->name('pencarian');
-    Route::get('partner/detail', 'MemberController@detailPartner')->name('detail.partner');
+    Route::get('partner/detail/{id}', 'MemberController@detailPartner')->name('detail.partner');
+    Route::get('produk/detail/{id}', 'MemberController@detailProduk')->name('detail.produk');
 //member
 
 Route::get('/', 'MemberController@index')->name('home');
 
+Route::post('search', 'SearchController@search')->name('search');
+
 //test upload
-Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
+// Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
 
 Route::middleware('auth')->group(function () {
     Route::get('chat', 'MemberController@chat')->name('chat');
     //TODO merapikan File Storage 2
     /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+            Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
     /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
     Route::get('/profil', 'MemberController@profile')->name('profile');
@@ -92,6 +96,7 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
 
         Route::get('saldo', 'PartnerController@saldo')->name('saldo');
         Route::get('saldo/tarik', 'PartnerController@tarikSaldo')->name('saldo.tarik');
+        Route::post('saldo/tarik/store', 'PartnerController@storeTarikSaldo')->name('saldo.tarik.store');
 
         Route::resource('produk', 'ProdukController');
         Route::post('produk/media', 'ProdukController@storeMedia')->name('produk.storeMedia');
@@ -100,13 +105,18 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::get('pesanan', 'PesananController@index')->name('pesanan');
         Route::get('pesanan/detail', 'PesananController@detailPesanan')->name('detail.pesanan');
 
-        Route::get('riwayat/{id}', 'PartnerController@riwayatTransaksi')->name('riwayat.detail');
+        Route::get('riwayat/{id}', 'PartnerController@riwayatTransaksi')->name('riwayat.saldo');
 
         Route::resource('promo', 'PromoController');
+        Route::post('promo/store', 'PromoController@store');
 
         Route::resource('atk', 'AtkController');
 
         Route::get('info', 'PartnerController@info')->name('info');
+        Route::post('ubah-status', 'PartnerController@statusToko')->name('ubah-status');
+
+
+        Route::post('search/produk', 'PromoController@searchProdukPartner')->name('search.produk');
     });
 });
 
@@ -131,7 +141,7 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::get('member/json','AdminController@memberJson')->name('member.json');
         Route::get('partner/json','AdminController@partnerJson')->name('partner.json');
-        Route::get('member/json','AdminController@memberJson')->name('member.json');
+        Route::get('saldo/json','AdminController@saldoJson')->name('saldo.json');
     });
 });
 
@@ -140,12 +150,16 @@ Route::get('/testjson', 'ProductController@index');
 
 // Route::get('table', 'ProductController@table');
 Route::get('table', 'ProductController@table');
+Route::get('carousel', 'ProductController@carousel');
 Route::get('table/json', 'ProductController@json');
 
 Route::get('/testjson/tambah/', 'ProductController@tambah');
 Route::post('/testjson/store', 'ProductController@store');
 Route::get('/testjson/update/{id}', 'ProductController@updateShow');
 Route::post('/testjson/update/{id}', 'ProductController@update');
+
+
+Route::get('foto', 'ProductController@foto');
 
 // Route::get('/index', 'SiteController@index');
 // Route::get('/index/create', 'SiteController@create');

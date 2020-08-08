@@ -91,9 +91,15 @@
                             <a class="nav-link" href="{{ route('partner.profile') }}"
                                 style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
                                 {{-- <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span> --}}
-                                <span class="text-primary-purple mr-2">{{__('Rp. 10.000')}}</span>
+                                <span class="text-primary-purple text-truncate mr-2" style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
+                                @if (!empty(Auth::user()->getFirstMediaUrl()))
+                                    <img class="align-middle border border-gray ml-2" src="{{ Auth::user()->getFirstMediaUrl() }}"
+                                        width="45" height="45" alt="no logo" style="border-radius: 30px;">
+                                @else
                                 <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
-                                    width="45" height="45" alt="no logo">
+                                        width="45" height="45" alt="no logo">
+                                @endif
+
                             </a>
                         </li>
                         @endguest
@@ -108,7 +114,9 @@
                     @case('partner.detail.pesanan')
                     @case('partner.produk.create')
                     @case('partner.promo.create')
+                    @case('partner.promo.edit')
                     @case('partner.atk.create')
+                    @case('partner.atk.edit')
                         @yield('content')
                         @break
                     @default
@@ -119,10 +127,18 @@
                                     <label class="font-weight-bold mr-3">
                                         {{__('Percetakan')}}
                                     </label>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
+                                    <form id="status-form" action="{{ route('partner.ubah-status') }}" method="POST">
+                                        @csrf
+                                        <label class="switch">
+                                            <input id="statusToko" class="statusToko" type="checkbox" value="Buka" name="status_toko" onchange="event.preventDefault(); document.getElementById('status-form').submit();"
+                                            @if (Auth::user()->status_toko == 'Buka')
+                                                checked
+                                            @endif
+                                            >
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </form>
+
                                 </div>
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical"
                                     style="font-size: 18px;">
@@ -205,6 +221,7 @@
 {{-- ...Some more scripts... --}}
 <script src="{{ asset('js/scriptPengelola.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
 @yield('script')
 
 </html>

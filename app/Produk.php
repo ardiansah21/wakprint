@@ -16,6 +16,10 @@ class Produk extends Model implements HasMedia
     //set nilai kolom db default
     protected $attributes = [
         'rating' => 5.0,
+        'harga_hitam_putih' => 0,
+        'harga_timbal_balik_hitam_putih' => 0,
+        'harga_berwarna' => 0,
+        'harga_timbal_balik_berwarna' => 0
     ];
 
     protected $guarded = [];
@@ -36,5 +40,10 @@ class Produk extends Model implements HasMedia
     public function media()
     {
         return $this->morphMany(Media::class, 'model');
+    }
+
+    public function partner(){
+        return $this->belongsTo('App\Pengelola_Percetakan','id_pengelola');
+        // return $this->belongsTo(Pengelola_Percetakan::all());
     }
 }

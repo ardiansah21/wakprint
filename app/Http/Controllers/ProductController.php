@@ -7,6 +7,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\product;
 use DataTables;
 use App\Member;
+use App\Pengelola_Percetakan;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -58,8 +60,25 @@ class ProductController extends Controller
         return view('table');
     }
 
+    public function carousel()
+    {
+        return view('carousel');
+    }
+
     public function json(){
         return Datatables::of(Member::all())->make(true);
+    }
+
+
+    public function foto()
+    {
+        $pengelola = Pengelola_Percetakan::user();
+        $pengelola
+            ->addMedia(public_path('img/facebook.png'))
+            ->toMediaCollection('nyobak');
+
+            return $pengelola->getMedia('nyobak');
+        //return view('table');
     }
 
 }

@@ -8,15 +8,23 @@
         {{__('Profil Tempat Percetakan') }}
     </label>
     <br>
-    <form method="POST" action="{{ route('partner.profile.edit') }}">
+    <form method="POST" action="{{ route('partner.profile.edit') }}"  enctype="multipart/form-data">
         @csrf
         <label class="mb-2"
             style="font-size: 16px;">
             {{__('Foto Tempat Percetakan') }}
         </label>
 
+        <div class="needsclick dropzone mb-3" id="document-dropzone"
+            style=" border:1px solid #EBD1EC; border-radius:10px; color: #BC41BE; background-color:#EBD1EC;">
+            <div class="dz-message" data-dz-message style="font-size: 18px;">
+                <span>{{__('Klik atau Tarik Foto Percetakan Anda Disini') }}</span>
+            </div>
+        </div>
+
         {{-- <div class="scrolling-wrapper mb-0"> --}}
-            <div class="row justify-content-left"
+
+            <div class="row justify-content-left" hidden
                 style="height:200px;">
                 <div class="col-md-auto"
                     style="position: relative">
@@ -40,7 +48,7 @@
                 <div class="col-md-2 align-self-center mb-5">
                     <button class="btn btn-circle shadow-sm"
                         role="button">
-                        <i class="material-icons md-36 align-middle" 
+                        <i class="material-icons md-36 align-middle"
                         style="color: white; margin-left:-7px;">
                             add
                         </i>
@@ -48,7 +56,7 @@
                 </div>
             </div>
         {{-- </div> --}}
-        
+
         <label class="mb-2">
             {{__('Nama Tempat Percetakan') }}
         </label>
@@ -56,7 +64,7 @@
             <input type="text"
                 name="namapercetakan"
                 class="form-control pt-2 pb-2"
-                placeholder="Masukkan Nama Tempat Percetakan" 
+                placeholder="Masukkan Nama Tempat Percetakan"
                 aria-label="Masukkan Nama Tempat Percetakan"
                 aria-describedby="inputGroup-sizing-sm"
                 value="{{ $partner->nama_toko }}"
@@ -103,16 +111,16 @@
             {{__('Buka') }}
             <input type="datetime"
                 maxlength="2"
-                value="{{ $partner->jam_op_buka}}"
+                value="{{ date_create("$partner->jam_op_buka")->format('H')}}"
                 class="form-input mr-2 ml-2"
                 name="jambuka"
                 style="width:48px;
-                    font-size: 16px;"> 
+                    font-size: 16px;">
                 :
             <input type="datetime"
                 name="menitbuka"
                 maxlength="2"
-                value="{{ $partner->jam_op_buka }}"
+                value="{{ date_create("$partner->jam_op_buka")->format('i')}}"
                 class="form-input mr-2 ml-2"
                 style="width:48px;
                     font-size: 16px;">
@@ -122,14 +130,14 @@
                 maxlength="2"
                 name="jamtutup"
                 class="form-input mr-2 ml-2"
-                value="{{ $partner->jam_op_tutup }}"
+                value="{{ date_create("$partner->jam_op_tutup")->format('H')}}"
                 style="width:48px;
                     font-size: 16px;"> :
             <input type="datetime"
                 maxlength="2"
                 name="menittutup"
                 class="form-input mr-2 ml-2"
-                value="{{ $partner->jam_op_tutup }}"
+                value="{{ date_create("$partner->jam_op_tutup")->format('i')}}"
                 style="width:48px;
                     font-size: 16px;">
         </label>
@@ -152,11 +160,20 @@
                 <div class="row justify-content-left mb-2">
                     <div class="form-group custom-control custom-checkbox mt-2 ml-3"
                         style="font-size: 16px;">
-                        <input type="checkbox"
-                            name="ambiltempat"
-                            class="custom-control-input"
-                            value="Ambil di Tempat"
-                            id="checkboxAmbil">
+                        @if ($partner->ambil_di_tempat === 0)
+                            <input type="checkbox"
+                                name="ambiltempat"
+                                class="custom-control-input"
+                                value="Ambil di Tempat"
+                                id="checkboxAmbil">
+                        @else
+                            <input type="checkbox"
+                                name="ambiltempat"
+                                class="custom-control-input"
+                                value="Ambil di Tempat"
+                                id="checkboxAmbil"
+                                checked>
+                        @endif
                         <label class="custom-control-label"
                             for="checkboxAmbil">
                             {{__('Ambil di Tempat') }}
@@ -164,11 +181,20 @@
                     </div>
                     <div class="form-group custom-control custom-checkbox mt-2 ml-4"
                         style="font-size: 16px;">
-                        <input type="checkbox"
-                            name="antartempat"
-                            class="custom-control-input"
-                            value="Diantar ke Tempat"
-                            id="checkboxDiantar">
+                        @if ($partner->antar_ke_tempat === 0)
+                            <input type="checkbox"
+                                name="antartempat"
+                                class="custom-control-input"
+                                value="Diantar ke Tempat"
+                                id="checkboxDiantar">
+                        @else
+                            <input type="checkbox"
+                                name="antartempat"
+                                class="custom-control-input"
+                                value="Diantar ke Tempat"
+                                id="checkboxDiantar"
+                                checked>
+                        @endif
                         <label class="custom-control-label"
                             for="checkboxDiantar">
                             {{__('Diantar ke Tempat') }}
@@ -176,47 +202,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-auto text-right">
-                <label class="mb-2">
+            <div class="col-md-6">
+                <label class="mb-2" style="font-size:14px;">
                     {{__('Akurasi Tingkat Keakuratan Deteksi Warna Halaman') }}
-                    <a class="text-primary-purple ml-2"
+                    <a class="text-primary-purple font-weight-bold ml-2"
                         href=""
                         data-toggle="modal"
                         data-target="#infoAtkdwhModal">
                         {{__('Info') }}
                     </a>
                 </label>
-                <div class="form-group dropdown">
-                    <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray" 
-                        id="dropdownATKDH" 
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        style="font-size: 16px;
-                            text-align:left;">
-                        {{__('Akurasi Tingkat Keakuratan Deteksi Warna') }}
-                    </button>
-                    <ul class="dropdown-menu"
-                        name="atkdwh"
-                        aria-labelledby="dropdownATKDH"
-                        style="font-size: 16px;
-                        width:100%;">
-                            <li class="dropdown-item" href="#" value="{{__('Penuh') }}">
-                                {{__('Penuh') }}
-                            </li>
-                            <li class="dropdown-item" href="#" value="{{__('Tinggi') }}">
-                                {{__('Tinggi') }}
-                            </li>
-                            <li class="dropdown-item" href="#" value="{{__('Sedang') }}">
-                                {{__('Sedang') }}
-                            </li>
-                            <li class="dropdown-item" href="#" value="{{__('Rendah') }}">
-                                {{__('Rendah') }}
-                            </li>
-                            <li class="dropdown-item" href="#" value="{{__('Sangat Rendah') }}">
-                                {{__('Sangat Rendah') }}
-                            </li>
-                    </ul>
+
+                <div class="form-group">
+                    <div class="dropdown" aria-required="true">
+                        <input name="atkdwh" type="text" id="atkdwh" Class="form-control" value="{{ $partner->atkdwh ?? '' }}" hidden>
+                        <button id="atkdwhButton"
+                            class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                            id="dropdownAtkdwh" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
+                                text-align:left;">
+                            {{$partner->atkdwh ?? 'Pilih Tingkat Akurasi Deteksi Warna Halaman'}}
+                        </button>
+                        @php
+                        $atkdwh= array('Penuh', 'Tinggi', 'Sedang', 'Rendah', 'Sangat Rendah');
+                        @endphp
+                        <div id="atkdwhList" class="dropdown-menu" aria-labelledby="dropdownAtkdwh"
+                            style="font-size: 16px; width:100%;">
+                            @foreach ( $atkdwh as $a)
+                            <span class="dropdown-item cursor-pointer ">
+                                {{$a}}
+                            </span>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -228,14 +245,47 @@
                 {{__('Simpan Perubahan') }}
             </button>
         </div>
-    
+
         <label class="font-weight-bold mb-5 mt-2"
             style="font-size:36px;">
             {{__('Profil Pemilik Tempat Percetakan') }}
         </label>
 
         <div class="row justify-content-between mb-0">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3" style="width:250px;height:250px; border-radius:10px;">
+                @if (!empty($partner->getFirstMediaUrl()))
+                    <img id="gambarPartner" src="{{ $partner->getFirstMediaUrl() }}"
+                    class="img-responsive" style="width:100%;height:250px; border-radius:10px;" alt="Foto Kosong">
+                <button id="editPhotoButton" type="button" onclick="document.getElementById('imgupload').click();"
+                    class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0"
+                    style="position: relative;
+                        font-size:16px;
+                        bottom: 50px;
+                        left:110px;
+                        right: 0px;
+                        border-radius:30px;">
+                        {{__('Pilih Foto') }}
+                </button>
+                <input id="imgupload" type="file" name="foto_partner" hidden accept="image/png, image/jpeg"
+                    onchange="document.getElementById('gambarPartner').src=window.URL.createObjectURL(this.files[0]);" hidden>
+                @else
+                    <img id="gambarPartner" src="https://unsplash.it/600/400"
+                        class="img-responsive" style="width:100%;height:250px; border-radius:10px;" alt="Foto Kosong">
+                    <button id="editPhotoButton" type="button" onclick="document.getElementById('imgupload').click();"
+                        class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0"
+                        style="position: relative;
+                            font-size:16px;
+                            bottom: 50px;
+                            left:110px;
+                            right: 0px;
+                            border-radius:30px;">
+                            {{__('Pilih Foto') }}
+                    </button>
+                    <input id="imgupload" type="file" name="foto_partner" hidden accept="image/png, image/jpeg"
+                        onchange="document.getElementById('gambarPartner').src=window.URL.createObjectURL(this.files[0]);" hidden>
+                @endif
+            </div>
+            {{-- <div class="form-group col-md-3">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
                     class="img-responsive bg-light"
                     style="width:250px;
@@ -252,7 +302,7 @@
                         {{__('Pilih Foto') }}
                     </button>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-md-9">
                 <label class="mb-2">
                     {{__('Nama Pemilik Tempat Percetakan') }}
@@ -262,7 +312,7 @@
                         name="namapemilik"
                         class="form-control pt-2 pb-2"
                         value="{{ $partner->nama_lengkap }}"
-                        placeholder="Masukkan Nama Pemilik Tempat Percetakan" 
+                        placeholder="Masukkan Nama Pemilik Tempat Percetakan"
                         aria-label="Masukkan Nama Pemilik Tempat Percetakan"
                         aria-describedby="inputGroup-sizing-sm"
                         style="font-size:16px;">
@@ -275,7 +325,7 @@
                         name="nomorhp"
                         class="form-control pt-2 pb-2"
                         value="{{ $partner->nomor_hp }}"
-                        placeholder="Masukkan Nomor HP Pemilik Tempat Percetakan" 
+                        placeholder="Masukkan Nomor HP Pemilik Tempat Percetakan"
                         aria-label="Masukkan Nomor HP Pemilik Tempat Percetakan"
                         aria-describedby="inputGroup-sizing-sm"
                         style="font-size:16px;">
@@ -290,58 +340,29 @@
                                 $namaBank = array(
                                     "BRI",
                                     "BNI",
-                                    "Maybank",
-                                    "Mandiri"
+                                    "BCA",
+                                    "Mandiri",
+                                    "Maybank"
                                 );
                             @endphp
-                            {{-- <select class="btn btn-default btn-block dropdown dropdown-toggle border border-gray" name="namabank" style="font-size: 18px;">
-                                @foreach ($namaBank as $key => $value)
-                                    <option value="{{ $key }}"
-                                    @if ($key == old('namabank', $partner->nama_bank->option))
-                                        selected="selected"
-                                    @endif>
-                                    {{ $value }}
-                                </option>
-                                @endforeach
-                            </select> --}}
-                            <select class="btn btn-default btn-block dropdown dropdown-toggle border border-gray" name="namabank"
-                                aria-valuetext="{{$partner->nama_bank}}" style="font-size: 18px;">
-                                <option value="Maybank">{{__('Maybank')}}</option>
-                                <option value="BCA">{{__('BCA')}}</option>
-                                <option value="Mandiri">{{__('Mandiri')}}</option>
-                                <option value="BRI">{{__('BRI')}}</option>
-                            </select>
-                            {{-- <button class="btn btn-default btn-block shadow-sm dropdown-toggle border border-gray"
-                                id="dropdownNamaBank"
-                                value="{{$partner->nama_bank}}"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                style="font-size:16px;
-                                    text-align:left;">
-                                {{$partner->nama_bank}}
-                            </button>
-                            <ul class="dropdown-menu"
-                                name="namabank"
-                                aria-labelledby="dropdownNamaBank"
-                                style="font-size:16px;
-                                    width:100%;">
-                                <li class="dropdown-item"
-                                    href="#"
-                                    value="BCA">
-                                    {{__('BCA') }}
-                                </li>
-                                <li class="dropdown-item"
-                                    href="#"
-                                    value="Mandiri">
-                                    {{__('Mandiri') }}
-                                </li>
-                                <li class="dropdown-item"
-                                    href="#"
-                                    value="BNI">
-                                    {{__('BNI') }}
-                                </li>
-                            </ul> --}}
+                            <div class="form-group">
+                                <div class="dropdown" aria-required="true">
+                                    <input name="namabank" type="text" id="namabank" Class="form-control" value="{{ $partner->nama_bank }}" hidden>
+                                    <button id="namaBankButton"
+                                        class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                                        id="dropdownNamaBank" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
+                                        {{$partner->nama_bank}}
+                                    </button>
+                                    <div id="namaBankList" class="dropdown-menu" aria-labelledby="dropdownAtkdwh"
+                                        style="font-size: 16px; width:100%;">
+                                        @foreach ($namaBank as $nb)
+                                        <span class="dropdown-item cursor-pointer ">
+                                            {{$nb}}
+                                        </span>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-7">
@@ -353,7 +374,7 @@
                                 name="nomorrekening"
                                 class="form-control pt-2 pb-2"
                                 value="{{ $partner->nomor_rekening }}"
-                                placeholder="Masukkan Nomor Rekening Pemilik Tempat Percetakan" 
+                                placeholder="Masukkan Nomor Rekening Pemilik Tempat Percetakan"
                                 aria-label="Masukkan Nomor Rekening Pemilik Tempat Percetakan"
                                 aria-describedby="inputGroup-sizing-sm"
                                 style="font-size:16px;">
@@ -382,5 +403,52 @@
     {{-- pop up info --}}
     @include('pengelola.tingkat_akurasi')
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            var uploadedDocumentMap = {}
+            Dropzone.options.documentDropzone = {
+                url: '{{ route('partner.produk.storeMedia') }}',
+                maxFilesize: 2, // MB
+                addRemoveLinks: true,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                success: function (file, response) {
+                    $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+                    uploadedDocumentMap[file.name] = response.name
+                },
+                removedfile: function (file) {
+                    file.previewElement.remove()
+                    var name = ''
+                    if (typeof file.file_name !== 'undefined') {
+                    name = file.file_name
+                    } else {
+                    name = uploadedDocumentMap[file.name]
+                    }
+                }
+            }
+
+            $('#atkdwhList span').on('click', function () {
+                $('#atkdwhButton').text($(this).text());
+                $('#atkdwh').val($(this).text());
+            });
+            $('#namaBankList span').on('click', function () {
+                $('#namaBankButton').text($(this).text());
+                $('#namabank').val($(this).text());
+            });
+
+            $("#editPhotoButton").on("click",function(){
+                $('#imgupload').trigger('click'); return false;
+            });
+
+            $("#gambarPartner").on("change","#imgupload",function(){
+                document.getElementById('gambarPartner').src=window.URL.createObjectURL(this.files[0]);
+            });
+        });
+
+    </script>
 @endsection
 

@@ -10,7 +10,7 @@
         <table class="table table-hover">
             <thead class="bg-primary-purple text-white" style="border-radius:25px 25px 15px 15px; font-size:16px;">
                 <tr>
-                    <th class="align-middle" scope="col-md-auto">{{__('No')}}</th>
+                    <th class="align-middle" scope="col-md-auto">{{__('ID')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Nama ATK')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Harga')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Jumlah')}}</th>
@@ -19,28 +19,37 @@
             </thead>
             <tbody style="font-size:12px;">
 
-                {{-- @foreach ($collection as $item) --}}
-                <tr>
-
-                    {{-- @foreach ($collection as $item) --}}
-                    <td scope="row">{{__('1')}}</td>
-                    <td>{{__('Pensil')}}</td>
-                    <td>{{__('Rp. 2.000')}}</td>
-                    <td>{{__('40')}}</td>
-                    <td class="text-right">
-                        <a href="" style="margin-left: -50px;">
-                            <i class="material-icons md-18">
-                                edit
-                            </i>
-                        </a>
-                        <i class="material-icons md-18" style="color: #FF4949;">
-                            delete
-                        </i>
-                    </td>
-                    {{-- @endforeach --}}
-
-                </tr>
-                {{-- @endforeach --}}
+                @foreach ($atk as $a)
+                    @if ($a->id_pengelola === $partner->id_pengelola)
+                        <tr>
+                            <td scope="row">{{$a->id_atk}}</td>
+                            <td>{{$a->nama}}</td>
+                            <td>Rp. {{$a->harga}}</td>
+                            <td>{{$a->jumlah}}</td>
+                            <td class="text-right">
+                                <a href="{{ route('partner.atk.edit',$a->id_atk) }}" style="margin-left: -50px;">
+                                    <i class="material-icons md-18">
+                                        edit
+                                    </i>
+                                </a>
+                                {{-- <a href="{{ route('partner.atk.destroy',$a->id_atk) }}">
+                                    <i class="material-icons md-18" style="color: #FF4949;">
+                                        delete
+                                    </i>
+                                </a> --}}
+                                <i class="material-icons md-18 pointer p-1 mr-2"
+                                    style="color: #FF4949;" onclick="event.preventDefault();
+                                    document.getElementById('delete-form{{$a->id_atk}}').submit();">
+                                    delete
+                                </i>
+                                <form id="delete-form{{$a->id_atk}}" method="POST" style="display: none"
+                                    action="{{ route('partner.atk.destroy',[$a->id_atk]) }}">
+                                    @csrf @method('DELETE')
+                                </form>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
 
             </tbody>
         </table>

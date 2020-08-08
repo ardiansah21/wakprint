@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="tab-pane fade show active" role="tabpanel" style="font-size: 18px;">
-    <div class="row jusify-content-between mb-3 mr-0">
+    {{-- <div class="row jusify-content-between mb-3 mr-0">
         <div class="col-md-10">
             <div class="form-group search-input">
                 <div class="main-search-input-item">
@@ -247,31 +247,223 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> --}}
 
-{{-- <table id="saldoMemberTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
-        </tr>
-    </thead>
-</table>
-<table id="saldoPartnerTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
-        </tr>
-    </thead>
-</table> --}}
+    <ul class="nav nav-pills mb-3"
+            id="pills-tab"
+            role="tablist"
+            style="font-size: 16px;">
+            <li class="nav-item mr-3">
+                <a class="nav-link"
+                    id="pills-saldo-member-tab"
+                    data-toggle="tab"
+                    href="#pills-saldo-member"
+                    role="tab"
+                    aria-controls="pills-saldo-member"
+                    aria-selected="true"
+                    style="border-radius:10px 10px 0px 0px;">
+                    <i class="material-icons align-middle mr-2">
+                        account_circle
+                    </i>
+                    {{__('Member')}}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                    id="pills-saldo-pengelola-tab"
+                    data-toggle="tab"
+                    href="#pills-saldo-pengelola"
+                    role="tab"
+                    aria-controls="pills-saldo-pengelola"
+                    aria-selected="false"
+                    style="border-radius:10px 10px 0px 0px;">
+                    <i class="material-icons align-middle mr-2">
+                        print
+                    </i>
+                    {{__('Pengelola Percetakan')}}
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content ml-0 mr-0"
+            id="pills-tabContent">
+            <div class="tab-pane fade show active"
+                id="pills-saldo-member"
+                role="tabpanel"
+                aria-labelledby="pills-saldo-member-tab">
+                <table id="memberSaldoTable" class="table table-hover">
+                    <thead class="bg-primary-purple text-white"
+                            style="font-size:16px;">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Kode Pembayaran</th>
+                            <th>Jumlah Top Up</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 12px;">
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show"
+                id="pills-saldo-pengelola"
+                role="tabpanel"
+                aria-labelledby="pills-saldo-pengelola-tab">
+                <table id="partnerSaldoTable" class="table table-hover">
+                    <thead class="bg-primary-purple text-white"
+                            style="font-size:16px;">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Jumlah Penarikan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 12px;">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#memberSaldoTable').DataTable({
+                scrollY: 300,
+                paging: false,
+                info: false,
+                processing: true,
+                serverSide: true,
+                orderable: true,
+                searchable: true,
+                autowidth: true,
+                deferloading: 0,
+                ajax: '{{ route('admin.saldo.json') }}',
+                columns: [
+                    { data: 'id_transaksi', name: 'id_transaksi' },
+                    { data: 'jenis_transaksi', name: 'jenis_transaksi' },
+                    { data: 'kode_pembayaran', name: 'kode_pembayaran' },
+                    { data: 'jumlah_saldo', name: 'jumlah_saldo' },
+                    { data: 'status', name: 'status' }
+                ]
+            });
+
+            $('#partnerSaldoTable').DataTable({
+                scrollY: 300,
+                paging: false,
+                info: false,
+                processing: true,
+                serverSide: true,
+                orderable: true,
+                searchable: true,
+                autowidth: true,
+                deferloading: 0,
+                ajax: '{{ route('admin.saldo.json') }}',
+                columns: [
+                    { data: 'id_transaksi', name: 'id_transaksi' },
+                    { data: 'jenis_transaksi', name: 'jenis_transaksi' },
+                    { data: 'jumlah_saldo', name: 'jumlah_saldo' },
+                    { data: 'status', name: 'status' }
+                ]
+            });
+
+        // var table = $('#partnerTable').DataTable();
+        // $('#partnerTable tbody').on( 'click', 'tr', function () {
+        //     var id = table.row(this).data();
+        //     document.location.href='partner/detail/' + id.id_pengelola;
+        //     // if ($(this).hasClass('selected')) {
+        //     //     $(this).removeClass('selected');
+        //     // }
+        //     // else {
+        //     //     table.$('tr.selected').removeClass('selected');
+        //     //     $(this).addClass('selected');
+        //     //}
+        // });
+
+            $('li.a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+                var currentTab = $(e.target).text(); // get current tab
+                switch (currentTab)   {
+                    case 'Member' :   //do nothing
+                        //$('.nav-pills .nav-item a[href="pills-saldo-member"]').tab('show');
+                        var table = $('#memberSaldoTable').DataTable({
+                            scrollY: 300,
+                            paging: false,
+                            info: false,
+                            processing: true,
+                            serverSide: true,
+                            orderable: true,
+                            searchable: true,
+                            autowidth: true,
+                            deferloading: 0,
+                            ajax: '{{ route('admin.saldo.json') }}',
+                            columns: [
+                                { data: 'id_transaksi', name: 'id_transaksi' },
+                                { data: 'jenis_transaksi', name: 'jenis_transaksi' },
+                                { data: 'kode_pembayaran', name: 'kode_pembayaran' },
+                                { data: 'jumlah_saldo', name: 'jumlah_saldo' },
+                                { data: 'status', name: 'status' }
+                            ]
+                        });
+                        //$('#container').css( 'display', 'block' );
+                        table.columns.adjust().draw();
+                        break ;
+                    case 'Pengelola Percetakan' :
+                        var table = $('#partnerSaldoTable').DataTable({
+                            scrollY: 300,
+                            paging: false,
+                            info: false,
+                            processing: true,
+                            serverSide: true,
+                            orderable: true,
+                            searchable: true,
+                            autowidth: true,
+                            deferloading: 0,
+                            ajax: '{{ route('admin.saldo.json') }}',
+                            columns: [
+                                { data: 'id_transaksi', name: 'id_transaksi' },
+                                { data: 'jenis_transaksi', name: 'jenis_transaksi' },
+                                { data: 'jumlah_saldo', name: 'jumlah_saldo' },
+                                { data: 'status', name: 'status' }
+                            ]
+                        });
+
+                        //$('#container').css( 'display', 'block' );
+                        table.columns.adjust().draw();
+                        $('.li a[href="pills-saldo-pengelola' + tab + '"]').tab('show');
+                        break ;
+                    default:
+                        $('ul li a').addClass('active');
+                        $('ul li a').on('click', function () {
+                            $(this).closest('nav ul').find('a.active').removeClass('active');
+                            $(this).addClass('active');
+                        });
+
+                        var table = $('#memberSaldoTable').DataTable({
+                            scrollY: 300,
+                            paging: false,
+                            info: false,
+                            processing: true,
+                            serverSide: true,
+                            orderable: true,
+                            searchable: true,
+                            autowidth: true,
+                            deferloading: 0,
+                            ajax: '{{ route('admin.saldo.json') }}',
+                            columns: [
+                                { data: 'id_transaksi', name: 'id_transaksi' },
+                                { data: 'jenis_transaksi', name: 'jenis_transaksi' },
+                                { data: 'kode_pembayaran', name: 'kode_pembayaran' },
+                                { data: 'jumlah_saldo', name: 'jumlah_saldo' },
+                                { data: 'status', name: 'status' }
+                            ]
+                        });
+                        table.columns.adjust().draw();
+                        $('li a[href="pills-saldo-member"]').tab('show');
+
+                };
+            }) ;
+        } );
+    </script>
 @endsection

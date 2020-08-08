@@ -14,24 +14,39 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
             <label
                 style="font-size: 18px;">{{ __('Kelola informasi pribadi kamu untuk mengobrol, melindungi, dan mengamankan akun') }}</label>
         </div>
-        <div class="form-group mb-4" style="position: relative; width: 100%;">
-
-            <input type="file" class="form-control-file" name="photoprofile" id="photoProfileFile" aria-describedby="fileHelp">
-            <img src=""
-                class="img-responsive shadow-sm justify-content-center align-self-center center-block" alt=""
-                width="120px" height="120px" style="border-radius:8px 8px 8px 8px;">
-            <a href="" class="bg-light-purple material-icons text-decorations-none" style="border-radius:3px;
-                position: absolute;
-                top: 55%; left:14%;
-                transform: translate(-20%, 100%);
-                opacity:90%;
-                color: #BC41BE;">
-                edit
-            </a>
-        </div>
-
-        <form action="{{ route('profile.edit') }}" method="POST">
+        <form action="{{ route('profile.edit') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <div class="form-group mb-4" style="border-radius:10px;">
+                @if (!empty($member->getFirstMediaUrl()))
+                    <img id="gambarMember" src="{{ $member->getFirstMediaUrl() }}"
+                        class="img-responsive" style="width:120px; height:120px; border-radius:10px;" alt="Foto Kosong">
+                    <a id="editPhotoButton" class="bg-light-purple material-icons text-decorations-none pointer" onclick="document.getElementById('imgupload').click();"
+                        style="border-radius:3px;
+                        position: relative;
+                        top: 15%; right:5%;
+                        transform: translate(-20%, 200%);
+                        opacity:90%;
+                        color: #BC41BE;">
+                        edit
+                    </a>
+                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg"
+                        onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
+                @else
+                    <img id="gambarPartner" src="https://unsplash.it/600/400"
+                        class="img-responsive" style="width:120px;height:120px; border-radius:10px;" alt="Foto Kosong">
+                    <a href="" id="editPhotoButton" class="bg-light-purple material-icons text-decorations-none" onclick="document.getElementById('imgupload').click();"
+                        style="border-radius:3px;
+                        position: relative;
+                        top: 15%; right:5%;
+                        transform: translate(-20%, 200%);
+                        opacity:90%;
+                        color: #BC41BE;">
+                        edit
+                    </a>
+                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg"
+                        onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
+                @endif
+            </div>
             <label class="SemiBold mb-1" style="font-size: 24px;">
                 {{ __('Biodata Diri') }}
             </label>
@@ -52,8 +67,8 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <div class="col-md-auto">
                         <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="date" style="font-size: 18px;">
                             @for($date = 1; $date < 32; $date++)
-                                <option value="<?= $date ?>">
-                                    <?= $date ?>
+                                <option value="{{ $date }}">
+                                    {{ $date }}
                                 </option>
                             @endfor
                         </select>
@@ -61,8 +76,8 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <div class="col-md-auto">
                         <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="month" style="font-size: 18px;">
                             @for($i = 1; $i < 13; $i++)
-                                <option value="<?= $i ?>">
-                                    <?= $month[$i-1] ?>
+                                <option value="{{ $i }}">
+                                    {{ $month[$i-1] }}
                                 </option>
                             @endfor
                         </select>
@@ -70,8 +85,8 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <div class="col-md-auto">
                         <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="year" style="font-size: 18px;">
                                 @for($year = 2015; $year > 1979; $year--)
-                                    <option value="<?= $year ?>">
-                                        <?= $year ?>
+                                    <option value="{{ $year }}">
+                                        {{ $year }}
                                     </option>
                                 @endfor
                         </select>
@@ -176,12 +191,29 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
             </div>
         </form>
         <script>
+
+        </script>
+
+    </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
             var msg = '{{Session::get('alert')}}';
             var exist = '{{Session::has('alert')}}';
             if(exist){
                 alert(msg);
             }
-        </script>
 
-    </div>
+            $("#editPhotoButton").on("click",function(){
+                $('#imgupload').trigger('click'); return false;
+            });
+
+            $("#gambarMember").on("change","#imgupload",function(){
+                document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);
+            });
+        });
+
+    </script>
 @endsection

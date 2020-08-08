@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="nama" class="mb-2">{{__('Nama Lengkap')}}</label>
                 <br>
-                <input id="nama" type="text" class="form-control form-control-lg 
+                <input id="nama" type="text" class="form-control form-control-lg
                     @error('nama') is-invalid @enderror" placeholder="Masukkan Nama Lengkap Anda"
                     name="nama" value="{{ old('nama') }}" required autocomplete="nama" autofocus>
                 @error('nama')
@@ -33,12 +33,12 @@
             <div class="form-group">
                 <label for="nomor_hp" class="mb-2">{{__('Nomor HP')}}</label>
                 <input id="nomor_hp" type="nomor_hp"
-                        class="form-control form-control-lg 
-                        @error('nomor_hp') is-invalid 
-                        @enderror" 
+                        class="form-control form-control-lg
+                        @error('nomor_hp') is-invalid
+                        @enderror"
                         name="nomor_hp"
-                        value="{{ old('nomor_hp') }}" 
-                        required 
+                        value="{{ old('nomor_hp') }}"
+                        required
                         autocomplete="nomor_hp"
                         placeholder="Masukkan Nomor HP Anda">
                     @error('nomor_hp')
@@ -52,11 +52,11 @@
                 <div class="input-group mb-3">
                     <input id="password"
                         type="password"
-                        class="form-control form-control-lg 
-                        @error('password') is-invalid 
-                        @enderror" 
+                        class="form-control form-control-lg
+                        @error('password') is-invalid
+                        @enderror"
                         name="password"
-                        required 
+                        required
                         autocomplete="new-password"
                         data-toggle="password"
                         placeholder="Masukkan Kata Sandi">
@@ -68,8 +68,8 @@
                     <div class="input-group-append">
                         <span class="input-group-text bg-white"
                             style="border-radius: 0px 5px 5px 0px;">
-                            <i id="togglePassword" 
-                            toggle="#password-field" 
+                            <i id="togglePassword"
+                            toggle="#password-field"
                             class="fa fa-fw fa-eye field_icon toggle-password">
                             </i>
                         </span>
@@ -81,7 +81,7 @@
                     {{__('Konfirmasi Password')}}
                 </label>
                 <div class="input-group mb-3">
-                    <input id="password-confirm" 
+                    <input id="password-confirm"
                         required
                         type="password"
                         name="password_confirmation"
@@ -129,14 +129,14 @@
             </button>
             <label class="row justify-content-center mb-4" style="font-size: 18px;">
                 {{__('Sudah punya akun ?')}}
-                <a class="text-primary-purple ml-2" href="">
+                <a class="text-primary-purple ml-2" href="{{ route('login') }}">
                     {{__('Masuk')}}
                 </a>
             </label>
         </div>
     </div>
 </div>
-@endsection 
+@endsection
 
 {{-- @extends('layouts.member')
 

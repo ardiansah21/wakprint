@@ -3,26 +3,31 @@
 @section('content')
 
 <div class="tab-pane fade show active" role="tabpanel">
-    <div class="pl-2 pr-2 pt-2 pb-2 mb-4" style="height:210px;
-                    border-radius:5px;
-                    background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg');
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    justify-content: space-between;
-                    flex-direction: column;
-                    display: flex;">
-        <label class="font-weight-bold mb-5 ml-2" style="font-size: 24px;">
-            {{$partner->nama_toko}}
-        </label>
-        <div class="">
-            <a href="{{ route('partner.profile.edit') }}" class="btn btn-outline-yellow font-weight-bold pl-4 pr-4"
-                style="border-radius:30px;
-                            font-size: 16px;
-                            float:right;">
-                {{__('Ubah Profil')}}
-            </a>
-        </div>
+    <div class="pl-2 pr-2 pt-2 pb-2 mb-0" style="border-radius:5px; background-size: cover; flex-direction: column; display: flex;">
+        @if (!empty($partner->getFirstMediaUrl()))
+            <img src="{{ $partner->getFirstMediaUrl() }}" alt="Belum Ada Foto Profil" style="height:210px; border-radius:5px; ">
+            <label class="font-weight-bold text-primary-yellow mb-5 ml-4 mt-2" style="font-size: 24px; position: absolute; top: 8px; left: 16px;">
+                {{$partner->nama_toko}}
+            </label>
+            <div class="">
+                <a href="{{ route('partner.profile.edit') }}" class="btn btn-outline-yellow font-weight-bold pl-4 pr-4"
+                    style="border-radius:30px; position: relative; bottom: 58px; right: 16px; font-size: 16px; float:right;">
+                    {{__('Ubah Profil')}}
+                </a>
+            </div>
+        @else
+            <img src="https://unsplash.it/600/400" alt="Belum Ada Foto Profil" style="height:210px; border-radius:5px; ">
+            <label class="font-weight-bold text-primary-yellow mb-5 ml-4 mt-2" style="font-size: 24px; position: absolute; top: 8px; left: 16px;">
+                {{$partner->nama_toko}}
+            </label>
+            <div class="">
+                <a href="{{ route('partner.profile.edit') }}" class="btn btn-outline-yellow font-weight-bold pl-4 pr-4"
+                    style="border-radius:30px; position: relative; bottom: 58px; right: 16px; font-size: 16px; float:right;">
+                    {{__('Ubah Profil')}}
+                </a>
+            </div>
+        @endif
+
     </div>
     <div class="table-scrollbar" style="font-size:18px;">
         <div class="row justify-content-left mb-0">

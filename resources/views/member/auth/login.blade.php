@@ -13,9 +13,9 @@
                     type="email"
                     class="form-control form-control-lg mb-3
                     @error('email')
-                    is-invalid @enderror" 
+                    is-invalid @enderror"
                     name="email"
-                    value="{{ old('email') }}" 
+                    value="{{ old('email') }}"
                     required
                     autocomplete="email"
                     autofocus>
@@ -79,7 +79,7 @@
             <label class="row justify-content-center mb-4"
             style="font-size: 18px;">
                 {{__('Belum punya akun ?')}}
-                <a class="text-primary-purple ml-2" href="">
+                <a class="text-primary-purple ml-2" href="{{ route('register') }}">
                     {{__('Daftar')}}
                 </a>
             </label>

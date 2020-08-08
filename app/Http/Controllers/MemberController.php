@@ -42,6 +42,7 @@ class MemberController extends Controller
 
     public function uploadtes(Request $request)
     {
+        $produk = Produk::all();
         $pdf = new stdClass();
         $pdf->namaFile = $request->namaFile;
         $pdf->jumlahHalaman = $request->jumlahHalaman;
@@ -49,15 +50,19 @@ class MemberController extends Controller
         $pdf->jumlahHalBerwarna = $request->jumlahHalBerwarna;
         $pdf->path = $request->path;
 
-        return view('member.konfigurasi_file_lanjutan', compact('pdf'));
+        return view('member.konfigurasi_file_lanjutan', compact('pdf','produk'));
     }
 
 ////
 
     public function index()
     {
+        // $member = Auth::user();
         $produk = Produk::all();
-        return view('home',compact('produk'));
+        $partner = Pengelola_Percetakan::all();
+        // json_decode($produk->fitur,true);
+        //dd($fitur);
+        return view('home',compact('produk','partner'));
     }
 
     // temp dropzone
@@ -94,21 +99,70 @@ class MemberController extends Controller
     public function konfigurasiFile($pdf)
     {
         dd($pdf);
-        return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
+        $produk = Produk::all();
+        $partner = Pengelola_Percetakan::all();
+        $fitur = json_decode($produk->fitur,true);
+        return view('member.konfigurasi_file_lanjutan', [
+            'pdf' => $pdf,
+            'produk' => $produk,
+            'partner' => $partner,
+            'fitur' => $fitur
+        ]);
     }
 
     public function pencarian()
     {
-        $produk = Produk::all();
-        $partner = Pengelola_Percetakan::all();
-        return view('member.pencarian',compact('produk','partner'));
+        // $produk = Produk::all();
+        // $partner = Pengelola_Percetakan::all();
+        // $fitur = json_decode($produk->fitur,true);
+        return view('member.pencarian');
     }
 
-    public function detailPartner()
+    public function detailPartner($id)
     {
-      return view('member.detail_percetakan');
+        $produk = Produk::all();
+        $partner = Pengelola_Percetakan::find($id);
+        // $fitur = json_decode($produk->fitur,true);
+        return view('member.detail_percetakan',compact('produk','partner'));
     }
 
+    public function detailProduk($id)
+    {
+        $produk = Produk::find($id);
+        // $partner = Pengelola_Percetakan::find($id);
+        // $partner = Pengelola_Percetakan::all();
+        // $produk = Produk::all();
+
+        // foreach($partner as $p){
+        //     dd($p->products());
+        // }
+
+        // foreach($produk as $p){
+        //     dd($p->partner->nama_toko);
+        // }
+
+        $fitur = json_decode($produk->fitur,true);
+
+        // foreach ($fitur['tambahan'] as $key) {
+        //     dd($key['harga']);
+        // }
+
+        // for($i=0;$i<count($fitur['paket']);$i++){
+        //     dd($i);
+        // }
+
+
+        // foreach($fitur['paket'] as $key){
+        //     dd($key['paket']);
+        // }
+
+        // $rr = array();
+        // foreach ($fitur['tambahan'] as $key => $value) {
+        //     $fitur['tambahan'][$key]['foto_fitur'] = $value['foto_fitur']->getClientOriginalName();
+        //     $rr = $fitur;
+        // }
+        return view('member.detail_produk',compact('produk','fitur'));
+    }
 
     public function upload(Request $request)
     {
@@ -124,6 +178,10 @@ class MemberController extends Controller
         $path = $file->move(public_path('tmp/upload'), $file->getClientOriginalName());
         $pdf = $this->cekWarna($file, $path);
 
+        $produk = Produk::all();
+        $partner = Pengelola_Percetakan::all();
+
+
         // return response()->json([
         //     'original_name' => $file->getClientOriginalName(),
         //     'request' => $request,
@@ -137,7 +195,11 @@ class MemberController extends Controller
         //     return Response::json('error', 400);
         // }
 
-        return view('member.konfigurasi_file_lanjutan', ['pdf' => $pdf]);
+        return view('member.konfigurasi_file_lanjutan', [
+            'pdf' => $pdf,
+            'produk' => $produk,
+            'partner' => $partner
+        ]);
     }
 
     public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
@@ -271,7 +333,8 @@ class MemberController extends Controller
 
     public function topUpSaldo(Request $request)
     {
-        $member = Member::find(Auth::id());
+        $member = Auth::user();
+        //$member = Member::find(Auth::id());
         $transaksiSaldo = Transaksi_saldo::all();
 
         $jenisTransaksi = 'TopUp';
@@ -280,16 +343,6 @@ class MemberController extends Controller
         $status = 'Pending';
         $keterangan = 'Top Up Sedang Diproses';
         $waktu = Carbon::now()->format('Y:m:d H:i:s');
-
-        // $transaksiSaldo->id_member = $member;
-        // $transaksiSaldo->jenis_transaksi = $jenisTransaksi;
-        // $transaksiSaldo->jumlah_saldo = $jumlahSaldo;
-        // $transaksiSaldo->kode_pembayaran = $kodePembayaran;
-        // $transaksiSaldo->status = $status;
-        // $transaksiSaldo->keterangan = $keterangan;
-        // $transaksiSaldo->waktu = $waktu;
-
-        //dd($keterangan);
 
         Transaksi_saldo::create([
             'id_member' => $member->id_member,
@@ -301,9 +354,7 @@ class MemberController extends Controller
             'waktu' => $waktu
         ]);
 
-        //$transaksiSaldo->save();
-
-        return redirect()->route('saldo')->with('alert', 'Top Up Anda Sedang Diproses, Silahkan Periksa Riwayat Halaman Pembayaran ! ');;
+        return redirect()->route('saldo')->with('alert', 'Top Up Anda Sedang Diproses, Silahkan Periksa Riwayat Halaman Pembayaran ! ');
     }
 
     public function credentialRules(array $data)
@@ -346,6 +397,7 @@ class MemberController extends Controller
 
     public function updateDataProfile(Request $request)
     {
+        $member = Member::find(Auth::id());
         $date = $request->date;
         $month = $request->month;
         $year = $request->year;
@@ -353,14 +405,15 @@ class MemberController extends Controller
         $dateBorn = date_create("$year-$month-$date");
 
         if (empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))) {
-            Member::find(Auth::id())->update([
+            $member->update([
                 'nama_lengkap' => $request->nama,
                 'jenis_kelamin' => $request->jk,
                 'tanggal_lahir' => $dateBorn,
             ]);
+            $member->clearMediaCollection();
+            $member->addMedia($request->file('foto_member'))->toMediaCollection();
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
         }
-
         else {
             if (Auth::Check()) {
                 $request_data = $request->All();
@@ -373,30 +426,31 @@ class MemberController extends Controller
                 else {
                     $current_password = Auth::user()->password;
                     if (Hash::check($request_data['current-password'], $current_password)) {
-                        $member_id = Auth::user()->id_member;
-                        $member = Member::find($member_id);
+                        // $member_id = Auth::user()->id_member;
+                        // $member = Member::find($member_id);
                         $member->update([
                             'nama_lengkap' => $request->nama,
                             'jenis_kelamin' => $request->jk,
                             'tanggal_lahir' => $dateBorn,
                             'password' => Hash::make($request->password)
                         ]);
+                        $member->clearMediaCollection();
+                        $member->addMedia($request->file('foto_member'))->toMediaCollection();
                         return redirect()->route('profile')->with('alert', 'Profil dan Password telah berhasil diubah');
                     }
                     else {
-                        // $error = array('current-password' => 'Please enter correct current password');
-                        // return response()->json(array('error' => $error), 400);
-
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
                     }
                 }
             }
             else {
-                Member::find(Auth::id())->update([
+                $member->update([
                     'nama_lengkap' => $request->nama,
                     'jenis_kelamin' => $request->jk,
                     'tanggal_lahir' => $dateBorn,
                 ]);
+                $member->clearMediaCollection();
+                $member->addMedia($request->file('foto_member'))->toMediaCollection();
                 return redirect()->route('profile')->with('alert', 'Profil telah berhasil diubah');
             }
         }
@@ -455,7 +509,9 @@ class MemberController extends Controller
         $kodePos = $request->kodepos;
         $alamatJalan = $request->alamatjalan;
 
-        $alamat = array(
+        
+
+        $alamatBaru = array(
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,

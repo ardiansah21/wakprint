@@ -1,0 +1,42 @@
+[
+    {
+        "type": "File",
+        "name": "/home/imaha7/Projek Web Wakprint/wakprint/routes/web.php",
+        "parent_id": null,
+        "workspaceRoot": "/home/imaha7/Projek Web Wakprint/wakprint",
+        "workspacePath": "routes/web.php",
+        "id": "nVO0RJWT8QBfYCi1"
+    },
+    {
+        "type": "Group",
+        "name": "Pengelola",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "McwnU7OWGt0l4RN6"
+    },
+    {
+        "type": "File",
+        "name": "/home/imaha7/Projek Web Wakprint/wakprint/resources/views/pengelola/saldo.blade.php",
+        "parent_id": "McwnU7OWGt0l4RN6",
+        "workspaceRoot": "/home/imaha7/Projek Web Wakprint/wakprint",
+        "workspacePath": "resources/views/pengelola/saldo.blade.php",
+        "id": "idfRW8OgKL2PIXZB"
+    },
+    {
+        "type": "File",
+        "name": "/home/imaha7/Projek Web Wakprint/wakprint/app/Http/Controllers/Partner/PartnerController.php",
+        "parent_id": "McwnU7OWGt0l4RN6",
+        "workspaceRoot": "/home/imaha7/Projek Web Wakprint/wakprint",
+        "workspacePath": "app/Http/Controllers/Partner/PartnerController.php",
+        "id": "dWDCvRSn3UcqMKLj"
+    },
+    {
+        "type": "File",
+        "name": "/home/imaha7/Projek Web Wakprint/wakprint/resources/views/pengelola/tambah_promo.blade.php",
+        "parent_id": null,
+        "workspaceRoot": "/home/imaha7/Projek Web Wakprint/wakprint",
+        "workspacePath": "resources/views/pengelola/tambah_promo.blade.php",
+        "id": "VSsAjrphNFIwLQ79"
+    }
+]

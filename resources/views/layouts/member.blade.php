@@ -141,11 +141,16 @@
                         </li>
                         <li class="nav-item mr-0">
                             <a class="nav-link" href="{{ route('profile') }}"
-                                style="display: flex; align-items:center; font-weight:bold; font-size: 24px;">
-                                <span class="text-primary-purple text-truncate mr-2"
-                                    style="width: 250px;">{{Auth::user()->email}}</span>
+                                style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
+                                <span class="text-primary-purple text-truncate mr-2" style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
+                                @if (!empty(Auth::user()->getFirstMediaUrl()))
+                                    <img class="align-middle border border-gray ml-2" src="{{Auth::user()->getFirstMediaUrl()}}"
+                                        width="45" height="45" alt="no logo" style="border-radius: 30px;">
+                                @else
                                 <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
-                                    width="50" height="50" alt="no logo">
+                                        width="45" height="45" alt="no logo">
+                                @endif
+
                             </a>
                         </li>
                         @endguest
@@ -216,9 +221,16 @@
                     <div class="col-md-5">
                         <div class="bg-light-purple text-center"
                             style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                class="img-responsive" alt="" width="300px" height="300px"
-                                style="border-radius:8px 8px 8px 8px;">
+                            @if (@!empty($member->getFirstMediaUrl()))
+                                <img src="{{ $member->getFirstMediaUrl() }}"
+                                    class="img-responsive" alt="" width="300px" height="300px"
+                                    style="border-radius:8px 8px 8px 8px;">
+                            @else
+                                <img src="https://unsplash.it/600/400"
+                                    class="img-responsive" alt="" width="300px" height="300px"
+                                    style="border-radius:8px 8px 8px 8px;">
+                            @endif
+
                             <div class="bg-dark" style="position: absolute;
                                             top: 50%;
                                             left: 50%;
@@ -233,7 +245,7 @@
                         <div class="mt-3">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                <a class="nav-link SemiBold mb-4" id="v-pills-alamat-tab" href="{{ route('alamat') }}"
+                                <a class="nav-link {{set_active('alamat')}} SemiBold mb-4" id="v-pills-alamat-tab" href="{{ route('alamat') }}"
                                     role="tab" aria-controls="v-pills-alamat" aria-selected="true"
                                     style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">
@@ -241,43 +253,43 @@
                                     </i>
                                     {{__('Medan ID') }}
                                 </a>
-                                <a class="nav-link SemiBold mb-2" id="v-pills-saldo-tab" href="{{ route('saldo') }}"
+                                <a class="nav-link {{set_active('saldo')}} SemiBold mb-2" id="v-pills-saldo-tab" href="{{ route('saldo') }}"
                                     role="tab" aria-controls="v-pills-saldo" aria-selected="false"
-                                    style="font-size: 24px;">
-                                    <i class="material-icons align-middle md-32 mr-2">account_balance_wallet</i>
-                                    Rp. {{ $member->jumlah_saldo }}
+                                    style="font-size: 24px; color:#BC41BE">
+                                    <i class="material-icons align-middle md-32 mr-2" style="color:#BC41BE">account_balance_wallet</i>
+                                    Rp. {{ $member->jumlah_saldo ?? 0 }}
                                 </a>
-                                <a class="nav-link SemiBold mb-4" id="v-pills-riwayat-tab mb-3"
+                                <a class="nav-link {{set_active('riwayat')}} SemiBold mb-4" id="v-pills-riwayat-tab mb-3"
                                     href="{{ route('riwayat') }}" role="tab" aria-controls="v-pills-riwayat"
                                     aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">history</i>
                                     {{__('Riwayat Transaksi') }}
                                 </a>
-                                <a class="nav-link SemiBold mb-2" id="v-pills-konfigurasi-tab"
+                                <a class="nav-link {{set_active('konfigurasiPesanan')}} SemiBold mb-2" id="v-pills-konfigurasi-tab"
                                     href="{{ route('konfigurasiPesanan') }}" role="tab"
                                     aria-controls="v-pills-konfigurasi" aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
                                     {{__('Konfigurasi File') }}
                                 </a>
-                                <a class="nav-link SemiBold mb-4" id="v-pills-pesanan-tab" href="{{ route('pesanan') }}"
+                                <a class="nav-link {{set_active('pesanan')}} SemiBold mb-4" id="v-pills-pesanan-tab" href="{{ route('pesanan') }}"
                                     role="tab" aria-controls="v-pills-pesanan" aria-selected="false"
                                     style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
                                     {{__('Pesanan') }}
                                 </a>
-                                <a class="nav-link SemiBold mb-2" id="v-pills-favorit-tab" href="{{ route('favorit') }}"
+                                <a class="nav-link {{set_active('favorit')}} SemiBold mb-2" id="v-pills-favorit-tab" href="{{ route('favorit') }}"
                                     role="tab" aria-controls="v-pills-favorit" aria-selected="false"
                                     style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">favorite</i>
                                     {{__('Favorit') }}
                                 </a>
-                                <a class="nav-link SemiBold mb-4" id="v-pills-ulasan-tab" href="{{ route('ulasan') }}"
+                                <a class="nav-link {{set_active('ulasan')}} SemiBold mb-4" id="v-pills-ulasan-tab" href="{{ route('ulasan') }}"
                                     role="tab" aria-controls="v-pills-ulasan" aria-selected="false"
                                     style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">rate_review</i>
                                     {{__('Ulasan') }}
                                 </a>
-                                <a class="nav-link SemiBold" id="v-pills-keluar-tab" data-toggle="pill"
+                                <a class="nav-link {{set_active('logout')}} SemiBold" id="v-pills-keluar-tab" data-toggle="pill"
                                     href="{{ route('logout') }}" role="tab" aria-controls="v-pills-keluar"
                                     aria-selected="true" style="font-size: 24px;"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

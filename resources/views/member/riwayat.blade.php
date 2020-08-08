@@ -11,14 +11,14 @@
             <option value="Saldo Masuk">{{__('Saldo Masuk')}}</option>
             <option value="Saldo Keluar">{{__('Saldo Keluar')}}</option>
         </select>
-        
+
         {{-- <div class="dropdown" style="font-size: 18px;">
             <button class="btn btn-default btn-lg shadow-sm dropdown-toggle border border-gray"
             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             {{__('Semua') }}
             </button>
-            <div class="dropdown-menu" 
+            <div class="dropdown-menu"
             style="font-size: 18px;"
             aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">{{__('Terbaru') }}</a>
@@ -41,8 +41,8 @@
                 </thead>
                 <tbody style="font-size: 14px;">
                     @foreach ($transaksi_saldo as $ts)
-                    @if ($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran')
-                        <tr 
+                    @if (($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran') && $ts->id_member === $member->id_member)
+                        <tr
                             @if ($ts->jenis_transaksi === 'TopUp')
                                 onclick="window.location.href='saldo/riwayat/{{ $ts->id_transaksi }}'"
                             @else

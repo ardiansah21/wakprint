@@ -408,6 +408,10 @@ body {
     color: #c1c1c1;
 }
 
+.text-primary-yellow {
+    color: #F2FF58;
+}
+
 .text-primary-danger {
     color: #FF4949;
 }
@@ -747,7 +751,7 @@ table {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #FF4949;
+    background-color:#FF4949;
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
@@ -768,7 +772,7 @@ table {
 }
 
 input:checked+.slider {
-    background-color: #7BD6AF;
+    background-color:#7BD6AF;
 }
 
 input:focus+.slider {
@@ -794,4 +798,40 @@ input:checked+.slider:before {
 
 input:checked+.slider:after {
     content: 'Buka';
+}
+
+
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item>div {
+        display: none;
+    }
+
+    .carousel-inner .carousel-item>div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+        transform: translateX(33.333%);
+    }
+
+    .carousel-inner .carousel-item-left.active,
+    .carousel-inner .carousel-item-prev {
+        transform: translateX(-33.333%);
+    }
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left {
+    transform: translateX(0);
 }

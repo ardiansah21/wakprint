@@ -63,7 +63,7 @@
             </button>
             <label class="row justify-content-center mb-4" style="font-size: 18px;">
                 {{__('Belum punya akun ?')}}
-                <a class="text-primary-purple ml-2" href="">
+                <a class="text-primary-purple ml-2" href="{{ route('register') }}">
                     {{__('Daftar')}}
                 </a>
             </label>

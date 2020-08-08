@@ -345,7 +345,7 @@
             $(this).find('#kelurahan').val(button.data('kelurahan'))
             $(this).find('#kodePos').val(button.data('kode-pos'))
             $(this).find('#alamatJalan').val(button.data('alamat-jalan'))
-            
+
     })
 </script>
 

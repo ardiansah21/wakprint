@@ -23,7 +23,7 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->rememberToken();
             // $table->string('email',320);
             // $table->string('password',100);
-            
+
             $table->integer('jumlah_saldo')->nullable();
             $table->string('nomor_hp',16);
             $table->string('nama_bank',100);
@@ -39,6 +39,9 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->time('jam_op_tutup')->nullable();
             $table->text('syaratkententuan')->nullable();
             $table->string('foto_toko')->nullable();
+            $table->boolean('ambil_di_tempat')->nullable();
+            $table->boolean('antar_ke_tempat')->nullable();
+            $table->string('atkdwh')->nullable();
             $table->timestamps();
         });
     }

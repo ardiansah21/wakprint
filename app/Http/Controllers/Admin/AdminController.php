@@ -66,6 +66,14 @@ class AdminController extends Controller
         return datatables(Pengelola_Percetakan::all())->make(true);
     }
 
+    public function saldoJson(){
+        $member = Member::all();
+        $partner = Pengelola_Percetakan::all();
+        $transaksiSaldo = Transaksi_saldo::all()->union($member);
+        // return datatables($transaksiSaldo)->addIndexColumn()->make(true);
+        return datatables(Transaksi_saldo::all())->make(true);
+    }
+
     public function detailMember(Request $request, $id)
     {
 

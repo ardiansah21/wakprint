@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Pengelola_Percetakan extends Authenticable
+class Pengelola_Percetakan extends Authenticable implements HasMedia
 {
-    use Notifiable;
- 
+    use Notifiable, HasMediaTrait;
+
     protected $table = "pengelola_percetakan";
     protected $primaryKey = 'id_pengelola';
 
@@ -19,10 +21,27 @@ class Pengelola_Percetakan extends Authenticable
      ];
     //  protected $guard = 'partner';
      protected $guarded = [];
- 
+
      protected $hidden = ['password','remember_token'];
 
      protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    /**
+     * Get all of the user's images.
+     */
+    // public function media()
+    // {
+    //     return $this->morphMany(Media::class, 'model');
+    // }
+
+    public function products(){
+    	return $this->hasMany('App\Produk','id_pengelola');
+    }
 }
