@@ -242,7 +242,7 @@
                         {{__('ATK')}}
                     </label>
 
-                    {{-- @foreach ($collection as $item) --}}
+                    {{-- @foreach ($atk as $a) --}}
                         <div class="row justify-content-between" style="font-size: 14px;">
                             <div class="col-md-auto text-left">
                                 <label class="mb-2">

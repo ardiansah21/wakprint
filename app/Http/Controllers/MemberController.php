@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Atk;
 use App\Konfigurasi_file;
 use App\Member;
 use App\Pengelola_Percetakan;
@@ -113,17 +114,18 @@ class MemberController extends Controller
     public function pencarian()
     {
         // $produk = Produk::all();
-        // $partner = Pengelola_Percetakan::all();
+        $partner = Pengelola_Percetakan::all();
         // $fitur = json_decode($produk->fitur,true);
-        return view('member.pencarian');
+        return view('member.pencarian',compact('partner'));
     }
 
     public function detailPartner($id)
     {
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::find($id);
+        $atk = Atk::all();
         // $fitur = json_decode($produk->fitur,true);
-        return view('member.detail_percetakan',compact('produk','partner'));
+        return view('member.detail_percetakan',compact('produk','partner','atk'));
     }
 
     public function detailProduk($id)
@@ -343,6 +345,19 @@ class MemberController extends Controller
         return view('member.profil', compact('transaksiSaldo'))->renderSections()['content'];
     }
 
+    public function saldo()
+    {
+        $member = Auth::user();
+        // $id = Pengelola_Percetakan::find(Auth::id());
+        $transaksi_saldo = Transaksi_saldo::all();
+        // $id = Auth::user($transaksi_saldo->id_pengelola);
+        return view('member.topup_saldo', [
+            'member' => $member,
+            // 'id' => $id,
+            'transaksi_saldo' => $transaksi_saldo,
+        ]);
+    }
+
     public function topUpSaldo(Request $request)
     {
         $member = Auth::user();
@@ -350,7 +365,7 @@ class MemberController extends Controller
         $transaksiSaldo = Transaksi_saldo::all();
         //$transaksiSaldo = transaks
 
-        $transaksiSaldo->jenis_transaksi = 'TopUp';
+        $jenisTransaksi = $transaksiSaldo->jenis_transaksi = 'TopUp';
         $transaksiSaldo->status = 'Berhasil';
         $transaksiSaldo->keterangan = 'Top Up Telah Berhasil Dilakukan';
         $transaksiSaldo->waktu = Carbon::now()->format('Y:m:d H:i:s');
@@ -406,8 +421,7 @@ class MemberController extends Controller
 
     public function profileEdit()
     {
-        $member = Member::find(Auth::id())->get();
-
+        $member = Auth::user();
         return view('member.edit_profil', ['member' => $member]);
     }
 
@@ -616,11 +630,21 @@ class MemberController extends Controller
         ]);
     }
 
+    public function riwayat()
+    {
+        $member=Auth::user();
+        $transaksi_saldo = Transaksi_saldo::all();
+
+        return view('member.riwayat', [
+            'member' => $member,
+            'transaksi_saldo' => $transaksi_saldo
+        ]);
+    }
+
     public function riwayatSaldo($id)
     {
         $member=Auth::user();
         $transaksi_saldo = Transaksi_saldo::find($id);
-        $waktu = $transaksi_saldo->waktu;
 
         return view('member.riwayat_topup', [
             'member' => $member,
@@ -634,6 +658,41 @@ class MemberController extends Controller
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.detail_pesanan');
+    }
+
+    public function pesanan()
+    {
+        $member=Auth::user();
+        // $transaksi_saldo = Transaksi_saldo::all();
+
+        return view('member.pesanan', [
+            'member' => $member
+            // 'transaksi_saldo' => $transaksi_saldo
+        ]);
+    }
+
+    public function favorit()
+    {
+        $member=Auth::user();
+        $produk=Produk::all();
+        // $transaksi_saldo = Transaksi_saldo::all();
+
+        return view('member.produk_favorit', [
+            'member' => $member,
+            'produk' => $produk
+            // 'transaksi_saldo' => $transaksi_saldo
+        ]);
+    }
+
+    public function ulasan()
+    {
+        $member=Auth::user();
+        // $produk=Produk::all();
+        // $transaksi_saldo = Transaksi_saldo::all();
+
+        return view('member.ulasan', [
+            'member' => $member
+        ]);
     }
 
     public function ulas()

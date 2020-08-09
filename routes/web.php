@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profil/alamat', 'MemberController@alamat')->name('alamat');
     Route::post('profil/alamat/update', 'MemberController@editAlamat')->name('alamat.edit');
     Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
-    Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
+    Route::post('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
     Route::get('saldo', 'MemberController@saldo')->name('saldo');
     Route::post('saldo/topup', 'MemberController@topUpSaldo')->name('saldo.topup');
     Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
