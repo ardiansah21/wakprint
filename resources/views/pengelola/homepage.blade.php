@@ -61,7 +61,7 @@
                     <td>{{__('09:34')}}</td>
                     <td>{{__('5/7/2020')}}</td>
                     <td>{{__('2')}}</td>
-                    <td>{{__('Ambil Sendiri')}}</td>
+                    <td>{{__('Antar ke Tempat')}}</td>
                     <td>{{__('Pending')}}</td>
                     {{-- @endforeach --}}
 

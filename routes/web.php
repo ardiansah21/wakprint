@@ -116,7 +116,7 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::get('info', 'PartnerController@info')->name('info');
         Route::post('ubah-status', 'PartnerController@statusToko')->name('ubah-status');
 
-
+        Route::post('filter/riwayat', 'PartnerController@filterSaldo')->name('filter.riwayat');
         Route::post('search/produk', 'PromoController@searchProdukPartner')->name('search.produk');
     });
 });
@@ -175,3 +175,5 @@ Route::resource('pdf', 'PdfController');
 Route::get('tess', function () {
     return view('pengujianTemp');
 });
+
+Route::get('tesst','PdfController@tesst');

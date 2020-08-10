@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use imagick;
 
 class PdfController extends Controller
 {
@@ -107,5 +108,23 @@ class PdfController extends Controller
     {
         //
     }
+
+    public function tesst()
+    {
+ // Create a new Imagick object
+ $im = new Imagick(
+    '/home/imaha7/Projek Web Wakprint/wakprint/public/tempCekwarna/Document5(2).pdf1596998900-0.jpg');
+
+
+
+    // Resize the image
+    $im->resizeImage( 10000, 25.05045, Imagick::FILTER_LANCZOS, 1);
+
+        $im->writeImage(public_path('tempCekwarna/')."tttttttttt.jpg");
+        $im->clear();
+        $im->destroy();
+    }
+
+
 
 }

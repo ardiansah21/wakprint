@@ -31,7 +31,28 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                @include('pengelola.card_produk')
+                            </div>
+                            <div class="col-md-6">
+                                <div class="container mb-3">
+                                    <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
+                                        style="border-radius:30px;
+                                            font-size:14px;">
+                                        {{__('Lihat') }}
+                                    </button>
+                                </div>
+                                <div class="container mb-3">
+                                    <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0"
+                                        style="border-radius:30px;
+                                            font-size:14px;">
+                                        {{__('Cetak') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     {{-- @endforeach --}}
 
                 </div>
@@ -49,7 +70,7 @@
                         <br>
                         <label class="mr-3 mb-4"
                             style="font-size:16px;">
-                            {{__('04:25 17 Agustus 2020') }}
+                            {{__('09:34 5 Juli 2020') }}
                         </label>
                         <br>
                         <label class="font-weight-bold mb-1"
@@ -69,7 +90,7 @@
                         <br>
                         <label class=" mr-3 mb-4"
                             style="font-size:16px;">
-                            {{__('+62 821 7635 8392') }}
+                            {{__('+6282176358392') }}
                         </label>
                         <br>
                         <label class="font-weight-bold mb-1"
@@ -89,14 +110,14 @@
                         <br>
                         <label class=" mr-3 mb-4"
                             style="font-size:16px;">
-                            {{__('Diantar ke Tempat') }}
+                            {{__('Antar ke Tempat') }}
                         </label>
                         <div class="mb-4">
                             <label class="font-weight-bold mr-3 mb-2"
                                 style="font-size:14px;">
                                 {{__('Warna Halaman') }}
                             </label>
-
+                            <br>
                             {{-- @foreach ($collection as $item) --}}
                                 <label class="mr-3 mb-0"
                                     style="font-size:14px;">
@@ -122,8 +143,31 @@
                                         {{__('x Rp. 3k / hal') }}
                                     </label>
                                 </div>
+                                <label class="mr-3 mt-2 mb-0"
+                                    style="font-size:14px;">
+                                    {{__('(Skripsilagee.pdf)') }}
+                                </label>
+                                <div class="row justify-content-between ml-0 mb-0 mr-0">
+                                    <label class="mb-0"
+                                        style="font-size: 16px;">
+                                        {{__('25 Halaman Hitam-Putih') }}
+                                    </label>
+                                    <label class="font-weight-bold mb-0"
+                                        style="font-size: 16px;">
+                                        {{__('x Rp. 2k / hal') }}
+                                    </label>
+                                </div>
+                                <div class="row justify-content-between ml-0 mb-0 mr-0">
+                                    <label class="mb-0"
+                                        style="font-size: 16px;">
+                                        {{__('25 Halaman Berwarna') }}
+                                    </label>
+                                    <label class="font-weight-bold mb-0"
+                                        style="font-size: 16px;">
+                                        {{__('x Rp. 3k / hal') }}
+                                    </label>
+                                </div>
                             {{-- @endforeach --}}
-                            
                         </div>
                         <div class="mb-4">
                             <label class="font-weight-bold mb-1"
@@ -132,6 +176,15 @@
                             </label>
 
                             {{-- @foreach ($collection as $item) --}}
+                                <div class="row justify-content-between ml-0 mb-0"
+                                    style="font-size: 16px;">
+                                    <label class="mr-3 mb-0">
+                                        {{__('(Skripsilagee.pdf)') }}
+                                    </label>
+                                    <label class="font-weight-bold mr-3 mb-0">
+                                        {{__('Semua Halaman') }}
+                                    </label>
+                                </div>
                                 <div class="row justify-content-between ml-0 mb-0"
                                     style="font-size: 16px;">
                                     <label class="mr-3 mb-0">
@@ -160,10 +213,19 @@
                                         {{__('2') }}
                                     </label>
                                 </div>
+                                <div class="row justify-content-between ml-0 mb-0"
+                                    style="font-size:16px;">
+                                    <label class="mr-3 mb-0">
+                                        {{__('(Skripsilagee.pdf)') }}
+                                    </label>
+                                    <label class="font-weight-bold mr-3 mb-0">
+                                        {{__('1') }}
+                                    </label>
+                                </div>
                             {{-- @endforeach --}}
 
                         </div>
-                        
+
                         <div class="mb-4">
                             <label class="font-weight-bold mb-1"
                                 style="font-size:14px;">
@@ -180,10 +242,19 @@
                                         {{__('Satu Sisi') }}
                                     </label>
                                 </div>
+                                <div class="row justify-content-between ml-0 mb-0"
+                                    style="font-size:16px;">
+                                    <label class="mr-3 mb-0">
+                                        {{__('(Skripsilagee.pdf)') }}
+                                    </label>
+                                    <label class="font-weight-bold mr-3 mb-0">
+                                        {{__('Satu Sisi') }}
+                                    </label>
+                                </div>
                             {{-- @endforeach --}}
 
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="row justify-content-between bg-light-purple pl-3 pr-3 pt-2 pb-2 mb-5"
@@ -234,7 +305,7 @@
                 </div>
             </div>
         </div>
-        
+
         {{-- pop up detail biaya --}}
         @include('pengelola.popup_detail_biaya')
 

@@ -44,4 +44,8 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function products(){
     	return $this->hasMany('App\Produk','id_pengelola');
     }
+
+    public function atk(){
+    	return $this->hasMany('App\Atk','id_pengelola');
+    }
 }

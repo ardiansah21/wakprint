@@ -17,4 +17,8 @@ class Atk extends Model implements HasMedia
     {
         $this->addMediaCollection('default')->singleFile();
     }
+
+    public function partner(){
+        return $this->belongsTo('App\Pengelola_Percetakan','id_pengelola');
+    }
 }

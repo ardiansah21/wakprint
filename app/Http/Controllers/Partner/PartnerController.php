@@ -203,4 +203,24 @@ class PartnerController extends Controller
             'original_name' => $file->getClientOriginalName(),
         ]);
     }
+
+    public function filterSaldo(Request $request)
+    {
+        $transaksi_saldo = new Transaksi_saldo();
+        // $partner = new Pengelola_Percetakan();
+        $tanggalAwal = $request->keyword_tanggal_awal;
+        $tanggalAkhir = $request->keyword_tanggal_akhir;
+        $jenisTransaksi = $request->keyword_jenis_transaksi;
+        // $keyword = 'ERDE';
+        // dd($jenisTransaksi);
+        $transaksi_saldo = Transaksi_saldo::where('jenis_transaksi','LIKE',"%$jenisTransaksi%")
+                    ->orWhere('created_at','LIKE',"%$tanggalAwal%")
+                    ->get();
+
+        // $partner =  Pengelola_Percetakan::where('nama_toko','LIKE',"%$keyword%")
+        //             ->orWhere('alamat_toko','LIKE',"%$keyword%")
+        //             ->get();
+
+        return redirect()->back()->with('transaksi_saldo',$transaksi_saldo)->with('keyword_tanggal_awal', $tanggalAwal,'keyword_jenis_transaksi',$jenisTransaksi);
+    }
 }

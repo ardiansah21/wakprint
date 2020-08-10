@@ -46,8 +46,9 @@
                     <label class="font-weight-bold mt-2 mb-3">
                         {{__('Cetak Skripsi Mahasiswa') }}
                     </label>
+                    <br>
                     <label class="font-weight-bold mb-2">
-                        {{__('Skripsi.pdf') }}
+                        {{__('Skripsilagee.pdf') }}
                     </label>
                     <div class="row justify-content-between">
                         <div class="col-md-6 text-left">
@@ -170,6 +171,6 @@
                     </div>
                 </div>
             </div>
-        </div>            
-    </div>            
+        </div>
+    </div>
 </div>

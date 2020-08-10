@@ -242,26 +242,27 @@
                         {{__('ATK')}}
                     </label>
 
-                    {{-- @foreach ($atk as $a) --}}
-                        <div class="row justify-content-between" style="font-size: 14px;">
-                            <div class="col-md-auto text-left">
-                                <label class="mb-2">
-                                    {{__('Pensil')}}
-                                    <i class="material-icons md-18 align-middle ml-2 mr-4"
-                                    style="color:#C4C4C4">
-                                        help
-                                    </i>
-                                    {{__('x 34')}}
-                                </label>
+                    @foreach ($atk as $a)
+                        @if ($a->id_pengelola === $partner->id_pengelola)
+                            <div class="row justify-content-between" style="font-size: 14px;">
+                                <div class="col-md-auto text-left">
+                                    <label class="mb-2">
+                                        {{$a->nama}}
+                                        <i class="material-icons md-18 align-middle ml-2 mr-4"
+                                        style="color:#C4C4C4">
+                                            help
+                                        </i>
+                                        x {{$a->jumlah}}
+                                    </label>
+                                </div>
+                                <div class="col-md-auto text-right">
+                                    <label class="mb-2">
+                                        Rp. {{$a->harga}}
+                                    </label>
+                                </div>
                             </div>
-                            <div class="col-md-auto text-right">
-                                <label class="mb-2">
-                                    {{__('Rp. 2.000')}}
-                                </label>
-                            </div>
-                        </div>
-                    {{-- @endforeach --}}
-
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <div class="col-md-8 mt-5">
@@ -451,8 +452,8 @@
                                                         <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$partner->nama_toko ?? '-'}}</label>
                                                         <label class="col-md-auto card-text mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i> {{__('100 m') }}</label>
                                                     </div>
-                                                    <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px;">{{$p->nama ?? '-'}}</label>
-                                                    <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}</label>
+                                                    <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px; min-height:75px;">{{$p->nama ?? '-'}}</label>
+                                                    <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{$p->partner->alamat_toko}}</label>
                                                     <div class="row justify-content-between ml-0 mr-0">
                                                         <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
                                                             @if ($p->berwarna === 0 && $p->hitam_putih === 1)

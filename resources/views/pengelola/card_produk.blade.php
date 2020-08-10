@@ -17,7 +17,7 @@
                     </label>
             </div>
         </div>
-        <i class="fa fa-heart fa-responsive" 
+        <i class="fa fa-heart fa-responsive"
             style="position: absolute;
                 top: 5%;
                 left: 87%;
@@ -38,7 +38,7 @@
                     style="font-size: 10px;">
                     <i class="material-icons md-12 align-middle mr-0">
                         location_on
-                    </i> 
+                    </i>
                     {{__('100 m') }}
                 </label>
             </div>
@@ -50,60 +50,60 @@
                 style="font-size: 12px;">
                 {{__('Jalan Seksama Ujung No 95A Medan Denai, Medan, Sumatera Utara') }}
             </label>
-            <div class="row justify-content-between ml-0 mr-0">
-                <label class="card-text text-truncate SemiBold"
+            <div class="row justify-content-between">
+                <label class="col-md-6 card-text text-truncate SemiBold"
                     style="font-size: 10px;">
                     <i class="material-icons md-12 align-middle mr-1">
                         color_lens
                     </i>
                     {{__('Hitam Putih') }}
                 </label>
-                <label class="card-text text-truncate SemiBold"
+                <label class="col-md-6 card-text text-truncate SemiBold"
                     style="font-size: 10px;">
                     <i class="material-icons md-12 align-middle mr-1">
                         description
                     </i>
-                    {{__('A4 HVS') }}
-                </label> 
-                <label class="card-text text-truncate SemiBold"
+                    {{__('A4HVS80Gr') }}
+                </label>
+                <label class="col-md-6 card-text text-truncate SemiBold"
                     style="font-size: 10px;">
                     <i class="material-icons md-12 align-middle mr-1">
                         menu_book
                     </i>
                     {{__('Jilid') }}
                 </label>
-                <label class="card-text text-truncate SemiBold"
+                <label class="col-md-6 card-text text-truncate SemiBold"
                     style="font-size: 10px;">
                     <i class="material-icons md-12 align-middle mr-1">
                         print
                     </i>
                     {{__('Ink Jet') }}
-                </label> 
+                </label>
             </div>
         </div>
-        <div class="card-footer card-footer-primary"
-            style="border-radius: 0px 0px 10px 10px;">
-            <div class="row justify-content-between">
-                <div class="ml-3">
-                    <label class="card-text ml-0 SemiBold"
-                        style="font-size: 14px;">
-                        <i class="material-icons md-18 align-middle mr-2"
-                            style="color: #7BD6AF">
-                            local_offer
-                        </i>
-                        {{__('Rp. 2K') }}
+        <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
+            <div class="row justify-content-between ml-0 mr-0">
+                <div>
+                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
+                        {{__('Rp. 2.000')}}
+                    </label>
+                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 8px; border-radius:5px;">
+                        {{__('Hitam-Putih')}}
+                    </label>
+                    <br>
+                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 12px;">
+                        {{__('Rp. 3.000')}}
+                    </label>
+                    <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 8px; border-radius:5px;">
+                        {{__('Berwarna')}}
                     </label>
                 </div>
-                <div class="mr-0">
-                    <label class="card-text mt-0 mr-4 SemiBold"
-                        style="font-size: 14px;">
-                        <i class="material-icons md-18 mr-1 align-middle"
-                            style="color: #FCFF82">
-                            star
-                        </i>
-                        {{__('5') }}
-                    </label>
-                </div>
+            </div>
+            <div class="my-auto">
+                <label class="card-text mt-0 mr-0 SemiBold" style="font-size: 12px;">
+                    <i class="material-icons md-18 align-middle mr-1" style="color: #FCFF82">star</i>
+                    {{__('5.0')}}
+                </label>
             </div>
         </div>
     </a>

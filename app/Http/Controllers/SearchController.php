@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pengelola_Percetakan;
 use App\Produk;
+use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

@@ -131,39 +131,9 @@ class MemberController extends Controller
     public function detailProduk($id)
     {
         $produk = Produk::find($id);
-        // $partner = Pengelola_Percetakan::find($id);
-        // $partner = Pengelola_Percetakan::all();
-        // $produk = Produk::all();
-
-        // foreach($partner as $p){
-        //     dd($p->products());
-        // }
-
-        // foreach($produk as $p){
-        //     dd($p->partner->nama_toko);
-        // }
-
+        $atk = Atk::all();
         $fitur = json_decode($produk->fitur,true);
-
-        // foreach ($fitur['tambahan'] as $key) {
-        //     dd($key['harga']);
-        // }
-
-        // for($i=0;$i<count($fitur['paket']);$i++){
-        //     dd($i);
-        // }
-
-
-        // foreach($fitur['paket'] as $key){
-        //     dd($key['paket']);
-        // }
-
-        // $rr = array();
-        // foreach ($fitur['tambahan'] as $key => $value) {
-        //     $fitur['tambahan'][$key]['foto_fitur'] = $value['foto_fitur']->getClientOriginalName();
-        //     $rr = $fitur;
-        // }
-        return view('member.detail_produk',compact('produk','fitur'));
+        return view('member.detail_produk',compact('produk','fitur','atk'));
     }
 
     public function upload(Request $request)

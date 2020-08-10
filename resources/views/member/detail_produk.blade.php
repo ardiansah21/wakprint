@@ -250,25 +250,27 @@
                         {{__('ATK')}}
                     </label>
 
-                    {{-- @foreach ($collection as $item) --}}
-                        <div class="row justify-content-between" style="font-size: 14px;">
-                            <div class="col-md-auto text-left">
-                                <label class="mb-2">
-                                    {{__('Pensil')}}
-                                    <i class="material-icons md-18 align-middle ml-2 mr-4"
-                                    style="color:#C4C4C4">
-                                        help
-                                    </i>
-                                    {{__('x 34')}}
-                                </label>
+                    @foreach ($atk as $a)
+                        @if ($a->id_pengelola === $produk->partner->id_pengelola)
+                            <div class="row justify-content-between" style="font-size: 14px;">
+                                <div class="col-md-auto text-left">
+                                    <label class="mb-2">
+                                        {{$a->nama}}
+                                        <i class="material-icons md-18 align-middle ml-2 mr-4"
+                                        style="color:#C4C4C4">
+                                            help
+                                        </i>
+                                        x {{$a->jumlah}}
+                                    </label>
+                                </div>
+                                <div class="col-md-auto text-right">
+                                    <label class="mb-2">
+                                        Rp. {{$a->harga}}
+                                    </label>
+                                </div>
                             </div>
-                            <div class="col-md-auto text-right">
-                                <label class="mb-2">
-                                    {{__('Rp. 2.000')}}
-                                </label>
-                            </div>
-                        </div>
-                    {{-- @endforeach --}}
+                        @endif
+                    @endforeach
 
                 </div>
             </div>
