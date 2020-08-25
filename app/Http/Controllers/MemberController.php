@@ -8,16 +8,15 @@ use App\Member;
 use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
+use Carbon\Carbon;
 use File;
 use Hash;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use imagick;
+use Str;
 use Validator;
 use \stdClass;
-use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
@@ -51,7 +50,7 @@ class MemberController extends Controller
         $pdf->jumlahHalBerwarna = $request->jumlahHalBerwarna;
         $pdf->path = $request->path;
 
-        return view('member.konfigurasi_file_lanjutan', compact('pdf','produk'));
+        return view('member.konfigurasi_file_lanjutan', compact('pdf', 'produk'));
     }
 
 ////
@@ -63,7 +62,7 @@ class MemberController extends Controller
         $partner = Pengelola_Percetakan::all();
         // json_decode($produk->fitur,true);
         //dd($fitur);
-        return view('home',compact('produk','partner'));
+        return view('home', compact('produk', 'partner'));
     }
 
     // temp dropzone
@@ -102,21 +101,23 @@ class MemberController extends Controller
         dd($pdf);
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::all();
-        $fitur = json_decode($produk->fitur,true);
+        $fitur = json_decode($produk->fitur, true);
         return view('member.konfigurasi_file_lanjutan', [
             'pdf' => $pdf,
             'produk' => $produk,
             'partner' => $partner,
-            'fitur' => $fitur
+            'fitur' => $fitur,
         ]);
     }
 
     public function pencarian()
     {
-        // $produk = Produk::all();
+
+        $produk = Produk::all();
         $partner = Pengelola_Percetakan::all();
+
         // $fitur = json_decode($produk->fitur,true);
-        return view('member.pencarian',compact('partner'));
+        return view('member.pencarian', compact('partner', 'produk'));
     }
 
     public function detailPartner($id)
@@ -125,15 +126,15 @@ class MemberController extends Controller
         $partner = Pengelola_Percetakan::find($id);
         $atk = Atk::all();
         // $fitur = json_decode($produk->fitur,true);
-        return view('member.detail_percetakan',compact('produk','partner','atk'));
+        return view('member.detail_percetakan', compact('produk', 'partner', 'atk'));
     }
 
     public function detailProduk($id)
     {
         $produk = Produk::find($id);
         $atk = Atk::all();
-        $fitur = json_decode($produk->fitur,true);
-        return view('member.detail_produk',compact('produk','fitur','atk'));
+        $fitur = json_decode($produk->fitur, true);
+        return view('member.detail_produk', compact('produk', 'fitur', 'atk'));
     }
 
     public function upload(Request $request)
@@ -165,7 +166,6 @@ class MemberController extends Controller
         //     return Response::json('error', 400);
         // }
 
-
         // return response()->json([
         //     'original_name' => $file->getClientOriginalName(),
         //     'request' => $request,
@@ -182,7 +182,7 @@ class MemberController extends Controller
         return view('member.konfigurasi_file_lanjutan', [
             'pdf' => $pdf,
             'produk' => $produk,
-            'partner' => $partner
+            'partner' => $partner,
         ]);
     }
 
@@ -352,7 +352,7 @@ class MemberController extends Controller
             'kode_pembayaran' => $kodePembayaran,
             'status' => $status,
             'keterangan' => $keterangan,
-            'waktu' => $waktu
+            'waktu' => $waktu,
         ]);
 
         return redirect()->route('saldo')->with('alert', 'Top Up Anda Sedang Diproses, Silahkan Periksa Riwayat Halaman Pembayaran ! ');
@@ -413,8 +413,7 @@ class MemberController extends Controller
             $member->clearMediaCollection();
             $member->addMedia($request->file('foto_member'))->toMediaCollection();
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
-        }
-        else {
+        } else {
             if (Auth::Check()) {
                 $request_data = $request->All();
                 $validator = $this->credentialRules($request_data);
@@ -431,18 +430,16 @@ class MemberController extends Controller
                             'nama_lengkap' => $request->nama,
                             'jenis_kelamin' => $request->jk,
                             'tanggal_lahir' => $dateBorn,
-                            'password' => Hash::make($request->password)
+                            'password' => Hash::make($request->password),
                         ]);
                         $member->clearMediaCollection();
                         $member->addMedia($request->file('foto_member'))->toMediaCollection();
                         return redirect()->route('profile')->with('alert', 'Profil dan Password telah berhasil diubah');
-                    }
-                    else {
+                    } else {
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
                     }
                 }
-            }
-            else {
+            } else {
                 $member->update([
                     'nama_lengkap' => $request->nama,
                     'jenis_kelamin' => $request->jk,
@@ -533,8 +530,6 @@ class MemberController extends Controller
         $kodePos = $request->kodepos;
         $alamatJalan = $request->alamatjalan;
 
-
-
         $alamatBaru = array(
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
@@ -602,23 +597,23 @@ class MemberController extends Controller
 
     public function riwayat()
     {
-        $member=Auth::user();
+        $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.riwayat', [
             'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
     public function riwayatSaldo($id)
     {
-        $member=Auth::user();
+        $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::find($id);
 
         return view('member.riwayat_topup', [
             'member' => $member,
-            'transaksi_saldo' => $transaksi_saldo
+            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
@@ -632,36 +627,36 @@ class MemberController extends Controller
 
     public function pesanan()
     {
-        $member=Auth::user();
+        $member = Auth::user();
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.pesanan', [
-            'member' => $member
+            'member' => $member,
             // 'transaksi_saldo' => $transaksi_saldo
         ]);
     }
 
     public function favorit()
     {
-        $member=Auth::user();
-        $produk=Produk::all();
+        $member = Auth::user();
+        $produk = Produk::all();
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.produk_favorit', [
             'member' => $member,
-            'produk' => $produk
+            'produk' => $produk,
             // 'transaksi_saldo' => $transaksi_saldo
         ]);
     }
 
     public function ulasan()
     {
-        $member=Auth::user();
+        $member = Auth::user();
         // $produk=Produk::all();
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.ulasan', [
-            'member' => $member
+            'member' => $member,
         ]);
     }
 
@@ -679,4 +674,5 @@ class MemberController extends Controller
     {
         return view('member.chat');
     }
+
 }

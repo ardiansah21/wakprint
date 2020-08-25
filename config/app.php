@@ -67,8 +67,6 @@ return [
     |
      */
 
-
-
     'timezone' => 'Asia/Jakarta',
 
     /*
