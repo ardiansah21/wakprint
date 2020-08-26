@@ -40,7 +40,7 @@
             <tbody style="font-size:14px;">
 
                 @foreach ($transaksi_saldo as $ts)
-                @if (($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran') && $ts->id_member === $member->id_member)
+                @if (($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran') && $ts->status === 'Pending' && $ts->id_member === $member->id_member)
                 <tr @if ($ts->jenis_transaksi === 'TopUp')
                     {{-- onclick="window.location.href='{{ url('/saldo/pembayaran/'. $ts->id_transaksi) }}'" --}}
                     onclick="window.location.href='/saldo/pembayaran/{{ $ts->id_transaksi }}'"

@@ -107,22 +107,45 @@
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                             <div class="col-md-4">
                                 <div class="card shadow mb-2" style="border-radius: 10px;">
-                                    <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;">
-                                        <div class="text-center" style="position: relative;">
-                                            <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
-                                                width:75px;
-                                                height:50px;
-                                                border-radius:0px 0px 8px 8px;">
-                                                    <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                    {{-- <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;"> --}}
+                                        @if (!empty($p->jumlah_diskon))
+                                            <div class="text-center" style="position: relative;">
+                                                <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                                    width:75px;
+                                                    height:50px;
+                                                    border-radius:0px 0px 8px 8px;">
+                                                        <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <i class="fa fa-heart fa-2x fa-responsive"
-                                        style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                                        </i>
+                                        @else
+                                            <div class="text-center" style="position: relative;" hidden>
+                                                <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                                    width:75px;
+                                                    height:50px;
+                                                    border-radius:0px 0px 8px 8px;">
+                                                        <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        {{-- <form id="favorit-form" action="{{ route('partner.ubah-status') }}" method="POST"> --}}
+                                            {{-- @csrf --}}
+                                            {{-- <label class="switch"> --}}
+                                            <input id="statusFavorit" class="statusFavorit" type="checkbox" value="{{$p->id_produk}}" name="status_favorit" onchange="event.preventDefault(); document.getElementById('favorit-form').submit();"
+                                                {{-- @if (Auth::user()->status_toko == 'Buka') --}}
+                                                    checked
+                                                    hidden
+                                                {{-- @endif --}}
+                                                >
+                                            {{-- </label> --}}
+                                            <i class="fa fa-heart fa-2x fa-responsive" onclick="window.location.href=''"
+                                                style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
+                                            </i>
+                                        {{-- </form> --}}
+
                                         <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                        style="height: 180px; border-radius: 10px 10px 0px 0px;"
+                                            onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px;"
                                         alt="Card image cap"/>
-                                        <div class="card-body">
+                                        <div class="card-body" onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'">
                                             <div class="row">
                                                 <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$p->partner->nama_toko ?? '-'}}</label>
                                                 <label class="col-md-auto card-text mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i> {{__('100 m') }}</label>
@@ -150,21 +173,53 @@
                                                 <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                             </div>
                                         </div>
-                                        <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
+                                        <div class="card-footer card-footer-primary" onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'" style="border-radius: 0px 0px 10px 10px;">
                                             <div class="row justify-content-between ml-0 mr-0">
                                                 <div>
-                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                        Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                    </label>
+                                                    @if (!empty($p->jumlah_diskon))
+                                                        @php
+                                                            $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                                                            $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+
+                                                            if($jumlahDiskonGray > $p->maksimal_diskon){
+                                                                $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                                                                $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                                                            }
+                                                            else{
+                                                                $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                                                                $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                                                            }
+                                                        @endphp
+                                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                            Rp. <del>{{$p->harga_hitam_putih ?? '-'}}</del>
+                                                        </label>
+                                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                            {{$hargaHitamPutih ?? '-'}}
+                                                        </label>
+                                                    @else
+                                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                            Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                        </label>
+                                                    @endif
                                                     <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
                                                         {{__('Hitam-Putih')}}
                                                     </label>
                                                     <br>
-                                                    @if (!empty($p->harga_berwarna))
+                                                    @if (!empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
                                                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                                            Rp. {{$p->harga_berwarna}}
+                                                            Rp. <del>{{$p->harga_berwarna ?? '-'}}</del>
+                                                        </label>
+                                                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                            {{$hargaBerwarna ?? '-'}}
                                                         </label>
                                                         <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
+                                                            {{__('Berwarna')}}
+                                                        </label>
+                                                    @else
+                                                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;" hidden>
+                                                            Rp. {{$p->harga_berwarna ?? '-'}}
+                                                        </label>
+                                                        <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;" hidden>
                                                             {{__('Berwarna')}}
                                                         </label>
                                                     @endif
@@ -177,7 +232,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
+                                    {{-- </a> --}}
                                 </div>
                             </div>
                     </div>
@@ -301,7 +356,15 @@
                             <div class="col-md-4">
                                 <div class="card shadow mb-2" style="border-radius: 10px;">
                                     <a class="text-decoration-none" href="{{ route('detail.partner',$p->id_pengelola) }}" style="color: black;">
-                                        <label class="badge badge-pill badge-info bg-promo font-weight-bold align-bottom p-2 mb-1 mt-3" style="position: absolute;top: 0%; left: 80%; font-size: 12px;">{{__('ATK') }}</label>
+                                        @foreach ($atk as $a)
+                                            @if($a->id_pengelola === $p->id_pengelola && $a->status === 'Tersedia')
+                                                <label class="badge badge-pill badge-info bg-promo font-weight-bold align-bottom p-2 mb-1 mt-3" style="position: absolute;top: 0%; left: 80%; font-size: 12px;">{{__('ATK') }}</label>
+                                            @else
+                                                <label class="badge badge-pill badge-info bg-promo font-weight-bold align-bottom p-2 mb-1 mt-3" style="position: absolute;top: 0%; left: 80%; font-size: 12px;" hidden>{{__('ATK') }}</label>
+                                            @endif
+                                        @endforeach
+
+
                                         <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
                                         style="height: 180px; border-radius: 10px 10px 0px 0px;"
                                         alt="Card image cap"/>
@@ -330,16 +393,30 @@
                     </div>
                     @endforeach
                 </div>
-                <a class="carousel-control-prev w-auto" href="#percetakanCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon btn btn-circle-navigation-right rounded-circle"
-                        aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next w-auto" href="#percetakanCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon btn btn-circle-navigation-right rounded-circle"
-                        aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                @if (count($partner) < 3)
+                    <a class="carousel-control-prev w-auto" href="#percetakanCarousel" role="button" data-slide="prev" hidden>
+                        <span class="carousel-control-prev-icon btn btn-circle-navigation-right rounded-circle"
+                            aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next w-auto" href="#percetakanCarousel" role="button" data-slide="next" hidden>
+                        <span class="carousel-control-next-icon btn btn-circle-navigation-right rounded-circle"
+                            aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                @else
+                    <a class="carousel-control-prev w-auto" href="#percetakanCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon btn btn-circle-navigation-right rounded-circle"
+                            aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next w-auto" href="#percetakanCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon btn btn-circle-navigation-right rounded-circle"
+                            aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                @endif
+
             </div>
             {{-- <span class="align-self-center col-md-1">
                 <a class="btn btn-circle-navigation-left btn-xl shadow-sm" href="#multi-item-percetakan-pilihan"
@@ -445,27 +522,25 @@
 
 
     $('#produkCarousel').carousel({
-        interval: 10000
-    })
+        interval: 0
+    });
 
     $('#partnerCarousel').carousel({
-        interval: 10000
-    })
+        interval: 0
+    });
 
     $('.carousel .carousel-item').each(function(){
         var minPerSlide = 3;
         var next = $(this).next();
         if (!next.length) {
-        next = $(this).siblings(':first');
+            next = $(this).siblings(':first');
         }
         next.children(':first-child').clone().appendTo($(this));
-
         for (var i=0;i<minPerSlide;i++) {
             next=next.next();
             if (!next.length) {
                 next = $(this).siblings(':first');
             }
-
             next.children(':first-child').clone().appendTo($(this));
         }
     });

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel" style="font-size: 18px;">
+{{-- <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel" style="font-size: 18px;">
     <div class="row jusify-content-between mb-3 mr-0">
         <div class="col-md-10">
             <div class="form-group search-input">
@@ -84,11 +84,7 @@
                 </tr>
             </thead>
             <tbody style="font-size: 12px;">
-
-                {{-- @foreach ($collection as $item) --}}
                     <tr>
-
-                        {{-- @foreach ($collection as $item) --}}
                             <td scope="row">
                                 {{__('000001')}}
                             </td>
@@ -109,15 +105,73 @@
                                     </i>
                                 </a>
                             </td>
-                        {{-- @endforeach --}}
-
                     </tr>
-                {{-- @endforeach --}}
-
             </tbody>
         </table>
     </div>
-</div>
+</div> --}}
+
+
+<table id="keluhanTable" class="table table-hover">
+    <thead class="bg-primary-purple text-white"
+        style="border-radius:25px 25px 15px 15px;
+            font-size:16px;">
+        <tr>
+            <th scope="col-md-auto">
+                {{__('ID')}}
+            </th>
+            <th scope="col-md-auto">
+                {{__('Nama')}}
+            </th>
+            <th scope="col-md-auto">
+                {{__('Keluhan')}}
+            </th>
+            <th scope="col-md-auto">
+                {{__('Status')}}
+            </th>
+        </tr>
+    </thead>
+    <tbody style="font-size: 12px;">
+    </tbody>
+</table>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready( function () {
+            $('#keluhanTable').DataTable({
+                scrollY: 300,
+                paging: false,
+                info: false,
+                processing: true,
+                serverSide: true,
+                orderable: true,
+                searchable: true,
+                autowidth: true,
+                deferloading: 0,
+                ajax: '{{ route('admin.keluhan.json') }}',
+                columns: [
+                    { data: 'id_lapor', name: 'id_lapor' },
+                    { data: 'id_member', name: 'id_member' },
+                    { data: 'pesan', name: 'pesan' },
+                    { data: 'status', name: 'status' }
+                ]
+            });
+
+            var table = $('#keluhanTable').DataTable();
+            $('#keluhanTable tbody').on( 'click', 'tr', function () {
+                var id = table.row(this).data();
+                document.location.href='keluhan/detail/' + id.id_lapor;
+                // if ($(this).hasClass('selected')) {
+                //     $(this).removeClass('selected');
+                // }
+                // else {
+                //     table.$('tr.selected').removeClass('selected');
+                //     $(this).addClass('selected');
+                // }
+            } );
+        });
+    </script>
 @endsection
 
 

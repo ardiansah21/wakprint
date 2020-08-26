@@ -22,14 +22,14 @@
             <div class="col-md-10 ml-0 mr-0">
                 <label class="text-truncate font-weight-bold align-middle mt-2"
                     style="width: 100%;">
-                    {{__('Ali Susiasdasdasdasdsadsaajiiiibbbbsssssadasdadsadadsadssasadsa')}}
+                    {{$laporProduk->member->nama_lengkap}}
                 </label>
             </div>
         </div>
         <div class="card shadow-sm mb-4 pl-3 pr-3 pt-2 pb-2">
             <label class="mb-1"
                 style="font-size:16px;">
-                {{__('Puas banget bisa ngeprint disini ajiiiibbbbsssssadasdadsadadsadssasadsa')}}
+                {{$laporProduk->pesan}}
             </label>
         </div>
         <label class="mb-2"

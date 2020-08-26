@@ -14,8 +14,7 @@
                 <span class="slider round"></span>
             </label>
         </div>
-
-        <label class="mb-2 h4 font-weight-bold" style="font-size: 16px;">
+        <label class="mb-2 h4 font-weight-bold">
             {{__('Foto Produk') }}
         </label>
         <div class="needsclick dropzone mb-3" id="document-dropzone"
@@ -24,7 +23,6 @@
                 <span>{{__('Klik atau Tarik Foto Produk Anda Disini') }}</span>
             </div>
         </div>
-
         {{-- <div class="scrolling-wrapper mb-0"> --}}
         <div class="row justify-content-left" style="height:200px;" hidden>
             <div class="col-md-auto" style="position: relative">
@@ -272,12 +270,9 @@
             <textarea name="deskripsi" class="form-control" aria-label="Deskripsi Produk"
                 placeholder="Masukkan Deskripsi Produk Anda"></textarea>
         </div>
-        <label class="mb-3 h4 font-weight-bold">
-            {{__('Fitur Utama') }}
-        </label>
         <div class="row justify-content-between mb-4">
             <div class="form-group col-md-6">
-                <label class="font-weight-bold mb-2" style="font-size:14px;">
+                <label class="font-weight-bold h4 mb-2">
                     {{__('Kertas') }}
                 </label>
                 <div class="dropdown" aria-required="true">
@@ -303,7 +298,7 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label class="font-weight-bold mb-2" style="font-size: 14px;">
+                <label class="font-weight-bold h4 mb-2">
                     {{__('Printer') }}
                 </label>
                 <div class="dropdown">
@@ -361,7 +356,7 @@
             </label>
         </div>
         @php
-        $paket = array('Lem','Baut','Kawat','spiral');
+        $paket = array('Lem','Baut','Kawat','Spiral');
         @endphp
         @foreach ($paket as $p)
         <div class="form-group row justify-content-between mb-3 ml-2 mr-0">

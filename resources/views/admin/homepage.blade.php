@@ -12,7 +12,7 @@
                 <div class="bg-light-purple p-4 col-md-12 text-center mr-4" style="border-radius:10px;
                         font-size:48px;">
                     <label class="font-weight-bold text-break" style="width: 100%;">
-                        {{__('43')}}
+                        {{$jumlahMember}}
                     </label>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="bg-light-purple p-4 col-md-12 text-center mr-4" style="border-radius:10px;
                         font-size:48px;">
                     <label class="font-weight-bold text-break" style="width: 100%;">
-                        {{__('43')}}
+                        {{$jumlahPartner}}
                     </label>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <div class="bg-light-purple p-4 col-md-12 text-center mr-4" style="border-radius:10px;
                         font-size:48px;">
                     <label class="font-weight-bold text-break" style="width: 100%;">
-                        {{__('43')}}
+                        {{$jumlahTransaksi}}
                     </label>
                 </div>
             </div>

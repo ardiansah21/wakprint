@@ -142,7 +142,7 @@
                         <li class="nav-item mr-0">
                             <a class="nav-link" href="{{ route('profile') }}"
                                 style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
-                                <span class="text-primary-purple text-truncate mr-2" style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
+                                <span class="text-primary-purple text-truncate text-right mr-2" style="width:80%;">{{Auth::user()->nama_lengkap}}</span>
                                 @if (!empty(Auth::user()->getFirstMediaUrl()))
                                     <img class="align-middle border border-gray ml-2" src="{{Auth::user()->getFirstMediaUrl()}}"
                                         width="45" height="45" alt="no logo" style="border-radius: 30px;">

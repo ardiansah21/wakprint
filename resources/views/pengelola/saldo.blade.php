@@ -1,8 +1,8 @@
 @extends('layouts.pengelola')
 
 @section('content')
-<form id="filter-form" action="{{ route('partner.filter.riwayat') }}" method="POST">
-    @csrf
+{{-- <form id="filter-form" action="{{ route('partner.filter.riwayat') }}" method="POST"> --}}
+    {{-- @csrf --}}
     <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel">
         <div class="bg-primary-purple text-white mb-5 ml-0" style="border-radius:10px;">
             <div class="row justify-content-left card-body ml-0">
@@ -43,11 +43,11 @@
                 @endphp
                 <div class="dropdown" aria-required="true">
                     <input name="keyword_jenis_transaksi" type="text" id="keyword_jenis_transaksi" Class="form-control"
-                        @php
+                        {{-- @php
                             if (session()->has('keyword_jenis_transaksi')) {
                                 echo "value = '".session('keyword_jenis_transaksi')."' autofocus onfocus='this.value = this.value;'";
                             }
-                        @endphp
+                        @endphp --}}
                         hidden>
                     <button id="jenisDanaButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
                         id="dropdownJenisDana" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -56,7 +56,6 @@
                     <div id="jenisDanaList" class="dropdown-menu" aria-labelledby="dropdownJenisDana"
                         style="font-size: 16px; width:100%;">
                         @foreach ($jenisDana as $jd)
-
                             <span class="dropdown-item cursor-pointer">
                                 {{$jd}}
                             </span>
@@ -69,11 +68,12 @@
             </label>
             <div class="col-md-4">
                 <input class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus onselect="this.value = this.value;"
-                    @php
+                    {{-- @php
                         if (session()->has('keyword_tanggal_awal')) {
                             echo "value = '".session('keyword_tanggal_awal')."' autofocus onselect='this.value = this.value;'";
                         }
-                    @endphp>
+                    @endphp --}}
+                    >
                 {{-- <script>
                         var $datepicker = $('#tanggal-awal');
                         $datepicker.datepicker();
@@ -114,8 +114,9 @@
                     </tr>
                 </thead>
                 <tbody style="font-size:12px;">
-                    @if(session()->has('transaksi_saldo'))
-                        @foreach(session('transaksi_saldo') as $ts)
+                    {{-- @if(session()->has('transaksi_saldo')) --}}
+                    @foreach($transaksi_saldo as $ts)
+                        {{-- @foreach(session('transaksi_saldo') as $ts) --}}
                             @if (($ts->jenis_transaksi === 'Tarik' || $ts->jenis_transaksi === 'Pembayaran') && $ts->id_pengelola === $partner->id_pengelola)
                             <tr>
                                 <td scope="row">{{$ts->id_transaksi ?? ''}}</td>
@@ -137,8 +138,9 @@
                                 </td>
                             </tr>
                             @endif
-                        @endforeach
-                    @endif
+                        {{-- @endforeach --}}
+                    {{-- @endif --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -152,7 +154,7 @@
             <label>Riwayat Transaksi Kosong</label>
         @endif
     </div>
-</form>
+{{-- </form> --}}
 
 @endsection
 

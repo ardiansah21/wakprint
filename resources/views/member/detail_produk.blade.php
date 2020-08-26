@@ -108,13 +108,23 @@
                 {{__('Antar ke Rumah')}}
             </label>
         @endif
-
-        <label class="mr-4" style="font-size: 18px;">
-            <i class="align-middle material-icons md-32 mr-2">
-                architecture
-            </i>
-            {{__('Alat Tulis Kantor')}}
-        </label>
+        @foreach ($atk as $a)
+            @if($a->id_pengelola === $produk->partner->id_pengelola && $a->status === 'Tersedia')
+                <label class="mr-4" style="font-size: 18px;">
+                    <i class="align-middle material-icons md-32 mr-2">
+                        architecture
+                    </i>
+                    {{__('Alat Tulis Kantor')}}
+                </label>
+            @else
+                <label class="mr-4" style="font-size: 18px;" hidden>
+                    <i class="align-middle material-icons md-32 mr-2">
+                        architecture
+                    </i>
+                    {{__('Alat Tulis Kantor')}}
+                </label>
+            @endif
+        @endforeach
         </div>
         <div class="row justify-content-between ml-0 mr-0">
             <div class="bg-light-purple col-md-4 p-3 mt-5"
@@ -249,29 +259,33 @@
                         style="font-size: 18px;">
                         {{__('ATK')}}
                     </label>
-
-                    @foreach ($atk as $a)
-                        @if ($a->id_pengelola === $produk->partner->id_pengelola)
-                            <div class="row justify-content-between" style="font-size: 14px;">
-                                <div class="col-md-auto text-left">
-                                    <label class="mb-2">
-                                        {{$a->nama}}
-                                        <i class="material-icons md-18 align-middle ml-2 mr-4"
-                                        style="color:#C4C4C4">
-                                            help
-                                        </i>
-                                        x {{$a->jumlah}}
-                                    </label>
+                    <br>
+                    {{-- @if (!empty($atk->id_atk)) --}}
+                        @foreach ($atk as $a)
+                            @if ($a->id_pengelola === $produk->partner->id_pengelola && !empty($a->nama))
+                                <div class="row justify-content-between" style="font-size: 14px;">
+                                    <div class="col-md-auto text-left">
+                                        <label class="mb-2">
+                                            {{$a->nama}}
+                                            <i class="material-icons md-18 align-middle ml-2 mr-4"
+                                            style="color:#C4C4C4">
+                                                help
+                                            </i>
+                                            x {{$a->jumlah}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-auto text-right">
+                                        <label class="mb-2">
+                                            Rp. {{$a->harga}}
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col-md-auto text-right">
-                                    <label class="mb-2">
-                                        Rp. {{$a->harga}}
-                                    </label>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+                            @else
+                                <label>-</label>
+                            @endif
+                        @endforeach
 
+                    {{-- @endif --}}
                 </div>
             </div>
             <div class="my-custom-scrollbar-2 col-8 mt-5 ml-0 pl-4 pr-4">
@@ -377,23 +391,58 @@
                                 </span>
                             </div>
                         </div>
+                        @php
+                            // foreach ($produk as $p) {
+                            //     $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                            //     $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+
+                            //     if($jumlahDiskonGray > $p->maksimal_diskon){
+                            //         $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                            //         $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                            //     }
+                            //     else{
+                            //         $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                            //         $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                            //     }
+                            // }
+                            $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
+                            $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
+                            if($jumlahDiskonGray > $produk->maksimal_diskon){
+                                $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
+                                $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
+                            }
+                            else{
+                                $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
+                                $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
+                            }
+                        @endphp
                         <div class="col-md-6">
-                            @if (!empty($produk->harga_berwarna))
-                                <label class="text-break font-weight-bold mb-2"
+                            @if (!empty($produk->jumlah_diskon))
+                                <label class="text-break font-weight-bold mb-4"
                                     style="font-size: 24px;">
-                                    Rp. {{$produk->harga_hitam_putih}} / hal (Hitam-Putih)
+                                    Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del> {{$hargaHitamPutih ?? '-'}} / hal (Hitam-Putih)
                                 </label>
-                                <label class="text-break text-primary-purple font-weight-bold mb-4"
-                                    style="font-size: 24px;">
-                                    Rp. {{$produk->harga_berwarna}} / hal (Warna)
-                                </label>
+                                @if (!empty($produk->harga_berwarna))
+                                    <label class="text-break text-primary-purple font-weight-bold mb-4"
+                                        style="font-size: 24px;">
+                                        Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del> {{$hargaBerwarna ?? '-'}} / hal (Berwarna)
+                                    </label>
+                                @else
+                                    <label class="text-break text-primary-purple font-weight-bold mb-4"
+                                        style="font-size: 24px;" hidden>
+                                        Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del> {{$hargaBerwarna ?? '-'}} / hal (Berwarna)
+                                    </label>
+                                @endif
                             @else
                                 <label class="text-break font-weight-bold mb-4"
                                     style="font-size: 24px;">
-                                    Rp. {{$produk->harga_hitam_putih}} / hal (Hitam-Putih)
+                                    Rp. {{$produk->harga_hitam_putih ?? '-'}} / hal (Hitam-Putih)
+                                </label>
+                                <label class="text-break text-primary-purple font-weight-bold mb-4"
+                                    style="font-size: 24px;">
+                                    Rp. {{$produk->harga_berwarna ?? '-'}} / hal (Warna)
                                 </label>
                             @endif
-
                             {{-- @foreach ($collection as $item) --}}
                             <label class="card-text text-break mb-2"
                                 style="font-size: 18px;">
@@ -530,7 +579,7 @@
                     </div>
 
                     <div class="row justify-content-end mr-0">
-                        <button class="btn btn-default btn-lg text-primary-danger font-weight-bold pl-4 pr-4 mr-4"
+                        <button class="btn btn-default btn-lg text-primary-danger font-weight-bold pl-4 pr-4 mr-4" onclick="window.location.href='{{ route('produk.lapor',$produk->id_produk) }}'"
                             style="border-radius:30px;font-size: 18px;">
                             {{__('Laporkan')}}
                         </button>
@@ -540,9 +589,18 @@
                         </button>
                     </div>
                 </div>
-
                 {{-- @include('member.card_detail_produk') --}}
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        var msg = '{{Session::get('alert')}}';
+        var exist = '{{Session::has('alert')}}';
+        if(exist){
+            alert(msg);
+        }
+    </script>
 @endsection
