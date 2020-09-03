@@ -98,13 +98,24 @@
                         {{__('Antar ke Rumah')}}
                     </label>
                 @endif
-
-                <label class="mr-4" style="font-size: 18px;">
-                    <i class="align-middle material-icons md-32 mr-2">
-                        architecture
-                    </i>
-                    {{__('Alat Tulis Kantor')}}
-                </label>
+                @foreach ($atk as $a)
+                    @if($a->id_pengelola === $partner->id_pengelola && $a->status === 'Tersedia')
+                        <label class="mr-4" style="font-size: 18px;">
+                            <i class="align-middle material-icons md-32 mr-2">
+                                architecture
+                            </i>
+                            {{__('Alat Tulis Kantor')}}
+                        </label>
+                    @break
+                    @else
+                        <label class="mr-4" style="font-size: 18px;" hidden>
+                            <i class="align-middle material-icons md-32 mr-2">
+                                architecture
+                            </i>
+                            {{__('Alat Tulis Kantor')}}
+                        </label>
+                    @endif
+                @endforeach
         </div>
         <div class="row justify-content-between ml-0 mr-0">
             <div class="bg-light-purple col-md-4 p-3 mt-5"
@@ -241,7 +252,7 @@
                         style="font-size: 18px;">
                         {{__('ATK')}}
                     </label>
-
+                    <br>
                     @foreach ($atk as $a)
                         @if ($a->id_pengelola === $partner->id_pengelola)
                             <div class="row justify-content-between" style="font-size: 14px;">
@@ -261,6 +272,9 @@
                                     </label>
                                 </div>
                             </div>
+                        @else
+                            <label>-</label>
+                        @break
                         @endif
                     @endforeach
                 </div>

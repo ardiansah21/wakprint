@@ -723,6 +723,13 @@ class MemberController extends Controller
         return view('member.ulasan_saya');
     }
 
+    public function ulasanPartner($id)
+    {
+        $partner = Pengelola_Percetakan::find($id);
+        // $produk = Produk::find($id);
+        return view('member.ulasan_produk_pengelola', compact('partner'));
+    }
+
     public function chat()
     {
         return view('member.chat');

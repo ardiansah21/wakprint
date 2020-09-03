@@ -39,8 +39,11 @@
                     star
                 </i>
                 {{$produk->partner->rating_toko}} / 5
+                {{-- @foreach($produk as $p) --}}
+                    {{-- {{collect([$produk->rating])->avg()}} / 5 --}}
+                {{-- @endforeach --}}
+                
             </label>
-
         </label>
         @if ($produk->partner->ambil_di_tempat === 0 && $produk->partner->antar_ke_tempat === 0)
             <label class="mr-4" style="font-size: 18px;" hidden>
@@ -116,6 +119,7 @@
                     </i>
                     {{__('Alat Tulis Kantor')}}
                 </label>
+            @break
             @else
                 <label class="mr-4" style="font-size: 18px;" hidden>
                     <i class="align-middle material-icons md-32 mr-2">
@@ -260,32 +264,30 @@
                         {{__('ATK')}}
                     </label>
                     <br>
-                    {{-- @if (!empty($atk->id_atk)) --}}
-                        @foreach ($atk as $a)
-                            @if ($a->id_pengelola === $produk->partner->id_pengelola && !empty($a->nama))
-                                <div class="row justify-content-between" style="font-size: 14px;">
-                                    <div class="col-md-auto text-left">
-                                        <label class="mb-2">
-                                            {{$a->nama}}
-                                            <i class="material-icons md-18 align-middle ml-2 mr-4"
-                                            style="color:#C4C4C4">
-                                                help
-                                            </i>
-                                            x {{$a->jumlah}}
-                                        </label>
-                                    </div>
-                                    <div class="col-md-auto text-right">
-                                        <label class="mb-2">
-                                            Rp. {{$a->harga}}
-                                        </label>
-                                    </div>
+                    @foreach ($atk as $a)
+                        @if ($a->id_pengelola === $produk->partner->id_pengelola && !empty($a->nama))
+                            <div class="row justify-content-between" style="font-size: 14px;">
+                                <div class="col-md-auto text-left">
+                                    <label class="mb-2">
+                                        {{$a->nama}}
+                                        <i class="material-icons md-18 align-middle ml-2 mr-4"
+                                        style="color:#C4C4C4">
+                                            help
+                                        </i>
+                                        x {{$a->jumlah}}
+                                    </label>
                                 </div>
-                            @else
-                                <label>-</label>
-                            @endif
-                        @endforeach
-
-                    {{-- @endif --}}
+                                <div class="col-md-auto text-right">
+                                    <label class="mb-2">
+                                        Rp. {{$a->harga}}
+                                    </label>
+                                </div>
+                            </div>
+                        @else
+                            <label>-</label>
+                        @break
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <div class="my-custom-scrollbar-2 col-8 mt-5 ml-0 pl-4 pr-4">
@@ -307,14 +309,12 @@
                         <div class="col-md-auto ml-0">
                             <label class="" style="color:#FCFF82;
                                 font-size: 18px;">
-                                <span class="material-icons md-36 align-middle">star</span>
-                                <span class="material-icons md-36 align-middle">star</span>
-                                <span class="material-icons md-36 align-middle">star</span>
-                                <span class="material-icons md-36 align-middle">star</span>
-                                <span class="material-icons md-36 align-middle">star</span>
+                                @for ($i = 0; $i < $produk->rating; $i++)
+                                    <span class="material-icons md-36 align-middle">star</span>
+                                @endfor
                                 <span class="ml-4">
                                     <a class="text-primary-purple align-middle"
-                                        href="">
+                                    href="{{ route('ulasan.partner', $produk->partner->id_pengelola) }}">
                                         {{__('10 Ulasan')}}
                                     </a>
                                 </span>

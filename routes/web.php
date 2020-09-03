@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::get('ulasan', 'MemberController@ulasan')->name('ulasan');
     Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
     Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
+    Route::get('ulasan/partner/{id}', 'MemberController@ulasanPartner')->name('ulasan.partner');
 
     Route::get('chat', 'MemberController@chat')->name('chat');
 
