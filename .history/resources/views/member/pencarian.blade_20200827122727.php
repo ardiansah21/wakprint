@@ -304,7 +304,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
-                                            {{ $produk->links() }}
+                                            {{-- {{ $produk->links() }} --}}
                                             @endif
                                         </div>
                                     </section>
@@ -409,7 +409,7 @@
             $.ajax({
                 url : url
             }).done(function (data) {
-                $('.produk').html(data);
+                $('.produk').append(data);
             }).fail(function () {
                 alert('Produk tidak ditemukan.');
             });

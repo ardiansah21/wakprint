@@ -33,7 +33,7 @@ Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fi
 //Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
 
 Route::get('produk', 'MemberController@produk')->name('produk');
-Route::any('pencarian', 'MemberController@pencarian')->name('pencarian');
+Route::get('pencarian', 'MemberController@pencarian')->name('pencarian');
 Route::get('partner/detail/{id}', 'MemberController@detailPartner')->name('detail.partner');
 Route::get('produk/detail/{id}', 'MemberController@detailProduk')->name('detail.produk');
 //member

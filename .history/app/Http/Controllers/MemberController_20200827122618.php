@@ -111,8 +111,7 @@ class MemberController extends Controller
 
     public function pencarian(Request $request)
     {
-        // $produk = Produk::paginate(4);
-        $produk = Produk::all();
+        $produk = Produk::paginate(4);
         $partner = Pengelola_Percetakan::paginate(30);
 
         // if ($request->ajax()) {

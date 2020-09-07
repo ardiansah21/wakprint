@@ -409,7 +409,7 @@
             $.ajax({
                 url : url
             }).done(function (data) {
-                $('.produk').html(data);
+                $('.produk').append(data);
             }).fail(function () {
                 alert('Produk tidak ditemukan.');
             });

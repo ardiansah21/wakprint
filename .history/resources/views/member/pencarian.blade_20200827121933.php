@@ -188,7 +188,8 @@
                         <div class="tab-pane fade show active" id="pills-produk" role="tabpanel"
                             aria-labelledby="pills-produk-tab">
                             <div class="infinite-scroll">
-                                <div id="pencarianItemsProduk" class="row justify-content-between mb-4">
+                                <div id="pencarianItemsProduk" class="row justify-content-between mb-4"
+                                    style="position: absolute">
                                     {{-- <div id="load" style=""> --}}
                                     <section class="produk">
                                         <div class="infinite-scroll">
