@@ -142,7 +142,7 @@
                         <li class="nav-item mr-0">
                             <a class="nav-link" href="{{ route('profile') }}"
                                 style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
-                                <span class="text-primary-purple text-truncate mr-2" style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
+                                <span class="text-primary-purple text-truncate text-right mr-2" style="width:80%;">{{Auth::user()->nama_lengkap}}</span>
                                 @if (!empty(Auth::user()->getFirstMediaUrl()))
                                     <img class="align-middle border border-gray ml-2" src="{{Auth::user()->getFirstMediaUrl()}}"
                                         width="45" height="45" alt="no logo" style="border-radius: 30px;">
@@ -150,7 +150,6 @@
                                 <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
                                         width="45" height="45" alt="no logo">
                                 @endif
-
                             </a>
                         </li>
                         @endguest
@@ -173,7 +172,6 @@
                         <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
                         <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
                         <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
-
                     </div>
                     <div class="col-md-3 mt-3">
                         <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}</h4>
@@ -251,7 +249,16 @@
                                     <i class="material-icons align-middle md-32 mr-2">
                                         location_on
                                     </i>
-                                    {{__('Medan ID') }}
+                                    @if (!empty($member->alamat['alamat']))
+                                        @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
+                                            @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
+                                                {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }}
+                                            @endif
+                                        @endfor
+                                    @else
+                                        <label>-</label>
+                                    @endif
+
                                 </a>
                                 <a class="nav-link {{set_active('saldo')}} SemiBold mb-2" id="v-pills-saldo-tab" href="{{ route('saldo') }}"
                                     role="tab" aria-controls="v-pills-saldo" aria-selected="false"

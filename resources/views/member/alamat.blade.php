@@ -4,15 +4,21 @@
 @section('content')
 <div class="container mt-4 mb-5">
     <label class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Alamat Pengiriman')}}</label>
-    <div class="mb-4">
-        <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4" data-toggle="modal"
-            data-target="#tambahAlamatModal" data-title="Tambah Alamat Pengiriman"
-            style="border-radius:30px; font-size: 18px;">
-            <i class="material-icons align-middle mr-2">location_on</i>
-            {{__('Tambah Alamat Baru')}}
-        </button>
-    </div>
     @if(!empty($member->alamat))
+        <div class="row mb-4 ml-0">
+            <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4 mr-4" data-toggle="modal"
+                data-target="#tambahAlamatModal" data-title="Tambah Alamat Pengiriman"
+                style="border-radius:30px; font-size: 18px;">
+                <i class="material-icons align-middle mr-2">location_on</i>
+                {{__('Tambah Alamat Baru')}}
+            </button>
+            {{-- <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4" data-toggle="modal"
+                data-target="#tambahAlamatModal" data-title="Tambah Alamat Pengiriman"
+                style="border-radius:30px; font-size: 18px;">
+                <i class="material-icons align-middle mr-2">location_on</i>
+                {{__('Ubah Alamat Utama')}}
+            </button> --}}
+        </div>
         <div class="table-scrollbar pr-4">
             <table id="table-wrapper" class="table table-hover mt-4" style="border-radius:25px 25px 15px 15px;">
                 <thead class="bg-primary-purple text-white">
@@ -27,8 +33,11 @@
                 <tbody style="font-size: 14px;">
                     @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
                         {{-- @if($member->alamat['alamat'][$i] != null){ --}}
-                            <tr>
-                                {{-- <input type="number" id="id" name="id" hidden> --}}
+                        {{-- <form action="{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}" method="POST"> --}}
+                            {{-- @csrf --}}
+                            {{-- <tr onclick="document.getElementById('id').click()"> --}}
+                            <tr class="cursor-pointer" onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'">
+                                {{-- <input type="submit" id="id" name="id" value="{{$member->alamat['alamat'][$i]['id']}}"> --}}
                                 <td class="align-middle" name="namapenerima" scope="row">
                                     {{ $member->alamat['alamat'][$i]['Nama Penerima'] }}
                                 </td>
@@ -41,7 +50,7 @@
                                     {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
                                 </td>
                                 <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] }}</td>
-                                <td>
+                                <td class="align-middle">
                                     <span>
                                         <a href="" class="material-icons text-decoration-none mr-2" data-toggle="modal"
                                             data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
@@ -62,24 +71,31 @@
                                         </a>
                                     </span>
                                 </td>
-                                <td>
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <td class="align-middle">
+                                    @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
                                         <label class="btn btn-outline-purple">
-                                            <input type="radio" name="alamatutama" id="alamatutama" autocomplete="off" checked>
                                             Utama
                                         </label>
-                                    </div>
+                                    @endif
                                 </td>
                             </tr>
-                        {{-- @endif --}}
-                        @endfor
+                        {{-- </form> --}}
+                        {{-- <tr onclick="window.location.href='{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}'"> --}}
+                    @endfor
                 </tbody>
             </table>
         </div>
     @else
+        <div class="mb-4">
+            <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4" data-toggle="modal"
+                data-target="#tambahAlamatModal" data-title="Tambah Alamat Pengiriman"
+                style="border-radius:30px; font-size: 18px;">
+                <i class="material-icons align-middle mr-2">location_on</i>
+                {{__('Tambah Alamat Baru')}}
+            </button>
+        </div>
         <label style="font-size: 16px;">{{__('Silahkan tambahkan alamat pengiriman Anda')}}</label>
     @endif
-
     {{-- popup modal tambah alamat --}}
     <div class="modal fade" id="tambahAlamatModal" tabindex="-1" role="dialog" aria-labelledby="alamatModalLabel"
         aria-hidden="true">

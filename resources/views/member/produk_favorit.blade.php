@@ -10,22 +10,35 @@
                     <div class="col-md-6 mb-4">
                         <div class="col-md-auto mb-4">
                             <div class="card shadow mb-2" style="border-radius: 10px;">
-                                <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;">
-                                    <div class="text-center" style="position: relative;">
-                                        <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
-                                            width:75px;
-                                            height:50px;
-                                            border-radius:0px 0px 8px 8px;">
-                                                <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                {{-- <a class="text-decoration-none" href="" style="color: black;"> --}}
+                                    @if (!empty($p->jumlah_diskon))
+                                        <div class="text-center" style="position: relative;">
+                                            <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                                width:75px;
+                                                height:50px;
+                                                border-radius:0px 0px 8px 8px;">
+                                                    <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <i class="fa fa-heart fa-2x fa-responsive"
-                                    style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                                    </i>
+                                    @else
+                                        <div class="text-center" style="position: relative;" hidden>
+                                            <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                                width:75px;
+                                                height:50px;
+                                                border-radius:0px 0px 8px 8px;">
+                                                    <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    {{-- <a class="text-decoration-none" href="" style="color: black;"> --}}
+                                        <i class="fa fa-heart fa-2x fa-responsive" onclick="window.location.href='{{ route('produk.lapor',$p->id_produk) }}'"
+                                            style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
+                                        </i>
+                                    {{-- </a> --}}
                                     <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                    style="height: 180px; border-radius: 10px 10px 0px 0px;"
+                                    onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px;"
                                     alt="Card image cap"/>
-                                    <div class="card-body">
+                                    <div class="card-body" onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'">
                                         <div class="row">
                                             <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$p->partner->nama_toko ?? '-'}}</label>
                                             <label class="col-md-auto card-text mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i> {{__('100 m') }}</label>
@@ -49,7 +62,7 @@
                                             <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                         </div>
                                     </div>
-                                    <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
+                                    <div class="card-footer card-footer-primary" onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'" style="border-radius: 0px 0px 10px 10px;">
                                         <div class="row justify-content-between ml-0 mr-0">
                                             <div>
                                                 <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
@@ -76,7 +89,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                {{-- </a> --}}
                             </div>
                         </div>
                     </div>

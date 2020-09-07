@@ -58,7 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::get('profil/alamat', 'MemberController@alamat')->name('alamat');
     Route::post('profil/alamat/update', 'MemberController@editAlamat')->name('alamat.edit');
     Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
-    Route::post('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
+    Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
+    Route::get('profil/alamat/pilih/{id}', 'MemberController@pilihAlamat')->name('alamat.pilih');
     Route::get('saldo', 'MemberController@saldo')->name('saldo');
     Route::post('saldo/topup', 'MemberController@topUpSaldo')->name('saldo.topup');
     Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
@@ -72,12 +73,17 @@ Route::middleware('auth')->group(function () {
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('detail.pesanan');
 
     Route::get('favorit', 'MemberController@favorit')->name('favorit');
+    Route::post('favorit/status', 'MemberController@tambahFavorit')->name('favorit.status');
 
     Route::get('ulasan', 'MemberController@ulasan')->name('ulasan');
     Route::get('/ulasan/ulas', 'MemberController@ulas')->name('ulasan.ulas');
     Route::get('/ulasan/ulasan-saya', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
+    Route::get('ulasan/partner/{id}', 'MemberController@ulasanPartner')->name('ulasan.partner');
 
     Route::get('chat', 'MemberController@chat')->name('chat');
+
+    Route::get('produk/lapor/{id}', 'MemberController@laporProduk')->name('produk.lapor');
+    Route::post('produk/lapor/store/{id}', 'MemberController@storeLapor')->name('lapor.store');
 });
 
 //Pengelola percetakan
@@ -136,13 +142,14 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/saldo', 'AdminController@dataSaldo')->name('saldo');
         Route::get('saldo/tolak', 'AdminController@saldoTolak')->name('saldo.tolak');
         Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
-        Route::get('keluhan/detail', 'AdminController@detailKeluhan')->name('detail.keluhan');
+        Route::get('keluhan/detail/{id}', 'AdminController@detailKeluhan')->name('detail.keluhan');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
         Route::get('member/json', 'AdminController@memberJson')->name('member.json');
         Route::get('partner/json', 'AdminController@partnerJson')->name('partner.json');
         Route::get('saldo/json', 'AdminController@saldoJson')->name('saldo.json');
+        Route::get('keluhan/json', 'AdminController@keluhanJson')->name('keluhan.json');
     });
 });
 

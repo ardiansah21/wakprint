@@ -8,6 +8,7 @@ use App\Member;
 use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
+use App\Lapor_produk;
 use Carbon\Carbon;
 use File;
 use Hash;
@@ -60,9 +61,8 @@ class MemberController extends Controller
         // $member = Auth::user();
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::all();
-        // json_decode($produk->fitur,true);
-        //dd($fitur);
-        return view('home', compact('produk', 'partner'));
+        $atk = Atk::all();
+        return view('home', compact('produk','partner','atk'));
     }
 
     // temp dropzone
@@ -287,6 +287,37 @@ class MemberController extends Controller
     {
         //dd(getDateBorn());
         return view('member.detail_produk');
+    }
+
+    public function laporProduk($id)
+    {
+        //dd(getDateBorn());
+        $produk = Produk::find($id);
+        $atk = Atk::all();
+        $fitur = json_decode($produk->fitur, true);
+        return view('member.lapor_produk', compact('produk', 'fitur', 'atk'));
+    }
+
+    public function storeLapor(Request $request, $id)
+    {
+        //dd(getDateBorn());
+        $member = Auth::user();
+        $produk = Produk::find($id);
+        $laporProduk = Lapor_produk::all();
+
+        $pesan = $request->pesan;
+        $status = $laporProduk->status = 'Pending';
+        $waktu = $laporProduk->waktu = Carbon::now()->format('Y:m:d H:i:s');
+
+        Lapor_produk::create([
+            'id_produk' => $produk->id_produk,
+            'id_member' => $member->id_member,
+            'pesan' => $pesan,
+            'waktu' => $waktu,
+            'status' => $status
+        ]);
+
+        return redirect()->route('detail.produk',$produk->id_produk)->with('alert', 'Laporan telah berhasil dikirim !');
     }
 
     public function profile()
@@ -527,14 +558,14 @@ class MemberController extends Controller
     {
         $member = Member::find($id);
 
-        $namaPenerima = $request->namapenerima;
-        $nomorHP = $request->nomorhp;
-        $provinsi = $request->provinsi;
-        $kabKota = $request->kota;
-        $kecamatan = $request->kecamatan;
-        $kelurahan = $request->kelurahan;
-        $kodePos = $request->kodepos;
-        $alamatJalan = $request->alamatjalan;
+        // $namaPenerima = $request->namapenerima;
+        // $nomorHP = $request->nomorhp;
+        // $provinsi = $request->provinsi;
+        // $kabKota = $request->kota;
+        // $kecamatan = $request->kecamatan;
+        // $kelurahan = $request->kelurahan;
+        // $kodePos = $request->kodepos;
+        // $alamatJalan = $request->alamatjalan;
 
         $alamatBaru = array(
             'Nama Penerima' => $request->namapenerima,
@@ -548,6 +579,17 @@ class MemberController extends Controller
         );
 
         $alamat['alamat'][$request->id] = $alamatBaru;
+        $member->alamat = $alamat;
+        $member->save();
+
+        return redirect()->route('alamat');
+    }
+
+    public function pilihAlamat($id, Request $request){
+        $member = Member::find(Auth::id());
+        $alamat = $member->alamat;
+        $alamat['IdAlamatUtama'] = $alamat['alamat'][$id]['id'];
+
         $member->alamat = $alamat;
         $member->save();
 
@@ -581,7 +623,8 @@ class MemberController extends Controller
 
         //return redirect()->route('alamat');
         //return view('member.alamat',['member'=>Auth::user()]);
-        return redirect()->to('alamat/' . $id);
+        // return redirect()->to('alamat/' . $id);
+        return redirect()->route('alamat');
     }
 
     public function konfigurasiPesanan()
@@ -655,6 +698,28 @@ class MemberController extends Controller
         ]);
     }
 
+    public function tambahFavorit(Request $request)
+    {
+        $member = Auth::user();
+
+        $arrayFavorit = $member->produk_favorit;
+
+        if (empty($arrayFavorit)) {
+            $arrayFavorit = array();
+        }
+
+        $arrayFavorit = array(
+            'id_produk' => $request->status_favorit
+        );
+
+        //$favorit['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
+
+        $member->produk_favorit = $arrayFavorit;
+        $member->save();
+
+        return redirect()->route('home');
+    }
+
     public function ulasan()
     {
         $member = Auth::user();
@@ -674,6 +739,13 @@ class MemberController extends Controller
     public function ulasanSaya()
     {
         return view('member.ulasan_saya');
+    }
+
+    public function ulasanPartner($id)
+    {
+        $partner = Pengelola_Percetakan::find($id);
+        // $produk = Produk::find($id);
+        return view('member.ulasan_produk_pengelola', compact('partner'));
     }
 
     public function chat()

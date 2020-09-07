@@ -138,7 +138,6 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </form>
-
                                 </div>
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical"
                                     style="font-size: 18px;">

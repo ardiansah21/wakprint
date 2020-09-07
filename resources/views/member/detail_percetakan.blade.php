@@ -98,13 +98,24 @@
                         {{__('Antar ke Rumah')}}
                     </label>
                 @endif
-
-                <label class="mr-4" style="font-size: 18px;">
-                    <i class="align-middle material-icons md-32 mr-2">
-                        architecture
-                    </i>
-                    {{__('Alat Tulis Kantor')}}
-                </label>
+                @foreach ($atk as $a)
+                    @if($a->id_pengelola === $partner->id_pengelola && $a->status === 'Tersedia')
+                        <label class="mr-4" style="font-size: 18px;">
+                            <i class="align-middle material-icons md-32 mr-2">
+                                architecture
+                            </i>
+                            {{__('Alat Tulis Kantor')}}
+                        </label>
+                    @break
+                    @else
+                        <label class="mr-4" style="font-size: 18px;" hidden>
+                            <i class="align-middle material-icons md-32 mr-2">
+                                architecture
+                            </i>
+                            {{__('Alat Tulis Kantor')}}
+                        </label>
+                    @endif
+                @endforeach
         </div>
         <div class="row justify-content-between ml-0 mr-0">
             <div class="bg-light-purple col-md-4 p-3 mt-5"
@@ -241,7 +252,7 @@
                         style="font-size: 18px;">
                         {{__('ATK')}}
                     </label>
-
+                    <br>
                     @foreach ($atk as $a)
                         @if ($a->id_pengelola === $partner->id_pengelola)
                             <div class="row justify-content-between" style="font-size: 14px;">
@@ -261,6 +272,9 @@
                                     </label>
                                 </div>
                             </div>
+                        @else
+                            <label>-</label>
+                        @break
                         @endif
                     @endforeach
                 </div>
@@ -433,14 +447,25 @@
                                     <div class="col-md-auto mb-4">
                                         <div class="card shadow mb-2" style="border-radius: 10px;">
                                             <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;">
-                                                <div class="text-center" style="position: relative;">
-                                                    <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
-                                                        width:75px;
-                                                        height:50px;
-                                                        border-radius:0px 0px 8px 8px;">
-                                                            <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                                @if (!empty($p->jumlah_diskon))
+                                                    <div class="text-center" style="position: relative;">
+                                                        <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                                            width:75px;
+                                                            height:50px;
+                                                            border-radius:0px 0px 8px 8px;">
+                                                                <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @else
+                                                    <div class="text-center" style="position: relative;" hidden>
+                                                        <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                                            width:75px;
+                                                            height:50px;
+                                                            border-radius:0px 0px 8px 8px;">
+                                                                <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <i class="fa fa-heart fa-2x fa-responsive"
                                                 style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                                                 </i>
@@ -472,20 +497,52 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
-                                                    <div class="row justify-content-between">
-                                                        <div class="ml-3">
-                                                            <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                                Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                            </label>
+                                                    <div class="row justify-content-between ml-0">
+                                                        <div class="">
+                                                            @if (!empty($p->jumlah_diskon))
+                                                                @php
+                                                                    $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                                                                    $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+
+                                                                    if($jumlahDiskonGray > $p->maksimal_diskon){
+                                                                        $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                                                                        $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                                                                    }
+                                                                    else{
+                                                                        $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                                                                        $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                                                                    }
+                                                                @endphp
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    Rp. <del>{{$p->harga_hitam_putih ?? '-'}}</del>
+                                                                </label>
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    {{$hargaHitamPutih ?? '-'}}
+                                                                </label>
+                                                            @else
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                                </label>
+                                                            @endif
                                                             <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
                                                                 {{__('Hitam-Putih')}}
                                                             </label>
                                                             <br>
-                                                            @if (!empty($p->harga_berwarna))
+                                                            @if (!empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
                                                                 <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                                                    Rp. {{$p->harga_berwarna}}
+                                                                    Rp. <del>{{$p->harga_berwarna ?? '-'}}</del>
+                                                                </label>
+                                                                <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                                    {{$hargaBerwarna ?? '-'}}
                                                                 </label>
                                                                 <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
+                                                                    {{__('Berwarna')}}
+                                                                </label>
+                                                            @else
+                                                                <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;" hidden>
+                                                                    Rp. {{$p->harga_berwarna ?? '-'}}
+                                                                </label>
+                                                                <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;" hidden>
                                                                     {{__('Berwarna')}}
                                                                 </label>
                                                             @endif

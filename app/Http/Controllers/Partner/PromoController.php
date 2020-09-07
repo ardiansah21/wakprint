@@ -55,6 +55,7 @@ class PromoController extends Controller
         // $partner = Pengelola_Percetakan::find(Auth::id());
 
         $idProduk = $request->checkbox_promo;
+        $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $tanggalMulai = $request->tanggal_mulai_promo;
         $bulanMulai = $request->bulan_mulai_promo;
@@ -69,6 +70,7 @@ class PromoController extends Controller
         foreach ($idProduk as $id) {
             $produk = Produk::find($id);
             // $produk->id_produk = $idProduk;
+            $produk->status_diskon = $statusDiskon;
             $produk->maksimal_diskon = $maksimalDiskon;
             $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
             $produk->jumlah_diskon = $jumlahDiskon;
@@ -141,6 +143,7 @@ class PromoController extends Controller
     public function destroy($id)
     {
         $produk = Produk::find($id);
+        $produk->status_diskon = 'TidakTersedia';
         $produk->maksimal_diskon = null;
         $produk->mulai_waktu_diskon = null;
         $produk->jumlah_diskon = null;

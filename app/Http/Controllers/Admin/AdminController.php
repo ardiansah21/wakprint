@@ -5,8 +5,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Admin;
+use App\Lapor_produk;
 use App\Member;
 use App\Pengelola_Percetakan;
+use App\Pesanan;
 use App\Transaksi_saldo;
 
 class AdminController extends Controller
@@ -14,23 +16,19 @@ class AdminController extends Controller
     public function index()
     {
         $member = Member::all();
-        $pengelola = Pengelola_Percetakan::all();
+        $partner = Pengelola_Percetakan::all();
+        $pesanan = Pesanan::all();
 
-        $idMember = Member::find(Auth::id());
-
-        // dd($pengelola[0]->nama_lengkap);
-
-        // dd($idMember->id_member);
-        // $m[] = array(
-        //     'id_member' => $member->id_member,
-        //     'nama_lengkap' => $member->nama_lengkap
-        // );
-
-        // dd($member[0]->nama_lengkap);
+        $jumlahMember = count($member);
+        $jumlahPartner = count($partner);
+        $jumlahTransaksi = count($pesanan);
 
         return view('admin.homepage',[
             'member' => $member,
-            'pengelola_percetakan' => $pengelola
+            'jumlahMember' => $jumlahMember,
+            'partner' => $partner,
+            'jumlahPartner' => $jumlahPartner,
+            'jumlahTransaksi' => $jumlahTransaksi,
         ]);
     }
 
@@ -72,6 +70,10 @@ class AdminController extends Controller
         $transaksiSaldo = Transaksi_saldo::all()->union($member);
         // return datatables($transaksiSaldo)->addIndexColumn()->make(true);
         return datatables(Transaksi_saldo::all())->make(true);
+    }
+
+    public function keluhanJson(){
+        return datatables(Lapor_produk::all())->make(true);
     }
 
     public function detailMember(Request $request, $id)
@@ -178,15 +180,11 @@ class AdminController extends Controller
         ]);
     }
 
-    public function detailKeluhan()
+    public function detailKeluhan($id)
     {
-        $pengelola = Pengelola_Percetakan::all();
-        $member = Member::all();
-
-        return view('admin.tanggapi_keluhan',[
-            'member' => $member,
-            'pengelola_percetakan' => $pengelola
-        ]);
+        $member = Member::find($id);
+        $laporProduk = Lapor_produk::find($id);
+        return view('admin.tanggapi_keluhan',compact('member','laporProduk'));
     }
 
     // public function tableDataMember(){
