@@ -552,14 +552,14 @@ class MemberController extends Controller
     {
         $member = Member::find($id);
 
-        $namaPenerima = $request->namapenerima;
-        $nomorHP = $request->nomorhp;
-        $provinsi = $request->provinsi;
-        $kabKota = $request->kota;
-        $kecamatan = $request->kecamatan;
-        $kelurahan = $request->kelurahan;
-        $kodePos = $request->kodepos;
-        $alamatJalan = $request->alamatjalan;
+        // $namaPenerima = $request->namapenerima;
+        // $nomorHP = $request->nomorhp;
+        // $provinsi = $request->provinsi;
+        // $kabKota = $request->kota;
+        // $kecamatan = $request->kecamatan;
+        // $kelurahan = $request->kelurahan;
+        // $kodePos = $request->kodepos;
+        // $alamatJalan = $request->alamatjalan;
 
         $alamatBaru = array(
             'Nama Penerima' => $request->namapenerima,
@@ -573,6 +573,17 @@ class MemberController extends Controller
         );
 
         $alamat['alamat'][$request->id] = $alamatBaru;
+        $member->alamat = $alamat;
+        $member->save();
+
+        return redirect()->route('alamat');
+    }
+
+    public function pilihAlamat($id, Request $request){
+        $member = Member::find(Auth::id());
+        $alamat = $member->alamat;
+        $alamat['IdAlamatUtama'] = $alamat['alamat'][$id]['id'];
+
         $member->alamat = $alamat;
         $member->save();
 
@@ -606,7 +617,8 @@ class MemberController extends Controller
 
         //return redirect()->route('alamat');
         //return view('member.alamat',['member'=>Auth::user()]);
-        return redirect()->to('alamat/' . $id);
+        // return redirect()->to('alamat/' . $id);
+        return redirect()->route('alamat');
     }
 
     public function konfigurasiPesanan()
@@ -685,7 +697,7 @@ class MemberController extends Controller
         $member = Auth::user();
 
         $arrayFavorit = $member->produk_favorit;
-        
+
         if (empty($arrayFavorit)) {
             $arrayFavorit = array();
         }
