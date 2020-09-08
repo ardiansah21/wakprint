@@ -304,7 +304,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
-                                            {{ $produk->links() }}
+                                            {{-- {{ $produk->links() }} --}}
                                             @endif
                                         </div>
                                     </section>

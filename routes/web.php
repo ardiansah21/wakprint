@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\KonFileController;
+use App\Produk;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\StoreProductRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\KonFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,11 @@ Route::post('search', 'SearchController@search')->name('search');
 
 //test upload
 // Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
+
+Route::get('/tesproduk', function () {
+    $produk = Produk::all();
+    return view('member.card_produk', compact('produk'));
+});
 
 Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2

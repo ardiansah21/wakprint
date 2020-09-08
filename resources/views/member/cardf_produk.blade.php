@@ -92,5 +92,5 @@
         </div>
         @endforeach
     </div>
-    {{ $produk->links() }}
+    {{-- {{ $produk->links() }} --}}
 </div>
