@@ -184,8 +184,8 @@ Route::get('foto', 'ProductController@foto');
 
 Route::resource('pdf', 'PdfController');
 
-Route::get('tess', function () {
-    return view('pengujianTemp');
+Route::get('testing', function () {
+    return view('pengujian3');
 });
 
-Route::get('tesst', 'PdfController@tesst');
+Route::post('store2', 'PdfController@store2')->name('store2');

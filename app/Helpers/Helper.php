@@ -68,7 +68,7 @@ function cekWarna($path, $percenMinimum = 100)
                 $jenisWarna[$i] = "Berwarna";
             }
         } else {
-            if ($totalPixelGray[$i] <= $percenMin) {
+            if ($totalPixelGray[$i] <= $percenMin || $percenMin == 0) {
                 $totalPageColor++;
                 $jenisWarna[$i] = "Berwarna";
             } else {
