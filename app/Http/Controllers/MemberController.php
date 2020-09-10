@@ -100,7 +100,6 @@ class MemberController extends Controller
 
     public function konfigurasiFile($pdf)
     {
-        dd($pdf);
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::all();
         $fitur = json_decode($produk->fitur, true);
@@ -112,14 +111,21 @@ class MemberController extends Controller
         ]);
     }
 
-    public function pencarian()
+    public function pencarian(Request $request)
     {
-
+        // $produk = Produk::paginate(4);
         $produk = Produk::all();
-        $partner = Pengelola_Percetakan::all();
+        $partner = Pengelola_Percetakan::paginate(30);
 
+        // if ($request->ajax()) {
+        //     // $produk = Produk::where(function ($query) {
+        //     //     $query->where('nama', 'LIKE', '%' . $request->keyword . '%');
+        //     // });
+        //     // $produk = Produk::
+        //     return view('member.cardf_produk', ['produk' => $produk])->render();
+        // }
         // $fitur = json_decode($produk->fitur,true);
-        return view('member.pencarian', compact('partner', 'produk'));
+        return view('member.pencarian', compact('partner', 'produk'))->render();
     }
 
     public function detailPartner($id)

@@ -187,16 +187,21 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-produk" role="tabpanel"
                             aria-labelledby="pills-produk-tab">
-                            <div class="my-custom-scrollbar">
-                                <div id="pencarianItems" class="row justify-content-between mb-4">
-                                    @foreach ($produk as $p)
-                                    <div class="col-md-6 mb-4">
-                                        <div class="col-md-auto mb-4">
-                                            <div class="card shadow mb-2" style="border-radius: 10px;">
-                                                <a class="text-decoration-none" href="produk/detail/{{ $p->id_produk }}"
-                                                    style="color: black;">
-                                                    <div class="text-center" style="position: relative;">
-                                                        <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                            <div class="infinite-scroll">
+                                <div id="pencarianItemsProduk" class="row justify-content-between mb-4">
+                                    {{-- <div id="load" style=""> --}}
+                                    <section class="produk">
+                                        <div class="infinite-scroll">
+                                            @if (count($produk)>0)
+                                            @foreach ($produk as $p)
+                                            <div class="col-md-6 mb-4">
+                                                <div class="col-md-auto mb-4">
+                                                    <div class="card shadow mb-2" style="border-radius: 10px;">
+                                                        <a class="text-decoration-none"
+                                                            href="produk/detail/{{ $p->id_produk }}"
+                                                            style="color: black;">
+                                                            <div class="text-center" style="position: relative;">
+                                                                <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
                                                                             width:75px;
                                                                             height:50px;
                                                                             border-radius:0px 0px 8px 8px;">
@@ -329,13 +334,15 @@
                                                                     {{$p->rating ?? '-'}}
                                                                 </label>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
-                                                </a>
+                                                </div>
                                             </div>
+                                            @endforeach
+                                            {{-- {{ $produk->links() }} --}}
+                                            @endif
                                         </div>
-                                    </div>
-                                    @endforeach
+                                    </section>
                                 </div>
                             </div>
                         </div>
@@ -398,7 +405,7 @@
 </div>
 @endsection
 @section('script')
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script> --}}
+<script src="/js/jquery.jscroll.min.js"></script>
 <script>
     $('#ukuranKertasList span').on('click', function () {
             $('#ukuranKertasButton').text($(this).text());
@@ -421,12 +428,48 @@
 
 
 
+    $(function() {
+        $('body').on('click', '.pagination a', function(e) {
+            e.preventDefault();
+
+            // $('.produk').css('color', '#dfecf6');
+            // $('.produk').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/img/loading.gif" />');
+
+            var url = $(this).attr('href');
+            getArticles(url);
+            // window.history.pushState("", "", url);
+        });
+
+        function getArticles(url) {
+            $.ajax({
+                url : url
+            }).done(function (data) {
+                $('.produk').html(data);
+            }).fail(function () {
+                alert('Produk tidak ditemukan.');
+            });
+        }
+    });
+
+    $('ul.pagination').hide();
+    $(function() {
+        $('.infinite-scroll').jscroll({
+            autoTrigger: true,
+            loadingHtml: '<img class="center-block" src="/img/loading.gif" alt="Loading..." />',
+            padding: 0,
+            nextSelector: '.pagination li.active + li a',
+            contentSelector: 'div.infinite-scroll',
+            callback: function() {
+                $('ul.pagination').remove();
+            }
+        });
+    });
 
     $(document).ready(function(){
         $('#keyword').on('keyup',function(){
             var keyword = $('#keyword').val();
             $.ajax({
-                url:"{{route('search')}}",
+                url:"{{route('pencarian')}}",
                 type:"POST",
                 data:{
                     "_token": "{{ csrf_token() }}",

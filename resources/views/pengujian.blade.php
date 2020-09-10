@@ -104,7 +104,7 @@
             </div>
             <div class="col-md-7">
                 <div class="float-right col" style="height: 100%">
-                    <embed id="a" style="width: 100%; height: 100%" {{-- src="{{url('/pengujian/pdf/a.pdf')}}" --}}
+                    <embed id="a" style="width: 100%; height: 100%" {{-- src="{{url('/pengujian/pdf/null.pdf')}}" --}}
                         type="application/pdf" frameborder="0" />
                 </div>
             </div>
@@ -135,6 +135,7 @@
 </body>
 
 </html>
+
 
 
 {{-- <style>

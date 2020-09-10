@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\KonFileController;
+use App\Produk;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\StoreProductRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\KonFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fi
 //Route::post('/profil','MemberController@topUpSaldo')->name('profil.topup');
 
 Route::get('produk', 'MemberController@produk')->name('produk');
-Route::get('pencarian', 'MemberController@pencarian')->name('pencarian');
+Route::any('pencarian', 'MemberController@pencarian')->name('pencarian');
 Route::get('partner/detail/{id}', 'MemberController@detailPartner')->name('detail.partner');
 Route::get('produk/detail/{id}', 'MemberController@detailProduk')->name('detail.produk');
 Route::get('faq', 'MemberController@faq')->name('faq');
@@ -46,6 +47,11 @@ Route::post('search', 'SearchController@search')->name('search');
 
 //test upload
 // Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
+
+Route::get('/tesproduk', function () {
+    $produk = Produk::all();
+    return view('member.card_produk', compact('produk'));
+});
 
 Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
@@ -184,8 +190,8 @@ Route::get('foto', 'ProductController@foto');
 
 Route::resource('pdf', 'PdfController');
 
-Route::get('tess', function () {
-    return view('pengujianTemp');
+Route::get('testing', function () {
+    return view('pengujian3');
 });
 
-Route::get('tesst', 'PdfController@tesst');
+Route::post('store2', 'PdfController@store2')->name('store2');

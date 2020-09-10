@@ -1,26 +1,27 @@
-function submit() {
-    showLoading();
-    document.getElementById('form').submit();
-}
+// function submit() {
+//     showLoading();
+//     document.getElementById('form').submit();
+// }
+
 $(function () {
     $('.table').hide();
 
     $(document).ready(function () {
         $('#loading').hide();
-        var bar = $('.bar');
-        var percent = $('.percent');
+        // var bar = $('.bar');
+        // var percent = $('.percent');
 
         $('form').ajaxForm({
             beforeSend: function () {
-                var percentVal = '0%';
-                bar.width(percentVal)
-                percent.html(percentVal);
+                // var percentVal = '0%';
+                // bar.width(percentVal)
+                // percent.html(percentVal);
                 $('.table').hide();
             },
             uploadProgress: function (event, position, total, percentComplete) {
-                var percentVal = percentComplete + '%';
-                bar.width(percentVal)
-                percent.html(percentVal);
+                // var percentVal = percentComplete + '%';
+                // bar.width(percentVal)
+                // percent.html(percentVal);
                 $('#loading').show();
             },
             complete: function (xhr) {
@@ -30,8 +31,9 @@ $(function () {
                 // alert(xhr['path']);
                 // document.getElementsByClassName('aa').html(xhr.path)
 
-                bar.width('0%')
-                percent.html('0%');
+                // bar.width('0%')
+                // percent.html('0%');vb
+
                 var data = xhr.responseText;
                 var pdf = JSON.parse(data);
 
@@ -53,7 +55,8 @@ $(function () {
                     $('#pixelPercenMin').text(pdf['pixelPercenMin']);
                     // $('embed').src = '{{url(\'pengujian/pdf/\',)."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}';
                     // $('#a').src = "<?php {{url('/pengujian/pdf/" + pdf['namaFile'] + "')}}?>";
-                    document.getElementById('a').setAttribute('src', 'pengujian/pdf/' + pdf["namaFile"])
+
+                    //document.getElementById('a').setAttribute('src', 'pengujian/pdf/' + pdf["namaFile"])
                     var k = '<tbody>'
                     for (i = 0; i < pdf['halaman'].length; i++) {
                         if (pdf['halaman'][i].jenis_warna == "Berwarna")
