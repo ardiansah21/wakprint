@@ -38,19 +38,19 @@
         </label>
         <div class="form-group mb-5">
             <textarea type="text"
-                class="form-control form-control-lg pt-2 pb-2"
+                class="form-control form-control-lg pt-2 pb-2" id="tanggapan_keluhan" name="tanggapan_keluhan"
                 style="height:154px;"></textarea>
         </div>
         <div class="row justify-content-end">
             <div class="form-group mr-3">
-                <button class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5"
+                <button class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5" onclick="window.location.href='{{ route('admin.keluhan') }}'"
                     style="border-radius:30px;
                         font-size:18px;">
                     {{__('Batal')}}
                 </button>
             </div>
             <div class="form-group mr-3">
-                <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5"
+            <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5" onclick="window.location.href='{{route('admin.keluhan.tanggapi',$laporProduk->member->id_member)}}'"
                     style="border-radius:30px;
                         font-size:18px;">
                     {{__('Kirim')}}

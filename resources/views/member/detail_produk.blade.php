@@ -38,11 +38,12 @@
                     style="color:#FCFF82;">
                     star
                 </i>
-                {{$produk->partner->rating_toko}} / 5
+                {{round($ratingPartner,1)}} / 5
+                {{-- {{$produk->partner->rating_toko}} / 5 --}}
                 {{-- @foreach($produk as $p) --}}
                     {{-- {{collect([$produk->rating])->avg()}} / 5 --}}
                 {{-- @endforeach --}}
-                
+
             </label>
         </label>
         @if ($produk->partner->ambil_di_tempat === 0 && $produk->partner->antar_ke_tempat === 0)
@@ -447,6 +448,14 @@
                             <label class="card-text text-break mb-2"
                                 style="font-size: 18px;">
                                 <i class="material-icons md-18 align-middle mr-2">
+                                    description
+                                </i>
+                                {{$produk->jenis_kertas}}
+                            </label>
+                            <br>
+                            <label class="card-text text-break mb-2"
+                                style="font-size: 18px;">
+                                <i class="material-icons md-18 align-middle mr-2">
                                     palette
                                 </i>
                                 @if ($produk->berwarna === 0 && $produk->hitam_putih === 1)
@@ -487,7 +496,6 @@
 
                             </div>
                             <div class="row justify-content-between mb-4">
-
                                 @if (!empty($produk->harga_timbal_balik_berwarna))
                                     <label class="col-md-6 text-break mb-2"
                                             style="font-size: 18px;">
@@ -502,12 +510,12 @@
                                         + Rp. {{$produk->harga_timbal_balik_berwarna}} / hal
                                     </label>
                                 @endif
-
                             </div>
                             <label class="card-text SemiBold mb-2"
                                 style="font-size: 18px;">
                                 {{__('Paket')}}
                             </label>
+                            @if(!empty($fitur['paket']))
                                 <div class="row justify-content-between mb-4">
                                     @foreach ($fitur['paket'] as $key => $value)
                                         <label class="col-md-6 text-break mb-2"
@@ -524,46 +532,61 @@
                                         </label>
                                     @endforeach
                                 </div>
+                            @else
+                                <label class="ml-0">-</label>
+                                <br>
+                            @endif()
                             <label class="card-text SemiBold mb-2"
                                 style="font-size: 18px;">
                                 {{__('Non-Paket')}}
                             </label>
-                            <div class="row justify-content-between mb-4">
-                                @foreach ($fitur['nonPaket'] as $key => $value)
-                                    <label class="col-md-6 text-break mb-2"
-                                        style="font-size: 18px;">
-                                        {{$key}}
-                                    </label>
-                                    <i class="col-md-1 material-icons md-18 mt-1"
-                                    style="color:#C4C4C4">
-                                    help
-                                    </i>
-                                    <label class="col-md-4 text-break font-weight-bold mb-2"
-                                        style="font-size: 14px;">
-                                        + Rp. {{$value}} / Hal
-                                    </label>
-                                @endforeach
-                            </div>
+                            <br>
+                            @if(!empty($fitur['nonPaket']))
+                                <div class="row justify-content-between mb-4">
+                                    @foreach ($fitur['nonPaket'] as $key => $value)
+                                        <label class="col-md-6 text-break mb-2"
+                                            style="font-size: 18px;">
+                                            {{$key}}
+                                        </label>
+                                        <i class="col-md-1 material-icons md-18 mt-1"
+                                        style="color:#C4C4C4">
+                                        help
+                                        </i>
+                                        <label class="col-md-4 text-break font-weight-bold mb-2"
+                                            style="font-size: 14px;">
+                                            + Rp. {{$value}} / Hal
+                                        </label>
+                                    @endforeach
+                                </div>
+                            @else
+                                <label class="ml-0">-</label>
+                                <br>
+                            @endif()
                             <label class="card-text SemiBold mb-2"
                                 style="font-size: 18px;">
                                 {{__('Paket Tambahan')}}
                             </label>
-                            <div class="row justify-content-between mb-4">
-                                @foreach ($fitur['tambahan'] as $key)
-                                    <label class="col-md-6 text-break mb-2"
-                                        style="font-size: 18px;">
-                                        {{$key['nama']}}
-                                    </label>
-                                    <i class="col-md-1 material-icons md-18 mt-1"
-                                    style="color:#C4C4C4">
-                                    help
-                                    </i>
-                                    <label class="col-md-4 text-break font-weight-bold mb-2"
-                                        style="font-size: 14px;">
-                                        + Rp. {{$key['harga']}} / Hal
-                                    </label>
-                                @endforeach
-                            </div>
+                            @if(!empty($fitur['paket']))
+                                <div class="row justify-content-between mb-4">
+                                    @foreach ($fitur['tambahan'] as $key)
+                                        <label class="col-md-6 text-break mb-2"
+                                            style="font-size: 18px;">
+                                            {{$key['nama']}}
+                                        </label>
+                                        <i class="col-md-1 material-icons md-18 mt-1"
+                                        style="color:#C4C4C4">
+                                        help
+                                        </i>
+                                        <label class="col-md-4 text-break font-weight-bold mb-2"
+                                            style="font-size: 14px;">
+                                            + Rp. {{$key['harga']}} / Hal
+                                        </label>
+                                    @endforeach
+                                </div>
+                            @else
+                                <label class="ml-0">-</label>
+                                <br>
+                            @endif()
                         </div>
                     </div>
                     <div class="bg-light-purple pl-4 pr-4 pb-4 pt-4 mb-5"

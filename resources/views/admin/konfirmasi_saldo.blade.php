@@ -407,8 +407,13 @@
                             ]
                         });
                         //$('#container').css( 'display', 'block' );
+                        $('#memberSaldoTable tbody').on( 'click', 'tr', function () {
+                            // var id = table.row(this).data();
+                            document.location.href='saldo/tolak';
+                        });
                         table.columns.adjust().draw();
-                        break ;
+                        
+                        break;
                     case 'Pengelola Percetakan' :
                         var table = $('#partnerSaldoTable').DataTable({
                             scrollY: 300,
@@ -461,7 +466,6 @@
                         });
                         table.columns.adjust().draw();
                         $('li a[href="pills-saldo-member"]').tab('show');
-
                 };
             }) ;
         } );

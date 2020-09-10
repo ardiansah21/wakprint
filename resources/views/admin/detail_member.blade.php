@@ -6,7 +6,7 @@
             close
         </a>
         <label class="text-break font-weight-bold mb-4 ml-2" style="font-size:36px; width:100%;">
-            {{ $member->id_member ?? '-'}}  
+            {{ $member->id_member ?? '-'}}
         </label>
         <div class="row justify-content-between mb-2 ml-0">
             <label class="col-md-6 font-weight-bold mb-0">
@@ -60,6 +60,21 @@
                 {{__('Alamat')}}
             </label>
             <label id="alamatMember" name="alamatmember" class="col-md-6 mb-0">
+                @if (!empty($member->alamat['alamat']))
+                    @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
+                        @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
+                            {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
+                            {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
+                            {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
+                            {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
+                            {{ $member->alamat['alamat'][$i]['Provinsi'] }},
+                            {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
+                        @endif
+                    @endfor
+                @else
+                    <label>-</label>
+                @endif
+
                 {{-- {{ $member->alamat }} --}}
                 {{-- @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
                 {{ $member->alamat['alamat'][$i]['AlamatJalan'] }},
@@ -71,11 +86,14 @@
                 @endfor --}}
             </label>
         </div>
-        <div class="container" style="font-size:18px;">
-            <button class="btn btn-danger btn-outline-danger-primary btn-block font-weight-bold"
-                style="border-radius:30px">
-                {{__('Hapus')}}
-            </button>
-        </div>
+        <form action="{{route('admin.member.hapus',$member->id_member)}}" method="POST">
+            @csrf
+            <div class="container" style="font-size:18px;">
+                <button type="submit" class="btn btn-danger btn-outline-danger-primary btn-block font-weight-bold"
+                    style="border-radius:30px">
+                    {{__('Hapus')}}
+                </button>
+            </div>
+        </form>
     </div>
 @endsection

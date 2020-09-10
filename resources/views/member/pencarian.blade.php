@@ -255,31 +255,73 @@
                                                         style="border-radius: 0px 0px 10px 10px;">
                                                         <div class="row justify-content-between">
                                                             <div class="ml-3">
-                                                                <label
-                                                                    class="card-text SemiBold text-white my-auto mr-2"
-                                                                    style="font-size: 16px;">
-                                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                                </label>
-                                                                <label
-                                                                    class="card-text SemiBold badge-sm badge-light px-1"
-                                                                    style="font-size: 12px; border-radius:5px;">
-                                                                    {{__('Hitam-Putih')}}
-                                                                </label>
-                                                                <br>
-                                                                @if (!empty($p->harga_berwarna))
-                                                                <label
-                                                                    class="card-text SemiBold text-primary-yellow my-auto mr-2"
-                                                                    style="font-size: 16px;">
-                                                                    Rp. {{$p->harga_berwarna}}
-                                                                </label>
-                                                                <label
-                                                                    class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1"
-                                                                    style="font-size: 12px; border-radius:5px;">
-                                                                    {{__('Berwarna')}}
-                                                                </label>
+                                                                @if (!empty($p->harga_hitam_putih) && !empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
+                                                                    @php
+                                                                        $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                                                                        $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+
+                                                                        if($jumlahDiskonGray > $p->maksimal_diskon){
+                                                                            $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                                                                            $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                                                                        }
+                                                                        else{
+                                                                            $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                                                                            $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                                                                        }
+                                                                    @endphp
+                                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                        Rp. <del>{{$p->harga_hitam_putih ?? '-'}}</del>
+                                                                    </label>
+                                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                        {{$hargaHitamPutih ?? '-'}}
+                                                                    </label>
+                                                                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                        {{__('Hitam-Putih')}}
+                                                                    </label>
+                                                                    <br>
+                                                                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                                        Rp. <del>{{$p->harga_berwarna ?? '-'}}</del>
+                                                                    </label>
+                                                                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                                        {{$hargaBerwarna ?? '-'}}
+                                                                    </label>
+                                                                    <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
+                                                                        {{__('Berwarna')}}
+                                                                    </label>
+                                                                @elseif(!empty($p->harga_hitam_putih) && !empty($p->jumlah_diskon))
+                                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                        Rp. <del>{{$p->harga_hitam_putih ?? '-'}}</del>
+                                                                    </label>
+                                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                        {{$hargaHitamPutih ?? '-'}}
+                                                                    </label>
+                                                                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                        {{__('Hitam-Putih')}}
+                                                                    </label>
+                                                                @elseif(!empty($p->harga_berwarna))
+                                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                        Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                                    </label>
+                                                                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                        {{__('Hitam-Putih')}}
+                                                                    </label>
+                                                                    <br>
+                                                                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                                        Rp. {{$p->harga_berwarna ?? '-'}}
+                                                                    </label>
+                                                                    <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
+                                                                        {{__('Berwarna')}}
+                                                                    </label>
+                                                                @else
+                                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                        Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                                    </label>
+                                                                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                        {{__('Hitam-Putih')}}
+                                                                    </label>
                                                                 @endif
                                                             </div>
-                                                            <div class="mr-0 my-auto">
+                                                            <div class="ml-3 my-auto">
                                                                 <label class="card-text mt-0 mr-4 SemiBold"
                                                                     style="font-size: 18px;">
                                                                     <i class="material-icons md-24 mr-1 align-middle"

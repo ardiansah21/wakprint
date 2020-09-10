@@ -45,7 +45,7 @@
             <tbody style="font-size: 14px;">
 
                 {{-- @foreach ($collection as $item) --}}
-                <tr onclick="window.location.href='{{ route('detail.pesanan') }}'">
+                <tr onclick="window.location.href='{{ route('pesanan.detail') }}'">
 
                     {{-- @foreach ($collection as $item) --}}
                     <td scope="row">{{__('00000001') }}</td>

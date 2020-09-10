@@ -30,7 +30,14 @@
                     style="color:#FCFF82;">
                     star
                 </i>
-                {{$partner->rating_toko}} / 5
+                @foreach($produk as $p)
+                    @if(!empty($p) && $p->id_pengelola === $p->partner->id_pengelola)
+                        {{round($ratingPartner,1)}} / 5
+                    @else
+                        {{$p->partner->rating_toko}} / 5
+                    @endif
+                    @break
+                @endforeach
             </label>
                 @if ($partner->ambil_di_tempat === 0 && $partner->antar_ke_tempat === 0)
                     <label class="mr-4" style="font-size: 18px;" hidden>
@@ -498,8 +505,8 @@
                                                 </div>
                                                 <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
                                                     <div class="row justify-content-between ml-0">
-                                                        <div class="">
-                                                            @if (!empty($p->jumlah_diskon))
+                                                        <div>
+                                                            @if (!empty($p->harga_hitam_putih) && !empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
                                                                 @php
                                                                     $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
                                                                     $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
@@ -519,16 +526,10 @@
                                                                 <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
                                                                     {{$hargaHitamPutih ?? '-'}}
                                                                 </label>
-                                                            @else
-                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                    {{__('Hitam-Putih')}}
                                                                 </label>
-                                                            @endif
-                                                            <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
-                                                                {{__('Hitam-Putih')}}
-                                                            </label>
-                                                            <br>
-                                                            @if (!empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
+                                                                <br>
                                                                 <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                                                                     Rp. <del>{{$p->harga_berwarna ?? '-'}}</del>
                                                                 </label>
@@ -538,12 +539,36 @@
                                                                 <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
                                                                     {{__('Berwarna')}}
                                                                 </label>
-                                                            @else
-                                                                <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;" hidden>
+                                                            @elseif(!empty($p->harga_hitam_putih) && !empty($p->jumlah_diskon))
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    Rp. <del>{{$p->harga_hitam_putih ?? '-'}}</del>
+                                                                </label>
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    {{$hargaHitamPutih ?? '-'}}
+                                                                </label>
+                                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                    {{__('Hitam-Putih')}}
+                                                                </label>
+                                                            @elseif(!empty($p->harga_berwarna))
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                                </label>
+                                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                    {{__('Hitam-Putih')}}
+                                                                </label>
+                                                                <br>
+                                                                <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                                                                     Rp. {{$p->harga_berwarna ?? '-'}}
                                                                 </label>
-                                                                <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;" hidden>
+                                                                <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
                                                                     {{__('Berwarna')}}
+                                                                </label>
+                                                            @else
+                                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                                </label>
+                                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                                                    {{__('Hitam-Putih')}}
                                                                 </label>
                                                             @endif
                                                         </div>
