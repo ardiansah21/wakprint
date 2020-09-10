@@ -62,6 +62,8 @@ class MemberController extends Controller
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::all();
         $atk = Atk::all();
+        // $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
+        
         return view('home', compact('produk','partner','atk'));
     }
 
@@ -131,8 +133,16 @@ class MemberController extends Controller
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::find($id);
         $atk = Atk::all();
-        // $fitur = json_decode($produk->fitur,true);
-        return view('member.detail_percetakan', compact('produk', 'partner', 'atk'));
+        $ratingPartner = $produk->where('id_pengelola',$id)->avg('rating');
+        
+        if(empty($ratingPartner)){
+            $ratingPartner = $partner->rating_toko;
+        }
+
+        $partner->rating_toko = $ratingPartner;
+        $partner->save();
+
+        return view('member.detail_percetakan', compact('produk', 'partner', 'atk', 'ratingPartner'));
     }
 
     public function detailProduk($id)
@@ -140,7 +150,9 @@ class MemberController extends Controller
         $produk = Produk::find($id);
         $atk = Atk::all();
         $fitur = json_decode($produk->fitur, true);
-        return view('member.detail_produk', compact('produk', 'fitur', 'atk'));
+        $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
+
+        return view('member.detail_produk', compact('produk', 'fitur', 'atk', 'ratingPartner'));
     }
 
     public function upload(Request $request)
@@ -666,7 +678,7 @@ class MemberController extends Controller
         ]);
     }
 
-    public function detailRiwayat()
+    public function detailPesanan()
     {
         // $member=Auth::user();
         // $transaksi_saldo = Transaksi_saldo::all();
@@ -700,40 +712,79 @@ class MemberController extends Controller
 
     public function tambahFavorit(Request $request)
     {
-        $member = Auth::user();
+        $member = Member::find(Auth::id());
+        // $produk = Produk::all();
 
-        $arrayFavorit = $member->produk_favorit;
+        $produkFavorit = $member->produk_favorit;
 
-        if (empty($arrayFavorit)) {
-            $arrayFavorit = array();
+        if (empty($produkFavorit)) {
+            $produkFavorit = array(
+                'id_favorit' => 0,
+                'status' => false,
+                'produk' => array(),
+            );
+            // $id = 0;
+        }
+        else {
+            // dd($produkFavorit);
+            // $id = count($produkFavorit['produk']);
         }
 
-        $arrayFavorit = array(
-            'id_produk' => $request->status_favorit
+        $favorited[] = array(
+            'id_produk' => $request->id_produk
         );
 
-        //$favorit['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
+        // dd($favorited);
 
-        $member->produk_favorit = $arrayFavorit;
+        $produkFavorit['id_favorit'] = 0;
+        $produkFavorit['status'] = true;
+
+        $FavoritFinal['id_favorit'] = $produkFavorit['id_favorit'];
+        $FavoritFinal['status'] = $produkFavorit['status'];
+        $FavoritFinal['produk'] = array_merge($produkFavorit['produk'], $favorited);
+
+        $member->produk_favorit = $FavoritFinal;
         $member->save();
 
-        return redirect()->route('home');
+        return redirect()->back();
     }
+
+    // public function tambahFavorit(Request $request)
+    // {
+    //     $member = Auth::user();
+
+    //     $arrayFavorit = $member->produk_favorit;
+
+    //     if (empty($arrayFavorit)) {
+    //         $arrayFavorit = array();
+    //     }
+
+    //     $arrayFavorit = array(
+    //         'id_produk' => $request->status_favorit
+    //     );
+
+    //     $member->produk_favorit = $arrayFavorit;
+    //     $member->save();
+
+    //     return redirect()->route('home');
+    // }
 
     public function ulasan()
     {
         $member = Auth::user();
-        // $produk=Produk::all();
+        $produk=Produk::all();
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.ulasan', [
             'member' => $member,
+            'produk' => $produk
         ]);
     }
 
-    public function ulas()
+    public function ulas($id)
     {
-        return view('member.ulas_produk');
+        $produk=Produk::find($id);
+        return view('member.ulas_produk',compact('produk'));
     }
 
     public function ulasanSaya()
@@ -751,6 +802,16 @@ class MemberController extends Controller
     public function chat()
     {
         return view('member.chat');
+    }
+
+    public function faq()
+    {
+        return view('member.faq');
+    }
+
+    public function tentang()
+    {
+        return view('member.tentang');
     }
 
 }

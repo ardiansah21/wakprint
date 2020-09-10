@@ -10,6 +10,8 @@ use App\Member;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -76,47 +78,20 @@ class AdminController extends Controller
         return datatables(Lapor_produk::all())->make(true);
     }
 
-    public function detailMember(Request $request, $id)
+    public function detailMember($id)
     {
-
         $member = Member::find($id);
-
-        $date = $request->date;
-        $month = $request->month;
-        $year = $request->year;
-
-        $dateBorn = date_create("$year-$month-$date");
-
-        $alamat = $member->alamat;
-
-        if (empty($alamat)) {
-            $alamat = array(
-                'IdAlamatUtama' => 0,
-                'alamat' => array()
-            );
-            $id = 0;
-        } else {
-            $id = count($alamat['alamat']);
-        }
-
-        $alamatBaru[] = array(
-            'Nama Penerima' => $request->namapenerima,
-            'Nomor HP' => $request->nomorhp,
-            'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kota,
-            'Kecamatan' => $request->kecamatan,
-            'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan
-        );
-
-        $member->alamat = $alamatBaru;
-
         return view('admin.detail_member',[
             'member' => $member,
-            'alamat' => $alamatBaru,
             'tanggalLahir'=>$this->getDateBorn($id)
         ]);
+    }
+
+    public function hapusMember($id)
+    {
+        $member = Member::find($id);
+        $member->delete();
+        return redirect()->route('admin.member');
     }
 
     public function getDateBorn($id)
@@ -147,6 +122,22 @@ class AdminController extends Controller
         $partner = Pengelola_Percetakan::find($id);
 
         return view('admin.detail_pengelola',compact('partner'));
+    }
+
+    public function terimaPartner($id)
+    {
+        $partner = Pengelola_Percetakan::find($id);
+        $partner->email_verified_at = Carbon::now()->format('Y:m:d H:i:s');
+
+        $partner->save();
+        return redirect()->route('admin.partner');
+    }
+
+    public function tolakPartner($id)
+    {
+        $partner = Pengelola_Percetakan::find($id);
+        // $partner->save();
+        return view('admin.tolak_pengelola',compact('partner'));
     }
 
     public function dataSaldo()
@@ -185,6 +176,35 @@ class AdminController extends Controller
         $member = Member::find($id);
         $laporProduk = Lapor_produk::find($id);
         return view('admin.tanggapi_keluhan',compact('member','laporProduk'));
+    }
+
+    public function tanggapiKeluhan($id)
+    {
+        $member = Member::find($id);
+        $email = $member->email;
+        // $laporProduk = Lapor_produk::find($id);
+
+        // Mail::send('Html.view', $data, function ($message) {
+        //     $message->from('john@johndoe.com', 'John Doe');
+        //     $message->sender('john@johndoe.com', 'John Doe');
+        //     $message->to('john@johndoe.com', 'John Doe');
+        //     $message->cc('john@johndoe.com', 'John Doe');
+        //     $message->bcc('john@johndoe.com', 'John Doe');
+        //     $message->replyTo('john@johndoe.com', 'John Doe');
+        //     $message->subject('Subject');
+        //     $message->priority(3);
+        //     $message->attach('pathToFile');
+        // });
+
+        Mail::raw([], function($message) use($email) {
+            $message->from('admin@wakprint.com', 'Wakprint');
+            $message->to($email);
+            $message->subject('Tanggapan Laporan Anda');
+            $message->setBody( '<html><h1>5% off its awesome</h1><p>Go get it now !</p></html>', 'text/html' );
+            $message->addPart("5% off its awesome\n\nGo get it now!", 'text/plain');
+        });
+        // return view('admin.kelola_keluhan',compact('member','laporProduk'));
+        return redirect()->route('admin.keluhan');
     }
 
     // public function tableDataMember(){

@@ -219,7 +219,7 @@
                     <div class="col-md-5">
                         <div class="bg-light-purple text-center"
                             style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
-                            @if (@!empty($member->getFirstMediaUrl()))
+                            @if (!empty($member->getFirstMediaUrl()))
                                 <img src="{{ $member->getFirstMediaUrl() }}"
                                     class="img-responsive" alt="" width="300px" height="300px"
                                     style="border-radius:8px 8px 8px 8px;">
@@ -243,22 +243,26 @@
                         <div class="mt-3">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                <a class="nav-link {{set_active('alamat')}} SemiBold mb-4" id="v-pills-alamat-tab" href="{{ route('alamat') }}"
+                                <a class="nav-link {{set_active('alamat')}} SemiBold text-truncate mb-4" id="v-pills-alamat-tab" href="{{ route('alamat') }}"
                                     role="tab" aria-controls="v-pills-alamat" aria-selected="true"
-                                    style="font-size: 24px;">
+                                    style="font-size: 24px; width:100%;">
                                     <i class="material-icons align-middle md-32 mr-2">
                                         location_on
                                     </i>
                                     @if (!empty($member->alamat['alamat']))
                                         @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
                                             @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
-                                                {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }}
+                                                {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
+                                                {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
+                                                {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
+                                                {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
+                                                {{ $member->alamat['alamat'][$i]['Provinsi'] }},
+                                                {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
                                             @endif
                                         @endfor
                                     @else
                                         <label>-</label>
                                     @endif
-
                                 </a>
                                 <a class="nav-link {{set_active('saldo')}} SemiBold mb-2" id="v-pills-saldo-tab" href="{{ route('saldo') }}"
                                     role="tab" aria-controls="v-pills-saldo" aria-selected="false"
@@ -331,11 +335,11 @@
                         <div class="col-md-3 mt-3">
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
                             </h4>
-                            <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                            <a class="row text-dark mb-0" href="{{route('tentang')}}" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
                             <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
                             <a class="row text-dark" href="#"
                                 style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                            <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                            <a class="row text-dark" href="{{route('faq')}}" style="font-size: 16px;">{{ __('FAQ') }}</a>
                         </div>
                         <div class="col-md-3 mt-3">
                             <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
@@ -378,11 +382,11 @@
                         <div class="col-md-3 mt-3">
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
                             </h4>
-                            <a class="row text-dark mb-0" href="#" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                            <a class="row text-dark mb-0" href="{{route('tentang')}}" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
                             <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
                             <a class="row text-dark" href="#"
                                 style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                            <a class="row text-dark" href="" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                            <a class="row text-dark" href="{{route('faq')}}" style="font-size: 16px;">{{ __('FAQ') }}</a>
                         </div>
                         <div class="col-md-3 mt-3">
                             <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>

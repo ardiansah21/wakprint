@@ -2,7 +2,7 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="pt-5 pb-5">
+    <div class="container pt-5 pb-5">
         <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('FAQ') }}</h1>
         <label class="mb-3" style="font-size: 18px;">{{__('Apa yang bisa kami bantu ?') }}</label>
         <div class="search-input ml-0 mb-5" style="font-size: 18px;">

@@ -4,9 +4,17 @@
 <div class="tab-pane fade show active mb-0" style="border-radius:10px;">
     <div class="card shadow-sm mb-0 p-4">
         <span>
-            <a class="close material-icons md-32" href="{{ route('admin.saldo') }}">
-                close
-            </a>
+            @switch(Route::currentRouteName())
+                @case('admin.partner.tolak')
+                    <a class="close material-icons md-32" href="{{ route('admin.partner.detail',$partner->id_pengelola) }}">
+                        close
+                    </a>
+                    @break
+                @default
+                    <a class="close material-icons md-32" href="{{ route('admin.saldo') }}">
+                        close
+                    </a>
+            @endswitch
             <label class="font-weight-bold ml-0 mb-5"
                 style="font-size:36px;">
                 {{__('Alasan Penolakan')}}
@@ -47,20 +55,39 @@
                 style="font-size: 18px;"></textarea>
         </div>
         <div class="row justify-content-end">
-            <div class="form-group mr-3">
-                <button class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5"
-                    style="border-radius:30px;
-                        font-size:18px;">
-                    {{__('Batal')}}
-                </button>
-            </div>
-            <div class="form-group mr-3">
-                <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5"
-                    style="border-radius:30px;
-                        font-size:18px;">
-                    {{__('Kirim')}}
-                </button>
-            </div>
+            @switch(Route::currentRouteName())
+                @case('admin.partner.tolak')
+                    <div class="form-group mr-3">
+                        <button class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5" onclick="window.location.href='{{ route('admin.partner.detail',$partner->id_pengelola) }}'"
+                            style="border-radius:30px;
+                                font-size:18px;">
+                            {{__('Batal')}}
+                        </button>
+                    </div>
+                    <div class="form-group mr-3">
+                        <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5"
+                            style="border-radius:30px;
+                                font-size:18px;">
+                            {{__('Kirim')}}
+                        </button>
+                    </div>
+                    @break
+                @default
+                    <div class="form-group mr-3">
+                        <button class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5" onclick="window.location.href='{{ route('admin.saldo') }}'"
+                            style="border-radius:30px;
+                                font-size:18px;">
+                            {{__('Batal')}}
+                        </button>
+                    </div>
+                    <div class="form-group mr-3">
+                        <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5"
+                            style="border-radius:30px;
+                                font-size:18px;">
+                            {{__('Kirim')}}
+                        </button>
+                    </div>
+            @endswitch
         </div>
     </div>
 </div>

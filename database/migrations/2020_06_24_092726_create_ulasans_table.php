@@ -15,8 +15,9 @@ class CreateUlasansTable extends Migration
     {
         Schema::create('ulasan', function (Blueprint $table) {
             $table->increments('id_ulasan');
-            $table->integer('id_produk')->unsigned();$table->foreign('id_produk')->references('id_produk')->on('produk');
-            $table->integer('id_member')->unsigned();$table->foreign('id_member')->references('id_member')->on('member');
+            // $table->integer('id_pesanan')->unsigned()->nullable();$table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
+            $table->integer('id_produk')->unsigned()->nullable();$table->foreign('id_produk')->references('id_produk')->on('produk');
+            $table->integer('id_member')->unsigned()->nullable();$table->foreign('id_member')->references('id_member')->on('member');
             $table->decimal('rating',1,1);
             $table->string('pesan',255)->nullable();
             $table->string('foto',255)->nullable();

@@ -83,21 +83,31 @@
                 {{$partner->status_toko ?? '-'}}
             </label>
         </div>
-        <div class="row justify-content-end">
-            <div class="mr-3">
-                <button
-                    class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5 "
-                    style="border-radius:30px
-                                        font-size:18px;">
-                    {{__('Tolak')}}
-                </button>
+        @if (!empty($partner->email_verified_at))
+            <div class="text-right mr-0">
+                <label class="col-auto btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5" style="border-radius:30px; font-size:18px;">
+                    {{__('Disetujui')}}
+                </label>
             </div>
-            <div class="mr-2">
-                <button class="col-auto btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5" style="border-radius:30px; font-size:18px;">
-                    {{__('Setujui')}}
-                </button>
+        @else
+            <div class="row justify-content-end">
+                <div class="mr-3">
+                    <button
+                class="btn btn-danger btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold pl-5 pr-5 " onclick="window.location.href='{{route('admin.partner.tolak',$partner->id_pengelola)}}'"
+                        style="border-radius:30px; font-size:18px;">
+                        {{__('Tolak')}}
+                    </button>
+                </div>
+                <form action="{{route('admin.partner.terima',$partner->id_pengelola)}}" method="POST">
+                    @csrf
+                    <div class="mr-2">
+                        <button type="submit" class="col-auto btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5" style="border-radius:30px; font-size:18px;">
+                            {{__('Setujui')}}
+                        </button>
+                    </div>
+                </form>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 @endsection
