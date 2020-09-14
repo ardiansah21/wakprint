@@ -8,10 +8,11 @@
 
         {{-- @foreach ($collection as $item) --}}
         <div class="row mt-5">
-            <div class="col-md-3">
-                @include('member.card_produk')
+            <div class="col-md-4">
+
+                {{-- @include('member.card_produk') --}}
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="row mb-5">
                     <div class="col-md-9 ml-0 my-auto">
                         <h5 style="font-size: 24px; color:#BABABA">{{__('Dipesan pada: 21 Februari 2020, 20:35 WIB') }}</h5>
@@ -40,7 +41,7 @@
                     </div>
                     <div class="col-md-10">
                         <div class="card ml-5" style="height:232px;">
-                            <p class="card-text text-truncate mb-2 ml-4 mt-3" 
+                            <p class="card-text text-truncate mb-2 ml-4 mt-3"
                             style="font-size: 18px;">
                             {{__('"Mantap sekali gannnn"') }}
                             </p>

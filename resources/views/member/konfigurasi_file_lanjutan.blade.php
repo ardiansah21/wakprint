@@ -9,7 +9,7 @@
         <div class="row justify-content-between mb-5">
             <div class="col-md-auto mt-5 mr-0">
                 <div class="border-primary-purple" style="width:515px;
-                        height:515px;
+                        height:560px;
                         position:relative;
                         float: none;
                         display: table-cell;
@@ -20,7 +20,7 @@
                     --}}
                     <embed
                         src="{{url('tmp/upload/',$pdf->namaFile ?? '')."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}"
-                        type="application/pdf" height="515px" width="515px" frameborder="0" />
+                        type="application/pdf" height="567px" width="515px" frameborder="0" />
                     {{-- <div class="row bg-dark justify-content-between align-middle ml-0 mr-0 pl-2 pr-2 pt-4 pb-4" style="font-size:24px;
                         opacity:80%;
                         width:100%;
@@ -34,49 +34,56 @@
                         <i class="fa fa-chevron-right ml-2"></i>
                     </label>
                 </div> --}}
+                </div>
             </div>
-        </div>
-        <div class="col-md-6 mt-5">
-            <div class="row align-self-center p-2 bg-light-purple mb-4 col-md-12" style="border-radius:5px;">
-                <div class="col-md-1 d-flex justify-content-center">
-                    <div class="align-self-center"><img src="https://img.icons8.com/nolan/96/pdf-2.png" width="48px" />
+            <div class="col-md-6 mt-5">
+                <div class="bg-light-purple p-2 mb-4" width="100%" style="border-radius:5px;">
+                    <div class="col-md-12 row align-self-center mb-2">
+                        <div class="col-md-1 d-flex justify-content-center">
+                            <div class="align-self-center"><img src="https://img.icons8.com/nolan/96/pdf-2.png" width="48px" />
+                            </div>
+                        </div>
+                        <div class="col-md-8 text-truncate align-self-center">
+                            <a class="" href="{{url('tmp/upload',$pdf->namaFile?? '')}}" target="_blank"
+                                style="font-size: 18px;">
+                                {{$pdf->namaFile ?? ''}}
+                            </a>
+                            <br>
+                            <label class="text-muted" style="font-size: 12px;">
+                                {{$pdf ->jumlahHalaman ?? '' }} {{ __('Halaman') }}
+                            </label>
+                        </div>
+                        <div class="col-md-3 align-self-center text-right p-0">
+                            <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4"
+                                style="border-radius:35px;font-size: 16px;" onclick="openDialog()">
+                                {{__('Ubah') }}
+                            </button>
+                            <script>
+                                function openDialog() {
+                                        document.getElementById('fileid').click();
+                                    }
+                                function submitForm() {
+                                        document.getElementById('upload-form').submit();
+                                    }
+                            </script>
+                            <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST"
+                                enctype="multipart/form-data" style="display: none;">
+                                @csrf
+                                <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf"
+                                    hidden />
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-8 text-truncate align-self-center">
-                    <a class="" href="{{url('tmp/upload',$pdf->namaFile?? '')}}" target="_blank"
-                        style="font-size: 18px;">
-                        {{$pdf->namaFile ?? ''}}
-                    </a>
-                    <br>
-                    <label class="text-muted" style="font-size: 12px;">
-                        {{$pdf ->jumlahHalaman ?? '' }} {{ __('Halaman') }}
+                    <div class="mt-3 mb-3 mx-2" style="border-bottom: 1px solid #BC41BE"></div>
+                    <label class="ml-2 mb-0" style="font-size: 18px;">
+                        {{$pdf->jumlahHalHitamPutih ?? '' }}{{ __(' Halaman Hitam Putih') }}
                     </label>
-                </div>
-                <div class="col-md-3 align-self-center text-right p-0">
-                    <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4"
-                        style="border-radius:35px;font-size: 16px;" onclick="openDialog()">
-                        {{__('Ubah') }}
-                    </button>
-                    <script>
-                        function openDialog() {
-                                document.getElementById('fileid').click();
-                            }
-                        function submitForm() {
-                                document.getElementById('upload-form').submit();
-                            }
-                    </script>
-                    <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST"
-                        enctype="multipart/form-data" style="display: none;">
-                        @csrf
-                        <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf"
-                            hidden />
-
-
+                    <br>
+                    <label class="text-primary-purple ml-2 mb-2" style="font-size: 18px;">
+                        {{$pdf->jumlahHalBerwarna ?? ''}} {{ __(' Halaman Berwarna') }}
+                    </label><br>
                 </div>
 
-            </div>
-
-            </form>
+        {{-- </div> --}}
             {{--
             <div class="bg-light-purple mb-4 p-2" style="border-radius:5px;">
                 <div class="row justify-content-between">
@@ -124,91 +131,77 @@
 </div>
 --}}
 
-<div class="row justify-content-between">
-    <div class="col-md-7">
-        <label class="mb-0" style="font-size: 18px;">
-            {{$pdf->jumlahHalHitamPutih ?? '' }}{{ __(' Halaman Hitam Putih') }}
-        </label>
-        <br>
-        <label class="mb-2" style="font-size: 18px;">
-            {{$pdf->jumlahHalBerwarna ?? ''}} {{ __(' Halaman Berwarna') }}
-        </label><br>
-        <label class="text-muted mb-0" style="font-size: 12px;">
-            {{__('*Hitam Putih Rp. 2K / lembar') }}
-        </label>
-        <br>
-        <label class="text-muted mb-4" style="font-size: 12px;">
-            {{__('*Berwarna Rp. 2K / lembar') }}
-        </label>
-        <label class="SemiBold mb-3" style="font-size: 24px;">
-            {{__('Pilih Halaman') }}
-        </label>
-        <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
-            <input id="rbSemuaHal" name="radio" class="custom-control-input" type="radio"
-                onchange="document.getElementById('halamanAwal').disabled; document.getElementById('halamanAkhir').disabled; document.getElementById('halamanKustom').disabled;"
-                checked>
-            <label class="custom-control-label" for="rbSemuaHal">
-                {{__('Semua') }}
-            </label>
-        </div>
-        {{-- if(document.getElementById('halamanAwal').disabled){document.getElementById('rbSemuaHal').click();document.getElementById('rbSemuaHal').focus() }; --}}
-        <div class="form-group custom-control custom-radio mb-4"
-            onchange="document.getElementById('halamanAwal').!disabled; document.getElementById('halamanAkhir').!disabled; document.getElementById('halamanKustom').disabled;"
-            style="font-size: 18px;">
-            <input id="rbSampaiHal" name="radio" class="custom-control-input" type="radio">
-            <label class="custom-control-label" for="rbSampaiHal">
-                <input id="halamanAwal" type="text" class="form-input mr-2" for="rbSampaiHal"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                    style="width:48px;">
-                {{__('Sampai') }}
-                <input id="halamanAkhir" type="text" class="form-input ml-2" for="rbSampaiHal"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                    style="width:48px;">
-            </label>
-        </div>
-        <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
-            <input id="rbKustomHal" name="radio" class="custom-control-input" type="radio">
-            <label class="custom-control-label" for="rbKustomHal">
-                {{__('Kustom') }}
-            </label>
-            <br>
-            <input id="halamanKustom" type="text mr-4" class="form-input"
-                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-        </div>
-    </div>
-    <div class="col-md-5">
-        <label class="card-title font-weight-bold mb-4" style="font-size: 24px;">
-            {{__('Jumlah Salinan') }}
-        </label>
-        <div class="form-group mb-4" style="font-size: 18px;">
-            <label>
-                <i class="fa fa-minus ml-2 mr-2"></i>
-            </label>
-            <input id="jumlahSalin" type="number" class="form-input"
-                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                style="width:48px;">
-            <label class="label">
-                <i class="fa fa-plus ml-2 mr-2"></i>
-            </label>
-        </div>
-        <label class="SemiBold mb-2" style="font-size: 24px;">
-            {{__('Cetak') }}
-        </label>
-        <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
-            <input type="checkbox" class="custom-control-input" id="checkboxTimbalBalik">
-            <label class="custom-control-label" for="checkboxTimbalBalik">
-                {{__('Timbal Balik') }}
-            </label>
-        </div>
-        <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
-            <input type="checkbox" class="custom-control-input" id="checkboxPaksaHitamPutih">
-            <label class="custom-control-label" for="checkboxPaksaHitamPutih">
-                {{__('Paksa Hitam Putih') }}
-            </label>
+        <div class="row justify-content-between border-primary-purple mx-0" style="border-radius: 5px;">
+            <div class="col-md-7">
+                <label class="SemiBold mb-3 mt-2" style="font-size: 24px;">
+                    {{__('Pilih Halaman') }}
+                </label>
+                <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
+                    <input id="rbSemuaHal" name="radio" class="custom-control-input" type="radio"
+                        onchange="document.getElementById('halamanAwal').disabled; document.getElementById('halamanAkhir').disabled; document.getElementById('halamanKustom').disabled;"
+                        checked>
+                    <label class="custom-control-label" for="rbSemuaHal">
+                        {{__('Semua') }}
+                    </label>
+                </div>
+                {{-- if(document.getElementById('halamanAwal').disabled){document.getElementById('rbSemuaHal').click();document.getElementById('rbSemuaHal').focus() }; --}}
+                <div class="form-group custom-control custom-radio mb-4"
+                    onchange="document.getElementById('halamanAwal').!disabled; document.getElementById('halamanAkhir').!disabled; document.getElementById('halamanKustom').disabled;"
+                    style="font-size: 18px;">
+                    <input id="rbSampaiHal" name="radio" class="custom-control-input" type="radio">
+                    <label class="custom-control-label" for="rbSampaiHal">
+                        <input id="halamanAwal" type="text" class="form-input mr-2" for="rbSampaiHal"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            style="width:48px;">
+                        {{__('Sampai') }}
+                        <input id="halamanAkhir" type="text" class="form-input ml-2" for="rbSampaiHal"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            style="width:48px;">
+                    </label>
+                </div>
+                <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
+                    <input id="rbKustomHal" name="radio" class="custom-control-input" type="radio">
+                    <label class="custom-control-label" for="rbKustomHal">
+                        {{__('Kustom') }}
+                    </label>
+                    <br>
+                    <input id="halamanKustom" type="text mr-4" class="form-input"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                </div>
+                <label class="card-title font-weight-bold mb-3" style="font-size: 24px;">
+                    {{__('Jumlah Salinan') }}
+                </label>
+                <div class="form-group mb-4" style="font-size: 18px;">
+                    <label>
+                        <i class="fa fa-minus ml-2 mr-2"></i>
+                    </label>
+                    <input id="jumlahSalin" type="number" class="form-input"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        style="width:48px;">
+                    <label class="label">
+                        <i class="fa fa-plus ml-2 mr-2"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label class="SemiBold mb-2 mt-2" style="font-size: 24px;">
+                    {{__('Cetak') }}
+                </label>
+                <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
+                    <input type="checkbox" class="custom-control-input" id="checkboxTimbalBalik">
+                    <label class="custom-control-label" for="checkboxTimbalBalik">
+                        {{__('Timbal Balik') }}
+                    </label>
+                </div>
+                <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
+                    <input type="checkbox" class="custom-control-input" id="checkboxPaksaHitamPutih">
+                    <label class="custom-control-label" for="checkboxPaksaHitamPutih">
+                        {{__('Paksa Hitam Putih') }}
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <div class="row justify-content-between mb-4">
     <div class="col-md-6">
@@ -341,7 +334,6 @@
         @endforeach
     </div>
 </div>
-
 <div id="pilihProduk" class="border-primary-purple my-custom-scrollbar-2 p-5" style="border-radius:5px;">
     <div class="row row-cols-3">
         @foreach ($produk as $p)
@@ -422,7 +414,6 @@
         @endforeach
     </div>
 </div>
-
 <div id="detailProduk" hidden>
     <div class="border-primary-purple my-custom-scrollbar-2 p-5 mb-5" style="border-radius:5px;">
         <div class="card shadow mt-0 ml-0 mb-4 p-4">
@@ -435,7 +426,6 @@
                         {{__('Jalan Seksama No 95A Medan Denai, Medan, Sumatera Utara') }}
                     </label>
                     <div class="row justify-content-left mb-4 ml-0" style="font-size: 14px;">
-
                         <label class="mr-4">
                             <i class="align-middle material-icons mr-1">
                                 directions_run

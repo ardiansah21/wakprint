@@ -18,7 +18,7 @@ function set_active($uri, $output = 'active')
     }
 }
 
-function cekWarna($path, $percenMinimum = 100)
+function cekWarna($path, $percenMinimum = 0)
 {
     $start = microtime(true);
 

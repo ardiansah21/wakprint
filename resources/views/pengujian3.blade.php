@@ -80,9 +80,9 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <label class="SemiBold mr-3" style="font-size:20px;">Percentase Minimun</label>
+                        <label class="SemiBold mr-3" style="font-size:20px;">Persentase Minimum</label>
                         <input type="number" name="percenMin" step="any" id="percenMin" min="0" max="100"
-                            placeholder="masukkan persentase minimum" value="100">
+                            placeholder="masukkan persentase minimum" value="0">
                         <label for="percenMin" class="ml-1">%</label>
                     </div>
                     <button type="submit" class="btn btn-primary mt-4 ml-0 w-25" data-toggle="button"
@@ -97,7 +97,7 @@
                         </div>
                         <table class="table borderless my-3">
                             <tr>
-                                <td>Nama file</td>
+                                <td>Nama File</td>
                                 <td id="namaFile"></td>
                             </tr>
                             <tr>
@@ -113,11 +113,11 @@
                                 <td id="jumlahHalamanHitamPutih"></td>
                             </tr>
                             <tr>
-                                <td>Warktu Eksekusi</td>
+                                <td>Waktu Eksekusi</td>
                                 <td id="waktuEksekusi"></td>
                             </tr>
                             <tr>
-                                <td>Total piksel Persentase Minimum</td>
+                                <td>Total Piksel Persentase Minimum</td>
                                 <td id="pixelPercenMin"></td>
                             </tr>
                         </table>

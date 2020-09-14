@@ -58,9 +58,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -203,7 +201,6 @@
             </div>
         </footer>
         @endguest
-
         @auth
         <main>
             @switch(Route::currentRouteName())
@@ -216,7 +213,7 @@
             @case('ulasan')
             <div class="container">
                 <div class="row mt-5 mb-5">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="bg-light-purple text-center"
                             style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
                             @if (!empty($member->getFirstMediaUrl()))
@@ -314,7 +311,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-content col-md-7">
+                    <div class="tab-content col-md-8">
                         @yield('content')
                     </div>
                 </div>
@@ -330,7 +327,6 @@
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Kontak') }}</h4>
                             <a class="row mb-0" style="font-size: 16px;">{{ __('+6281263638') }}</a>
                             <a class="row mb-0" style="font-size: 16px;">{{ __('dev@wakprint.com') }}</a>
-
                         </div>
                         <div class="col-md-3 mt-3">
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
@@ -413,7 +409,6 @@
             @endswitch
         </main>
         @endauth
-
     </div>
     <!-- Script -->
     @yield('script')

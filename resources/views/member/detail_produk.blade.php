@@ -2,6 +2,18 @@
 @extends('layouts.member')
 
 @section('content')
+@php
+    $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
+    $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
+    if($jumlahDiskonGray > $produk->maksimal_diskon){
+        $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
+        $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
+    }
+    else{
+        $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
+        $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
+    }
+@endphp
     <div class="container mt-5 mb-5">
         <div class="row justify-content-between">
             <div class="col-md-10">
@@ -213,8 +225,9 @@
                     <br>
                     <label class="mb-4"
                         style="font-size: 14px;">
-                        {{$produk->partner->deskripsi_toko}}
+                        {{$produk->partner->deskripsi_toko ?? '-'}}
                     </label>
+                    <br>
                     <label class="SemiBold mb-2"
                         style="font-size: 18px;">
                         {{__('Jam Operasional Percetakan')}}
@@ -265,33 +278,45 @@
                         {{__('ATK')}}
                     </label>
                     <br>
-                    @foreach ($atk as $a)
-                        @if ($a->id_pengelola === $produk->partner->id_pengelola && !empty($a->nama))
-                            <div class="row justify-content-between" style="font-size: 14px;">
-                                <div class="col-md-auto text-left">
-                                    <label class="mb-2">
-                                        {{$a->nama}}
+                    @if (!empty($atk))
+                        @foreach ($atk as $a)
+                            @if ($a->id_pengelola === $produk->partner->id_pengelola)
+                                <div class="row justify-content-left" style="font-size: 14px;">
+                                    <div class="col-md-3 text-left">
+                                        <label class="mb-2">
+                                            {{$a->nama}}
+
+                                            {{-- x {{$a->jumlah}} --}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
                                         <i class="material-icons md-18 align-middle ml-2 mr-4"
-                                        style="color:#C4C4C4">
+                                            style="color:#C4C4C4">
                                             help
                                         </i>
-                                        x {{$a->jumlah}}
-                                    </label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label class="mb-2">
+                                            x {{$a->jumlah}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <label class="mb-2">
+                                            Rp. {{$a->harga}}
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col-md-auto text-right">
-                                    <label class="mb-2">
-                                        Rp. {{$a->harga}}
-                                    </label>
-                                </div>
-                            </div>
-                        @else
-                            <label>-</label>
-                        @break
-                        @endif
-                    @endforeach
+                            {{-- @else
+                                <label>-</label>
+                                @break --}}
+                            @endif
+                        @endforeach
+                    @else
+                        <label>-</label>
+                    @endif
                 </div>
             </div>
-            <div class="my-custom-scrollbar-2 col-8 mt-5 ml-0 pl-4 pr-4">
+            <div class="col-8 mt-5 ml-0 pl-4 pr-4">
                 <div class="card shadow-sm pl-4 pr-4 pt-4 pb-5">
                     <div class="row justify-content-between mb-2">
                         <label class="col-md-10 text-justify text-break SemiBold"
@@ -392,70 +417,19 @@
                                 </span>
                             </div>
                         </div>
-                        @php
-                            // foreach ($produk as $p) {
-                            //     $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
-                            //     $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
-
-                            //     if($jumlahDiskonGray > $p->maksimal_diskon){
-                            //         $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
-                            //         $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
-                            //     }
-                            //     else{
-                            //         $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
-                            //         $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
-                            //     }
-                            // }
-                            $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
-                            $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
-                            if($jumlahDiskonGray > $produk->maksimal_diskon){
-                                $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
-                                $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
-                            }
-                            else{
-                                $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
-                                $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
-                            }
-                        @endphp
                         <div class="col-md-6">
-                            @if (!empty($produk->jumlah_diskon))
-                                <label class="text-break font-weight-bold mb-4"
-                                    style="font-size: 24px;">
-                                    Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del> {{$hargaHitamPutih ?? '-'}} / hal (Hitam-Putih)
-                                </label>
-                                @if (!empty($produk->harga_berwarna))
-                                    <label class="text-break text-primary-purple font-weight-bold mb-4"
-                                        style="font-size: 24px;">
-                                        Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del> {{$hargaBerwarna ?? '-'}} / hal (Berwarna)
-                                    </label>
-                                @else
-                                    <label class="text-break text-primary-purple font-weight-bold mb-4"
-                                        style="font-size: 24px;" hidden>
-                                        Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del> {{$hargaBerwarna ?? '-'}} / hal (Berwarna)
-                                    </label>
-                                @endif
-                            @else
-                                <label class="text-break font-weight-bold mb-4"
-                                    style="font-size: 24px;">
-                                    Rp. {{$produk->harga_hitam_putih ?? '-'}} / hal (Hitam-Putih)
-                                </label>
-                                <label class="text-break text-primary-purple font-weight-bold mb-4"
-                                    style="font-size: 24px;">
-                                    Rp. {{$produk->harga_berwarna ?? '-'}} / hal (Warna)
-                                </label>
-                            @endif
                             {{-- @foreach ($collection as $item) --}}
                             <label class="card-text text-break mb-2"
-                                style="font-size: 18px;">
-                                <i class="material-icons md-18 align-middle mr-2">
+                                style="font-size: 24px;">
+                                <i class="material-icons md-32 align-middle mr-2">
                                     description
                                 </i>
                                 {{$produk->jenis_kertas}}
                             </label>
                             <br>
-                            <label class="card-text text-break mb-2"
-                                style="font-size: 18px;">
-                                <i class="material-icons md-18 align-middle mr-2">
+                            {{-- <label class="card-text text-break mb-2"
+                                style="font-size: 24px;">
+                                <i class="material-icons md-32 align-middle mr-2">
                                     palette
                                 </i>
                                 @if ($produk->berwarna === 0 && $produk->hitam_putih === 1)
@@ -468,16 +442,51 @@
                                     {{__('-')}}
                                 @endif
                             </label>
-                            <br>
-                            <label class="card-text text-break mb-2"
-                                style="font-size: 18px;">
-                                <i class="material-icons md-18 align-middle mr-2">
+                            <br> --}}
+                            <label class="card-text text-break mb-3"
+                                style="font-size: 24px;">
+                                <i class="material-icons md-32 align-middle mr-2">
                                     print
                                 </i>
                                 {{$produk->jenis_printer}}
                             </label>
                             {{-- @endforeach --}}
 
+                            @if (!empty($produk->jumlah_diskon))
+                                <label class="text-break font-weight-bold mb-2"
+                                    style="font-size: 24px;">
+                                    Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del> {{$hargaHitamPutih ?? '-'}} / hal (Hitam-Putih)
+                                </label>
+                                @if (!empty($produk->harga_berwarna))
+                                    <label class="text-break text-primary-purple font-weight-bold mb-2"
+                                        style="font-size: 24px;">
+                                        Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del> {{$hargaBerwarna ?? '-'}} / hal (Berwarna)
+                                    </label>
+                                {{-- @else
+                                    <label class="text-break text-primary-purple font-weight-bold mb-4"
+                                        style="font-size: 24px;" hidden>
+                                        Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del> {{$hargaBerwarna ?? '-'}} / hal (Berwarna)
+                                    </label> --}}
+                                @endif
+                            @elseif(!empty($produk->harga_berwarna))
+                                <label class="text-break font-weight-bold mb-2"
+                                    style="font-size: 24px;">
+                                    Rp. {{$produk->harga_hitam_putih ?? '-'}} / hal (Hitam-Putih)
+                                </label>
+                                <label class="text-break text-primary-purple font-weight-bold mb-4"
+                                    style="font-size: 24px;">
+                                    Rp. {{$produk->harga_berwarna ?? '-'}} / hal (Warna)
+                                </label>
+                            @else
+                                <label class="text-break font-weight-bold mb-2"
+                                    style="font-size: 24px;">
+                                    Rp. {{$produk->harga_hitam_putih ?? '-'}} / hal (Hitam-Putih)
+                                </label>
+                                {{-- <label class="text-break text-primary-purple font-weight-bold mb-4"
+                                    style="font-size: 24px;">
+                                    Rp. {{$produk->harga_berwarna ?? '-'}} / hal (Warna)
+                                </label> --}}
+                            @endif
                             <div class="row justify-content-between mb-2">
                                 @if (!empty($produk->harga_timbal_balik_hitam_putih))
                                     <label class="col-md-6 text-break mb-2"
@@ -493,11 +502,10 @@
                                         + Rp. {{$produk->harga_timbal_balik_hitam_putih}} / hal
                                     </label>
                                 @endif
-
                             </div>
                             <div class="row justify-content-between mb-4">
                                 @if (!empty($produk->harga_timbal_balik_berwarna))
-                                    <label class="col-md-6 text-break mb-2"
+                                    <label class="col-md-6 text-break text-primary-purple mb-2"
                                             style="font-size: 18px;">
                                             {{__('Timbal Balik (Warna)')}}
                                     </label>
@@ -505,13 +513,13 @@
                                         style="color:#C4C4C4">
                                         help
                                     </i>
-                                    <label class="col-md-4 text-break SemiBold mb-2"
+                                    <label class="col-md-4 text-break text-primary-purple SemiBold mb-2"
                                         style="font-size: 14px;">
                                         + Rp. {{$produk->harga_timbal_balik_berwarna}} / hal
                                     </label>
                                 @endif
                             </div>
-                            <label class="card-text SemiBold mb-2"
+                            {{-- <label class="card-text SemiBold mb-2"
                                 style="font-size: 18px;">
                                 {{__('Paket')}}
                             </label>
@@ -586,8 +594,87 @@
                             @else
                                 <label class="ml-0">-</label>
                                 <br>
-                            @endif()
+                            @endif() --}}
                         </div>
+                    </div>
+                    <div>
+                        <label class="card-text SemiBold mb-2"style="font-size: 18px;">
+                            {{__('Paket')}}
+                        </label>
+                        <br>
+                        @if(!empty($fitur['paket']))
+                            <div class="row justify-content-between mb-4">
+                                @foreach ($fitur['paket'] as $key => $value)
+                                    <label class="col-md-6 text-break mb-2"
+                                            style="font-size: 18px;">
+                                            {{$key}}
+                                    </label>
+                                    <i class="col-md-1 material-icons md-18 mt-1"
+                                    style="color:#C4C4C4">
+                                    help
+                                    </i>
+                                    <label class="col-md-5 text-break text-right font-weight-bold mb-2"
+                                        style="font-size: 14px;">
+                                        + Rp. {{$value}} / Hal
+                                    </label>
+                                @endforeach
+                            </div>
+                        @else
+                            <label class="ml-0">-</label>
+                            <br>
+                        @endif()
+                        <label class="card-text SemiBold mb-2"
+                            style="font-size: 18px;">
+                            {{__('Non-Paket')}}
+                        </label>
+                        <br>
+                        @if(!empty($fitur['nonPaket']))
+                            <div class="row justify-content-between mb-4">
+                                @foreach ($fitur['nonPaket'] as $key => $value)
+                                    <label class="col-md-6 text-break mb-2"
+                                        style="font-size: 18px;">
+                                        {{$key}}
+                                    </label>
+                                    <i class="col-md-1 material-icons md-18 mt-1"
+                                    style="color:#C4C4C4">
+                                    help
+                                    </i>
+                                    <label class="col-md-5 text-break text-right font-weight-bold mb-2"
+                                        style="font-size: 14px;">
+                                        + Rp. {{$value}} / Hal
+                                    </label>
+                                @endforeach
+                            </div>
+                        @else
+                            <label class="ml-0">-</label>
+                            <br>
+                        @endif()
+                        <label class="card-text SemiBold mb-2"
+                            style="font-size: 18px;">
+                            {{__('Paket Tambahan')}}
+                        </label>
+                        <br>
+                        @if(!empty($fitur['paket']))
+                            <div class="row justify-content-between mb-4">
+                                @foreach ($fitur['tambahan'] as $key)
+                                    <label class="col-md-6 text-break mb-2"
+                                        style="font-size: 18px;">
+                                        {{$key['nama']}}
+                                    </label>
+                                    <i class="col-md-1 material-icons md-18 mt-1"
+                                    style="color:#C4C4C4">
+                                    help
+                                    </i>
+                                    <label class="col-md-5 text-break text-right font-weight-bold mb-2"
+                                        style="font-size: 14px;">
+                                        + Rp. {{$key['harga']}} / Hal
+                                    </label>
+                                @endforeach
+                            </div>
+                        @else
+                            <label class="ml-0">-</label>
+                            <br>
+                        @endif()
                     </div>
                     <div class="bg-light-purple pl-4 pr-4 pb-4 pt-4 mb-5"
                         style="border-radius:5px;">
@@ -600,7 +687,6 @@
                             {{$produk->deskripsi}}
                         </p>
                     </div>
-
                     <div class="row justify-content-end mr-0">
                         <button class="btn btn-default btn-lg text-primary-danger font-weight-bold pl-4 pr-4 mr-4" onclick="window.location.href='{{ route('produk.lapor',$produk->id_produk) }}'"
                             style="border-radius:30px;font-size: 18px;">

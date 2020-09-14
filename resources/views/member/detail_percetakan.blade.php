@@ -18,12 +18,15 @@
                     height="60px">
             </div>
         </div>
-        <label class="text-break mb-4" style="font-size:24px;">
-            <i class="material-icons md-32 align-middle mr-2">
+        <div class="row justify-content-start mb-4">
+            <i class="col-md-auto material-icons md-32">
                 location_on
             </i>
-            {{$partner->alamat_toko}}
-        </label>
+            <label class="col-md-10 text-break" style="font-size:24px;">
+                {{$partner->alamat_toko}}
+            </label>
+        </div>
+
         <div class="row justify-content-left ml-0 mb-0">
             <label class="SemiBold mr-4" style="font-size: 24px;">
                 <i class="material-icons md-32 align-middle mr-2"
@@ -208,8 +211,9 @@
                     <br>
                     <label class="mb-4"
                         style="font-size: 14px;">
-                        {{$partner->deskripsi_toko}}
+                        {{$partner->deskripsi_toko ?? '-'}}
                     </label>
+                    <br>
                     <label class="SemiBold mb-2"
                         style="font-size: 18px;">
                         {{__('Jam Operasional Percetakan')}}
@@ -260,30 +264,42 @@
                         {{__('ATK')}}
                     </label>
                     <br>
-                    @foreach ($atk as $a)
-                        @if ($a->id_pengelola === $partner->id_pengelola)
-                            <div class="row justify-content-between" style="font-size: 14px;">
-                                <div class="col-md-auto text-left">
-                                    <label class="mb-2">
-                                        {{$a->nama}}
+                    @if (!empty($atk))
+                        @foreach ($atk as $a)
+                            @if ($a->id_pengelola === $partner->id_pengelola)
+                                <div class="row justify-content-left" style="font-size: 14px;">
+                                    <div class="col-md-3 text-left">
+                                        <label class="mb-2">
+                                            {{$a->nama}}
+
+                                            {{-- x {{$a->jumlah}} --}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
                                         <i class="material-icons md-18 align-middle ml-2 mr-4"
-                                        style="color:#C4C4C4">
+                                            style="color:#C4C4C4">
                                             help
                                         </i>
-                                        x {{$a->jumlah}}
-                                    </label>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <label class="mb-2">
+                                            x {{$a->jumlah}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <label class="mb-2">
+                                            Rp. {{$a->harga}}
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col-md-auto text-right">
-                                    <label class="mb-2">
-                                        Rp. {{$a->harga}}
-                                    </label>
-                                </div>
-                            </div>
-                        @else
-                            <label>-</label>
-                        @break
-                        @endif
-                    @endforeach
+                            {{-- @else
+                                <label>-</label>
+                                @break --}}
+                            @endif
+                        @endforeach
+                    @else
+                        <label>-</label>
+                    @endif
                 </div>
             </div>
             <div class="col-md-8 mt-5">
@@ -452,7 +468,8 @@
                             @if ($p->id_pengelola === $partner->id_pengelola)
                                 <div class="col-md-6 mb-4">
                                     <div class="col-md-auto mb-4">
-                                        <div class="card shadow mb-2" style="border-radius: 10px;">
+                                        @include('member.card_produk')
+                                        {{-- <div class="card shadow mb-2" style="border-radius: 10px;">
                                             <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;">
                                                 @if (!empty($p->jumlah_diskon))
                                                     <div class="text-center" style="position: relative;">
@@ -581,7 +598,7 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             @endif
