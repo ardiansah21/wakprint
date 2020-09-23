@@ -365,7 +365,7 @@
                             <li>{{__('5. Bank Lain. Transfer ke Bank Lain > Kode BNI 009 > Isi nomor VA BNI > Nominal Pembayaran > Konfirmasi') }}</li>
                         </div>
                         {{-- <ul class="mb-2" style="font-size: 14px;"> --}}
-                            
+
                         {{-- </ul> --}}
                         {{-- <p class="mb-2"
                             style="font-size: 14px;">
