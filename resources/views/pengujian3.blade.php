@@ -82,7 +82,7 @@
                     <div class="row mt-3">
                         <label class="SemiBold mr-3" style="font-size:20px;">Percentase Minimun</label>
                         <input type="number" name="percenMin" step="any" id="percenMin" min="0" max="100"
-                            placeholder="masukkan persentase minimum" value="100">
+                            placeholder="masukkan persentase minimum" value="0">
                         <label for="percenMin" class="ml-1">%</label>
                     </div>
                     <button type="submit" class="btn btn-primary mt-4 ml-0 w-25" data-toggle="button"

@@ -95,7 +95,7 @@ $('#jenisDokumenList span').on('click', function () {
     $('#labelPreview').show();
     $('#jenisDokumenButton').text($(this).text());
     $('#jenisDokumen').val($(this).text());
-    document.getElementById('a').setAttribute('src', 'pengujian/pdf/' + $(this).text().trim() + '.pdf');
+
 
     // switch ($(this).text) {
     //     case "Teks":

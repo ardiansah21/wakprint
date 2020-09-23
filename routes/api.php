@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,24 +11,24 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/member', function (Request $request) {
-    return $request->user();
-});
+// Route::get('/member', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::post('/login', function (Request $request) {
-    // return $request;
+// Route::post('/login', function (Request $request) {
+//     // return $request;
 
-    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        return response()->json(Auth::user(), 200);
-    } else {
-        return Response::make(['error' => "gagal login"], 401);
-    }
+//     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+//         return response()->json(Auth::user(), 200);
+//     } else {
+//         return Response::make(['error' => "gagal login"], 401);
+//     }
 
-});
+// });
 
 // Route::get('/member', function (Request $request) {
 //     // return $request->user();
