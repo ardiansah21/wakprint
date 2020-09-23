@@ -17,9 +17,9 @@ use App\Http\Controllers\KonFileController;
 |
  */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 Auth::routes();
 
 /////
@@ -48,10 +48,10 @@ Route::post('search', 'SearchController@search')->name('search');
 //test upload
 // Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
 
-Route::get('/tesproduk', function () {
-    $produk = Produk::all();
-    return view('member.card_produk', compact('produk'));
-});
+// Route::get('/tesproduk', function () {
+//     $produk = Produk::all();
+//     return view('member.card_produk', compact('produk'));
+// });
 
 Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
@@ -188,10 +188,16 @@ Route::get('foto', 'ProductController@foto');
 // Route::post('/index/update/{id}', 'SiteController@update')->name('update');
 // Route::post('/index/destroy/{id}', 'SiteController@destroy')->name('destroy');
 
+//TEMP
 Route::resource('pdf', 'PdfController');
 
-Route::get('testing', function () {
-    return view('pengujian3');
-});
+// Route::get('testing', function () {
+//     return view('pengujian3');
+// });
 
 Route::post('store2', 'PdfController@store2')->name('store2');
+
+//PENGUJIAN
+Route::get('pengujian', 'PengujianController@index')->name('pengujian');
+Route::post('pengujian/store', 'PengujianController@store')->name('pengujian.store');
+Route::post('pengujian/proses', 'PengujianController@proses')->name('pengujian.proses');

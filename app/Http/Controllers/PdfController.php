@@ -36,30 +36,20 @@ class PdfController extends Controller
      */
     public function store(Request $request)
     {
-        // 1 $path = $request->file('file')->storeAs('pdf', $request->file('file')->getClientOriginalName());
 
-        // 2 $path = $request->file('file')->storeAs(
-        //     'pdf',
-        //     $request->file('file')->getClientOriginalName(),
-        //     'public'
-        // );
-
-        //  dd($path);
-
-        //  1 $path = storage_path("app/" . $path);
-
-        $path = public_path('pengujian/pdf');
+        $path = public_path('temp_pdf_pengujian');
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
-        $request->file('file')->move($path, $request->file('file')->getClientOriginalName());
-        $path = $path . '/' . $request->file('file')->getClientOriginalName();
+        $nameFile = $request->file('file')->getClientOriginalName();
 
-        $percenMin = $request->percenMin;
+        $request->file('file')->move($path, $nameFile);
+        $path = $path . '/' . $nameFile;
 
-        $pdf = cekWarna($path, $percenMin);
-
-        return response()->json($pdf, 200);
+        return response()->json([
+            'path' => $path,
+            'name' => $nameFile,
+        ], 200);
 
     }
 
@@ -110,7 +100,7 @@ class PdfController extends Controller
 
     public function store2(Request $request)
     {
-        $path = public_path('pengujian/pdf');
+        $path = public_path('temp_pdf_pengujian');
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
@@ -119,8 +109,15 @@ class PdfController extends Controller
 
         $percenMin = $request->percenMin;
 
-        $pdf = cekWarna($path, $percenMin);
+        $pdf = cekWarnaNew($path, $percenMin);
 
+        return response()->json($pdf, 200);
+
+    }
+
+    public function proses(Request $request)
+    {
+        $pdf = cekWarnaNew($request->path, $request->percenMin);
         return response()->json($pdf, 200);
 
     }

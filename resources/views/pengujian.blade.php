@@ -27,7 +27,8 @@
             margin-top: 8px;
         }
 
-        .table th {
+        .table-hover th,
+        .table-hover td {
 
             text-align: center;
 
@@ -35,9 +36,22 @@
 
         .table {
             border-radius: 5px;
-            width: 50%;
+            /* width: 50%; */
             margin: auto;
             float: none;
+        }
+
+        .table-borderless>tbody>tr>td,
+        .table-borderless>tbody>tr>th,
+        .table-borderless>tfoot>tr>td,
+        .table-borderless>tfoot>tr>th,
+        .table-borderless>thead>tr>td,
+        .table-borderless>thead>tr>th {
+            border: none;
+        }
+
+        body {
+            overflow-y: scroll;
         }
     </style>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
@@ -47,86 +61,129 @@
 
 <body>
     <div class="container">
-        <div class="row mt-2">
-            <div class="col-md-5">
-                <form action="{{route('pdf.store')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <label class="btn btn-primary mt-4" for="my-file-selector">
-                        <input id="my-file-selector" name="file" type="file" accept="application/pdf"
-                            style="display:none" onchange="
-                            $('#upload-file-info').html(this.files[0].name);
-                            ">
-                        Cari PDF
-                    </label><span class='label label-info' id="upload-file-info"></span>
-                    <div class="progress">
-                        <div class="bar"></div>
-                        <div class="percent">0%</div>
+        <h2 class="my-4">Sistem Deteksi Warna Halaman</h2>
+
+        {{-- <div class="card"> --}}
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Upload Dokumen</div>
+                    <div class="card-body">
+                        <form id="frmUpload" action="{{route('pengujian.store')}}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <label class="btn btn-primary " for="my-file-selector">
+                                <input id="my-file-selector" name="file" type="file" accept="application/pdf"
+                                    style="display:none" onchange="
+                                        $('#upload-file-info').html(this.files[0].name);
+                                        $('#frmUpload').submit();
+                                        // document.getElementById('a').setAttribute('src', 'temp_pdf_pengujian/' +this.files[0].name )
+                                        ">
+                                Cari PDF dan Upload
+                            </label><span class='label label-info ml-2' id="upload-file-info"></span>
+
+                            <div class="progress mt-2">
+                                <div class="bar"></div>
+                                <div class="percent">0%</div>
+                            </div>
+
+                        </form>
                     </div>
-                    <div class="row mt-2">
-                        <label for="percenMin" class="mr-3 ml-3">Percentase minimum :</label>
-                        <input type="number" name="percenMin" step="any" id="percenMin" min="0" max="100"
-                            placeholder="masukkan persentase minimum" value="100">
-                        <label for="percenMin" class="ml-1">%</label>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header">Eksekusi</div>
+                    <div class="card-body">
+                        <form id="frmProses" action="{{route('pengujian.proses')}}" method="POST">
+                            @csrf
+
+                            <input id="path" name="path" type="text" hidden>
+                            <div class="row mt-2">
+                                <label for="percenMin" class="mr-3 ml-3">Percentase minimum piksel berwarna:</label>
+                                <input type="number" name="percenMin" step="any" id="percenMin" min="0" max="100"
+                                    placeholder="masukkan persentase minimum piksel berwarna" value="0">
+                                <label for="percenMin" class="ml-1">%</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger mt-4">Proses</button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-danger mt-4">Proses</button>
-                </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Preview</div>
+                    <div class="card-body p-0">
+                        {{-- <h5 class="card-title">Preview</h5> --}}
+                        <embed id="a" style="width: 100%; height: 317px"
+                            {{-- src="{{url('/temp_pdf_pengujian/Gambar.pdf#zoom=30')}}" --}} type="application/pdf"
+                            background-color="#00ff00" frameborder="0" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- </div> --}}
+
+        <div class="card mb-5" id="hasil">
+            <div class="card-header">Hasil</div>
+            <div class="card-body">
+                {{-- <h4 class="card-title">Title</h4> --}}
                 <div id="loading">
                     <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
                     <div id="progressText" class="mx-auto d-block"></div>
                 </div>
-                <table class="table borderless my-3">
-                    <tr>
-                        <td>Nama file</td>
-                        <td id="namaFile"></td>
-                    </tr>
-                    <tr>
-                        <td>Jumlah Halaman</td>
-                        <td id="jumlahHalaman"></td>
-                    </tr>
-                    <tr>
-                        <td>Jumlah Halaman Berwarna</td>
-                        <td id="jumlahHalamanBerwarna"></td>
-                    </tr>
-                    <tr>
-                        <td>Jumlah Halaman Hitam Putih</td>
-                        <td id="jumlahHalamanHitamPutih"></td>
-                    </tr>
-                    <tr>
-                        <td>Warktu Eksekusi</td>
-                        <td id="waktuEksekusi"></td>
-                    </tr>
-                    <tr>
-                        <td>Total piksel Persentase Minimum</td>
-                        <td id="pixelPercenMin"></td>
-                    </tr>
-                </table>
+                <div class="row">
+                    <div class="col-md-4">
+                        <table class="table borderless">
+                            {{-- <tr>
+                                <td>Nama file</td>
+                                <td id="namaFile"></td>
+                            </tr> --}}
+                            <tr>
+                                <td>Jumlah Halaman</td>
+                                <td id="jumlahHalaman"></td>
+                            </tr>
+                            <tr>
+                                <td>Jumlah Halaman Berwarna</td>
+                                <td id="jumlahHalamanBerwarna"></td>
+                            </tr>
+                            <tr>
+                                <td>Jumlah Halaman Hitam Putih</td>
+                                <td id="jumlahHalamanHitamPutih"></td>
+                            </tr>
+                            <tr>
+                                <td>Warktu Eksekusi (detik)</td>
+                                <td id="waktuEksekusi"></td>
+                            </tr>
+                            <tr>
+                                <td>Total piksel Persentase Minimum</td>
+                                <td id="pixelPercenMin"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="placeTable">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-inverse  w-auto">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th>Halaman</th>
+                                            <th>Total Piksel</th>
+                                            <th>Total Piksel Berwarna</th>
+                                            <th>Total Piksel Hitam Putih</th>
+                                            <th>Jenis Warna</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableData"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-            <div class="col-md-7">
-                <div class="float-right col" style="height: 100%">
-                    <embed id="a" style="width: 100%; height: 100%" {{-- src="{{url('/pengujian/pdf/null.pdf')}}" --}}
-                        type="application/pdf" frameborder="0" />
-                </div>
-            </div>
         </div>
-        <div id="placeTable" style="margin-top: 30px">
-            <div class="">
-                <div class="table-responsive">
-                    <table class="table table-hover table-inverse mx-auto w-auto">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th>Halaman</th>
-                                <th>Total Piksel</th>
-                                <th>Total Piksel Berwarna</th>
-                                <th>Total Piksel Hitam Putih</th>
-                                <th>Jenis Warna</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
