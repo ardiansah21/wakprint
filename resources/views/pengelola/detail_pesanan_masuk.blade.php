@@ -112,13 +112,13 @@
                             style="font-size:16px;">
                             {{__('Antar ke Tempat') }}
                         </label>
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label class="font-weight-bold mr-3 mb-2"
                                 style="font-size:14px;">
                                 {{__('Warna Halaman') }}
                             </label>
                             <br>
-                            {{-- @foreach ($collection as $item) --}}
+                            @foreach ($collection as $item)
                                 <label class="mr-3 mb-0"
                                     style="font-size:14px;">
                                     {{__('(Skripsilagee.pdf)') }}
@@ -167,7 +167,7 @@
                                         {{__('x Rp. 3k / hal') }}
                                     </label>
                                 </div>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </div>
                         <div class="mb-4">
                             <label class="font-weight-bold mb-1"
@@ -175,7 +175,7 @@
                                 {{__('Halaman yang Dicetak') }}
                             </label>
 
-                            {{-- @foreach ($collection as $item) --}}
+                            @foreach ($collection as $item)
                                 <div class="row justify-content-between ml-0 mb-0"
                                     style="font-size: 16px;">
                                     <label class="mr-3 mb-0">
@@ -194,7 +194,7 @@
                                         {{__('Semua Halaman') }}
                                     </label>
                                 </div>
-                            {{-- @endforeach --}}
+                            @endforeach
 
                         </div>
                         <div class="mb-4">
@@ -203,7 +203,7 @@
                                 {{__('Jumlah Salinan') }}
                             </label>
 
-                            {{-- @foreach ($collection as $item) --}}
+                            @foreach ($collection as $item)
                                 <div class="row justify-content-between ml-0 mb-0"
                                     style="font-size:16px;">
                                     <label class="mr-3 mb-0">
@@ -222,17 +222,16 @@
                                         {{__('1') }}
                                     </label>
                                 </div>
-                            {{-- @endforeach --}}
+                            @endforeach
 
                         </div>
-
                         <div class="mb-4">
                             <label class="font-weight-bold mb-1"
                                 style="font-size:14px;">
                                 {{__('Cetak') }}
                             </label>
 
-                            {{-- @foreach ($collection as $item) --}}
+                            @foreach ($collection as $item)
                                 <div class="row justify-content-between ml-0 mb-0"
                                     style="font-size:16px;">
                                     <label class="mr-3 mb-0">
@@ -251,10 +250,9 @@
                                         {{__('Satu Sisi') }}
                                     </label>
                                 </div>
-                            {{-- @endforeach --}}
+                            @endforeach
 
-                        </div>
-
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row justify-content-between bg-light-purple pl-3 pr-3 pt-2 pb-2 mb-5"

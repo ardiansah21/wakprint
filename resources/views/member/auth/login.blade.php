@@ -58,7 +58,7 @@
                 <button type="submit"
                     class="btn btn-primary-wakprint btn-block SemiBold"
                     style="font-size: 24px;">
-                    {{ __('Login') }}
+                    {{ __('Masuk') }}
                 </button>
             </div>
         </form>

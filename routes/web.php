@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('pesanan.detail');
 
     Route::get('favorit', 'MemberController@favorit')->name('favorit');
-    Route::get('favorit/status', 'MemberController@tambahFavorit')->name('favorit.status');
+    Route::post('favorit/status/{id}', 'MemberController@tambahFavorit')->name('favorit.status');
 
     Route::get('ulasan', 'MemberController@ulasan')->name('ulasan');
     Route::get('/ulasan/ulas/{id}', 'MemberController@ulas')->name('ulasan.ulas');

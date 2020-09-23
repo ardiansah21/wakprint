@@ -63,7 +63,7 @@ class MemberController extends Controller
         $partner = Pengelola_Percetakan::all();
         $atk = Atk::all();
         // $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
-        
+
         return view('home', compact('produk','partner','atk'));
     }
 
@@ -134,7 +134,7 @@ class MemberController extends Controller
         $partner = Pengelola_Percetakan::find($id);
         $atk = Atk::all();
         $ratingPartner = $produk->where('id_pengelola',$id)->avg('rating');
-        
+
         if(empty($ratingPartner)){
             $ratingPartner = $partner->rating_toko;
         }
@@ -710,31 +710,33 @@ class MemberController extends Controller
         ]);
     }
 
-    public function tambahFavorit(Request $request)
+    public function tambahFavorit(Request $request, $id)
     {
         $member = Member::find(Auth::id());
-        // $produk = Produk::all();
+        $produk = Produk::find($id);
 
         $produkFavorit = $member->produk_favorit;
+        // $id = 0;
 
-        if (empty($produkFavorit)) {
+        if ($produkFavorit === '[]') {
+            // dd('Kosong');
             $produkFavorit = array(
                 'id_favorit' => 0,
                 'status' => false,
                 'produk' => array(),
             );
-            // $id = 0;
         }
         else {
-            // dd($produkFavorit);
+            // dd(count($produkFavorit['produk']));
             // $id = count($produkFavorit['produk']);
+            // $produkFavorit['id_favorit'] = $id;
+            // $produkFavorit['status'] = true;
         }
 
         $favorited[] = array(
-            'id_produk' => $request->id_produk
+            'id_produk' => $request->id_produk,
+            'nama' => $produk->nama
         );
-
-        // dd($favorited);
 
         $produkFavorit['id_favorit'] = 0;
         $produkFavorit['status'] = true;
@@ -742,6 +744,8 @@ class MemberController extends Controller
         $FavoritFinal['id_favorit'] = $produkFavorit['id_favorit'];
         $FavoritFinal['status'] = $produkFavorit['status'];
         $FavoritFinal['produk'] = array_merge($produkFavorit['produk'], $favorited);
+
+        // $favoritArray[] = array($FavoritFinal['id_favorit'],$FavoritFinal['status'],$FavoritFinal['produk']);
 
         $member->produk_favorit = $FavoritFinal;
         $member->save();

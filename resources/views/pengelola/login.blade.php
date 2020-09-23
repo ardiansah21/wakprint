@@ -92,7 +92,7 @@
                 <div class="form-group mb-0">
                     <label for="password" class="">{{ __('Password') }}</label>
                     <div class="input-group">
-                        <input id="password" type="password" class="form-control form-control-lg {{ $errors->has('password') ? ' is-invalid' : '' }}" 
+                        <input id="password" type="password" class="form-control form-control-lg {{ $errors->has('password') ? ' is-invalid' : '' }}"
                         name="password" required autocomplete="current-password">
                         @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
@@ -119,7 +119,7 @@
                 </div>
                 <div class="form-group mb-4">
                     <button type="submit" class="btn btn-primary-wakprint btn-block SemiBold" style="font-size: 18px;">
-                        {{ __('Login') }}
+                        {{ __('Masuk') }}
                     </button>
                 </div>
                 <label class="row justify-content-center mb-4" style="font-size: 16px;">

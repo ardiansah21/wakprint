@@ -6,12 +6,16 @@
         @if (!empty($produk))
             <div class="custom-scrollbar-favorit">
                 <div class="row justify-content-between">
-                    @foreach ($produk as $p)
-                    <div class="col-md-6 mb-4">
-                        <div class="col-md-auto mb-4">
-                            @include('member.card_produk')
-                        </div>
-                    </div>
+                    @foreach ($produk as $p => $value)
+                        {{-- @for($i=0;$i < count($produk)+1;$i++) --}}
+                            @if($value->id_produk === $member->produk_favorit['produk'][$p]['id_produk'])
+                                <div class="col-md-6 mb-4">
+                                    <div class="col-md-auto mb-4">
+                                        @include('member.card_produk')
+                                    </div>
+                                </div>
+                            @endif
+                        {{-- @endfor --}}
                     @endforeach
                 </div>
             </div>
