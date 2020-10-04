@@ -39,6 +39,7 @@
             /* width: 50%; */
             margin: auto;
             float: none;
+
         }
 
         .table-borderless>tbody>tr>td,
@@ -79,7 +80,7 @@
                                         $('#frmUpload').submit();
                                         // document.getElementById('a').setAttribute('src', 'temp_pdf_pengujian/' +this.files[0].name )
                                         ">
-                                Cari PDF dan Upload
+                                Upload PDF
                             </label><span class='label label-info ml-2' id="upload-file-info"></span>
 
                             <div class="progress mt-2">
@@ -98,7 +99,7 @@
 
                             <input id="path" name="path" type="text" hidden>
                             <div class="row mt-2">
-                                <label for="percenMin" class="mr-3 ml-3">Percentase minimum piksel berwarna:</label>
+                                <label for="percenMin" class="mr-3 ml-3">Persentase Minimum Piksel Berwarna:</label>
                                 <input type="number" name="percenMin" step="any" id="percenMin" min="0" max="100"
                                     placeholder="masukkan persentase minimum piksel berwarna" value="0">
                                 <label for="percenMin" class="ml-1">%</label>
@@ -132,13 +133,17 @@
                     <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
                     <div id="progressText" class="mx-auto d-block"></div>
                 </div>
-                <div class="row">
+                <div class="row justify-content-between">
                     <div class="col-md-4">
-                        <table class="table borderless">
+                        <table class="table borderless w-auto">
                             {{-- <tr>
                                 <td>Nama file</td>
                                 <td id="namaFile"></td>
                             </tr> --}}
+                            <tr>
+                                <td>Total Persentase Minimum Piksel Berwarna</td>
+                                <td class="align-middle" id="pixelPercenMin"></td>
+                            </tr>
                             <tr>
                                 <td>Jumlah Halaman</td>
                                 <td id="jumlahHalaman"></td>
@@ -151,14 +156,12 @@
                                 <td>Jumlah Halaman Hitam Putih</td>
                                 <td id="jumlahHalamanHitamPutih"></td>
                             </tr>
+
                             <tr>
-                                <td>Warktu Eksekusi (detik)</td>
+                                <td>Waktu Eksekusi (detik)</td>
                                 <td id="waktuEksekusi"></td>
                             </tr>
-                            <tr>
-                                <td>Total piksel Persentase Minimum</td>
-                                <td id="pixelPercenMin"></td>
-                            </tr>
+
                         </table>
                     </div>
                     <div class="col-md-8">
