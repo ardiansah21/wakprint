@@ -6,6 +6,27 @@
     <div class="mt-5 mb-5">
         <label class="font-weight-bold" style="font-size:48px;">{{__('Konfigurasi File') }}
         </label>
+        <div class="row justify-content-between bg-light-purple pl-4 pr-4 pt-4 pb-4 mt-5 mb-5 mr-0 ml-0" style="border-radius:5px; height:310px;">
+            <div class="col-md-3 border-primary-purple d-flex h-100" style="width:265px;
+                height:265px;">
+                <label class="SemiBold text-center text-primary-purple align-self-center"
+                    style="font-size: 24px;">
+                    {{__('Letak Dokumen Disini') }}
+                </label>
+            </div>
+            <div class="col-md-9">
+                <label class="text-justify mb-4 ml-2" style="font-size: 14px">
+                    {{__('Letak dokumen yang ingin kamu cetak disamping kiri atau klik tombol dibawah') }}
+                </label>
+                <div class="text-center ml-2">
+                    <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold" style="border-radius:30px
+                            font-size: 18px">
+                        <i class="material-icons align-middle mr-2">cloud_upload</i>
+                        {{__('Unggah') }}
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-between mb-5">
             <div class="col-md-auto mt-5 mr-0">
                 <div class="border-primary-purple" style="width:515px;
@@ -38,7 +59,7 @@
             </div>
             <div class="col-md-6 mt-5">
                 <div class="bg-light-purple p-2 mb-4" width="100%" style="border-radius:5px;">
-                    <div class="col-md-12 row align-self-center mb-2">
+                    <div class="col-md-12 row align-self-center">
                         <div class="col-md-1 d-flex justify-content-center">
                             <div class="align-self-center"><img src="https://img.icons8.com/nolan/96/pdf-2.png" width="48px" />
                             </div>
@@ -73,16 +94,7 @@
                                     hidden />
                         </div>
                     </div>
-                    <div class="mt-3 mb-3 mx-2" style="border-bottom: 1px solid #BC41BE"></div>
-                    <label class="ml-2 mb-0" style="font-size: 18px;">
-                        {{$pdf->jumlahHalHitamPutih ?? '' }}{{ __(' Halaman Hitam Putih') }}
-                    </label>
-                    <br>
-                    <label class="text-primary-purple ml-2 mb-2" style="font-size: 18px;">
-                        {{$pdf->jumlahHalBerwarna ?? ''}} {{ __(' Halaman Berwarna') }}
-                    </label><br>
                 </div>
-
         {{-- </div> --}}
             {{--
             <div class="bg-light-purple mb-4 p-2" style="border-radius:5px;">
@@ -125,187 +137,213 @@
             </form>
 
         </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        --}}
+            <div class="row justify-content-between mx-0">
+                <div class="col-md-7">
+                    <label class="SemiBold mb-3 mt-2" style="font-size: 24px;">
+                        {{__('Pilih Halaman') }}
+                    </label>
+                    <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
+                        <input id="rbSemuaHal" name="radio" class="custom-control-input" type="radio"
+                            onchange="document.getElementById('halamanAwal').disabled; document.getElementById('halamanAkhir').disabled; document.getElementById('halamanKustom').disabled;"
+                            checked>
+                        <label class="custom-control-label" for="rbSemuaHal">
+                            {{__('Semua') }}
+                        </label>
+                    </div>
+                    {{-- if(document.getElementById('halamanAwal').disabled){document.getElementById('rbSemuaHal').click();document.getElementById('rbSemuaHal').focus() }; --}}
+                    <div class="form-group custom-control custom-radio mb-4"
+                        onchange="document.getElementById('halamanAwal').!disabled; document.getElementById('halamanAkhir').!disabled; document.getElementById('halamanKustom').disabled;"
+                        style="font-size: 18px;">
+                        <input id="rbSampaiHal" name="radio" class="custom-control-input" type="radio">
+                        <label class="custom-control-label" for="rbSampaiHal">
+                            <input id="halamanAwal" type="text" class="form-input mr-2" for="rbSampaiHal"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                style="width:48px;">
+                            {{__('Sampai') }}
+                            <input id="halamanAkhir" type="text" class="form-input ml-2" for="rbSampaiHal"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                style="width:48px;">
+                        </label>
+                    </div>
+                    <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
+                        <input id="rbKustomHal" name="radio" class="custom-control-input" type="radio">
+                        <label class="custom-control-label" for="rbKustomHal">
+                            {{__('Kustom') }}
+                        </label>
+                        <br>
+                        <input id="halamanKustom" type="text mr-4" class="form-input"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label class="card-title font-weight-bold mb-3" style="font-size: 24px;">
+                        {{__('Jumlah Salinan') }}
+                    </label>
+                    <div class="form-group mb-4" style="font-size: 18px;">
+                        <label>
+                            <i class="fa fa-minus ml-2 mr-2"></i>
+                        </label>
+                        <input id="jumlahSalin" type="number" class="form-input"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            style="width:48px;">
+                        <label class="label">
+                            <i class="fa fa-plus ml-2 mr-2"></i>
+                        </label>
+                    </div>
+                    <label class="SemiBold mb-2 mt-2" style="font-size: 24px;">
+                        {{__('Cetak') }}
+                    </label>
+                    <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
+                        <input type="checkbox" class="custom-control-input" id="checkboxTimbalBalik">
+                        <label class="custom-control-label" for="checkboxTimbalBalik">
+                            {{__('Timbal Balik') }}
+                        </label>
+                    </div>
+                    <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
+                        <input type="checkbox" class="custom-control-input" id="checkboxPaksaHitamPutih">
+                        <label class="custom-control-label" for="checkboxPaksaHitamPutih">
+                            {{__('Paksa Hitam Putih') }}
+                        </label>
+                    </div>
+                </div>
+                <div class="bg-primary-yellow mt-4 p-2" style="border-radius: 5px; width:100%">
+                    <label class="my-auto" style="font-size: 16px;">
+                        <i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4">warning</i>
+                        {{__('8 Halaman Akan Dicetak')}}
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-</div>
---}}
 
-        <div class="row justify-content-between border-primary-purple mx-0" style="border-radius: 5px;">
-            <div class="col-md-7">
-                <label class="SemiBold mb-3 mt-2" style="font-size: 24px;">
-                    {{__('Pilih Halaman') }}
-                </label>
-                <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
-                    <input id="rbSemuaHal" name="radio" class="custom-control-input" type="radio"
-                        onchange="document.getElementById('halamanAwal').disabled; document.getElementById('halamanAkhir').disabled; document.getElementById('halamanKustom').disabled;"
-                        checked>
-                    <label class="custom-control-label" for="rbSemuaHal">
-                        {{__('Semua') }}
-                    </label>
-                </div>
-                {{-- if(document.getElementById('halamanAwal').disabled){document.getElementById('rbSemuaHal').click();document.getElementById('rbSemuaHal').focus() }; --}}
-                <div class="form-group custom-control custom-radio mb-4"
-                    onchange="document.getElementById('halamanAwal').!disabled; document.getElementById('halamanAkhir').!disabled; document.getElementById('halamanKustom').disabled;"
-                    style="font-size: 18px;">
-                    <input id="rbSampaiHal" name="radio" class="custom-control-input" type="radio">
-                    <label class="custom-control-label" for="rbSampaiHal">
-                        <input id="halamanAwal" type="text" class="form-input mr-2" for="rbSampaiHal"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width:48px;">
-                        {{__('Sampai') }}
-                        <input id="halamanAkhir" type="text" class="form-input ml-2" for="rbSampaiHal"
-                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            style="width:48px;">
-                    </label>
-                </div>
-                <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
-                    <input id="rbKustomHal" name="radio" class="custom-control-input" type="radio">
-                    <label class="custom-control-label" for="rbKustomHal">
-                        {{__('Kustom') }}
-                    </label>
-                    <br>
-                    <input id="halamanKustom" type="text mr-4" class="form-input"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                </div>
-                <label class="card-title font-weight-bold mb-3" style="font-size: 24px;">
-                    {{__('Jumlah Salinan') }}
-                </label>
-                <div class="form-group mb-4" style="font-size: 18px;">
-                    <label>
-                        <i class="fa fa-minus ml-2 mr-2"></i>
-                    </label>
-                    <input id="jumlahSalin" type="number" class="form-input"
-                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                        style="width:48px;">
-                    <label class="label">
-                        <i class="fa fa-plus ml-2 mr-2"></i>
-                    </label>
+    {{-- <div class="row justify-content-between mb-4">
+        <div class="col-md-6">
+            <div class="search-input">
+                <div class="main-search-input-item">
+                    <input type="text" role="search" class="form-control" placeholder="Cari percetakan atau produk disini"
+                        aria-label="Cari percetakan atau produk disini" aria-describedby="basic-addon2" style="border:0px solid white;
+                                    border-radius:30px;
+                                    font-size:18px;">
+                    <i class="material-icons ml-1 pt-1 pb-1 pl-3 pr-3"
+                        style="position: absolute;
+                                        top: 50%; left: 95%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
+                        search
+                    </i>
                 </div>
             </div>
-            <div class="col-md-5">
-                <label class="SemiBold mb-2 mt-2" style="font-size: 24px;">
-                    {{__('Cetak') }}
-                </label>
-                <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
-                    <input type="checkbox" class="custom-control-input" id="checkboxTimbalBalik">
-                    <label class="custom-control-label" for="checkboxTimbalBalik">
-                        {{__('Timbal Balik') }}
-                    </label>
+        </div>
+        <div class="col-md-2">
+            <div class="dropdown">
+                <input name="filter_produk" type="text" id="filterProduk" Class="form-control" hidden>
+                <button id="filterProdukButton"
+                    class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                    id="dropdownFilterProduk" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
+                        text-align:left;">
+                    {{__('Urutkan') }}
+                </button>
+                @php
+                $filterProduk= array('Terbaru', 'Harga Tertinggi', 'Harga Terendah');
+                @endphp
+                <div id="filterProdukList" class="dropdown-menu" aria-labelledby="dropdownKertas"
+                    style="font-size: 16px; width:100%;">
+                    @foreach ( $filterProduk as $fp)
+                    <span class="dropdown-item cursor-pointer ">
+                        {{$fp}}
+                    </span>
+                    @endforeach
                 </div>
-                <div class="form-group custom-control custom-checkbox mt-2 ml-0" style="font-size: 18px;">
-                    <input type="checkbox" class="custom-control-input" id="checkboxPaksaHitamPutih">
-                    <label class="custom-control-label" for="checkboxPaksaHitamPutih">
-                        {{__('Paksa Hitam Putih') }}
-                    </label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="dropdown">
+                <input name="jenis_printer" type="text" id="jenisPrinter" Class="form-control" hidden>
+                <button id="jenisPrinterButton"
+                    class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                    id="dropdownJenisPrinter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
+                        text-align:left;">
+                    {{__('Jenis Printer') }}
+                </button>
+                @php
+                $jenisPrinter= array('Ink Jet', 'Laser Jet');
+                @endphp
+                <div id="jenisPrinterList" class="dropdown-menu" aria-labelledby="dropdownJenisPrinter"
+                    style="font-size: 16px; width:100%;">
+                    @foreach ( $jenisPrinter as $printer)
+                    <span class="dropdown-item cursor-pointer ">
+                        {{$printer}}
+                    </span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="dropdown" aria-required="true">
+                <input name="jenis_kertas" type="text" id="ukuranKertas" Class="form-control" hidden>
+                <button id="ukuranKertasButton"
+                    class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                    id="dropdownKertas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
+                        text-align:left;">
+                    {{__('Ukuran Kertas') }}
+                </button>
+                @php
+                $ukuranKertas= array('A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr',
+                'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LeterHVS80gr');
+                @endphp
+                <div id="ukuranKertasList" class="dropdown-menu" aria-labelledby="dropdownKertas"
+                    style="font-size: 16px; width:100%;">
+                    @foreach ( $ukuranKertas as $kertas)
+                    <span class="dropdown-item cursor-pointer ">
+                        {{$kertas}}
+                    </span>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row justify-content-between mb-4">
-    <div class="col-md-6">
-        <div class="search-input">
-            <div class="main-search-input-item">
-                <input type="text" role="search" class="form-control" placeholder="Cari percetakan atau produk disini"
-                    aria-label="Cari percetakan atau produk disini" aria-describedby="basic-addon2" style="border:0px solid white;
-                                border-radius:30px;
-                                font-size:18px;">
-                <i class="material-icons ml-1 pt-1 pb-1 pl-3 pr-3"
-                    style="position: absolute;
-                                    top: 50%; left: 95%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                    search
-                </i>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="dropdown">
-            <input name="filter_produk" type="text" id="filterProduk" Class="form-control" hidden>
-            <button id="filterProdukButton"
-                class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                id="dropdownFilterProduk" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
-                    text-align:left;">
-                {{__('Urutkan') }}
-            </button>
-            @php
-            $filterProduk= array('Terbaru', 'Harga Tertinggi', 'Harga Terendah');
-            @endphp
-            <div id="filterProdukList" class="dropdown-menu" aria-labelledby="dropdownKertas"
-                style="font-size: 16px; width:100%;">
-                @foreach ( $filterProduk as $fp)
-                <span class="dropdown-item cursor-pointer ">
-                    {{$fp}}
-                </span>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="dropdown">
-            <input name="jenis_printer" type="text" id="jenisPrinter" Class="form-control" hidden>
-            <button id="jenisPrinterButton"
-                class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                id="dropdownJenisPrinter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
-                    text-align:left;">
-                {{__('Jenis Printer') }}
-            </button>
-            @php
-            $jenisPrinter= array('Ink Jet', 'Laser Jet');
-            @endphp
-            <div id="jenisPrinterList" class="dropdown-menu" aria-labelledby="dropdownJenisPrinter"
-                style="font-size: 16px; width:100%;">
-                @foreach ( $jenisPrinter as $printer)
-                <span class="dropdown-item cursor-pointer ">
-                    {{$printer}}
-                </span>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="dropdown" aria-required="true">
-            <input name="jenis_kertas" type="text" id="ukuranKertas" Class="form-control" hidden>
-            <button id="ukuranKertasButton"
-                class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                id="dropdownKertas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
-                    text-align:left;">
-                {{__('Ukuran Kertas') }}
-            </button>
-            @php
-            $ukuranKertas= array('A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr',
-            'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LeterHVS80gr');
-            @endphp
-            <div id="ukuranKertasList" class="dropdown-menu" aria-labelledby="dropdownKertas"
-                style="font-size: 16px; width:100%;">
-                @foreach ( $ukuranKertas as $kertas)
-                <span class="dropdown-item cursor-pointer ">
-                    {{$kertas}}
-                </span>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-<div class="bg-light-purple pt-3 pb-3 pl-4 pr-4 mb-4 ml-0" style="border-radius:5px;">
-    <label class="SemiBold mb-3 ml-0" style="font-size: 18px;">
-        {{__('Paket')}}
-    </label>
-    <br>
-    @php
-    $paket = array('Lem','Baut','Kawat','Spiral');
-    @endphp
-    <div class="container" style="font-size: 14px;">
-        <label class="SemiBold mb-2 ml-0">
-            {{__('Jilid')}}
+    <div class="bg-light-purple pt-3 pb-3 pl-4 pr-4 mb-4 ml-0" style="border-radius:5px;">
+        <label class="SemiBold mb-3 ml-0" style="font-size: 18px;">
+            {{__('Paket')}}
         </label>
-        <div class="row justify-content-left ml-0">
-            @foreach ($paket as $p)
+        <br>
+        @php
+        $paket = array('Lem','Baut','Kawat','Spiral');
+        @endphp
+        <div class="container" style="font-size: 14px;">
+            <label class="SemiBold mb-2 ml-0">
+                {{__('Jilid')}}
+            </label>
+            <div class="row justify-content-left ml-0">
+                @foreach ($paket as $p)
+                <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
+                    <input type="checkbox" name="checkbox_paket{{ $p }}" class="custom-control-input"
+                        id="checkboxPaket{{ $p }}">
+                    <label class="custom-control-label" for="checkboxPaket{{ $p }}">
+                        {{$p}}
+                        <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
+                            help
+                        </i>
+                    </label>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @php
+        $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transparan','Kertas Jeruk');
+        @endphp
+        <label class="SemiBold mt-3 mb-2 ml-0" style="font-size: 18px;">
+            {{__('Non-Paket')}}
+        </label>
+        <div class="row justify-content-left ml-0" style="font-size: 14px;">
+            @foreach ($nonPaket as $np)
             <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                <input type="checkbox" name="checkbox_paket{{ $p }}" class="custom-control-input"
-                    id="checkboxPaket{{ $p }}">
-                <label class="custom-control-label" for="checkboxPaket{{ $p }}">
-                    {{$p}}
+                <input type="checkbox" class="custom-control-input" id="checkboxNonPaket{{$np}}">
+                <label class="custom-control-label" for="checkboxNonPaket{{$np}}">
+                    {{$np}}
                     <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
                         help
                     </i>
@@ -314,514 +352,618 @@
             @endforeach
         </div>
     </div>
-    @php
-    $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transparan','Kertas Jeruk');
-    @endphp
-    <label class="SemiBold mt-3 mb-2 ml-0" style="font-size: 18px;">
-        {{__('Non-Paket')}}
-    </label>
-    <div class="row justify-content-left ml-0" style="font-size: 14px;">
-        @foreach ($nonPaket as $np)
-        <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-            <input type="checkbox" class="custom-control-input" id="checkboxNonPaket{{$np}}">
-            <label class="custom-control-label" for="checkboxNonPaket{{$np}}">
-                {{$np}}
-                <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
-                    help
-                </i>
-            </label>
-        </div>
-        @endforeach
-    </div>
-</div>
-<div id="pilihProduk" class="border-primary-purple my-custom-scrollbar-2 p-5" style="border-radius:5px;">
-    <div class="row row-cols-3">
-        @foreach ($produk as $p)
-            <div class="col-md-4 mb-4">
-                <div class="card shadow mb-2" onclick="document.getElementById('detailProduk').hidden = false; document.getElementById('pilihProduk').hidden = true;" style="border-radius: 10px;">
-                    <a class="text-decoration-none"
-                        {{-- onclick="document.getElementById('detailProduk').hidden = false" --}}
-                        {{-- href="{{ route('detail.produk',$p->id_produk) }}" --}}
-                        style="color: black;">
-                        <div class="text-center" style="position: relative;">
-                            <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
-                                width:75px;
-                                height:50px;
-                                border-radius:0px 0px 8px 8px;">
-                                    <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+    <div id="pilihProduk" class="border-primary-purple my-custom-scrollbar-2 p-5" style="border-radius:5px;">
+        <div class="row row-cols-3">
+            @foreach ($produk as $p)
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow mb-2" onclick="document.getElementById('detailProduk').hidden = false; document.getElementById('pilihProduk').hidden = true;" style="border-radius: 10px;">
+                        <a class="text-decoration-none"
+
+                            style="color: black;">
+                            <div class="text-center" style="position: relative;">
+                                <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
+                                    width:75px;
+                                    height:50px;
+                                    border-radius:0px 0px 8px 8px;">
+                                        <label class="font-weight-bold mb-1 mt-3" style="font-size: 12px;">{{__('Promo') }}</label>
+                                </div>
                             </div>
-                        </div>
-                        <i class="fa fa-heart fa-2x fa-responsive"
-                        style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                        </i>
-                        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                        style="height: 180px; border-radius: 10px 10px 0px 0px;"
-                        alt="Card image cap"/>
-                        <div class="card-body">
-                            <div class="row">
-                                <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$p->partner->nama_toko ?? '-'}}</label>
-                                <label class="col-md-auto card-text mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i> {{__('100 m') }}</label>
-                            </div>
-                            <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px; min-height:75px;">{{$p->nama ?? ''}}</label>
-                            <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{$p->partner->alamat_toko}}</label>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
-                                    @if ($p->berwarna === 0 && $p->hitam_putih === 1)
-                                        {{__('Hitam-Putih')}}
-                                    @elseif ($p->berwarna === 1 && $p->hitam_putih === 0)
-                                        {{__('Berwarna')}}
-                                    @elseif ($p->hitam_putih === 1 && $p->berwarna === 1)
-                                        {{__('Berwarna')}}
-                                    @else
-                                        {{__('-')}}
-                                    @endif
-                                </label>
-                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
-                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
-                                <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
-                            </div>
-                        </div>
-                        <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
-                            <div class="row justify-content-between">
-                                <div class="ml-3">
-                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                        Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                    </label>
-                                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
-                                        {{__('Hitam-Putih')}}
-                                    </label>
-                                    <br>
-                                    @if (!empty($p->harga_berwarna))
-                                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                            Rp. {{$p->harga_berwarna}}
-                                        </label>
-                                        <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
+                            <i class="fa fa-heart fa-2x fa-responsive"
+                            style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
+                            </i>
+                            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                            style="height: 180px; border-radius: 10px 10px 0px 0px;"
+                            alt="Card image cap"/>
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$p->partner->nama_toko ?? '-'}}</label>
+                                    <label class="col-md-auto card-text mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i> {{__('100 m') }}</label>
+                                </div>
+                                <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px; min-height:75px;">{{$p->nama ?? ''}}</label>
+                                <label class="card-text text-truncate-multiline" style="font-size: 18px;">{{$p->partner->alamat_toko}}</label>
+                                <div class="row justify-content-between ml-0 mr-0">
+                                    <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
+                                        @if ($p->berwarna === 0 && $p->hitam_putih === 1)
+                                            {{__('Hitam-Putih')}}
+                                        @elseif ($p->berwarna === 1 && $p->hitam_putih === 0)
                                             {{__('Berwarna')}}
-                                        </label>
-                                    @endif
-                                </div>
-                                <div class="mr-0 my-auto">
-                                    <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
-                                        <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
-                                        {{$p->rating ?? '-'}}
+                                        @elseif ($p->hitam_putih === 1 && $p->berwarna === 1)
+                                            {{__('Berwarna')}}
+                                        @else
+                                            {{__('-')}}
+                                        @endif
                                     </label>
+                                    <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$p->jenis_kertas ?? ''}}</label>
+                                    <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label>
+                                    <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$p->jenis_printer ?? ''}}</label>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div>
-<div id="detailProduk" hidden>
-    <div class="border-primary-purple my-custom-scrollbar-2 p-5 mb-5" style="border-radius:5px;">
-        <div class="card shadow mt-0 ml-0 mb-4 p-4">
-            <div class="row justify-content-between">
-                <div class="col-md-8">
-                    <label class="text-break font-weight-bold" style="font-size: 24px;">
-                        {{__('Percetakan IMAHA Productions') }}
-                    </label>
-                    <label class="text-truncate-multiline mb-4" style="font-size: 18px;">
-                        {{__('Jalan Seksama No 95A Medan Denai, Medan, Sumatera Utara') }}
-                    </label>
-                    <div class="row justify-content-left mb-4 ml-0" style="font-size: 14px;">
-                        <label class="mr-4">
-                            <i class="align-middle material-icons mr-1">
-                                directions_run
-                            </i>
-                            {{__('Ambil di Tempat') }}
-                        </label>
-                        <label class="mr-4">
-                            <i class="align-middle material-icons mr-1">
-                                local_shipping
-                            </i>
-                            {{__('Antar ke Rumah') }}
-                        </label>
-                        <label class="">
-                            <i class="align-middle material-icons mr-1">
-                                architecture
-                            </i>
-                            {{__('Alat Tulis Kantor') }}
-                        </label>
-
-                    </div>
-                </div>
-                <div class="col-md-auto mt-2">
-                    <div class="row justify-content-right">
-                        <i class="text-right material-icons md-32 mr-4">location_on</i>
-                        <i class="text-right material-icons md-32 mr-5">favorite</i>
-                        <i class="text-right material-icons md-32 mr-4" onclick="document.getElementById('detailProduk').hidden = true; document.getElementById('pilihProduk').hidden = false;">close</i>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-between">
-                <div class="col-6">
-                    <div class="mb-4" style="position:relative;">
-                        <img class="img-responsive"
-                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
-                            style="width:100%; height:200px;">
-                        <label class="text-break font-weight-bold" style="position: absolute;
-                                        top: 10%;
-                                        left: 0%;
-                                        width: 100%;
-                                        height: 100%;
-                                        max-width: 440px;
-                                        font-size:24px;
-                                        color: black;
-                                        display:flex;
-                                        justify-content: top;
-                                        flex-direction: column;
-                                        text-align: center;">
-                            {{__('Cetak Dokumen Hitam Putih') }}
-                        </label>
-                    </div>
-                    <div class="row justify-content-center mb-5">
-                        <span class="align-self-center col-md-1 ml-0 mr-0">
-                            <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="prev">
-                                <i class="material-icons md-32">
-                                    chevron_left
-                                </i>
-                            </a>
-                        </span>
-
-                        <!--Carousel Wrapper-->
-                        <div id="multi-item-foto-produk" class="col-md-9 carousel slide carousel-multi-item"
-                            data-ride="carousel">
-
-                            <!--Slides-->
-                            <div class="carousel-inner" role="listbox">
-
-                                {{-- @foreach ($collection as $item) --}}
-                                <div class="carousel-item active">
-
-                                    <div class="row">
-
-                                        {{-- @foreach ($collection as $item) --}}
-                                        <div class="col-md-auto mr-0">
-                                            <img class="img-responsive"
-                                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                                alt="" style="width:60px; height:60px;">
-                                        </div>
-                                        {{-- @endforeach --}}
-
+                            <div class="card-footer card-footer-primary" style="border-radius: 0px 0px 10px 10px;">
+                                <div class="row justify-content-between">
+                                    <div class="ml-3">
+                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
+                                            Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                        </label>
+                                        <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 12px; border-radius:5px;">
+                                            {{__('Hitam-Putih')}}
+                                        </label>
+                                        <br>
+                                        @if (!empty($p->harga_berwarna))
+                                            <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                Rp. {{$p->harga_berwarna}}
+                                            </label>
+                                            <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1" style="font-size: 12px; border-radius:5px;">
+                                                {{__('Berwarna')}}
+                                            </label>
+                                        @endif
+                                    </div>
+                                    <div class="mr-0 my-auto">
+                                        <label class="card-text mt-0 mr-4 SemiBold" style="font-size: 18px;">
+                                            <i class="material-icons md-24 mr-1 align-middle" style="color: #FCFF82">star</i>
+                                            {{$p->rating ?? '-'}}
+                                        </label>
                                     </div>
                                 </div>
-                                {{-- @endforeach --}}
-
                             </div>
-                            <!--/.Slides-->
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div id="detailProduk" hidden>
+        <div class="border-primary-purple my-custom-scrollbar-2 p-5 mb-5" style="border-radius:5px;">
+            <div class="card shadow mt-0 ml-0 mb-4 p-4">
+                <div class="row justify-content-between">
+                    <div class="col-md-8">
+                        <label class="text-break font-weight-bold" style="font-size: 24px;">
+                            {{__('Percetakan IMAHA Productions') }}
+                        </label>
+                        <label class="text-truncate-multiline mb-4" style="font-size: 18px;">
+                            {{__('Jalan Seksama No 95A Medan Denai, Medan, Sumatera Utara') }}
+                        </label>
+                        <div class="row justify-content-left mb-4 ml-0" style="font-size: 14px;">
+                            <label class="mr-4">
+                                <i class="align-middle material-icons mr-1">
+                                    directions_run
+                                </i>
+                                {{__('Ambil di Tempat') }}
+                            </label>
+                            <label class="mr-4">
+                                <i class="align-middle material-icons mr-1">
+                                    local_shipping
+                                </i>
+                                {{__('Antar ke Rumah') }}
+                            </label>
+                            <label class="">
+                                <i class="align-middle material-icons mr-1">
+                                    architecture
+                                </i>
+                                {{__('Alat Tulis Kantor') }}
+                            </label>
 
                         </div>
-                        <!--/.Carousel Wrapper-->
-
-                        <span class="align-self-center col-md-2">
-                            <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="next">
-                                <i class="material-icons md-32">
-                                    chevron_right
-                                </i>
-                            </a>
-                        </span>
                     </div>
-                    <label class="font-weight-bold mb-4" style="font-size: 24px;">
-                        {{__('Fitur') }}
-                    </label>
-                    <div class="bg-light-purple p-4 mb-4" style="border-radius:5px;
-                                    font-size: 18px;">
-                        <label class="mb-2">
-                            {{__('Harga Produk') }}
+                    <div class="col-md-auto mt-2">
+                        <div class="row justify-content-right">
+                            <i class="text-right material-icons md-32 mr-4">location_on</i>
+                            <i class="text-right material-icons md-32 mr-5">favorite</i>
+                            <i class="text-right material-icons md-32 mr-4" onclick="document.getElementById('detailProduk').hidden = true; document.getElementById('pilihProduk').hidden = false;">close</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-6">
+                        <div class="mb-4" style="position:relative;">
+                            <img class="img-responsive"
+                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
+                                style="width:100%; height:200px;">
+                            <label class="text-break font-weight-bold" style="position: absolute;
+                                            top: 10%;
+                                            left: 0%;
+                                            width: 100%;
+                                            height: 100%;
+                                            max-width: 440px;
+                                            font-size:24px;
+                                            color: black;
+                                            display:flex;
+                                            justify-content: top;
+                                            flex-direction: column;
+                                            text-align: center;">
+                                {{__('Cetak Dokumen Hitam Putih') }}
+                            </label>
+                        </div>
+                        <div class="row justify-content-center mb-5">
+                            <span class="align-self-center col-md-1 ml-0 mr-0">
+                                <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="prev">
+                                    <i class="material-icons md-32">
+                                        chevron_left
+                                    </i>
+                                </a>
+                            </span>
+
+
+                            <div id="multi-item-foto-produk" class="col-md-9 carousel slide carousel-multi-item"
+                                data-ride="carousel">
+
+
+                                <div class="carousel-inner" role="listbox">
+
+
+                                    <div class="carousel-item active">
+
+                                        <div class="row">
+
+
+                                            <div class="col-md-auto mr-0">
+                                                <img class="img-responsive"
+                                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                                                    alt="" style="width:60px; height:60px;">
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <span class="align-self-center col-md-2">
+                                <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="next">
+                                    <i class="material-icons md-32">
+                                        chevron_right
+                                    </i>
+                                </a>
+                            </span>
+                        </div>
+                        <label class="font-weight-bold mb-4" style="font-size: 24px;">
+                            {{__('Fitur') }}
+                        </label>
+                        <div class="bg-light-purple p-4 mb-4" style="border-radius:5px;
+                                        font-size: 18px;">
+                            <label class="mb-2">
+                                {{__('Harga Produk') }}
+                            </label>
+                            <br>
+                            <label class="font-weight-bold mb-4">
+                                {{__('Rp. 2.000 / hal') }}
+                            </label>
+                            <div class="row justify-content-left ml-0 mb-4">
+
+
+                                <label class="mr-4">
+                                    <i class="material-icons align-middle mr-2">
+                                        color_lens
+                                    </i>
+                                    {{__('Hitam-Putih') }}
+                                </label>
+                                <label class="mr-4">
+                                    <i class="material-icons align-middle mr-2">
+                                        description
+                                    </i>
+                                    {{__('A4 HVS') }}
+                                </label>
+                                <label class="mr-4">
+                                    <i class="material-icons align-middle mr-2">
+                                        print
+                                    </i>
+                                    {{__('Ink Jet') }}
+                                </label>
+                                <label class="mr-4">
+                                    <i class="material-icons align-middle mr-2">
+                                        menu_book
+                                    </i>
+                                    {{__('Jilid') }}
+                                </label>
+
+
+                            </div>
+
+                            <div class="row justify-content-between mb-2">
+                                <div class="col-md-auto text-left">
+                                    <label class="mb-0 ml-0">{{__('Timbal Balik') }}</label>
+                                </div>
+                                <div class="col text-right">
+                                    <label class="font-weight-bold mb-0">+ Rp. 2k / Hal</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="card-text SemiBold mb-2" style="font-size: 18px;">
+                            {{__('Paket')}}
+                        </label>
+
+
+                        <div class="row justify-content-between mb-4">
+                            <label class="col-md-5 text-break mb-2" style="font-size: 18px;">
+                                {{__('Jilid')}}
+                            </label>
+                            <i class="col-md-auto material-icons md-18 mt-1" style="color:#C4C4C4">
+                                help
+                            </i>
+                            <label class="col-md-auto text-break font-weight-bold mb-2" style="font-size: 14px;">
+                                {{__('+ Rp. 2k / Hal')}}
+                            </label>
+                        </div>
+
+
+
+                        <label class="card-text SemiBold mb-2" style="font-size: 18px;">
+                            {{__('Non-Paket')}}
+                        </label>
+
+
+                        <div class="row justify-content-between mb-4">
+                            <label class="col-md-5 text-break mb-2" style="font-size: 18px;">
+                                {{__('Kertas Jeruk')}}
+                            </label>
+                            <i class="col-md-auto material-icons md-18 mt-1" style="color:#C4C4C4">
+                                help
+                            </i>
+                            <label class="col-md-auto text-break font-weight-bold mb-2" style="font-size: 14px;">
+                                {{__('+ Rp. 2k / Hal')}}
+                            </label>
+                        </div>
+
+
+                        <div class="bg-light-purple pl-4 pr-4 pb-4 pt-4 mb-5" style="border-radius:5px;
+                                        ">
+                            <label class="SemiBold mb-2" style="font-size: 18px;">
+                                {{__('Deskripsi Produk')}}
+                            </label>
+                            <p class="mb-4" style="font-size: 14px;">
+                                {{__('Produk ini sudah dibuat 1 paket dengan keterangan yang ada diatas, apabila kamu ingin
+                                        membuat permintaan khusus silahkan tulis di kolom catatan tambahan yang sudah disediakan
+                                        pada konfigurasi file kamu sebelum melakukan pemesanan atau apabila produk ini kurang
+                                        sesuai dengan keinginan tambahan kamu maka silahkan kamu memilih produk lain yang sesuai
+                                        dengan tambahan yang anda inginkan. Terimakasih:):)')}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4" style="position:relative;">
+                            <img class="img-responsive"
+                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
+                                style="width:100%; height:200px;">
+                            <label class="text-break font-weight-bold" style="position: absolute;
+                                            top: 10%;
+                                            left: 0%;
+                                            width: 100%;
+                                            height: 100%;
+                                            max-width: 440px;
+                                            font-size:24px;
+                                            color: black;
+                                            display:flex;
+                                            justify-content: top;
+                                            flex-direction: column;
+                                            text-align: center;">
+                                {{__('IMAHA Productions') }}
+                            </label>
+                        </div>
+                        <div class="row justify-content-center mb-5">
+                            <span class="align-self-center col-md-1 ml-0 mr-0">
+                                <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="prev">
+                                    <i class="material-icons md-32">
+                                        chevron_left
+                                    </i>
+                                </a>
+                            </span>
+
+
+                            <div id="multi-item-foto-produk" class="col-md-9 carousel slide carousel-multi-item"
+                                data-ride="carousel">
+
+
+                                <div class="carousel-inner" role="listbox">
+
+
+                                    <div class="carousel-item active">
+
+                                        <div class="row">
+
+
+                                            <div class="col-md-auto mr-0">
+                                                <img class="img-responsive"
+                                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                                                    alt="" style="width:60px; height:60px;">
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <span class="align-self-center col-md-2">
+                                <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="next">
+                                    <i class="material-icons md-32">
+                                        chevron_right
+                                    </i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="row justify-content-left mb-4">
+                            <div class="col-md-auto">
+                                <img src="{{ url('img/buka.png') }}" class="align-self-center img-responsive mt-2" alt=""
+                                    width="100px" height="50px">
+                            </div>
+                            <div class="col-md-3 ml-0" style="font-size: 18px;">
+                                <label class="mt-0">
+                                    {{__('Sampai Jam 22:00 WIB')}}
+                                </label>
+                            </div>
+                            <div class="col-md-auto mb-2">
+                                <div class="row justify-content-between">
+                                    <label class="col-md-auto SemiBold mr-4" style="font-size: 18px;">
+                                        <i class="material-icons md-24 align-middle" style="color:#FCFF82;">
+                                            star
+                                        </i>
+                                        {{__('2 / 5')}}
+                                    </label>
+                                    <label class="col-md-auto text-right align-self-center" style="font-size: 14px;">
+                                        <a class="text-primary-purple" href="{{ url('member/ulasan-produk') }}">
+                                            {{__('Ulasan')}}
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-left ml-0 mb-4">
+                            <img src="https://ptetutorials.com/images/user-profile.png" width="50" height="50" alt="no logo">
+                            <label class="align-self-center font-weight-bold mb-0 ml-4" style="font-size: 18px;">
+                                {{__('Ali Susi') }}
+                            </label>
+                        </div>
+                        <div class="card shadow-sm pl-4 pr-4 pt-2 pb-2 mb-4" style="font-size: 18px;">
+                            <p class="card-text">
+                                {{__('“ Kami menawarkan produk-produk berkualitas tinggi yang sudah
+                                        dipercayai oleh artis-artis top seperti; Chris Evans, Lucinta Luna (yang baru saja kena
+                                        tangkap), Toby Maguire (mantan pemeran Spiderman), dan masih banyak lagi. Pokoknya
+                                        mantappu jiwa produk yang kami tawarkan. “') }}
+                            </p>
+                        </div>
+                        <div class="text-right mb-0">
+                            <button class="btn btn-primary-yellow font-weight-bold pl-4 pr-4" style="border-radius:30px;
+                                            font-size:14px;">{{__('Laporkan') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+        <label class="font-weight-bold" style="font-size:36px;">{{__('Produk') }}
+        </label>
+        <div class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
+            <div class="text-center" style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4" style="border-radius:30px; font-size:24px;">
+                    <i class="material-icons md-36 align-middle mr-2">print</i>{{__('Pilih Produk Percetakan')}}
+                </button>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-md-4">
+                    @include('member.card_produk')
+                </div>
+                <div class="col-md-8">
+                    <div class="ml-2">
+                        <div class="text-right">
+                            <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4" style="border-radius:35px;font-size: 16px;" onclick="openDialog()">
+                                {{__('Ubah Produk') }}
+                            </button>
+                        </div>
+                        <br>
+                        <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Detail') }}
                         </label>
                         <br>
-                        <label class="font-weight-bold mb-4">
-                            {{__('Rp. 2.000 / hal') }}
+                        <div class="row justify-content-between ml-0 mr-0">
+                            <label class="" style="font-size:16px;">{{__('Berwarna') }}
+                            </label>
+                            <label class="" style="font-size:16px;">{{__('Rp. 1.000 / Halaman') }}
+                            </label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0 mb-4">
+                            <label class="" style="font-size:16px;">{{__('Hitam Putih') }}
+                            </label>
+                            <label class="" style="font-size:16px;">{{__('Rp. 500 / Halaman') }}
+                            </label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0">
+                            <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}
+                            </label>
+                            <label class="" style="font-size:16px;">{{__('Rp. 1.000 / Halaman') }}
+                            </label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0 mb-4">
+                            <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}
+                            </label>
+                            <label class="" style="font-size:16px;">{{__('Rp. 500 / Halaman') }}
+                            </label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0 mb-5">
+                            <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}
+                            </label>
+                            <label class="" style="font-size:16px;">{{__('10%') }}
+                            </label>
+                        </div>
+                        <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur Tambahan') }}
                         </label>
-                        <div class="row justify-content-left ml-0 mb-4">
+                        <div class="row justify-content-between ml-0 mr-0">
+                            <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
+                                <input type="checkbox" name="checkbox_fitur" class="custom-control-input"
+                                    id="checkboxFitur">
+                                <label class="custom-control-label" for="checkboxFitur">
+                                    {{__('Jilid Lakban Hitam')}}
+                                    <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
+                                        help
+                                    </i>
+                                </label>
+                            </div>
+                            <label class="" style="font-size:16px;">{{__('Rp. 10.500') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-primary-yellow mt-4 mb-4 p-2" style="border-radius: 5px; width:100%">
+            <label class="my-auto" style="font-size: 16px;">
+                <i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4;">warning</i>
+                {{__('Silahkan unggah file dokumen anda untuk melanjutkan proses konfigurasi file')}}
+            </label>
+        </div>
+        <label class="font-weight-bold mt-5 mb-4" style="font-size:36px;">{{__('Detail Jenis Warna Setiap Halaman') }}
+        </label>
+        <div class="row justify-content-between ml-0 mr-0 ">
+            <div class="col-md-6">
+                <table class="table table-hover text-center" style="border-radius:25px 25px 15px 15px;">
+                    <thead class="bg-primary-purple text-white align-self-center">
+                        <tr style="font-size: 18px;">
+                            <th class="align-middle" scope="col-md-auto">{{__('Halaman') }}</th>
+                            <th class="align-middle" scope="col-md-auto">{{__('Persentase kandungan Berwarna') }}</th>
+                            <th class="align-middle" scope="col-md-auto">{{__('Jenis Warna Halaman') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 14px;">
+
+                        {{-- @foreach ($collection as $item) --}}
+                        <tr>
 
                             {{-- @foreach ($collection as $item) --}}
-                            <label class="mr-4">
-                                <i class="material-icons align-middle mr-2">
-                                    color_lens
-                                </i>
-                                {{__('Hitam-Putih') }}
-                            </label>
-                            <label class="mr-4">
-                                <i class="material-icons align-middle mr-2">
-                                    description
-                                </i>
-                                {{__('A4 HVS') }}
-                            </label>
-                            <label class="mr-4">
-                                <i class="material-icons align-middle mr-2">
-                                    print
-                                </i>
-                                {{__('Ink Jet') }}
-                            </label>
-                            <label class="mr-4">
-                                <i class="material-icons align-middle mr-2">
-                                    menu_book
-                                </i>
-                                {{__('Jilid') }}
-                            </label>
+                            <td scope="row">{{__('1') }}</td>
+                            <td>{{__('25%') }}</td>
+                            <td>{{__('Berwarna') }}</td>
                             {{-- @endforeach --}}
 
-                        </div>
+                        </tr>
+                        {{-- @endforeach --}}
 
-                        <div class="row justify-content-between mb-2">
-                            <div class="col-md-auto text-left">
-                                <label class="mb-0 ml-0">{{__('Timbal Balik') }}</label>
-                            </div>
-                            <div class="col text-right">
-                                <label class="font-weight-bold mb-0">+ Rp. 2k / Hal</label>
-                            </div>
-                        </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 bg-primary-yellow p-2" style="border-radius: 5px;">
+                <div class="row justify-content-left ml-0 mr-0">
+                    <div class="col-md-auto">
+                        <i class="material-icons md-18 align-middle mr-0" style="color:#C4C4C4">warning</i>
                     </div>
-
-                    <label class="card-text SemiBold mb-2" style="font-size: 18px;">
-                        {{__('Paket')}}
-                    </label>
-
-                    {{-- @foreach ($collection as $item) --}}
-                    <div class="row justify-content-between mb-4">
-                        <label class="col-md-5 text-break mb-2" style="font-size: 18px;">
-                            {{__('Jilid')}}
+                    <div class="col-md-10">
+                        <label style="font-size: 16px;">
+                            {{__('File dokumen anda dinyatakan memiliki 2 halaman berwarna karena melebihi nilai toleransi kandungan warna yang ditetapkan oleh produk yang anda pilih dan 2 halaman hitam-putih karena tidak melebihi nilai toleransi kandungan warna yang ditetapkan oleh produk yang anda pilih.')}}
                         </label>
-                        <i class="col-md-auto material-icons md-18 mt-1" style="color:#C4C4C4">
-                            help
-                        </i>
-                        <label class="col-md-auto text-break font-weight-bold mb-2" style="font-size: 14px;">
-                            {{__('+ Rp. 2k / Hal')}}
-                        </label>
-                    </div>
-                    {{-- @endforeach --}}
-
-
-                    <label class="card-text SemiBold mb-2" style="font-size: 18px;">
-                        {{__('Non-Paket')}}
-                    </label>
-
-                    {{-- @foreach ($collection as $item) --}}
-                    <div class="row justify-content-between mb-4">
-                        <label class="col-md-5 text-break mb-2" style="font-size: 18px;">
-                            {{__('Kertas Jeruk')}}
-                        </label>
-                        <i class="col-md-auto material-icons md-18 mt-1" style="color:#C4C4C4">
-                            help
-                        </i>
-                        <label class="col-md-auto text-break font-weight-bold mb-2" style="font-size: 14px;">
-                            {{__('+ Rp. 2k / Hal')}}
-                        </label>
-                    </div>
-                    {{-- @endforeach --}}
-
-                    <div class="bg-light-purple pl-4 pr-4 pb-4 pt-4 mb-5" style="border-radius:5px;
-                                    ">
-                        <label class="SemiBold mb-2" style="font-size: 18px;">
-                            {{__('Deskripsi Produk')}}
-                        </label>
-                        <p class="mb-4" style="font-size: 14px;">
-                            {{__('Produk ini sudah dibuat 1 paket dengan keterangan yang ada diatas, apabila kamu ingin
-                                    membuat permintaan khusus silahkan tulis di kolom catatan tambahan yang sudah disediakan
-                                    pada konfigurasi file kamu sebelum melakukan pemesanan atau apabila produk ini kurang
-                                    sesuai dengan keinginan tambahan kamu maka silahkan kamu memilih produk lain yang sesuai
-                                    dengan tambahan yang anda inginkan. Terimakasih:):)')}}
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-4" style="position:relative;">
-                        <img class="img-responsive"
-                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
-                            style="width:100%; height:200px;">
-                        <label class="text-break font-weight-bold" style="position: absolute;
-                                        top: 10%;
-                                        left: 0%;
-                                        width: 100%;
-                                        height: 100%;
-                                        max-width: 440px;
-                                        font-size:24px;
-                                        color: black;
-                                        display:flex;
-                                        justify-content: top;
-                                        flex-direction: column;
-                                        text-align: center;">
-                            {{__('IMAHA Productions') }}
-                        </label>
-                    </div>
-                    <div class="row justify-content-center mb-5">
-                        <span class="align-self-center col-md-1 ml-0 mr-0">
-                            <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="prev">
-                                <i class="material-icons md-32">
-                                    chevron_left
-                                </i>
-                            </a>
-                        </span>
-
-                        <!--Carousel Wrapper-->
-                        <div id="multi-item-foto-produk" class="col-md-9 carousel slide carousel-multi-item"
-                            data-ride="carousel">
-
-                            <!--Slides-->
-                            <div class="carousel-inner" role="listbox">
-
-                                {{-- @foreach ($collection as $item) --}}
-                                <div class="carousel-item active">
-
-                                    <div class="row">
-
-                                        {{-- @foreach ($collection as $item) --}}
-                                        <div class="col-md-auto mr-0">
-                                            <img class="img-responsive"
-                                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                                alt="" style="width:60px; height:60px;">
-                                        </div>
-                                        {{-- @endforeach --}}
-
-                                    </div>
-                                </div>
-                                {{-- @endforeach --}}
-
-                            </div>
-                            <!--/.Slides-->
-
-                        </div>
-                        <!--/.Carousel Wrapper-->
-
-                        <span class="align-self-center col-md-2">
-                            <a class="text-primary-purple" href="#multi-item-foto-produk" role="button" data-slide="next">
-                                <i class="material-icons md-32">
-                                    chevron_right
-                                </i>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="row justify-content-left mb-4">
-                        <div class="col-md-auto">
-                            <img src="{{ url('img/buka.png') }}" class="align-self-center img-responsive mt-2" alt=""
-                                width="100px" height="50px">
-                        </div>
-                        <div class="col-md-3 ml-0" style="font-size: 18px;">
-                            <label class="mt-0">
-                                {{__('Sampai Jam 22:00 WIB')}}
-                            </label>
-                        </div>
-                        <div class="col-md-auto mb-2">
-                            <div class="row justify-content-between">
-                                <label class="col-md-auto SemiBold mr-4" style="font-size: 18px;">
-                                    <i class="material-icons md-24 align-middle" style="color:#FCFF82;">
-                                        star
-                                    </i>
-                                    {{__('2 / 5')}}
-                                </label>
-                                <label class="col-md-auto text-right align-self-center" style="font-size: 14px;">
-                                    <a class="text-primary-purple" href="{{ url('member/ulasan-produk') }}">
-                                        {{__('Ulasan')}}
-                                    </a>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-left ml-0 mb-4">
-                        <img src="https://ptetutorials.com/images/user-profile.png" width="50" height="50" alt="no logo">
-                        <label class="align-self-center font-weight-bold mb-0 ml-4" style="font-size: 18px;">
-                            {{__('Ali Susi') }}
-                        </label>
-                    </div>
-                    <div class="card shadow-sm pl-4 pr-4 pt-2 pb-2 mb-4" style="font-size: 18px;">
-                        <p class="card-text">
-                            {{__('“ Kami menawarkan produk-produk berkualitas tinggi yang sudah
-                                    dipercayai oleh artis-artis top seperti; Chris Evans, Lucinta Luna (yang baru saja kena
-                                    tangkap), Toby Maguire (mantan pemeran Spiderman), dan masih banyak lagi. Pokoknya
-                                    mantappu jiwa produk yang kami tawarkan. “') }}
-                        </p>
-                    </div>
-                    <div class="text-right mb-0">
-                        <button class="btn btn-primary-yellow font-weight-bold pl-4 pr-4" style="border-radius:30px;
-                                        font-size:14px;">{{__('Laporkan') }}
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row mr-0 mb-5">
-        <div class="col-md-6 pl-2 pr-4 pb-4 pt-4 mb-4" style="border-radius:5px;">
-            <label class="font-weight-bold mb-2 ml-0" style="font-size: 24px;">
-                {{__('Catatan Tambahan') }}
-            </label>
-            <div class="input-group mb-3" style="height:120px;">
-                <textarea class="form-control" style="font-size: 18px;" aria-label="Deskripsi Ulasan">
-                        </textarea>
+
+        <div class="row justify-content-between ml-0 mr-0 mt-5 mb-5">
+            <div class="col-md-6 pl-2 pr-4 pb-4 pt-4 mb-4" style="border-radius:5px;">
+                <label class="font-weight-bold mb-2 ml-0" style="font-size: 24px;">
+                    {{__('Catatan Tambahan') }}
+                </label>
+                <div class="input-group mb-3" style="height:120px;">
+                    <textarea class="form-control" style="font-size: 18px;" aria-label="Deskripsi Ulasan"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6 bg-light-purple pl-4 pr-4 pt-2 pb-2 mt-4 mr-0" style="border-radius:10px;
+                            font-size:18px;">
+                <label class="SemiBold mb-4" style="font-size:24px;">
+                    {{__('Rincian Harga') }}
+                </label>
+                <div class="row justify-content-between mb-2">
+                    <div class="col-md-auto text-left">
+                        <label class="mb-2">
+                            {{__('5 Halaman Hitam Putih') }}
+                        </label>
+                        <br>
+                        <label class="mb-2">
+                            {{__('2 Halaman Berwarna') }}
+                        </label>
+                    </div>
+                    <div class="col-md-auto text-right">
+                        <label class="SemiBold mb-2">
+                            {{__('Rp. 1.000') }}
+                        </label>
+                        <br>
+                        <label class="SemiBold mb-2">
+                            {{__('Rp. 2.000') }}
+                        </label>
+                    </div>
+                </div>
+                <label class="SemiBold mb-2">
+                    {{__('Fitur') }}
+                </label>
+                <div class="row justify-content-between">
+                    <div class="col-md-auto text-left">
+                        <label class="mb-2">
+                            {{__('Jilid Lem') }}
+                        </label>
+                    </div>
+                    <div class="col-md-auto text-right">
+                        <label class="SemiBold mb-2">
+                            {{__('Rp. 2.000') }}
+                        </label>
+                    </div>
+                </div>
+                <div class="row row-bordered"></div>
+                <div class="row justify-content-between SemiBold mt-2">
+                    <div class="col-md-auto text-left">
+                        <label>Total Harga Pesanan Kamu</label>
+                    </div>
+                    <div class="col-md-auto text-right">
+                        <label>Rp. 20.000</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6 bg-light-purple pl-4 pr-4 pt-2 pb-2 mt-4 mr-0" style="border-radius:10px;
-                        font-size:18px;">
-            <label class="SemiBold mb-4" style="font-size:24px;">
-                {{__('Rincian Harga') }}
-            </label>
-            <div class="row justify-content-between mb-2">
-                <div class="col-md-auto text-left">
-                    <label class="mb-2">
-                        {{__('Total Halaman') }}
-                    </label>
-                    <br>
-                    <label class="mb-2">
-                        {{__('Harga Cetak per Halaman') }}
-                    </label>
-                </div>
-                <div class="col-md-auto text-right">
-                    <label class="SemiBold mb-2">
-                        {{__('2') }}
-                    </label>
-                    <br>
-                    <label class="SemiBold mb-2">
-                        {{__('Rp. 2.000') }}
-                    </label>
-                </div>
-            </div>
-            <label class="SemiBold mb-2">
-                {{__('Fitur Tambahan') }}
-            </label>
-            {{-- @foreach ($collection as $item) --}}
-            <div class="row justify-content-between">
-                <div class="col-md-auto text-left">
-                    <label class="mb-2">
-                        {{__('Jilid Lem') }}
-                    </label>
-                </div>
-                <div class="col-md-auto text-right">
-                    <label class="SemiBold mb-2">
-                        {{__('Rp. 2.000') }}
-                    </label>
-                </div>
-            </div>
-            {{-- @endforeach --}}
-            <div class="row row-bordered"></div>
-            <div class="row justify-content-between SemiBold mt-2">
-                <div class="col-md-auto text-left">
-                    <label>Total Harga Pesanan Kamu</label>
-                </div>
-                <div class="col-md-auto text-right">
-                    <label>Rp. 20.000</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-end ml-0 mr-0 mb-5">
-        <div class="form-group mb-3 mr-4">
-            <button class="btn btn-outline-purple font-weight-bold pl-4 pr-4" style="border-radius:30px;
-                    font-size:24px;">
-                {{__('Simpan Konfigurasi')}}
-            </button>
-        </div>
-        <div class="form-group mb-3">
-            <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4" style="border-radius:30px;
+        <div class="row justify-content-between ml-0 mr-0 mt-2 mb-5">
+            <div class="form-group mb-3 mr-2">
+                <button class="btn btn-outline-danger-primary font-weight-bold pl-4 pr-4" style="border-radius:30px;
                         font-size:24px;">
-                {{__('Simpan dan Lanjutkan')}}
-            </button>
+                    {{__('Hapus Konfigurasi')}}
+                </button>
+            </div>
+            <div class="form-group mb-3 mr-2">
+                <button class="btn btn-outline-purple font-weight-bold pl-4 pr-4" style="border-radius:30px;
+                        font-size:24px;">
+                    {{__('Simpan Konfigurasi')}}
+                </button>
+            </div>
+            <div class="form-group mb-3">
+                <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4" style="border-radius:30px;
+                            font-size:24px;">
+                    {{__('Simpan dan Lanjutkan')}}
+                </button>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 @endsection
 

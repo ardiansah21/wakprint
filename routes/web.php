@@ -197,6 +197,8 @@ Route::resource('pdf', 'PdfController');
 
 Route::post('store2', 'PdfController@store2')->name('store2');
 
+// Route::get('/konfigurasi-file', 'MemberController@tesKonfigurasiFile')->name('tes.konfigurasi.file');
+
 //PENGUJIAN
 Route::get('pengujian', 'PengujianController@index')->name('pengujian');
 Route::post('pengujian/store', 'PengujianController@store')->name('pengujian.store');

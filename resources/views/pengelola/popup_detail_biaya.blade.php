@@ -118,6 +118,13 @@
                     </div>
                     {{-- @endforeach --}}
 
+                    <label class="font-weight-bold mt-2 mb-2">
+                        {{__('Catatan Tambahan') }}
+                    </label>
+                    <label class="mt-2 mb-2">
+                        {{__('Yang rapi yah bang jangan sampek sobek sobek.') }}
+                    </label>
+
                     <div class="row row-bordered mt-2 mb-4">
                     </div>
 

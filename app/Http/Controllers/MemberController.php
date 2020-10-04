@@ -111,6 +111,19 @@ class MemberController extends Controller
         ]);
     }
 
+    // public function tesKonfigurasiFile()
+    // {
+    //     $produk = Produk::all();
+    //     $partner = Pengelola_Percetakan::all();
+    //     // $fitur = json_decode($produk->fitur, true);
+    //     return view('member.konfigurasi_file_lanjutan', [
+    //         // 'pdf' => $pdf,
+    //         'produk' => $produk,
+    //         'partner' => $partner
+    //         // 'fitur' => $fitur,
+    //     ]);
+    // }
+
     public function pencarian(Request $request)
     {
         // $produk = Produk::paginate(4);

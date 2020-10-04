@@ -20,7 +20,7 @@ function set_active($uri, $output = 'active')
 
 function cekWarna($path, $percenMinimum = 0)
 {
-    ini_set('max_execution_time', 3000000);
+    ini_set('max_execution_time', 3000);
     $start = microtime(true);
 
     $totalPageGray = 0;
@@ -109,6 +109,7 @@ function cekWarna($path, $percenMinimum = 0)
 
 function cekWarnaNew($path, $percenMinimum = 0)
 {
+    ini_set('max_execution_time', 3000);
     $start = microtime(true);
 
     $totalPageGray = 0;

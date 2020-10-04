@@ -5,6 +5,9 @@
 {{-- @foreach ($produk as $p) --}}
 @php
     $member = Auth::user();
+    foreach ($produk as $p) {
+
+    }
 @endphp
 <div class="card shadow mb-2" style="border-radius: 10px;">
     {{-- <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;"> --}}
