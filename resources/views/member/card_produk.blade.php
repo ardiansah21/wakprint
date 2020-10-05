@@ -3,7 +3,12 @@
 {{-- @section('content') --}}
 
 {{-- @foreach ($produk as $p) --}}
+@php
+    $member = Auth::user();
+    foreach ($produk as $p) {
 
+    }
+@endphp
 <div class="card shadow mb-2" style="border-radius: 10px;">
     {{-- <a class="text-decoration-none" href="{{ route('detail.produk',$p->id_produk) }}" style="color: black;"> --}}
         @if (!empty($p->jumlah_diskon))
@@ -25,22 +30,21 @@
                 </div>
             </div>
         @endif
-        {{-- <form id="favorit-form" action="{{ route('partner.ubah-status') }}" method="POST"> --}}
-            {{-- @csrf --}}
+        <form id="favorit-form" action="{{ route('favorit.status',$p->id_produk) }}" method="POST">
+            @csrf
             {{-- <label class="switch"> --}}
             {{-- <input id="statusFavorit" class="statusFavorit" type="checkbox" value="{{$p->id_produk}}" name="status_favorit" onchange="event.preventDefault(); document.getElementById('favorit-form').submit();"
                 checked hidden> --}}
             {{-- </label> --}}
 
             <input id="id_produk" name="id_produk" value="{{$p->id_produk}}" hidden>
-            {{-- <form action="{{route('favorit.status')}}" method="POST">
-                @csrf
+            {{-- @if ($p->id_produk === $member->produk_favorit['produk']['id_produk'])
+                <button type="submit" class="btn fa fa-heart fa-2x fa-responsive text-danger cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
+            @else --}}
+                <button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
+            {{-- @endif --}}
 
-            </form> --}}
-            <i class="fa fa-heart fa-2x fa-responsive cursor-pointer" onclick="window.location.href='{{route('favorit.status')}}'"
-                style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-            </i>
-        {{-- </form> --}}
+        </form>
 
         <img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
             onclick="window.location.href='{{ route('detail.produk',$p->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px;"
