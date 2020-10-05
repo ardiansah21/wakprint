@@ -201,3 +201,10 @@ Route::post('store2', 'PdfController@store2')->name('store2');
 Route::get('pengujian', 'PengujianController@index')->name('pengujian');
 Route::post('pengujian/store', 'PengujianController@store')->name('pengujian.store');
 Route::post('pengujian/proses', 'PengujianController@proses')->name('pengujian.proses');
+
+//Testing seasion
+Route::get('session', 'SessionController@index');
+Route::get('session/put', 'SessionController@put');
+Route::get('session/push', 'SessionController@push');
+Route::get('session/del', 'SessionController@delete');
+Route::get('session/tes', 'SessionController@tes');
