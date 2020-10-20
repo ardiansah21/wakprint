@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Atk;
 use App\Konfigurasi_file;
+use App\Lapor_produk;
 use App\Member;
 use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
-use App\Lapor_produk;
 use Carbon\Carbon;
 use File;
 use Hash;
@@ -64,7 +64,7 @@ class MemberController extends Controller
         $atk = Atk::all();
         // $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
 
-        return view('home', compact('produk','partner','atk'));
+        return view('home', compact('produk', 'partner', 'atk'));
     }
 
     // temp dropzone
@@ -98,18 +98,22 @@ class MemberController extends Controller
         }
     }
 
-    public function konfigurasiFile($pdf)
+    public function konfigurasiFile()
     {
-        $produk = Produk::all();
-        $partner = Pengelola_Percetakan::all();
-        $fitur = json_decode($produk->fitur, true);
-        return view('member.konfigurasi_file_lanjutan', [
-            'pdf' => $pdf,
-            'produk' => $produk,
-            'partner' => $partner,
-            'fitur' => $fitur,
-        ]);
+        return view('member.konfigurasi_file_lanjutan');
     }
+    // public function konfigurasiFile($pdf)
+    // {
+    //     $produk = Produk::all();
+    //     $partner = Pengelola_Percetakan::all();
+    //     $fitur = json_decode($produk->fitur, true);
+    //     return view('member.konfigurasi_file_lanjutan', [
+    //         'pdf' => $pdf,
+    //         'produk' => $produk,
+    //         'partner' => $partner,
+    //         'fitur' => $fitur,
+    //     ]);
+    // }
 
     // public function tesKonfigurasiFile()
     // {
@@ -146,9 +150,9 @@ class MemberController extends Controller
         $produk = Produk::all();
         $partner = Pengelola_Percetakan::find($id);
         $atk = Atk::all();
-        $ratingPartner = $produk->where('id_pengelola',$id)->avg('rating');
+        $ratingPartner = $produk->where('id_pengelola', $id)->avg('rating');
 
-        if(empty($ratingPartner)){
+        if (empty($ratingPartner)) {
             $ratingPartner = $partner->rating_toko;
         }
 
@@ -163,7 +167,7 @@ class MemberController extends Controller
         $produk = Produk::find($id);
         $atk = Atk::all();
         $fitur = json_decode($produk->fitur, true);
-        $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
+        $ratingPartner = $produk->where('id_pengelola', $produk->partner->id_pengelola)->avg('rating');
 
         return view('member.detail_produk', compact('produk', 'fitur', 'atk', 'ratingPartner'));
     }
@@ -339,10 +343,10 @@ class MemberController extends Controller
             'id_member' => $member->id_member,
             'pesan' => $pesan,
             'waktu' => $waktu,
-            'status' => $status
+            'status' => $status,
         ]);
 
-        return redirect()->route('detail.produk',$produk->id_produk)->with('alert', 'Laporan telah berhasil dikirim !');
+        return redirect()->route('detail.produk', $produk->id_produk)->with('alert', 'Laporan telah berhasil dikirim !');
     }
 
     public function profile()
@@ -610,7 +614,8 @@ class MemberController extends Controller
         return redirect()->route('alamat');
     }
 
-    public function pilihAlamat($id, Request $request){
+    public function pilihAlamat($id, Request $request)
+    {
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
         $alamat['IdAlamatUtama'] = $alamat['alamat'][$id]['id'];
@@ -738,8 +743,7 @@ class MemberController extends Controller
                 'status' => false,
                 'produk' => array(),
             );
-        }
-        else {
+        } else {
             // dd(count($produkFavorit['produk']));
             // $id = count($produkFavorit['produk']);
             // $produkFavorit['id_favorit'] = $id;
@@ -748,7 +752,7 @@ class MemberController extends Controller
 
         $favorited[] = array(
             'id_produk' => $request->id_produk,
-            'nama' => $produk->nama
+            'nama' => $produk->nama,
         );
 
         $produkFavorit['id_favorit'] = 0;
@@ -789,19 +793,19 @@ class MemberController extends Controller
     public function ulasan()
     {
         $member = Auth::user();
-        $produk=Produk::all();
+        $produk = Produk::all();
         // $transaksi_saldo = Transaksi_saldo::all();
 
         return view('member.ulasan', [
             'member' => $member,
-            'produk' => $produk
+            'produk' => $produk,
         ]);
     }
 
     public function ulas($id)
     {
-        $produk=Produk::find($id);
-        return view('member.ulas_produk',compact('produk'));
+        $produk = Produk::find($id);
+        return view('member.ulas_produk', compact('produk'));
     }
 
     public function ulasanSaya()

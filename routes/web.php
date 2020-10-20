@@ -55,7 +55,8 @@ Route::post('search', 'SearchController@search')->name('search');
 
 Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
-    /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+    // /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+    Route::any('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
     /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
 
@@ -92,6 +93,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('produk/lapor/{id}', 'MemberController@laporProduk')->name('produk.lapor');
     Route::post('produk/lapor/store/{id}', 'MemberController@storeLapor')->name('lapor.store');
+
+    //konfigurasi
+    Route::post('/konfigurasi-file/upload', 'KonfigurasiController@uploadFile')->name('konfigurasi.upload');
+    Route::get('/konfigurasi-file/produk/{produkId}', 'KonfigurasiController@selectedProduk')->name('konfigurasi.produk');
+    Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
+
 });
 
 //Pengelola percetakan
