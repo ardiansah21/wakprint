@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "datatables.net": "^1.10.21",
-        "datatables.net-dt": "^1.10.21"
+        "datatables.net-dt": "^1.10.21",
+        "owl.carousel": "^2.3.4"
     }
 }

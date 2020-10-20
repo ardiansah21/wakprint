@@ -130,13 +130,23 @@
         <div class="row justify-content-between ml-0 mr-0">
             <div class="bg-light-purple col-md-4 p-3 mt-5"
                 style="border-radius:10px;">
+                <div class="mb-4" style="border-bottom: 1px solid #BC41BE">
+                    <label class="SemiBold mb-2"
+                        style="font-size: 18px;">
+                        {{__('Nilai Persentase Minimum Toleransi Halaman Berwarna')}}
+                    </label>
+                    <label class="mb-4"
+                        style="font-size: 18px;">
+                        {{__('10%')}}
+                    </label>
+                </div>
                 <div class="text-center mb-4"
                 style="position:relative;">
-                <img class="img-responsive"
-                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                    alt=""
-                    style="width:300px;
-                        height:200px;">
+                    <img class="img-responsive"
+                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                        alt=""
+                        style="width:300px;
+                            height:200px;">
                 </div>
                 <div class="row justify-content-left mb-5">
                     <span class="align-self-center col-md-1 mr-0">

@@ -35,6 +35,7 @@ Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fi
 
 Route::get('produk', 'MemberController@produk')->name('produk');
 Route::any('pencarian', 'MemberController@pencarian')->name('pencarian');
+Route::get('pencariantes', 'MemberController@pencarianTes')->name('pencariantes');
 Route::get('partner/detail/{id}', 'MemberController@detailPartner')->name('detail.partner');
 Route::get('produk/detail/{id}', 'MemberController@detailProduk')->name('detail.produk');
 Route::get('faq', 'MemberController@faq')->name('faq');
@@ -43,6 +44,7 @@ Route::get('tentang', 'MemberController@tentang')->name('tentang');
 
 Route::get('/', 'MemberController@index')->name('home');
 
+Route::get('pencarian/cari', 'MemberController@cari')->name('cari');
 Route::post('search', 'SearchController@search')->name('search');
 
 //test upload
@@ -57,7 +59,7 @@ Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
     /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
-    /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
+    /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasi.pesanan');
 
     Route::get('/profil', 'MemberController@profile')->name('profile');
     Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
@@ -75,7 +77,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('riwayat', 'MemberController@riwayat')->name('riwayat');
 
-    Route::get('konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasiPesanan');
+    Route::get('konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasi.pesanan');
+    Route::get('konfirmasi-pembayaran', 'MemberController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
 
     Route::get('pesanan', 'MemberController@pesanan')->name('pesanan');
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('pesanan.detail');

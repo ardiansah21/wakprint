@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    {{-- Owl Carousel --}}
+    <link rel="stylesheet" href="OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
 
 
     {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -143,10 +145,10 @@
                                 <span class="text-primary-purple text-truncate text-right mr-2" style="width:80%;">{{Auth::user()->nama_lengkap}}</span>
                                 @if (!empty(Auth::user()->getFirstMediaUrl()))
                                     <img class="align-middle border border-gray ml-2" src="{{Auth::user()->getFirstMediaUrl()}}"
-                                        width="45" height="45" alt="no logo" style="border-radius: 30px;">
+                                        width="45" height="45" alt="-" style="border-radius: 30px;">
                                 @else
-                                <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
-                                        width="45" height="45" alt="no logo">
+                                    <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
+                                            width="45" height="45" alt="-">
                                 @endif
                             </a>
                         </li>
@@ -273,8 +275,8 @@
                                     <i class="material-icons align-middle md-32 mr-2">history</i>
                                     {{__('Riwayat Transaksi') }}
                                 </a>
-                                <a class="nav-link {{set_active('konfigurasiPesanan')}} SemiBold mb-2" id="v-pills-konfigurasi-tab"
-                                    href="{{ route('konfigurasiPesanan') }}" role="tab"
+                                <a class="nav-link {{set_active('konfigurasi.pesanan')}} SemiBold mb-2" id="v-pills-konfigurasi-tab"
+                                    href="{{ route('konfigurasi.pesanan') }}" role="tab"
                                     aria-controls="v-pills-konfigurasi" aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
                                     {{__('Konfigurasi File') }}
@@ -411,6 +413,12 @@
         @endauth
     </div>
     <!-- Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="OwlCarousel2-2.3.4/dist/owl.carousel.js"></script>
+    <script src="OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+    <script src="/js/jquery.jscroll.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+
     @yield('script')
 </body>
 

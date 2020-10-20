@@ -74,19 +74,6 @@
                             </label>
                         </div>
                     </div>
-
-                    <div class="row justify-content-between">
-                        <div class="col-md-6 text-left">
-                            <label>
-                                {{__('Timbal Balik') }}
-                            </label>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <label>
-                                {{__('Rp. 5.000') }}
-                            </label>
-                        </div>
-                    </div>
                     <div class="row justify-content-between mb-2">
                         <div class="col-md-6 text-left">
                             <label>
@@ -100,7 +87,7 @@
                         </div>
                     </div>
                     <label class="font-weight-bold mt-2 mb-2">
-                        {{__('Fitur Tambahan') }}
+                        {{__('Fitur') }}
                     </label>
 
                     {{-- @foreach ($collection as $item) --}}
@@ -117,13 +104,6 @@
                         </div>
                     </div>
                     {{-- @endforeach --}}
-
-                    <label class="font-weight-bold mt-2 mb-2">
-                        {{__('Catatan Tambahan') }}
-                    </label>
-                    <label class="mt-2 mb-2">
-                        {{__('Yang rapi yah bang jangan sampek sobek sobek.') }}
-                    </label>
 
                     <div class="row row-bordered mt-2 mb-4">
                     </div>

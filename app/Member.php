@@ -31,4 +31,34 @@ class Member extends Authenticable implements HasMedia
     {
         $this->addMediaCollection('avatar')->singleFile();
     }
+
+    // public function getProdukFavoritAttribute($value)
+    // {
+    //     return json_decode($value);
+    // }
+
+    // public function setProdukFavoritAttribute($value)
+    // {
+    //     $produkFavorit = json_decode($this->attributes['produk_favorit']);
+
+    //     foreach ($produkFavorit as $key => $pf) {
+    //         if($pf == $value){
+    //             array_splice($produkFavorit,$key);
+    //         }
+    //         else {
+    //             array_push($produkFavorit,$value);
+    //         }
+    //     }
+
+    //     // dd($produkFavorit);
+    //     $this->attributes['produk_favorit'] = $produkFavorit;
+
+    // }
+
+    public static function cekProdukFavorit($idMember, $idProduk) : bool
+    {
+        $produkFavorit = Member::find($idMember)->produk_favorit;
+
+        return in_array($idProduk, json_decode($produkFavorit));
+    }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="mb-5 mt-5">
+    <div class="container mb-5 mt-5">
         <div>
             <label class="font-weight-bold mb-5"
                 style="font-size:48px;">
@@ -9,8 +9,8 @@
             </label>
 
             {{-- @foreach ($collection as $item) --}}
-            <div class="row justify-content-between mb-5">
-                <div class="col-md-3">
+            <div class="row justify-content-between mb-5 mr-0">
+                <div class="col-md-4">
                     @include('member.card_produk')
                 </div>
                 <div class="col-md-4">
@@ -71,8 +71,8 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-md-auto">
-                    <label class="SemiBold mb-1"
+                <div class="col-md-4">
+                    <label class="SemiBold mb-3"
                         style="font-size:24px;">
                             {{__('Catatan Tambahan') }}
                         </label>
@@ -98,7 +98,7 @@
                 <div class="row justify-content-between">
                     <div class="col-md-auto text-left">
                         <label class="mb-2">
-                            {{__('Jumlah File Kamu') }}
+                            {{__('Jumlah File') }}
                         </label>
                         <br>
                         <label class="mb-2">
@@ -148,18 +148,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="row justify-content-between">
-                    <div class="col-md-6 text-left">
-                        <label>
-                            {{__('Timbal Balik') }}
-                        </label>
-                    </div>
-                    <div class="col-md-6 SemiBold text-right">
-                        <label>
-                            {{__('Rp. 5.000') }}
-                        </label>
-                    </div>
-                </div>
                 <div class="row justify-content-between mb-2">
                     <div class="col-md-6 text-left">
                         <label>
@@ -173,7 +161,7 @@
                     </div>
                 </div>
                 <label class="font-weight-bold mt-2 mb-2">
-                    {{__('Fitur Tambahan') }}
+                    {{__('Fitur') }}
                 </label>
 
                 {{-- @foreach ($collection as $item) --}}
@@ -247,7 +235,7 @@
             </div>
         </div>
         <div class="row justify-content-end mb-5 mr-0">
-            <button class="btn btn-default btn-lg text-danger font-weight-bold mr-4"
+            <button class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4"
                 style="border-radius:30px;
                     font-size:24px;">
                 {{__('Batalkan Pemesanan') }}

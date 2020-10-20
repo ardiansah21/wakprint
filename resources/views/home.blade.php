@@ -94,7 +94,55 @@
             </div>
         </div>
     </div>
-    <div class="mb-5">
+    <div class="row justify-content-between mb-5">
+        <label class="font-weight-bold" style="font-size: 48px">{{__('Produk Pilihan') }}</label>
+        <a class="SemiBold text-primary-purple align-self-center" href="{{ route('pencarian') }}"
+            style="font-size: 14px">{{__('Lihat Semua') }}</a>
+    </div>
+    <div class="row justify-content-between mb-5">
+        <div class="col-md-1 owl-nav align-self-center">
+            <a class="produk-prev disabled" role="presentation">
+                <span class="carousel-control-prev-icon btn-floating btn-circle-navigation-right rounded-circle" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="produk-carousel" class="col-md-10 owl-carousel owl-theme owl-loaded owl-drag owl-loading">
+            @foreach ($produk as $p)
+                <div class="mr-4">
+                    @include('member.card_produk')
+                </div>
+            @endforeach
+        </div>
+        <div class="col-md-1 owl-nav align-self-center">
+            <a class="produk-next" role="presentation">
+                <span class="carousel-control-next-icon btn-floating btn-circle-navigation-left rounded-circle" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+    <div class="row justify-content-between mb-5">
+        <label class="font-weight-bold" style="font-size: 48px">{{__('Percetakan Pilihan') }}</label>
+        <a class="SemiBold text-primary-purple align-self-center" href="{{ route('pencarian') }}"
+            style="font-size: 14px">{{__('Lihat Semua') }}</a>
+    </div>
+    <div class="row justify-content-between mb-5">
+        <div class="col-md-1 owl-nav align-self-center">
+            <a class="percetakan-prev disabled" role="presentation">
+                <span class="carousel-control-prev-icon btn-floating btn-circle-navigation-right rounded-circle" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="percetakan-carousel" class="col-md-10 owl-carousel owl-theme owl-loaded owl-drag owl-loading">
+            @foreach ($partner as $p)
+                <div class="mr-4">
+                    @include('member.card_percetakan')
+                </div>
+            @endforeach
+        </div>
+        <div class="col-md-1 owl-nav align-self-center">
+            <a class="percetakan-next" role="presentation">
+                <span class="carousel-control-next-icon btn-floating btn-circle-navigation-left rounded-circle" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+    {{-- <div class="mb-5">
         <div class="row justify-content-between mb-5">
             <label class="font-weight-bold" style="font-size: 48px">{{__('Produk Pilihan') }}</label>
             <a class="SemiBold text-primary-purple align-self-center" href="{{ route('pencarian') }}"
@@ -122,7 +170,7 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            {{-- <span class="justify-content-center align-self-center col-md-1">
+            <span class="justify-content-center align-self-center col-md-1">
                 <a class="btn btn-circle-navigation-left btn-xl shadow-sm" href="#multi-item-produk-pilihan"
                     role="button" data-slide="prev"><img src="img/arrow-left.png"></a>
             </span>
@@ -211,11 +259,11 @@
             <span class="justify-content-center align-self-center text-center col-md-1">
                 <a class="btn btn-circle-navigation-right btn-xl shadow-sm" href="#multi-item-produk-pilihan"
                     role="button" data-slide="next"><img src="img/arrow-right.png"></a>
-            </span> --}}
+            </span>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="mb-5">
+    {{-- <div class="mb-5">
         <div class="row justify-content-between mb-5">
             <label class="font-weight-bold" style="font-size: 48px">{{__('Percetakan Pilihan') }}</label>
             <a class="text-primary-purple SemiBold align-self-center" href="{{ route('pencarian') }}"
@@ -257,7 +305,7 @@
                 @endif
 
             </div>
-            {{-- <span class="align-self-center col-md-1">
+            <span class="align-self-center col-md-1">
                 <a class="btn btn-circle-navigation-left btn-xl shadow-sm" href="#multi-item-percetakan-pilihan"
                     role="button" data-slide="prev"><img src="img/arrow-left.png"></a>
             </span>
@@ -303,9 +351,9 @@
             <span class="align-self-center text-center col-md-1">
                 <a class="btn btn-circle-navigation-right btn-xl shadow-sm" href="#multi-item-percetakan-pilihan"
                     role="button" data-slide="next"><img src="img/arrow-right.png"></a>
-            </span> --}}
+            </span>
         </div>
-    </div>
+    </div> --}}
 </div>
 <div id="areaDaftarPercetakan" class="img-responsive pt-5 pb-5 pr-0 pl-0 mb-0 mr-0"
     style="background-image: url(img/bg-daftarpercetakan.png); background-size: cover;">
@@ -382,6 +430,42 @@
             }
             next.children(':first-child').clone().appendTo($(this));
         }
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        var produkCarousel = $("#produk-carousel");
+        var percetakanCarousel = $("#percetakan-carousel");
+
+        // Produk Navigation Events
+        $(".produk-next").on('click',function(){
+            produkCarousel.trigger('next.owl.carousel');
+        });
+        $(".produk-prev").on('click',function(){
+            produkCarousel.trigger('prev.owl.carousel');
+        });
+
+        // Percetakan Navigation Events
+        $(".percetakan-next").on('click',function(){
+            percetakanCarousel.trigger('next.owl.carousel');
+        });
+        $(".percetakan-prev").on('click',function(){
+            percetakanCarousel.trigger('prev.owl.carousel');
+        });
+
+        produkCarousel.owlCarousel({
+            loop:true,
+            autoplay:true,
+            autoplayTimeout:5000,
+            autoplayHoverPause:true
+        });
+
+        percetakanCarousel.owlCarousel({
+            loop:true,
+            autoplay:true,
+            autoplayTimeout:5000,
+            autoplayHoverPause:true
+        });
     });
 </script>
 @endsection

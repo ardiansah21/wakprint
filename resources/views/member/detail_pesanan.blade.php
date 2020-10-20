@@ -7,8 +7,8 @@
             style="font-size: 48px;">Pesanan Kamu</label>
 
             {{-- @foreach ($collection as $item) --}}
-            <div class="row justify-content-between mb-5">
-                <div class="col-md-3">
+            <div class="row justify-content-between mb-5 mr-0" style="width: 100%;">
+                <div class="col-md-4">
                     @include('member.card_produk')
                 </div>
                 <div class="col-md-4">
@@ -69,8 +69,8 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-md-auto">
-                    <label class="SemiBold mb-1"
+                <div class="col-md-4">
+                    <label class="SemiBold mb-3"
                         style="font-size:24px;">
                             {{__('Catatan Tambahan') }}
                         </label>
@@ -86,9 +86,7 @@
             </div>
             {{-- @endforeach --}}
 
-            <div class="bg-light-purple p-4 mb-5"
-                style="border-radius:10px;
-                    font-size:18px;">
+            <div class="bg-light-purple p-4 mb-5" style="border-radius:10px;font-size:18px; width:100%;">
                 <label class="font-weight-bold mb-4"
                     style="font-size:36px;">
                     {{__('Rincian Harga') }}
@@ -96,7 +94,7 @@
                 <div class="row justify-content-between">
                     <div class="col-md-auto text-left">
                         <label class="mb-2">
-                            {{__('Jumlah File Kamu') }}
+                            {{__('Jumlah File') }}
                         </label>
                         <br>
                         <label class="mb-2">
@@ -146,18 +144,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="row justify-content-between">
-                    <div class="col-md-6 text-left">
-                        <label>
-                            {{__('Timbal Balik') }}
-                        </label>
-                    </div>
-                    <div class="col-md-6 SemiBold text-right">
-                        <label>
-                            {{__('Rp. 5.000') }}
-                        </label>
-                    </div>
-                </div>
                 <div class="row justify-content-between mb-2">
                     <div class="col-md-6 text-left">
                         <label>
@@ -171,7 +157,7 @@
                     </div>
                 </div>
                 <label class="font-weight-bold mt-2 mb-2">
-                    {{__('Fitur Tambahan') }}
+                    {{__('Fitur') }}
                 </label>
 
                 {{-- @foreach ($collection as $item) --}}

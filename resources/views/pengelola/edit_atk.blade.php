@@ -14,7 +14,7 @@
                 <div class="col-md-2">
                     @if (!empty($atk->getFirstMediaUrl()))
                         <img id="gambarAtk" src="{{ $atk->getFirstMediaUrl() }}"
-                            class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px;" alt="foto atk">
+                            class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px;" alt="foto atk"/>
                         <a id="editGambarAtk" class="pointer" onclick="document.getElementById('imgupload').click();"
                             style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;">
                             <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2" style="border-radius: 5px;"> edit

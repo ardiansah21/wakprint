@@ -111,34 +111,129 @@ class MemberController extends Controller
         ]);
     }
 
-    // public function tesKonfigurasiFile()
-    // {
-    //     $produk = Produk::all();
-    //     $partner = Pengelola_Percetakan::all();
-    //     // $fitur = json_decode($produk->fitur, true);
-    //     return view('member.konfigurasi_file_lanjutan', [
-    //         // 'pdf' => $pdf,
-    //         'produk' => $produk,
-    //         'partner' => $partner
-    //         // 'fitur' => $fitur,
-    //     ]);
-    // }
+        function cari(Request $request)
+        {
+            if($request->ajax()){
+                if ($request->filterPencarian === 'Harga Tertinggi') {
+                    $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                        // ->orWhere('jenis_kertas', 'like', '%'.$request->keyword.'%')
+                        ->orWhere('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                        // ->orWhere('jenis_printer', 'like', '%'.$request->keyword.'%')
+                        ->orWhere('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                        ->orWhere('harga_hitam_putih', 'like', '%'.$request->keyword)
+                        ->orWhere('harga_berwarna', 'like', '%'.$request->keyword)
+                        ->orWhere('rating', 'like', '%'.$request->keyword.'%')
+                        ->orderBy('harga_hitam_putih', 'desc')
+                        ->orderBy('harga_berwarna', 'desc')
+                        ->get();
+                }
+                else if ($request->filterPencarian === 'Harga Terendah') {
+                    $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                        // ->orWhere('jenis_kertas', 'like', '%'.$request->keyword.'%')
+                        ->orWhere('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                        // ->orWhere('jenis_printer', 'like', '%'.$request->keyword.'%')
+                        ->orWhere('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                        ->orWhere('harga_hitam_putih', 'like', '%'.$request->keyword)
+                        ->orWhere('harga_berwarna', 'like', '%'.$request->keyword)
+                        ->orWhere('rating', 'like', '%'.$request->keyword.'%')
+                        ->orderBy('harga_hitam_putih', 'asc')
+                        ->orderBy('harga_berwarna', 'asc')
+                        ->get();
+                }
+                else {
+                    if ($request->fiturTambahan != null) {
+                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
+                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
+                            ->where('rating', 'like', '%'.$request->keyword.'%')
+                            ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
+                            ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
+                            // ->orWhere(function($query) use ($request) {
+                            //     $query
+
+                            //         ;
+                            // })
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+                    }
+                    else {
+                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
+                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
+                            ->where('rating', 'like', '%'.$request->keyword.'%')
+
+                            // ->orWhere(function($query) use ($request) {
+                            //     $query
+
+                            //         ;
+                            // })
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+
+                        // $produks->partner->where('antar_ke_tempat', 'like', '%'.$request->antarKeTempat.'%')
+                        //     ->where('ambil_di_tempat', 'like', '%'.$request->ambilDiTempat.'%')
+                        //     ->get();
+                    }
+                }
+
+                $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%'.$request->keyword.'%')
+                        ->where('nama_lengkap', 'like', '%'.$request->keyword.'%')
+                        ->where('ambil_di_tempat', 'like', '%'.$request->ambilDiTempat.'%')
+                        ->where('antar_ke_tempat', 'like', '%'.$request->antarKeTempat.'%')
+                        ->where('alamat_toko', 'like', '%'.$request->keyword.'%')
+                        ->where('rating_toko', 'like', '%'.$request->keyword.'%')
+                        // ->orWhere(function($query) use ($request) {
+                        //     $query;
+                        // })
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+                $atks = Atk::where('nama', 'like', '%'.$request->keyword.'%')
+                        ->orderBy('id_atk', 'asc')
+                        ->get();
+
+                $idPartnerDariProduk = array();
+                $namaPartnerDariProduk = array();
+                $alamatPartnerDariProduk = array();
+                foreach ($produks as $p) {
+                    array_push($idPartnerDariProduk,$p->partner->id_pengelola);
+                    array_push($namaPartnerDariProduk,$p->partner->nama_toko);
+                    array_push($alamatPartnerDariProduk,$p->partner->alamat_toko);
+                }
+
+                $atkIdPartner = array();
+                $atkStatusPartner = array();
+                foreach ($atks as $a) {
+                    array_push($atkIdPartner,$a->partner->id_pengelola);
+                    array_push($atkStatusPartner,$a->partner->status);
+                }
+
+                return response()->json([
+                    'produks' => $produks,
+                    'partners' => $partners,
+                    'id_partner_dari_produk' => $idPartnerDariProduk,
+                    'nama_partner_dari_produk' => $namaPartnerDariProduk,
+                    'alamat_partner_dari_produk' => $alamatPartnerDariProduk,
+                    'atk_id_partner' => $atkIdPartner,
+                    'atk_status_partner' => $atkStatusPartner,
+                    'atks' => $atks,
+                ], 200);
+            }
+        }
+
 
     public function pencarian(Request $request)
     {
         // $produk = Produk::paginate(4);
         $produk = Produk::all();
-        $partner = Pengelola_Percetakan::paginate(30);
+        $atk = Atk::all();
+        $partner = Pengelola_Percetakan::all();
 
-        // if ($request->ajax()) {
-        //     // $produk = Produk::where(function ($query) {
-        //     //     $query->where('nama', 'LIKE', '%' . $request->keyword . '%');
-        //     // });
-        //     // $produk = Produk::
-        //     return view('member.cardf_produk', ['produk' => $produk])->render();
-        // }
-        // $fitur = json_decode($produk->fitur,true);
-        return view('member.pencarian', compact('partner', 'produk'))->render();
+        return view('member.pencarian', compact('partner', 'produk','atk'))->render();
     }
 
     public function detailPartner($id)
@@ -657,6 +752,12 @@ class MemberController extends Controller
         return view('member.konfigurasi_pesanan');
     }
 
+    public function konfirmasiPembayaran()
+    {
+        $produk = Produk::all();
+        return view('member.konfirmasi_pembayaran',compact('produk'));
+    }
+
     public function saldoPembayaran($id)
     {
         $member = Auth::user();
@@ -694,9 +795,10 @@ class MemberController extends Controller
     public function detailPesanan()
     {
         // $member=Auth::user();
+        $produk = Produk::all();
         // $transaksi_saldo = Transaksi_saldo::all();
 
-        return view('member.detail_pesanan');
+        return view('member.detail_pesanan',compact('produk'));
     }
 
     public function pesanan()
@@ -714,77 +816,96 @@ class MemberController extends Controller
     {
         $member = Auth::user();
         $produk = Produk::all();
-        // $transaksi_saldo = Transaksi_saldo::all();
+        $produkFavorit = json_decode($member->produk_favorit);
+
+        // dd($produkFavorit[0]);
+        // for ($i=0; $i < count($produkFavorit); $i++) {
+        //     dd(count($produkFavorit));
+        // }
 
         return view('member.produk_favorit', [
             'member' => $member,
             'produk' => $produk,
-            // 'transaksi_saldo' => $transaksi_saldo
+            'produkFavorit' => $produkFavorit
         ]);
     }
 
     public function tambahFavorit(Request $request, $id)
     {
         $member = Member::find(Auth::id());
-        $produk = Produk::find($id);
 
-        $produkFavorit = $member->produk_favorit;
-        // $id = 0;
+        $produkFavorit = json_decode($member->produk_favorit);
 
-        if ($produkFavorit === '[]') {
-            // dd('Kosong');
-            $produkFavorit = array(
-                'id_favorit' => 0,
-                'status' => false,
-                'produk' => array(),
-            );
+        // dd($produkFavorit);
+
+        if(empty($produkFavorit))
+        {
+            array_push($produkFavorit,$request->id_produk);
         }
-        else {
-            // dd(count($produkFavorit['produk']));
-            // $id = count($produkFavorit['produk']);
-            // $produkFavorit['id_favorit'] = $id;
-            // $produkFavorit['status'] = true;
+        else{
+            foreach ($produkFavorit as $key => $pf) {
+                if($pf == $request->id_produk){
+                    array_splice($produkFavorit,$key);
+                }
+                else {
+                    array_push($produkFavorit,$request->id_produk);
+                }
+            }
         }
 
-        $favorited[] = array(
-            'id_produk' => $request->id_produk,
-            'nama' => $produk->nama
-        );
-
-        $produkFavorit['id_favorit'] = 0;
-        $produkFavorit['status'] = true;
-
-        $FavoritFinal['id_favorit'] = $produkFavorit['id_favorit'];
-        $FavoritFinal['status'] = $produkFavorit['status'];
-        $FavoritFinal['produk'] = array_merge($produkFavorit['produk'], $favorited);
-
-        // $favoritArray[] = array($FavoritFinal['id_favorit'],$FavoritFinal['status'],$FavoritFinal['produk']);
-
-        $member->produk_favorit = $FavoritFinal;
+        $member->produk_favorit = $produkFavorit;
         $member->save();
 
+        dd($member->produk_favorit);
+
         return redirect()->back();
+
+        // $produkFavorit = json_decode($member->produk_favorit);
+
+        // // $nilaiInput = array($request->id_produk);
+
+        // foreach ($produkFavorit as $key => $pf) {
+        //     if($pf === $request->id_produk){
+        //         array_splice($produkFavorit,$key);
+        //     }
+        //     else {
+        //         array_push($produkFavorit,$request->id_produk);
+        //     }
+        // }
+
+        // // array_push($produkFavorit,$request->id_produk);
+
+        // // if(count($produkFavorit) === 0){
+        // //     array_push($produkFavorit,$nilaiInput);
+        // // }
+
+        // // else {
+        // //     for ($i=0; $i < count($produkFavorit); $i++) {
+        // //         // dd('TES');
+        // //         // if($key = array_search($produkFavorit[$i], $produkFavorit) === $request->id_produk){
+
+        // //         // if($produkFavorit[$i] === $request->id_produk){
+        // //         //     // dd('HAPUS');
+        // //         //     unset($produkFavorit[$i]);
+        // //         // }
+        // //         // else {
+        // //         //     array_push($produkFavorit[$i],$nilaiInput);
+        // //         // }
+        // //     }
+        // //     // array_push($produkFavorit,$nilaiInput);
+        // // }
+        // // array_push($produkFavorit,$nilaiInput);
+
+        // $member->produk_favorit = array_unique($produkFavorit);
+        // $member->save();
+
+        // $member->produk_favorit = $request->id_produk;
+        // $member->save();
+
+        // // dd($member->produk_favorit);
+
+        // return redirect()->back();
     }
-
-    // public function tambahFavorit(Request $request)
-    // {
-    //     $member = Auth::user();
-
-    //     $arrayFavorit = $member->produk_favorit;
-
-    //     if (empty($arrayFavorit)) {
-    //         $arrayFavorit = array();
-    //     }
-
-    //     $arrayFavorit = array(
-    //         'id_produk' => $request->status_favorit
-    //     );
-
-    //     $member->produk_favorit = $arrayFavorit;
-    //     $member->save();
-
-    //     return redirect()->route('home');
-    // }
 
     public function ulasan()
     {

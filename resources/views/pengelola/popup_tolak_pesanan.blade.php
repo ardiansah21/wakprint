@@ -27,7 +27,7 @@
                             style="font-size: 16px;"></textarea>
                         </div>
                         <div class="form-group row justify-content-end mr-0 ml-0">
-                            <button class="btn btn-default text-primary-purple font-weight-bold pl-5 pr-5 mr-2 mb-0"
+                            <button class="btn btn-outline-danger-primary text-primary-danger font-weight-bold pl-5 pr-5 mr-3 mb-0"
                                 data-dismiss="modal"
                                 aria-label="Close"
                                 style="border-radius:30px;
@@ -42,8 +42,8 @@
                         </div>
                     </form>
                 </div>
-            </div> 
+            </div>
         </div>
-    </div>            
+    </div>
 </div>
 
