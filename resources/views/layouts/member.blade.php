@@ -98,7 +98,8 @@
                                 <li class="notification-box mb-2">
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                            <img src="https://ptetutorials.com/images/user-profile.png" class="w-50 rounded-circle my-auto">
+                                            <img src="https://ptetutorials.com/images/user-profile.png"
+                                                class="w-50 rounded-circle my-auto">
                                         </div>
                                         <div class="col-lg-9 col-sm-9 col-9">
                                             <strong class="text-black">David John</strong>
@@ -112,7 +113,8 @@
                                 <li class="notification-box mb-2">
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                            <img src="https://ptetutorials.com/images/user-profile.png" class="w-50 rounded-circle my-auto">
+                                            <img src="https://ptetutorials.com/images/user-profile.png"
+                                                class="w-50 rounded-circle my-auto">
                                         </div>
                                         <div class="col-lg-9 col-sm-9 col-9">
                                             <strong class="text-black">David John</strong>
@@ -126,7 +128,8 @@
                                 <li class="notification-box mb-2">
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                            <img src="https://ptetutorials.com/images/user-profile.png" class="w-50 rounded-circle my-auto">
+                                            <img src="https://ptetutorials.com/images/user-profile.png"
+                                                class="w-50 rounded-circle my-auto">
                                         </div>
                                         <div class="col-lg-9 col-sm-9 col-9">
                                             <strong class="text-black">David John</strong>
@@ -142,7 +145,8 @@
                         <li class="nav-item mr-0">
                             <a class="nav-link" href="{{ route('profile') }}"
                                 style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
-                                <span class="text-primary-purple text-truncate text-right mr-2" style="width:80%;">{{Auth::user()->nama_lengkap}}</span>
+                                <span class="text-primary-purple text-truncate text-right mr-2"
+                                    style="width:80%;">{{Auth::user()->nama_lengkap}}</span>
                                 @if (!empty(Auth::user()->getFirstMediaUrl()))
                                     <img class="align-middle border border-gray ml-2" src="{{Auth::user()->getFirstMediaUrl()}}"
                                         width="45" height="45" alt="-" style="border-radius: 30px;">
@@ -219,13 +223,11 @@
                         <div class="bg-light-purple text-center"
                             style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
                             @if (!empty($member->getFirstMediaUrl()))
-                                <img src="{{ $member->getFirstMediaUrl() }}"
-                                    class="img-responsive" alt="" width="300px" height="300px"
-                                    style="border-radius:8px 8px 8px 8px;">
+                            <img src="{{ $member->getFirstMediaUrl() }}" class="img-responsive" alt="" width="300px"
+                                height="300px" style="border-radius:8px 8px 8px 8px;">
                             @else
-                                <img src="https://unsplash.it/600/400"
-                                    class="img-responsive" alt="" width="300px" height="300px"
-                                    style="border-radius:8px 8px 8px 8px;">
+                            <img src="https://unsplash.it/600/400" class="img-responsive" alt="" width="300px"
+                                height="300px" style="border-radius:8px 8px 8px 8px;">
                             @endif
 
                             <div class="bg-dark" style="position: absolute;
@@ -242,36 +244,38 @@
                         <div class="mt-3">
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
-                                <a class="nav-link {{set_active('alamat')}} SemiBold text-truncate mb-4" id="v-pills-alamat-tab" href="{{ route('alamat') }}"
-                                    role="tab" aria-controls="v-pills-alamat" aria-selected="true"
+                                <a class="nav-link {{set_active('alamat')}} SemiBold text-truncate mb-4"
+                                    id="v-pills-alamat-tab" href="{{ route('alamat') }}" role="tab"
+                                    aria-controls="v-pills-alamat" aria-selected="true"
                                     style="font-size: 24px; width:100%;">
                                     <i class="material-icons align-middle md-32 mr-2">
                                         location_on
                                     </i>
                                     @if (!empty($member->alamat['alamat']))
-                                        @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
-                                            @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
-                                                {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
-                                                {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
-                                                {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                                                {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
-                                                {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                                                {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
-                                            @endif
+                                    @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
+                                        @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
+                                        {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
+                                        {{ $member->alamat['alamat'][$i]['Provinsi'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
+                                        @endif
                                         @endfor
-                                    @else
+                                        @else
                                         <label>-</label>
-                                    @endif
+                                        @endif
                                 </a>
-                                <a class="nav-link {{set_active('saldo')}} SemiBold mb-2" id="v-pills-saldo-tab" href="{{ route('saldo') }}"
-                                    role="tab" aria-controls="v-pills-saldo" aria-selected="false"
-                                    style="font-size: 24px; color:#BC41BE">
-                                    <i class="material-icons align-middle md-32 mr-2" style="color:#BC41BE">account_balance_wallet</i>
+                                <a class="nav-link {{set_active('saldo')}} SemiBold mb-2" id="v-pills-saldo-tab"
+                                    href="{{ route('saldo') }}" role="tab" aria-controls="v-pills-saldo"
+                                    aria-selected="false" style="font-size: 24px; color:#BC41BE">
+                                    <i class="material-icons align-middle md-32 mr-2"
+                                        style="color:#BC41BE">account_balance_wallet</i>
                                     Rp. {{ $member->jumlah_saldo ?? 0 }}
                                 </a>
-                                <a class="nav-link {{set_active('riwayat')}} SemiBold mb-4" id="v-pills-riwayat-tab mb-3"
-                                    href="{{ route('riwayat') }}" role="tab" aria-controls="v-pills-riwayat"
-                                    aria-selected="false" style="font-size: 24px;">
+                                <a class="nav-link {{set_active('riwayat')}} SemiBold mb-4"
+                                    id="v-pills-riwayat-tab mb-3" href="{{ route('riwayat') }}" role="tab"
+                                    aria-controls="v-pills-riwayat" aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">history</i>
                                     {{__('Riwayat Transaksi') }}
                                 </a>
@@ -281,27 +285,27 @@
                                     <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
                                     {{__('Konfigurasi File') }}
                                 </a>
-                                <a class="nav-link {{set_active('pesanan')}} SemiBold mb-4" id="v-pills-pesanan-tab" href="{{ route('pesanan') }}"
-                                    role="tab" aria-controls="v-pills-pesanan" aria-selected="false"
-                                    style="font-size: 24px;">
+                                <a class="nav-link {{set_active('pesanan')}} SemiBold mb-4" id="v-pills-pesanan-tab"
+                                    href="{{ route('pesanan') }}" role="tab" aria-controls="v-pills-pesanan"
+                                    aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">shopping_cart</i>
                                     {{__('Pesanan') }}
                                 </a>
-                                <a class="nav-link {{set_active('favorit')}} SemiBold mb-2" id="v-pills-favorit-tab" href="{{ route('favorit') }}"
-                                    role="tab" aria-controls="v-pills-favorit" aria-selected="false"
-                                    style="font-size: 24px;">
+                                <a class="nav-link {{set_active('favorit')}} SemiBold mb-2" id="v-pills-favorit-tab"
+                                    href="{{ route('favorit') }}" role="tab" aria-controls="v-pills-favorit"
+                                    aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">favorite</i>
                                     {{__('Favorit') }}
                                 </a>
-                                <a class="nav-link {{set_active('ulasan')}} SemiBold mb-4" id="v-pills-ulasan-tab" href="{{ route('ulasan') }}"
-                                    role="tab" aria-controls="v-pills-ulasan" aria-selected="false"
-                                    style="font-size: 24px;">
+                                <a class="nav-link {{set_active('ulasan')}} SemiBold mb-4" id="v-pills-ulasan-tab"
+                                    href="{{ route('ulasan') }}" role="tab" aria-controls="v-pills-ulasan"
+                                    aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">rate_review</i>
                                     {{__('Ulasan') }}
                                 </a>
-                                <a class="nav-link {{set_active('logout')}} SemiBold" id="v-pills-keluar-tab" data-toggle="pill"
-                                    href="{{ route('logout') }}" role="tab" aria-controls="v-pills-keluar"
-                                    aria-selected="true" style="font-size: 24px;"
+                                <a class="nav-link {{set_active('logout')}} SemiBold" id="v-pills-keluar-tab"
+                                    data-toggle="pill" href="{{ route('logout') }}" role="tab"
+                                    aria-controls="v-pills-keluar" aria-selected="true" style="font-size: 24px;"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="material-icons align-middle md-32 mr-2">exit_to_app</i>
                                     {{__('Keluar') }}
@@ -333,11 +337,13 @@
                         <div class="col-md-3 mt-3">
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
                             </h4>
-                            <a class="row text-dark mb-0" href="{{route('tentang')}}" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                            <a class="row text-dark mb-0" href="{{route('tentang')}}"
+                                style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
                             <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
                             <a class="row text-dark" href="#"
                                 style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                            <a class="row text-dark" href="{{route('faq')}}" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                            <a class="row text-dark" href="{{route('faq')}}"
+                                style="font-size: 16px;">{{ __('FAQ') }}</a>
                         </div>
                         <div class="col-md-3 mt-3">
                             <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>
@@ -380,11 +386,13 @@
                         <div class="col-md-3 mt-3">
                             <h4 class="row mb-2 font-weight-bold" style="font-size: 24px;">{{ __('Informasi Umum') }}
                             </h4>
-                            <a class="row text-dark mb-0" href="{{route('tentang')}}" style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
+                            <a class="row text-dark mb-0" href="{{route('tentang')}}"
+                                style="font-size: 16px;">{{ __('Tentang Kami') }}</a>
                             <a class="row text-dark" href="#" style="font-size: 16px;">{{ __('Kebijakan Privasi') }}</a>
                             <a class="row text-dark" href="#"
                                 style="font-size: 16px;">{{ __('Syarat & Ketentuan') }}</a>
-                            <a class="row text-dark" href="{{route('faq')}}" style="font-size: 16px;">{{ __('FAQ') }}</a>
+                            <a class="row text-dark" href="{{route('faq')}}"
+                                style="font-size: 16px;">{{ __('FAQ') }}</a>
                         </div>
                         <div class="col-md-3 mt-3">
                             <h4 class="row font-weight-bold mb-2" style="font-size: 24px;">{{ __('Sosial Media') }}</h4>

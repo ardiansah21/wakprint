@@ -57,7 +57,8 @@ Route::post('search', 'SearchController@search')->name('search');
 
 Route::middleware('auth')->group(function () {
     //TODO merapikan File Storage 2
-    /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+    // /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
+    Route::any('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
     /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasi.pesanan');
 
@@ -95,6 +96,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('produk/lapor/{id}', 'MemberController@laporProduk')->name('produk.lapor');
     Route::post('produk/lapor/store/{id}', 'MemberController@storeLapor')->name('lapor.store');
+
+    //konfigurasi
+    Route::post('/konfigurasi-file/upload', 'KonfigurasiController@uploadFile')->name('konfigurasi.upload');
+    Route::get('/konfigurasi-file/produk/{produkId}', 'KonfigurasiController@selectedProduk')->name('konfigurasi.produk');
+    Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
+
 });
 
 //Pengelola percetakan
@@ -206,3 +213,10 @@ Route::post('store2', 'PdfController@store2')->name('store2');
 Route::get('pengujian', 'PengujianController@index')->name('pengujian');
 Route::post('pengujian/store', 'PengujianController@store')->name('pengujian.store');
 Route::post('pengujian/proses', 'PengujianController@proses')->name('pengujian.proses');
+
+//Testing seasion
+Route::get('session', 'SessionController@index');
+Route::get('session/put', 'SessionController@put');
+Route::get('session/push', 'SessionController@push');
+Route::get('session/del', 'SessionController@delete');
+Route::get('session/tes', 'SessionController@tes');
