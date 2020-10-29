@@ -61,8 +61,9 @@
 
         <div class="py-2 px-3 mb-4" style="border:1px solid #EBD1EC; border-radius:10px; background-color:white;">
             <div class="custom-control custom-checkbox col-md-3 mb-2">
-                <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutih" onchange="document.getElementById('harga_hitam_putih').disabled=!this.checked; document.getElementById('harga_timbal_balik_hitam_putih').disabled=!this.checked;"
-                    value="True" checked required>
+                <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutih"
+                    onchange="document.getElementById('harga_hitam_putih').disabled=!this.checked; document.getElementById('harga_timbal_balik_hitam_putih').disabled=!this.checked;"
+                    value="True" checked>
                 <label class="custom-control-label" for="checkboxHitamPutih">
                     {{__('Hitam-Putih') }}
                 </label>
@@ -71,15 +72,16 @@
                 <label class="col-md-3 align-self-center ml-4 mt-2">
                     {{__('Harga Cetak') }}
                 </label>
-                <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_hitam_putih').disabled){document.getElementById('checkboxHitamPutih').click();document.getElementById('harga_timbal_balik_hitam_putih').focus() };">
+                <div class="row justify-content-left col-md-9"
+                    onclick="if(document.getElementById('harga_hitam_putih').disabled){document.getElementById('checkboxHitamPutih').click();document.getElementById('harga_timbal_balik_hitam_putih').focus() };">
                     <label class="col-md-1 mt-2 mb-2"
-                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_hitam_putih" name="harga_hitam_putih" type="number" step="50" min="0"
+                    <input id="harga_hitam_putih" name="harga_hitam_putih" type="number" min="0"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
+                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('/ Halaman') }}
@@ -90,13 +92,14 @@
                 <label class="col-md-3 align-self-center ml-4 mt-2">
                     {{__('Harga Cetak Timbal Balik') }}
                 </label>
-                <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_timbal_balik_hitam_putih').disabled){document.getElementById('checkboxHitamPutih').click();document.getElementById('harga_timbal_balik_hitam_putih').focus() };">
+                <div class="row justify-content-left col-md-9"
+                    onclick="if(document.getElementById('harga_timbal_balik_hitam_putih').disabled){document.getElementById('checkboxHitamPutih').click();document.getElementById('harga_timbal_balik_hitam_putih').focus() };">
                     <label class="col-md-1 mt-2 mb-2"
-                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_timbal_balik_hitam_putih" name="harga_timbal_balik_hitam_putih" type="number" step="50" min="0"
-                        class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
+                    <input id="harga_timbal_balik_hitam_putih" name="harga_timbal_balik_hitam_putih" type="number"
+                        min="0" class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                         aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
                     <label class="col-md-2 align-middle mt-2 mb-2"
@@ -106,8 +109,9 @@
                 </div>
             </div>
             <div class="custom-control custom-checkbox col-md-3 mb-2">
-                <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarna" onchange="document.getElementById('harga_berwarna').disabled=!this.checked; document.getElementById('harga_timbal_balik_berwarna').disabled=!this.checked;"
-                    value="True" checked>
+                <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarna"
+                    onchange="document.getElementById('harga_berwarna').disabled=!this.checked; document.getElementById('harga_timbal_balik_berwarna').disabled=!this.checked;"
+                    value="False">
                 <label class="custom-control-label" for="checkboxBerwarna">
                     {{__('Berwarna') }}
                 </label>
@@ -116,15 +120,16 @@
                 <label class="col-md-3 align-self-center ml-4 mt-2">
                     {{__('Harga Cetak') }}
                 </label>
-                <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_berwarna').disabled){document.getElementById('checkboxBerwarna').click();document.getElementById('harga_berwarna').focus() };">
+                <div class="row justify-content-left col-md-9"
+                    onclick="if(document.getElementById('harga_berwarna').disabled){document.getElementById('checkboxBerwarna').click();document.getElementById('harga_berwarna').focus() };">
                     <label class="col-md-1 mt-2 mb-2"
-                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_berwarna" name="harga_berwarna" type="number" step="50" min="0"
+                    <input id="harga_berwarna" name="harga_berwarna" type="number" min="0"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
+                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" disabled required>
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('/ Halaman') }}
@@ -135,15 +140,16 @@
                 <label class="col-md-3 align-self-center ml-4 mt-2">
                     {{__('Harga Cetak Timbal Balik') }}
                 </label>
-                <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_timbal_balik_berwarna').disabled){document.getElementById('checkboxBerwarna').click();document.getElementById('harga_timbal_balik_berwarna').focus() };">
+                <div class="row justify-content-left col-md-9"
+                    onclick="if(document.getElementById('harga_timbal_balik_berwarna').disabled){document.getElementById('checkboxBerwarna').click();document.getElementById('harga_timbal_balik_berwarna').focus() };">
                     <label class="col-md-1 mt-2 mb-2"
-                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="number" step="50" min="0"
+                    <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="number" min="0"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
+                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" disabled>
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('/ Halaman') }}
@@ -156,289 +162,290 @@
             <div class="col-md-6">
                 <label class="mb-2 h4 font-weight-bold">
                     {{__('Harga Produk') }}
-                </label>
-                <div class="row justify-content-left mb-2">
-                    <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
-                        <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHargaHitamPutih" onchange="document.getElementById('harga').disabled=!this.checked;"
-                            value="True" checked>
-                        <label class="custom-control-label" for="checkboxHargaHitamPutih">
-                            {{__('Hitam-Putih') }}
-                        </label>
-                    </div>
-                    <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga').disabled){document.getElementById('checkboxHargaHitamPutih').click();document.getElementById('harga').focus() };">
-                        <label class="col-md-auto mt-2 mb-2"
-                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('Rp') }}
-                        </label>
-                        <input id="harga_hitam_putih" name="harga" type="number" step="50" min="0"
-                            class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0"
-                            placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                            aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
-                        <label class="col-md-2 align-middle mt-2 mb-2"
-                            style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('/ Hal') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label class="mb-2 h4 font-weight-bold">
-                    {{__('Harga Produk Timbal Balik') }}
-                </label>
-                <div class="row justify-content-left mb-2">
-                    <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
-                        <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutihTimbalBalik" onchange="document.getElementById('harga_timbal_balik').disabled=!this.checked;"
-                            value="True" checked>
-                        <label class="custom-control-label" for="checkboxHitamPutihTimbalBalik">
-                            {{__('Hitam-Putih') }}
-                        </label>
-                    </div>
-                    <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_timbal_balik').disabled){document.getElementById('checkboxHitamPutihTimbalBalik').click();document.getElementById('harga_timbal_balik').focus() };">
-                        <label class="col-md-auto mt-2 mb-2"
-                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('Rp') }}
-                        </label>
-                        <input id="harga_timbal_balik" name="harga_timbal_balik" type="number" step="50" min="0"
-                            class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0"
-                            placeholder="Masukkan Harga Produk Timbal Balik" aria-label="Masukkan Harga Produk Timbal Balik"
-                            aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
-                        <label class="col-md-2 align-middle mt-2 mb-2"
-                            style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('/ Hal') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-between mb-4">
-            <div class="col-md-6">
-                <div class="row justify-content-left mb-2">
-                    <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
-                        <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarna" onchange="document.getElementById('harga_berwarna').disabled=!this.checked;"
-                            value="True" checked>
-                        <label class="custom-control-label" for="checkboxBerwarna">
-                            {{__('Berwarna') }}
-                        </label>
-                    </div>
-                    <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_berwarna').disabled){document.getElementById('checkboxBerwarna').click();document.getElementById('harga_berwarna').focus() };">
-                        <label class="col-md-auto mt-2 mb-2"
-                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('Rp') }}
-                        </label>
-                        <input id="harga_berwarna" name="harga_berwarna" type="number" step="50" min="0"
-                            class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0"
-                            placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                            aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
-                        <label class="col-md-2 align-middle mt-2 mb-2"
-                            style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('/ Hal') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row justify-content-left mb-2">
-                    <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
-                        <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarnaTimbalBalik" onchange="document.getElementById('harga_timbal_balik_berwarna').disabled=!this.checked;"
-                            value="True" checked>
-                        <label class="custom-control-label" for="checkboxBerwarnaTimbalBalik">
-                            {{__('Berwarna') }}
-                        </label>
-                    </div>
-                    <div class="row justify-content-left col-md-9" onclick="if(document.getElementById('harga_timbal_balik_berwarna').disabled){document.getElementById('checkboxBerwarnaTimbalBalik').click();document.getElementById('harga_timbal_balik_berwarna').focus() };">
-                        <label class="col-md-auto mt-2 mb-2"
-                        style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('Rp') }}
-                        </label>
-                        <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="number" step="50" min="0"
-                            class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0"
-                            placeholder="Masukkan Harga Produk Timbal Balik" aria-label="Masukkan Harga Produk Timbal Balik"
-                            aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
-                        <label class="col-md-2 align-middle mt-2 mb-2"
-                            style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
-                            {{__('/ Hal') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-        <label class="mb-2 h4 font-weight-bold">
-            {{__('Deskripsi Produk') }}
         </label>
-        <div class="form-group mb-4">
-            <textarea name="deskripsi" class="form-control" aria-label="Deskripsi Produk"
-                placeholder="Masukkan Deskripsi Produk Anda"></textarea>
-        </div>
-        <div class="row justify-content-between mb-4">
-            <div class="form-group col-md-6">
-                <label class="font-weight-bold h4 mb-2">
-                    {{__('Kertas') }}
-                </label>
-                <div class="dropdown" aria-required="true">
-                    <input name="jenis_kertas" type="text" id="ukuranKertas" Class="form-control" hidden>
-                    <button id="ukuranKertasButton"
-                        class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                        id="dropdownKertas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
-                            text-align:left;">
-                        {{__('Jenis Pilih Kertas') }}
-                    </button>
-                    @php
-                    $ukuranKertas= array('A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr',
-                    'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LeterHVS80gr');
-                    @endphp
-                    <div id="ukuranKertasList" class="dropdown-menu" aria-labelledby="dropdownKertas"
-                        style="font-size: 16px; width:100%;">
-                        @foreach ( $ukuranKertas as $kertas)
-                        <span class="dropdown-item cursor-pointer ">
-                            {{$kertas}}
-                        </span>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                <label class="font-weight-bold h4 mb-2">
-                    {{__('Printer') }}
-                </label>
-                <div class="dropdown">
-                    <input name="jenis_printer" type="text" id="jenisPrinter" Class="form-control" hidden>
-                    <button id="jenisPrinterButton"
-                        class="btn is-flex btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                        id="dropdownPrinter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
-                                text-align:left;">
-                        {{__('Jenis Pilih Printer') }}
-                    </button>
-                    <div id="jenisPrinterList" class="dropdown-menu" aria-labelledby="dropdownPrinter" style="font-size: 16px;
-                                width:100%">
-                        <span class="dropdown-item ">
-                            {{__('Ink Jet') }}
-                        </span>
-                        <span class="dropdown-item cursor-pointer">
-                            {{__('Laser Jet') }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <label class="mb-3 h4 font-weight-bold">
-            {{__('Paket Produk') }}
-        </label>
-        <div class="row justify-content-between mb-2 ml-0 mr-0">
-            <div class="form-group custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkboxKliping"
-                    onchange="document.getElementById('kliping').disabled=!this.checked;">
-                <label class="custom-control-label" for="checkboxKliping">
-                    {{__('Kliping') }}
-                    <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
-                        help
-                    </i>
+        <div class="row justify-content-left mb-2">
+            <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
+                <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHargaHitamPutih"
+                    onchange="document.getElementById('harga').disabled=!this.checked;" value="True" checked>
+                <label class="custom-control-label" for="checkboxHargaHitamPutih">
+                    {{__('Hitam-Putih') }}
                 </label>
             </div>
-            <div class="row col-md-5"
-                onclick="if(document.getElementById('kliping').disabled){document.getElementById('checkboxKliping').click();document.getElementById('kliping').focus() };">
-                <label class="align-self-center"
-                    style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
+            <div class="row justify-content-left col-md-9"
+                onclick="if(document.getElementById('harga').disabled){document.getElementById('checkboxHargaHitamPutih').click();document.getElementById('harga').focus() };">
+                <label class="col-md-auto mt-2 mb-2"
+                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                     {{__('Rp') }}
                 </label>
-                <input id="kliping" name="fitur[paket][Kliping]" type="number" step="50" min="0"
-                    class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
+                <input id="harga_hitam_putih" name="harga" type="number" min="0"
+                    class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0" placeholder="Masukkan Harga Produk"
                     aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
-                    style="font-size: 16px; width:90%" disabled required>
+                    style="font-size: 16px; width:90%" required>
+                <label class="col-md-2 align-middle mt-2 mb-2"
+                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                    {{__('/ Hal') }}
+                </label>
             </div>
         </div>
-        <div class="row justify-content-left mb-2 ml-0">
-            <label class="h5">
-                {{__('Jilid') }}
-                <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
-                    help
-                </i>
+</div>
+<div class="col-md-6">
+    <label class="mb-2 h4 font-weight-bold">
+        {{__('Harga Produk Timbal Balik') }}
+    </label>
+    <div class="row justify-content-left mb-2">
+        <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
+            <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutihTimbalBalik"
+                onchange="document.getElementById('harga_timbal_balik').disabled=!this.checked;" value="True" checked>
+            <label class="custom-control-label" for="checkboxHitamPutihTimbalBalik">
+                {{__('Hitam-Putih') }}
             </label>
         </div>
-        @php
-        $paket = array('Lem','Baut','Kawat','Spiral');
-        @endphp
-        @foreach ($paket as $p)
-        <div class="form-group row justify-content-between mb-3 ml-2 mr-0">
-            <div class="col-md-6 custom-control custom-checkbox ml-3">
-                <input name="" type="checkbox" class="custom-control-input" id="checkbox{{ $p }}"
-                    onchange="document.getElementById('{{ $p }}').disabled=!this.checked; ">
-                <label class="custom-control-label" for="checkbox{{$p}}">
-                    {{$p}}
-                    <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
-                        help
-                    </i>
+        <div class="row justify-content-left col-md-9"
+            onclick="if(document.getElementById('harga_timbal_balik').disabled){document.getElementById('checkboxHitamPutihTimbalBalik').click();document.getElementById('harga_timbal_balik').focus() };">
+            <label class="col-md-auto mt-2 mb-2"
+                style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                {{__('Rp') }}
+            </label>
+            <input id="harga_timbal_balik" name="harga_timbal_balik" type="number" min="0"
+                class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0"
+                placeholder="Masukkan Harga Produk Timbal Balik" aria-label="Masukkan Harga Produk Timbal Balik"
+                aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
+            <label class="col-md-2 align-middle mt-2 mb-2"
+                style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                {{__('/ Hal') }}
+            </label>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row justify-content-between mb-4">
+    <div class="col-md-6">
+        <div class="row justify-content-left mb-2">
+            <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
+                <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarna"
+                    onchange="document.getElementById('harga_berwarna').disabled=!this.checked;" value="True" checked>
+                <label class="custom-control-label" for="checkboxBerwarna">
+                    {{__('Berwarna') }}
                 </label>
             </div>
-            <div class="row col-md-5"
-                onclick="if(document.getElementById('{{ $p }}').disabled){document.getElementById('checkbox{{ $p }}').click();document.getElementById('{{ $p }}').focus() };">
-                <label class="align-self-center"
-                    style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
+            <div class="row justify-content-left col-md-9"
+                onclick="if(document.getElementById('harga_berwarna').disabled){document.getElementById('checkboxBerwarna').click();document.getElementById('harga_berwarna').focus() };">
+                <label class="col-md-auto mt-2 mb-2"
+                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                     {{__('Rp') }}
                 </label>
-                <input id="{{ $p }}" name="fitur[paket][{{ $p }}]" min="0" type="number"
-                    class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
+                <input id="harga_berwarna" name="harga_berwarna" type="number" min="0"
+                    class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0" placeholder="Masukkan Harga Produk"
                     aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
-                    style="font-size: 16px; width:90%" disabled required>
-            </div>
-        </div>
-        @endforeach
-        <label class="mb-3 h4 font-weight-bold">
-            {{__('Paket Non-Produk') }}
-        </label>
-        @php
-        $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transparan','Kertas Jeruk');
-        @endphp
-        @foreach ($nonPaket as $np)
-        <div class="row justify-content-between mb-3 ml-0 mr-0">
-            <div class="col-md-6 custom-control custom-checkbox ml-0">
-                <input name="" type="checkbox" class="custom-control-input" id="checkbox{{ $np }}"
-                    onchange="document.getElementById('{{ $np }}').disabled=!this.checked; ">
-                <label class="custom-control-label" for="checkbox{{$np}}">
-                    {{$np}}
-                    <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
-                        help
-                    </i>
+                    style="font-size: 16px; width:90%" required>
+                <label class="col-md-2 align-middle mt-2 mb-2"
+                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                    {{__('/ Hal') }}
                 </label>
             </div>
-            <div class="row col-md-5"
-                onclick="if(document.getElementById('{{ $np }}').disabled){document.getElementById('checkbox{{ $np }}').click();document.getElementById('{{ $np }}').focus() };">
-                <label class="align-self-center"
-                    style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row justify-content-left mb-2">
+            <div class="custom-control custom-checkbox col-md-3 mt-2 ml-3">
+                <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarnaTimbalBalik"
+                    onchange="document.getElementById('harga_timbal_balik_berwarna').disabled=!this.checked;"
+                    value="True" checked>
+                <label class="custom-control-label" for="checkboxBerwarnaTimbalBalik">
+                    {{__('Berwarna') }}
+                </label>
+            </div>
+            <div class="row justify-content-left col-md-9"
+                onclick="if(document.getElementById('harga_timbal_balik_berwarna').disabled){document.getElementById('checkboxBerwarnaTimbalBalik').click();document.getElementById('harga_timbal_balik_berwarna').focus() };">
+                <label class="col-md-auto mt-2 mb-2"
+                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                     {{__('Rp') }}
                 </label>
-                <input id="{{ $np }}" name="fitur[nonPaket][{{ $np }}]" type="number" min="0"
-                    class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
-                    aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
-                    style="font-size: 16px; width:90%" disabled required>
+                <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="number" min="0"
+                    class="col-md-7 form-control pt-2 pb-2 optional-step-100 mr-0"
+                    placeholder="Masukkan Harga Produk Timbal Balik" aria-label="Masukkan Harga Produk Timbal Balik"
+                    aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
+                <label class="col-md-2 align-middle mt-2 mb-2"
+                    style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
+                    {{__('/ Hal') }}
+                </label>
             </div>
         </div>
-        @endforeach
-        <hr class="mt-4">
-        <label class="mb-4 ml-0 h4 mt-2 font-weight-bold ">
-            {{__('Paket Tambahan Anda') }}
+    </div>
+</div> --}}
+
+<label class="mb-2 h4 font-weight-bold">
+    {{__('Deskripsi Produk') }}
+</label>
+<div class="form-group mb-4">
+    <textarea name="deskripsi" class="form-control" aria-label="Deskripsi Produk"
+        placeholder="Masukkan Deskripsi Produk Anda"></textarea>
+</div>
+<div class="row justify-content-between mb-4">
+    <div class="form-group col-md-6">
+        <label class="font-weight-bold h4 mb-2">
+            {{__('Kertas') }}
         </label>
-        <ul id="areaTambah" class="mr-0" style="margin-left:-50px;list-style-type: none;">
-        </ul>
-        <button id="tambahPaket" type="button" class="btn btn-primary-yellow btn-block center SemiBold mt-2 mb-5">
-            Tambah Paket
+        <div class="dropdown" aria-required="true">
+            <input name="jenis_kertas" type="text" id="ukuranKertas" Class="form-control" value="A4HVS70gr" hidden>
+            <button id="ukuranKertasButton"
+                class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                id="dropdownKertas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
+                            text-align:left;">
+                {{__('A4HVS70gr') }}
+            </button>
+            @php
+            $ukuranKertas= array('A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr',
+            'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LeterHVS80gr');
+            @endphp
+            <div id="ukuranKertasList" class="dropdown-menu" aria-labelledby="dropdownKertas"
+                style="font-size: 16px; width:100%;">
+                @foreach ( $ukuranKertas as $kertas)
+                <span class="dropdown-item cursor-pointer ">
+                    {{$kertas}}
+                </span>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <label class="font-weight-bold h4 mb-2">
+            {{__('Printer') }}
+        </label>
+        <div class="dropdown">
+            <input name="jenis_printer" type="text" id="jenisPrinter" Class="form-control" value="Ink Jet" hidden>
+            <button id="jenisPrinterButton"
+                class="btn is-flex btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                id="dropdownPrinter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
+                                text-align:left;">
+                {{__('Ink Jet') }}
+            </button>
+            <div id="jenisPrinterList" class="dropdown-menu" aria-labelledby="dropdownPrinter" style="font-size: 16px;
+                                width:100%">
+                <span class="dropdown-item ">
+                    {{__('Ink Jet') }}
+                </span>
+                <span class="dropdown-item cursor-pointer">
+                    {{__('Laser Jet') }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<label class="mb-3 h4 font-weight-bold">
+    {{__('Fitur Produk') }}
+</label>
+<div class="row justify-content-between mb-2 ml-0 mr-0">
+    <div class="form-group custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="checkboxKliping"
+            onchange="document.getElementById('kliping').disabled=!this.checked;">
+        <label class="custom-control-label" for="checkboxKliping">
+            {{__('Kliping') }}
+            <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                help
+            </i>
+        </label>
+    </div>
+    <div class="row col-md-5"
+        onclick="if(document.getElementById('kliping').disabled){document.getElementById('checkboxKliping').click();document.getElementById('kliping').focus() };">
+        <label class="align-self-center"
+            style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
+            {{__('Rp') }}
+        </label>
+        <input id="kliping" name="fitur[Kliping]" type="number" min="0" class="form-control pt-2 pb-2 optional-step-100"
+            placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
+            aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" disabled required>
+    </div>
+</div>
+<div class="row justify-content-left mb-2 ml-0">
+    <label class="h5">
+        {{__('Jilid') }}
+        <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+            help
+        </i>
+    </label>
+</div>
+@php
+$paket = array('Lem','Baut','Kawat','Spiral');
+@endphp
+@foreach ($paket as $p)
+<div class="form-group row justify-content-between mb-3 ml-2 mr-0">
+    <div class="col-md-6 custom-control custom-checkbox ml-3">
+        <input name="" type="checkbox" class="custom-control-input" id="checkbox{{ $p }}"
+            onchange="document.getElementById('{{ $p }}').disabled=!this.checked; ">
+        <label class="custom-control-label" for="checkbox{{$p}}">
+            {{$p}}
+            <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                help
+            </i>
+        </label>
+    </div>
+    <div class="row col-md-5"
+        onclick="if(document.getElementById('{{ $p }}').disabled){document.getElementById('checkbox{{ $p }}').click();document.getElementById('{{ $p }}').focus() };">
+        <label class="align-self-center"
+            style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
+            {{__('Rp') }}
+        </label>
+        <input id="{{ $p }}" name="fitur[{{ $p }}]" min="0" type="number"
+            class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
+            aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
+            style="font-size: 16px; width:90%" disabled required>
+    </div>
+</div>
+@endforeach
+@php
+$nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transparan','Kertas Jeruk');
+@endphp
+@foreach ($nonPaket as $np)
+<div class="row justify-content-between mb-3 ml-0 mr-0">
+    <div class="col-md-6 custom-control custom-checkbox ml-0">
+        <input name="" type="checkbox" class="custom-control-input" id="checkbox{{ $np }}"
+            onchange="document.getElementById('{{ $np }}').disabled=!this.checked; ">
+        <label class="custom-control-label" for="checkbox{{$np}}">
+            {{$np}}
+            <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                help
+            </i>
+        </label>
+    </div>
+    <div class="row col-md-5"
+        onclick="if(document.getElementById('{{ $np }}').disabled){document.getElementById('checkbox{{ $np }}').click();document.getElementById('{{ $np }}').focus() };">
+        <label class="align-self-center"
+            style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
+            {{__('Rp') }}
+        </label>
+        <input id="{{ $np }}" name="fitur[{{ $np }}]" type="number" min="0"
+            class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
+            aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
+            style="font-size: 16px; width:90%" disabled required>
+    </div>
+</div>
+@endforeach
+<hr class="mt-4">
+<label class="mb-4 ml-0 h4 mt-2 font-weight-bold ">
+    {{__('Fitur Tambahan Anda') }}
+</label>
+<ul id="areaTambah" class="mr-0" style="margin-left:-50px;list-style-type: none;">
+</ul>
+<button id="tambahPaket" type="button" class="btn btn-primary-yellow btn-block center SemiBold mt-2 mb-5">
+    Tambah Fitur
+</button>
+<div class="row justify-content-end mr-0 mb-5">
+    <div class="mr-3">
+        <button id="tes" type="reset" class="btn btn-default btn-lg text-primary-danger font-weight-bold pl-5 pr-5 mb-0"
+            style="border-radius:30px;
+                            font-size:18px;">
+            {{__('Batalkan Perubahan') }}
         </button>
-        <div class="row justify-content-end mr-0 mb-5">
-            <div class="mr-3">
-                <button id="tes" type="reset"
-                    class="btn btn-default btn-lg text-primary-danger font-weight-bold pl-5 pr-5 mb-0" style="border-radius:30px;
+    </div>
+    <div class="mr-0">
+        <button type="submit" class="btn btn-lg btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" style="border-radius:30px;
                             font-size:18px;">
-                    {{__('Batalkan Perubahan') }}
-                </button>
-            </div>
-            <div class="mr-0">
-                <button type="submit" class="btn btn-lg btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" style="border-radius:30px;
-                            font-size:18px;">
-                    {{__('Simpan Perubahan') }}
-                </button>
-            </div>
-        </div>
-    </form>
+            {{__('Simpan Perubahan') }}
+        </button>
+    </div>
+</div>
+</form>
 </div>
 
 
@@ -502,7 +509,7 @@
     var uploadedDocumentMap = {}
     Dropzone.options.documentDropzone = {
       url: '{{ route('partner.produk.storeMedia') }}',
-      maxFilesize: 2, // MB
+      maxFilesize: 10, // MB
       addRemoveLinks: true,
       headers: {
         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -519,7 +526,27 @@
         } else {
           name = uploadedDocumentMap[file.name]
         }
-      }
+        $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+      },
+      init: function () {
+        @if(isset($produk) && $produk->getMedia('foto_produk'))
+            var files =
+            {!! json_encode($produk->getMedia('foto_produk')) !!}
+            for (var i in files) {
+                var file = files[i]
+                var fileUrl = "/storage"+"/"+file.id+"/"+file.file_name
+            this.options.addedfile.call(this, file);
+            this.options.thumbnail.call(this, file, fileUrl)
+                {
+                $('[data-dz-thumbnail]').css('height', '120');
+                $('[data-dz-thumbnail]').css('width', '120');
+                $('[data-dz-thumbnail]').css('object-fit', 'cover');
+
+            };
+            file.previewElement.classList.add('dz-complete')
+            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+            }
+        @endif
     }
 
     $('#jenisPrinterList span').on('click', function () {
@@ -533,6 +560,7 @@ $('#ukuranKertasList span').on('click', function () {
 });
 
 $(document).ready(function() {
+
  var i = 0;
     $("#tambahPaket").click(function() {
       $("#areaTambah").append(
