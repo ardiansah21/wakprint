@@ -91,13 +91,15 @@
                             <a class="nav-link" href="{{ route('partner.profile') }}"
                                 style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
                                 {{-- <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span> --}}
-                                <span class="text-primary-purple text-truncate mr-2" style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
+                                <span class="text-primary-purple text-truncate mr-2"
+                                    style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
                                 @if (!empty(Auth::user()->getFirstMediaUrl()))
-                                    <img class="align-middle border border-gray ml-2" src="{{ Auth::user()->getFirstMediaUrl() }}"
-                                        width="45" height="45" alt="no logo" style="border-radius: 30px;">
+                                <img class="align-middle border border-gray ml-2"
+                                    src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45" alt="no logo"
+                                    style="border-radius: 30px;">
                                 @else
                                 <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
-                                        width="45" height="45" alt="no logo">
+                                    width="45" height="45" alt="no logo">
                                 @endif
 
                             </a>
@@ -109,108 +111,119 @@
         </nav>
         <main>
             @auth
-                @switch(Route::currentRouteName())
-                    @case('partner.profile.edit')
-                    @case('partner.detail.pesanan')
-                    @case('partner.produk.create')
-                    @case('partner.promo.create')
-                    @case('partner.promo.edit')
-                    @case('partner.atk.create')
-                    @case('partner.atk.edit')
-                        @yield('content')
-                        @break
-                    @default
-                    <div class="container mt-4 mb-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="row justify-content-left ml-0 mb-3" style="font-size: 18px;">
-                                    <label class="font-weight-bold mr-3">
-                                        {{__('Percetakan')}}
-                                    </label>
-                                    <form id="status-form" action="{{ route('partner.ubah-status') }}" method="POST">
-                                        @csrf
-                                        <label class="switch">
-                                            <input id="statusToko" class="statusToko" type="checkbox" value="Buka" name="status_toko" onchange="event.preventDefault(); document.getElementById('status-form').submit();"
-                                            @if (Auth::user()->status_toko == 'Buka')
-                                                checked
-                                            @endif
-                                            >
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </form>
-                                </div>
-                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical"
-                                    style="font-size: 18px;">
-                            <a class="nav-link mb-2 {{set_active('partner.home')}}" id="v-pills-beranda-tab" href="{{ route('partner.home') }}" role="tab"
-                                        aria-controls="v-pills-beranda" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            home
-                                        </i>
-                                        {{__('Beranda')}}
-                                    </a>
-                                    <a class="nav-link mb-2 {{set_active('partner.pesanan')}}" id="v-pills-pesanan-tab" href="{{ route('partner.pesanan') }}" role="tab"
-                                        aria-controls="v-pills-pesanan" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            shopping_cart
-                                        </i>
-                                        {{__('Pesanan')}}
-                                    </a>
-                                    <a class="nav-link mb-2 {{set_active('partner.saldo')}}" id="v-pills-saldo-tab" href="{{ route('partner.saldo') }}" role="tab"
-                                        aria-controls="v-pills-saldo" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            account_balance_wallet
-                                        </i>
-                                        {{__('Saldo')}}
-                                    </a>
-                                    <a class="nav-link mb-2 {{set_active('partner.produk.index')}}" id="v-pills-produk-tab" href="{{ route('partner.produk.index') }}"
-                                        role="tab" aria-controls="v-pills-produk" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            print
-                                        </i>
-                                        {{__('Produk')}}
-                                    </a>
-                                    <a class="nav-link mb-2 {{set_active('partner.promo.index')}}" id="v-pills-promo-tab" href="{{ route('partner.promo.index') }}" role="tab"
-                                        aria-controls="v-pills-promo" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            local_offer
-                                        </i>
-                                        {{__('Promo')}}
-                                    </a>
-                                    <a class="nav-link mb-2 {{set_active('partner.atk.index')}}" id="v-pills-atk-tab" href="{{ route('partner.atk.index') }}" role="tab"
-                                        aria-controls="v-pills-atk" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            architecture
-                                        </i>
-                                        {{__('Alat Tulis Kantor')}}
-                                    </a>
-                                    <a class="nav-link mb-2 {{set_active('partner.info')}}" id="v-pills-info-tab" href="{{ route('partner.info') }}" role="tab"
-                                        aria-controls="v-pills-info" aria-selected="true">
-                                        <i class="material-icons md-36 align-middle mr-2">
-                                            contact_support
-                                        </i>
-                                        {{__('Info dan Bantuan')}}
-                                    </a>
-                                    <a class="nav-link mb-2 mt-4" id="v-pills-keluar-tab" data-toggle="pill" href="#v-pills-keluar"
-                                        role="tab" aria-controls="v-pills-keluar" aria-selected="true"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="material-icons text-primary-danger md-36 align-middle mr-2">
-                                            exit_to_app
-                                        </i>
-                                        {{__('Keluar')}}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('partner.logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tab-content col-md-8">
-                                @yield('content')
-                            </div>
+            @switch(Route::currentRouteName())
+            @case('partner.profile.edit')
+            @case('partner.detail.pesanan')
+            @case('partner.produk.create')
+            @case('partner.produk.edit')
+            @case('partner.promo.create')
+            @case('partner.promo.edit')
+            @case('partner.atk.create')
+            @case('partner.atk.edit')
+            @yield('content')
+            @break
+            @default
+            <div class="container mt-4 mb-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row justify-content-left ml-0 mb-3" style="font-size: 18px;">
+                            <label class="font-weight-bold mr-3">
+                                {{__('Percetakan')}}
+                            </label>
+                            <form id="status-form" action="{{ route('partner.ubah-status') }}" method="POST">
+                                @csrf
+                                <label class="switch">
+                                    <input id="statusToko" class="statusToko" type="checkbox" value="Buka"
+                                        name="status_toko"
+                                        onchange="event.preventDefault(); document.getElementById('status-form').submit();"
+                                        @if (Auth::user()->status_toko == 'Buka')
+                                    checked
+                                    @endif
+                                    >
+                                    <span class="slider round"></span>
+                                </label>
+                            </form>
+                        </div>
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                            aria-orientation="vertical" style="font-size: 18px;">
+                            <a class="nav-link mb-2 {{set_active('partner.home')}}" id="v-pills-beranda-tab"
+                                href="{{ route('partner.home') }}" role="tab" aria-controls="v-pills-beranda"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    home
+                                </i>
+                                {{__('Beranda')}}
+                            </a>
+                            <a class="nav-link mb-2 {{set_active('partner.pesanan')}}" id="v-pills-pesanan-tab"
+                                href="{{ route('partner.pesanan') }}" role="tab" aria-controls="v-pills-pesanan"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    shopping_cart
+                                </i>
+                                {{__('Pesanan')}}
+                            </a>
+                            <a class="nav-link mb-2 {{set_active('partner.saldo')}}" id="v-pills-saldo-tab"
+                                href="{{ route('partner.saldo') }}" role="tab" aria-controls="v-pills-saldo"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    account_balance_wallet
+                                </i>
+                                {{__('Saldo')}}
+                            </a>
+                            <a class="nav-link mb-2 {{set_active('partner.produk.index')}}" id="v-pills-produk-tab"
+                                href="{{ route('partner.produk.index') }}" role="tab" aria-controls="v-pills-produk"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    print
+                                </i>
+                                {{__('Produk')}}
+                            </a>
+                            <a class="nav-link mb-2 {{set_active('partner.promo.index')}}" id="v-pills-promo-tab"
+                                href="{{ route('partner.promo.index') }}" role="tab" aria-controls="v-pills-promo"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    local_offer
+                                </i>
+                                {{__('Promo')}}
+                            </a>
+                            <a class="nav-link mb-2 {{set_active('partner.atk.index')}}" id="v-pills-atk-tab"
+                                href="{{ route('partner.atk.index') }}" role="tab" aria-controls="v-pills-atk"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    architecture
+                                </i>
+                                {{__('Alat Tulis Kantor')}}
+                            </a>
+                            <a class="nav-link mb-2 {{set_active('partner.info')}}" id="v-pills-info-tab"
+                                href="{{ route('partner.info') }}" role="tab" aria-controls="v-pills-info"
+                                aria-selected="true">
+                                <i class="material-icons md-36 align-middle mr-2">
+                                    contact_support
+                                </i>
+                                {{__('Info dan Bantuan')}}
+                            </a>
+                            <a class="nav-link mb-2 mt-4" id="v-pills-keluar-tab" data-toggle="pill"
+                                href="#v-pills-keluar" role="tab" aria-controls="v-pills-keluar" aria-selected="true"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="material-icons text-primary-danger md-36 align-middle mr-2">
+                                    exit_to_app
+                                </i>
+                                {{__('Keluar')}}
+                            </a>
+                            <form id="logout-form" action="{{ route('partner.logout') }}" method="POST"
+                                style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
                         </div>
                     </div>
-                @endswitch
+                    <div class="tab-content col-md-8">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+            @endswitch
             @else
-                @yield('content')
+            @yield('content')
             @endauth
         </main>
     </div>
