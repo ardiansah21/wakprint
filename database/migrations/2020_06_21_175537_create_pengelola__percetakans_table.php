@@ -41,7 +41,7 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->string('foto_toko')->nullable();
             $table->boolean('ambil_di_tempat')->nullable();
             $table->boolean('antar_ke_tempat')->nullable();
-            $table->string('atkdwh')->nullable();
+            $table->smallInteger('ntkwh')->nullable();
             $table->timestamps();
         });
     }

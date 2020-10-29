@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/konfigurasi-file/upload', 'KonfigurasiController@uploadFile')->name('konfigurasi.upload');
     Route::get('/konfigurasi-file/produk/{produkId}', 'KonfigurasiController@selectedProduk')->name('konfigurasi.produk');
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
+    Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
 
 });
 

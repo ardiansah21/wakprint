@@ -390,25 +390,13 @@
             $(this).bind('change', function(){
                 if(this.checked){
                     hasilFitur.push($(this).val());
-                    console.log(hasilFitur);
                     searching();
                 }
                 else {
-                    // if (hasilFitur[index] === $(this).val()) {
-                    //     hasilFitur.pop(hasilFitur[index],$(this).val());
-                    // }
-                    // hasilFitur = $.grep(hasilFitur, function(value){
-                    //     return value != $(this).val();
-                    // })
-                    // delete hasilFitur[index];
-                    // hasilFitur.splice($(this).index,1);
                     var pos = hasilFitur.indexOf($(this).val());
                     if(pos > -1){
                         hasilFitur.splice(pos, 1);
                     }
-                    // hasilFitur.pop(this.index,$(this).val());
-                    console.log('Nilai : ' + hasilFitur);
-                    // hasilFitur.slice(index);
                     searching();
                 }
             });
@@ -475,8 +463,8 @@
                     var produkItem = '<div class="row justify-content-between ml-0 mr-0">';
                         if (produks['produks'].length != 0) {
                                 for (i = 0; i < produks['produks'].length; i++) {
-                                    var urlDetailProduk = '{{ route('detail.produk','produks.id_produk') }}';
-                                    // urlDetailProduk = url.replace("produks",produks['produks'][i].id_produk);
+                                    var idProduk = produks['produks'][i].id_produk;
+                                    var urlDetailProduk = "{{ route("detail.produk","") }}" + "/" + idProduk;
 
                                     var jumlahDiskonGray = produks['produks'][i].harga_hitam_putih * produks['produks'][i].jumlah_diskon;
                                     var jumlahDiskonWarna = produks['produks'][i].harga_berwarna * produks['produks'][i].jumlah_diskon;
@@ -491,7 +479,7 @@
                                     }
                                     produkItem += '<div class="col-md-6 mb-4">';
                                         produkItem += '<div class="card shadow mb-2" style="border-radius: 10px;">';
-                                            produkItem +='<a class="text-decoration-none" href='+urlDetailProduk+' style="color: black;">'
+                                            produkItem +='<a class="text-decoration-none" href="'+urlDetailProduk+'" style="color: black;">'
                                                 if (produks['produks'][i].jumlah_diskon != null) {
                                                     produkItem +='<div class="text-center" style="position: relative;">';
                                                         produkItem +='<div class="bg-promo" style="position: absolute; top: 55%; left: 10%; width:75px; height:50px; border-radius:0px 0px 8px 8px;">';
@@ -500,6 +488,13 @@
                                                     produkItem +='</div>';
                                                 }
                                                 produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
+
+                                                // if(produks['members'].cekProdukFavorit(produks['members'].id_member,produks['produks'][i].id_produk)){
+                                                //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer text-danger" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
+                                                // }
+                                                // else{
+                                                //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
+                                                // }
                                                 produkItem +='<img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
                                                 produkItem +='<div class="card-body cursor-pointer" onclick="window.location.href=">';
                                                     produkItem +='<div class="row justify-content-between">';

@@ -107,7 +107,7 @@ function cekWarna($path, $percenMinimum = 0)
     return $pdf;
 }
 
-function cekWarnaNew($path, $percenMinimum = 0)
+function cekWarnaNew($path, $percenMinimum)
 {
     ini_set('max_execution_time', 300000);
     $start = microtime(true);

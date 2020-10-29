@@ -119,30 +119,56 @@ class MemberController extends Controller
         {
             if($request->ajax()){
                 if ($request->filterPencarian === 'Harga Tertinggi') {
-                    $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                        // ->orWhere('jenis_kertas', 'like', '%'.$request->keyword.'%')
-                        ->orWhere('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                        // ->orWhere('jenis_printer', 'like', '%'.$request->keyword.'%')
-                        ->orWhere('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                        ->orWhere('harga_hitam_putih', 'like', '%'.$request->keyword)
-                        ->orWhere('harga_berwarna', 'like', '%'.$request->keyword)
-                        ->orWhere('rating', 'like', '%'.$request->keyword.'%')
-                        ->orderBy('harga_hitam_putih', 'desc')
-                        ->orderBy('harga_berwarna', 'desc')
-                        ->get();
+                    if ($request->fiturTambahan != null) {
+                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
+                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
+                            ->where('rating', 'like', '%'.$request->keyword.'%')
+                            ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
+                            ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
+                            ->orderBy('harga_hitam_putih', 'desc')
+                            ->orderBy('harga_berwarna', 'desc')
+                            ->get();
+                    }
+                    else {
+                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
+                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
+                            ->where('rating', 'like', '%'.$request->keyword.'%')
+                            ->orderBy('harga_hitam_putih', 'desc')
+                            ->orderBy('harga_berwarna', 'desc')
+                            ->get();
+                    }
                 }
                 else if ($request->filterPencarian === 'Harga Terendah') {
-                    $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                        // ->orWhere('jenis_kertas', 'like', '%'.$request->keyword.'%')
-                        ->orWhere('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                        // ->orWhere('jenis_printer', 'like', '%'.$request->keyword.'%')
-                        ->orWhere('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                        ->orWhere('harga_hitam_putih', 'like', '%'.$request->keyword)
-                        ->orWhere('harga_berwarna', 'like', '%'.$request->keyword)
-                        ->orWhere('rating', 'like', '%'.$request->keyword.'%')
-                        ->orderBy('harga_hitam_putih', 'asc')
-                        ->orderBy('harga_berwarna', 'asc')
-                        ->get();
+                    if ($request->fiturTambahan != null) {
+                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
+                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
+                            ->where('rating', 'like', '%'.$request->keyword.'%')
+                            ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
+                            ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
+                            ->orderBy('harga_hitam_putih', 'asc')
+                            ->orderBy('harga_berwarna', 'asc')
+                            ->get();
+                    }
+                    else {
+                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
+                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
+                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
+                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
+                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
+                            ->where('rating', 'like', '%'.$request->keyword.'%')
+                            ->orderBy('harga_hitam_putih', 'asc')
+                            ->orderBy('harga_berwarna', 'asc')
+                            ->get();
+                    }
                 }
                 else {
                     if ($request->fiturTambahan != null) {
@@ -154,11 +180,6 @@ class MemberController extends Controller
                             ->where('rating', 'like', '%'.$request->keyword.'%')
                             ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
                             ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            // ->orWhere(function($query) use ($request) {
-                            //     $query
-
-                            //         ;
-                            // })
                             ->orderBy('created_at', 'desc')
                             ->get();
                     }
@@ -169,20 +190,13 @@ class MemberController extends Controller
                             ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
                             ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
                             ->where('rating', 'like', '%'.$request->keyword.'%')
-
-                            // ->orWhere(function($query) use ($request) {
-                            //     $query
-
-                            //         ;
-                            // })
                             ->orderBy('created_at', 'desc')
                             ->get();
-
-                        // $produks->partner->where('antar_ke_tempat', 'like', '%'.$request->antarKeTempat.'%')
-                        //     ->where('ambil_di_tempat', 'like', '%'.$request->ambilDiTempat.'%')
-                        //     ->get();
                     }
                 }
+
+                // $members = Auth::user();
+                // $members->cekProdukFavorit();
 
                 $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%'.$request->keyword.'%')
                         ->where('nama_lengkap', 'like', '%'.$request->keyword.'%')
@@ -190,9 +204,6 @@ class MemberController extends Controller
                         ->where('antar_ke_tempat', 'like', '%'.$request->antarKeTempat.'%')
                         ->where('alamat_toko', 'like', '%'.$request->keyword.'%')
                         ->where('rating_toko', 'like', '%'.$request->keyword.'%')
-                        // ->orWhere(function($query) use ($request) {
-                        //     $query;
-                        // })
                         ->orderBy('created_at', 'desc')
                         ->get();
 
@@ -233,6 +244,7 @@ class MemberController extends Controller
     public function pencarian(Request $request)
     {
         // $produk = Produk::paginate(4);
+        // $member = Auth::user();
         $produk = Produk::all();
         $atk = Atk::all();
         $partner = Pengelola_Percetakan::all();
@@ -553,7 +565,12 @@ class MemberController extends Controller
     public function profileEdit()
     {
         $member = Auth::user();
-        return view('member.edit_profil', ['member' => $member]);
+        $tanggalLahir = $member->tanggal_lahir;
+        $tanggal = substr($tanggalLahir,8,2);
+        return view('member.edit_profil', [
+            'member' => $member,
+            'tanggal' => $tanggal
+        ]);
     }
 
     public function updateDataProfile(Request $request)
@@ -823,11 +840,6 @@ class MemberController extends Controller
         $produk = Produk::all();
         $produkFavorit = json_decode($member->produk_favorit);
 
-        // dd($produkFavorit[0]);
-        // for ($i=0; $i < count($produkFavorit); $i++) {
-        //     dd(count($produkFavorit));
-        // }
-
         return view('member.produk_favorit', [
             'member' => $member,
             'produk' => $produk,
@@ -840,8 +852,6 @@ class MemberController extends Controller
         $member = Member::find(Auth::id());
 
         $produkFavorit = json_decode($member->produk_favorit);
-
-        // dd($produkFavorit);
 
         if(empty($produkFavorit))
         {
@@ -861,55 +871,9 @@ class MemberController extends Controller
         $member->produk_favorit = $produkFavorit;
         $member->save();
 
-        dd($member->produk_favorit);
+        // dd($member->produk_favorit);
 
         return redirect()->back();
-
-        // $produkFavorit = json_decode($member->produk_favorit);
-
-        // // $nilaiInput = array($request->id_produk);
-
-        // foreach ($produkFavorit as $key => $pf) {
-        //     if($pf === $request->id_produk){
-        //         array_splice($produkFavorit,$key);
-        //     }
-        //     else {
-        //         array_push($produkFavorit,$request->id_produk);
-        //     }
-        // }
-
-        // // array_push($produkFavorit,$request->id_produk);
-
-        // // if(count($produkFavorit) === 0){
-        // //     array_push($produkFavorit,$nilaiInput);
-        // // }
-
-        // // else {
-        // //     for ($i=0; $i < count($produkFavorit); $i++) {
-        // //         // dd('TES');
-        // //         // if($key = array_search($produkFavorit[$i], $produkFavorit) === $request->id_produk){
-
-        // //         // if($produkFavorit[$i] === $request->id_produk){
-        // //         //     // dd('HAPUS');
-        // //         //     unset($produkFavorit[$i]);
-        // //         // }
-        // //         // else {
-        // //         //     array_push($produkFavorit[$i],$nilaiInput);
-        // //         // }
-        // //     }
-        // //     // array_push($produkFavorit,$nilaiInput);
-        // // }
-        // // array_push($produkFavorit,$nilaiInput);
-
-        // $member->produk_favorit = array_unique($produkFavorit);
-        // $member->save();
-
-        // $member->produk_favorit = $request->id_produk;
-        // $member->save();
-
-        // // dd($member->produk_favorit);
-
-        // return redirect()->back();
     }
 
     public function ulasan()

@@ -67,9 +67,15 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     <div class="col-md-auto">
                         <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="date" style="font-size: 18px;">
                             @for($date = 1; $date < 32; $date++)
-                                <option value="{{ $date }}">
-                                    {{ $date }}
-                                </option>
+                                {{-- @if (!empty($member->tanggal_lahir))
+                                    <option value="{{ $date }}">
+                                        {{ $date }}
+                                    </option> --}}
+                                {{-- @else --}}
+                                    <option value="{{ $date }}">
+                                        {{ $date }}
+                                    </option>
+                                {{-- @endif --}}
                             @endfor
                         </select>
                     </div>

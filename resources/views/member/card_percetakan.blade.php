@@ -7,7 +7,12 @@
                 <label class="badge badge-pill badge-info bg-promo font-weight-bold align-bottom p-2 mb-1 mt-3" style="position: absolute;top: 0%; left: 80%; font-size: 12px;" hidden>{{__('ATK') }}</label>
             @endif
         @endforeach
-        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+        <img class="card-img-top"
+        @if (count($p->getMedia('foto_produk')) > 0)
+            src="{{$p->getFirstMediaUrl('foto_produk')}}"
+        @else
+            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+        @endif
         style="height: 180px; border-radius: 10px 10px 0px 0px;"
         alt="Card image cap"/>
         <div class="card-body">
