@@ -63,7 +63,7 @@
             <div class="custom-control custom-checkbox col-md-3 mb-2">
                 <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutih"
                     onchange="document.getElementById('harga_hitam_putih').disabled=!this.checked; document.getElementById('harga_timbal_balik_hitam_putih').disabled=!this.checked;"
-                    value="True" checked>
+                    value="True" checked required>
                 <label class="custom-control-label" for="checkboxHitamPutih">
                     {{__('Hitam-Putih') }}
                 </label>
@@ -78,7 +78,7 @@
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_hitam_putih" name="harga_hitam_putih" type="number" min="0"
+                    <input id="harga_hitam_putih" name="harga_hitam_putih" type="number" min="0" required
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                         aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
@@ -99,7 +99,7 @@
                         {{__('Rp') }}
                     </label>
                     <input id="harga_timbal_balik_hitam_putih" name="harga_timbal_balik_hitam_putih" type="number"
-                        min="0" class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
+                        required min="0" class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                         aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
                     <label class="col-md-2 align-middle mt-2 mb-2"
@@ -509,7 +509,7 @@ $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transpara
     var uploadedDocumentMap = {}
     Dropzone.options.documentDropzone = {
       url: '{{ route('partner.produk.storeMedia') }}',
-      maxFilesize: 10, // MB
+      maxFilesize: 3, // MB
       addRemoveLinks: true,
       headers: {
         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -527,28 +527,8 @@ $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transpara
           name = uploadedDocumentMap[file.name]
         }
         $('form').find('input[name="document[]"][value="' + name + '"]').remove()
-      },
-      init: function () {
-        @if(isset($produk) && $produk->getMedia('foto_produk'))
-            var files =
-            {!! json_encode($produk->getMedia('foto_produk')) !!}
-            for (var i in files) {
-                var file = files[i]
-                var fileUrl = "/storage"+"/"+file.id+"/"+file.file_name
-            this.options.addedfile.call(this, file);
-            this.options.thumbnail.call(this, file, fileUrl)
-                {
-                $('[data-dz-thumbnail]').css('height', '120');
-                $('[data-dz-thumbnail]').css('width', '120');
-                $('[data-dz-thumbnail]').css('object-fit', 'cover');
-
-            };
-            file.previewElement.classList.add('dz-complete')
-            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-            }
-        @endif
+      }
     }
-
     $('#jenisPrinterList span').on('click', function () {
     $('#jenisPrinterButton').text($(this).text());
     $('#jenisPrinter').val($(this).text());
@@ -567,7 +547,7 @@ $(document).ready(function() {
         '<li class="ml-0 mr-0">'+
         '    <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">'+
         '        <div class="col-md-2">'+
-        '            <img id="blah'+i+'" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"'+
+        '            <img id="blah'+i+'" src="https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur"'+
         '                class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px;" alt="foto produk">'+
         '            <a id="editGambarProduk" class="pointer" onclick="document.getElementById(\'imgupload'+i+'\').click();"'+
         '                style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;">'+
@@ -594,7 +574,7 @@ $(document).ready(function() {
         '            <label class="mb-2 "> Deskripsi Fitur </label>'+
         '            <div class="form-group mb-4 mr-0">'+
         '                <textarea id="deskripsi" name="fitur[tambahan]['+i+'][deskripsi]" class="form-control d-flex"'+
-        '                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda"></textarea>'+
+        '                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda" required></textarea>'+
         '            </div>'+
         '        </div>'+
         '        <div class="col-md-auto align-self-center mr-0 mb-3">'+
