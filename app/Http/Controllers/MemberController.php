@@ -588,8 +588,11 @@ class MemberController extends Controller
                 'jenis_kelamin' => $request->jk,
                 'tanggal_lahir' => $dateBorn,
             ]);
-            $member->clearMediaCollection();
-            $member->addMedia($request->file('foto_member'))->toMediaCollection();
+            if ($request->hasFile('foto_atk')) {
+                $member->addMedia($request->file('foto_atk'))->toMediaCollection();
+            }
+            // $member->clearMediaCollection();
+            // $member->addMedia($request->file('foto_member'))->toMediaCollection();
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
         } else {
             if (Auth::Check()) {
@@ -610,8 +613,11 @@ class MemberController extends Controller
                             'tanggal_lahir' => $dateBorn,
                             'password' => Hash::make($request->password),
                         ]);
-                        $member->clearMediaCollection();
-                        $member->addMedia($request->file('foto_member'))->toMediaCollection();
+                        if ($request->hasFile('foto_atk')) {
+                            $member->addMedia($request->file('foto_atk'))->toMediaCollection();
+                        }
+                        // $member->clearMediaCollection();
+                        // $member->addMedia($request->file('foto_member'))->toMediaCollection();
                         return redirect()->route('profile')->with('alert', 'Profil dan Password telah berhasil diubah');
                     } else {
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
@@ -623,8 +629,11 @@ class MemberController extends Controller
                     'jenis_kelamin' => $request->jk,
                     'tanggal_lahir' => $dateBorn,
                 ]);
-                $member->clearMediaCollection();
-                $member->addMedia($request->file('foto_member'))->toMediaCollection();
+                if ($request->hasFile('foto_atk')) {
+                    $member->addMedia($request->file('foto_atk'))->toMediaCollection();
+                }
+                // $member->clearMediaCollection();
+                // $member->addMedia($request->file('foto_member'))->toMediaCollection();
                 return redirect()->route('profile')->with('alert', 'Profil telah berhasil diubah');
             }
         }

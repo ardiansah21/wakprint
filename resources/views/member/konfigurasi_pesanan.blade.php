@@ -6,6 +6,10 @@
         $hargaKonfigurasi = array();
         $biayaOngkir = 0;
 
+        $arrAtk = array();
+        $posAtk = array();
+        $hargaAtk = array();
+
         for ($i=0; $i < count($konfigurasi); $i++) {
             if (!empty($konfigurasi) && $konfigurasi[$i]->id_member === $member->id_member) {
                 array_push($arrKonfigurasi,$konfigurasi[$i]->id_konfigurasi);
@@ -18,7 +22,29 @@
                 // $jumlahSubtotalFile = 0;
             }
         }
-        // dd($arrKonfigurasi);
+
+        foreach ($konfigurasi as $k){
+            foreach ($produk as $p){
+                if (!empty($k) && $k->id_member === $member->id_member){
+                    if ($k->id_produk === $p->id_produk){
+                        foreach ($atk as $a => $value){
+                            if ($value->id_pengelola === $p->partner->id_pengelola){
+                                array_push($arrAtk,$value->id_atk);
+                                array_push($hargaAtk,$value->harga);
+                                // dd(count($arrAtk));
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        }
+
+        for ($i=0; $i < count($arrAtk); $i++) {
+            $posAtk[$i] = $arrAtk[$i];
+            // dd($arrAtk[$i]);
+        }
+        // dd($a);
     @endphp
     <div class="container mt-5 mb-5">
         <label class="font-weight-bold"
@@ -219,7 +245,7 @@
                                         <div class="row justify-content-between ml-0 mr-2">
                                         {{-- <input type="number" id="banyakAtk" value="{{count($atk)}}"> --}}
                                             <div class="col-md-4 form-group custom-control custom-checkbox">
-                                            <input type="number" id="indexAtk" value="{{$a}}" hidden>
+                                            <input type="number" id="indexAtk" value="{{$posAtk}}" hidden>
                                             <input type="checkbox" class="custom-control-input" id="checkboxAtk{{$a}}" value="{{$value->id_atk}}" style="width: 100%;">
                                                 <label class="custom-control-label text-break align-middle" for="checkboxAtk{{$a}}" style="width: 100%;">
                                                     {{$value->nama ?? '-'}}
@@ -228,16 +254,16 @@
                                             </div>
                                             <div class="col-md-auto form-group">
                                                 <label>{{__('Jumlah') }}
-                                                    <i id="plusAtk" class="fa fa-plus ml-2 mr-2"></i>
+                                                <i id="plusAtk{{$a}}" class="fa fa-plus ml-2 mr-2"></i>
                                                 </label>
-                                                <input id="jumlahAtk" type="number" class="form-input" min="1" max="{{$value->jumlah}}" value="1" style="width:48px;">
-                                                <i id="minusAtk" class="fa fa-minus ml-2 mr-2"></i>
+                                                <input id="jumlahAtk{{$a}}" type="number" class="form-input" min="1" max="{{$value->jumlah}}" value="1" style="width:48px;">
+                                                <i id="minusAtk{{$a}}" class="fa fa-minus ml-2 mr-2"></i>
                                             </div>
                                             <div class="col-md-4 text-right">
-                                                <label id="hargaAtkLabel" class="SemiBold mb-2 ml-0" style="width: 100%;">
+                                                <label id="hargaAtkLabel{{$a}}" class="SemiBold mb-2 ml-0" style="width: 100%;">
                                                     Rp. {{$value->harga ?? 0}}
                                                 </label>
-                                                <input type="number" name="hargaAtk" id="hargaAtk" value="{{$value->harga ?? 0}}" hidden>
+                                                <input type="number" name="hargaAtk" id="hargaAtk{{$a}}" value="{{$value->harga ?? 0}}" hidden>
                                             </div>
                                         </div>
                                     @endif
@@ -269,13 +295,6 @@
             var totalSisaSaldo = 0;
 
             $('input[type=checkbox]').each(function(index, value){
-                $('#checkboxAtk' + indexAtk).bind('change', function(){
-                    if($('#checkboxAtk' + indexAtk).prop('checked', this.checked)){
-                        console.log($('#checkboxAtk' + indexAtk).val());
-                    }
-                    $('#checkboxAtk' + indexAtk).not(this).prop('checked', this.checked);
-                });
-
                 $('#checkboxKonfigurasi' + index).bind('change', function(){
 
                     // $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
@@ -366,6 +385,12 @@
 
                     // $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
                 });
+                $('#checkboxAtk' + index).bind('change', function(){
+                    if($('#checkboxAtk' + index).prop('checked', this.checked)){
+                        console.log($('#checkboxAtk' + index).val());
+                    }
+                    $('#checkboxAtk' + index).not(this).prop('checked', this.checked);
+                });
             });
 
             $('#checkboxPilihSemua').on('change',function(){
@@ -445,24 +470,24 @@
                 var related_class=$(this).val();
                 $('.'+related_class).prop('disabled',false);
 
-                // subTotalFile = 0;
-                // hargaSubTotalFile = 0;
-                // arrKonfig = [];
-                // arrSubTotalFile = [];
-                // totalHargaPesanan = 0;
-                // totalSisaSaldo = 0;
+                subTotalFile = 0;
+                hargaSubTotalFile = 0;
+                arrKonfig = [];
+                arrSubTotalFile = [];
+                totalHargaPesanan = 0;
+                totalSisaSaldo = 0;
 
                 if($('#rbAmbilTempat').is(':checked')){
                     biayaOngkir = 0;
                     $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                     $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
 
-                    subTotalFile = 0;
-                    hargaSubTotalFile = 0;
-                    arrKonfig = [];
-                    arrSubTotalFile = [];
-                    totalHargaPesanan = 0;
-                    totalSisaSaldo = 0;
+                    // subTotalFile = 0;
+                    // hargaSubTotalFile = 0;
+                    // arrKonfig = [];
+                    // arrSubTotalFile = [];
+                    // totalHargaPesanan = 0;
+                    // totalSisaSaldo = 0;
 
                     for (i = 0; i < batas-1; i++) {
                         if ($('#checkboxPilihSemua').is(':checked')) {
@@ -707,24 +732,16 @@
                     $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                     $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
 
-                    subTotalFile = 0;
-                    hargaSubTotalFile = 0;
-                    arrKonfig = [];
-                    arrSubTotalFile = [];
-                    totalHargaPesanan = 0;
-                    totalSisaSaldo = 0;
+                    // subTotalFile = 0;
+                    // hargaSubTotalFile = 0;
+                    // arrKonfig = [];
+                    // arrSubTotalFile = [];
+                    // totalHargaPesanan = 0;
+                    // totalSisaSaldo = 0;
 
                     for (i = 0; i < batas-1; i++) {
                         if ($('#checkboxPilihSemua').is(':checked')) {
-                            // subTotalFile = 0;
-                            // hargaSubTotalFile = 0;
-                            // arrKonfig = [];
-                            // arrSubTotalFile = [];
-                            // totalHargaPesanan = 0;
-                            // totalSisaSaldo = 0;
-
                             $('#checkboxKonfigurasi' + i).prop('checked', this.checked);
-
                             arrKonfig.push($('#checkboxKonfigurasi' + i).val());
                             subTotalFile = arrKonfig.length;
                             arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
@@ -739,13 +756,6 @@
                             $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
                         }
                         else{
-                            // subTotalFile = 0;
-                            // hargaSubTotalFile = 0;
-                            // arrKonfig = [];
-                            // arrSubTotalFile = [];
-                            // totalHargaPesanan = 0;
-                            // totalSisaSaldo = 0;
-
                             if($('#checkboxKonfigurasi' + i).is(':checked')){
                                 arrKonfig.push($('#checkboxKonfigurasi' + i).val());
                                 arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
@@ -973,6 +983,33 @@
                 });
             }));
 
+            $('input[type=number]').each(function(index, value){
+                $('#jumlahAtk' + index).on('change input', function(){
+                    var max = $('#jumlahAtk' + index).attr('max');
+                    var min = $('#jumlahAtk' + index).attr('min');
+                    this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                    var val = parseInt($('#jumlahAtk' + index).val());
+
+                    if ($('#jumlahAtk' + index).val().length < 1) {
+                        val = 0;
+                        $('#jumlahAtk' + index).prop('required',true);
+                    }
+                    else if($('#jumlahAtk' + index).val().length > max.length){
+                        val = max;
+                        $('#jumlahAtk' + index).val(max);
+                    }
+                    else {
+                        if ($('#jumlahAtk' + index).val() > max) {
+                            val = max;
+                            $('#jumlahAtk' + index).val(max);
+                        } else if($('#jumlahAtk' + index).val() < min) {
+                            val = min;
+                            $('#jumlahAtk' + index).val(min);
+                        }
+                    }
+                    $('#hargaAtkLabel' + index).text('Rp. ' + val * parseInt($('#hargaAtk' + index).val()));
+                });
+            });
             $('#plusAtk').click(function(){
                 var val = parseInt($('#jumlahAtk').val());
                 if(val >= $('#jumlahAtk').attr('max')){
@@ -998,31 +1035,31 @@
                 $('#hargaAtkLabel').text('Rp. ' + val * parseInt($('#hargaAtk').val()));
             })
 
-            $('#jumlahAtk').on('change input', function(){
-                var max = $('#jumlahAtk').attr('max');
-                var min = $('#jumlahAtk').attr('min');
-                this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-                var val = parseInt($('#jumlahAtk').val());
+            // $('#jumlahAtk').on('change input', function(){
+            //     var max = $('#jumlahAtk').attr('max');
+            //     var min = $('#jumlahAtk').attr('min');
+            //     this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+            //     var val = parseInt($('#jumlahAtk').val());
 
-                if ($('#jumlahAtk').val().length < 1) {
-                    val = 0;
-                    $('#jumlahAtk').prop('required',true);
-                }
-                else if($('#jumlahAtk').val().length > max.length){
-                    val = max;
-                    $('#jumlahAtk').val(max);
-                }
-                else {
-                    if ($('#jumlahAtk').val() > max) {
-                        val = max;
-                        $('#jumlahAtk').val(max);
-                    } else if($('#jumlahAtk').val() < min) {
-                        val = min;
-                        $('#jumlahAtk').val(min);
-                    }
-                }
-                $('#hargaAtkLabel').text('Rp. ' + val * parseInt($('#hargaAtk').val()));
-            });
+            //     if ($('#jumlahAtk').val().length < 1) {
+            //         val = 0;
+            //         $('#jumlahAtk').prop('required',true);
+            //     }
+            //     else if($('#jumlahAtk').val().length > max.length){
+            //         val = max;
+            //         $('#jumlahAtk').val(max);
+            //     }
+            //     else {
+            //         if ($('#jumlahAtk').val() > max) {
+            //             val = max;
+            //             $('#jumlahAtk').val(max);
+            //         } else if($('#jumlahAtk').val() < min) {
+            //             val = min;
+            //             $('#jumlahAtk').val(min);
+            //         }
+            //     }
+            //     $('#hargaAtkLabel').text('Rp. ' + val * parseInt($('#hargaAtk').val()));
+            // });
         });
     </script>
 @endsection

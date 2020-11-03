@@ -161,14 +161,24 @@ class ProdukController extends Controller
                 if ($key == 'tambahan') {
                     foreach ($value as $value2) {
                         if (isset($value2['foto_fitur']) && is_file($value2['foto_fitur'])) {
-                            $lastNameFile = basename(json_decode($produk->fitur)[array_search($value2['uniqid'], array_column(json_decode($produk->fitur), 'uniqid'))]->foto_fitur);
-                            $path = public_path('storage/_fitur');
-                            unlink($path . '/' . $lastNameFile);
-                            $file = $value2['foto_fitur'];
-                            $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
+                            if (empty($value2['uniqid'])) {
+                                $path = public_path('storage/_fitur');
+                                $file = $value2['foto_fitur'];
+                                $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
 
-                            $file->move($path, $name);
-                            $foto_fitur = url('/storage/_fitur') . '/' . $name;
+                                $file->move($path, $name);
+                                $foto_fitur = url('/storage/_fitur') . '/' . $name;
+                            }else {
+                                $lastNameFile = basename(json_decode($produk->fitur)[array_search($value2['uniqid'], array_column(json_decode($produk->fitur), 'uniqid'))]->foto_fitur);
+                                $path = public_path('storage/_fitur');
+                                unlink($path . '/' . $lastNameFile);
+                                $file = $value2['foto_fitur'];
+                                $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
+
+                                $file->move($path, $name);
+                                $foto_fitur = url('/storage/_fitur') . '/' . $name;
+                            }
+
                         } else {
                             $foto_fitur = json_decode($produk->fitur)[array_search($value2['uniqid'], array_column(json_decode($produk->fitur), 'uniqid'))]->foto_fitur;
                         }

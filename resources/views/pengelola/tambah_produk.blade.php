@@ -554,6 +554,7 @@ $(document).ready(function() {
         '                <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2" style="border-radius: 5px;"> edit'+
         '                </i>'+
         '            </a>'+
+        '            <input type="text" hidden name="fitur[tambahan]['+i+'][uniqid]">'+
         '            <input id="imgupload'+i+'" type="file" name="fitur[tambahan]['+i+'][foto_fitur]" hidden accept="image/png, image/jpeg"'+
         '                onchange="document.getElementById(\'blah'+i+'\').src=window.URL.createObjectURL(this.files[0]);" hidden>'+
         '        </div>'+
