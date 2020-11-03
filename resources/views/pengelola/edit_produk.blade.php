@@ -19,6 +19,11 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
 @extends('layouts.pengelola')
 
 @section('content')
+<script>
+    $(".dropzone, .dz-preview, .dz-image-preview").css("background","#EBD1EC");
+    $(".dz-remove").text("Hapus Gambar");
+    $(".dz-remove").css({"margin-top" : "10px", "color" : "#000","font-weight": "bold"});
+</script>
 <div class="container mt-5 mb-5" style="font-size: 16px;">
     <form action="{{ route('partner.produk.update',['produk'=>$produk->id_produk]) }}" method="POST"
         enctype="multipart/form-data">
@@ -374,7 +379,7 @@ $f[$p] = $fitur[$tkey];
             $FiturGabung = array_merge($paket,$nonPaket);
             array_push($FiturGabung,'Kliping');
             $arrFiturTambah = array();
-            $i = -1;
+            $i = 0;
             @endphp
 
             @foreach ($namaFiturArr as $key => $value)
@@ -383,26 +388,28 @@ $f[$p] = $fitur[$tkey];
             $i++;
             $tkey = array_search($value, array_column($fitur, 'nama'));
             if (false !== $tkey) {$f[$i] = $fitur[$tkey];}
-
-            try {$imgUrl = ($produk->getMedia('foto_fitur')[$i])->getUrl();
-            } catch (\Throwable $th) {$imgUrl = null;
-            }
+            // echo $f[$i]->foto_fitur . " " .$i;
             @endphp
             <li class="ml-0 mr-0">
                 <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">
-                    <div class="col-md-2"> <img id="blah{{$i}}"
-                            src="{{$imgUrl ?? 'https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur'}}"
+                    <div class="col-md-2">
+                        <img id="blah{{$i}}"
+                            src="{{$f[$i]->foto_fitur ?? 'https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur'}}"
+                            {{-- onerror="this.onerror=null; this.src='https:\/\/via.placeholder.com\/163/BC41BE\/fff.png?text=Fitur'" --}}
                             class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px; "
                             alt="foto produk">
                         <a id="editGambarProduk" class="pointer"
                             onclick="document.getElementById('imgupload{{$i}}').click();"
-                            style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;"> <i
-                                class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2"
+                            style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;">
+                            <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2"
                                 style="border-radius: 5px;">
                                 edit
-                            </i> </a> <input id="imgupload{{$i}}" type="file" name="fitur[tambahan][{{$i}}][foto_fitur]"
-                            hidden="" accept="image/png, image/jpeg"
-                            onchange="document.getElementById('blah{{$i}}').src=window.URL.createObjectURL(this.files[0]);">
+                            </i>
+                        </a>
+                        <input type="text" value="{{$f[$i]->uniqid}}" hidden name="fitur[tambahan][{{$i}}][uniqid]">
+                        <input id="imgupload{{$i}}" type="file" name="fitur[tambahan][{{$i}}][foto_fitur]" value="''"
+                            hidden accept="image/png, image/jpeg" onchange="
+                            document.getElementById('blah{{$i}}').src=window.URL.createObjectURL(this.files[0]);">
                     </div>
                     <div class="col-md-9">
                         <div class="row justify-content-between mr-1">
@@ -424,7 +431,7 @@ $f[$p] = $fitur[$tkey];
                         <div class="form-group mb-4 mr-0"> <textarea id="deskripsi"
                                 name="fitur[tambahan][{{$i}}][deskripsi]" class="form-control d-flex"
                                 aria-label="Deskripsi Fitur"
-                                placeholder="Masukkan Deskripsi Paket Tambahan Anda">{{$f[$i]->deskripsi}}</textarea>
+                                placeholder="Masukkan Deskripsi Paket Tambahan Anda">{{$f[$i]->deskripsi ?? '' }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-auto align-self-center mr-0 mb-3"> <button id="hapus"
@@ -519,7 +526,7 @@ $f[$p] = $fitur[$tkey];
     var uploadedDocumentMap = {}
     Dropzone.options.documentDropzone = {
       url: '{{ route('partner.produk.storeMedia') }}',
-      maxFilesize: 5, // MB
+      maxFilesize: 3, // MB
       addRemoveLinks: true,
       headers: {
         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -573,11 +580,11 @@ $('#ukuranKertasList span').on('click', function () {
 });
 
 $(document).ready(function() {
-
-
  var i = "{{$i}}";
-    $("#tambahPaket").click(function() {
-      $("#areaTambah").append(
+ $("#tambahPaket").click(function() {
+     i++;
+     alert(i);
+     $("#areaTambah").append(
         '<li class="ml-0 mr-0">'+
         '    <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">'+
         '        <div class="col-md-2">'+
