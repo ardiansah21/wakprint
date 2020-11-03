@@ -26,6 +26,7 @@ class CreateKonfigurasiFilesTable extends Migration
             $table->integer('biaya')->nullable();
             $table->text('catatan_tambahan')->nullable();
             $table->string('nama_produk',)->nullable();
+            $table->json('fitur_terpilih')->nullable();
             $table->timestamp('waktu');
             $table->timestamps();
         });

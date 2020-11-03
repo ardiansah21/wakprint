@@ -30,7 +30,15 @@
 
     </div>
     <div class="table-scrollbar" style="font-size:18px;">
-        <div class="row justify-content-left mb-0">
+        <div class="row justify-content-left ml-0 mr-0 mb-4">
+            <label class="col-4 ml-0">
+                {{__('Nilai Toleransi Kandungan Warna Halaman')}}
+            </label>
+            <label class="col-8 SemiBold">
+                {{$partner->ntkwh}} %
+            </label>
+        </div>
+        <div class="row justify-content-left ml-0 mr-0 mb-0">
             <label class="col-4 ml-0">
                 {{__('Nama Pemilik')}}
             </label>
@@ -38,7 +46,7 @@
                 {{$partner->nama_lengkap}}
             </label>
         </div>
-        <div class="row justify-content-left mb-0">
+        <div class="row justify-content-left ml-0 mr-0 mb-0">
             <label class="col-4 ml-0">
                 {{__('Nomor HP')}}
             </label>
@@ -46,7 +54,7 @@
                 {{$partner->nomor_hp}}
             </label>
         </div>
-        <div class="row justify-content-left mb-0">
+        <div class="row justify-content-left ml-0 mr-0 mb-0">
             <label class="col-4 ml-0">
                 {{__('Nama Bank')}}
             </label>
@@ -54,7 +62,7 @@
                 {{$partner->nama_bank}}
             </label>
         </div>
-        <div class="row justify-content-left mb-0">
+        <div class="row justify-content-left ml-0 mr-0 mb-0">
             <label class="col-4 ml-0">
                 {{__('Nomor Rekening')}}
             </label>
@@ -62,7 +70,7 @@
                 {{$partner->nomor_rekening}}
             </label>
         </div>
-        <div class="row justify-content-left mb-2">
+        <div class="row justify-content-left ml-0 mr-0 mb-2">
             <label class="col-4 ml-0">
                 {{__('Alamat')}}
             </label>
@@ -70,7 +78,7 @@
                 {{$partner->alamat_toko}}
             </label>
         </div>
-        <div class="row justify-content-left mb-4">
+        <div class="row justify-content-left ml-0 mr-0 mb-4">
             <label class="col-4 ml-0">
                 {{__('Deskripsi Tempat Percetakan')}}
             </label>

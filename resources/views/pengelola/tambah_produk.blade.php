@@ -527,26 +527,7 @@ $nonPaket = array('Hekter','Tulang Kliping','Penjepit Kertas','Plastik Transpara
           name = uploadedDocumentMap[file.name]
         }
         $('form').find('input[name="document[]"][value="' + name + '"]').remove()
-      },
-      init: function () {
-        @if(isset($produk) && $produk->getMedia('foto_produk'))
-            var files =
-            {!! json_encode($produk->getMedia('foto_produk')) !!}
-            for (var i in files) {
-                var file = files[i]
-                var fileUrl = "/storage"+"/"+file.id+"/"+file.file_name
-            this.options.addedfile.call(this, file);
-            this.options.thumbnail.call(this, file, fileUrl)
-                {
-                $('[data-dz-thumbnail]').css('height', '120');
-                $('[data-dz-thumbnail]').css('width', '120');
-                $('[data-dz-thumbnail]').css('object-fit', 'cover');
-
-            };
-            file.previewElement.classList.add('dz-complete')
-            $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-            }
-        @endif
+      }
     }
 
     $('#jenisPrinterList span').on('click', function () {

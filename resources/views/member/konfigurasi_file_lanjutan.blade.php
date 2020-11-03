@@ -155,7 +155,7 @@
                                     <i class="fa fa-minus ml-2 mr-2"></i>
                                 </label>
                                 <input id="jumlahSalin" type="number" class="form-input" min="1"
-                                    {{-- oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" --}}
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                     value="1" style="width:48px;">
                                 <label class="label pointer" id="btnPlus">
                                     <i class="fa fa-plus ml-2 mr-2"></i>
@@ -218,19 +218,19 @@
                             <br>
                             <div class="row justify-content-between ml-0 mr-0">
                                 <label class="" style="font-size:16px;">{{__('Berwarna') }}</label>
-                                <label class="" style="font-size:16px;">{{"Rp. ". session()->get('produkKonfigurasiFile')->harga_berwarna . " / Halaman" ?? "-" }}</label>
+                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_berwarna ?? 0 }} / Halaman</label>
                             </div>
                             <div class="row justify-content-between ml-0 mr-0 mb-4">
                                 <label class="" style="font-size:16px;">{{__('Hitam Putih') }}</label>
-                                <label class="" style="font-size:16px;">{{"Rp. ". session()->get('produkKonfigurasiFile')->harga_hitam_putih . " / Halaman" ?? "-" }}</label>
+                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_hitam_putih ?? 0 }} / Halaman</label>
                             </div>
                             <div class="row justify-content-between ml-0 mr-0">
                                 <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">{{"Rp. ". session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna . " / Halaman" ?? "-" }}</label>
+                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna ?? 0 }} / Halaman</label>
                             </div>
                             <div class="row justify-content-between ml-0 mr-0 mb-4">
                                 <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">{{"Rp. ". session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih . " / Halaman" ?? "-" }}</label>
+                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih ?? 0 }} / Halaman</label>
                             </div>
                             <div class="row justify-content-between ml-0 mr-0 mb-5">
                                 <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}</label>
@@ -242,24 +242,24 @@
                                     @endif
                                 </label>
                             </div>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur Tambahan') }}</label>
+                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur') }}</label>
                             @php
-                                $fitur = json_decode(session()->get('produkKonfigurasiFile')->fitur);
+                                $fitur = json_decode(session()->get('produkKonfigurasiFile')->fitur,true);
                             @endphp
                             @if (!empty($fitur))
-                                @foreach ($fitur->tambahan as $f => $value)
+                                @foreach ($fitur as $f => $value)
                                     <div class="row justify-content-between ml-0 mr-0">
                                         <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                        <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value->nama}}">
+                                        <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
                                             <label class="custom-control-label" for="checkboxFitur{{$f}}">
-                                                {{$value->nama}}
+                                                {{$value['nama']}}
                                                 <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
                                                     help
                                                 </i>
                                             </label>
                                         </div>
-                                        <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value->harga}}" hidden>
-                                        <label class="" style="font-size:16px;">{{__('Rp. ' .$value->harga) }}</label>
+                                        <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
+                                        <label class="" style="font-size:16px;">{{__('Rp. ' .$value['harga']) }}</label>
                                     </div>
                                 @endforeach
                             @else
@@ -372,6 +372,8 @@
                                 var nilaiPaksaHitamPutih = parseInt(pdf['jumlahHalBerwarna'] + pdf['jumlahHalHitamPutih']);
                                 var nilaiPaksaBerwarna = 0;
                                 var fiturTerpilih = [];
+                                var nilaiKustomHal = $('#kustomHal').val();
+                                var jumlahKustomHal = 0;
 
                                 var hargaHitamPutihFinal = 0;
                                 var hargaBerwarnaFinal = 0;
@@ -686,6 +688,8 @@
                                                 if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -709,6 +713,9 @@
                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                 }
                                                 else {
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -717,12 +724,12 @@
                                                         jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                     );
 
-                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                     $('#hargaHitamPutih').html(
                                                         'Rp. ' + hargaHitamPutihFinal
                                                     );
 
-                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                     $('#hargaBerwarna').html(
                                                         'Rp. ' + hargaBerwarnaFinal
                                                     );
@@ -746,6 +753,9 @@
                                                 }
 
                                                 nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                 $('#jumlahHitamPutih').html(
                                                     nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -797,6 +807,9 @@
                                                     }
                                                 }
 
+                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                 $('#jumlahHitamPutih').html(
                                                     jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                 );
@@ -820,6 +833,164 @@
 
                                                 console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                             }
+                                        }
+                                        else if($('#rbKustomHal').is(':checked')){
+                                                    nilaiKustomHal = $('#halamanKustom').val();
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '{{route("halaman.kustom")}}',
+                                                        data: {
+                                                            nilaiKustomHal:nilaiKustomHal,
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                        },
+                                                        complete: function(hasil){
+                                                        },
+                                                        success: function (hasil) {
+                                                            var jumlahHitamPutihFinal = 0;
+                                                            var jumlahBerwarnaFinal = 0;
+
+                                                            pdf.halamanTerpilih = hasil;
+
+                                                            for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                                if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                    jumlahBerwarnaFinal += 1;
+                                                                }
+                                                                else{
+                                                                    jumlahHitamPutihFinal += 1;
+                                                                }
+                                                            }
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                    nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else{
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                    });
                                         }
 
                                         pdf.biaya = hargaTotalKonfigurasi;
@@ -964,6 +1135,8 @@
                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -987,6 +1160,9 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -995,12 +1171,12 @@
                                                             jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                         );
 
-                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -1024,6 +1200,9 @@
                                                     }
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1075,6 +1254,9 @@
                                                         }
                                                     }
 
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -1098,6 +1280,164 @@
 
                                                     console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                                 }
+                                            }
+                                            else if($('#rbKustomHal').is(':checked')){
+                                                    nilaiKustomHal = $('#halamanKustom').val();
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '{{route("halaman.kustom")}}',
+                                                        data: {
+                                                            nilaiKustomHal:nilaiKustomHal,
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                        },
+                                                        complete: function(hasil){
+                                                        },
+                                                        success: function (hasil) {
+                                                            var jumlahHitamPutihFinal = 0;
+                                                            var jumlahBerwarnaFinal = 0;
+
+                                                            pdf.halamanTerpilih = hasil;
+
+                                                            for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                                if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                    jumlahBerwarnaFinal += 1;
+                                                                }
+                                                                else{
+                                                                    jumlahHitamPutihFinal += 1;
+                                                                }
+                                                            }
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                    nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else{
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                    });
                                             }
                                         }
                                         else if(val === 1){
@@ -1210,6 +1550,8 @@
                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1233,6 +1575,9 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -1241,12 +1586,12 @@
                                                             jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                         );
 
-                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -1270,6 +1615,9 @@
                                                     }
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1321,6 +1669,9 @@
                                                         }
                                                     }
 
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -1344,6 +1695,164 @@
 
                                                     console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                                 }
+                                            }
+                                            else if($('#rbKustomHal').is(':checked')){
+                                                    nilaiKustomHal = $('#halamanKustom').val();
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '{{route("halaman.kustom")}}',
+                                                        data: {
+                                                            nilaiKustomHal:nilaiKustomHal,
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                        },
+                                                        complete: function(hasil){
+                                                        },
+                                                        success: function (hasil) {
+                                                            var jumlahHitamPutihFinal = 0;
+                                                            var jumlahBerwarnaFinal = 0;
+
+                                                            pdf.halamanTerpilih = hasil;
+
+                                                            for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                                if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                    jumlahBerwarnaFinal += 1;
+                                                                }
+                                                                else{
+                                                                    jumlahHitamPutihFinal += 1;
+                                                                }
+                                                            }
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                    nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else{
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                    });
                                             }
                                         }
                                         else {
@@ -1454,6 +1963,8 @@
                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1477,6 +1988,9 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -1485,12 +1999,12 @@
                                                             jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                         );
 
-                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -1514,6 +2028,9 @@
                                                     }
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1565,6 +2082,9 @@
                                                         }
                                                     }
 
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -1588,6 +2108,164 @@
 
                                                     console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                                 }
+                                            }
+                                            else if($('#rbKustomHal').is(':checked')){
+                                                    nilaiKustomHal = $('#halamanKustom').val();
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '{{route("halaman.kustom")}}',
+                                                        data: {
+                                                            nilaiKustomHal:nilaiKustomHal,
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                        },
+                                                        complete: function(hasil){
+                                                        },
+                                                        success: function (hasil) {
+                                                            var jumlahHitamPutihFinal = 0;
+                                                            var jumlahBerwarnaFinal = 0;
+
+                                                            pdf.halamanTerpilih = hasil;
+
+                                                            for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                                if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                    jumlahBerwarnaFinal += 1;
+                                                                }
+                                                                else{
+                                                                    jumlahHitamPutihFinal += 1;
+                                                                }
+                                                            }
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                    nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else{
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                    });
                                             }
                                         }
 
@@ -1738,6 +2416,8 @@
                                                 if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1761,6 +2441,9 @@
                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                 }
                                                 else {
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -1769,12 +2452,12 @@
                                                         jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                     );
 
-                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                     $('#hargaHitamPutih').html(
                                                         'Rp. ' + hargaHitamPutihFinal
                                                     );
 
-                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                     $('#hargaBerwarna').html(
                                                         'Rp. ' + hargaBerwarnaFinal
                                                     );
@@ -1798,6 +2481,9 @@
                                                 }
 
                                                 nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                 $('#jumlahHitamPutih').html(
                                                     nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -1849,6 +2535,9 @@
                                                     }
                                                 }
 
+                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                 $('#jumlahHitamPutih').html(
                                                     jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                 );
@@ -1872,6 +2561,164 @@
 
                                                 console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                             }
+                                        }
+                                        else{
+                                            nilaiKustomHal = $('#halamanKustom').val();
+                                                $.ajaxSetup({
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    }
+                                                });
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '{{route("halaman.kustom")}}',
+                                                    data: {
+                                                        nilaiKustomHal:nilaiKustomHal,
+                                                    },
+                                                    error: function (xhr, ajaxOptions, thrownError) {
+                                                        alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                    },
+                                                    complete: function(hasil){
+                                                    },
+                                                    success: function (hasil) {
+                                                        var jumlahHitamPutihFinal = 0;
+                                                        var jumlahBerwarnaFinal = 0;
+
+                                                        pdf.halamanTerpilih = hasil;
+
+                                                        for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                            if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                jumlahBerwarnaFinal += 1;
+                                                            }
+                                                            else{
+                                                                jumlahHitamPutihFinal += 1;
+                                                            }
+                                                        }
+
+                                                        if($('#checkboxTimbalBalik').is(':checked')){
+                                                            if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                            else {
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                        else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                            nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                            pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                            pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                            $('#jumlahHitamPutih').html(
+                                                                nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                            );
+
+                                                            $('#jumlahBerwarna').html(
+                                                                nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                            );
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                            else {
+                                                                hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                        else{
+                                                            pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                            pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                            $('#jumlahHitamPutih').html(
+                                                                jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                            );
+
+                                                            $('#jumlahBerwarna').html(
+                                                                jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                            );
+
+                                                            hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                            $('#hargaHitamPutih').html(
+                                                                'Rp. ' + hargaHitamPutihFinal
+                                                            );
+
+                                                            hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                            $('#hargaBerwarna').html(
+                                                                'Rp. ' + hargaBerwarnaFinal
+                                                            );
+
+                                                            hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                            $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                        }
+                                                    }
+                                                });
                                         }
 
                                         pdf.biaya = hargaTotalKonfigurasi;
@@ -2041,6 +2888,8 @@
                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                            pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                            pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                             $('#jumlahHitamPutih').html(
                                                                 nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2064,6 +2913,9 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                            pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                             $('#jumlahHitamPutih').html(
                                                                 jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                             );
@@ -2072,12 +2924,12 @@
                                                                 jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                             );
 
-                                                            hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                            hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
                                                             );
 
-                                                            hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                            hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                             $('#hargaBerwarna').html(
                                                                 'Rp. ' + hargaBerwarnaFinal
                                                             );
@@ -2101,6 +2953,9 @@
                                                         }
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2152,6 +3007,9 @@
                                                             }
                                                         }
 
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -2175,6 +3033,164 @@
 
                                                         console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                                     }
+                                                }
+                                                else if($('#rbKustomHal').is(':checked')){
+                                                    nilaiKustomHal = $('#halamanKustom').val();
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '{{route("halaman.kustom")}}',
+                                                        data: {
+                                                            nilaiKustomHal:nilaiKustomHal,
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                        },
+                                                        complete: function(hasil){
+                                                        },
+                                                        success: function (hasil) {
+                                                            var jumlahHitamPutihFinal = 0;
+                                                            var jumlahBerwarnaFinal = 0;
+
+                                                            pdf.halamanTerpilih = hasil;
+
+                                                            for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                                if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                    jumlahBerwarnaFinal += 1;
+                                                                }
+                                                                else{
+                                                                    jumlahHitamPutihFinal += 1;
+                                                                }
+                                                            }
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                    nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else{
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                    });
                                                 }
 
                                                 $('#fiturTambahanTerpilih').html(hasilFiturTambahan);
@@ -2364,6 +3380,8 @@
                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                            pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                            pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                             $('#jumlahHitamPutih').html(
                                                                 nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2387,6 +3405,9 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                            pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                             $('#jumlahHitamPutih').html(
                                                                 jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                             );
@@ -2395,12 +3416,12 @@
                                                                 jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                             );
 
-                                                            hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                            hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
                                                             );
 
-                                                            hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                            hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                             $('#hargaBerwarna').html(
                                                                 'Rp. ' + hargaBerwarnaFinal
                                                             );
@@ -2424,6 +3445,9 @@
                                                         }
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2475,6 +3499,9 @@
                                                             }
                                                         }
 
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -2498,6 +3525,165 @@
 
                                                         console.log('Jumlah Hitam Putih : ' + jumlahHitamPutihFinal + '\nJumlah Berwarna : ' + jumlahBerwarnaFinal);
                                                     }
+                                                }
+
+                                                else if($('#rbKustomHal').is(':checked')){
+                                                    nilaiKustomHal = $('#halamanKustom').val();
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '{{route("halaman.kustom")}}',
+                                                        data: {
+                                                            nilaiKustomHal:nilaiKustomHal,
+                                                        },
+                                                        error: function (xhr, ajaxOptions, thrownError) {
+                                                            alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                        },
+                                                        complete: function(hasil){
+                                                        },
+                                                        success: function (hasil) {
+                                                            var jumlahHitamPutihFinal = 0;
+                                                            var jumlahBerwarnaFinal = 0;
+
+                                                            pdf.halamanTerpilih = hasil;
+
+                                                            for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                                if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                    jumlahBerwarnaFinal += 1;
+                                                                }
+                                                                else{
+                                                                    jumlahHitamPutihFinal += 1;
+                                                                }
+                                                            }
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                    nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                    $('#jumlahHitamPutih').html(
+                                                                        jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                    );
+
+                                                                    $('#jumlahBerwarna').html(
+                                                                        jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                    );
+
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                                else {
+                                                                    hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                    $('#hargaHitamPutih').html(
+                                                                        'Rp. ' + hargaHitamPutihFinal
+                                                                    );
+
+                                                                    hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                    $('#hargaBerwarna').html(
+                                                                        'Rp. ' + hargaBerwarnaFinal
+                                                                    );
+
+                                                                    hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                    $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                                }
+                                                            }
+                                                            else{
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                    });
                                                 }
 
                                                 $('#fiturTambahanTerpilih').html(hasilFiturTambahan);
@@ -2674,10 +3860,14 @@
                                                     }
                                                 }
 
+                                                range(parseInt($('#halamanAwal').val()),parseInt($('#halamanAkhir').val()),1);
+
                                                 if($('#checkboxTimbalBalik').is(':checked')){
                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2701,6 +3891,9 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -2726,6 +3919,8 @@
                                                 else if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2736,12 +3931,12 @@
                                                     );
 
                                                     if($('#checkboxTimbalBalik').is(':checked')){
-                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -2750,12 +3945,12 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
-                                                        hargaHitamPutihFinal = hargaHitamPutih * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarna * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -2765,6 +3960,9 @@
                                                     }
                                                 }
                                                 else{
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -2801,10 +3999,14 @@
                                                     }
                                                 }
 
+                                                range(parseInt($('#halamanAwal').val()),parseInt($('#halamanAkhir').val()),1);
+
                                                 if($('#checkboxTimbalBalik').is(':checked')){
                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                        pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                        pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         $('#jumlahHitamPutih').html(
                                                             nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2828,6 +4030,9 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
+                                                        pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                        pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                         $('#jumlahHitamPutih').html(
                                                             jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                         );
@@ -2853,6 +4058,8 @@
                                                 else if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2863,12 +4070,12 @@
                                                     );
 
                                                     if($('#checkboxTimbalBalik').is(':checked')){
-                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -2877,12 +4084,12 @@
                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                     else {
-                                                        hargaHitamPutihFinal = hargaHitamPutih * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                        hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                         $('#hargaHitamPutih').html(
                                                             'Rp. ' + hargaHitamPutihFinal
                                                         );
 
-                                                        hargaBerwarnaFinal = hargaBerwarna * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                        hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
                                                         $('#hargaBerwarna').html(
                                                             'Rp. ' + hargaBerwarnaFinal
                                                         );
@@ -2892,6 +4099,9 @@
                                                     }
                                                 }
                                                 else{
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -2946,6 +4156,8 @@
                                                 if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                     nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                    pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                    pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                     $('#jumlahHitamPutih').html(
                                                         nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -2969,6 +4181,9 @@
                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                 }
                                                 else {
+                                                    pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                    pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                     $('#jumlahHitamPutih').html(
                                                         jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                     );
@@ -2977,12 +4192,12 @@
                                                         jumlahBerwarnaFinal + ' Halaman Berwarna'
                                                     );
 
-                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                    hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
                                                     $('#hargaHitamPutih').html(
                                                         'Rp. ' + hargaHitamPutihFinal
                                                     );
 
-                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                    hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
                                                     $('#hargaBerwarna').html(
                                                         'Rp. ' + hargaBerwarnaFinal
                                                     );
@@ -3006,6 +4221,8 @@
                                                 }
 
                                                 nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                 $('#jumlahHitamPutih').html(
                                                     nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
@@ -3057,6 +4274,9 @@
                                                     }
                                                 }
 
+                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
                                                 $('#jumlahHitamPutih').html(
                                                     jumlahHitamPutihFinal + ' Halaman Hitam Putih'
                                                 );
@@ -3082,9 +4302,172 @@
                                             }
                                         }
                                         else if($('#rbKustomHal').is(':checked')){
-                                            var a = kustomHal($('#halamanKustom').val())
                                             $('#halamanKustom').on('change input',function(){
-                                                console.log(a);
+                                                nilaiKustomHal = $('#halamanKustom').val();
+                                                $.ajaxSetup({
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    }
+                                                });
+                                                $.ajax({
+                                                    type: 'GET',
+                                                    url: '{{route("halaman.kustom")}}',
+                                                    data: {
+                                                        nilaiKustomHal:nilaiKustomHal,
+                                                    },
+                                                    error: function (xhr, ajaxOptions, thrownError) {
+                                                        alert('Fungsi Error '+ thrownError +' Silahkan coba kembali');
+                                                    },
+                                                    complete: function(hasil){
+                                                    },
+                                                    success: function (hasil) {
+                                                        var jumlahHitamPutihFinal = 0;
+                                                        var jumlahBerwarnaFinal = 0;
+
+                                                        pdf.halamanTerpilih = hasil;
+                                                        jumlahKustomHal = hasil.length;
+
+                                                        $('#jumlahHalCetak').html(
+                                                            '<label id="jumlahHalCetak" class="my-auto" style="font-size: 16px;">' +
+                                                            '<i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4">warning</i>' +
+                                                                '<label id="jumlahHal">' + jumlahKustomHal + '</label>' +
+                                                                ' Halaman yang Akan Dicetak' +
+                                                            '</label>'
+                                                        );
+
+                                                        for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                            if(pdf['halaman'][i]['jenis_warna'] === 'Berwarna'){
+                                                                jumlahBerwarnaFinal += 1;
+                                                            }
+                                                            else{
+                                                                jumlahHitamPutihFinal += 1;
+                                                            }
+                                                        }
+
+                                                        if($('#checkboxTimbalBalik').is(':checked')){
+                                                            if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                            else {
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                                $('#jumlahHitamPutih').html(
+                                                                    jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                                );
+
+                                                                $('#jumlahBerwarna').html(
+                                                                    jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                                );
+
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                        else if($('#checkboxPaksaHitamPutih').is(':checked')){
+
+                                                            nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                            pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                            pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
+
+                                                            $('#jumlahHitamPutih').html(
+                                                                nilaiPaksaHitamPutih + ' Halaman Hitam Putih'
+                                                            );
+
+                                                            $('#jumlahBerwarna').html(
+                                                                nilaiPaksaBerwarna + ' Halaman Berwarna'
+                                                            );
+
+                                                            if($('#checkboxTimbalBalik').is(':checked')){
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                            else {
+                                                                hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html(
+                                                                    'Rp. ' + hargaHitamPutihFinal
+                                                                );
+
+                                                                hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html(
+                                                                    'Rp. ' + hargaBerwarnaFinal
+                                                                );
+
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                            }
+                                                        }
+                                                        else{
+                                                            pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                            pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
+
+                                                            $('#jumlahHitamPutih').html(
+                                                                jumlahHitamPutihFinal + ' Halaman Hitam Putih'
+                                                            );
+
+                                                            $('#jumlahBerwarna').html(
+                                                                jumlahBerwarnaFinal + ' Halaman Berwarna'
+                                                            );
+
+                                                            hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                            $('#hargaHitamPutih').html(
+                                                                'Rp. ' + hargaHitamPutihFinal
+                                                            );
+
+                                                            hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                            $('#hargaBerwarna').html(
+                                                                'Rp. ' + hargaBerwarnaFinal
+                                                            );
+
+                                                            hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                            $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
+                                                        }
+                                                    },
+                                                });
                                             });
                                         }
 
@@ -3108,23 +4491,8 @@
                                     }));
 
                                     $('#simpanKonfigurasi').on('click',(function(){
-                                        if($('#rbSemuaHal').is(':checked')){
-                                            console.log('Nama File : ' + pdf.namaFile);
-                                            console.log('Jumlah Halaman Hitam Putih : ' + pdf.jumlahHalamanHitamPutih);
-                                            console.log('Jumlah Halaman Berwarna : ' + pdf.jumlahHalamanBerwarna);
-                                            console.log('Halaman Terpilih : ' + pdf.halamanTerpilih);
-                                            console.log('Jumlah Salinan : ' + pdf.jumlahSalinan);
-                                            console.log('Nilai Paksa Hitam Putih : ' + pdf.paksaHitamPutih);
-                                            console.log('Biaya : ' + pdf.biaya);
-                                            console.log('Catatan Tambahan : ' + pdf.catatanTambahan);
-                                            console.log('Nama Produk : ' + pdf.namaProduk);
-                                            console.log('Fitur Terpilih : ' + pdf.fiturTerpilih);
-                                        }
-
                                         $('#konfigurasiForm').submit(function(e){
-
                                             e.preventDefault();
-
                                             $.ajaxSetup({
                                                 headers: {
                                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3136,17 +4504,16 @@
                                                 data:{
                                                     idProduk:"{{session()->get('produkKonfigurasiFile')->id_produk}}",
                                                     namaFile:"{{(session()->get('fileUpload'))->name}}",
-                                                    jumlahHalamanHitamPutih:0,
-                                                    jumlahHalamanBerwarna:0,
-                                                    halamanTerpilih:[],
-                                                    jumlahSalinan:$('#jumlahSalin').val(),
+                                                    jumlahHalamanHitamPutih:pdf.jumlahHalamanHitamPutih,
+                                                    jumlahHalamanBerwarna:pdf.jumlahHalamanBerwarna,
+                                                    halamanTerpilih:pdf.halamanTerpilih,
+                                                    jumlahSalinan:pdf.jumlahSalinan,
                                                     paksaHitamPutih:pdf.paksaHitamPutih,
-                                                    biaya:0,
-                                                    catatanTambahan:$('#catatanTambahan').val(),
+                                                    biaya:pdf.biaya,
+                                                    catatanTambahan:pdf.catatanTambahan,
                                                     namaProduk:"{{session()->get('produkKonfigurasiFile')->nama}}",
-                                                    fiturTerpilih:[],
+                                                    fiturTerpilih:pdf.fiturTerpilih,
                                                 },
-                                                // data: form.serialize(),
                                                 error: function (xhr, ajaxOptions, thrownError) {
                                                     alert('Tambah Konfigurasi Bermasalah '+ thrownError +' Silahkan coba kembali');
                                                 },
@@ -3157,50 +4524,65 @@
                                                     $('#loading').hide();
                                                 },
                                                 success: function (pdf) {
-                                                    // data.namaFile = pdf.namaFile,
-                                                    // data.jumlahHalamanHitamPutih = pdf.jumlahHalamanHitamPutih,
-                                                    // data.jumlahHalamanBerwarna = pdf.jumlahHalamanBerwarna,
-                                                    // data.halamanTerpilih = pdf.halamanTerpilih,
-                                                    // data.jumlahSalinan = pdf.jumlahSalinan,
-                                                    // data.paksaHitamPutih = pdf.paksaHitamPutih,
-                                                    // data.biaya = pdf.biaya,
-                                                    // data.catatanTambahan = pdf.catatanTambahan,
-                                                    // data.namaProduk = pdf.namaProduk,
-                                                    // data.fiturTerpilih = pdf.fiturTerpilih,
-                                                    alert('Konfigurasi Anda Telah Berhasil Ditambahkan');
+                                                    alert('Konfigurasi Anda Telah Berhasil Disimpan');
+                                                    window.location.href="{{route("konfigurasi.file")}}";
                                                 },
                                             });
                                         });
-
-                                        // $('#konfigurasiForm').trigger('submit');
-
                                     }));
 
                                     $('#simpanDanLanjutkan').on('click',(function(){
-
+                                        $('#konfigurasiForm').submit(function(e){
+                                            e.preventDefault();
+                                            $.ajaxSetup({
+                                                headers: {
+                                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                }
+                                            });
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '{{route("konfigurasi.tambah")}}',
+                                                data:{
+                                                    idProduk:"{{session()->get('produkKonfigurasiFile')->id_produk}}",
+                                                    namaFile:"{{(session()->get('fileUpload'))->name}}",
+                                                    jumlahHalamanHitamPutih:pdf.jumlahHalamanHitamPutih,
+                                                    jumlahHalamanBerwarna:pdf.jumlahHalamanBerwarna,
+                                                    halamanTerpilih:pdf.halamanTerpilih,
+                                                    jumlahSalinan:pdf.jumlahSalinan,
+                                                    paksaHitamPutih:pdf.paksaHitamPutih,
+                                                    biaya:pdf.biaya,
+                                                    catatanTambahan:pdf.catatanTambahan,
+                                                    namaProduk:"{{session()->get('produkKonfigurasiFile')->nama}}",
+                                                    fiturTerpilih:pdf.fiturTerpilih,
+                                                },
+                                                error: function (xhr, ajaxOptions, thrownError) {
+                                                    alert('Tambah Konfigurasi Bermasalah '+ thrownError +' Silahkan coba kembali');
+                                                },
+                                                beforeSend: function () {
+                                                    $('#loading').show();
+                                                },
+                                                complete: function () {
+                                                    $('#loading').hide();
+                                                },
+                                                success: function (pdf) {
+                                                    alert('Konfigurasi Anda Telah Berhasil Ditambahkan');
+                                                    window.location.href="{{route("konfigurasi.pesanan")}}";
+                                                },
+                                            });
+                                        });
                                     }));
+
+                                    function range(start, stop, step) {
+                                        pdf.halamanTerpilih = [start], b = start;
+                                        while (b < stop) {
+                                            pdf.halamanTerpilih.push(b += step || 1);
+                                        }
+                                        return pdf.halamanTerpilih;
+                                    }
                             }
                         });
 
-                        function kustomHal(halaman) {
-                            var hh = new Array(halaman.split("/[\s,,]+/"));
-                            var hasil = new Array();
 
-                            // console.log(hh);
-
-                            hh.forEach(h => {
-                                if(hh.indexOf(h + '-') !== false) {
-                                    // var kk = hh.split("-");
-                                    for (let i = h[0]; i <= h[1]; i++) {
-                                        hasil.push(i);
-                                    }
-                                } else {
-                                    hasil.push(h);
-                                }
-                            });
-                            hasil.sort();
-                            return hasil;
-                        }
                 });
 
 

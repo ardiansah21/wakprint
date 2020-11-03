@@ -383,6 +383,7 @@ class ProdukController extends Controller
     {
         //TODO tambah deskripsi dan foto di setiap fitur template di bawah ini
         $fiturTemplate = array(
+            $this->setFitur('Kliping', null, 'deskripsinya, fotonya taruh di sebelah'),
             $this->setFitur('Lem', null, 'deskripsinya, fotonya taruh di sebelah'),
             $this->setFitur('Baut', null, 'deskripsinya, fotonya taruh di sebelah'),
             $this->setFitur('Kawat', null, 'deskripsinya, fotonya taruh di sebelah'),

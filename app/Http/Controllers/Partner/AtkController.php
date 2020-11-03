@@ -58,8 +58,10 @@ class AtkController extends Controller
             'harga' => $request->harga,
             'jumlah' => $request->jumlah
         ]);
-        $atk->clearMediaCollection();
-        $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+        // $atk->clearMediaCollection();
+        if ($request->hasFile('foto_atk')) {
+            $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+        }
 
         return redirect()->route('partner.atk.index');
     }

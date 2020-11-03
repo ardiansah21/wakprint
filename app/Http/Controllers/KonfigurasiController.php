@@ -64,45 +64,45 @@ class KonfigurasiController extends Controller
             $waktu = Carbon::now()->format('Y:m:d H:i:s');
 
             Konfigurasi_file::create([
-                // 'id_konfigurasi' => $konfigurasi->id_konfigurasi,
                 'id_member' => $member->id_member,
                 'id_produk' => $request->idProduk,
                 'nama_file' => $request->namaFile,
                 'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
                 'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
-                'halaman_terpilih' => $request->halamanTerpilih,
+                'halaman_terpilih' => json_encode($request->halamanTerpilih),
                 'jumlah_salinan' => $request->jumlahSalinan,
                 'paksa_hitamputih' => $request->paksaHitamPutih,
                 'biaya' => $request->biaya,
                 'catatan_tambahan' => $request->catatanTambahan,
                 'nama_produk' => $request->namaProduk,
+                'fitur_terpilih' => json_encode($request->fiturTerpilih),
                 'waktu' => $waktu,
             ]);
-            // return response()->json($konfigurasi,200);
-            return redirect()->back();
+
+            return response()->json($konfigurasi, 200);
         }
-
-        // $member = Auth::user();
-        //     $konfigurasi = Konfigurasi_file::all();
-        //     $waktu = Carbon::now()->format('Y:m:d H:i:s');
-
-        //     Konfigurasi_file::create([
-        //         // 'id_konfigurasi' => $request->$konfigurasi->id_konfigurasi,
-        //         'id_member' => $member->id_member,
-        //         'id_produk' => $request->idProduk,
-        //         'nama_file' => $request->namaFile,
-        //         'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
-        //         'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
-        //         'halaman_terpilih' => $request->halamanTerpilih,
-        //         'jumlah_salinan' => $request->jumlahSalinan,
-        //         'paksa_hitamputih' => $request->paksaHitamPutih,
-        //         'biaya' => $request->biaya,
-        //         'catatan_tambahan' => $request->catatanTambahan,
-        //         'nama_produk' => $request->namaProduk,
-        //         'waktu' => $waktu,
-        //     ]);
-
-        // return redirect()->back();
     }
 
+    public function kustomHal(Request $request)
+    {
+        if ($request->ajax()) {
+            $hh = preg_split("/[\s,,]+/",$request->nilaiKustomHal);
+            $hasil = array();
+
+            foreach ($hh as $h){
+                if (strpos($h, '-') != false){
+                    $kk = explode("-",$h);
+                    for($i = $kk[0]; $i<=$kk[1]; $i++){
+                        array_push($hasil, $i);
+                    }
+                }
+                else{
+                    array_push($hasil, $h);
+                }
+            }
+            sort($hasil);
+            return $hasil;
+            // return response()->json($hasil, 200);
+        }
+    }
 }

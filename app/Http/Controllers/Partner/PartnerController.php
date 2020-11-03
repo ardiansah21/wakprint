@@ -63,8 +63,6 @@ class PartnerController extends Controller
             'AntarKeTempat' => $request->antartempat,
         );
 
-        $atkdwh = $request->atkdwh;
-
         $opBuka = date_create("$jamBuka:$menitBuka");
         $opTutup = date_create("$jamTutup:$menitTutup");
 
@@ -81,7 +79,7 @@ class PartnerController extends Controller
         $partner->nomor_rekening = $request->nomorrekening;
         $partner->ambil_di_tempat = $request->ambiltempat == 'Ambil di Tempat' ? '1' : '0';
         $partner->antar_ke_tempat = $request->antartempat == 'Diantar ke Tempat' ? '1' : '0';
-        $partner->atkdwh = $request->atkdwh;
+        $partner->ntkwh = $request->ntkwh;
 
         $partner->save();
 

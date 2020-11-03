@@ -102,6 +102,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfigurasi-file/produk/{produkId}', 'KonfigurasiController@selectedProduk')->name('konfigurasi.produk');
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
     Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
+    Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
+    Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
 
 });
 

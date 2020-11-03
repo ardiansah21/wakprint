@@ -204,18 +204,15 @@
             </div>
             <div class="col-md-6">
                 <label class="mb-2" style="font-size:14px;">
-                    {{__('Akurasi Tingkat Keakuratan Deteksi Warna Halaman') }}
-                    <a class="text-primary-purple font-weight-bold ml-2"
-                        href=""
-                        data-toggle="modal"
-                        data-target="#infoAtkdwhModal">
-                        {{__('Info') }}
-                    </a>
+                    {{__('Nilai Toleransi Kandungan Warna Halaman') }}
                 </label>
-
-                <div class="form-group">
-                    <div class="dropdown" aria-required="true">
-                        <input name="atkdwh" type="text" id="atkdwh" Class="form-control" value="{{ $partner->atkdwh ?? '' }}" hidden>
+                <div class="row justify-content-between form-group mr-0 ml-0">
+                    <input type="number" min="0" max="100" id="ntkwh" name="ntkwh" class="form-control col-md-11 pt-2 pb-2" value="{{ $partner->ntkwh ?? '0' }}" placeholder="Contoh : 10" style="font-size: 16px;">
+                    <label class="col-md-1 align-self-center mb-2" style="font-size:14px;">
+                        {{__('%') }}
+                    </label>
+                    {{-- <div class="dropdown" aria-required="true">
+                        <input name="atkdwh" type="text" id="atkdwh" Class="form-control" value="{{ $partner->ntkwh ?? '' }}" hidden>
                         <button id="atkdwhButton"
                             class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
                             id="dropdownAtkdwh" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
@@ -233,7 +230,15 @@
                             </span>
                             @endforeach
                         </div>
-                    </div>
+                    </div> --}}
+                </div>
+                <div class="text-right mr-0">
+                    <a class="text-primary-purple font-weight-bold"
+                        href=""
+                        data-toggle="modal"
+                        data-target="#infoAtkdwhModal">
+                        {{__('Uji Coba Sistem Deteksi Warna Halaman') }}
+                    </a>
                 </div>
             </div>
         </div>

@@ -771,7 +771,13 @@ class MemberController extends Controller
 
     public function konfigurasiPesanan()
     {
-        return view('member.konfigurasi_pesanan');
+        $member = Auth::user();
+        $konfigurasi = Konfigurasi_file::all();
+        $partner = Pengelola_Percetakan::all();
+        $produk = Produk::all();
+        $atk = Atk::all();
+
+        return view('member.konfigurasi_pesanan',compact('member','konfigurasi','partner','produk','atk'));
     }
 
     public function konfirmasiPembayaran()
