@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Pengelola_Percetakan;
 use App\Produk;
-use Facade\FlareClient\Stacktrace\File;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class ProdukController extends Controller
@@ -272,18 +271,36 @@ class ProdukController extends Controller
      */
     public function duplicate($id)
     {
-        // Produk::find($id)->replicate()->save();
+
         $produkA = Produk::find($id);
         $produkB = $produkA->replicate();
         $produkB->status = "TidakTersedia";
         $produkB->nama = $produkA->nama . " [ SALINAN ]";
-        $produkB->save();
 
-        $a = DB::table('media')->where('model_id', $id)->get();
-        // dd($a);
-        // foreach ($a as $key => $value) {
-        //     dd($value->id);
-        // }
+        $fiturDefault = array('Kliping', 'Lem', 'Baut', 'Kawat', 'Spiral', 'Hekter', 'Tulang Kliping', 'Penjepit Kertas', 'Plastik Transparan', 'Kertas Jeruk');
+
+        $fitur = json_decode($produkB->fitur);
+        foreach ($fitur as $value) {
+            if (isset($value->foto_fitur) && !in_array($value->foto_fitur, $fiturDefault)) {
+                $name = basename($value->foto_fitur);
+                $path = public_path('storage/_fitur');
+                File::copy($path . '/' . $name, $path . '/copy-' . $name);
+                $value->foto_fitur = url('/storage/_fitur') . '/copy-' . $name;
+            }
+        }
+        $produkB->fitur = json_encode($fitur);
+        $produkB->push();
+
+        foreach ($produkA->media as $media) {
+            assert($media instanceof Media);
+            $props = $media->toArray();
+            unset($props['id']);
+            $produkB->addMedia($media->getPath())
+                ->preservingOriginal()
+                ->withProperties($props)
+                ->toMediaCollection($media->collection_name);
+        }
+
         return redirect()->back();
     }
 
