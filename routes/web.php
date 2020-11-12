@@ -121,6 +121,7 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::get('profil', 'PartnerController@profile')->name('profile');
         Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
         Route::post('profil/edit', 'PartnerController@profileUpdate');
+        Route::post('profil/media', 'PartnerController@storeMedia')->name('profile.storeMedia');
 
         Route::get('saldo', 'PartnerController@saldo')->name('saldo');
         Route::get('saldo/tarik', 'PartnerController@tarikSaldo')->name('saldo.tarik');

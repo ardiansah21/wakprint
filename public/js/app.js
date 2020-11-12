@@ -56054,7 +56054,7 @@ Vue.component("chat-form", __webpack_require__(/*! ./components/ChatForm.vue */ 
 
 window.onload = function () {
   var app = new Vue({
-    el: "#app",
+    el: "#chat",
     data: {
       messages: []
     },

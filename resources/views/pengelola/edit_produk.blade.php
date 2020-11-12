@@ -357,23 +357,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
         <label class="mb-4 ml-0 h4 mt-2 font-weight-bold ">
             {{__('Fitur Tambahan Anda') }}
         </label>
-        {{-- @php
-            $FiturGabung = array_merge($paket,$nonPaket);
-            array_push($FiturGabung,'Kliping');
-
-            $arrFiturTambah = array();
-            foreach ($namaFiturArr as $key => $value) {
-            if (!in_array($value, $FiturGabung)) {
-            $tkey = array_search($value, array_column($fitur, 'nama'));
-            if (false !== $tkey){
-            $f[$p] = $fitur[$tkey];
-            }
-            }
-            }
-
-            @endphp --}}
-
-
         <ul id="areaTambah" class="mr-0" style="margin-left:-50px;list-style-type: none;">
             @php
             $FiturGabung = array_merge($paket,$nonPaket);
@@ -525,54 +508,54 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
 <script>
     var uploadedDocumentMap = {}
     Dropzone.options.documentDropzone = {
-      url: '{{ route('partner.produk.storeMedia') }}',
-      maxFilesize: 3, // MB
-      addRemoveLinks: true,
-      headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-      },
-      success: function (file, response) {
-        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
-        uploadedDocumentMap[file.name] = response.name
-      },
-      removedfile: function (file) {
-        file.previewElement.remove()
-        var name = ''
-        if (typeof file.file_name !== 'undefined') {
-          name = file.file_name
-        } else {
-          name = uploadedDocumentMap[file.name]
+        url: '{{ route('partner.produk.storeMedia') }}',
+        maxFilesize: 3, // MB
+        addRemoveLinks: true,
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+            uploadedDocumentMap[file.name] = response.name
+        },
+        removedfile: function (file) {
+            file.previewElement.remove()
+            var name = ''
+            if (typeof file.file_name !== 'undefined') {
+            name = file.file_name
+            } else {
+            name = uploadedDocumentMap[file.name]
+            }
+            $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+        },
+        init: function () {
+            @if(isset($produk) && $produk->getMedia('foto_produk'))
+                var files =
+                {!! json_encode($produk->getMedia('foto_produk')) !!}
+                for (var i in files) {
+                    var file = files[i]
+                    var fileUrl = "/storage"+"/"+file.id+"/"+file.file_name
+
+                this.options.addedfile.call(this, file);
+                this.options.thumbnail.call(this, file, fileUrl)
+                    {
+                    $('[data-dz-thumbnail]').css('height', '120');
+                    $('[data-dz-thumbnail]').css('width', '120');
+                    $('[data-dz-thumbnail]').css('object-fit', 'cover');
+
+                };
+                file.previewElement.classList.add('dz-complete')
+                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+                }
+            @endif
         }
-        $('form').find('input[name="document[]"][value="' + name + '"]').remove()
-      },
-      init: function () {
-      @if(isset($produk) && $produk->getMedia('foto_produk'))
-        var files =
-          {!! json_encode($produk->getMedia('foto_produk')) !!}
-        for (var i in files) {
-            var file = files[i]
-            var fileUrl = "/storage"+"/"+file.id+"/"+file.file_name
 
-          this.options.addedfile.call(this, file);
-          this.options.thumbnail.call(this, file, fileUrl)
-            {
-            $('[data-dz-thumbnail]').css('height', '120');
-            $('[data-dz-thumbnail]').css('width', '120');
-            $('[data-dz-thumbnail]').css('object-fit', 'cover');
-
-           };
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-        }
-      @endif
-    }
-
-    }
+    };
 
     $('#jenisPrinterList span').on('click', function () {
-    $('#jenisPrinterButton').text($(this).text());
-    $('#jenisPrinter').val($(this).text());
-});
+        $('#jenisPrinterButton').text($(this).text());
+        $('#jenisPrinter').val($(this).text());
+    });
 
 $('#ukuranKertasList span').on('click', function () {
     $('#ukuranKertasButton').text($(this).text());

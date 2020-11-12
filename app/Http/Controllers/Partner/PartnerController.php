@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Str;
-use Carbon\Carbon;
 
 class PartnerController extends Controller
 {
@@ -45,10 +45,6 @@ class PartnerController extends Controller
 
     public function profileUpdate(Request $request)
     {
-        // $request->validate([
-        //     'foto_profil' => 'image|mimes:jpeg,png,jpg|max:2048',
-        // ]);
-
         $partner = Pengelola_Percetakan::find(Auth::id());
 
         $jamBuka = $request->jambuka;
@@ -82,9 +78,28 @@ class PartnerController extends Controller
         $partner->ntkwh = $request->ntkwh;
 
         $partner->save();
+        if ($request->file('foto_partner') != null) {
+            $partner->clearMediaCollection();
+            $partner->addMedia($request->file('foto_partner'))->toMediaCollection();
+        }
 
-        $partner->clearMediaCollection();
-        $partner->addMedia($request->file('foto_partner'))->toMediaCollection();
+        if (count($partner->getMedia('foto_percetakan')) > 0) {
+            foreach ($partner->getMedia('foto_percetakan') as $media) {
+                if (!in_array($media->file_name, $request->input('document', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $partner->getMedia('foto_percetakan')->pluck('file_name')->toArray();
+
+        if ($request->input('document', []) != null) {
+            foreach ($request->input('document', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $partner->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_percetakan');
+                }
+            }
+        }
 
         return redirect()->route('partner.profile')->with('alert', 'Profil berhasil diubah');
     }
@@ -128,17 +143,13 @@ class PartnerController extends Controller
         $partner = Pengelola_Percetakan::find(Auth::id());
         $jumlahSaldo = $request->jumlah_saldo;
 
-        if($partner->jumlah_saldo <= 0){
+        if ($partner->jumlah_saldo <= 0) {
             return redirect()->route('partner.saldo')->with('alert', 'Saldo Anda Kosong !');
-        }
-
-        else if($jumlahSaldo > $partner->jumlah_saldo){
+        } else if ($jumlahSaldo > $partner->jumlah_saldo) {
             return redirect()->route('partner.saldo')->with('alert', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
-        }
-
-        else{
+        } else {
             $jenisTransaksi = 'Tarik';
-            $partner->jumlah_saldo =  $partner->jumlah_saldo - $jumlahSaldo;
+            $partner->jumlah_saldo = $partner->jumlah_saldo - $jumlahSaldo;
             $kodePembayaran = Str::random(20);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
@@ -151,7 +162,7 @@ class PartnerController extends Controller
                 'kode_pembayaran' => $kodePembayaran,
                 'status' => $status,
                 'keterangan' => $keterangan,
-                'waktu' => $waktu
+                'waktu' => $waktu,
             ]);
 
             $partner->save();
@@ -172,10 +183,11 @@ class PartnerController extends Controller
 
     public function statusToko(Request $request)
     {
-        // dd($request->status_toko);
         $status = 'Buka';
-        if($request->status_toko != 'Buka')
+        if ($request->status_toko != 'Buka') {
             $status = 'Tutup';
+        }
+
         $partner = Pengelola_Percetakan::find(Auth::id());
         $partner->status_toko = $status;
         $partner->save();
@@ -209,16 +221,14 @@ class PartnerController extends Controller
         $tanggalAwal = $request->keyword_tanggal_awal;
         $tanggalAkhir = $request->keyword_tanggal_akhir;
         $jenisTransaksi = $request->keyword_jenis_transaksi;
-        // $keyword = 'ERDE';
-        // dd($jenisTransaksi);
-        $transaksi_saldo = Transaksi_saldo::where('jenis_transaksi','LIKE',"%$jenisTransaksi%")
-                    ->orWhere('created_at','LIKE',"%$tanggalAwal%")
-                    ->get();
+        $transaksi_saldo = Transaksi_saldo::where('jenis_transaksi', 'LIKE', "%$jenisTransaksi%")
+            ->orWhere('created_at', 'LIKE', "%$tanggalAwal%")
+            ->get();
 
         // $partner =  Pengelola_Percetakan::where('nama_toko','LIKE',"%$keyword%")
         //             ->orWhere('alamat_toko','LIKE',"%$keyword%")
         //             ->get();
 
-        return redirect()->back()->with('transaksi_saldo',$transaksi_saldo)->with('keyword_tanggal_awal', $tanggalAwal,'keyword_jenis_transaksi',$jenisTransaksi);
+        return redirect()->back()->with('transaksi_saldo', $transaksi_saldo)->with('keyword_tanggal_awal', $tanggalAwal, 'keyword_jenis_transaksi', $jenisTransaksi);
     }
 }
