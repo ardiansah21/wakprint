@@ -425,7 +425,6 @@
         });
 
         function searching() {
-
             var data = {
                 keyword: $('#keyword').val(),
                 jenisKertas: $('#ukuranKertas').val(),

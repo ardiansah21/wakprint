@@ -358,20 +358,20 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             {{__('Fitur Tambahan Anda') }}
         </label>
         {{-- @php
-$FiturGabung = array_merge($paket,$nonPaket);
-array_push($FiturGabung,'Kliping');
+            $FiturGabung = array_merge($paket,$nonPaket);
+            array_push($FiturGabung,'Kliping');
 
-$arrFiturTambah = array();
-foreach ($namaFiturArr as $key => $value) {
-if (!in_array($value, $FiturGabung)) {
-$tkey = array_search($value, array_column($fitur, 'nama'));
-if (false !== $tkey){
-$f[$p] = $fitur[$tkey];
-}
-}
-}
+            $arrFiturTambah = array();
+            foreach ($namaFiturArr as $key => $value) {
+            if (!in_array($value, $FiturGabung)) {
+            $tkey = array_search($value, array_column($fitur, 'nama'));
+            if (false !== $tkey){
+            $f[$p] = $fitur[$tkey];
+            }
+            }
+            }
 
-@endphp --}}
+            @endphp --}}
 
 
         <ul id="areaTambah" class="mr-0" style="margin-left:-50px;list-style-type: none;">

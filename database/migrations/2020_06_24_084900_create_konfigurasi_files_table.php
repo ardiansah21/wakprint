@@ -15,6 +15,7 @@ class CreateKonfigurasiFilesTable extends Migration
     {
         Schema::create('konfigurasi_file', function (Blueprint $table) {
             $table->increments('id_konfigurasi');
+            // $table->integer('id_pesanan')->unsigned()->nullable();$table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
             $table->integer('id_member')->unsigned()->nullable();$table->foreign('id_member')->references('id_member')->on('member');
             $table->integer('id_produk')->unsigned()->nullable();$table->foreign('id_produk')->references('id_produk')->on('produk');
             $table->string('nama_file',255);

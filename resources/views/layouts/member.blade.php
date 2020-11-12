@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     {{-- Owl Carousel --}}
-    <link rel="stylesheet" href="OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="{{asset('OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css')}}" />
 
 
     {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -279,12 +279,12 @@
                                     <i class="material-icons align-middle md-32 mr-2">history</i>
                                     {{__('Riwayat Transaksi') }}
                                 </a>
-                                <a class="nav-link {{set_active('konfigurasi.pesanan')}} SemiBold mb-2" id="v-pills-konfigurasi-tab"
+                                {{-- <a class="nav-link {{set_active('konfigurasi.pesanan')}} SemiBold mb-2" id="v-pills-konfigurasi-tab"
                                     href="{{ route('konfigurasi.pesanan') }}" role="tab"
                                     aria-controls="v-pills-konfigurasi" aria-selected="false" style="font-size: 24px;">
                                     <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
                                     {{__('Konfigurasi File') }}
-                                </a>
+                                </a> --}}
                                 <a class="nav-link {{set_active('pesanan')}} SemiBold mb-4" id="v-pills-pesanan-tab"
                                     href="{{ route('pesanan') }}" role="tab" aria-controls="v-pills-pesanan"
                                     aria-selected="false" style="font-size: 24px;">
@@ -420,11 +420,12 @@
         </main>
         @endauth
     </div>
+
     <!-- Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <script src="OwlCarousel2-2.3.4/dist/owl.carousel.js"></script>
-    <script src="OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
-    <script src="/js/jquery.jscroll.min.js"></script>
+    <script src="{{asset('OwlCarousel2-2.3.4/dist/owl.carousel.js')}}"></script>
+    <script src="{{asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('/js/jquery.jscroll.min.js')}}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
     @yield('script')

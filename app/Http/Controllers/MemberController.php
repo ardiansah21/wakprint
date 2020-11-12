@@ -98,7 +98,7 @@ class MemberController extends Controller
         }
     }
 
-    public function konfigurasiFile()
+    public function konfigurasiFile(Request $request)
     {
         return view('member.konfigurasi_file_lanjutan');
     }
@@ -463,21 +463,14 @@ class MemberController extends Controller
         $transaksi_saldo = Transaksi_saldo::all();
         $pengelola = Pengelola_Percetakan::all();
         $produk = Produk::all();
+        $konfigurasi = Konfigurasi_file::all();
 
-        // foreach ($transaksi_saldo as $ts => $value) {
-        //     dd($value['kode_pembayaran']);
-        // }
-
-        //dd($transaksiSaldo);
-
-        // $id = Transaksi_saldo::find(Auth::id());
-
-        //dd($member);
         return view('member.profil', [
             'member' => $member,
             'transaksi_saldo' => $transaksi_saldo,
             'pengelola_percetakan' => $pengelola,
             'produk' => $produk,
+            'konfigurasi' => $konfigurasi,
             'tanggalLahir' => $this->getDateBorn()]
         );
     }
@@ -639,21 +632,20 @@ class MemberController extends Controller
         }
     }
 
-    public function alamat()
+    public function alamat(Request $request)
     {
-        //$member = Member::find(Auth::id())->get();
-        //$member = Member::find($id);
+        $member = Auth::user();
 
-        //$member = Member::all();
-        //return view('member.profil');
-        //dd(count(Auth::user()->alamat));
-        return view('member.alamat', ['member' => Auth::user()]);
+        // if ($request->session()->exists("alamatPesanan" . $member->id_member)){
+        //     // $sessionAlamat = $request->session()->get("alamatPesanan". $member->id_member);
+        //     // dd(true);
+        // }
+        return view('member.alamat',compact('member'));
     }
 
     public function tambahAlamat(Request $request)
     {
         $member = Member::find(Auth::id());
-
         $alamatLama = $member->alamat;
 
         if (empty($alamatLama)) {
@@ -684,38 +676,12 @@ class MemberController extends Controller
         $member->alamat = $AlamatFinal;
         $member->save();
 
-        // dd($member->alamat['IdAlamatUtama']);
-
-        // //tampilan
-        // for($i=0 ; $i < count($alamatLama['alamat'])-1;i++ ){
-        //     if($member->alamat['IdAlamatUtama']==$i){
-        //         div aktif
-        //     }
-        //     else{
-        //         div biasa
-        //     }
-        // }
-        // //ubah alat utama
-        // $member->alamat['IdAlamatUtama'] = 2
-        // $member->save();
-        // return view('/alamat');
-
-        // dd(json_encode($member->alamat));
         return redirect()->route('alamat');
     }
 
     public function editAlamat($id, Request $request)
     {
         $member = Member::find($id);
-
-        // $namaPenerima = $request->namapenerima;
-        // $nomorHP = $request->nomorhp;
-        // $provinsi = $request->provinsi;
-        // $kabKota = $request->kota;
-        // $kecamatan = $request->kecamatan;
-        // $kelurahan = $request->kelurahan;
-        // $kodePos = $request->kodepos;
-        // $alamatJalan = $request->alamatjalan;
 
         $alamatBaru = array(
             'Nama Penerima' => $request->namapenerima,
@@ -744,10 +710,16 @@ class MemberController extends Controller
         $member->alamat = $alamat;
         $member->save();
 
-        return redirect()->route('alamat');
+        if ($request->session()->exists("alamatPesanan")){
+            $request->session()->forget("alamatPesanan");
+            return redirect()->route('konfigurasi.pesanan',['konfigurasi' => $member->id_member]);
+        }
+        else {
+            return redirect()->route('alamat');
+        }
     }
 
-    public function hapusAlamat($id)
+    public function hapusAlamat($id, Request $request)
     {
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
@@ -772,21 +744,7 @@ class MemberController extends Controller
         $member->alamat = $alamat;
         $member->save();
 
-        //return redirect()->route('alamat');
-        //return view('member.alamat',['member'=>Auth::user()]);
-        // return redirect()->to('alamat/' . $id);
         return redirect()->route('alamat');
-    }
-
-    public function konfigurasiPesanan()
-    {
-        $member = Auth::user();
-        $konfigurasi = Konfigurasi_file::all();
-        $partner = Pengelola_Percetakan::all();
-        $produk = Produk::all();
-        $atk = Atk::all();
-
-        return view('member.konfigurasi_pesanan',compact('member','konfigurasi','partner','produk','atk'));
     }
 
     public function konfirmasiPembayaran()

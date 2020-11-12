@@ -60,7 +60,6 @@ Route::middleware('auth')->group(function () {
     // /*****/Route::get('/konfigurasi-file/{pdf}', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     Route::any('/konfigurasi-file', 'MemberController@konfigurasiFile')->name('konfigurasi.file');
     Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
-    /*****/Route::get('/konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasi.pesanan');
 
     Route::get('/profil', 'MemberController@profile')->name('profile');
     Route::get('profil/edit', 'MemberController@profileEdit')->name('profile.edit');
@@ -104,6 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
+    Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
 
 });
 

@@ -1,7 +1,34 @@
 @auth
-@php
-$m = Auth::user();
-@endphp
+    @php
+        $m = Auth::user();
+        $arrKonfigurasi = array();
+        $hargaKonfigurasi = array();
+        $biayaOngkir = 0;
+
+        $a = array();
+
+        for ($i=0; $i < count($konfigurasi); $i++) {
+            if (!empty($konfigurasi) && $konfigurasi[$i]->id_member === $member->id_member) {
+                array_push($arrKonfigurasi,$konfigurasi[$i]->id_konfigurasi);
+                array_push($hargaKonfigurasi,$konfigurasi[$i]->biaya);
+                $jumlahSubtotalFile = count($arrKonfigurasi);
+                $hargaSubTotalFile = array_sum($hargaKonfigurasi);
+                $hargaTotalPesanan = $hargaSubTotalFile + $biayaOngkir;
+                $sisaSaldo = $member->jumlah_saldo - $hargaTotalPesanan;
+            } else {
+                // $jumlahSubtotalFile = 0;
+            }
+        }
+
+        // foreach ($arrKonfigurasi as $key => $value) {
+        //     dd($value);
+        // }
+
+        // for ($i = 0; $i < count($arrKonfigurasi); $i++) {
+        //     // $a[$i] = $arrKonfigurasi[$i];
+        //     dd($i);
+        // }
+    @endphp
 @endauth
 
 <!-- Menghubungkan dengan view template master -->
@@ -67,7 +94,9 @@ $m = Auth::user();
                         <a class="col-md-9 p-0 text-danger text-truncate" style="font-size: 24px;"
                             href="#">{{ $m->email }}
                         </a>
-                        <i class="col-md-2 align-self-center fa fa-warning ml-2"></i>
+                        <a class="col-md-2 text-danger align-self-center" style="font-size: 24px;" href="#">
+                            <i class="fa fa-warning ml-2"></i>
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -93,25 +122,27 @@ $m = Auth::user();
                     </tr>
                 </thead>
                 <tbody>
-
-                    {{-- @foreach ($collection as $item) --}}
-                    <tr style="font-size: 14px;">
-
-                        {{-- @foreach ($collection as $item) --}}
-                        <td scope="row">{{__('00000001') }}</td>
-                        <td><a href="#">{{__('Skripsilageee.pdf') }}</a></td>
-                        <td>{{__('5 hour ago') }}</td>
-                        <td>{{__('Rp. 12.000') }}</td>
-                        <td>{{__('1h 5m') }}
-                            <span class="material-icons md-18 align-middle text-danger ml-2">
-                                delete
-                            </span>
-                        </td>
-                        {{-- @endforeach --}}
-
-                    </tr>
-                    {{-- @endforeach --}}
-
+                    @foreach ($konfigurasi as $k => $value)
+                        @if (!empty($value) && $value->id_member === $member->id_member)
+                            <tr style="font-size: 14px;">
+                                <td scope="row">{{$value->id_konfigurasi}}</td>
+                                <td><a href="#">{{$value->nama_file}}</a></td>
+                                <td>{{date('l, d M Y H:i', strtotime($value->waktu))}}</td>
+                                <td>Rp. {{$value->biaya}}</td>
+                                <td
+                                    {{-- id="sisaWaktuBayar" --}}
+                                    @for($i = 0; $i < count($arrKonfigurasi); $i++)
+                                        id="sisaWaktuBayar{{$i}}"
+                                    @endfor
+                                >{{__('1h 5m') }}
+                                    <span class="material-icons md-18 align-middle text-danger ml-2">
+                                        delete
+                                    </span>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                    <input id="arrKonfigurasi" type="number" value="{{count($arrKonfigurasi)}}" hidden>
                 </tbody>
             </table>
         </div>
@@ -119,24 +150,74 @@ $m = Auth::user();
             var msg = '{{Session::get('alert')}}';
             var exist = '{{Session::has('alert')}}';
             if(exist){
-            alert(msg);
+                alert(msg);
             }
+
+            function startTimer(duration, display) {
+                var timer = duration, minutes, seconds;
+                setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "" + minutes : minutes;
+                    seconds = seconds < 10 ? "" + seconds : seconds;
+
+                    display.textContent = minutes + "m" + " " + seconds + "s";
+
+                    if (--timer < 0) {
+                        timer = 0;
+                    }
+                }, 1000);
+            }
+
+            function countDownTimer(timeLeft){
+                // Set the date we're counting down to
+                var countDownDate = new Date(timeLeft).getTime();
+
+                // Update the count down every 1 second
+                var x = setInterval(function() {
+
+                    // Get today's date and time
+                    var now = new Date().getTime();
+
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result in the element with id="demo"
+                    for (i = 0; i < $('#arrKonfigurasi').val(); i++) {
+                        document.getElementById("sisaWaktuBayar" + i).innerHTML = days + "d " + hours + "h "
+                        + minutes + "m " + seconds + "s ";
+                    }
+
+                    // If the count down is finished, write some text
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("sisaWaktuBayar" + 0).innerHTML = "Sisa Waktu Anda Telah Habis";
+                        // for (i = 0; i < $('#arrKonfigurasi').val(); i++) {
+
+                        // }
+                    }
+                }, 1000);
+            }
+
+            window.onload = function () {
+                // var timeLeft = "Nov 4, 2020 20:03:00";
+                // countDownTimer(timeLeft);
+                // var display = document.querySelector('#sisaWaktuBayar');
+                // for (i = 0; i < $('#arrKonfigurasi').val(); i++) {
+                //     var fiveMinutes = 60 * 30;
+                //     var display = document.querySelector('#sisaWaktuBayar' + i);
+                //     startTimer(fiveMinutes, display);
+                //     // console.log(i);
+                // }
+            };
         </script>
     </div>
-    {{-- <div class="tab-pane fade ml-2 mr-0" id="v-pills-saldo" role="tabpanel">
-        @include('member.topup_saldo')
-    </div>
-    <div class="tab-pane fade ml-2 mr-0" id="v-pills-riwayat" role="tabpanel">
-        @include('member.riwayat')
-    </div>
-    <div class="tab-pane fade ml-2" id="v-pills-pesanan" role="tabpanel">
-        @include('member.pesanan')
-    </div>
-    <div class="tab-pane fade ml-2" id="v-pills-favorit" role="tabpanel">
-        @include('member.produk_favorit')
-    </div>
-    <div class="tab-pane fade ml-2" id="v-pills-ulasan" role="tabpanel">
-        @include('member.ulasan')
-    </div> --}}
 
 @endsection

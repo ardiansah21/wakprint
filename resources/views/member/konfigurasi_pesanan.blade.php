@@ -6,45 +6,16 @@
         $hargaKonfigurasi = array();
         $biayaOngkir = 0;
 
-        $arrAtk = array();
-        $posAtk = array();
-        $hargaAtk = array();
-
-        for ($i=0; $i < count($konfigurasi); $i++) {
-            if (!empty($konfigurasi) && $konfigurasi[$i]->id_member === $member->id_member) {
-                array_push($arrKonfigurasi,$konfigurasi[$i]->id_konfigurasi);
-                array_push($hargaKonfigurasi,$konfigurasi[$i]->biaya);
+        if (!empty($pesanan->konfigurasiFile)) {
+            for ($i=0; $i < count($pesanan->konfigurasiFile); $i++) {
+                array_push($arrKonfigurasi,$pesanan->konfigurasiFile[$i]->id_konfigurasi);
+                array_push($hargaKonfigurasi,$pesanan->konfigurasiFile[$i]->biaya);
                 $jumlahSubtotalFile = count($arrKonfigurasi);
                 $hargaSubTotalFile = array_sum($hargaKonfigurasi);
                 $hargaTotalPesanan = $hargaSubTotalFile + $biayaOngkir;
                 $sisaSaldo = $member->jumlah_saldo - $hargaTotalPesanan;
-            } else {
-                // $jumlahSubtotalFile = 0;
             }
         }
-
-        foreach ($konfigurasi as $k){
-            foreach ($produk as $p){
-                if (!empty($k) && $k->id_member === $member->id_member){
-                    if ($k->id_produk === $p->id_produk){
-                        foreach ($atk as $a => $value){
-                            if ($value->id_pengelola === $p->partner->id_pengelola){
-                                array_push($arrAtk,$value->id_atk);
-                                array_push($hargaAtk,$value->harga);
-                                // dd(count($arrAtk));
-                            }
-                        }
-                    }
-                }
-            }
-            break;
-        }
-
-        for ($i=0; $i < count($arrAtk); $i++) {
-            $posAtk[$i] = $arrAtk[$i];
-            // dd($arrAtk[$i]);
-        }
-        // dd($a);
     @endphp
     <div class="container mt-5 mb-5">
         <label class="font-weight-bold"
@@ -66,16 +37,11 @@
                             {{__('Ambil di Tempat Percetakan') }}
                         </label>
                         <label class="text-truncate-multiline mb-2">
-                            @foreach ($konfigurasi as $k)
-                                @foreach ($produk as $p)
-                                    @if (!empty($k) && $k->id_member === $member->id_member)
-                                        @if ($k->id_produk === $p->id_produk)
-                                            {{$p->partner->alamat_toko ?? '-'}}
-                                        @endif
-                                    @endif
-                                @endforeach
-                                @break
-                            @endforeach
+                            {{-- @if (!empty($konfigurasi) && $konfigurasi->id_member === $member->id_member) --}}
+                                {{-- @if ($konfigurasi->id_produk === $konfigurasi->product->id_produk) --}}
+                                    {{$konfigurasi->product->partner->alamat_toko ?? '-'}}
+                                {{-- @endif --}}
+                            {{-- @endif --}}
                         </label>
                     </div>
                     <div class="form-group custom-control custom-radio mr-0 mb-4">
@@ -84,7 +50,7 @@
                             <label class="custom-control-label" for="rbAntarTempat">
                                 {{__('Pengantaran') }}
                             </label>
-                            <a class="col-md-auto text-right mb-2" href="" style="font-size: 12px;">
+                            <a class="col-md-auto text-right mb-2" href="{{route('alamat')}}" style="font-size: 12px;">
                                 @if(!empty($member->alamat))
                                     {{__('Ubah') }}
                                 @else
@@ -93,17 +59,28 @@
                             </a>
                         </div>
                         <label class="text-truncate SemiBold mb-2 ml-0">
-                            {{$member->nama_lengkap}}
+                            @for($i=0 ; $i < count($member->alamat['alamat']); $i++)
+                                @if (!empty($member->alamat['alamat']))
+                                    @if ($member->alamat['IdAlamatUtama'] === $i)
+                                        {{ $member->alamat['alamat'][$i]['Nama Penerima'] }}
+                                    @endif
+                                @else
+                                    {{$member->nama_lengkap}}
+                                    @break
+                                @endif
+                            @endfor
                         </label>
                         <label class="text-truncate-multiline mb-2 ml-0 mb-5">
                             @if(!empty($member->alamat))
                                 @for($i=0 ; $i < count($member->alamat['alamat']); $i++)
-                                    {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
-                                    {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
+                                    @if ($member->alamat['IdAlamatUtama'] === $i)
+                                        {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
+                                        {{ $member->alamat['alamat'][$i]['Provinsi'] }},
+                                        {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
+                                    @endif
                                 @endfor
                             @else
                                 {{__('-')}}
@@ -128,24 +105,10 @@
                     </label>
                     <div class="row justify-content-between">
                         <label id="subTotalFile" class="col-md-auto mb-2">
-                            @foreach ($konfigurasi as $k => $value)
-                                @if (!empty($value) && $value->id_member === $member->id_member)
-                                    Subtotal {{$jumlahSubtotalFile}} file
-                                @else
-                                    {{__('Subtotal (0 file)') }}
-                                @endif
-                                @break
-                            @endforeach
+                            Subtotal {{count($pesanan->konfigurasiFile) ?? 0}} file
                         </label>
                         <label id="hargaSubTotalFile" class="col-md-auto text-right mb-2">
-                            @foreach ($konfigurasi as $k)
-                                @if (!empty($k) && $k->id_member === $member->id_member)
-                                    Rp. {{$hargaSubTotalFile}}
-                                @else
-                                    {{__('Rp. 0') }}
-                                @endif
-                                @break
-                            @endforeach
+                            Rp. {{$hargaSubTotalFile ?? 0}}
                         </label>
                     </div>
                     <div class="row justify-content-between mb-2">
@@ -155,7 +118,7 @@
                     </div>
                     <div class="row justify-content-between">
                         <label class="col-md-auto SemiBold mb-2">{{__('Total') }}</label>
-                        <label id="totalHargaPesanan" class="col-md-auto SemiBold text-right mb-2">Rp. {{$hargaTotalPesanan}}</label>
+                        <label id="totalHargaPesanan" class="col-md-auto SemiBold text-right mb-2">Rp. {{$hargaTotalPesanan ?? 0}}</label>
                     </div>
                     <div class="row justify-content-between">
                         <label class="col-md-auto SemiBold mb-2">{{__('Saldo Kamu') }}</label>
@@ -164,32 +127,34 @@
                     </div>
                     <div class="row justify-content-between">
                         <label class="col-md-auto SemiBold mb-2">{{__('Sisa Saldo Kamu') }}</label>
-                        <label id="totalSisaSaldo" class="col-md-auto SemiBold text-right mb-3">Rp. {{$sisaSaldo}}</label>
+                        <label id="totalSisaSaldo" class="col-md-auto SemiBold text-right mb-3">Rp. {{$sisaSaldo ?? '0'}}</label>
                     </div>
-                    @if ($sisaSaldo < 0)
-                        <label id="warningSaldo" class="text-muted text-justify mb-2">
+                    <label id="warningSaldo" class="text-muted text-justify mb-2">
+                        @if (!empty($sisaSaldo) && $sisaSaldo < 0)
                             {{__('Saldo kamu tidak mencukupi, silahkan melakukan pengisian saldo setelah pesanan kamu dibuat') }}
-                        </label>
-                    @endif
+                        @elseif($jumlahSubtotalFile === 0)
+                            {{__('Silahkan Pilih File Konfigurasi Pesanan Anda') }}
+                        @endif
+                    </label>
                 </div>
             </div>
             <div class="col-md-8 ml-0 mt-5"
                 style="font-size: 18px;">
                 <div class="row justify-content-between mb-4 ml-0 mr-2">
                     <div class="custom-control custom-checkbox mt-2 ml-1">
-                    <input type="checkbox" class="custom-control-input" id="checkboxPilihSemua"
-                        @foreach ($konfigurasi as $k => $value)
-                            @if (!empty($value) && $value->id_member === $member->id_member)
-                                value="{{count($konfigurasi)}}"
-                            @endif
-                        @endforeach
-                        checked>
+                        <input type="checkbox" class="custom-control-input" id="checkboxPilihSemua"
+                            @foreach ($pesanan->konfigurasiFile as $k => $value)
+                                @if (!empty($value) && $value->id_member === $member->id_member)
+                                    value="{{count($pesanan->konfigurasiFile)}}"
+                                @endif
+                            @endforeach
+                            checked>
                         <label class="custom-control-label" for="checkboxPilihSemua">{{__('Pilih Semua') }}</label>
                     </div>
-                    <button class="btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center"
+                <button type="button" class="btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center" onclick="window.location.href='{{route('konfigurasi.file')}}'"
                         style="border-radius:30px">{{__('Tambah File') }}</button>
                 </div>
-                <div class="table-scrollbar pl-0 pr-2 mb-5">
+                <div class="table-scrollbar pl-0 pr-2 mb-5" style="max-height: 270px;">
                     <table class="table table-hover">
                         <thead class="bg-primary-purple text-white"
                             style="border-radius:25px 25px 15px 15px;">
@@ -203,8 +168,8 @@
                             </tr>
                         </thead>
                         <tbody style="font-size: 14px;">
-                            @foreach ($konfigurasi as $k => $value)
-                                @if (!empty($value) && $value->id_member === $member->id_member)
+                            @if (!empty($pesanan->konfigurasiFile))
+                                @foreach ($pesanan->konfigurasiFile as $k => $value)
                                     <tr id="barisKonfigurasi{{$k}}">
                                         <td scope="row">
                                             <div class="custom-control custom-checkbox mt-0 ml-1">
@@ -213,7 +178,7 @@
                                                 <label class="custom-control-label" for="checkboxKonfigurasi{{$k}}"></label>
                                             </div>
                                         </td>
-                                        <td>{{$value->id_produk}}</td>
+                                        <td>{{$value->id_konfigurasi}}</td>
                                         <td>{{$value->nama_file}}</td>
                                         <td>{{$value->nama_produk}}</td>
                                         <td>Rp. {{$value->biaya}}</td>
@@ -229,49 +194,38 @@
                                             </span>
                                         </td>
                                     </tr>
-                                @endif
-                            @endforeach
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
                 <label class="SemiBold mb-2 ml-0 mr-2">{{__('ATK') }}</label>
-
-                @foreach ($konfigurasi as $k)
-                    @foreach ($produk as $p)
-                        @if (!empty($k) && $k->id_member === $member->id_member)
-                            @if ($k->id_produk === $p->id_produk)
-                                @foreach ($atk as $a => $value)
-                                    @if ($value->id_pengelola === $p->partner->id_pengelola)
-                                        <div class="row justify-content-between ml-0 mr-2">
-                                        {{-- <input type="number" id="banyakAtk" value="{{count($atk)}}"> --}}
-                                            <div class="col-md-4 form-group custom-control custom-checkbox">
-                                            <input type="number" id="indexAtk" value="{{$posAtk}}" hidden>
-                                            <input type="checkbox" class="custom-control-input" id="checkboxAtk{{$a}}" value="{{$value->id_atk}}" style="width: 100%;">
-                                                <label class="custom-control-label text-break align-middle" for="checkboxAtk{{$a}}" style="width: 100%;">
-                                                    {{$value->nama ?? '-'}}
-                                                    <i class="material-icons align-middle ml-2" style="color: #C4C4C4">help</i>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-auto form-group">
-                                                <label>{{__('Jumlah') }}
-                                                <i id="plusAtk{{$a}}" class="fa fa-plus ml-2 mr-2"></i>
-                                                </label>
-                                                <input id="jumlahAtk{{$a}}" type="number" class="form-input" min="1" max="{{$value->jumlah}}" value="1" style="width:48px;">
-                                                <i id="minusAtk{{$a}}" class="fa fa-minus ml-2 mr-2"></i>
-                                            </div>
-                                            <div class="col-md-4 text-right">
-                                                <label id="hargaAtkLabel{{$a}}" class="SemiBold mb-2 ml-0" style="width: 100%;">
-                                                    Rp. {{$value->harga ?? 0}}
-                                                </label>
-                                                <input type="number" name="hargaAtk" id="hargaAtk{{$a}}" value="{{$value->harga ?? 0}}" hidden>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @endif
-                        @endif
-                    @endforeach
-                    @break
+                @foreach ($atk as $a => $value)
+                    <div class="row justify-content-between ml-0 mr-2">
+                        <div class="col-md-4 form-group custom-control custom-checkbox">
+                            <input type="number" id="idAtk{{$a}}" value="{{$a}}" hidden>
+                            <input type="checkbox" class="custom-control-input" id="checkboxAtk{{$a}}" value="{{$value->nama}}" style="width: 100%;">
+                            <input type="number" id="hargaAtk{{$a}}" value="{{$value->harga}}" style="width: 100%;" hidden>
+                                <label class="custom-control-label text-break align-middle" for="checkboxAtk{{$a}}" style="width: 100%;">
+                                    {{$value->nama ?? '-'}}
+                                    <i class="material-icons align-middle ml-2" style="color: #C4C4C4">help</i>
+                                </label>
+                        </div>
+                        <div class="col-md-auto form-group jumlahAtk">
+                            <label>{{__('Jumlah') }}
+                                <i id="plusAtk{{$a}}" class="fa fa-plus cursor-pointer ml-2 mr-2"></i>
+                            </label>
+                            <input id="jumlahAtk{{$a}}" type="number" class="form-input" min="1" max="{{$value->jumlah}}" value="1" style="width:48px;">
+                            <i id="minusAtk{{$a}}" class="fa fa-minus cursor-pointer ml-2 mr-2"></i>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <label id="hargaAtkLabel{{$a}}" class="SemiBold mb-2 ml-0" style="width: 100%;">
+                                Rp. {{$value->harga ?? 0}}
+                            </label>
+                            <input id="idAtk" type="number" class="" value="{{$value->id_atk}}" hidden>
+                            <input type="number" name="hargaAtk" id="hargaAtk{{$a}}" value="{{$value->harga ?? 0}}" hidden>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -283,12 +237,20 @@
     </div>
     <script>
         $(document).ready(function(){
+            var metodePenerimaan = "";
             var batas = $('#checkboxPilihSemua').val();
-            var indexAtk = $('#indexAtk').val();
             var arrKonfig = [];
             var arrSubTotalFile = [];
+            var arrAtk = [];
+            var arrJumlahAtk = [];
+            var arrTotalHargaAtk = [];
             var subTotalFile = 0;
             var hargaSubTotalFile = 0;
+            var jumlahAtk = 0;
+            var totalAtk = 0;
+            var hargaAtk = 0;
+            var hargaPerAtk = 0;
+            var hargaTotalAtk = 0;
             var biayaOngkir = parseInt($('#hargaOngkir').val());
             var totalHargaPesanan = 0;
             var totalSaldo = parseInt($('#totalSaldo').val());
@@ -297,22 +259,23 @@
             $('input[type=checkbox]').each(function(index, value){
                 $('#checkboxKonfigurasi' + index).bind('change', function(){
 
-                    // $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
-
                     // subTotalFile = 0;
                     // hargaSubTotalFile = 0;
                     // totalHargaPesanan = 0;
                     // totalSisaSaldo = 0;
 
                     if($('#checkboxKonfigurasi' + index).is(':checked')){
+                        // console.log(index);
                         // if (index === 0) {
                         //     $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
                         // }
 
                         if ($('#rbAmbilTempat').is(':checked')){
+                            metodePenerimaan = "Ditempat";
                             biayaOngkir = 0;
                         }
                         else{
+                            metodePenerimaan = "Diantar";
                             biayaOngkir = parseInt($('#hargaOngkir').val());
                         }
 
@@ -358,9 +321,11 @@
                         // }
 
                         if ($('#rbAmbilTempat').is(':checked')){
+                            metodePenerimaan = "Ditempat";
                             biayaOngkir = 0;
                         }
                         else{
+                            metodePenerimaan = "Diantar";
                             biayaOngkir = parseInt($('#hargaOngkir').val());
                         }
 
@@ -378,6 +343,11 @@
 
                     if(totalSaldo < totalHargaPesanan){
                         $('#warningSaldo').show();
+                        $('#warningSaldo').text('Saldo kamu tidak mencukupi, silahkan melakukan pengisian saldo setelah pesanan kamu dibuat ');
+                    }
+                    else if(subTotalFile === 0){
+                        $('#warningSaldo').show();
+                        $('#warningSaldo').text('Silahkan Pilih File Konfigurasi Pesanan Anda');
                     }
                     else{
                         $('#warningSaldo').hide();
@@ -385,11 +355,85 @@
 
                     // $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
                 });
+
                 $('#checkboxAtk' + index).bind('change', function(){
-                    if($('#checkboxAtk' + index).prop('checked', this.checked)){
-                        console.log($('#checkboxAtk' + index).val());
+                    if($('#checkboxAtk' + index).is(':checked')){
+                        $('#jumlahAtk'+index).prop('disabled',false);
+                        $('#plusAtk' + index).show();
+                        $('#minusAtk' + index).show();
+
+                        jumlahAtk = $('#jumlahAtk' + index).val();
+                        hargaAtk = $('#hargaAtk' + index).val();
+                        hargaPerAtk = jumlahAtk * hargaAtk;
+
+                        if ($('#rbAmbilTempat').is(':checked')){
+                            metodePenerimaan = "Ditempat";
+                            biayaOngkir = 0;
+                        }
+                        else{
+                            metodePenerimaan = "Diantar";
+                            biayaOngkir = parseInt($('#hargaOngkir').val());
+                        }
+
+                        arrAtk.push($('#checkboxAtk' + index).val());
+                        arrJumlahAtk.push(jumlahAtk);
+                        arrTotalHargaAtk.push(hargaPerAtk);
+                        hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+
+                        console.log(arrAtk);
+                        console.log(arrJumlahAtk);
+                        console.log(arrTotalHargaAtk);
+                        console.log(hargaTotalAtk);
                     }
-                    $('#checkboxAtk' + index).not(this).prop('checked', this.checked);
+                    else{
+                        $('#jumlahAtk'+index).prop('disabled',true);
+                        $('#plusAtk' + index).hide();
+                        $('#minusAtk' + index).hide();
+
+                        jumlahAtk = $('#jumlahAtk' + index).val();
+                        hargaAtk = $('#hargaAtk' + index).val();
+                        hargaPerAtk = jumlahAtk * hargaAtk;
+
+                        var pos = arrAtk.indexOf($('#checkboxAtk' + index).val());
+                        var posJumlah = arrJumlahAtk.indexOf(jumlahAtk);
+                        var posHarga = arrTotalHargaAtk.indexOf(hargaPerAtk);
+
+                        if(pos > -1){
+                            arrAtk.splice(pos,1);
+                            totalAtk = arrAtk.length;
+                            arrJumlahAtk.splice(posJumlah,1);
+                            arrTotalHargaAtk.splice(posHarga,1);
+
+                            if(totalAtk === 0){
+                                hargaTotalAtk = 0;
+                            }
+                            else {
+                                hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+                            }
+
+                            console.log(arrAtk);
+                            console.log(arrJumlahAtk);
+                            console.log(arrTotalHargaAtk);
+                            console.log(hargaTotalAtk);
+                        }
+
+                        if ($('#rbAmbilTempat').is(':checked')){
+                            metodePenerimaan = "Ditempat";
+                            biayaOngkir = 0;
+                        }
+                        else{
+                            metodePenerimaan = "Diantar";
+                            biayaOngkir = parseInt($('#hargaOngkir').val());
+                        }
+
+                        $('#checkboxAtk' + index).not(this).prop('checked', this.checked);
+                    }
+                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
+                    totalSisaSaldo = totalSaldo - totalHargaPesanan;
+
+                    $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
+                    $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
+                    $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
                 });
             });
 
@@ -401,16 +445,18 @@
                 totalHargaPesanan = 0;
                 totalSisaSaldo = 0;
 
-                for (i = 0; i < batas-1; i++) {
+                for (i = 0; i < batas; i++) {
                     if ($('#checkboxPilihSemua').is(':checked')) {
                         $('#checkboxKonfigurasi' + i).prop('checked', this.checked);
 
                         if ($('#rbAmbilTempat').is(':checked')){
+                            metodePenerimaan = "Ditempat";
                             biayaOngkir = 0;
                             $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                             $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
                         }
                         else{
+                            metodePenerimaan = "Diantar";
                             biayaOngkir = parseInt($('#hargaOngkir').val());
                             $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                             $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
@@ -431,13 +477,14 @@
                         console.log(arrSubTotalFile);
                     }
                     else{
-
                         if ($('#rbAmbilTempat').is(':checked')){
+                            metodePenerimaan = "Ditempat";
                             biayaOngkir = 0;
                             $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                             $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
                         }
                         else{
+                            metodePenerimaan = "Diantar";
                             biayaOngkir = parseInt($('#hargaOngkir').val());
                             $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                             $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
@@ -460,6 +507,11 @@
 
                 if(totalSaldo < totalHargaPesanan){
                     $('#warningSaldo').show();
+                    $('#warningSaldo').text('Saldo kamu tidak mencukupi, silahkan melakukan pengisian saldo setelah pesanan kamu dibuat ');
+                }
+                else if(subTotalFile === 0){
+                    $('#warningSaldo').show();
+                    $('#warningSaldo').text('Silahkan Pilih File Konfigurasi Pesanan Anda');
                 }
                 else{
                     $('#warningSaldo').hide();
@@ -478,6 +530,7 @@
                 totalSisaSaldo = 0;
 
                 if($('#rbAmbilTempat').is(':checked')){
+                    metodePenerimaan = "Ditempat";
                     biayaOngkir = 0;
                     $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                     $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
@@ -489,7 +542,7 @@
                     // totalHargaPesanan = 0;
                     // totalSisaSaldo = 0;
 
-                    for (i = 0; i < batas-1; i++) {
+                    for (i = 0; i < batas; i++) {
                         if ($('#checkboxPilihSemua').is(':checked')) {
                             $('#checkboxKonfigurasi' + i).prop('checked', this.checked);
 
@@ -497,7 +550,7 @@
                             subTotalFile = arrKonfig.length;
                             arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
                             hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                            totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                            totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                             totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                             $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -512,7 +565,7 @@
                                 arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
                                 subTotalFile = arrKonfig.length;
                                 hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                                totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                                totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                                 totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                                 $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -536,7 +589,7 @@
                                     else {
                                         hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
                                     }
-                                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                                     totalSisaSaldo = totalSaldo - totalHargaPesanan;
                                 }
 
@@ -558,176 +611,9 @@
                     else{
                         $('#warningSaldo').hide();
                     }
-
-                    // $('#checkboxPilihSemua').on('change',function(){
-                    //     subTotalFile = 0;
-                    //     hargaSubTotalFile = 0;
-                    //     arrKonfig = [];
-                    //     arrSubTotalFile = [];
-                    //     totalHargaPesanan = 0;
-                    //     totalSisaSaldo = 0;
-
-                    //     for (i = 0; i < batas-1; i++) {
-                    //         if ($('#checkboxPilihSemua').is(':checked')) {
-                    //             $('#checkboxKonfigurasi' + i).prop('checked', this.checked);
-
-                    //             if ($('#rbAmbilTempat').is(':checked')){
-                    //                 biayaOngkir = 0;
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-                    //             else{
-                    //                 biayaOngkir = parseInt($('#hargaOngkir').val());
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-
-                    //             arrKonfig.push($('#checkboxKonfigurasi' + i).val());
-                    //             subTotalFile = arrKonfig.length;
-                    //             arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
-                    //             hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                    //             totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
-                    //             totalSisaSaldo = totalSaldo - totalHargaPesanan;
-
-                    //             $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
-                    //             $('#hargaSubTotalFile').text('Rp. ' + hargaSubTotalFile);
-                    //             $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
-                    //             $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
-                    //             $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
-                    //             console.log(arrSubTotalFile);
-                    //         }
-                    //         else{
-
-                    //             if ($('#rbAmbilTempat').is(':checked')){
-                    //                 biayaOngkir = 0;
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-                    //             else{
-                    //                 biayaOngkir = parseInt($('#hargaOngkir').val());
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-
-                    //             arrKonfig = [];
-                    //             subTotalFile = arrKonfig.length;
-                    //             hargaSubTotalFile = subTotalFile;
-                    //             totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
-                    //             totalSisaSaldo = totalSaldo - totalHargaPesanan;
-
-                    //             $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
-                    //             $('#hargaSubTotalFile').text('Rp. ' + hargaSubTotalFile);
-                    //             $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
-                    //             $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
-                    //             $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
-                    //             $('#checkboxKonfigurasi' + i).not(this).prop('checked', this.checked);
-                    //         }
-                    //     }
-
-                    //     if(totalSaldo < totalHargaPesanan){
-                    //         $('#warningSaldo').show();
-                    //     }
-                    //     else{
-                    //         $('#warningSaldo').hide();
-                    //     }
-                    // });
-
-                    // $('input[type=checkbox]').each(function(index, value){
-                    //     $('#checkboxAtk' + indexAtk).bind('change', function(){
-                    //         if($('#checkboxAtk' + indexAtk).prop('checked', this.checked)){
-                    //             console.log($('#checkboxAtk' + indexAtk).val());
-                    //         }
-                    //         $('#checkboxAtk' + indexAtk).not(this).prop('checked', this.checked);
-                    //     });
-
-                    //     $('#checkboxKonfigurasi' + index).bind('change', function(){
-                    //         subTotalFile = 0;
-                    //         hargaSubTotalFile = 0;
-                    //         totalHargaPesanan = 0;
-                    //         totalSisaSaldo = 0;
-
-                    //         if($('#checkboxKonfigurasi' + index).is(':checked')){
-
-                    //             if ($('#rbAmbilTempat').is(':checked')){
-                    //                 biayaOngkir = 0;
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-                    //             else{
-                    //                 biayaOngkir = parseInt($('#hargaOngkir').val());
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-
-                    //             arrKonfig.push($('#checkboxKonfigurasi' + index).val());
-                    //             arrSubTotalFile.push($('#hargaKonfigurasi' + index).val());
-                    //             subTotalFile = arrKonfig.length;
-                    //             hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                    //             totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
-                    //             totalSisaSaldo = totalSaldo - totalHargaPesanan;
-
-                    //             $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
-                    //             $('#hargaSubTotalFile').text('Rp. ' + hargaSubTotalFile);
-                    //             $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
-                    //             $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
-                    //             $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
-
-                    //             console.log(arrKonfig);
-                    //             console.log(arrSubTotalFile);
-                    //         }
-                    //         else{
-                    //             var pos = arrKonfig.indexOf($('#checkboxKonfigurasi' + index).val());
-                    //             var posHarga = arrSubTotalFile.indexOf($('#hargaKonfigurasi' + index).val());
-
-                    //             if(pos > -1){
-                    //                 arrKonfig.splice(pos,1);
-                    //                 subTotalFile = arrKonfig.length;
-                    //                 arrSubTotalFile.splice(posHarga,1);
-                    //                 if(subTotalFile === 0){
-                    //                     hargaSubTotalFile = 0;
-                    //                 }
-                    //                 else {
-                    //                     hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                    //                 }
-                    //             }
-
-                    //             if ($('#rbAmbilTempat').is(':checked')){
-                    //                 biayaOngkir = 0;
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-                    //             else{
-                    //                 biayaOngkir = parseInt($('#hargaOngkir').val());
-                    //                 $('#biayaOngkir').text('Rp. ' + biayaOngkir);
-                    //                 $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
-                    //             }
-
-                    //             totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
-                    //             totalSisaSaldo = totalSaldo - totalHargaPesanan;
-
-                    //             $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
-                    //             $('#hargaSubTotalFile').text('Rp. ' + hargaSubTotalFile);
-                    //             $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
-                    //             $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
-                    //             $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
-                    //             $('#checkboxKonfigurasi' + index).not(this).prop('checked', this.checked);
-
-                    //             console.log(arrKonfig);
-                    //             console.log(arrSubTotalFile);
-                    //         }
-
-                    //         if(totalSaldo < totalHargaPesanan){
-                    //             $('#warningSaldo').show();
-                    //         }
-                    //         else{
-                    //             $('#warningSaldo').hide();
-                    //         }
-
-                    //         $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
-                    //     });
-                    // });
                 }
                 else{
+                    metodePenerimaan = "Diantar";
                     biayaOngkir = parseInt($('#hargaOngkir').val());
                     $('#biayaOngkir').text('Rp. ' + biayaOngkir);
                     $('#biayaPengiriman').text('Rp. ' + biayaOngkir);
@@ -739,14 +625,15 @@
                     // totalHargaPesanan = 0;
                     // totalSisaSaldo = 0;
 
-                    for (i = 0; i < batas-1; i++) {
+                    for (i = 0; i < batas; i++) {
                         if ($('#checkboxPilihSemua').is(':checked')) {
                             $('#checkboxKonfigurasi' + i).prop('checked', this.checked);
                             arrKonfig.push($('#checkboxKonfigurasi' + i).val());
                             subTotalFile = arrKonfig.length;
                             arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
                             hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                            totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+
+                            totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                             totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                             $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -761,7 +648,8 @@
                                 arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
                                 subTotalFile = arrKonfig.length;
                                 hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                                totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+
+                                totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                                 totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                                 $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -786,8 +674,10 @@
                                         hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
                                     }
                                 }
+                                // hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+                                console.log(hargaTotalAtk);
 
-                                totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                                totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                                 totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                                 $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -1007,59 +897,86 @@
                             $('#jumlahAtk' + index).val(min);
                         }
                     }
+                    hargaPerAtk = val * parseInt($('#hargaAtk' + index).val());
+
+                    // hargaTotalAtk = eval(arrTotalHargaAtk.join("+")) + hargaPerAtk;
+                    hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+
+                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaPerAtk;
+                    totalSisaSaldo = totalSaldo - totalHargaPesanan;
+
+                    // console.log(hargaTotalAtk);
+                    // console.log(totalHargaPesanan);
+
+                    $('#hargaAtkLabel' + index).text('Rp. ' + val * parseInt($('#hargaAtk' + index).val()));
+                    $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
+                    $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
+                    $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
+                });
+            });
+
+            $('.jumlahAtk').each(function(index, value){
+                $('#jumlahAtk'+index).prop('disabled',true);
+                $('#plusAtk' + index).hide();
+                $('#minusAtk' + index).hide();
+
+                $('#plusAtk' + index).click(function(){
+                    $('#jumlahAtk'+index).prop('disabled',false);
+                    var val = parseInt($('#jumlahAtk' + index).val());
+                    if(val >= $('#jumlahAtk' + index).attr('max')){
+                        $('#jumlahAtk' + index).val((val));
+                    }
+                    else {
+                        val += 1;
+                        $('#jumlahAtk' + index).val((val));
+                    }
+
+                    hargaPerAtk = val * parseInt($('#hargaAtk' + index).val());
+
+                    // hargaTotalAtk = eval(arrTotalHargaAtk.join("+")) + hargaPerAtk;
+                    hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+
+                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaPerAtk;
+                    totalSisaSaldo = totalSaldo - totalHargaPesanan;
+
+                    // console.log(hargaTotalAtk);
+                    // console.log(totalHargaPesanan);
+
+                    $('#hargaAtkLabel' + index).text('Rp. ' + val * parseInt($('#hargaAtk' + index).val()));
+                    $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
+                    $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
+                    $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
+                });
+                $('#minusAtk' + index).click(function(){
+                    $('#jumlahAtk'+index).prop('disabled',false);
+                    var val = parseInt($('#jumlahAtk' + index).val());
+                    if(val>1){
+                        val -= 1;
+                        $('#jumlahAtk' + index).val((val));
+                    }
+                    else {
+                        val = 1;
+                        $('#jumlahAtk' + index).val((val));
+                    }
+
+                    hargaPerAtk = val * parseInt($('#hargaAtk' + index).val());
+
+                    // hargaTotalAtk = eval(arrTotalHargaAtk.join("+")) + hargaPerAtk;
+                    hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+
+                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaPerAtk;
+                    totalSisaSaldo = totalSaldo - totalHargaPesanan;
+
+                    // console.log(hargaTotalAtk);
+                    // console.log(totalHargaPesanan);
+
+                    $('#hargaAtkLabel' + index).text('Rp. ' + val * parseInt($('#hargaAtk' + index).val()));
+                    $('#totalHargaPesanan').text('Rp. ' + totalHargaPesanan);
+                    $('#totalSaldoLabel').text('Rp. ' + totalSaldo);
+                    $('#totalSisaSaldo').text('Rp. ' + totalSisaSaldo);
                     $('#hargaAtkLabel' + index).text('Rp. ' + val * parseInt($('#hargaAtk' + index).val()));
                 });
             });
-            $('#plusAtk').click(function(){
-                var val = parseInt($('#jumlahAtk').val());
-                if(val >= $('#jumlahAtk').attr('max')){
-                    $('#jumlahAtk').val((val));
-                }
-                else {
-                    val += 1;
-                    $('#jumlahAtk').val((val));
-                }
-                $('#hargaAtkLabel').text('Rp. ' + val * parseInt($('#hargaAtk').val()));
-            })
-
-            $('#minusAtk').click(function(){
-                var val = parseInt($('#jumlahAtk').val());
-                if(val>1){
-                    val -= 1;
-                    $('#jumlahAtk').val((val));
-                }
-                else {
-                    val = 1;
-                    $('#jumlahAtk').val((val));
-                }
-                $('#hargaAtkLabel').text('Rp. ' + val * parseInt($('#hargaAtk').val()));
-            })
-
-            // $('#jumlahAtk').on('change input', function(){
-            //     var max = $('#jumlahAtk').attr('max');
-            //     var min = $('#jumlahAtk').attr('min');
-            //     this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-            //     var val = parseInt($('#jumlahAtk').val());
-
-            //     if ($('#jumlahAtk').val().length < 1) {
-            //         val = 0;
-            //         $('#jumlahAtk').prop('required',true);
-            //     }
-            //     else if($('#jumlahAtk').val().length > max.length){
-            //         val = max;
-            //         $('#jumlahAtk').val(max);
-            //     }
-            //     else {
-            //         if ($('#jumlahAtk').val() > max) {
-            //             val = max;
-            //             $('#jumlahAtk').val(max);
-            //         } else if($('#jumlahAtk').val() < min) {
-            //             val = min;
-            //             $('#jumlahAtk').val(min);
-            //         }
-            //     }
-            //     $('#hargaAtkLabel').text('Rp. ' + val * parseInt($('#hargaAtk').val()));
-            // });
         });
     </script>
 @endsection

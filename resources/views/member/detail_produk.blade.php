@@ -141,7 +141,7 @@ $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                     </label>
                     <label class="mb-4"
                         style="font-size: 18px;">
-                        {{__('10%')}}
+                        {{$partner->ntkwh ?? 0}} %
                     </label>
                 </div>
                 <div class="text-center mb-4"
@@ -207,8 +207,11 @@ $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                     </label>
                     <label class="text-truncate mb-4" style="width: 100%;
                                 font-size: 18px;">
-                        <img class="img-responsive align-self-center mr-2"
-                            src="https://ptetutorials.com/images/user-profile.png" width="40" height="40" alt="no logo">
+                        @if (!empty($produk->partner->getFirstMediaUrl()))
+                            <img class="img-responsive border border-gray align-self-center mr-2" src="{{$produk->partner->getFirstMediaUrl()}}" width="40" height="40" alt="no logo" style="border-radius: 30px;">
+                        @else
+                            <img class="img-responsive border border-gray align-self-center mr-2" src="https://ptetutorials.com/images/user-profile.png" width="40" height="40" alt="no logo" style="border-radius: 30px;">
+                        @endif
                         {{$produk->partner->nama_lengkap}}
                     </label>
                     <label class="SemiBold mb-2" style="font-size: 18px;">
@@ -334,58 +337,43 @@ $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                     <div class="row justify-content-between ml-0">
                         <div class="col-md-6">
                             <div class="mb-4" style="position:relative;">
-                                <img class="img-responsive"
-                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
-                                    style="width:285px; height:200px;">
+                                @if (count($produk->getMedia('foto_produk')) > 0)
+                                    <img id="fotoProdukUtama" class="img-responsive"
+                                        src="{{$produk->getFirstMediaUrl('foto_produk')}}" alt="no picture"
+                                        style="width:285px; height:200px;">
+                                @else
+                                    <img class="img-responsive"
+                                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
+                                        style="width:285px; height:200px;">
+                                @endif
                             </div>
-                            <div class="row justify-content-left mb-5">
-                                <span class="align-self-center col-md-1 mr-0">
-                                    <a class="text-primary-purple" href="#multi-item-foto-produk" role="button"
-                                        data-slide="prev">
-                                        <i class="material-icons md-32">
-                                            chevron_left
-                                        </i>
-                                    </a>
-                                </span>
-
-                                <!--Carousel Wrapper-->
-                                <div id="multi-item-foto-produk" class="carousel slide carousel-multi-item col-md-9"
-                                    data-ride="carousel">
-
-                                    <!--Slides-->
-                                    <div class="carousel-inner" role="listbox">
-
-                                        {{-- @foreach ($collection as $item) --}}
-                                        <div class="carousel-item active">
-                                            <div class="row">
-
-                                                {{-- @foreach ($collection as $item) --}}
-                                                <div class="col-md-auto mr-0">
-                                                    <img class="img-responsive"
-                                                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                                        alt="" style="width:50px; height:50px;">
-                                                </div>
-                                                {{-- @endforeach --}}
-
-                                            </div>
-                                        </div>
-                                        {{-- @endforeach --}}
-
+                            @if (count($produk->getMedia('foto_produk')) > 0)
+                                <div class="row justify-content-left mb-5 mr-0">
+                                    <div class="col-md-1 owl-nav align-self-center">
+                                        <a class="foto-produk-prev text-primary-purple cursor-pointer disabled" role="presentation">
+                                            <i class="material-icons md-28 text-primary-purple">
+                                                chevron_left
+                                            </i>
+                                            {{-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> --}}
+                                        </a>
                                     </div>
-                                    <!--/.Slides-->
-
+                                    <div id="foto-produk-carousel" class="col-md-9 owl-carousel owl-theme owl-loaded owl-drag owl-loading">
+                                        {{-- @if (count($produk->getMedia('foto_produk')) > 0) --}}
+                                        @foreach ($produk->getMedia('foto_produk') as $p)
+                                            <img class="img-responsive" src="{{$p->getUrl()}}" alt="no picture" onclick="change(this.src)" style="width:50px; height:50px;"/>
+                                        @endforeach
+                                        {{-- @endif --}}
+                                    </div>
+                                    <div class="col-md-1 owl-nav align-self-center">
+                                        <a class="foto-produk-next cursor-pointer" role="presentation">
+                                            <i class="material-icons md-28 text-primary-purple">
+                                                chevron_right
+                                            </i>
+                                            {{-- <span class="carousel-control-next-icon" aria-hidden="true"></span> --}}
+                                        </a>
+                                    </div>
                                 </div>
-                                <!--/.Carousel Wrapper-->
-
-                                <span class="align-self-center">
-                                    <a class="text-primary-purple" href="#multi-item-foto-produk" role="button"
-                                        data-slide="next">
-                                        <i class="material-icons md-32">
-                                            chevron_right
-                                        </i>
-                                    </a>
-                                </span>
-                            </div>
+                            @endif
                         </div>
                         <div class="col-md-6">
                             {{-- @foreach ($collection as $item) --}}
@@ -530,14 +518,53 @@ $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
             </div>
         </div>
 </div>
-@endsection
 
+@endsection
 @section('script')
-<script>
-    var msg = '{{Session::get('alert')}}';
-        var exist = '{{Session::has('alert')}}';
-        if(exist){
-            alert(msg);
+    <script>
+        $(document).ready(function(){
+            var msg = '{{Session::get('alert')}}';
+            var exist = '{{Session::has('alert')}}';
+            if(exist){
+                alert(msg);
+            }
+
+            var fotoProdukCarousel = $("#foto-produk-carousel");
+            var fotoPercetakanCarousel = $("#foto-percetakan-carousel");
+
+            // Produk Navigation Events
+            $(".foto-produk-next").on('click',function(){
+                fotoProdukCarousel.trigger('next.owl.carousel');
+            });
+            $(".foto-produk-prev").on('click',function(){
+                fotoProdukCarousel.trigger('prev.owl.carousel');
+            });
+
+            // Percetakan Navigation Events
+            $(".foto-percetakan-next").on('click',function(){
+                fotoPercetakanCarousel.trigger('next.owl.carousel');
+            });
+            $(".foto-percetakan-prev").on('click',function(){
+                fotoPercetakanCarousel.trigger('prev.owl.carousel');
+            });
+
+            fotoProdukCarousel.owlCarousel({
+                loop:false,
+                autoplay:false,
+                autoplayTimeout:5000,
+                autoplayHoverPause:true
+            });
+
+            fotoPercetakanCarousel.owlCarousel({
+                loop:false,
+                autoplay:false,
+                autoplayTimeout:5000,
+                autoplayHoverPause:true
+            });
+        });
+
+        function change(src) {
+            document.getElementById('fotoProdukUtama').src = src;
         }
-</script>
+    </script>
 @endsection

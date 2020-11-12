@@ -15,7 +15,6 @@ class CreatePesanansTable extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->increments('id_pesanan');
-            $table->integer('id_konfigurasi')->unsigned();$table->foreign('id_konfigurasi')->references('id_konfigurasi')->on('konfigurasi_file');
             $table->integer('id_atk')->unsigned()->nullable();$table->foreign('id_atk')->references('id_atk')->on('atk');
             $table->integer('id_member')->unsigned();$table->foreign('id_member')->references('id_member')->on('member');
             $table->integer('id_pengelola')->unsigned();$table->foreign('id_pengelola')->references('id_pengelola')->on('pengelola_percetakan');
