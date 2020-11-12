@@ -59,16 +59,15 @@
                             </a>
                         </div>
                         <label class="text-truncate SemiBold mb-2 ml-0">
-                            @for($i=0 ; $i < count($member->alamat['alamat']); $i++)
-                                @if (!empty($member->alamat['alamat']))
+                            @if (!empty($member->alamat['alamat']))
+                                @for($i=0 ; $i < count($member->alamat['alamat']); $i++)
                                     @if ($member->alamat['IdAlamatUtama'] === $i)
                                         {{ $member->alamat['alamat'][$i]['Nama Penerima'] }}
                                     @endif
-                                @else
-                                    {{$member->nama_lengkap}}
-                                    @break
-                                @endif
-                            @endfor
+                                @endfor
+                            @else
+                                {{$member->nama_lengkap}}
+                            @endif
                         </label>
                         <label class="text-truncate-multiline mb-2 ml-0 mb-5">
                             @if(!empty($member->alamat))
@@ -110,6 +109,7 @@
                         <label id="hargaSubTotalFile" class="col-md-auto text-right mb-2">
                             Rp. {{$hargaSubTotalFile ?? 0}}
                         </label>
+                        <input id="hargaSemuaFile" type="number" value="{{$hargaSubTotalFile ?? 0}}" hidden>
                     </div>
                     <div class="row justify-content-between mb-2">
                         <label class="col-md-auto mb-2">{{__('Biaya Pengiriman') }}</label>
@@ -184,10 +184,10 @@
                                         <td>Rp. {{$value->biaya}}</td>
                                         <td>
                                             <span>
-                                                <i class="material-icons mr-2">
+                                                <i class="material-icons cursor-pointer mr-2">
                                                     edit
                                                 </i>
-                                                <i class="material-icons"
+                                                <i class="material-icons cursor-pointer"
                                                     style="color: red;">
                                                     delete
                                                 </i>
@@ -200,33 +200,35 @@
                     </table>
                 </div>
                 <label class="SemiBold mb-2 ml-0 mr-2">{{__('ATK') }}</label>
-                @foreach ($atk as $a => $value)
-                    <div class="row justify-content-between ml-0 mr-2">
-                        <div class="col-md-4 form-group custom-control custom-checkbox">
-                            <input type="number" id="idAtk{{$a}}" value="{{$a}}" hidden>
-                            <input type="checkbox" class="custom-control-input" id="checkboxAtk{{$a}}" value="{{$value->nama}}" style="width: 100%;">
-                            <input type="number" id="hargaAtk{{$a}}" value="{{$value->harga}}" style="width: 100%;" hidden>
-                                <label class="custom-control-label text-break align-middle" for="checkboxAtk{{$a}}" style="width: 100%;">
-                                    {{$value->nama ?? '-'}}
-                                    <i class="material-icons align-middle ml-2" style="color: #C4C4C4">help</i>
+                <div class="table-scrollbar" style="max-height: 300px;">
+                    @foreach ($atk as $a => $value)
+                        <div class="row justify-content-between ml-0 mr-2">
+                            <div class="col-md-4 form-group custom-control custom-checkbox">
+                                <input type="number" id="idAtk{{$a}}" value="{{$a}}" hidden>
+                                <input type="checkbox" class="custom-control-input" id="checkboxAtk{{$a}}" value="{{$value->nama}}" style="width: 100%;">
+                                <input type="number" id="hargaAtk{{$a}}" value="{{$value->harga}}" style="width: 100%;" hidden>
+                                    <label class="custom-control-label text-break align-middle" for="checkboxAtk{{$a}}" style="width: 100%;">
+                                        {{$value->nama ?? '-'}}
+                                        <i class="material-icons align-middle ml-2" style="color: #C4C4C4">help</i>
+                                    </label>
+                            </div>
+                            <div class="col-md-auto form-group jumlahAtk">
+                                <label>{{__('Jumlah') }}
+                                    <i id="plusAtk{{$a}}" class="fa fa-plus cursor-pointer ml-2 mr-2"></i>
                                 </label>
+                                <input id="jumlahAtk{{$a}}" type="number" class="form-input" min="1" max="{{$value->jumlah}}" value="1" style="width:48px;">
+                                <i id="minusAtk{{$a}}" class="fa fa-minus cursor-pointer ml-2 mr-2"></i>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <label id="hargaAtkLabel{{$a}}" class="SemiBold mb-2 ml-0" style="width: 100%;">
+                                    Rp. {{$value->harga ?? 0}}
+                                </label>
+                                <input id="idAtk" type="number" class="" value="{{$value->id_atk}}" hidden>
+                                <input type="number" name="hargaAtk" id="hargaAtk{{$a}}" value="{{$value->harga ?? 0}}" hidden>
+                            </div>
                         </div>
-                        <div class="col-md-auto form-group jumlahAtk">
-                            <label>{{__('Jumlah') }}
-                                <i id="plusAtk{{$a}}" class="fa fa-plus cursor-pointer ml-2 mr-2"></i>
-                            </label>
-                            <input id="jumlahAtk{{$a}}" type="number" class="form-input" min="1" max="{{$value->jumlah}}" value="1" style="width:48px;">
-                            <i id="minusAtk{{$a}}" class="fa fa-minus cursor-pointer ml-2 mr-2"></i>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <label id="hargaAtkLabel{{$a}}" class="SemiBold mb-2 ml-0" style="width: 100%;">
-                                Rp. {{$value->harga ?? 0}}
-                            </label>
-                            <input id="idAtk" type="number" class="" value="{{$value->id_atk}}" hidden>
-                            <input type="number" name="hargaAtk" id="hargaAtk{{$a}}" value="{{$value->harga ?? 0}}" hidden>
-                        </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
         <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold mb-5"
@@ -245,16 +247,19 @@
             var arrJumlahAtk = [];
             var arrTotalHargaAtk = [];
             var subTotalFile = 0;
-            var hargaSubTotalFile = 0;
+            var hargaSubTotalFile = parseInt($('#hargaSemuaFile').val());
             var jumlahAtk = 0;
+            var updateJumlahAtk = 0;
             var totalAtk = 0;
             var hargaAtk = 0;
             var hargaPerAtk = 0;
+            var updateHargaPerAtk = 0;
             var hargaTotalAtk = 0;
             var biayaOngkir = parseInt($('#hargaOngkir').val());
             var totalHargaPesanan = 0;
             var totalSaldo = parseInt($('#totalSaldo').val());
             var totalSisaSaldo = 0;
+
 
             $('input[type=checkbox]').each(function(index, value){
                 $('#checkboxKonfigurasi' + index).bind('change', function(){
@@ -283,7 +288,7 @@
                         arrSubTotalFile.push($('#hargaKonfigurasi' + index).val());
                         subTotalFile = arrKonfig.length;
                         hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                         totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                         $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -329,7 +334,7 @@
                             biayaOngkir = parseInt($('#hargaOngkir').val());
                         }
 
-                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                         totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                         $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -341,19 +346,17 @@
                         $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
                     }
 
-                    if(totalSaldo < totalHargaPesanan){
-                        $('#warningSaldo').show();
-                        $('#warningSaldo').text('Saldo kamu tidak mencukupi, silahkan melakukan pengisian saldo setelah pesanan kamu dibuat ');
-                    }
-                    else if(subTotalFile === 0){
+                    if(subTotalFile === 0){
                         $('#warningSaldo').show();
                         $('#warningSaldo').text('Silahkan Pilih File Konfigurasi Pesanan Anda');
+                    }
+                    else if(totalSaldo < totalHargaPesanan){
+                        $('#warningSaldo').show();
+                        $('#warningSaldo').text('Saldo kamu tidak mencukupi, silahkan melakukan pengisian saldo setelah pesanan kamu dibuat ');
                     }
                     else{
                         $('#warningSaldo').hide();
                     }
-
-                    // $('#checkboxPilihSemua').not(this).prop('checked', this.checked);
                 });
 
                 $('#checkboxAtk' + index).bind('change', function(){
@@ -438,13 +441,6 @@
             });
 
             $('#checkboxPilihSemua').on('change',function(){
-                subTotalFile = 0;
-                hargaSubTotalFile = 0;
-                arrKonfig = [];
-                arrSubTotalFile = [];
-                totalHargaPesanan = 0;
-                totalSisaSaldo = 0;
-
                 for (i = 0; i < batas; i++) {
                     if ($('#checkboxPilihSemua').is(':checked')) {
                         $('#checkboxKonfigurasi' + i).prop('checked', this.checked);
@@ -466,7 +462,7 @@
                         subTotalFile = arrKonfig.length;
                         arrSubTotalFile.push($('#hargaKonfigurasi' + i).val());
                         hargaSubTotalFile = eval(arrSubTotalFile.join("+"));
-                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                         totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                         $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -477,6 +473,12 @@
                         console.log(arrSubTotalFile);
                     }
                     else{
+                        subTotalFile = 0;
+                        hargaSubTotalFile = 0;
+                        arrKonfig = [];
+                        arrSubTotalFile = [];
+                        totalHargaPesanan = 0;
+                        totalSisaSaldo = 0;
                         if ($('#rbAmbilTempat').is(':checked')){
                             metodePenerimaan = "Ditempat";
                             biayaOngkir = 0;
@@ -493,7 +495,7 @@
                         arrKonfig = [];
                         subTotalFile = arrKonfig.length;
                         hargaSubTotalFile = subTotalFile;
-                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir;
+                        totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                         totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                         $('#subTotalFile').text('Subtotal ' + subTotalFile + ' File');
@@ -923,6 +925,7 @@
                 $('#plusAtk' + index).click(function(){
                     $('#jumlahAtk'+index).prop('disabled',false);
                     var val = parseInt($('#jumlahAtk' + index).val());
+
                     if(val >= $('#jumlahAtk' + index).attr('max')){
                         $('#jumlahAtk' + index).val((val));
                     }
@@ -931,15 +934,40 @@
                         $('#jumlahAtk' + index).val((val));
                     }
 
-                    hargaPerAtk = val * parseInt($('#hargaAtk' + index).val());
+                    updateHargaPerAtk = val * parseInt($('#hargaAtk' + index).val());
+                    updateJumlahAtk = $('#jumlahAtk' + index).val((val));
 
-                    // hargaTotalAtk = eval(arrTotalHargaAtk.join("+")) + hargaPerAtk;
+                    // jumlahAtk = $('#jumlahAtk' + index).val();
+                    // hargaAtk = $('#hargaAtk' + index).val();
+                    // hargaPerAtk = jumlahAtk * hargaAtk;
+
+                    // var pos = arrAtk.indexOf($('#checkboxAtk' + index).val());
+                    // var posJumlah = arrJumlahAtk.indexOf(jumlahAtk);
+                    // var posHarga = arrTotalHargaAtk.indexOf(hargaPerAtk);
+
+                    // if(pos > -1){
+                    //     // arrAtk.splice(pos,1);
+                    //     // totalAtk = arrAtk.length;
+                    //     arrJumlahAtk.splice(posJumlah,1);
+                    //     arrTotalHargaAtk.splice(posHarga,1);
+                    //     arrJumlahAtk.push(updateJumlahAtk);
+                    //     arrTotalHargaAtk.push(updateHargaPerAtk);
+
+                    //     if(totalAtk === 0){
+                    //         hargaTotalAtk = 0;
+                    //     }
+                    //     else {
+                    //         hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
+                    //     }
+                    // }
+
+
                     hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
 
-                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaPerAtk;
+                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                     totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
-                    // console.log(hargaTotalAtk);
+                    console.log(hargaTotalAtk);
                     // console.log(totalHargaPesanan);
 
                     $('#hargaAtkLabel' + index).text('Rp. ' + val * parseInt($('#hargaAtk' + index).val()));
@@ -964,7 +992,7 @@
                     // hargaTotalAtk = eval(arrTotalHargaAtk.join("+")) + hargaPerAtk;
                     hargaTotalAtk = eval(arrTotalHargaAtk.join("+"));
 
-                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaPerAtk;
+                    totalHargaPesanan = hargaSubTotalFile + biayaOngkir + hargaTotalAtk;
                     totalSisaSaldo = totalSaldo - totalHargaPesanan;
 
                     // console.log(hargaTotalAtk);

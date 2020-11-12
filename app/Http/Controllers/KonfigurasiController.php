@@ -126,19 +126,12 @@ class KonfigurasiController extends Controller
             $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
             $atk = $konfigurasi->product->partner->atk;
 
-            if ($request->session()->has("pesanan-" . $konfigurasi->id_member)) {
-                $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_member);
-                // $konfigurasi->id_pesanan = $pesanan->id_pesanan;
-                // $konfigurasi->save();
+            if ($request->session()->has("pesanan-" . $konfigurasi->id_pesanan)) {
+                $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_pesanan, $konfigurasi);
+
+                // dd($pesanan->konfigurasiFile);
 
                 $request->session()->put("alamatPesanan");
-
-                // if($request->session()->has("pesanan-" . $member->id_member)){
-                //     // $request->session()->get("alamatPesanan");
-                //     // dd(true);
-                // }
-                // $request->session()->save();
-                // dd($konfigurasi);
 
                 return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
             } else {
@@ -153,10 +146,8 @@ class KonfigurasiController extends Controller
                 $konfigurasi->id_pesanan = $pesanan->id_pesanan;
                 $konfigurasi->save();
 
-                $request->session()->put("pesanan-" . $konfigurasi->id_member, $pesanan);
+                $request->session()->put("pesanan-" . $konfigurasi->id_pesanan, $pesanan);
                 $request->session()->put("alamatPesanan");
-
-                // dd($konfigurasi);
 
                 return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
             }

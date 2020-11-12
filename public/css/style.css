@@ -202,6 +202,12 @@ body {
     border-radius: 30px;
 }
 
+.btn-outline-purple:hover {
+    color: #BC41BE;
+    border: 1px solid #BC41BE;
+    border-radius: 30px;
+}
+
 .btn-outline-square-purple {
     background-color: white;
     color: #BC41BE;
@@ -217,7 +223,7 @@ body {
 }
 
 .btn-outline-yellow:hover {
-    color: black;
+    color: #F2FF58;
     background-color: #F2FF58;
     border-color: #F2FF58;
 }
@@ -638,11 +644,13 @@ table {
     background-color: #5869ff;
 }
 
-.table-hover>tbody>tr .material-icons {
+.table-hover>tbody>tr .material-icons,
+.table-hover>tbody>tr> .pilih {
     visibility: hidden;
 }
 
-.table-hover>tbody>tr:hover .material-icons {
+.table-hover>tbody>tr:hover .material-icons,
+.table-hover>tbody>tr:hover .pilih{
     color: black;
     visibility: visible;
 }

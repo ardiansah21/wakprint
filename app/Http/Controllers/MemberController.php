@@ -736,6 +736,8 @@ class MemberController extends Controller
 
         if (empty($new_array['alamat'])) {
 
+            $member->alamat = [];
+
             //unset($new_array['alamat']);
             //unset($alamat['IdAlamatUtama']);
             //unset($new_array['IdAlamatUtama']);

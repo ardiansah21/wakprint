@@ -36,49 +36,74 @@
                         {{-- <form action="{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}" method="POST"> --}}
                             {{-- @csrf --}}
                             {{-- <tr onclick="document.getElementById('id').click()"> --}}
-                            <tr class="cursor-pointer" onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'">
-                                {{-- <input type="submit" id="id" name="id" value="{{$member->alamat['alamat'][$i]['id']}}"> --}}
-                                <td class="align-middle" name="namapenerima" scope="row">
-                                    {{ $member->alamat['alamat'][$i]['Nama Penerima'] }}
-                                </td>
-                                <td class="align-middle" name="alamat">
-                                    {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
-                                    {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                                    {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
-                                </td>
-                                <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] }}</td>
-                                <td class="align-middle">
-                                    <span>
-                                        <a href="" class="material-icons text-decoration-none mr-2" data-toggle="modal"
-                                            data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
-                                            data-id="{{ $member->alamat['alamat'][$i]['id'] }}"
-                                            data-nama-penerima="{{ $member->alamat['alamat'][$i]['Nama Penerima'] }}"
-                                            data-nomor-hp="{{ $member->alamat['alamat'][$i]['Nomor HP'] }}"
-                                            data-provinsi="{{ $member->alamat['alamat'][$i]['Provinsi'] }}"
-                                            data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }}"
-                                            data-kecamatan="{{ $member->alamat['alamat'][$i]['Kecamatan'] }}"
-                                            data-kelurahan="{{ $member->alamat['alamat'][$i]['Kelurahan'] }}"
-                                            data-kode-pos="{{ $member->alamat['alamat'][$i]['Kode Pos'] }}"
-                                            data-alamat-jalan="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] }}">
-                                            edit
-                                        </a>
-                                        <a href="alamat/hapus/{{$member->alamat['alamat'][$i]['id'] }}" text-decoration="none" class="material-icons text-decoration-none mr-2"
-                                            style="color: #FF4949;">
-                                            delete
-                                        </a>
-                                    </span>
-                                </td>
-                                <td class="align-middle">
-                                    @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
-                                        <label class="btn btn-outline-purple">
-                                            Utama
-                                        </label>
-                                    @endif
-                                </td>
-                            </tr>
+                            @if (!empty($member->alamat['alamat'][$i]))
+                                <tr>
+                                    {{-- <input type="submit" id="id" name="id" value="{{$member->alamat['alamat'][$i]['id']}}"> --}}
+                                    <td class="align-middle" name="namapenerima" scope="row">
+                                        {{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-' }}
+                                    </td>
+                                    <td class="align-middle" name="alamat">
+                                        {{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}},
+                                        {{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}},
+                                        {{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}},
+                                        {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}},
+                                        {{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}},
+                                        {{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}
+                                    </td>
+                                    <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}</td>
+                                    <td class="align-middle">
+                                        <span>
+                                            {{-- <input id="data-id" type="text" value="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}" hidden>
+                                            <input id="data-nama-penerima" type="text" value="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}" hidden>
+                                            <input id="data-nomor-hp" type="text" value="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}" hidden>
+                                            <input id="data-provinsi" type="text" value="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}" hidden>
+                                            <input id="data-kabupaten-kota" type="text" value="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}" hidden>
+                                            <input id="data-kecamatan" type="text" value="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}" hidden>
+                                            <input id="data-kelurahan" type="text" value="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}" hidden>
+                                            <input id="data-kode-pos" type="text" value="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}" hidden>
+                                            <input id="data-alamat-jalan" type="text" value="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}" hidden> --}}
+
+                                            <a id="tes" href="" class="material-icons text-decoration-none mr-2"
+                                                data-toggle="modal"
+                                                data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
+                                                data-id="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}"
+                                                data-nama-penerima="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}"
+                                                data-nomor-hp="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}"
+                                                data-provinsi="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}"
+                                                data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}"
+                                                data-kecamatan="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}"
+                                                data-kelurahan="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}"
+                                                data-kode-pos="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}"
+                                                data-alamat-jalan="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}">
+                                                edit
+                                            </a>
+                                            <a href="alamat/hapus/{{$member->alamat['alamat'][$i]['id'] ?? ''}}" text-decoration="none" class="material-icons text-decoration-none mr-2"
+                                                style="color: #FF4949;">
+                                                delete
+                                            </a>
+                                        </span>
+                                    </td>
+                                    <td class="pilih text-center align-middle">
+                                        <span>
+                                            @if (!empty($member->alamat['alamat'][$i]['id']))
+                                                @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
+                                                    <label class="btn btn-outline-purple">
+                                                        Utama
+                                                    </label>
+                                                @else
+                                                    <a onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'" text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
+                                                        check_circle
+                                                    </a>
+                                                    {{-- <label class="btn btn-primary-wakprint px-4" onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'">
+                                                        Pilih
+                                                    </label> --}}
+                                                @endif
+                                            @endif
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endif
+
                         {{-- </form> --}}
                         {{-- <tr onclick="window.location.href='{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}'"> --}}
                     @endfor
@@ -215,12 +240,10 @@
     </div>
 
     {{-- popup modal edit alamat --}}
-    <div class="modal fade" id="editAlamatModal" tabindex="-1" role="dialog" aria-labelledby="editAlamatModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="editAlamatModal" tabindex="-1" role="dialog" aria-labelledby="editAlamatModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-
                     <form id="formModal" action="{{ route('alamat.edit') }}" class="mb-3" method="POST">
                         @csrf
                         <button class="close material-icons md-32" data-dismiss="modal">
@@ -236,7 +259,7 @@
                                     <label class="font-weight-bold mb-2"
                                         style="font-size: 18px;">{{ __('Nama Penerima') }}</label>
                                     <div class="input-group">
-                                        <input id="namaPenerima" type="text" name="namapenerima" placeholder="Masukkan Nama Penerima"
+                                        <input id="namaPenerima" type="text" name="namapenerima" placeholder="Masukkan Nama Penerima" value="as"
                                             class="form-control pt-2 pb-2 r" style="font-size: 18px;">
                                     </div>
                                 </div>
@@ -304,7 +327,7 @@
                                     <label class="font-weight-bold mb-2"
                                         style="font-size: 18px;">{{ __('Alamat') }}</label>
                                     <div class="input-group mb-3">
-                                        <textarea id="alamatJalan" class="form-control" type="text" name="alamatjalan"
+                                        <textarea id="alamatJalan" class="form-control" type="text" name="alamatjalan" placeholder="Masukkan Alamat Lengkap"
                                             aria-label="Alamat" style="font-size: 18px;"></textarea>
                                     </div>
                                 </div>
@@ -333,20 +356,22 @@
 </div>
 
 <script>
+
     //ubah
     $('#editAlamatModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget)
-        $(this).find('.modal-title').text(button.data('title'))
-        $(this).find('#id').val(button.data('id'))
-        $(this).find('#namaPenerima').val(button.data('nama-penerima'))
-        $(this).find('#nomorHP').val(button.data('nomor-hp'))
-        $(this).find('#provinsi').val(button.data('provinsi'))
-        $(this).find('#kabupatenKota').val(button.data('kabupaten-kota'))
-        $(this).find('#kecamatan').val(button.data('kecamatan'))
-        $(this).find('#kelurahan').val(button.data('kelurahan'))
-        $(this).find('#kodePos').val(button.data('kode-pos'))
-        $(this).find('#alamatJalan').val(button.data('alamat-jalan'))
-    })
+        var button = $(event.relatedTarget);
+
+        $('.modal-title').text(button.data('title'));
+        $(this).find('#id').val(button.data('id'));
+        $(this).find('#namaPenerima').val(button.data('nama-penerima'));
+        $(this).find('#nomorHP').val(button.data('nomor-hp'));
+        $(this).find('#provinsi').val(button.data('provinsi'));
+        $(this).find('#kabupatenKota').val(button.data('kabupaten-kota'));
+        $(this).find('#kecamatan').val(button.data('kecamatan'));
+        $(this).find('#kelurahan').val(button.data('kelurahan'));
+        $(this).find('#kodePos').val(button.data('kode-pos'));
+        $(this).find('#alamatJalan').val(button.data('alamat-jalan'));
+    });
 
     //tambah
     $('#tambahAlamatModal').on('show.bs.modal', function (event) {
@@ -362,7 +387,7 @@
             $(this).find('#kodePos').val(button.data('kode-pos'))
             $(this).find('#alamatJalan').val(button.data('alamat-jalan'))
 
-    })
+    });
 </script>
 
 
