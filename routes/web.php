@@ -168,7 +168,7 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('saldo/tolak', 'AdminController@saldoTolak')->name('saldo.tolak');
         Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
         Route::get('keluhan/detail/{id}', 'AdminController@detailKeluhan')->name('detail.keluhan');
-        Route::get('keluhan/tanggapi/{id}', 'AdminController@tanggapiKeluhan')->name('keluhan.tanggapi');
+        Route::post('keluhan/tanggapi', 'AdminController@tanggapiKeluhan')->name('keluhan.tanggapi');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 

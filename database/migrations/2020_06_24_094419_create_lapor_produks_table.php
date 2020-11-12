@@ -15,11 +15,11 @@ class CreateLaporProduksTable extends Migration
     {
         Schema::create('lapor_produk', function (Blueprint $table) {
             $table->increments('id_lapor');
-            $table->integer('id_produk')->unsigned();$table->foreign('id_produk')->references('id_produk')->on('produk');
-            $table->integer('id_member')->unsigned();$table->foreign('id_member')->references('id_member')->on('member');
-            $table->string('pesan',255);
-            $table->timestamp('waktu');
-            $table->enum('status',['Ditanggapi','Pending'])->nullable();
+            $table->integer('id_produk')->unsigned(); $table->foreign('id_produk')->references('id_produk')->on('produk');
+            $table->integer('id_member')->unsigned(); $table->foreign('id_member')->references('id_member')->on('member');
+            $table->text('pesan');
+            $table->text('pesan_tanggapan')->nullable();
+            $table->enum('status', ['Ditanggapi', 'Pending'])->nullable();
             $table->timestamps();
         });
     }

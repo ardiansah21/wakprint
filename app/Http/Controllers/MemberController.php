@@ -115,131 +115,125 @@ class MemberController extends Controller
     //     ]);
     // }
 
-        function cari(Request $request)
-        {
-            if($request->ajax()){
-                if ($request->filterPencarian === 'Harga Tertinggi') {
-                    if ($request->fiturTambahan != null) {
-                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
-                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
-                            ->where('rating', 'like', '%'.$request->keyword.'%')
-                            ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            ->orderBy('harga_hitam_putih', 'desc')
-                            ->orderBy('harga_berwarna', 'desc')
-                            ->get();
-                    }
-                    else {
-                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
-                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
-                            ->where('rating', 'like', '%'.$request->keyword.'%')
-                            ->orderBy('harga_hitam_putih', 'desc')
-                            ->orderBy('harga_berwarna', 'desc')
-                            ->get();
-                    }
+    public function cari(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->filterPencarian === 'Harga Tertinggi') {
+                if ($request->fiturTambahan != null) {
+                    $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                        ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                        ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                        ->where('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                        ->where('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                        ->where('rating', 'like', '%' . $request->keyword . '%')
+                        ->where('fitur->paket', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                        ->orWhere('fitur->nonPaket', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                        ->orderBy('harga_hitam_putih', 'desc')
+                        ->orderBy('harga_berwarna', 'desc')
+                        ->get();
+                } else {
+                    $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                        ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                        ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                        ->where('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                        ->where('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                        ->where('rating', 'like', '%' . $request->keyword . '%')
+                        ->orderBy('harga_hitam_putih', 'desc')
+                        ->orderBy('harga_berwarna', 'desc')
+                        ->get();
                 }
-                else if ($request->filterPencarian === 'Harga Terendah') {
-                    if ($request->fiturTambahan != null) {
-                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
-                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
-                            ->where('rating', 'like', '%'.$request->keyword.'%')
-                            ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            ->orderBy('harga_hitam_putih', 'asc')
-                            ->orderBy('harga_berwarna', 'asc')
-                            ->get();
-                    }
-                    else {
-                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
-                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
-                            ->where('rating', 'like', '%'.$request->keyword.'%')
-                            ->orderBy('harga_hitam_putih', 'asc')
-                            ->orderBy('harga_berwarna', 'asc')
-                            ->get();
-                    }
+            } else if ($request->filterPencarian === 'Harga Terendah') {
+                if ($request->fiturTambahan != null) {
+                    $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                        ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                        ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                        ->where('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                        ->where('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                        ->where('rating', 'like', '%' . $request->keyword . '%')
+                        ->where('fitur->paket', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                        ->orWhere('fitur->nonPaket', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                        ->orderBy('harga_hitam_putih', 'asc')
+                        ->orderBy('harga_berwarna', 'asc')
+                        ->get();
+                } else {
+                    $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                        ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                        ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                        ->where('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                        ->where('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                        ->where('rating', 'like', '%' . $request->keyword . '%')
+                        ->orderBy('harga_hitam_putih', 'asc')
+                        ->orderBy('harga_berwarna', 'asc')
+                        ->get();
                 }
-                else {
-                    if ($request->fiturTambahan != null) {
-                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
-                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
-                            ->where('rating', 'like', '%'.$request->keyword.'%')
-                            ->where('fitur->paket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            ->orWhere('fitur->nonPaket', 'like', '%'.join(",",$request->fiturTambahan).'%')
-                            ->orderBy('created_at', 'desc')
-                            ->get();
-                    }
-                    else {
-                        $produks = Produk::where('nama', 'like', '%'.$request->keyword.'%')
-                            ->where('jenis_kertas', 'like', '%'.$request->jenisKertas.'%')
-                            ->where('jenis_printer', 'like', '%'.$request->jenisPrinter.'%')
-                            ->where('harga_hitam_putih', 'like', '%'.$request->keyword.'%')
-                            ->where('harga_berwarna', 'like', '%'.$request->keyword.'%')
-                            ->where('rating', 'like', '%'.$request->keyword.'%')
-                            ->orderBy('created_at', 'desc')
-                            ->get();
-                    }
-                }
-
-                // $members = Auth::user();
-                // $members->cekProdukFavorit();
-
-                $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%'.$request->keyword.'%')
-                        ->where('nama_lengkap', 'like', '%'.$request->keyword.'%')
-                        ->where('ambil_di_tempat', 'like', '%'.$request->ambilDiTempat.'%')
-                        ->where('antar_ke_tempat', 'like', '%'.$request->antarKeTempat.'%')
-                        ->where('alamat_toko', 'like', '%'.$request->keyword.'%')
-                        ->where('rating_toko', 'like', '%'.$request->keyword.'%')
+            } else {
+                if ($request->fiturTambahan != null) {
+                    $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                        ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                        ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                        ->where('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                        ->where('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                        ->where('rating', 'like', '%' . $request->keyword . '%')
+                        ->where('fitur->paket', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                        ->orWhere('fitur->nonPaket', 'like', '%' . join(",", $request->fiturTambahan) . '%')
                         ->orderBy('created_at', 'desc')
                         ->get();
-
-                $atks = Atk::where('nama', 'like', '%'.$request->keyword.'%')
-                        ->orderBy('id_atk', 'asc')
+                } else {
+                    $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                        ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                        ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                        ->where('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                        ->where('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                        ->where('rating', 'like', '%' . $request->keyword . '%')
+                        ->orderBy('created_at', 'desc')
                         ->get();
-
-                $idPartnerDariProduk = array();
-                $namaPartnerDariProduk = array();
-                $alamatPartnerDariProduk = array();
-                foreach ($produks as $p) {
-                    array_push($idPartnerDariProduk,$p->partner->id_pengelola);
-                    array_push($namaPartnerDariProduk,$p->partner->nama_toko);
-                    array_push($alamatPartnerDariProduk,$p->partner->alamat_toko);
                 }
-
-                $atkIdPartner = array();
-                $atkStatusPartner = array();
-                foreach ($atks as $a) {
-                    array_push($atkIdPartner,$a->partner->id_pengelola);
-                    array_push($atkStatusPartner,$a->partner->status);
-                }
-
-                return response()->json([
-                    'produks' => $produks,
-                    'partners' => $partners,
-                    'id_partner_dari_produk' => $idPartnerDariProduk,
-                    'nama_partner_dari_produk' => $namaPartnerDariProduk,
-                    'alamat_partner_dari_produk' => $alamatPartnerDariProduk,
-                    'atk_id_partner' => $atkIdPartner,
-                    'atk_status_partner' => $atkStatusPartner,
-                    'atks' => $atks,
-                ], 200);
             }
-        }
 
+            // $members = Auth::user();
+            // $members->cekProdukFavorit();
+
+            $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
+                ->where('nama_lengkap', 'like', '%' . $request->keyword . '%')
+                ->where('ambil_di_tempat', 'like', '%' . $request->ambilDiTempat . '%')
+                ->where('antar_ke_tempat', 'like', '%' . $request->antarKeTempat . '%')
+                ->where('alamat_toko', 'like', '%' . $request->keyword . '%')
+                ->where('rating_toko', 'like', '%' . $request->keyword . '%')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
+                ->orderBy('id_atk', 'asc')
+                ->get();
+
+            $idPartnerDariProduk = array();
+            $namaPartnerDariProduk = array();
+            $alamatPartnerDariProduk = array();
+            foreach ($produks as $p) {
+                array_push($idPartnerDariProduk, $p->partner->id_pengelola);
+                array_push($namaPartnerDariProduk, $p->partner->nama_toko);
+                array_push($alamatPartnerDariProduk, $p->partner->alamat_toko);
+            }
+
+            $atkIdPartner = array();
+            $atkStatusPartner = array();
+            foreach ($atks as $a) {
+                array_push($atkIdPartner, $a->partner->id_pengelola);
+                array_push($atkStatusPartner, $a->partner->status);
+            }
+
+            return response()->json([
+                'produks' => $produks,
+                'partners' => $partners,
+                'id_partner_dari_produk' => $idPartnerDariProduk,
+                'nama_partner_dari_produk' => $namaPartnerDariProduk,
+                'alamat_partner_dari_produk' => $alamatPartnerDariProduk,
+                'atk_id_partner' => $atkIdPartner,
+                'atk_status_partner' => $atkStatusPartner,
+                'atks' => $atks,
+            ], 200);
+        }
+    }
 
     public function pencarian(Request $request)
     {
@@ -249,7 +243,7 @@ class MemberController extends Controller
         $atk = Atk::all();
         $partner = Pengelola_Percetakan::all();
 
-        return view('member.pencarian', compact('partner', 'produk','atk'))->render();
+        return view('member.pencarian', compact('partner', 'produk', 'atk'))->render();
     }
 
     public function detailPartner($id)
@@ -443,13 +437,13 @@ class MemberController extends Controller
 
         $pesan = $request->pesan;
         $status = $laporProduk->status = 'Pending';
-        $waktu = $laporProduk->waktu = Carbon::now()->format('Y:m:d H:i:s');
+        // $waktu = $laporProduk->waktu = Carbon::now()->format('Y:m:d H:i:s');
 
         Lapor_produk::create([
             'id_produk' => $produk->id_produk,
             'id_member' => $member->id_member,
             'pesan' => $pesan,
-            'waktu' => $waktu,
+            // 'waktu' => $waktu,
             'status' => $status,
         ]);
 
@@ -559,10 +553,10 @@ class MemberController extends Controller
     {
         $member = Auth::user();
         $tanggalLahir = $member->tanggal_lahir;
-        $tanggal = substr($tanggalLahir,8,2);
+        $tanggal = substr($tanggalLahir, 8, 2);
         return view('member.edit_profil', [
             'member' => $member,
-            'tanggal' => $tanggal
+            'tanggal' => $tanggal,
         ]);
     }
 
@@ -640,7 +634,7 @@ class MemberController extends Controller
         //     // $sessionAlamat = $request->session()->get("alamatPesanan". $member->id_member);
         //     // dd(true);
         // }
-        return view('member.alamat',compact('member'));
+        return view('member.alamat', compact('member'));
     }
 
     public function tambahAlamat(Request $request)
@@ -710,11 +704,10 @@ class MemberController extends Controller
         $member->alamat = $alamat;
         $member->save();
 
-        if ($request->session()->exists("alamatPesanan")){
+        if ($request->session()->exists("alamatPesanan")) {
             $request->session()->forget("alamatPesanan");
-            return redirect()->route('konfigurasi.pesanan',['konfigurasi' => $member->id_member]);
-        }
-        else {
+            return redirect()->route('konfigurasi.pesanan', ['konfigurasi' => $member->id_member]);
+        } else {
             return redirect()->route('alamat');
         }
     }
@@ -750,7 +743,7 @@ class MemberController extends Controller
     public function konfirmasiPembayaran()
     {
         $produk = Produk::all();
-        return view('member.konfirmasi_pembayaran',compact('produk'));
+        return view('member.konfirmasi_pembayaran', compact('produk'));
     }
 
     public function saldoPembayaran($id)
@@ -793,7 +786,7 @@ class MemberController extends Controller
         $produk = Produk::all();
         // $transaksi_saldo = Transaksi_saldo::all();
 
-        return view('member.detail_pesanan',compact('produk'));
+        return view('member.detail_pesanan', compact('produk'));
     }
 
     public function pesanan()
@@ -816,7 +809,7 @@ class MemberController extends Controller
         return view('member.produk_favorit', [
             'member' => $member,
             'produk' => $produk,
-            'produkFavorit' => $produkFavorit
+            'produkFavorit' => $produkFavorit,
         ]);
     }
 
@@ -826,17 +819,14 @@ class MemberController extends Controller
 
         $produkFavorit = json_decode($member->produk_favorit);
 
-        if(empty($produkFavorit))
-        {
-            array_push($produkFavorit,$request->id_produk);
-        }
-        else{
+        if (empty($produkFavorit)) {
+            array_push($produkFavorit, $request->id_produk);
+        } else {
             foreach ($produkFavorit as $key => $pf) {
-                if($pf == $request->id_produk){
-                    array_splice($produkFavorit,$key);
-                }
-                else {
-                    array_push($produkFavorit,$request->id_produk);
+                if ($pf == $request->id_produk) {
+                    array_splice($produkFavorit, $key);
+                } else {
+                    array_push($produkFavorit, $request->id_produk);
                 }
             }
         }
