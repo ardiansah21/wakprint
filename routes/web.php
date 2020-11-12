@@ -20,8 +20,8 @@ use App\Http\Controllers\KonFileController;
 // Route::get('/welcome', function () {
 //     return view('welcome');
 // });
-Auth::routes();
-
+// Auth::routes();
+Auth::routes(['verify' => true]);
 /////
 Route::post('/upload-pdf', 'MemberController@uploadPdf')->name('upload.pdf');
 
