@@ -23,6 +23,11 @@ Vue.component(
     "example-component",
     require("./components/ExampleComponent.vue").default
 );
+Vue.component(
+    "chat-messages",
+    require("./components/ChatMessages.vue").default
+);
+Vue.component("chat-form", require("./components/ChatForm.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,6 +37,33 @@ Vue.component(
 
 window.onload = function() {
     const app = new Vue({
-        el: "#app"
+        el: "#app",
+        data: {
+            messages: []
+        },
+        created() {
+            this.fetchMessages();
+            Echo.private("chat").listen("MessageSent", e => {
+                this.messages.push({
+                    message: e.message.message,
+                    user: e.user
+                });
+            });
+        },
+        methods: {
+            fetchMessages() {
+                axios.get("/messages").then(response => {
+                    this.messages = response.data;
+                });
+            },
+
+            addMessage(message) {
+                this.messages.push(message);
+
+                axios.post("/messages", message).then(response => {
+                    console.log(response.data);
+                });
+            }
+        }
     });
 };

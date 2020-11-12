@@ -217,3 +217,8 @@ Route::get('session/put', 'SessionController@put');
 Route::get('session/push', 'SessionController@push');
 Route::get('session/del', 'SessionController@delete');
 Route::get('session/tes', 'SessionController@tes');
+
+//chat
+Route::get('chattest', 'ChatsController@index');
+Route::get('messages', 'ChatsController@fetchMessages');
+Route::post('messages', 'ChatsController@sendMessage');
