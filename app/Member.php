@@ -2,12 +2,13 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Member extends Authenticable implements HasMedia
+class Member extends Authenticable implements HasMedia, MustVerifyEmail
 {
     use Notifiable, HasMediaTrait;
 
@@ -31,11 +32,12 @@ class Member extends Authenticable implements HasMedia
         $this->addMediaCollection('avatar')->singleFile();
     }
 
-    public function konfigurasi(){
-    	return $this->hasMany('App\Konfigurasi_file','id_konfigurasi');
+    public function konfigurasi()
+    {
+        return $this->hasMany('App\Konfigurasi_file', 'id_konfigurasi');
     }
 
-    public static function cekProdukFavorit($idMember, $idProduk) : bool
+    public static function cekProdukFavorit($idMember, $idProduk): bool
     {
         $produkFavorit = Member::find($idMember)->produk_favorit;
 

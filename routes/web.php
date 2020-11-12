@@ -20,8 +20,8 @@ use App\Http\Controllers\KonFileController;
 // Route::get('/welcome', function () {
 //     return view('welcome');
 // });
-Auth::routes();
-
+// Auth::routes();
+Auth::routes(['verify' => true]);
 /////
 Route::post('/upload-pdf', 'MemberController@uploadPdf')->name('upload.pdf');
 
@@ -121,6 +121,7 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::get('profil', 'PartnerController@profile')->name('profile');
         Route::get('profil/edit', 'PartnerController@profileEdit')->name('profile.edit');
         Route::post('profil/edit', 'PartnerController@profileUpdate');
+        Route::post('profil/media', 'PartnerController@storeMedia')->name('profile.storeMedia');
 
         Route::get('saldo', 'PartnerController@saldo')->name('saldo');
         Route::get('saldo/tarik', 'PartnerController@tarikSaldo')->name('saldo.tarik');
@@ -167,7 +168,7 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('saldo/tolak', 'AdminController@saldoTolak')->name('saldo.tolak');
         Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
         Route::get('keluhan/detail/{id}', 'AdminController@detailKeluhan')->name('detail.keluhan');
-        Route::get('keluhan/tanggapi/{id}', 'AdminController@tanggapiKeluhan')->name('keluhan.tanggapi');
+        Route::post('keluhan/tanggapi', 'AdminController@tanggapiKeluhan')->name('keluhan.tanggapi');
         //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
         //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 

@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Auth;
+
 use App\Admin;
+use App\Http\Controllers\Controller;
 use App\Lapor_produk;
+use App\Mail\TanggapiKeluhanMail;
 use App\Member;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -25,7 +26,7 @@ class AdminController extends Controller
         $jumlahPartner = count($partner);
         $jumlahTransaksi = count($pesanan);
 
-        return view('admin.homepage',[
+        return view('admin.homepage', [
             'member' => $member,
             'jumlahMember' => $jumlahMember,
             'partner' => $partner,
@@ -35,17 +36,17 @@ class AdminController extends Controller
     }
 
     public function cari(Request $request)
-	{
-		// menangkap data pencarian
-		$cariMember = $request->carimember;
+    {
+        // menangkap data pencarian
+        $cariMember = $request->carimember;
         dd($cariMember);
-    		// mengambil data dari table pegawai sesuai pencarian data
-		$member = Member::all()
-		->where('pegawai_nama','like',"%".$cariMember."%")
-		->paginate();
+        // mengambil data dari table pegawai sesuai pencarian data
+        $member = Member::all()
+            ->where('pegawai_nama', 'like', "%" . $cariMember . "%")
+            ->paginate();
 
-    		// mengirim data pegawai ke view index
-		//return view('index',['pegawai' => $pegawai]);
+        // mengirim data pegawai ke view index
+        //return view('index',['pegawai' => $pegawai]);
 
     }
 
@@ -53,20 +54,23 @@ class AdminController extends Controller
     {
         $member = Member::all();
 
-        return view('admin.data_member',[
-            'member' => $member
+        return view('admin.data_member', [
+            'member' => $member,
         ]);
     }
 
-    public function memberJson(){
+    public function memberJson()
+    {
         return datatables(Member::all())->make(true);
     }
 
-    public function partnerJson(){
+    public function partnerJson()
+    {
         return datatables(Pengelola_Percetakan::all())->make(true);
     }
 
-    public function saldoJson(){
+    public function saldoJson()
+    {
         $member = Member::all();
         $partner = Pengelola_Percetakan::all();
         $transaksiSaldo = Transaksi_saldo::all()->union($member);
@@ -74,16 +78,17 @@ class AdminController extends Controller
         return datatables(Transaksi_saldo::all())->make(true);
     }
 
-    public function keluhanJson(){
+    public function keluhanJson()
+    {
         return datatables(Lapor_produk::all())->make(true);
     }
 
     public function detailMember($id)
     {
         $member = Member::find($id);
-        return view('admin.detail_member',[
+        return view('admin.detail_member', [
             'member' => $member,
-            'tanggalLahir'=>$this->getDateBorn($id)
+            'tanggalLahir' => $this->getDateBorn($id),
         ]);
     }
 
@@ -99,8 +104,7 @@ class AdminController extends Controller
         $member = Member::find($id);
         if (empty($member->tanggal_lahir)) {
             return "-";
-        }
-        else {
+        } else {
             $monthName = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
             $date = $member->tanggal_lahir;
             $tanggal = intval(substr($date, 8, 2));
@@ -114,14 +118,14 @@ class AdminController extends Controller
     {
         $partner = Pengelola_Percetakan::all();
 
-        return view('admin.data_pengelola',compact('partner'));
+        return view('admin.data_pengelola', compact('partner'));
     }
 
     public function detailPartner($id)
     {
         $partner = Pengelola_Percetakan::find($id);
 
-        return view('admin.detail_pengelola',compact('partner'));
+        return view('admin.detail_pengelola', compact('partner'));
     }
 
     public function terimaPartner($id)
@@ -137,7 +141,7 @@ class AdminController extends Controller
     {
         $partner = Pengelola_Percetakan::find($id);
         // $partner->save();
-        return view('admin.tolak_pengelola',compact('partner'));
+        return view('admin.tolak_pengelola', compact('partner'));
     }
 
     public function dataSaldo()
@@ -146,7 +150,7 @@ class AdminController extends Controller
         $partner = Pengelola_Percetakan::all();
         $transaksi_saldo = Transaksi_saldo::all();
 
-        return view('admin.konfirmasi_saldo',compact('member','partner','transaksi_saldo'));
+        return view('admin.konfirmasi_saldo', compact('member', 'partner', 'transaksi_saldo'));
     }
 
     public function saldoTolak()
@@ -154,9 +158,9 @@ class AdminController extends Controller
         $pengelola = Pengelola_Percetakan::all();
         $member = Member::all();
 
-        return view('admin.tolak_pengelola',[
+        return view('admin.tolak_pengelola', [
             'member' => $member,
-            'pengelola_percetakan' => $pengelola
+            'pengelola_percetakan' => $pengelola,
         ]);
     }
 
@@ -165,46 +169,36 @@ class AdminController extends Controller
         $member = Member::all();
         $partner = Pengelola_Percetakan::all();
 
-        return view('admin.kelola_keluhan',[
+        return view('admin.kelola_keluhan', [
             'member' => $member,
-            'pengelola_percetakan' => $partner
+            'pengelola_percetakan' => $partner,
         ]);
     }
 
     public function detailKeluhan($id)
     {
-        $member = Member::find($id);
         $laporProduk = Lapor_produk::find($id);
-        return view('admin.tanggapi_keluhan',compact('member','laporProduk'));
+        return view('admin.tanggapi_keluhan', compact('laporProduk'));
     }
 
-    public function tanggapiKeluhan($id)
+    public function tanggapiKeluhan(Request $request)
     {
-        $member = Member::find($id);
-        $email = $member->email;
-        // $laporProduk = Lapor_produk::find($id);
+        $laporan = Lapor_produk::find($request->id_laporan);
+        $laporan->pesan_tanggapan = $request->tanggapan_keluhan;
+        $laporan->save();
+        $m = (Mail::to($laporan->member->email)->send(new TanggapiKeluhanMail($laporan)));
+        // dd($m);
+        try {
+            Mail::to($laporan->member->email)->send(new TanggapiKeluhanMail($laporan));
+            //TODO:  buat pesan sukses
+            $laporan->status = 'Ditanggapi';
+            $laporan->save();
+            return redirect()->route('admin.keluhan');
+        } catch (\Throwable $th) {
+            //TODO:  buat pesan gagal
+            dd('gagal kirim email');
+        }
 
-        // Mail::send('Html.view', $data, function ($message) {
-        //     $message->from('john@johndoe.com', 'John Doe');
-        //     $message->sender('john@johndoe.com', 'John Doe');
-        //     $message->to('john@johndoe.com', 'John Doe');
-        //     $message->cc('john@johndoe.com', 'John Doe');
-        //     $message->bcc('john@johndoe.com', 'John Doe');
-        //     $message->replyTo('john@johndoe.com', 'John Doe');
-        //     $message->subject('Subject');
-        //     $message->priority(3);
-        //     $message->attach('pathToFile');
-        // });
-
-        Mail::raw([], function($message) use($email) {
-            $message->from('admin@wakprint.com', 'Wakprint');
-            $message->to($email);
-            $message->subject('Tanggapan Laporan Anda');
-            $message->setBody( '<html><h1>5% off its awesome</h1><p>Go get it now !</p></html>', 'text/html' );
-            $message->addPart("5% off its awesome\n\nGo get it now!", 'text/plain');
-        });
-        // return view('admin.kelola_keluhan',compact('member','laporProduk'));
-        return redirect()->route('admin.keluhan');
     }
 
     // public function tableDataMember(){
