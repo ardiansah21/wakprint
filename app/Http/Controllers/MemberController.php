@@ -725,17 +725,29 @@ class MemberController extends Controller
                 $i++;
             }
         }
-        $alamat['alamat'] = $new_array;
 
-        if (empty($new_array['alamat'])) {
+        // dd(json_encode($new_array));
 
-            $member->alamat = [];
+        // if(count($alamat['alamat']) === 0){
+        //     // {"alamat": [[]], "IdAlamatUtama": 0}
+        // }
 
-            //unset($new_array['alamat']);
-            //unset($alamat['IdAlamatUtama']);
-            //unset($new_array['IdAlamatUtama']);
-            //dd($alamat['alamat']);
+        if(json_encode($new_array) === '[[]]'){
+            $alamat = array();
         }
+        else{
+            $alamat['alamat'] = $new_array;
+        }
+
+        // if (empty($new_array)) {
+
+        //     $member->alamat[] = array();
+
+        //     //unset($new_array['alamat']);
+        //     //unset($alamat['IdAlamatUtama']);
+        //     //unset($new_array['IdAlamatUtama']);
+        //     //dd($alamat['alamat']);
+        // }
         $member->alamat = $alamat;
         $member->save();
 

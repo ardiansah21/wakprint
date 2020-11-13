@@ -19,97 +19,91 @@
                 {{__('Ubah Alamat Utama')}}
             </button> --}}
         </div>
-        <div class="table-scrollbar pr-4">
-            <table id="table-wrapper" class="table table-hover mt-4" style="border-radius:25px 25px 15px 15px;">
-                <thead class="bg-primary-purple text-white">
-                    <tr style="font-size: 18px;">
-                        <th class="align-middle" scope="col-md-auto">{{__('Nama Pengguna')}}</th>
-                        <th class="align-middle" scope="col-md-auto">{{__('Alamat')}}</th>
-                        <th class="align-middle" scope="col-md-auto">{{__('No. HP')}}</th>
-                        <th scope="col-md-auto"></th>
-                        <th scope="col-md-auto"></th>
-                    </tr>
-                </thead>
-                <tbody style="font-size: 14px;">
-                    @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
-                        {{-- @if($member->alamat['alamat'][$i] != null){ --}}
-                        {{-- <form action="{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}" method="POST"> --}}
-                            {{-- @csrf --}}
-                            {{-- <tr onclick="document.getElementById('id').click()"> --}}
-                            @if (!empty($member->alamat['alamat'][$i]))
-                                <tr>
-                                    {{-- <input type="submit" id="id" name="id" value="{{$member->alamat['alamat'][$i]['id']}}"> --}}
-                                    <td class="align-middle" name="namapenerima" scope="row">
-                                        {{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-' }}
-                                    </td>
-                                    <td class="align-middle" name="alamat">
-                                        {{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}},
-                                        {{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}},
-                                        {{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}},
-                                        {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}},
-                                        {{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}},
-                                        {{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}
-                                    </td>
-                                    <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}</td>
-                                    <td class="align-middle">
-                                        <span>
-                                            {{-- <input id="data-id" type="text" value="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}" hidden>
-                                            <input id="data-nama-penerima" type="text" value="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}" hidden>
-                                            <input id="data-nomor-hp" type="text" value="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}" hidden>
-                                            <input id="data-provinsi" type="text" value="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}" hidden>
-                                            <input id="data-kabupaten-kota" type="text" value="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}" hidden>
-                                            <input id="data-kecamatan" type="text" value="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}" hidden>
-                                            <input id="data-kelurahan" type="text" value="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}" hidden>
-                                            <input id="data-kode-pos" type="text" value="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}" hidden>
-                                            <input id="data-alamat-jalan" type="text" value="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}" hidden> --}}
+        @if (!empty($member->alamat['alamat']))
+            <div class="table-scrollbar pr-4">
+                <table id="table-wrapper" class="table table-hover mt-4" style="border-radius:25px 25px 15px 15px;">
+                    <thead class="bg-primary-purple text-white">
+                        <tr style="font-size: 18px;">
+                            <th class="align-middle" scope="col-md-auto">{{__('Nama Pengguna')}}</th>
+                            <th class="align-middle" scope="col-md-auto">{{__('Alamat')}}</th>
+                            <th class="align-middle" scope="col-md-auto">{{__('No. HP')}}</th>
+                            <th scope="col-md-auto"></th>
+                            <th scope="col-md-auto"></th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 14px;">
+                        @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
+                                @if (!empty($member->alamat['alamat'][$i]))
+                                    <tr>
+                                        <td class="align-middle" name="namapenerima" scope="row">
+                                            {{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-' }}
+                                        </td>
+                                        <td class="align-middle" name="alamat">
+                                            {{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}},
+                                            {{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}},
+                                            {{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}},
+                                            {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}},
+                                            {{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}},
+                                            {{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}
+                                        </td>
+                                        <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}</td>
+                                        <td class="align-middle">
+                                            <span>
+                                                {{-- <input id="data-id" type="text" value="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}" hidden>
+                                                <input id="data-nama-penerima" type="text" value="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}" hidden>
+                                                <input id="data-nomor-hp" type="text" value="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}" hidden>
+                                                <input id="data-provinsi" type="text" value="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}" hidden>
+                                                <input id="data-kabupaten-kota" type="text" value="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}" hidden>
+                                                <input id="data-kecamatan" type="text" value="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}" hidden>
+                                                <input id="data-kelurahan" type="text" value="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}" hidden>
+                                                <input id="data-kode-pos" type="text" value="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}" hidden>
+                                                <input id="data-alamat-jalan" type="text" value="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}" hidden> --}}
 
-                                            <a id="tes" href="" class="material-icons text-decoration-none mr-2"
-                                                data-toggle="modal"
-                                                data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
-                                                data-id="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}"
-                                                data-nama-penerima="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}"
-                                                data-nomor-hp="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}"
-                                                data-provinsi="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}"
-                                                data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}"
-                                                data-kecamatan="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}"
-                                                data-kelurahan="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}"
-                                                data-kode-pos="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}"
-                                                data-alamat-jalan="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}">
-                                                edit
-                                            </a>
-                                            <a href="alamat/hapus/{{$member->alamat['alamat'][$i]['id'] ?? ''}}" text-decoration="none" class="material-icons text-decoration-none mr-2"
-                                                style="color: #FF4949;">
-                                                delete
-                                            </a>
-                                        </span>
-                                    </td>
-                                    <td class="pilih text-center align-middle">
-                                        <span>
-                                            @if (!empty($member->alamat['alamat'][$i]['id']))
-                                                @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
-                                                    <label class="btn btn-outline-purple">
-                                                        Utama
-                                                    </label>
-                                                @else
-                                                    <a onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'" text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
-                                                        check_circle
-                                                    </a>
-                                                    {{-- <label class="btn btn-primary-wakprint px-4" onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'">
-                                                        Pilih
-                                                    </label> --}}
-                                                @endif
-                                            @endif
-                                        </span>
-                                    </td>
-                                </tr>
-                            @endif
-
-                        {{-- </form> --}}
-                        {{-- <tr onclick="window.location.href='{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}'"> --}}
-                    @endfor
-                </tbody>
-            </table>
-        </div>
+                                                <a href="" class="material-icons text-decoration-none mr-2"
+                                                    data-toggle="modal"
+                                                    data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
+                                                    data-id="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}"
+                                                    data-nama-penerima="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}"
+                                                    data-nomor-hp="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}"
+                                                    data-provinsi="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}"
+                                                    data-kabupaten-kota="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}"
+                                                    data-kecamatan="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}"
+                                                    data-kelurahan="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}"
+                                                    data-kode-pos="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}"
+                                                    data-alamat-jalan="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}">
+                                                    edit
+                                                </a>
+                                                <a href="alamat/hapus/{{$member->alamat['alamat'][$i]['id'] ?? ''}}" text-decoration="none" class="material-icons text-decoration-none mr-2"
+                                                    style="color: #FF4949;">
+                                                    delete
+                                                </a>
+                                            </span>
+                                        </td>
+                                        <td class="pilih text-center align-middle">
+                                            <span>
+                                                {{-- @if (!empty($member->alamat['alamat'])) --}}
+                                                    @if ($member->alamat['IdAlamatUtama'] === $member->alamat['alamat'][$i]['id'])
+                                                        <label class="btn btn-outline-purple">
+                                                            Utama
+                                                        </label>
+                                                    @else
+                                                        <a onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'" text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
+                                                            check_circle
+                                                        </a>
+                                                        {{-- <label class="btn btn-primary-wakprint px-4" onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'">
+                                                            Pilih
+                                                        </label> --}}
+                                                    @endif
+                                                {{-- @endif --}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endif
+                        @endfor
+                    </tbody>
+                </table>
+            </div>
+        @endif
     @else
         <div class="mb-4">
             <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4" data-toggle="modal"

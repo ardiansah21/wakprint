@@ -126,8 +126,8 @@ class KonfigurasiController extends Controller
             $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
             $atk = $konfigurasi->product->partner->atk;
 
-            if ($request->session()->has("pesanan-" . $konfigurasi->id_pesanan)) {
-                $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_pesanan, $konfigurasi);
+            if ($request->session()->has("pesanan-" . $konfigurasi->id_member)) {
+                $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_member);
 
                 // dd($pesanan->konfigurasiFile);
 
@@ -146,7 +146,7 @@ class KonfigurasiController extends Controller
                 $konfigurasi->id_pesanan = $pesanan->id_pesanan;
                 $konfigurasi->save();
 
-                $request->session()->put("pesanan-" . $konfigurasi->id_pesanan, $pesanan);
+                $request->session()->put("pesanan-" . $konfigurasi->id_member, $pesanan);
                 $request->session()->put("alamatPesanan");
 
                 return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
