@@ -12,6 +12,11 @@ class Pesanan extends Model
 
     public function konfigurasiFile()
     {
-        return $this->hasMany('App\Konfigurasi_file','id_konfigurasi');
+        return $this->hasMany('App\Konfigurasi_file', 'id_pesanan');
+    }
+
+    public function partner()
+    {
+        return $this->belongsTo('App\Pengelola_Percetakan', 'id_pengelola');
     }
 }

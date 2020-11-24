@@ -77,9 +77,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('riwayat', 'MemberController@riwayat')->name('riwayat');
 
-    Route::get('konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasi.pesanan');
-    Route::get('konfirmasi-pembayaran', 'MemberController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
-
     Route::get('pesanan', 'MemberController@pesanan')->name('pesanan');
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('pesanan.detail');
 
@@ -104,6 +101,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
+    Route::get('/konfigurasi-pesanan/konfirmasi', 'KonfigurasiController@konfirmasiPesanan')->name('konfirmasi.pesanan');
+    Route::post('/konfigurasi-pesanan/create', 'KonfigurasiController@createPesanan')->name('konfigurasi.pesanan.create');
+
+    Route::get('/konfirmasi-pembayaran', 'KonfigurasiController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
 
 });
 

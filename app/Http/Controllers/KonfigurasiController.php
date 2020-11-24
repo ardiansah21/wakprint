@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Atk;
 use App\Http\Controllers\Controller;
 use App\Konfigurasi_file;
 use App\Pesanan;
 use App\Produk;
-use App\Atk;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
-use SebastianBergmann\Environment\Console;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use stdClass;
 
 class KonfigurasiController extends Controller
@@ -81,7 +80,6 @@ class KonfigurasiController extends Controller
 
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
 
-
         //dd($konfigurasi);
         //return redirect()->route('konfigurasi.pesanan',['konfigurasi' => $konfigurasi]);
         return redirect()->action('KonfigurasiController@konfigurasiPesanan', ['konfigurasi' => $konfigurasi]);
@@ -111,55 +109,104 @@ class KonfigurasiController extends Controller
         }
     }
 
+    /*
     public function konfigurasiPesanan(Request $request)
     {
-        $member = Auth::user();
+    $member = Auth::user();
 
-        if (empty($request->konfigurasi)) {
-            if ($request->session()->has("pesanan-" . $member->id_member)) {
-                $pesanan = $request->session()->get("pesanan-" . $member->id_member);
-                $atk = $pesanan->konfigurasiFile[0]->product->partner->atk;
+    if (empty($request->konfigurasi)) {
+    if ($request->session()->has("pesanan-" . $member->id_member)) {
+    $pesanan = $request->session()->get("pesanan-" . $member->id_member);
+    $atk = $pesanan->konfigurasiFile[0]->product->partner->atk;
 
-                return view('member.konfigurasi_pesanan', compact('pesanan', 'atk', 'member'));
+    return view('member.konfigurasi_pesanan', compact('pesanan', 'atk', 'member'));
+    }
+    } else {
+    $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
+    $atk = $konfigurasi->product->partner->atk;
+
+    if ($request->session()->has("pesanan-" . $konfigurasi->id_member)) {
+    $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_member);
+    // $konfigurasi->id_pesanan = $pesanan->id_pesanan;
+    // $konfigurasi->save();
+
+    $request->session()->put("alamatPesanan");
+
+    // if($request->session()->has("pesanan-" . $member->id_member)){
+    //     // $request->session()->get("alamatPesanan");
+    //     // dd(true);
+    // }
+    // $request->session()->save();
+    // dd($konfigurasi);
+
+    return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
+    } else {
+    $pesanan = Pesanan::create([
+    'id_pengelola' => $konfigurasi->product->partner->id_pengelola,
+    'id_member' => $konfigurasi->id_member,
+    'metode_penerimaan' => 'Ditempat',
+    'biaya' => $konfigurasi->biaya,
+    'status' => 'Pending'
+    ]);
+
+    $konfigurasi->id_pesanan = $pesanan->id_pesanan;
+    $konfigurasi->save();
+
+    $request->session()->put("pesanan-" . $konfigurasi->id_member, $pesanan);
+    $request->session()->put("alamatPesanan");
+
+    // dd($konfigurasi);
+
+    return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
+    }
+    }
+    }
+     */
+    public function konfigurasiPesanan(Request $request)
+    {
+        $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
+        $pesanan = Auth::user()->pesanans->where('status', null)->first();
+        if ($pesanan) {
+            if ($konfigurasi) {
+                $konfigurasi->pesanan()->associate($pesanan)->save();
             }
-        } else {
-            $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
-            $atk = $konfigurasi->product->partner->atk;
 
-            if ($request->session()->has("pesanan-" . $konfigurasi->id_member)) {
-                $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_member);
-                // $konfigurasi->id_pesanan = $pesanan->id_pesanan;
-                // $konfigurasi->save();
-
-                $request->session()->put("alamatPesanan");
-
-                // if($request->session()->has("pesanan-" . $member->id_member)){
-                //     // $request->session()->get("alamatPesanan");
-                //     // dd(true);
-                // }
-                // $request->session()->save();
-                // dd($konfigurasi);
-
-                return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
-            } else {
-                $pesanan = Pesanan::create([
-                    'id_pengelola' => $konfigurasi->product->partner->id_pengelola,
-                    'id_member' => $konfigurasi->id_member,
-                    'metode_penerimaan' => 'Ditempat',
-                    'biaya' => $konfigurasi->biaya,
-                    'status' => 'Pending'
-                ]);
-
-                $konfigurasi->id_pesanan = $pesanan->id_pesanan;
-                $konfigurasi->save();
-
-                $request->session()->put("pesanan-" . $konfigurasi->id_member, $pesanan);
-                $request->session()->put("alamatPesanan");
-
-                // dd($konfigurasi);
-
-                return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
-            }
+            return view('member.konfigurasi_pesanan', ['pesanan' => $pesanan]);
         }
+        if ($konfigurasi) {
+            $pesanan = Pesanan::create([
+                'id_pengelola' => $konfigurasi->product->partner->id_pengelola,
+                'id_member' => $konfigurasi->id_member,
+                'metode_penerimaan' => 'Ditempat',
+                'biaya' => $konfigurasi->biaya,
+                'status' => 'Pending',
+            ]);
+            $konfigurasi->pesanan()->associate($pesanan)->save();
+            return view('member.konfigurasi_pesanan', ['pesanan' => $pesanan]);
+        }
+        return redirect()->back()->with('error', 'anda belum membuat pesanan');
+    }
+
+    public function createPesanan(Request $request)
+    {
+        return response()->json($request->all(), 201);
+    }
+    public function konfirmasiPesanan(Request $request)
+    {
+        $konFileTerpilih = Konfigurasi_file::findMany(explode(',', $request->konFileTerpilih));
+        $atkTerpilih = Atk::findMany(explode(',', $request->atkTerpilih));
+        $penerimaan = $request->penerimaan;
+
+        // dd($konFileTerpilih);
+        // dd($atkTerpilih);
+        // dd($request->atkTerpilih);
+
+        // dd($request->konFileTerpilih);
+        return view('member.konfirmasi_pesanan', compact('konFileTerpilih', 'atkTerpilih', 'penerimaan'));
+    }
+
+    public function konfirmasiPembayaran(Request $request)
+    {
+        return 'bbbbb';
     }
 }

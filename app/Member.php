@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Pesanan;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
@@ -42,6 +43,11 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
         $produkFavorit = Member::find($idMember)->produk_favorit;
 
         return in_array($idProduk, json_decode($produkFavorit));
+    }
+
+    public function pesanans()
+    {
+        return $this->hasMany(Pesanan::class, 'id_member');
     }
 
     public function messages()

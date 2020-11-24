@@ -17,14 +17,14 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     //set nilai kolom db default
     protected $attributes = [
         'rating_toko' => 5.0,
-        'status_toko' => 'Buka'
-     ];
+        'status_toko' => 'Buka',
+    ];
     //  protected $guard = 'partner';
-     protected $guarded = [];
+    protected $guarded = [];
 
-     protected $hidden = ['password','remember_token'];
+    protected $hidden = ['password', 'remember_token'];
 
-     protected $casts = [
+    protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
@@ -41,11 +41,18 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     //     return $this->morphMany(Media::class, 'model');
     // }
 
-    public function products(){
-    	return $this->hasMany('App\Produk','id_pengelola');
+    public function products()
+    {
+        return $this->hasMany('App\Produk', 'id_pengelola');
     }
 
-    public function atk(){
-    	return $this->hasMany('App\Atk','id_pengelola');
+    public function atk()
+    {
+        return $this->hasMany('App\Atk', 'id_pengelola');
+    }
+
+    public function pesanan()
+    {
+        return $this->hasMany('App\Pesanan', 'id_pengelola');
     }
 }

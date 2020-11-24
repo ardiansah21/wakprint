@@ -630,6 +630,12 @@ class MemberController extends Controller
     {
         $member = Auth::user();
 
+        //tes parsing data dari order
+        if ($request->fromOrder) {
+            //dd('s');
+            return '<center style="font-size: 120px;"><h2><span style="font-size:180px;">&#128514;</span><br>ilham Pantek</h2></center>';
+        }
+
         // if ($request->session()->exists("alamatPesanan" . $member->id_member)){
         //     // $sessionAlamat = $request->session()->get("alamatPesanan". $member->id_member);
         //     // dd(true);
@@ -673,6 +679,7 @@ class MemberController extends Controller
         return redirect()->route('alamat');
     }
 
+    //TODO: @imaha7 error modal edit enggak lama tertutup lagi. (test from chrome)
     public function editAlamat($id, Request $request)
     {
         $member = Member::find($id);
@@ -709,7 +716,9 @@ class MemberController extends Controller
             return redirect()->route('konfigurasi.pesanan', ['konfigurasi' => $member->id_member]);
         } else {
             return redirect()->route('alamat');
+
         }
+
     }
 
     public function hapusAlamat($id, Request $request)
@@ -738,12 +747,6 @@ class MemberController extends Controller
         $member->save();
 
         return redirect()->route('alamat');
-    }
-
-    public function konfirmasiPembayaran()
-    {
-        $produk = Produk::all();
-        return view('member.konfirmasi_pembayaran', compact('produk'));
     }
 
     public function saldoPembayaran($id)
