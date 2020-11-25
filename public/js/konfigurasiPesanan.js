@@ -488,7 +488,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 var atkObj = new Object();
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -555,6 +554,23 @@ var atkObj = new Object();
       atk.jumlahJenis = this.atkTerpilih.length;
       return atk;
     },
+    onDetailAtkShare: function onDetailAtkShare() {
+      var _this3 = this;
+
+      var arr = new Array();
+      this.atkTerpilih.forEach(function (v, i) {
+        var atk = new Array();
+        var idx = indexWhere(_this3.atks, function (atk) {
+          return atk.id_atk == v;
+        });
+        atk[0] = _this3.atks[idx].nama;
+        atk[1] = _this3.atks[idx].harga;
+        atk[2] = _this3.jumlahPerAtk[v];
+        atk[3] = atk[1] * atk[2];
+        arr.push(atk);
+      });
+      return arr;
+    },
     onTotalBiaya: function onTotalBiaya() {
       var _ongkir = this.penerimaan === "Diantar" ? this.ongkir : 0;
 
@@ -563,37 +579,48 @@ var atkObj = new Object();
     rupiah: function rupiah(val) {
       return "Rp." + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.");
     },
+    onHapusKonfigurasi: function onHapusKonfigurasi(id) {
+      axios["delete"]("/konfigurasi-file/delete/" + id).then(function (res) {
+        if (res.status == 204) {
+          alert("Konfigurasi File Berhasil di hapus");
+          location.reload();
+        }
+      });
+    },
     buatPesanan: function buatPesanan() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("/konfigurasi-pesanan/create", {
         konFileTerpilih: this.konFileTerpilih,
-        atkTerpilih: this.atkTerpilih,
-        penerimaan: this.penerimaan
+        atks: this.onDetailAtkShare(),
+        penerimaan: this.penerimaan,
+        subTotalFile: this.onSubtotalFile(),
+        ongkir: this.ongkir,
+        totalBiaya: this.onTotalBiaya()
       }).then(function (response) {
         if (response.status == 201) {
           var data = response.data;
 
-          _this3.$root.gotosite("/konfigurasi-pesanan/konfirmasi?" + "atkTerpilih=" + data.atkTerpilih + "&konFileTerpilih=" + data.konFileTerpilih + "&penerimaan=" + data.penerimaan);
+          _this4.$root.gotosite("/konfigurasi-pesanan/konfirmasi?" + "atks=" + data.atks + "&konFileTerpilih=" + data.konFileTerpilih + "&penerimaan=" + data.penerimaan + "&subTotalFile=" + data.subTotalFile + "&ongkir=" + data.ongkir + "&totalBiaya=" + data.totalBiaya);
         }
 
-        console.log(response);
+        console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
       });
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.konFiles.forEach(function (v) {
-      _this4.konFileTerpilih.push(v.id_konfigurasi);
+      _this5.konFileTerpilih.push(v.id_konfigurasi);
     }); // this.atks.forEach((v) => {
     //     this.jumlahPerAtk[v.id_atk] = { terpilih: Boolean, jumlah: 1 };
     // });
 
     this.atks.forEach(function (v) {
-      _this4.jumlahPerAtk[v.id_atk] = 1;
+      _this5.jumlahPerAtk[v.id_atk] = 1;
     });
   },
   mounted: function mounted() {},
@@ -2273,7 +2300,12 @@ var render = function() {
                   staticClass:
                     "btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center",
                   staticStyle: { "border-radius": "30px" },
-                  attrs: { type: "button", onclick: "window.location.href=''" }
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return this.$root.gotosite("konfigurasi-file")
+                    }
+                  }
                 },
                 [_vm._v("\n                    Tambah File\n                ")]
               )
@@ -2374,17 +2406,33 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(_vm.rupiah(f.biaya)))]),
                   _vm._v(" "),
-                  _c(
-                    "td",
-                    {
-                      on: {
-                        click: function($event) {
-                          return this.$root.gotosite("edit/contoh-loh-ya")
-                        }
-                      }
-                    },
-                    [_vm._m(1, true)]
-                  )
+                  _c("td", [
+                    _c("span", [
+                      _c("i", { staticClass: "material-icons mr-2 pointer" }, [
+                        _vm._v(
+                          "\n                                    edit\n                                "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "i",
+                        {
+                          staticClass: "material-icons pointer",
+                          staticStyle: { color: "red" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onHapusKonfigurasi(f.id_konfigurasi)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    delete\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
                 ])
               }),
               0
@@ -2568,31 +2616,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("i", { staticClass: "material-icons mr-2 pointer" }, [
-        _vm._v(
-          "\n                                    edit\n                                "
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "i",
-        {
-          staticClass: "material-icons pointer",
-          staticStyle: { color: "red" }
-        },
-        [
-          _vm._v(
-            "\n                                    delete\n                                "
-          )
-        ]
-      )
-    ])
   }
 ]
 render._withStripped = true

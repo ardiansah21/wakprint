@@ -226,8 +226,8 @@
                     <button
                         type="button"
                         class="btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center"
-                        onclick="window.location.href=''"
                         style="border-radius: 30px"
+                        @click="this.$root.gotosite('konfigurasi-file')"
                     >
                         Tambah File
                     </button>
@@ -280,11 +280,7 @@
                                 {{ f.nama_produk }}
                             </td>
                             <td>{{ rupiah(f.biaya) }}</td>
-                            <td
-                                @click="
-                                    this.$root.gotosite('edit/contoh-loh-ya')
-                                "
-                            >
+                            <td>
                                 <span>
                                     <i class="material-icons mr-2 pointer">
                                         edit
@@ -292,6 +288,9 @@
                                     <i
                                         class="material-icons pointer"
                                         style="color: red"
+                                        @click="
+                                            onHapusKonfigurasi(f.id_konfigurasi)
+                                        "
                                     >
                                         delete
                                     </i>
@@ -453,6 +452,19 @@ export default {
             atk.jumlahJenis = this.atkTerpilih.length;
             return atk;
         },
+        onDetailAtkShare: function () {
+            var arr = new Array();
+            this.atkTerpilih.forEach((v, i) => {
+                var atk = new Array();
+                var idx = indexWhere(this.atks, (atk) => atk.id_atk == v);
+                atk[0] = this.atks[idx].nama;
+                atk[1] = this.atks[idx].harga;
+                atk[2] = this.jumlahPerAtk[v];
+                atk[3] = atk[1] * atk[2];
+                arr.push(atk);
+            });
+            return arr;
+        },
         onTotalBiaya: function () {
             var _ongkir = this.penerimaan === "Diantar" ? this.ongkir : 0;
             return _ongkir + this.onSubtotalFile() + this.onSubtotalAtk().total;
@@ -463,28 +475,45 @@ export default {
                 val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
             );
         },
+        onHapusKonfigurasi: function (id) {
+            axios.delete("/konfigurasi-file/delete/" + id).then((res) => {
+                if (res.status == 204) {
+                    alert("Konfigurasi File Berhasil di hapus");
+                    location.reload();
+                }
+            });
+        },
 
         buatPesanan: function () {
             axios
                 .post("/konfigurasi-pesanan/create", {
                     konFileTerpilih: this.konFileTerpilih,
-                    atkTerpilih: this.atkTerpilih,
+                    atks: this.onDetailAtkShare(),
                     penerimaan: this.penerimaan,
+                    subTotalFile: this.onSubtotalFile(),
+                    ongkir: this.ongkir,
+                    totalBiaya: this.onTotalBiaya(),
                 })
                 .then((response) => {
                     if (response.status == 201) {
                         var data = response.data;
                         this.$root.gotosite(
                             "/konfigurasi-pesanan/konfirmasi?" +
-                                "atkTerpilih=" +
-                                data.atkTerpilih +
+                                "atks=" +
+                                data.atks +
                                 "&konFileTerpilih=" +
                                 data.konFileTerpilih +
                                 "&penerimaan=" +
-                                data.penerimaan
+                                data.penerimaan +
+                                "&subTotalFile=" +
+                                data.subTotalFile +
+                                "&ongkir=" +
+                                data.ongkir +
+                                "&totalBiaya=" +
+                                data.totalBiaya
                         );
                     }
-                    console.log(response);
+                    console.log(response.data);
                 })
                 .catch((error) => {
                     console.log(error);

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Atk;
 use App\Http\Controllers\Controller;
 use App\Konfigurasi_file;
 use App\Pesanan;
@@ -82,6 +81,10 @@ class KonfigurasiController extends Controller
 
         //dd($konfigurasi);
         //return redirect()->route('konfigurasi.pesanan',['konfigurasi' => $konfigurasi]);
+
+        $request->session()->forget('fileUpload');
+        $request->session()->forget('produkKonfigurasiFile');
+        $request->session()->forget('KonfigurasiCekwarna');
         return redirect()->action('KonfigurasiController@konfigurasiPesanan', ['konfigurasi' => $konfigurasi]);
 
         // return view('',['konfigurasi' => $konfigurasi]);
@@ -107,6 +110,43 @@ class KonfigurasiController extends Controller
             sort($hasil);
             return $hasil;
         }
+    }
+
+    public function editKonfigurasi($id, Request $request)
+    {
+        $konfigurasi = Konfigurasi_file::find($id);
+        $member = Auth::user();
+        $waktu = Carbon::now()->format('Y:m:d H:i:s');
+
+        $konfigurasi->update([
+            'id_member' => $member->id_member,
+            'id_produk' => $request->idProduk,
+            'nama_file' => $request->namaFile,
+            'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
+            'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
+            'halaman_terpilih' => json_encode($request->halamanTerpilih),
+            'jumlah_salinan' => $request->jumlahSalinan,
+            'paksa_hitamputih' => $request->paksaHitamPutih,
+            'biaya' => $request->biaya,
+            'catatan_tambahan' => $request->catatanTambahan,
+            'nama_produk' => $request->namaProduk,
+            'fitur_terpilih' => json_encode($request->fiturTerpilih),
+            'waktu' => $waktu,
+        ]);
+        $konfigurasi->clearMediaCollection();
+        $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
+
+        if ($konfigurasi) {
+            return response()->json(['status' => 'success'], 200);
+        }
+        return response()->json(['status' => 'error'], 400);
+    }
+
+    public function hapusKonfigurasi($id)
+    {
+        $konfigurasi = Konfigurasi_file::find($id);
+        $konfigurasi->delete();
+        return response()->json(['status' => 'success'], 204);
     }
 
     /*
@@ -194,15 +234,24 @@ class KonfigurasiController extends Controller
     public function konfirmasiPesanan(Request $request)
     {
         $konFileTerpilih = Konfigurasi_file::findMany(explode(',', $request->konFileTerpilih));
-        $atkTerpilih = Atk::findMany(explode(',', $request->atkTerpilih));
+        // $atkTerpilih = Atk::findMany(explode(',', $request->atkTerpilih));
+        $atks = array_chunk(explode(',', $request->atks), 4);
         $penerimaan = $request->penerimaan;
-
+        $subTotalFile = $request->subTotalFile;
+        $ongkir = $request->ongkir;
+        $totalBiaya = $request->totalBiaya;
         // dd($konFileTerpilih);
         // dd($atkTerpilih);
         // dd($request->atkTerpilih);
 
+        // $a = "[{ayam: 1, bebek: 2, dodol: 4}]";
+        // dd(json_decode($a));
+        // dd(array_chunk($atks, 4));
+        // dd($atks);
+
+        // dd($request->all());
         // dd($request->konFileTerpilih);
-        return view('member.konfirmasi_pesanan', compact('konFileTerpilih', 'atkTerpilih', 'penerimaan'));
+        return view('member.konfirmasi_pesanan', compact('konFileTerpilih', 'atks', 'penerimaan', 'subTotalFile', 'ongkir', 'totalBiaya'));
     }
 
     public function konfirmasiPembayaran(Request $request)

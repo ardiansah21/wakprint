@@ -99,6 +99,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
     Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
+    //TODO buat view edit konfigurasi
+    // Route::put('/konfigurasi-file/edit', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
+
+    Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
     Route::get('/konfigurasi-pesanan/konfirmasi', 'KonfigurasiController@konfirmasiPesanan')->name('konfirmasi.pesanan');
