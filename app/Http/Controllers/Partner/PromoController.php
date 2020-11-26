@@ -34,12 +34,9 @@ class PromoController extends Controller
     public function create()
     {
         $partner = Auth::user();
-        $produk = Produk::all();
+        // $produk = Produk::all();
 
-        return view('pengelola.tambah_promo', [
-            'partner' => $partner,
-            'produk' => $produk
-        ]);
+        return view('pengelola.tambah_promo', compact('partner'));
     }
 
     /**
@@ -52,9 +49,19 @@ class PromoController extends Controller
     {
         // $produk = Produk::all();
         // $produk = Produk::find($id);
-        // $partner = Pengelola_Percetakan::find(Auth::id());
+        $partner = Pengelola_Percetakan::find(Auth::id());
+        $arrIdProduk = array();
+        // foreach ($partner->products as $p => $value) {
+        //     $idProduk = $request->checkbox_promo[$p];
+        //     array_push($arrIdProduk,$idProduk);
+        // }
+        // dd($idProduk);
 
-        $idProduk = $request->checkbox_promo;
+        foreach ($arrIdProduk as $id => $value) {
+            array_push($arrIdProduk,$value);
+            // dd($arrIdProduk);
+        }
+
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $tanggalMulai = $request->tanggal_mulai_promo;
@@ -67,7 +74,7 @@ class PromoController extends Controller
         $tanggalMulaiPromo = date_create("$tanggalMulai-$bulanMulai-$tahunMulai");
         $tanggalSelesaiPromo = date_create("$tanggalSelesai-$bulanSelesai-$tahunSelesai");
 
-        foreach ($idProduk as $id) {
+        foreach ($arrIdProduk as $id) {
             $produk = Produk::find($id);
             // $produk->id_produk = $idProduk;
             $produk->status_diskon = $statusDiskon;
@@ -78,21 +85,7 @@ class PromoController extends Controller
             $produk->save();
         }
 
-        //$produk->save();
-        //dd($idProduk);
-        // $produk->update([
-        //     'maksimal_diskon' => $maksimalDiskon,
-        //     'mulai_waktu_diskon' => $tanggalMulaiPromo,
-        //     'jumlah_diskon' => $jumlahDiskon,
-        //     'selesai_waktu_diskon' => $tanggalSelesaiPromo
-        // ]);
-
-
-
-        // dd($idProduk);
-        //$produk->save();
-
-        return redirect()->route('partner.promo.index');
+        return redirect()->route('partner.promo.index', ['partner' => $partner]);
     }
 
     /**

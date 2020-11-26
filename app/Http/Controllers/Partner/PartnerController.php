@@ -2,38 +2,45 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\Exports\TransaksiSaldoPartnerExport;
 use App\Http\Controllers\Controller;
 use App\Pengelola_Percetakan;
-use App\Produk;
+use App\Pesanan;
 use App\Transaksi_saldo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Str;
 
 class PartnerController extends Controller
 {
     public function index()
     {
-        $produk = Produk::all();
         $partner = Auth::user();
-        $transaksi_saldo = Transaksi_saldo::all();
-        return view('pengelola.homepage', [
-            'partner' => $partner,
-            'produk' => $produk,
-            'transaksi_saldo' => $transaksi_saldo,
-        ]);
+        $arrTotalPelanggan = array();
+        $arrJumlahDokumen = array();
+
+        foreach ($partner->pesanan as $value) {
+            if (!in_array($value->id_member, $arrTotalPelanggan, true)) {
+                array_push($arrTotalPelanggan, $value->id_member);
+            }
+        }
+
+        foreach ($partner->pesanan as $p => $value) {
+            array_push($arrJumlahDokumen, $value->nama_file);
+        }
+
+        $totalPelanggan = count($arrTotalPelanggan);
+        $jumlahDokumen = count($arrJumlahDokumen);
+        return view('pengelola.homepage', compact('partner', 'totalPelanggan', 'jumlahDokumen'));
     }
 
     public function profile()
     {
         $partner = Auth::user();
-        $produk = Produk::all();
-        $transaksi_saldo = Transaksi_saldo::all();
         return view('pengelola.profil', [
             'partner' => $partner,
-            'produk' => $produk,
-            'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
 
@@ -171,6 +178,94 @@ class PartnerController extends Controller
         }
     }
 
+    public function exportTransaksiSaldo()
+    {
+        return Excel::download(new TransaksiSaldoPartnerExport, 'export_transaksi_saldo.xlsx');
+    }
+
+    public function filterSaldo(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->jenisDana === 'Dana Masuk') {
+                if(!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)){
+                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Pembayaran')
+                        ->where('id_pengelola', '=', $request->idPartner)
+                        ->where('status', '=', 'Berhasil')
+                        ->orWhere('status', '=', 'Gagal')
+                        ->where('waktu', '=', $request->tanggalAwal)
+                        ->orWhere('waktu', '=', $request->tanggalAkhir)
+                        ->get();
+                }
+                else{
+                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Pembayaran')
+                        ->where('id_pengelola', '=', $request->idPartner)
+                        ->where('status', '=', 'Berhasil')
+                        ->orWhere('status', '=', 'Gagal')
+                        ->get();
+                }
+                // $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Pembayaran')
+                //         ->where('id_pengelola', '=', $request->idPartner)
+                //         ->where('status', '=', 'Berhasil')
+                //         ->orWhere('status', '=', 'Gagal')
+                //         ->get();
+            } else if ($request->jenisDana === 'Dana Keluar') {
+                if(!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)){
+                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
+                        ->where('id_pengelola', '=', $request->idPartner)
+                        ->where('waktu', '=', $request->tanggalAwal)
+                        ->orWhere('waktu', '=', $request->tanggalAkhir)
+                        ->get();
+                }
+                else{
+                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
+                        ->where('id_pengelola', '=', $request->idPartner)
+                        ->get();
+                }
+                // $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
+                //         ->where('id_pengelola', '=', $request->idPartner)
+                //         ->get();
+            }
+            else{
+                if(!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)){
+                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->idPartner)
+                        ->where(function($q){
+                            $q->where('jenis_transaksi', '=', 'Pembayaran')
+                            ->where(function($q){
+                                $q->where('status', '=', 'Berhasil')
+                                ->orWhere('status', '=', 'Gagal');
+                            })
+                            ->orWhere('jenis_transaksi', '=', 'Tarik');
+                        })
+                        ->where('waktu', '=', $request->tanggalAwal)
+                        ->orWhere('waktu', '=', $request->tanggalAkhir)
+                        ->get();
+                }
+                else{
+                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->idPartner)
+                        ->where('jenis_transaksi', '=', 'Pembayaran')
+                        ->where(function($q){
+                            $q->where('status', '=', 'Berhasil')
+                            ->orWhere('status', '=', 'Gagal');
+                        })
+                        ->orWhere('jenis_transaksi', '=', 'Tarik')
+                        ->get();
+                }
+                // $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->idPartner)
+                //         ->where('jenis_transaksi', '=', 'Pembayaran')
+                //         ->where(function($q){
+                //             $q->where('status', '=', 'Berhasil')
+                //             ->orWhere('status', '=', 'Gagal');
+                //         })
+                //         ->orWhere('jenis_transaksi', '=', 'Tarik')
+                //         ->get();
+            }
+
+            return response()->json([
+                'transaksiSaldo' => $transaksiSaldo,
+            ], 200);
+        }
+    }
+
     public function tambahPromo()
     {
 
@@ -214,21 +309,26 @@ class PartnerController extends Controller
         ]);
     }
 
-    public function filterSaldo(Request $request)
+    // public function filterSaldo(Request $request)
+    // {
+    //     $transaksi_saldo = new Transaksi_saldo();
+    //     // $partner = new Pengelola_Percetakan();
+    //     $tanggalAwal = $request->keyword_tanggal_awal;
+    //     $tanggalAkhir = $request->keyword_tanggal_akhir;
+    //     $jenisTransaksi = $request->keyword_jenis_transaksi;
+    //     $transaksi_saldo = Transaksi_saldo::where('jenis_transaksi', 'LIKE', "%$jenisTransaksi%")
+    //         ->orWhere('created_at', 'LIKE', "%$tanggalAwal%")
+    //         ->get();
+
+    //     // $partner =  Pengelola_Percetakan::where('nama_toko','LIKE',"%$keyword%")
+    //     //             ->orWhere('alamat_toko','LIKE',"%$keyword%")
+    //     //             ->get();
+
+    //     return redirect()->back()->with('transaksi_saldo', $transaksi_saldo)->with('keyword_tanggal_awal', $tanggalAwal, 'keyword_jenis_transaksi', $jenisTransaksi);
+    // }
+
+    public function pengujianDeteksiWarna()
     {
-        $transaksi_saldo = new Transaksi_saldo();
-        // $partner = new Pengelola_Percetakan();
-        $tanggalAwal = $request->keyword_tanggal_awal;
-        $tanggalAkhir = $request->keyword_tanggal_akhir;
-        $jenisTransaksi = $request->keyword_jenis_transaksi;
-        $transaksi_saldo = Transaksi_saldo::where('jenis_transaksi', 'LIKE', "%$jenisTransaksi%")
-            ->orWhere('created_at', 'LIKE', "%$tanggalAwal%")
-            ->get();
-
-        // $partner =  Pengelola_Percetakan::where('nama_toko','LIKE',"%$keyword%")
-        //             ->orWhere('alamat_toko','LIKE',"%$keyword%")
-        //             ->get();
-
-        return redirect()->back()->with('transaksi_saldo', $transaksi_saldo)->with('keyword_tanggal_awal', $tanggalAwal, 'keyword_jenis_transaksi', $jenisTransaksi);
+        return view('pengujian');
     }
 }

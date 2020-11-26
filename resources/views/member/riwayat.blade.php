@@ -46,11 +46,11 @@
                             @if ($ts->jenis_transaksi === 'TopUp')
                                 onclick="window.location.href='saldo/riwayat/{{ $ts->id_transaksi }}'"
                             @else
-                                onclick="window.location.href='{{ route('detail.pesanan') }}'"
+                                onclick="window.location.href='{{ route('pesanan.detail') }}'"
                             @endif>
                             <td class="align-middle" scope="row">{{ $ts->id_transaksi }}</td>
                             <td class="align-middle">{{ $ts->jenis_transaksi }}</td>
-                            <td class="align-middle">{{ $ts->waktu }}</td>
+                            <td class="align-middle">{{ date('d M Y', strtotime($ts->waktu)) }}</td>
                             <td class="align-middle">Rp. {{ $ts->jumlah_saldo }}</td>
                             <td class="align-middle">{{ $ts->keterangan }}</td>
                         </tr>

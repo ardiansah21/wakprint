@@ -20,14 +20,14 @@
                 </tr>
             </thead>
             <tbody style="font-size: 12px;">
-                    @foreach (Auth::user()->products as $p)
+                    @foreach ($partner->products as $p)
                         @if ($p->jumlah_diskon != 0)
                         <tr>
                             <td scope="row">{{$p->id_produk}}</td>
                             <td>{{$p->nama}}</td>
                             <td>{{$p->jumlah_diskon * 100}} %</td>
                             <td>{{$p->maksimal_diskon}}</td>
-                            <td>{{$p->selesai_waktu_diskon}}</td>
+                            <td>{{date('d M Y', strtotime($p->selesai_waktu_diskon))}}</td>
                             <td>
                                 <a href="{{ route('partner.promo.edit',$p->id_produk) }}" style="margin-left: -50px;">
                                     <i class="material-icons md-18">

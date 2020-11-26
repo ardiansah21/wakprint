@@ -13,12 +13,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- <script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script> --}}
+    {{-- <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"
+        type="text/javascript"></script> --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('dropzone/dist/min/dropzone.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dropzone/dist/min/dropzone.min.css') }}">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
@@ -29,18 +30,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js">
-    </script>
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    {{-- Owl Carousel --}}
+    <link rel="stylesheet" href="{{ asset('OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}" />
+
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
     {{-- dropzone --}}
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" /> --}}
+    {{--
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+    --}}
 
 </head>
 
 <body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
+    <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <script src="{{ asset('js/scriptPengelola.js') }}"></script>
+    <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -62,48 +74,52 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                        @if (Route::currentRouteName() == 'partner.login')
-                        <li class="nav-i, i8tem">
-                            <a class="nav-link SemiBold text-primary-purple mr-4" href="{{route('partner.register')}}"
-                                style="color:#BC41BE; font-size: 24px;">{{__('Daftar')}}</a>
-                        </li>
-                        @elseif(Route::currentRouteName() == 'partner.register')
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary-wakprint btn-sm pt-2 pb-2 pl-5 pr-5 font-weight-bold"
-                                href="{{ route('partner.login') }}"
-                                style="border-radius:30px; font-size: 24px; color:white">
-                                {{ __('Masuk') }}
-                            </a>
-                        </li>
-                        @endif
+                            @if (Route::currentRouteName() == 'partner.login')
+                                <li class="nav-i, i8tem">
+                                    <a class="nav-link SemiBold text-primary-purple mr-4"
+                                        href="{{ route('partner.register') }}"
+                                        style="color:#BC41BE; font-size: 24px;">{{ __('Daftar') }}</a>
+                                </li>
+                            @elseif(Route::currentRouteName() == 'partner.register')
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-primary-wakprint btn-sm pt-2 pb-2 pl-5 pr-5 font-weight-bold"
+                                        href="{{ route('partner.login') }}"
+                                        style="border-radius:30px; font-size: 24px; color:white">
+                                        {{ __('Masuk') }}
+                                    </a>
+                                </li>
+                            @endif
 
                         @else
-                        <li class="nav-item mr-2" style="display: flex; align-items:center;">
-                            <a class="nav-link SemiBold" href="#"
-                                style="color: black; font-size: 18px;">{{ __('Chat') }}</a>
-                        </li>
-                        <li class="nav-item mr-0" style="display: flex; align-items:center;">
-                            <a class="nav-link" href="#" style="color: black">
-                                <i class="material-icons md-24 mt-2 mr-2">notifications</i>
-                            </a>
-                        </li>
-                        <li class="nav-item mr-0">
-                            <a class="nav-link" href="{{ route('partner.profile') }}"
-                                style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
-                                {{-- <span class="text-primary-purple mr-2">{{Auth::user()->nama_lengkap}}</span> --}}
-                                <span class="text-primary-purple text-truncate mr-2"
-                                    style="width:200px;">{{Auth::user()->nama_lengkap}}</span>
-                                @if (!empty(Auth::user()->getFirstMediaUrl()))
-                                <img class="align-middle border border-gray ml-2"
-                                    src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45" alt="no logo"
-                                    style="border-radius: 30px;">
-                                @else
-                                <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png"
-                                    width="45" height="45" alt="no logo">
-                                @endif
+                            <li class="nav-item mr-2" style="display: flex; align-items:center;">
+                                <a class="nav-link SemiBold" href="#"
+                                    style="color: black; font-size: 18px;">{{ __('Chat') }}</a>
+                            </li>
+                            <li class="nav-item mr-0" style="display: flex; align-items:center;">
+                                <a class="nav-link" href="#" style="color: black">
+                                    <i class="material-icons md-24 mt-2 mr-2">notifications</i>
+                                </a>
+                            </li>
+                            <li class="nav-item mr-0">
+                                <a class="nav-link" href="{{ route('partner.profile') }}"
+                                    style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
+                                    {{-- <span
+                                        class="text-primary-purple mr-2">{{ Auth::user()->nama_lengkap }}</span>
+                                    --}}
+                                    <span class="text-primary-purple text-truncate mr-2"
+                                        style="width:200px;">{{ Auth::user()->nama_lengkap }}</span>
+                                    @if (!empty(Auth::user()->getFirstMediaUrl()))
+                                        <img class="align-middle border border-gray ml-2"
+                                            src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45"
+                                            alt="no logo" style="border-radius: 30px; object-fit:contain;">
+                                    @else
+                                        <img class="align-middle ml-2"
+                                            src="https://ptetutorials.com/images/user-profile.png" width="45" height="45"
+                                            alt="no logo">
+                                    @endif
 
-                            </a>
-                        </li>
+                                </a>
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -111,129 +127,135 @@
         </nav>
         <main>
             @auth
-            @switch(Route::currentRouteName())
-            @case('partner.profile.edit')
-            @case('partner.detail.pesanan')
-            @case('partner.produk.create')
-            @case('partner.produk.edit')
-            @case('partner.promo.create')
-            @case('partner.promo.edit')
-            @case('partner.atk.create')
-            @case('partner.atk.edit')
-            @yield('content')
-            @break
-            @default
-            <div class="container mt-4 mb-5">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="row justify-content-left ml-0 mb-3" style="font-size: 18px;">
-                            <label class="font-weight-bold mr-3">
-                                {{__('Percetakan')}}
-                            </label>
-                            <form id="status-form" action="{{ route('partner.ubah-status') }}" method="POST">
-                                @csrf
-                                <label class="switch">
-                                    <input id="statusToko" class="statusToko" type="checkbox" value="Buka"
-                                        name="status_toko"
-                                        onchange="event.preventDefault(); document.getElementById('status-form').submit();"
-                                        @if (Auth::user()->status_toko == 'Buka')
-                                    checked
-                                    @endif
-                                    >
-                                    <span class="slider round"></span>
-                                </label>
-                            </form>
-                        </div>
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                            aria-orientation="vertical" style="font-size: 18px;">
-                            <a class="nav-link mb-2 {{set_active('partner.home')}}" id="v-pills-beranda-tab"
-                                href="{{ route('partner.home') }}" role="tab" aria-controls="v-pills-beranda"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    home
-                                </i>
-                                {{__('Beranda')}}
-                            </a>
-                            <a class="nav-link mb-2 {{set_active('partner.pesanan')}}" id="v-pills-pesanan-tab"
-                                href="{{ route('partner.pesanan') }}" role="tab" aria-controls="v-pills-pesanan"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    shopping_cart
-                                </i>
-                                {{__('Pesanan')}}
-                            </a>
-                            <a class="nav-link mb-2 {{set_active('partner.saldo')}}" id="v-pills-saldo-tab"
-                                href="{{ route('partner.saldo') }}" role="tab" aria-controls="v-pills-saldo"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    account_balance_wallet
-                                </i>
-                                {{__('Saldo')}}
-                            </a>
-                            <a class="nav-link mb-2 {{set_active('partner.produk.index')}}" id="v-pills-produk-tab"
-                                href="{{ route('partner.produk.index') }}" role="tab" aria-controls="v-pills-produk"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    print
-                                </i>
-                                {{__('Produk')}}
-                            </a>
-                            <a class="nav-link mb-2 {{set_active('partner.promo.index')}}" id="v-pills-promo-tab"
-                                href="{{ route('partner.promo.index') }}" role="tab" aria-controls="v-pills-promo"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    local_offer
-                                </i>
-                                {{__('Promo')}}
-                            </a>
-                            <a class="nav-link mb-2 {{set_active('partner.atk.index')}}" id="v-pills-atk-tab"
-                                href="{{ route('partner.atk.index') }}" role="tab" aria-controls="v-pills-atk"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    architecture
-                                </i>
-                                {{__('Alat Tulis Kantor')}}
-                            </a>
-                            <a class="nav-link mb-2 {{set_active('partner.info')}}" id="v-pills-info-tab"
-                                href="{{ route('partner.info') }}" role="tab" aria-controls="v-pills-info"
-                                aria-selected="true">
-                                <i class="material-icons md-36 align-middle mr-2">
-                                    contact_support
-                                </i>
-                                {{__('Info dan Bantuan')}}
-                            </a>
-                            <a class="nav-link mb-2 mt-4" id="v-pills-keluar-tab" data-toggle="pill"
-                                href="#v-pills-keluar" role="tab" aria-controls="v-pills-keluar" aria-selected="true"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="material-icons text-primary-danger md-36 align-middle mr-2">
-                                    exit_to_app
-                                </i>
-                                {{__('Keluar')}}
-                            </a>
-                            <form id="logout-form" action="{{ route('partner.logout') }}" method="POST"
-                                style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
+                @switch(Route::currentRouteName())
+                    @case('partner.profile.edit')
+                    @case('partner.detail.pesanan')
+                    @case('partner.produk.create')
+                    @case('partner.produk.edit')
+                    @case('partner.promo.create')
+                    @case('partner.promo.edit')
+                    @case('partner.atk.create')
+                    @case('partner.atk.edit')
+                    @yield('content')
+                    @break
+                    @default
+                    <div class="container mt-4 mb-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row justify-content-left ml-0 mb-3" style="font-size: 18px;">
+                                    <label class="font-weight-bold mr-3">
+                                        {{ __('Percetakan') }}
+                                    </label>
+                                    <form id="status-form" action="{{ route('partner.ubah-status') }}" method="POST">
+                                        @csrf
+                                        <label class="switch">
+                                            <input id="statusToko" class="statusToko" type="checkbox" value="Buka"
+                                                name="status_toko"
+                                                onchange="event.preventDefault(); document.getElementById('status-form').submit();"
+                                                @if (Auth::user()->status_toko == 'Buka')
+                                            checked
+                                            @endif
+                                            >
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </form>
+                                </div>
+                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                    aria-orientation="vertical" style="font-size: 18px;">
+                                    <a class="nav-link mb-2 {{ set_active('partner.home') }}" id="v-pills-beranda-tab"
+                                        href="{{ route('partner.home') }}" role="tab" aria-controls="v-pills-beranda"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            home
+                                        </i>
+                                        {{ __('Beranda') }}
+                                    </a>
+                                    <a class="nav-link mb-2 {{ set_active('partner.pesanan') }}" id="v-pills-pesanan-tab"
+                                        href="{{ route('partner.pesanan') }}" role="tab" aria-controls="v-pills-pesanan"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            shopping_cart
+                                        </i>
+                                        {{ __('Pesanan') }}
+                                    </a>
+                                    <a class="nav-link mb-2 {{ set_active('partner.saldo') }}" id="v-pills-saldo-tab"
+                                        href="{{ route('partner.saldo') }}" role="tab" aria-controls="v-pills-saldo"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            account_balance_wallet
+                                        </i>
+                                        {{ __('Saldo') }}
+                                    </a>
+                                    <a class="nav-link mb-2 {{ set_active('partner.produk.index') }}" id="v-pills-produk-tab"
+                                        href="{{ route('partner.produk.index') }}" role="tab" aria-controls="v-pills-produk"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            print
+                                        </i>
+                                        {{ __('Produk') }}
+                                    </a>
+                                    <a class="nav-link mb-2 {{ set_active('partner.promo.index') }}" id="v-pills-promo-tab"
+                                        href="{{ route('partner.promo.index') }}" role="tab" aria-controls="v-pills-promo"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            local_offer
+                                        </i>
+                                        {{ __('Promo') }}
+                                    </a>
+                                    <a class="nav-link mb-2 {{ set_active('partner.atk.index') }}" id="v-pills-atk-tab"
+                                        href="{{ route('partner.atk.index') }}" role="tab" aria-controls="v-pills-atk"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            architecture
+                                        </i>
+                                        {{ __('Alat Tulis Kantor') }}
+                                    </a>
+                                    <a class="nav-link mb-2 {{ set_active('partner.info') }}" id="v-pills-info-tab"
+                                        href="{{ route('partner.info') }}" role="tab" aria-controls="v-pills-info"
+                                        aria-selected="true">
+                                        <i class="material-icons md-36 align-middle mr-2">
+                                            contact_support
+                                        </i>
+                                        {{ __('Info dan Bantuan') }}
+                                    </a>
+                                    <a class="nav-link mb-2 mt-4" id="v-pills-keluar-tab" data-toggle="pill"
+                                        href="#v-pills-keluar" role="tab" aria-controls="v-pills-keluar" aria-selected="true"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="material-icons text-primary-danger md-36 align-middle mr-2">
+                                            exit_to_app
+                                        </i>
+                                        {{ __('Keluar') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('partner.logout') }}" method="POST"
+                                        style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-content col-md-8">
+                                @yield('content')
+                            </div>
                         </div>
                     </div>
-                    <div class="tab-content col-md-8">
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
-            @endswitch
+                @endswitch
             @else
-            @yield('content')
+                @yield('content')
             @endauth
         </main>
     </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+
+
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script> --}}
+{{-- <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+--}}
 {{-- ...Some more scripts... --}}
-<script src="{{ asset('js/scriptPengelola.js') }}"></script>
-<script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script> --}}
+
+{{-- <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+--}}
 
 @yield('script')
 

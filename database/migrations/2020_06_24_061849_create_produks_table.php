@@ -16,7 +16,7 @@ class CreateProduksTable extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->increments('id_produk');
-            $table->integer('id_pengelola')->unsigned()->nullable(); $table->foreign('id_pengelola')->references('id_pengelola')->on('pengelola_percetakan');
+            $table->integer('id_pengelola')->unsigned()->nullable(); $table->foreign('id_pengelola')->references('id_pengelola')->on('pengelola_percetakan')->onDelete('cascade');
             $table->string('nama', 150);
             $table->integer('harga_hitam_putih');
             $table->integer('harga_timbal_balik_hitam_putih')->nullable();

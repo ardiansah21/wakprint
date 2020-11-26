@@ -34,7 +34,7 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
 
     public function konfigurasi()
     {
-        return $this->hasMany('App\Konfigurasi_file', 'id_konfigurasi');
+        return $this->hasMany('App\Konfigurasi_file', 'id_member');
     }
 
     public static function cekProdukFavorit($idMember, $idProduk): bool
@@ -47,5 +47,20 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     public function messages()
     {
         return $this->hasMany('App\Message', 'id_member');
+    }
+
+    public function transaksiSaldo()
+    {
+        return $this->hasMany('App\Transaksi_saldo', 'id_transaksi');
+    }
+
+    public function pesanans()
+    {
+        return $this->hasMany('App\Pesanan', 'id_member');
+    }
+
+    public function ulasans()
+    {
+        return $this->hasMany('App\Ulasan', 'id_member');
     }
 }

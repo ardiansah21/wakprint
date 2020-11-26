@@ -185,6 +185,12 @@ body {
     border-radius: 30px;
 }
 
+.btn-primary-wakprint:hover {
+    background-color: #BC41BE;
+    color: rgb(255, 255, 255);
+    border-radius: 30px;
+}
+
 .btn-checkbox-active {
     background-color: #EBD1EC;
     color: #BC41BE;
@@ -194,7 +200,7 @@ body {
 .btn-primary-yellow {
     background-color: #F2FF58;
     border-radius: 30px;
-    color: rgb(2, 2, 2);
+    color: black;
 }
 
 .btn-outline-purple {
@@ -217,15 +223,15 @@ body {
     border-radius: 5px;
 }
 
-.btn-outline-yellow {
-    background-color: transparent;
-    color: #F2FF58;
+.btn-outline-yellow-primary {
+    background-color: #F2FF58;
+    color: black;
     border: 1px solid #F2FF58;
     border-radius: 30px;
 }
 
-.btn-outline-yellow:hover {
-    color: #F2FF58;
+.btn-outline-yellow-primary:hover {
+    color: black;
     background-color: #F2FF58;
     border-color: #F2FF58;
 }
@@ -404,11 +410,6 @@ body {
     transform: translateX(0);
 }
 
-
-/* #v-pills-saldo-tab {
-    color: #BC41BE;
-} */
-
 #v-pills-keluar-tab {
     color: #FF4949;
 }
@@ -564,7 +565,7 @@ body {
     position: relative;
     scrollbar-color: #BC41BE #F5F5F5;
     width: 100%;
-    height: 350px;
+    max-height: 350px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -852,7 +853,6 @@ input:checked+.slider:after {
     display: flex;
 }
 
-
 /* display 3 */
 
 @media (min-width: 768px) {
@@ -870,3 +870,15 @@ input:checked+.slider:after {
 .carousel-inner .carousel-item-left {
     transform: translateX(0);
 }
+
+.owl-carousel:active > img, .owl-carousel:focus > img , img:active, img:focus{
+    border: solid 2px #BC41BE;
+}
+
+.selectOption { border: 0; }
+.selected { border: 5px solid #BC41BE; }
+
+/* img.active
+{
+    border-color: solid 2px #BC41BE;
+} */

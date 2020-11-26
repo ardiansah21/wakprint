@@ -1,176 +1,177 @@
 @extends('layouts.admin')
 
 @section('content')
-{{-- <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel" style="font-size: 18px;">
-    <div class="row jusify-content-between mb-3 mr-0">
-        <div class="col-md-10">
-            <div class="form-group search-input">
-                <div class="main-search-input-item">
-                    <input type="text"
-                        role="search"
-                        class="form-control"
-                        placeholder="Cari keluhan pelanggan disini..."
-                        aria-label="Cari keluhan pelanggan disini"
-                        aria-describedby="basic-addon2"
-                        style="border:0px solid white;
-                            border-radius:30px;
-                            font-size:16px;">
+    {{-- <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel"
+        style="font-size: 18px;">
+        <div class="row jusify-content-between mb-3 mr-0">
+            <div class="col-md-10">
+                <div class="form-group search-input">
+                    <div class="main-search-input-item">
+                        <input type="text" role="search" class="form-control" placeholder="Cari keluhan pelanggan disini..."
+                            aria-label="Cari keluhan pelanggan disini" aria-describedby="basic-addon2"
+                            style="border:0px solid white;
+                                                                                                                                                                                                                                                            border-radius:30px;
+                                                                                                                                                                                                                                                            font-size:16px;">
                         <i class="material-icons ml-1 pt-1 pb-1 pl-3 pr-3"
                             style="position: absolute;
-                                top: 50%; left: 95%;
-                                transform: translate(-50%, -50%);
-                                -ms-transform: translate(-50%, -50%);">
+                                                                                                                                                                                                                                                                top: 50%; left: 95%;
+                                                                                                                                                                                                                                                                transform: translate(-50%, -50%);
+                                                                                                                                                                                                                                                                -ms-transform: translate(-50%, -50%);">
                             search
                         </i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="dropdown">
+                    <button class="btn btn-default btn-lg shadow-sm dropdown-toggle border border-gray" id="filterKeluhan"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;">
+                        {{ __('Semua') }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="filterKeluhan" style="font-size: 16px;">
+                        <a class="dropdown-item" href="#">
+                            {{ __('Terbaru') }}
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            {{ __('A-Z') }}
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            {{ __('Z-A') }}
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            {{ __('Pending') }}
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            {{ __('Tertanggapi') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="dropdown">
-                <button class="btn btn-default btn-lg shadow-sm dropdown-toggle border border-gray"
-                    id="filterKeluhan"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    style="font-size: 16px;">
-                    {{__('Semua')}}
-                </button>
-                <div class="dropdown-menu"
-                    aria-labelledby="filterKeluhan"
-                    style="font-size: 16px;">
-                    <a class="dropdown-item"
-                        href="#">
-                        {{__('Terbaru')}}
-                    </a>
-                    <a class="dropdown-item"
-                        href="#">
-                        {{__('A-Z')}}
-                    </a>
-                    <a class="dropdown-item"
-                        href="#">
-                        {{__('Z-A')}}
-                    </a>
-                    <a class="dropdown-item"
-                        href="#">
-                        {{__('Pending')}}
-                    </a>
-                    <a class="dropdown-item"
-                        href="#">
-                        {{__('Tertanggapi')}}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="table-scrollbar mb-5 pr-2">
-        <table class="table table-hover">
-            <thead class="bg-primary-purple text-white"
-                style="border-radius:25px 25px 15px 15px;
-                    font-size:16px;">
-                <tr>
-                    <th scope="col-md-auto">
-                        {{__('ID')}}
-                    </th>
-                    <th scope="col-md-auto">
-                        {{__('Nama')}}
-                    </th>
-                    <th scope="col-md-auto">
-                        {{__('Keluhan')}}
-                    </th>
-                    <th scope="col-md-auto">
-                        {{__('Status')}}
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody style="font-size: 12px;">
+        <div class="table-scrollbar mb-5 pr-2">
+            <table class="table table-hover">
+                <thead class="bg-primary-purple text-white"
+                    style="border-radius:25px 25px 15px 15px;
+                                                                                                                                                                                                                                                    font-size:16px;">
                     <tr>
-                            <td scope="row">
-                                {{__('000001')}}
-                            </td>
-                            <td>
-                                {{__('Agus')}}
-                            </td>
-                            <td>
-                                {{__('Cemananya ini bla bla bla bla')}}
-                            </td>
-                            <td>
-                                {{__('Pending')}}
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.detail.keluhan') }}">
-                                    <i class="material-icons"
-                                        style="color: #BC41BE;">
-                                        play_circle_filled
-                                    </i>
-                                </a>
-                            </td>
+                        <th scope="col-md-auto">
+                            {{ __('ID') }}
+                        </th>
+                        <th scope="col-md-auto">
+                            {{ __('Nama') }}
+                        </th>
+                        <th scope="col-md-auto">
+                            {{ __('Keluhan') }}
+                        </th>
+                        <th scope="col-md-auto">
+                            {{ __('Status') }}
+                        </th>
+                        <th></th>
                     </tr>
-            </tbody>
-        </table>
-    </div>
-</div> --}}
+                </thead>
+                <tbody style="font-size: 12px;">
+                    <tr>
+                        <td scope="row">
+                            {{ __('000001') }}
+                        </td>
+                        <td>
+                            {{ __('Agus') }}
+                        </td>
+                        <td>
+                            {{ __('Cemananya ini bla bla bla bla') }}
+                        </td>
+                        <td>
+                            {{ __('Pending') }}
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.detail.keluhan') }}">
+                                <i class="material-icons" style="color: #BC41BE;">
+                                    play_circle_filled
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> --}}
 
 
-<table id="keluhanTable" class="table table-hover">
-    <thead class="bg-primary-purple text-white"
-        style="border-radius:25px 25px 15px 15px;
-            font-size:16px;">
-        <tr>
-            <th scope="col-md-auto">
-                {{__('ID')}}
-            </th>
-            <th scope="col-md-auto">
-                {{__('Nama')}}
-            </th>
-            <th scope="col-md-auto">
-                {{__('Keluhan')}}
-            </th>
-            <th scope="col-md-auto">
-                {{__('Status')}}
-            </th>
-        </tr>
-    </thead>
-    <tbody style="font-size: 12px;">
-    </tbody>
-</table>
+    <table id="keluhanTable" class="table table-hover">
+        <thead class="bg-primary-purple text-white"
+            style="border-radius:25px 25px 15px 15px;
+                                                                                                                                                                                                                                            font-size:16px;">
+            <tr>
+                <th scope="col-md-auto">
+                    {{ __('ID') }}
+                </th>
+                <th scope="col-md-auto">
+                    {{ __('Nama') }}
+                </th>
+                <th scope="col-md-auto">
+                    {{ __('Keluhan') }}
+                </th>
+                <th scope="col-md-auto">
+                    {{ __('Status') }}
+                </th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px;">
+        </tbody>
+    </table>
 @endsection
 
 @section('script')
     <script>
-        $(document).ready( function () {
-            $('#keluhanTable').DataTable({
-                scrollY: 300,
-                paging: false,
-                info: false,
-                processing: true,
-                serverSide: true,
-                orderable: true,
-                searchable: true,
-                autowidth: true,
-                deferloading: 0,
-                ajax: '{{ route('admin.keluhan.json') }}',
-                columns: [
-                    { data: 'id_lapor', name: 'id_lapor' },
-                    { data: 'id_member', name: 'id_member' },
-                    { data: 'pesan', name: 'pesan' },
-                    { data: 'status', name: 'status' }
-                ]
-            });
-
-            var table = $('#keluhanTable').DataTable();
-            $('#keluhanTable tbody').on( 'click', 'tr', function () {
-                var id = table.row(this).data();
-                document.location.href='keluhan/detail/' + id.id_lapor;
-                // if ($(this).hasClass('selected')) {
-                //     $(this).removeClass('selected');
-                // }
-                // else {
-                //     table.$('tr.selected').removeClass('selected');
-                //     $(this).addClass('selected');
-                // }
-            } );
+        // $(document).ready(function() {
+        var table = $('#keluhanTable').DataTable({
+            scrollY: 300,
+            paging: false,
+            info: false,
+            processing: true,
+            serverSide: true,
+            orderable: true,
+            searchable: true,
+            autowidth: true,
+            deferloading: 0,
+            ajax: "{{ route('admin.keluhan.json') }}",
+            columns: [{
+                    data: 'id_lapor',
+                    name: 'id_lapor'
+                },
+                {
+                    data: 'id_member',
+                    name: 'id_member'
+                },
+                {
+                    data: 'pesan',
+                    name: 'pesan'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                }
+            ]
         });
+
+
+        $('#keluhanTable tbody').on('click', 'tr', function() {
+            var id = table.row(this).data();
+            if (id.status === 'Pending') {
+                document.location.href = 'keluhan/detail/' + id.id_lapor;
+            }
+        });
+        // if (data.status === 'Pending') {
+        //     alert('Pending');
+        //     $('#keluhanTable tbody').on('click', 'tr', function() {
+        //         var id = table.row(this).data();
+        //         document.location.href = 'keluhan/detail/' + id.id_lapor;
+        //     });
+        // } else {
+        //     alert('No');
+        // }
+        // });
+
     </script>
 @endsection
 

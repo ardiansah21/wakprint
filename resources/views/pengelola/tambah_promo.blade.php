@@ -5,8 +5,7 @@
 @endphp
 
 @section('content')
-    <div class="container mt-5 mb-5"
-        style="font-size: 16px;">
+    <div class="container mt-5 mb-5" style="font-size: 16px;">
         <label class="font-weight-bold mb-4"
             style="font-size: 36px;">
             {{__('Tambah Promo') }}
@@ -15,151 +14,87 @@
         <label class="mb-2">
             {{__('Pilih Produk untuk Diberi Promo') }}
         </label>
-            <form id="search-form" action="{{ route('partner.search.produk') }}" method="post">
-                @csrf
-                <div class="form-group search-input mb-4">
-                    <div class="main-search-input-item">
-                        <input id="keyword" name="keyword" type="text" role="search" name="keyword" class="form-control"
-                            @php
-                                if (session()->has('keyword')) {
-                                    echo "value = '".session('keyword')."' autofocus onfocus='this.value = this.value;'";
-                                }
-                            @endphp
-                            placeholder="Cari produk anda disini..."
-                            aria-label="Cari produk disini"
-                            aria-describedby="basic-addon2"
-                            style="border:0px solid white;
-                                border-radius:30px;
-                                font-size:16px;">
-                            <i class="material-icons pointer ml-1 pt-1 pb-1 pl-3 pr-3"
-                                onclick="event.preventDefault(); document.getElementById('search-form').submit();"
-                                style="position: absolute;
-                                    top: 50%; left: 98%;
-                                    transform: translate(-50%, -50%);
-                                    -ms-transform: translate(-50%, -50%);">
-                                search
-                            </i>
-                    </div>
+        <form id="search-form" action="{{ route('partner.search.produk') }}" method="post">
+            @csrf
+            <div class="form-group search-input mb-4">
+                <div class="main-search-input-item">
+                    <input id="keyword" name="keyword" type="text" role="search" name="keyword" class="form-control"
+                        @php
+                            if (session()->has('keyword')) {
+                                echo "value = '".session('keyword')."' autofocus onfocus='this.value = this.value;'";
+                            }
+                        @endphp
+                        placeholder="Cari produk anda disini..."
+                        aria-label="Cari produk disini"
+                        aria-describedby="basic-addon2"
+                        style="border:0px solid white;
+                            border-radius:30px;
+                            font-size:16px;">
+                        <i class="material-icons pointer ml-1 pt-1 pb-1 pl-3 pr-3"
+                            onclick="event.preventDefault(); document.getElementById('search-form').submit();"
+                            style="position: absolute;
+                                top: 50%; left: 98%;
+                                transform: translate(-50%, -50%);
+                                -ms-transform: translate(-50%, -50%);">
+                            search
+                        </i>
                 </div>
-            </form>
-            <form id="submit-form" action="{{ route('partner.promo.store') }}" method="POST">
-                @csrf
-                {{-- @method('PUT') --}}
-                <div class="row justify-content-between mb-0">
-                    @if (session()->has('produk'))
-                        @foreach (session('produk') as $p)
-                            @if ($p->id_pengelola === $partner->id_pengelola)
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm mb-4 mx-2" style="min-height: 200px;">
-                                        <div class="card-body">
-                                            <div class="row justify-content-between">
-                                                <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2"
-                                                    style="font-size: 14px;">
-                                                    {{$p->nama ?? '-'}}
-                                                </label>
-                                                <div class="col-md-2 text-right" style="font-size: 12px;">
-                                                    <input type="checkbox"
-                                                        name="checkbox_promo[]"
-                                                        class=""
-                                                        value="{{ $p->id_produk }}"
-                                                        id="checkboxPromo">
-                                                </div>
-                                            </div>
-                                            <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
-                                                {{__('Deskripsi Produk')}}
-                                            </label>
-                                            <label class="card-text text-truncate-multiline" style="font-size: 12px;">
-                                                {{$p->deskripsi ?? '-'}}
-                                            </label>
+            </div>
+        </form>
+        <form id="submit-form" action="{{ route('partner.promo.store') }}" method="POST">
+            @csrf
+                <div class="row justify-content-between mb-5">
+                    <div class="col-md-1 owl-nav align-self-center">
+                        <a class="produk-promo-prev disabled" role="presentation">
+                            <span class="carousel-control-prev-icon btn-floating btn-circle-navigation-right rounded-circle cursor-pointer" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <div id="produk-promo-carousel" class="col-md-10 owl-carousel owl-theme owl-loaded owl-drag owl-loading">
+                        @foreach ($partner->products as $p)
+                            <div class="card shadow-sm mb-4 mx-4" style="min-height: 200px;">
+                                <div class="card-body">
+                                    <div class="row justify-content-between">
+                                        <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2" style="font-size: 14px;">
+                                            {{$p->nama ?? '-'}}
+                                        </label>
+                                        <div class="col-md-2 text-right" style="font-size: 12px;">
+                                            <input type="checkbox" name="checkbox_promo" class="" value="{{ $p->id_produk }}" id="checkboxPromo">
                                         </div>
-                                        <div class="card-footer bg-primary-purple">
-                                            <div class="row justify-content-between mb-0 mr-0 ml-0">
-                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 14px;">
-                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                </label>
-                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 10px; border-radius:5px;">
-                                                    {{__('Hitam-Putih')}}
-                                                </label>
-                                                <br>
-                                                @if (!empty($p->harga_berwarna))
-                                                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 14px;">
-                                                        Rp. {{$p->harga_berwarna}}
-                                                    </label>
-                                                    <label class="card-text SemiBold badge-sm bg-primary-yellow px-1" style="font-size: 10px; border-radius:5px;">
-                                                        {{__('Berwarna')}}
-                                                    </label>
-                                                @endif
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
+                                        {{__('Deskripsi Produk')}}
+                                    </label>
+                                    <label class="card-text text-truncate-multiline" style="font-size: 12px;">
+                                        {{$p->deskripsi ?? '-'}}
+                                    </label>
+                                </div>
+                                <div class="card-footer bg-primary-purple">
+                                    <div class="row justify-content-between mb-0 mr-0 ml-0">
+                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 14px;">
+                                            Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                        </label>
+                                        <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 10px; border-radius:5px;">
+                                            {{__('Hitam-Putih')}}
+                                        </label>
+                                        <br>
+                                        @if (!empty($p->harga_berwarna))
+                                            <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 14px;">
+                                                Rp. {{$p->harga_berwarna}}
+                                            </label>
+                                            <label class="card-text SemiBold badge-sm bg-primary-yellow px-1" style="font-size: 10px; border-radius:5px;">
+                                                {{__('Berwarna')}}
+                                            </label>
+                                        @endif
                                     </div>
                                 </div>
-                            @endif
-                        @endforeach
-                    @endif
-                    {{-- <div id="produkCarousel" class="carousel slide w-100" data-ride="carousel">
-                        <div class="carousel-inner w-100" role="listbox">
-                            @foreach ($produk as $p)
-                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                @if ($p->id_pengelola === $partner->id_pengelola)
-                                    <div class="col-md-4">
-                                        <div class="card shadow-sm mb-4 mx-2" style="min-height: 200px;">
-                                            <div class="card-body">
-                                                <div class="row justify-content-between">
-                                                    <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2"
-                                                        style="font-size: 14px;">
-                                                        {{$p->nama ?? '-'}}
-                                                    </label>
-                                                    <div class="col-md-2 text-right" style="font-size: 12px;">
-                                                        <input type="checkbox"
-                                                            name="checkbox_promo"
-                                                            class=""
-                                                            value="{{ $p->id_produk }}"
-                                                            id="checkboxPromo">
-                                                    </div>
-                                                </div>
-                                                <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
-                                                    {{__('Deskripsi Produk')}}
-                                                </label>
-                                                <label class="card-text text-truncate-multiline" style="font-size: 12px;">
-                                                    {{$p->deskripsi ?? '-'}}
-                                                </label>
-                                            </div>
-                                            <div class="card-footer bg-primary-purple">
-                                                <div class="row justify-content-between mb-0 mr-0 ml-0">
-                                                    <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 14px;">
-                                                        Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                    </label>
-                                                    <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 10px; border-radius:5px;">
-                                                        {{__('Hitam-Putih')}}
-                                                    </label>
-                                                    <br>
-                                                    @if (!empty($p->harga_berwarna))
-                                                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 14px;">
-                                                            Rp. {{$p->harga_berwarna}}
-                                                        </label>
-                                                        <label class="card-text SemiBold badge-sm bg-primary-yellow px-1" style="font-size: 10px; border-radius:5px;">
-                                                            {{__('Berwarna')}}
-                                                        </label>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
-                            @endforeach
-                        </div>
-                        <a class="carousel-control-prev w-auto" href="#produkCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon btn btn-circle-navigation-right rounded-circle shadow-sm"
-                                aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
+                        @endforeach
+                    </div>
+                    <div class="col-md-1 owl-nav align-self-center">
+                        <a class="produk-promo-next" role="presentation">
+                            <span class="carousel-control-next-icon btn-floating btn-circle-navigation-left rounded-circle cursor-pointer" aria-hidden="true"></span>
                         </a>
-                        <a class="carousel-control-next w-auto" href="#produkCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon btn btn-circle-navigation-right rounded-circle"
-                                aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="row mb-4" style="">
                     <div class="col-md-6">
@@ -349,26 +284,23 @@
 
 @section('script')
     <script>
-        // $('#produkCarousel').carousel({
-        //     interval: 10000
-        // })
+        $(document).ready(function(){
+            var produkCarousel = $("#produk-promo-carousel");
 
-        $('.carousel .carousel-item').each(function(){
-            var minPerSlide = 3;
-            var next = $(this).next();
-            if (!next.length) {
-            next = $(this).siblings(':first');
-            }
-            next.children(':first-child').clone().appendTo($(this));
+            // Produk Navigation Events
+            $(".produk-promo-next").on('click',function(){
+                produkCarousel.trigger('next.owl.carousel');
+            });
+            $(".produk-promo-prev").on('click',function(){
+                produkCarousel.trigger('prev.owl.carousel');
+            });
 
-            for (var i=0;i<minPerSlide;i++) {
-                next=next.next();
-                if (!next.length) {
-                    next = $(this).siblings(':first');
-                }
-
-                next.children(':first-child').clone().appendTo($(this));
-            }
+            produkCarousel.owlCarousel({
+                loop:false,
+                autoplay:false,
+                autoplayTimeout:5000,
+                autoplayHoverPause:false
+            });
         });
 
         $('#tanggalMulaiPromoList span').on('click', function () {

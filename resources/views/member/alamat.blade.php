@@ -12,12 +12,6 @@
                 <i class="material-icons align-middle mr-2">location_on</i>
                 {{__('Tambah Alamat Baru')}}
             </button>
-            {{-- <button class="btn btn-primary-yellow shadow-sm font-weight-bold pl-4 pr-4" data-toggle="modal"
-                data-target="#tambahAlamatModal" data-title="Tambah Alamat Pengiriman"
-                style="border-radius:30px; font-size: 18px;">
-                <i class="material-icons align-middle mr-2">location_on</i>
-                {{__('Ubah Alamat Utama')}}
-            </button> --}}
         </div>
         @if (!empty($member->alamat['alamat']))
             <div class="table-scrollbar pr-4">
@@ -81,7 +75,7 @@
                                         </td>
                                         <td class="pilih text-center align-middle">
                                             <span>
-                                                {{-- @if (!empty($member->alamat['alamat'])) --}}
+                                                @if (!empty($member->alamat['alamat']))
                                                     @if ($member->alamat['IdAlamatUtama'] === $member->alamat['alamat'][$i]['id'])
                                                         <label class="btn btn-outline-purple">
                                                             Utama
@@ -94,7 +88,7 @@
                                                             Pilih
                                                         </label> --}}
                                                     @endif
-                                                {{-- @endif --}}
+                                                @endif
                                             </span>
                                         </td>
                                     </tr>
@@ -121,7 +115,6 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-
                     <form id="formModal" action="{{ route('alamat.tambah') }}" class="mb-3" method="POST">
                         @csrf
                         <button class="close material-icons md-32" data-dismiss="modal">
@@ -130,7 +123,8 @@
                         <input type="number" id="id" name="id" hidden>
                         <label id="alamatModalLabel" class="modal-title font-weight-bold ml-0 mb-5"
                             style="font-size: 48px;">
-                            {{ __('Tambah Alamat Pengiriman') }}</label>
+                            {{ __('Tambah Alamat Pengiriman') }}
+                        </label>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">

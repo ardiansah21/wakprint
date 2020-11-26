@@ -174,8 +174,7 @@
                 </div> --}}
             </div>
             <div class="text-right mr-0">
-                <a class="text-primary-purple font-weight-bold" href="" data-toggle="modal"
-                    data-target="#infoAtkdwhModal">
+                <a class="text-primary-purple font-weight-bold" href="{{route('partner.pengujian')}}">
                     {{__('Uji Coba Sistem Deteksi Warna Halaman') }}
                 </a>
             </div>
@@ -193,12 +192,11 @@
 </label>
 
 <div class="row justify-content-between mb-0">
-    <div class="form-group col-md-3" style="width:250px;height:250px; border-radius:10px;">
+    <div class="form-group bg-light col-md-3" style="width:250px;height:250px; border-radius:10px;">
         @if (!empty($partner->getFirstMediaUrl()))
-        <img id="gambarPartner" src="{{ $partner->getFirstMediaUrl() }}" class="img-responsive"
-            style="width:100%;height:250px; border-radius:10px;" alt="Foto Kosong">
+        <img id="gambarPartner" src="{{ $partner->getFirstMediaUrl() }}" class="img-responsive" style="width:100%; height:250px; border-radius:10px; object-fit:contain;" alt="Foto Kosong">
         <button id="editPhotoButton" type="button" onclick="document.getElementById('imgupload').click();"
-            class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0" style="position: relative;
+            class="btn btn-primary-yellow text-black font-weight-bold pl-4 pr-4 mb-0" style="position: relative;
                         font-size:16px;
                         bottom: 50px;
                         left:110px;
@@ -210,7 +208,7 @@
             onchange="document.getElementById('gambarPartner').src=window.URL.createObjectURL(this.files[0]);" hidden>
         @else
         <img id="gambarPartner" src="https://unsplash.it/600/400" class="img-responsive"
-            style="width:100%;height:250px; border-radius:10px;" alt="Foto Kosong">
+            style="width:100%;height:250px; border-radius:10px; object-fit:contain;" alt="Foto Kosong">
         <button id="editPhotoButton" type="button" onclick="document.getElementById('imgupload').click();"
             class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0" style="position: relative;
                             font-size:16px;
@@ -224,24 +222,6 @@
             onchange="document.getElementById('gambarPartner').src=window.URL.createObjectURL(this.files[0]);" hidden>
         @endif
     </div>
-    {{-- <div class="form-group col-md-3">
-                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                    class="img-responsive bg-light"
-                    style="width:250px;
-                        height:250px;
-                        border-radius:10px;">
-                <div class="form-group mb-3">
-                    <button class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0"
-                        style="position: relative;
-                        font-size:16px;
-                        bottom: 50px;
-                        left:110px;
-                        right: 0px;
-                        border-radius:30px;">
-                        {{__('Pilih Foto') }}
-    </button>
-</div>
-</div> --}}
 <div class="col-md-9">
     <label class="mb-2">
         {{__('Nama Pemilik Tempat Percetakan') }}

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 class Pengelola_Percetakan extends Authenticable implements HasMedia
 {
@@ -17,14 +18,14 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     //set nilai kolom db default
     protected $attributes = [
         'rating_toko' => 5.0,
-        'status_toko' => 'Buka'
-     ];
+        'status_toko' => 'Buka',
+    ];
     //  protected $guard = 'partner';
-     protected $guarded = [];
+    protected $guarded = [];
 
-     protected $hidden = ['password','remember_token'];
+    protected $hidden = ['password', 'remember_token'];
 
-     protected $casts = [
+    protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
@@ -36,16 +37,48 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     /**
      * Get all of the user's images.
      */
-    // public function media()
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'model');
+    }
+
+    public function products()
+    {
+        return $this->hasMany('App\Produk', 'id_pengelola');
+    }
+
+    public function atk()
+    {
+        return $this->hasMany('App\Atk', 'id_pengelola');
+    }
+
+    public function pesanan()
+    {
+        return $this->hasMany('App\Pesanan', 'id_pengelola');
+    }
+
+    public function transaksiSaldo()
+    {
+        return $this->hasMany('App\Transaksi_saldo', 'id_transaksi');
+    }
+
+    // public function hapus()
     // {
-    //     return $this->morphMany(Media::class, 'model');
+
+    //     // $this->atk()->delete();
+    //     // $this->products()->delete();
+    //     return parent::delete();
     // }
 
-    public function products(){
-    	return $this->hasMany('App\Produk','id_pengelola');
-    }
+    // // this is a recommended way to declare event handlers
+    // public static function boot()
+    // {
+    //     parent::boot();
 
-    public function atk(){
-    	return $this->hasMany('App\Atk','id_pengelola');
-    }
+    //     static::deleting(function ($partner) { // before delete() method call this
+    //         $partner->atk()->delete();
+    //         $partner->products()->delete();
+    //         // do the rest of the cleanup...
+    //     });
+    // }
 }
