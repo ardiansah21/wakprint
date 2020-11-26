@@ -80,9 +80,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('riwayat', 'MemberController@riwayat')->name('riwayat');
 
-    Route::get('konfigurasi-pesanan', 'MemberController@konfigurasiPesanan')->name('konfigurasi.pesanan');
-    Route::get('konfirmasi-pembayaran', 'MemberController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
-
     Route::get('pesanan', 'MemberController@pesanan')->name('pesanan');
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('pesanan.detail');
 
@@ -106,8 +103,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
     Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
+    //TODO buat view edit konfigurasi
+    // Route::put('/konfigurasi-file/edit', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
+
+    Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
+    Route::get('/konfigurasi-pesanan/konfirmasi', 'KonfigurasiController@konfirmasiPesanan')->name('konfirmasi.pesanan');
+    Route::post('/konfigurasi-pesanan/create', 'KonfigurasiController@createPesanan')->name('konfigurasi.pesanan.create');
+
+    Route::get('/konfirmasi-pembayaran', 'KonfigurasiController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
 
 });
 

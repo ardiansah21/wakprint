@@ -635,6 +635,17 @@ class MemberController extends Controller
     public function alamat(Request $request)
     {
         $member = Auth::user();
+
+        //tes parsing data dari order
+        if ($request->fromOrder) {
+            //dd('s');
+            return '<center style="font-size: 120px;"><h2><span style="font-size:180px;">&#128514;</span><br>ilham Pantek</h2></center>';
+        }
+
+        // if ($request->session()->exists("alamatPesanan" . $member->id_member)){
+        //     // $sessionAlamat = $request->session()->get("alamatPesanan". $member->id_member);
+        //     // dd(true);
+        // }
         return view('member.alamat', compact('member'));
     }
 
@@ -674,7 +685,8 @@ class MemberController extends Controller
         return redirect()->route('alamat');
     }
 
-    public function editAlamat(Request $request)
+    //TODO: @imaha7 error modal edit enggak lama tertutup lagi. (test from chrome)
+    public function editAlamat($id, Request $request)
     {
         $member = Member::find(Auth::id());
 
@@ -712,7 +724,9 @@ class MemberController extends Controller
             return redirect()->route('konfigurasi.pesanan', ['konfigurasi' => $member->id_member]);
         } else {
             return redirect()->route('alamat');
+
         }
+
     }
 
     public function hapusAlamat($idProduk, Request $request)
@@ -742,13 +756,7 @@ class MemberController extends Controller
         return redirect()->route('alamat');
     }
 
-    public function konfirmasiPembayaran()
-    {
-        $produk = Produk::all();
-        return view('member.konfirmasi_pembayaran', compact('produk'));
-    }
-
-    public function saldoPembayaran($idProduk)
+    public function saldoPembayaran($id)
     {
         $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::find($idProduk);
