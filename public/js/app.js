@@ -2038,41 +2038,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["produk"],
+  props: ["produk", "isFavorite"],
   data: function data() {
-    return {
-      favorit: []
-    };
-  },
-  computed: {},
-  updated: function updated() {
-    this.favorit = JSON.parse(this.$parent.$parent.$data.member.produk_favorit); // this.$parent.$parent.$data.member.produk_favorit;
+    return {};
   },
   methods: {
     setFavorite: function setFavorite(id) {
-      axios.post("/favorit/status", {
-        id_produk: id
+      var _this = this;
+
+      axios.post("/favorit/status/" + id, {
+        id_produk: id,
+        fromAxios: true
       }).then(function (res) {
-        console.log(res);
+        _this.$emit("update-favorite", res.data);
       });
-    },
-    isFavorite: function isFavorite(id) {
-      // console.log(await this.$root.$root.member.produk_favorit);
-      var a = this.$root.$root.member.produk_favorit; // var b = JSON.parse(a);
-
-      var c = Array.from(a); // console.log(c);
-
-      var tt = false;
-      c.forEach(function (v, i) {
-        if (v === id) {
-          tt = true;
-        } else {
-          tt = false;
-        }
-      });
-      return tt;
     }
-  }
+  },
+  computed: {},
+  updated: function updated() {},
+  beforeUpdate: function beforeUpdate() {}
 });
 
 /***/ }),
@@ -2290,6 +2274,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2306,7 +2294,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       jenis_printer_show: [],
       jenis_printer: [],
       fitur: [],
-      fiturTerpilih: []
+      fiturTerpilih: [],
+      produk_favorit_member: []
     };
   },
   methods: {
@@ -2399,7 +2388,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this3.jenis_printer_show = _toConsumableArray(new Set(arrayColumn(_this3.produks, "jenis_printer")));
               _this3.jenis_printer = _this3.jenis_printer_show; // this.fitur = [...new Set(arrayColumn)]
 
-            case 4:
+              _context.next = 6;
+              return axios.get("/member").then(function (res) {
+                return JSON.parse(res.data.produk_favorit);
+              });
+
+            case 6:
+              _this3.produk_favorit_member = _context.sent;
+
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -44863,7 +44860,7 @@ var render = function() {
         _vm._v(" "),
         _c("button", {
           staticClass: "btn fa fa-heart fa-2x fa-responsive cursor-pointer",
-          class: { "text-danger": _vm.isFavorite(_vm.produk.id_produk) },
+          class: { "text-danger": _vm.isFavorite },
           staticStyle: {
             position: "absolute",
             top: "5%",
@@ -45543,7 +45540,19 @@ var render = function() {
             return _c(
               "div",
               { key: i, staticClass: "col-md-6 mb-4" },
-              [_c("card-produk-component", { attrs: { produk: p } })],
+              [
+                _c("card-produk-component", {
+                  attrs: {
+                    produk: p,
+                    isFavorite: _vm.produk_favorit_member.includes(p.id_produk)
+                  },
+                  on: {
+                    "update-favorite": function($event) {
+                      _vm.produk_favorit_member = $event
+                    }
+                  }
+                })
+              ],
               1
             )
           })
