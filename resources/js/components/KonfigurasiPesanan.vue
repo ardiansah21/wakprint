@@ -392,8 +392,6 @@
 <script>
 import VueNumericInput from "vue-numeric-input";
 
-var atkObj = new Object();
-
 export default {
     props: ["member", "konFiles", "atks"],
     data() {

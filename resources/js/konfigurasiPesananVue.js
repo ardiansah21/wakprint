@@ -7,10 +7,6 @@ Vue.component(
 
 const konfigurasiPesanan = new Vue({
     el: "#konfigurasiPesanan",
-    props: ["pesanan"],
-    data: {
-        ayam: 99
-    },
     methods: {
         gotosite(producturl) {
             window.location.href = producturl;

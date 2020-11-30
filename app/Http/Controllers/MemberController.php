@@ -31,6 +31,11 @@ class MemberController extends Controller
     }
 
 ////
+
+    public function member()
+    {
+        return response()->json(Auth::user(), 200);
+    }
     public function uploadPdf(Request $request)
     {
         $file = $request->file('file');
@@ -248,8 +253,8 @@ class MemberController extends Controller
 
     public function detailPartner($id)
     {
-        $produk = Produk::all();
         $partner = Pengelola_Percetakan::find($id);
+        $produk = $partner->products;
         $atk = Atk::all();
         $ratingPartner = $produk->where('id_pengelola', $id)->avg('rating');
 

@@ -134,9 +134,8 @@
                     </div>
                     <div class="mx-auto mb-4" style="position:relative;">
                         <img class="img-responsive"
-                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
-                            style="width:300px;
-                                                                                                                                                                                                                                                                                                                                                            height:200px;">
+                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="" style="width:300px;
+                                    height:200px;">
                     </div>
                     <div class="row justify-content-left mb-5">
                         <span class="align-self-center col-md-1 mr-0">
@@ -193,9 +192,8 @@
                         <label class="SemiBold mb-2" style="font-size: 18px;">
                             {{ __('Pemilik Percetakan') }}
                         </label>
-                        <label class="text-truncate mb-4"
-                            style="width: 100%;
-                                                                                                                                                                                                                                                                                                                                                            font-size: 18px;">
+                        <label class="text-truncate mb-4" style="width: 100%;
+                                    font-size: 18px;">
                             @if (!empty($partner->getFirstMediaUrl()))
                                 <img class="img-responsive border border-gray align-self-center mr-2"
                                     src="{{ $partner->getFirstMediaUrl() }}" width="40" height="40" alt="no logo"
@@ -297,10 +295,8 @@
                     </div>
                 </div>
             </div>
-            <div id="pencarianDetailPartnerVue" class="col-md-8 mt-5">
-                <pencarian-produk-parner-component :produks="{{ $produk }}">
-                </pencarian-produk-parner-component>
-                {{-- <div class="search-input mr-0 ml-3 mb-4">
+            <div id="pencarianProduk" class="col-md-8 mt-5">
+                <div class="search-input mr-0 ml-3 mb-4">
                     <div class="main-search-input-item mr-0">
                         <input id="keyword" type="text" role="search" class="form-control" placeholder="Cari produk disini"
                             aria-label="Cari produk disini" aria-describedby="basic-addon2"
@@ -310,8 +306,8 @@
                             search
                         </i>
                     </div>
-                </div> --}}
-                {{-- <div class="row justify-content-between mb-4 ml-0">
+                </div>
+                <div class="row justify-content-between mb-4 ml-0">
                     <div class="col-md-3">
                         <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
                             <label id="semua" class="btn btn-yellow-wakprint btn-outline-black mr-1 pt-1 pb-1 pl-4 pr-4"
@@ -430,18 +426,13 @@
                             @endif
                         @endforeach
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
-
 @endsection
 @section('script')
-    <script src="{{ asset('js/app.js') }}"></script>
-
-    {{-- <script src="{{ asset('js/pencarianDetailPartnerVue.js') }}"></script>
-    --}}
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             var idPartner = $('#idPartner').val();
 
@@ -566,7 +557,7 @@
                         $('.produk').css('color', '#dfecf6');
                         $('.produk').html(
                             '<div class="mx-auto"><img id="imgLoading" style="" src="/img/loading.gif" /></div>'
-                        );
+                            );
                     },
                     uploadProgress: function() {
                         $('#imgLoading').show();
@@ -654,8 +645,7 @@
                                     produkItem += '<div>'
                                     if (produks['produks'][i].harga_hitam_putih != null && produks[
                                             'produks'][i].harga_berwarna != null && produks['produks'][
-                                            i
-                                        ].jumlah_diskon != null) {
+                                            i].jumlah_diskon != null) {
                                         produkItem +=
                                             '<i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>';
                                         produkItem +=
@@ -746,5 +736,5 @@
             }
         });
 
-    </script> --}}
+    </script>
 @endsection

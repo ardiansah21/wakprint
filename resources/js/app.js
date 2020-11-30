@@ -6,7 +6,7 @@
 
 require("./bootstrap");
 
-// window.Vue = require("vue");
+window.Vue = require("vue");
 
 /**
  * The following block of code may be used to automatically register your
@@ -74,3 +74,33 @@ require("./bootstrap");
 // const cAtk = new Vue({
 //     el: "#vATK"
 // });
+
+// Vue.component(
+//     "tes-component",
+//     require("./components/tesComponent.vue").default
+// );
+
+import pencarianProdukParnerComponent from "./components/pencarianProdukParnerComponent.vue";
+import cardProdukComponent from "./components/cardProdukComponent.vue";
+import Axios from "axios";
+
+const app = new Vue({
+    el: "#app",
+    components: {
+        cardProdukComponent,
+        pencarianProdukParnerComponent
+    },
+    data: {
+        pesan: "bambang",
+        member: { aa: "aaaaaa" },
+        loading: true
+    },
+    async beforeCreate() {
+        // await new Promise(resolve => setTimeout(resolve, 5000));
+        this.member = await axios.get("/member").then(res => {
+            return res.data;
+        });
+        this.loading = false;
+    },
+    created() {}
+});

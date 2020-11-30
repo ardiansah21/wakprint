@@ -27,6 +27,7 @@ Route::post('/upload-pdf', 'MemberController@uploadPdf')->name('upload.pdf');
 
 Route::post('/uploaddd', 'MemberController@uploadtes')->name('upload.test');
 /////
+Route::get('/member', 'MemberController@member');
 
 // temp dropzone
 Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fileupload');
