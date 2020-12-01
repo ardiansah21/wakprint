@@ -1,10 +1,11 @@
 @extends('layouts.pengelola')
 
 @section('content')
-<div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel">
-    <button class="btn btn-outline-purple font-weight-bold pl-5 pr-5 mb-4"
-        onclick="window.location.href='{{ route('partner.promo.create') }}'"
-        style="border-radius:30px; font-size:16px;">
+<div>
+    @php
+        use Carbon\Carbon;
+    @endphp
+    <button class="btn btn-outline-purple font-weight-bold pl-5 pr-5 mb-4" onclick="window.location.href='{{ route('partner.promo.create') }}'" style="border-radius:30px; font-size:16px;">
         {{__('Tambah Promo')}}
     </button>
     <div class="table-scrollbar mb-5 ml-0 pr-2">
@@ -26,8 +27,8 @@
                             <td scope="row">{{$p->id_produk}}</td>
                             <td>{{$p->nama}}</td>
                             <td>{{$p->jumlah_diskon * 100}} %</td>
-                            <td>{{$p->maksimal_diskon}}</td>
-                            <td>{{date('d M Y', strtotime($p->selesai_waktu_diskon))}}</td>
+                            <td>{{rupiah($p->maksimal_diskon)}}</td>
+                            <td>{{Carbon::parse($p->selesai_waktu_diskon)->translatedFormat('d F Y')}}</td>
                             <td>
                                 <a href="{{ route('partner.promo.edit',$p->id_produk) }}" style="margin-left: -50px;">
                                     <i class="material-icons md-18">

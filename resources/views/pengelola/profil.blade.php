@@ -17,10 +17,10 @@
             @else
                 <img src="https://unsplash.it/600/400" alt="Belum Ada Foto Profil"
                     style="height:210px; border-radius:5px; object-fit:contain;">
-                <label class="font-weight-bold text-primary-yellow mb-5 ml-4 mt-2"
+                {{-- <label class="font-weight-bold text-primary-yellow mb-5 ml-4 mt-2"
                     style="font-size: 24px; position: absolute; top: 8px; left: 16px;">
                     {{ $partner->nama_toko }}
-                </label>
+                </label> --}}
                 <div class="">
                     <a href="{{ route('partner.profile.edit') }}"
                         class="btn btn-primary-yellow font-weight-bold text-black pl-4 pr-4"

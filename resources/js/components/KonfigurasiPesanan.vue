@@ -72,7 +72,7 @@
                                     : member.nama_lengkap
                             }}
                         </label>
-                        <label class="text-truncate-multiline mb-2 ml-0 mb-5">
+                        <label v-if="member.alamat.alamat != '[]'" class="text-truncate-multiline mb-2 ml-0 mb-5">
                             {{
                                 member.alamat.alamat[
                                     member.alamat.IdAlamatUtama
@@ -103,6 +103,9 @@
                                     member.alamat.IdAlamatUtama
                                 ]["Kode Pos"]
                             }},
+                        </label>
+                        <label v-else class="text-truncate-multiline mb-2 ml-0 mb-5">
+                            -
                         </label>
                     </div>
                     <div
@@ -227,7 +230,7 @@
                         type="button"
                         class="btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center"
                         style="border-radius: 30px"
-                        @click="this.$root.gotosite('konfigurasi-file')"
+                        onclick="window.location.href='/konfigurasi-file'"
                     >
                         Tambah File
                     </button>

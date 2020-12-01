@@ -39,6 +39,12 @@
     {{-- Fancy Box --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css" rel="stylesheet" />
 
+    {{-- SweetAlert2 --}}
+    {{-- <link rel="stylesheet" href="sweetalert2.min.css"> --}}
+    {{-- <link rel="stylesheet" href="sweetalert-master/src/sweetalert.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     {{--
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -476,6 +482,16 @@
     <script src="https://momentjs.com/downloads/moment-timezone-with-data-1970-2030.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script> --}}
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
+
+    {{-- <script src="sweetalert2.all.min.js"></script> --}}
+    {{-- <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script>
+    <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script> --}}
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script> --}}
 
     @yield('script')
 </body>

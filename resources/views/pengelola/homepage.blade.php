@@ -1,8 +1,10 @@
 @extends('layouts.pengelola')
 
 @section('content')
-
-<div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel">
+<div id="v-pills-beranda" role="tabpanel">
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="row justify-content-between mb-5 ml-0 mr-0">
         <div class="col-md-3 bg-light-purple p-4 text-center" style="border-radius:10px;">
             <label class="font-weight-bold text-break text-truncate" style="font-size: 48px; width:100%;">
@@ -18,8 +20,7 @@
                 {{$totalPelanggan}}
             </label>
             <br>
-            <label class="font-weight-bold text-break text-truncate" style="font-size: 18px;
-                                width:100%;">
+            <label class="font-weight-bold text-break text-truncate" style="font-size: 18px; width:100%;">
                 {{__('Total Pelanggan')}}
             </label>
         </div>
@@ -30,8 +31,7 @@
                 {{$partner->rating_toko}}
             </label>
             <br>
-            <label class="font-weight-bold text-break" style="font-size: 18px;
-                                    width:100%;">
+            <label class="font-weight-bold text-break" style="font-size: 18px; width:100%;">
                 {{__('Rating Tempat Percetakan')}}
             </label>
         </div>
@@ -53,13 +53,19 @@
             </thead>
             <tbody style="font-size:12px;">
                 @foreach ($partner->pesanan as $p => $value)
-                    @if ($value->status === "Pending")
-                        <tr onclick="window.location.href='{{ route('partner.detail.pesanan') }}'">
+                    @if ($value->status === "Pending" && $value->transaksiSaldo->status === "Berhasil")
+                        <tr onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">
                             <td scope="row">{{$value->id_pesanan}}</td>
-                            <td>{{date('H:i', strtotime($value->updated_at))}}</td>
-                            <td>{{date('d M Y', strtotime($value->updated_at))}}</td>
+                            <td>{{Carbon::parse($value->updated_at)->translatedFormat('H:i')}} WIB</td>
+                            <td>{{Carbon::parse($value->updated_at)->translatedFormat('d F Y')}}</td>
                             <td>{{count($value->konfigurasiFile)}}</td>
-                            <td>{{$value->metode_penerimaan}}</td>
+                            <td>
+                                @if ($value->metode_penerimaan != "Ditempat")
+                                    {{__('Antar ke Rumah')}}
+                                @else
+                                    {{__('Ambil di Tempat')}}
+                                @endif
+                            </td>
                             <td>{{$value->status}}</td>
                         </tr>
                     @endif

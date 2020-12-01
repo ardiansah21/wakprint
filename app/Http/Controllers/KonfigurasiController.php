@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Konfigurasi_file;
+use App\Member;
 use App\Pesanan;
 use App\Produk;
+use App\Transaksi_saldo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
+use Str;
 
 class KonfigurasiController extends Controller
 {
@@ -57,9 +60,9 @@ class KonfigurasiController extends Controller
 
     public function tambahKonfigurasi(Request $request)
     {
+        // dd(json_decode($request->fiturTerpilih));
         $member = Auth::user();
         // $konfigurasi = Konfigurasi_file::all();
-        $waktu = Carbon::now()->format('Y:m:d H:i:s');
 
         $konfigurasi = Konfigurasi_file::create([
             'id_member' => $member->id_member,
@@ -70,11 +73,11 @@ class KonfigurasiController extends Controller
             'halaman_terpilih' => json_encode($request->halamanTerpilih),
             'jumlah_salinan' => $request->jumlahSalinan,
             'paksa_hitamputih' => $request->paksaHitamPutih,
+            'timbal_balik' => $request->timbalBalik,
             'biaya' => $request->biaya,
             'catatan_tambahan' => $request->catatanTambahan,
             'nama_produk' => $request->namaProduk,
-            'fitur_terpilih' => json_encode($request->fiturTerpilih),
-            'waktu' => $waktu,
+            'fitur_terpilih' => $request->fiturTerpilih,
         ]);
 
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
@@ -116,7 +119,6 @@ class KonfigurasiController extends Controller
     {
         $konfigurasi = Konfigurasi_file::find($id);
         $member = Auth::user();
-        $waktu = Carbon::now()->format('Y:m:d H:i:s');
 
         $konfigurasi->update([
             'id_member' => $member->id_member,
@@ -131,7 +133,6 @@ class KonfigurasiController extends Controller
             'catatan_tambahan' => $request->catatanTambahan,
             'nama_produk' => $request->namaProduk,
             'fitur_terpilih' => json_encode($request->fiturTerpilih),
-            'waktu' => $waktu,
         ]);
         $konfigurasi->clearMediaCollection();
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
@@ -219,11 +220,12 @@ class KonfigurasiController extends Controller
                 'id_member' => $konfigurasi->id_member,
                 'metode_penerimaan' => 'Ditempat',
                 'biaya' => $konfigurasi->biaya,
-                'status' => 'Pending',
             ]);
             $konfigurasi->pesanan()->associate($pesanan)->save();
             return view('member.konfigurasi_pesanan', ['pesanan' => $pesanan]);
         }
+        $request->session()->put('alamatPesanan');
+
         return redirect()->back()->with('error', 'anda belum membuat pesanan');
     }
 
@@ -234,28 +236,135 @@ class KonfigurasiController extends Controller
     public function konfirmasiPesanan(Request $request)
     {
         $konFileTerpilih = Konfigurasi_file::findMany(explode(',', $request->konFileTerpilih));
-        // $atkTerpilih = Atk::findMany(explode(',', $request->atkTerpilih));
+        $member = Auth::user();
+        $idPesanan = $konFileTerpilih->first()->pesanan->id_pesanan;
         $atks = array_chunk(explode(',', $request->atks), 4);
         $penerimaan = $request->penerimaan;
         $subTotalFile = $request->subTotalFile;
-        $ongkir = $request->ongkir;
-        $totalBiaya = $request->totalBiaya;
-        // dd($konFileTerpilih);
-        // dd($atkTerpilih);
-        // dd($request->atkTerpilih);
 
-        // $a = "[{ayam: 1, bebek: 2, dodol: 4}]";
-        // dd(json_decode($a));
-        // dd(array_chunk($atks, 4));
-        // dd($atks);
+        if ($konFileTerpilih->first()->pesanan->metode_penerimaan != "Ditempat") {
+            $ongkir = $request->ongkir;
+            $totalBiaya = $request->totalBiaya + $ongkir;
+        } else {
+            $ongkir = 0;
+            $totalBiaya = $request->totalBiaya;
+        }
 
-        // dd($request->all());
-        // dd($request->konFileTerpilih);
-        return view('member.konfirmasi_pesanan', compact('konFileTerpilih', 'atks', 'penerimaan', 'subTotalFile', 'ongkir', 'totalBiaya'));
+        return view('member.konfirmasi_pesanan', compact('idPesanan', 'member', 'konFileTerpilih', 'atks', 'penerimaan', 'subTotalFile', 'ongkir', 'totalBiaya'));
     }
 
-    public function konfirmasiPembayaran(Request $request)
+    public function updateKonfirmasiPesanan($idPesanan, Request $request)
     {
-        return 'bbbbb';
+        $member = Member::find(Auth::id());
+        $pesanan = $member->pesanans->find($idPesanan);
+
+        if ($member->jumlah_saldo < $request->totalBiaya) {
+            $transaksiSaldo = Transaksi_saldo::create([
+                'id_pesanan' => $idPesanan,
+                'id_pengelola' => $pesanan->partner->id_pengelola,
+                'id_member' => $member->id_member,
+                'jenis_transaksi' => 'Pembayaran',
+                'jumlah_saldo' => $request->totalBiaya,
+                'kode_pembayaran' => Str::random(20),
+                'status' => 'Pending',
+                'keterangan' => 'Pembayaran sedang diproses',
+            ]);
+            $transaksiSaldo->save();
+        } else {
+            $transaksiSaldo = Transaksi_saldo::create([
+                'id_pesanan' => $idPesanan,
+                'id_pengelola' => $pesanan->partner->id_pengelola,
+                'id_member' => $member->id_member,
+                'jenis_transaksi' => 'Pembayaran',
+                'jumlah_saldo' => $request->totalBiaya,
+                'kode_pembayaran' => Str::random(20),
+                'status' => 'Berhasil',
+                'keterangan' => 'Pembayaran telah berhasil dilakukan',
+            ]);
+            $sisaSaldo = $member->jumlah_saldo - $request->totalBiaya;
+            $member->jumlah_saldo = $sisaSaldo;
+
+            $member->save();
+            $transaksiSaldo->save();
+        }
+
+        $pesanan->update([
+            'atk_terpilih' => $request->atkTerpilih,
+            'alamat_penerima' => $request->alamatPenerima,
+            'ongkos_kirim' => $request->ongkir,
+            'atk_terpilih' => $request->atkTerpilih,
+            'biaya' => $request->totalBiaya,
+            'status' => 'Pending',
+        ]);
+
+        $pesanan->save();
+        // dd(json_decode($pesanan->atk_terpilih));
+        return redirect()->route('konfirmasi.pembayaran', $idPesanan);
+    }
+
+    public function deleteKonfirmasiPesanan($idPesanan, Request $request)
+    {
+        $member = Member::find(Auth::id());
+        $pesanan = $member->pesanans->find($idPesanan);
+        // $konfigurasiPesanan = $pesanan->konfgurasiFile
+
+        $pesanan->konfigurasiFile->first()->delete();
+        $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
+        $pesanan->delete();
+
+        // dd(json_decode($pesanan->atk_terpilih));
+        return redirect()->route('pesanan');
+    }
+
+    public function konfirmasiPembayaran($idPesanan, Request $request)
+    {
+        $pesanan = Pesanan::find($idPesanan);
+        $konFileTerpilih = $pesanan->konfigurasiFile;
+        $member = Auth::user();
+        $transaksiSaldo = $pesanan->transaksiSaldo;
+        $atks = json_decode($pesanan->atk_terpilih);
+        $penerimaan = $pesanan->metode_penerimaan;
+        $subTotalFile = count($pesanan->konfigurasiFile);
+        $batasWaktuTransaksi = Carbon::parse($transaksiSaldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i');
+        $waktuTransaksiExpired = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('l, d F Y H:i');
+
+        if ($penerimaan != "Ditempat") {
+            $ongkir = $pesanan->ongkos_kirim;
+            $totalBiaya = $pesanan->biaya + $ongkir;
+        } else {
+            $ongkir = 0;
+            $totalBiaya = $pesanan->biaya;
+        }
+        return view('member.detail_pesanan', compact('member', 'pesanan', 'konFileTerpilih', 'atks', 'penerimaan', 'subTotalFile', 'ongkir', 'totalBiaya', 'transaksiSaldo', 'batasWaktuTransaksi', 'waktuTransaksiExpired'));
+    }
+
+    public function cancelPesanan($idPesanan)
+    {
+        $pesanan = Pesanan::find($idPesanan);
+        $transaksiSaldo = $pesanan->transaksiSaldo;
+
+        $pesanan->status = "Batal";
+        $transaksiSaldo->status = "Gagal";
+        $transaksiSaldo->keterangan = "Pesanan telah dibatalkan oleh pelanggan";
+
+        $pesanan->save();
+        $transaksiSaldo->save();
+
+        return redirect()->route('pesanan');
+    }
+
+    public function selesaikanPesanan($idPesanan)
+    {
+        $pesanan = Pesanan::find($idPesanan);
+        $transaksiSaldo = $pesanan->transaksiSaldo;
+
+        $pesanan->status = "Selesai";
+        $transaksiSaldo->status = "Berhasil";
+        $transaksiSaldo->keterangan = "Pesanan telah selesai";
+
+        $pesanan->save();
+        $transaksiSaldo->save();
+
+        return redirect()->route('pesanan');
     }
 }

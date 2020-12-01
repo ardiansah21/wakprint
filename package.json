@@ -31,6 +31,8 @@
         "moment-timezone": "^0.5.32",
         "owl.carousel": "^2.3.4",
         "pusher-js": "^7.0.1",
+        "sweetalert": "^2.1.2",
+        "sweetalert2": "^10.10.4",
         "vue-numeric-input": "^1.0.6"
     }
 }

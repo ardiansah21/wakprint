@@ -43,16 +43,6 @@
                                         <td class="align-middle" name="nomorhp">{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}</td>
                                         <td class="align-middle">
                                             <span>
-                                                {{-- <input id="data-id" type="text" value="{{ $member->alamat['alamat'][$i]['id'] ?? '-'}}" hidden>
-                                                <input id="data-nama-penerima" type="text" value="{{ $member->alamat['alamat'][$i]['Nama Penerima'] ?? '-'}}" hidden>
-                                                <input id="data-nomor-hp" type="text" value="{{ $member->alamat['alamat'][$i]['Nomor HP'] ?? '-'}}" hidden>
-                                                <input id="data-provinsi" type="text" value="{{ $member->alamat['alamat'][$i]['Provinsi'] ?? '-'}}" hidden>
-                                                <input id="data-kabupaten-kota" type="text" value="{{ $member->alamat['alamat'][$i]['Kabupaten Kota'] ?? '-'}}" hidden>
-                                                <input id="data-kecamatan" type="text" value="{{ $member->alamat['alamat'][$i]['Kecamatan'] ?? '-'}}" hidden>
-                                                <input id="data-kelurahan" type="text" value="{{ $member->alamat['alamat'][$i]['Kelurahan'] ?? '-'}}" hidden>
-                                                <input id="data-kode-pos" type="text" value="{{ $member->alamat['alamat'][$i]['Kode Pos'] ?? '-'}}" hidden>
-                                                <input id="data-alamat-jalan" type="text" value="{{ $member->alamat['alamat'][$i]['Alamat Jalan'] ?? '-'}}" hidden> --}}
-
                                                 <a href="" class="material-icons text-decoration-none mr-2"
                                                     data-toggle="modal"
                                                     data-target="#editAlamatModal" data-title="Ubah Alamat Pengiriman"
@@ -73,24 +63,21 @@
                                                 </a>
                                             </span>
                                         </td>
-                                        <td class="pilih text-center align-middle">
-                                            <span>
-                                                @if (!empty($member->alamat['alamat']))
-                                                    @if ($member->alamat['IdAlamatUtama'] === $member->alamat['alamat'][$i]['id'])
-                                                        <label class="btn btn-outline-purple">
+                                        @if (!empty($member->alamat['alamat']))
+                                            <td class="pilih text-center align-middle">
+                                                @if ($member->alamat['IdAlamatUtama'] === $member->alamat['alamat'][$i]['id'])
+                                                        <label class="btn btn-outline-purple" disabled>
                                                             Utama
                                                         </label>
-                                                    @else
-                                                        <a onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'" text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
+                                                @else
+                                                    <span>
+                                                        <a onclick="window.location.href='{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}'" text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
                                                             check_circle
                                                         </a>
-                                                        {{-- <label class="btn btn-primary-wakprint px-4" onclick="window.location.href='alamat/pilih/{{$member->alamat['alamat'][$i]['id']}}'">
-                                                            Pilih
-                                                        </label> --}}
-                                                    @endif
+                                                    </span>
                                                 @endif
-                                            </span>
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endif
                         @endfor
@@ -115,7 +102,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="formModal" action="{{ route('alamat.tambah') }}" class="mb-3" method="POST">
+                    <form id="formModal" action="{{ route('alamat.tambah',$member->id_member) }}" class="mb-3" method="POST">
                         @csrf
                         <button class="close material-icons md-32" data-dismiss="modal">
                             close
@@ -232,7 +219,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form id="formModal" action="{{ route('alamat.edit') }}" class="mb-3" method="POST">
+                    <form id="formModal" action="{{ route('alamat.edit',$member->id_member) }}" class="mb-3" method="POST">
                         @csrf
                         <button class="close material-icons md-32" data-dismiss="modal">
                             close

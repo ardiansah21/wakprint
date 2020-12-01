@@ -29,4 +29,9 @@ class Pesanan extends Model
     {
         return $this->hasMany('App\Ulasan', 'id_member');
     }
+
+    public function transaksiSaldo()
+    {
+        return $this->hasOne('App\Transaksi_saldo', 'id_pesanan');
+    }
 }

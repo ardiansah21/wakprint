@@ -488,6 +488,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 var atkObj = new Object();
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1932,51 +1935,65 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "label",
-                    { staticClass: "text-truncate-multiline mb-2 ml-0 mb-5" },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Alamat Jalan"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kelurahan"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kecamatan"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kabupaten Kota"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Provinsi"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kode Pos"]
-                          ) +
-                          ",\n                    "
+                  _vm.member.alamat.alamat != "[]"
+                    ? _c(
+                        "label",
+                        {
+                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Alamat Jalan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kelurahan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kecamatan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kabupaten Kota"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Provinsi"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kode Pos"]
+                              ) +
+                              ",\n                    "
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : _c(
+                        "label",
+                        {
+                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
+                        },
+                        [
+                          _vm._v(
+                            "\n                        -\n                    "
+                          )
+                        ]
+                      )
                 ]
               ),
               _vm._v(" "),
@@ -2300,11 +2317,9 @@ var render = function() {
                   staticClass:
                     "btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center",
                   staticStyle: { "border-radius": "30px" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return this.$root.gotosite("konfigurasi-file")
-                    }
+                  attrs: {
+                    type: "button",
+                    onclick: "window.location.href='/konfigurasi-file'"
                   }
                 },
                 [_vm._v("\n                    Tambah File\n                ")]
@@ -14882,7 +14897,7 @@ var konfigurasiPesanan = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/js/konfigurasiPesanan.js */"./resources/js/konfigurasiPesanan.js");
+module.exports = __webpack_require__(/*! /home/vagrant/wakprint/resources/js/konfigurasiPesanan.js */"./resources/js/konfigurasiPesanan.js");
 
 
 /***/ })

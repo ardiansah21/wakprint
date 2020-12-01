@@ -318,6 +318,7 @@
                 <input type='text' name="halamanTerpilih" id="halamanTerpilih" value="" hidden />
                 <input type='number' name="jumlahSalinan" id="jumlahSalinan" value="" hidden />
                 <input type='number' name="paksaHitamPutih" id="paksaHitamPutih" value="" hidden />
+                <input type='number' name="timbalBalik" id="timbalBalik" value="" hidden />
                 <input type='number' name="biaya" id="biaya" value="" hidden />
                 <input type='text' name="catatanTambahan" id="catatanTambahan" value="" hidden />
                 <input type='text' name="namaProduk" id="namaProduk" value="{{session()->get('produkKonfigurasiFile')->nama}}" hidden />
@@ -326,8 +327,6 @@
                 <script>
                     $(function () {
                         $(document).ready(function () {
-
-
                                 $.ajaxSetup({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -346,6 +345,7 @@
                                         halamanTerpilih:[],
                                         jumlahSalinan:$('#jumlahSalin').val(),
                                         paksaHitamPutih:0,
+                                        timbalBalik:0,
                                         biaya:0,
                                         catatanTambahan:$('#catatanTambahan').val(),
                                         namaProduk:"{{session()->get('produkKonfigurasiFile')->nama}}",
@@ -376,6 +376,7 @@
                                         pdf.halamanTerpilih = [];
                                         pdf.jumlahSalinan = parseInt($('#jumlahSalin').val());
                                         pdf.paksaHitamPutih = 0;
+                                        pdf.timbalBalik = 0;
                                         pdf.namaProduk = '{{session()->get('produkKonfigurasiFile')->nama}}';
                                         pdf.fiturTerpilih = [];
 
@@ -556,6 +557,8 @@
 
                                                 if($('#rbSemuaHal').is(':checked')){
                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                        pdf.timbalBalik = 1;
+
                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                             $('#jumlahHitamPutih').html(
@@ -615,10 +618,9 @@
                                                         );
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
-                                                            $('#hargaHitamPutih').html(
-                                                                'Rp. ' + hargaHitamPutihFinal
-                                                            );
+                                                            $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
                                                             hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
                                                             $('#hargaBerwarna').html(
@@ -630,6 +632,7 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.timbalBalik = 0;
                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -646,6 +649,8 @@
                                                         }
                                                     }
                                                     else{
+                                                        pdf.timbalBalik = 0;
+
                                                         $('#jumlahHitamPutih').html(
                                                             pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih'
                                                         );
@@ -676,6 +681,7 @@
                                                     var jumlahBerwarnaFinal = 0;
 
                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                        pdf.timbalBalik = 1;
                                                         batasBawah = parseInt($('#halamanAwal').val())-1;
                                                         batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -769,6 +775,7 @@
                                                         );
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -783,6 +790,7 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.timbalBalik = 0;
                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -798,6 +806,7 @@
                                                         }
                                                     }
                                                     else{
+                                                        pdf.timbalBalik = 0;
                                                         batasBawah = parseInt($('#halamanAwal').val())-1;
                                                         batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -871,6 +880,7 @@
                                                                     }
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -939,6 +949,7 @@
                                                                         );
 
                                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                                            pdf.timbalBalik = 1;
                                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -953,6 +964,7 @@
                                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                         }
                                                                         else {
+                                                                            pdf.timbalBalik = 0;
                                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -968,6 +980,7 @@
                                                                         }
                                                                     }
                                                                     else{
+                                                                        pdf.timbalBalik = 0;
                                                                         pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                         pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -1008,6 +1021,7 @@
                                                     jumlahSalinan = val-1;
                                                     if($('#rbSemuaHal').is(':checked')){
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                 $('#jumlahHitamPutih').html(
@@ -1065,6 +1079,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -1079,6 +1094,7 @@
                                                                 $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -1094,6 +1110,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             $('#jumlahHitamPutih').html(
                                                                 pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih'
                                                             );
@@ -1123,6 +1140,7 @@
                                                         var jumlahBerwarnaFinal = 0;
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             batasBawah = parseInt($('#halamanAwal').val())-1;
                                                             batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -1216,6 +1234,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -1230,6 +1249,7 @@
                                                                 $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -1245,6 +1265,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             batasBawah = parseInt($('#halamanAwal').val())-1;
                                                             batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -1318,6 +1339,7 @@
                                                                     }
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -1386,6 +1408,7 @@
                                                                         );
 
                                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                                            pdf.timbalBalik = 1;
                                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -1400,6 +1423,7 @@
                                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                         }
                                                                         else {
+                                                                            pdf.timbalBalik = 0;
                                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -1415,6 +1439,7 @@
                                                                         }
                                                                     }
                                                                     else{
+                                                                        pdf.timbalBalik = 0;
                                                                         pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                         pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -1448,6 +1473,7 @@
                                                     jumlahSalinan = 1;
                                                     if($('#rbSemuaHal').is(':checked')){
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                 $('#jumlahHitamPutih').html(
@@ -1495,6 +1521,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan
                                                                 );
@@ -1504,6 +1531,7 @@
                                                                 );
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan
                                                                 );
@@ -1514,6 +1542,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             $('#jumlahHitamPutih').html(
                                                                 pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih'
                                                             );
@@ -1538,6 +1567,7 @@
                                                         var jumlahBerwarnaFinal = 0;
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             batasBawah = parseInt($('#halamanAwal').val())-1;
                                                             batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -1631,6 +1661,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -1645,6 +1676,7 @@
                                                                 $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -1660,6 +1692,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             batasBawah = parseInt($('#halamanAwal').val())-1;
                                                             batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -1733,6 +1766,7 @@
                                                                     }
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -1801,6 +1835,7 @@
                                                                         );
 
                                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                                            pdf.timbalBalik = 1;
                                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -1815,6 +1850,7 @@
                                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                         }
                                                                         else {
+                                                                            pdf.timbalBalik = 0;
                                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -1830,6 +1866,7 @@
                                                                         }
                                                                     }
                                                                     else{
+                                                                        pdf.timbalBalik = 0;
                                                                         pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                         pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -1861,6 +1898,7 @@
                                                 else {
                                                     if($('#rbSemuaHal').is(':checked')){
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                 $('#jumlahHitamPutih').html(
@@ -1908,6 +1946,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan
                                                                 );
@@ -1917,6 +1956,7 @@
                                                                 );
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan
                                                                 );
@@ -1927,6 +1967,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             $('#jumlahHitamPutih').html(
                                                                 pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih'
                                                             );
@@ -1951,6 +1992,7 @@
                                                         var jumlahBerwarnaFinal = 0;
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             batasBawah = parseInt($('#halamanAwal').val())-1;
                                                             batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -2044,6 +2086,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -2058,6 +2101,7 @@
                                                                 $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -2073,6 +2117,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             batasBawah = parseInt($('#halamanAwal').val())-1;
                                                             batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -2146,6 +2191,7 @@
                                                                     }
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -2214,6 +2260,7 @@
                                                                         );
 
                                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                                            pdf.timbalBalik = 1;
                                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -2228,6 +2275,7 @@
                                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                         }
                                                                         else {
+                                                                            pdf.timbalBalik = 0;
                                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -2243,6 +2291,7 @@
                                                                         }
                                                                     }
                                                                     else{
+                                                                        pdf.timbalBalik = 0;
                                                                         pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                         pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -2279,6 +2328,7 @@
                                             $('input[type=checkbox]').on('click change',(function(){
                                                 if($('#rbSemuaHal').is(':checked')){
                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                        pdf.timbalBalik = 1;
                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                             pdf.paksaHitamPutih = 1;
@@ -2343,6 +2393,7 @@
                                                         );
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -2357,6 +2408,7 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.timbalBalik = 0;
                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -2372,7 +2424,7 @@
                                                         }
                                                     }
                                                     else{
-
+                                                        pdf.timbalBalik = 0;
                                                         pdf.paksaHitamPutih = 0;
 
                                                         $('#jumlahHitamPutih').html(
@@ -2404,6 +2456,7 @@
                                                     var jumlahBerwarnaFinal = 0;
 
                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                        pdf.timbalBalik = 1;
                                                         batasBawah = parseInt($('#halamanAwal').val())-1;
                                                         batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -2497,6 +2550,7 @@
                                                         );
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -2511,6 +2565,7 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.timbalBalik = 0;
                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -2526,6 +2581,7 @@
                                                         }
                                                     }
                                                     else{
+                                                        pdf.timbalBalik = 0;
                                                         batasBawah = parseInt($('#halamanAwal').val())-1;
                                                         batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -2599,6 +2655,7 @@
                                                                 }
 
                                                                 if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    pdf.timbalBalik = 1;
                                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -2667,6 +2724,7 @@
                                                                     );
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                         $('#hargaHitamPutih').html(
                                                                             'Rp. ' + hargaHitamPutihFinal
@@ -2681,6 +2739,7 @@
                                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                     }
                                                                     else {
+                                                                        pdf.timbalBalik = 0;
                                                                         hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                         $('#hargaHitamPutih').html(
                                                                             'Rp. ' + hargaHitamPutihFinal
@@ -2696,6 +2755,7 @@
                                                                     }
                                                                 }
                                                                 else{
+                                                                    pdf.timbalBalik = 0;
                                                                     pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                     pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -2735,7 +2795,14 @@
                                                         fiturTerpilih.push($(this).val());
                                                         hargaFiturTerpilih.push($('#hargaFitur' + index).val());
 
-                                                        pdf.fiturTerpilih.push('namaFitur : ' + $(this).val() + ' hargaFitur : ' + $('#hargaFitur' + index).val());
+                                                        // pdf.fiturTerpilih.push('namaFitur : ' + $(this).val() + ' hargaFitur : ' + $('#hargaFitur' + index).val());
+
+                                                        pdf.fiturTerpilih.push({
+                                                            "namaFitur": $(this).val(),
+                                                            "hargaFitur": $('#hargaFitur' + index).val()
+                                                        });
+
+                                                        console.log(JSON.stringify(pdf.fiturTerpilih));
 
                                                         hargaTotalFiturTerpilih = eval(hargaFiturTerpilih.join("+"));
 
@@ -2760,6 +2827,7 @@
 
                                                         if($('#rbSemuaHal').is(':checked')){
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                     $('#jumlahHitamPutih').html(
@@ -2817,6 +2885,7 @@
                                                                 );
 
                                                                 if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    pdf.timbalBalik = 1;
                                                                     hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -2831,6 +2900,7 @@
                                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                 }
                                                                 else {
+                                                                    pdf.timbalBalik = 0;
                                                                     hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -2846,6 +2916,7 @@
                                                                 }
                                                             }
                                                             else{
+                                                                pdf.timbalBalik= 0;
                                                                 $('#jumlahHitamPutih').html(
                                                                     pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih'
                                                                 );
@@ -2876,6 +2947,7 @@
                                                             var jumlahBerwarnaFinal = 0;
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 batasBawah = parseInt($('#halamanAwal').val())-1;
                                                                 batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -2969,6 +3041,7 @@
                                                                 );
 
                                                                 if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    pdf.timbalBalik = 1;
                                                                     hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -2983,6 +3056,7 @@
                                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                 }
                                                                 else {
+                                                                    pdf.timbalBalik = 0;
                                                                     hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -2998,6 +3072,7 @@
                                                                 }
                                                             }
                                                             else{
+                                                                pdf.timbalBalik = 0;
                                                                 batasBawah = parseInt($('#halamanAwal').val())-1;
                                                                 batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -3071,6 +3146,7 @@
                                                                     }
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -3139,6 +3215,7 @@
                                                                         );
 
                                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                                            pdf.timbalBalik = 1;
                                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -3153,6 +3230,7 @@
                                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                         }
                                                                         else {
+                                                                            pdf.timbalBalik = 0;
                                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -3168,6 +3246,7 @@
                                                                         }
                                                                     }
                                                                     else{
+                                                                        pdf.timbalBalik = 0;
                                                                         pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                         pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -3205,6 +3284,8 @@
                                                             fiturTerpilih.splice(pos, 1);
                                                             hargaFiturTerpilih.splice(pos,1);
                                                             pdf.fiturTerpilih.splice(pos,1);
+
+                                                            console.log(pdf.fiturTerpilih);
 
                                                             if(fiturTerpilih.length === 0 && hargaFiturTerpilih.length === 0){
                                                                 hargaTotalFiturTerpilih = 0;
@@ -3252,6 +3333,7 @@
 
                                                         if($('#rbSemuaHal').is(':checked')){
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                     $('#jumlahHitamPutih').html(
@@ -3309,6 +3391,7 @@
                                                                 );
 
                                                                 if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    pdf.timbalBalik = 1;
                                                                     hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -3323,6 +3406,7 @@
                                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                 }
                                                                 else {
+                                                                    pdf.timbalBalik = 0;
                                                                     hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -3338,6 +3422,7 @@
                                                                 }
                                                             }
                                                             else{
+                                                                pdf.timbalBalik = 0;
                                                                 $('#jumlahHitamPutih').html(
                                                                     pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih'
                                                                 );
@@ -3368,6 +3453,7 @@
                                                             var jumlahBerwarnaFinal = 0;
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 batasBawah = parseInt($('#halamanAwal').val())-1;
                                                                 batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -3461,6 +3547,7 @@
                                                                 );
 
                                                                 if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    pdf.timbalBalik = 1;
                                                                     hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -3475,6 +3562,7 @@
                                                                     $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                 }
                                                                 else {
+                                                                    pdf.timbalBalik = 0;
                                                                     hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                     $('#hargaHitamPutih').html(
                                                                         'Rp. ' + hargaHitamPutihFinal
@@ -3490,6 +3578,7 @@
                                                                 }
                                                             }
                                                             else{
+                                                                pdf.timbalBalik = 0;
                                                                 batasBawah = parseInt($('#halamanAwal').val())-1;
                                                                 batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -3564,6 +3653,7 @@
                                                                     }
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                             nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -3632,6 +3722,7 @@
                                                                         );
 
                                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                                            pdf.timbalBalik = 1;
                                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -3646,6 +3737,7 @@
                                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                         }
                                                                         else {
+                                                                            pdf.timbalBalik = 0;
                                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                             $('#hargaHitamPutih').html(
                                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -3661,6 +3753,7 @@
                                                                         }
                                                                     }
                                                                     else{
+                                                                        pdf.timbalBalik = 0;
                                                                         pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                         pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -3715,6 +3808,7 @@
                                                     }
 
                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                        pdf.timbalBalik = 1;
                                                         if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                             pdf.paksaHitamPutih = 1;
@@ -3786,6 +3880,7 @@
                                                         pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -3800,6 +3895,7 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.timbalBalik = 0;
                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -3815,6 +3911,7 @@
                                                         }
                                                     }
                                                     else{
+                                                        pdf.timbalBalik = 0;
                                                         pdf.paksaHitamPutih = 0;
 
                                                         $('#jumlahHitamPutih').html(
@@ -3866,6 +3963,7 @@
                                                         range(parseInt($('#halamanAwal').val()),parseInt($('#halamanAkhir').val()),1);
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                 nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -3934,6 +4032,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -3948,6 +4047,7 @@
                                                                 $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -3963,6 +4063,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                             pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -4005,6 +4106,7 @@
                                                         range(parseInt($('#halamanAwal').val()),parseInt($('#halamanAkhir').val()),1);
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                 nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -4073,6 +4175,7 @@
                                                             );
 
                                                             if($('#checkboxTimbalBalik').is(':checked')){
+                                                                pdf.timbalBalik = 1;
                                                                 hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -4087,6 +4190,7 @@
                                                                 $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                             else {
+                                                                pdf.timbalBalik = 0;
                                                                 hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                 $('#hargaHitamPutih').html(
                                                                     'Rp. ' + hargaHitamPutihFinal
@@ -4102,6 +4206,7 @@
                                                             }
                                                         }
                                                         else{
+                                                            pdf.timbalBalik = 0;
                                                             pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                             pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -4144,6 +4249,7 @@
                                                     );
 
                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                        pdf.timbalBalik = 1;
                                                         batasBawah = parseInt($('#halamanAwal').val())-1;
                                                         batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -4236,6 +4342,7 @@
                                                         );
 
                                                         if($('#checkboxTimbalBalik').is(':checked')){
+                                                            pdf.timbalBalik = 1;
                                                             hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -4250,6 +4357,7 @@
                                                             $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                         else {
+                                                            pdf.timbalBalik = 0;
                                                             hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                             $('#hargaHitamPutih').html(
                                                                 'Rp. ' + hargaHitamPutihFinal
@@ -4265,6 +4373,7 @@
                                                         }
                                                     }
                                                     else{
+                                                        pdf.timbalBalik = 0;
                                                         batasBawah = parseInt($('#halamanAwal').val())-1;
                                                         batasAtas = parseInt($('#halamanAkhir').val())-1;
 
@@ -4348,6 +4457,7 @@
                                                                 }
 
                                                                 if($('#checkboxTimbalBalik').is(':checked')){
+                                                                    pdf.timbalBalik = 1;
                                                                     if($('#checkboxPaksaHitamPutih').is(':checked')){
 
                                                                         nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
@@ -4416,6 +4526,7 @@
                                                                     );
 
                                                                     if($('#checkboxTimbalBalik').is(':checked')){
+                                                                        pdf.timbalBalik = 1;
                                                                         hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                         $('#hargaHitamPutih').html(
                                                                             'Rp. ' + hargaHitamPutihFinal
@@ -4430,6 +4541,7 @@
                                                                         $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                                     }
                                                                     else {
+                                                                        pdf.timbalBalik = 0;
                                                                         hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
                                                                         $('#hargaHitamPutih').html(
                                                                             'Rp. ' + hargaHitamPutihFinal
@@ -4445,6 +4557,7 @@
                                                                     }
                                                                 }
                                                                 else{
+                                                                    pdf.timbalBalik = 0;
                                                                     pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
                                                                     pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
@@ -4498,9 +4611,10 @@
                                                 $('#halamanTerpilih').val(pdf.halamanTerpilih);
                                                 $('#jumlahSalinan').val(pdf.jumlahSalinan);
                                                 $('#paksaHitamPutih').val(pdf.paksaHitamPutih);
+                                                $('#timbalBalik').val(pdf.timbalBalik);
                                                 $('#biaya').val(pdf.biaya);
                                                 $('#catatanTambahan').val(pdf.catatanTambahan);
-                                                $('#fiturTerpilih').val(pdf.fiturTerpilih);
+                                                $('#fiturTerpilih').val(JSON.stringify(pdf.fiturTerpilih));
 
                                                 $('#konfigurasiForm').submit();
                                             }));
@@ -4514,116 +4628,13 @@
                                             }
                                     }
                                 });
-
-
                         });
-
-
                     });
 
                 </script>
             </form>
         @endif
-
         <div id="hasil">
-            {{-- <script>
-                $(function(pdf){
-                    $('#loading').hide();
-
-                    // alert(pdf.jumlahHalBerwarna);
-
-                    // document.getElementById('halamanAwal').onchange(function(){
-                    //     alert("asdasdas");
-
-                    //     document.getElementById('jumlahHal').text = parseInt(document.getElementById('halamanAkhir').value) - parseInt(this.value)+1;
-
-                    // });
-                    $(document).ready(function(){
-                        $('input[type=radio]').on('click change',(function(){
-
-                            var related_class=$(this).val();
-                            $('.'+related_class).prop('disabled',false);
-                            if($('#rbSemuaHal').is(':checked')){
-                                var nilaiSemuaHalaman = $('#rbSemuaHal').val();
-                                $('#jumlahHalCetak').html(
-                                    '<label id="jumlahHalCetak" class="my-auto" style="font-size: 16px;">' +
-                                        '<i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4">warning</i>' +
-                                        '<label id="jumlahHal">' + nilaiSemuaHalaman + '</label>' +
-                                        ' Halaman yang Akan Dicetak' +
-                                    '</label>'
-                                );
-
-                                $('#jumlahHitamPutih').html(
-                                    '<label id="jumlahHitamPutih" class="mb-2">' +
-                                        '   ' + pdf['jumlahHalHitamPutih'] + ' Halaman Berwarna' +
-                                    '</label>' +
-                                    '<br>'
-                                );
-
-                                $('#jumlahBerwarna').html(
-                                    '<label id="jumlahBerwarna" class="mb-2">' +
-                                    '   ' + pdf['jumlahHalBerwarna'] + ' Halaman Berwarna' +
-                                    '</label>' +
-                                    '<br>'
-                                );
-
-                            }
-                            else if($('#rbSampaiHal').is(':checked')){
-                                var nilaiSampaiHalaman = document.getElementById('halamanAkhir').value - document.getElementById('halamanAwal').value;
-                                    if(nilaiSampaiHalaman === 0){
-                                        nilaiSampaiHalaman = 1;
-                                    }
-                                    else{
-                                        nilaiSampaiHalaman += 1;
-                                    }
-                                $('#jumlahHalCetak').html(
-                                    '<label id="jumlahHalCetak" class="my-auto" style="font-size: 16px;">' +
-                                        '<i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4">warning</i>' +
-                                        '<label id="jumlahHal">' + nilaiSampaiHalaman + '</label>' +
-                                        ' Halaman yang Akan Dicetak' +
-                                    '</label>'
-                                );
-                            }
-                            // $('#rbSemuaHal').bind('change',function(){
-                            //     if(this.checked){
-                            //         var nilai1 = $('#rbSemuaHal').val(pdf['jumlahHalaman']);
-                            //         alert(nilai1);
-                            //     }
-                            // });
-
-                            // alert(related_class);
-
-                            $('input[type=radio]').not(':checked').each(function(){
-                                var other_class=$(this).val();
-                                $('.'+other_class).prop('disabled',true);
-                                // alert(other_class);
-                            });
-                        }));
-                    });
-
-                    var jumlahSalinan = 1;
-
-                    $('#btnPlus').click(function(){
-                        var val = parseInt($('#jumlahSalin').val(),10);
-                        $('#jumlahSalin').val((val+1));
-                        jumlahSalinan = val+1;
-                        // alert(jumlahSalinan);
-                    });
-
-                    $('#btnMinus').click(function(){
-                        var val = parseInt($('#jumlahSalin').val(),10);
-                        if (val>1) {
-                            $('#jumlahSalin').val((val-1));
-                            jumlahSalinan = val-1;
-                        }
-                        // alert(jumlahSalinan);
-                    });
-
-
-                    // $('#btnPlus')
-
-                });
-            </script> --}}
         </div>
     </div>
 </div>

@@ -69,8 +69,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profil/edit', 'MemberController@updateDataProfile');
 
     Route::get('profil/alamat', 'MemberController@alamat')->name('alamat');
-    Route::post('profil/alamat/update', 'MemberController@editAlamat')->name('alamat.edit');
-    Route::post('profil/alamat/tambah', 'MemberController@tambahAlamat')->name('alamat.tambah');
+    Route::post('profil/alamat/update/{id}', 'MemberController@editAlamat')->name('alamat.edit');
+    Route::post('profil/alamat/tambah/{id}', 'MemberController@tambahAlamat')->name('alamat.tambah');
     Route::get('profil/alamat/hapus/{id}', 'MemberController@hapusAlamat')->name('alamat.hapus');
     Route::get('profil/alamat/pilih/{id}', 'MemberController@pilihAlamat')->name('alamat.pilih');
     Route::get('saldo', 'MemberController@saldo')->name('saldo');
@@ -112,7 +112,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfigurasi-pesanan/konfirmasi', 'KonfigurasiController@konfirmasiPesanan')->name('konfirmasi.pesanan');
     Route::post('/konfigurasi-pesanan/create', 'KonfigurasiController@createPesanan')->name('konfigurasi.pesanan.create');
 
-    Route::get('/konfirmasi-pembayaran', 'KonfigurasiController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
+    Route::get('/konfirmasi-pembayaran/{idPesanan}', 'KonfigurasiController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
+    Route::post('/konfirmasi-pembayaran/update/{idPesanan}', 'KonfigurasiController@updateKonfirmasiPesanan')->name('konfirmasi.pesanan.update');
+    Route::get('/konfirmasi-pembayaran/delete/{idPesanan}', 'KonfigurasiController@deleteKonfirmasiPesanan')->name('konfirmasi.pesanan.delete');
+    Route::get('/konfirmasi-pembayaran/cancel/{idPesanan}', 'KonfigurasiController@cancelPesanan')->name('konfirmasi.pesanan.cancel');
+    Route::get('/konfirmasi-pembayaran/selesai/{idPesanan}', 'KonfigurasiController@selesaikanPesanan')->name('konfirmasi.pesanan.selesai');
 
 });
 
@@ -145,12 +149,21 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::get('produk/duplicate/{id}', 'ProdukController@duplicate')->name('produk.duplicate');
 
         Route::get('pesanan', 'PesananController@index')->name('pesanan');
-        Route::get('pesanan/detail', 'PesananController@detailPesanan')->name('detail.pesanan');
+        Route::get('pesanan/filter', 'PesananController@filterPesanan')->name('pesanan.filter');
+        Route::get('pesanan/detail/{id}', 'PesananController@detailPesanan')->name('detail.pesanan');
+        Route::get('pesanan/detail/terima/{id}', 'PesananController@terimaPesanan')->name('detail.pesanan.terima');
+        Route::get('pesanan/detail/tolak/{id}', 'PesananController@tolakPesanan')->name('detail.pesanan.tolak');
+        Route::get('pesanan/detail/selesai/{id}', 'PesananController@selesaikanPesanan')->name('detail.pesanan.selesai');
 
         Route::get('riwayat/{id}', 'PartnerController@riwayatTransaksi')->name('riwayat.saldo');
 
+        Route::get('promo/create/search', 'PromoController@search')->name('promo.search');
         Route::resource('promo', 'PromoController');
-        Route::post('promo/store', 'PromoController@store');
+        // Route::controller('promo', 'PromoController');
+        // Route::get('promo', 'PromoController@index')->name('promo.index');
+        // Route::get('promo/create', 'PromoController@create')->name('promo.create');
+        Route::post('promo/store/create', 'PromoController@storeCreate')->name('promo.store.create');
+        Route::post('promo/store/update/{id}', 'PromoController@update')->name('promo.store.update');
 
         Route::resource('atk', 'AtkController');
 

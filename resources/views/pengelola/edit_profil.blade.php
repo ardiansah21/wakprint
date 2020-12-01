@@ -210,12 +210,7 @@
         <img id="gambarPartner" src="https://unsplash.it/600/400" class="img-responsive"
             style="width:100%;height:250px; border-radius:10px; object-fit:contain;" alt="Foto Kosong">
         <button id="editPhotoButton" type="button" onclick="document.getElementById('imgupload').click();"
-            class="btn btn-outline-yellow font-weight-bold pl-4 pr-4 mb-0" style="position: relative;
-                            font-size:16px;
-                            bottom: 50px;
-                            left:110px;
-                            right: 0px;
-                            border-radius:30px;">
+            class="btn btn-outline-yellow-primary font-weight-bold pl-4 pr-4 mb-0" style="position: relative; font-size:16px; bottom: 50px; left:130px; right: 0px; border-radius:30px;">
             {{__('Pilih Foto') }}
         </button>
         <input id="imgupload" type="file" name="foto_partner" hidden accept="image/png, image/jpeg"

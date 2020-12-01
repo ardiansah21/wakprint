@@ -38,7 +38,7 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->timestamp('jam_op_buka')->nullable();
             $table->timestamp('jam_op_tutup')->nullable();
             $table->text('syaratkententuan')->nullable();
-            $table->string('foto_toko')->nullable();
+            // $table->string('foto_toko')->nullable();
             $table->boolean('ambil_di_tempat')->nullable();
             $table->boolean('antar_ke_tempat')->nullable();
             $table->smallInteger('ntkwh')->nullable();

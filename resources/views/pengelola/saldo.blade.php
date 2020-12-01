@@ -1,6 +1,9 @@
 @extends('layouts.pengelola')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
         <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel">
             <div class="bg-primary-purple text-white mb-5 ml-0" style="border-radius:10px;">
                 <div class="row justify-content-left card-body ml-0">
@@ -17,9 +20,7 @@
                                 </label>
                             </div>
                             <div class="col-md-4 align-self-center text-right mr-0">
-                                <button class="btn btn-primary-yellow pl-5 pr-5 font-weight-bold"
-                                    onclick="window.location.href='{{ route('partner.saldo.tarik') }}'" style="border-radius:30px
-                                                            font-size: 16px;">
+                                <button class="btn btn-primary-yellow pl-5 pr-5 font-weight-bold" onclick="window.location.href='{{ route('partner.saldo.tarik') }}'" style="border-radius:30px font-size: 16px;">
                                     {{ __('Tarik') }}
                                 </button>
                             </div>
@@ -85,19 +86,19 @@
                                         <input id="waktuTransaksi" type="text" value="{{ date('H:i', strtotime($ts->waktu ?? '')) }}" hidden>
                                         <input id="tanggalTransaksi" type="text" value="{{ date('d/m/y', strtotime($ts->waktu ?? '')) }}" hidden>
                                         <td scope="row">{{ $ts->id_transaksi ?? '' }}</td>
-                                        <td>{{ date('H:i', strtotime($ts->waktu ?? '')) }}</td>
-                                        <td>{{ date('d/m/y', strtotime($ts->waktu ?? '')) }}</td>
+                                        <td>{{Carbon::parse($ts->updated_at)->translatedFormat('H:i') ?? '-'}}</td>
+                                        <td>{{Carbon::parse($ts->updated_at)->translatedFormat('d F Y') ?? '-'}}</td>
                                         @if ($ts->jenis_transaksi === 'Tarik')
                                             <td>{{ __('Dana Keluar') }}</td>
                                         @else
                                             <td>{{ __('Dana Masuk') }}</td>
                                         @endif
-                                            <td>Rp. {{ $ts->jumlah_saldo ?? '' }}</td>
-                                            <td>
-                                                <a class="text-primary-purple" href="riwayat/{{ $ts->id_transaksi }}">
-                                                    {{ __('Lihat') }}
-                                                </a>
-                                            </td>
+                                        <td>{{ rupiah($ts->jumlah_saldo) ?? '' }}</td>
+                                        <td>
+                                            <a class="text-primary-purple" href="riwayat/{{ $ts->id_transaksi }}">
+                                                {{ __('Lihat') }}
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -125,7 +126,7 @@
         var exist = "{{ Session::has('alert') }}";
         var tanggalAwal = null;
         var tanggalAkhir = null;
-        
+
         if (exist) {
             alert(msg);
         }

@@ -14,7 +14,7 @@ class AddIdpesananToKonfigurasifileTable extends Migration
     public function up()
     {
         Schema::table('konfigurasi_file', function (Blueprint $table) {
-            $table->integer('id_pesanan')->unsigned()->nullable();$table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
+            $table->integer('id_pesanan')->unsigned()->nullable(); $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan')->onDelete('cascade');
         });
     }
 
