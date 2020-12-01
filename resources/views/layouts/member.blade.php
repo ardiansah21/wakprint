@@ -16,7 +16,7 @@
     <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}" type="text/javascript"></script>
 
     <!-- Styles -->

@@ -34,6 +34,11 @@ class MemberController extends Controller
     }
 
 ////
+
+    public function member()
+    {
+        return response()->json(Auth::user(), 200);
+    }
     public function uploadPdf(Request $request)
     {
         $file = $request->file('file');

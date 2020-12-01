@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -33,6 +34,11 @@ class Produk extends Model implements HasMedia
     // {
     //     return $this->fotoProduk->getUrl('foto_produk');
     // }
+
+    public function isFavoritProduct()
+    {
+        return in_array($this->id_produk, json_decode(Auth::user()->produk_favorit));
+    }
 
     /**
      * Get all of the user's images.
