@@ -1,40 +1,9 @@
-@auth
-    @php
-        $m = Auth::user();
-        $arrKonfigurasi = array();
-        $hargaKonfigurasi = array();
-        $biayaOngkir = 0;
-
-        $a = array();
-
-        for ($i=0; $i < count($konfigurasi); $i++) {
-            if (!empty($konfigurasi) && $konfigurasi[$i]->id_member === $member->id_member) {
-                array_push($arrKonfigurasi,$konfigurasi[$i]->id_konfigurasi);
-                array_push($hargaKonfigurasi,$konfigurasi[$i]->biaya);
-                $jumlahSubtotalFile = count($arrKonfigurasi);
-                $hargaSubTotalFile = array_sum($hargaKonfigurasi);
-                $hargaTotalPesanan = $hargaSubTotalFile + $biayaOngkir;
-                $sisaSaldo = $member->jumlah_saldo - $hargaTotalPesanan;
-            } else {
-                // $jumlahSubtotalFile = 0;
-            }
-        }
-
-        // foreach ($arrKonfigurasi as $key => $value) {
-        //     dd($value);
-        // }
-
-        // for ($i = 0; $i < count($arrKonfigurasi); $i++) {
-        //     // $a[$i] = $arrKonfigurasi[$i];
-        //     dd($i);
-        // }
-    @endphp
-@endauth
-
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <div class="row justify-content-between mb-2 ml-0 mr-0">
             <div class="">
@@ -60,7 +29,7 @@
                         {{__('Nama Lengkap') }}
                     </td>
                     <td>
-                        {{ $m->nama_lengkap }}
+                        {{ $member->nama_lengkap }}
                     </td>
                 </tr>
                 <tr>
@@ -76,13 +45,12 @@
                         {{__('Jenis Kelamin') }}
                     </td>
                     <td>
-                        @if ($m->jenis_kelamin === 'L')
-                        {{__('Laki-Laki') }}
-                        @elseif ($m->jenis_kelamin === 'P')
-                        {{__('Perempuan') }}
-                        @else{
-                        {{__('-') }}
-                        }
+                        @if ($member->jenis_kelamin === 'L')
+                            {{__('Laki-Laki')}}
+                        @elseif ($member->jenis_kelamin === 'P')
+                            {{__('Perempuan')}}
+                        @else
+                            {{__('-')}}
                         @endif
                     </td>
                 </tr>
@@ -90,13 +58,20 @@
                     <td class="SemiBold">
                         {{__('Email') }}
                     </td>
-                    <td class="row justify-content-left text-danger ml-0">
-                        <a class="col-md-9 p-0 text-danger text-truncate" style="font-size: 24px;"
-                            href="#">{{ $m->email }}
-                        </a>
-                        <a class="col-md-2 text-danger align-self-center" style="font-size: 24px;" href="#">
-                            <i class="fa fa-warning ml-2"></i>
-                        </a>
+                    <td class="row justify-content-left ml-0">
+                        @if (!empty($member->email_verified_at))
+                            <label class="text-truncate" style="font-size: 24px;">
+                                {{ $member->email }}
+                            </label>
+                        @else
+                            <a class="col-md-9 p-0 text-danger text-truncate" style="font-size: 24px;"
+                                href="#">{{ $member->email }}
+                            </a>
+                            <a class="col-md-2 text-danger align-self-center" style="font-size: 24px;" href="#">
+                                <i class="fa fa-warning ml-2"></i>
+                            </a>
+                        @endif
+
                     </td>
                 </tr>
                 <tr>
@@ -104,13 +79,47 @@
                         {{__('Nomor HP') }}
                     </td>
                     <td>
-                        {{ $m->nomor_hp }}
+                        {{ $member->nomor_hp }}
                     </td>
                 </tr>
             </tbody>
         </table>
         <h1 class="font-weight-bold mb-5 ml-2" style="font-size: 48px;">{{__('Konfigurasi Terakhir') }}</h1>
-        <div class="table-scrollbar mb-5 mr-0">
+        <div class="table-scrollbar mb-5 ml-0 pr-2">
+            <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
+                <thead class="bg-primary-purple text-white">
+                    <tr style="font-size: 18px;">
+                        <th scope="col-md-auto">{{__('ID') }}</th>
+                        <th scope="col-md-auto">{{__('Tanggal') }}</th>
+                        <th scope="col-md-auto">{{__('Total File') }}</th>
+                        <th scope="col-md-auto">{{__('Metode') }}</th>
+                        <th scope="col-md-auto">{{__('Biaya') }}</th>
+                        <th scope="col-md-auto">{{__('Status') }}</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 14px;">
+                    @foreach ($pesanan as $p)
+                        @if (!empty($p->status))
+                            <tr class="cursor-pointer" onclick="window.location.href='{{ route('konfirmasi.pembayaran',$p->id_pesanan) }}'">
+                                <td scope="row">{{$p->id_pesanan}}</td>
+                                <td>{{Carbon::parse($p->updated_at)->translatedFormat('d F Y')}}</td>
+                                <td>{{count($p->konfigurasiFile)}}</td>
+                                <td>
+                                    @if ($p->metode_penerimaan != "Ditempat")
+                                        {{__('Antar ke Rumah')}}
+                                    @else
+                                        {{__('Ambil di Tempat')}}
+                                    @endif
+                                </td>
+                                <td>{{rupiah($p->biaya)}}</td>
+                                <td>{{$p->status}}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        {{-- <div class="table-scrollbar mb-5 mr-0">
             <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
                 <thead class="bg-primary-purple text-white" style="font-size: 18px;">
                     <tr>
@@ -130,7 +139,6 @@
                                 <td>{{date('l, d M Y H:i', strtotime($value->waktu))}}</td>
                                 <td>Rp. {{$value->biaya}}</td>
                                 <td
-                                    {{-- id="sisaWaktuBayar" --}}
                                     @for($i = 0; $i < count($arrKonfigurasi); $i++)
                                         id="sisaWaktuBayar{{$i}}"
                                     @endfor
@@ -145,7 +153,7 @@
                     <input id="arrKonfigurasi" type="number" value="{{count($arrKonfigurasi)}}" hidden>
                 </tbody>
             </table>
-        </div>
+        </div> --}}
         <script>
             var msg = '{{Session::get('alert')}}';
             var exist = '{{Session::has('alert')}}';

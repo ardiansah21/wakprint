@@ -23,12 +23,12 @@ class CreateKonfigurasiFilesTable extends Migration
             $table->smallInteger('jumlah_halaman_hitamputih')->nullable();
             $table->json('halaman_terpilih')->nullable();
             $table->smallInteger('jumlah_salinan')->default(0);
+            $table->boolean('timbal_balik')->default(false);
             $table->boolean('paksa_hitamputih')->default(false);
             $table->integer('biaya')->nullable();
             $table->text('catatan_tambahan')->nullable();
-            $table->string('nama_produk', )->nullable();
+            $table->string('nama_produk')->nullable();
             $table->json('fitur_terpilih')->nullable();
-            $table->timestamp('waktu');
             $table->timestamps();
         });
     }

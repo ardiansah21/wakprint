@@ -3,6 +3,9 @@
 @section('content')
 
 <div class="tab-pane fade show active" role="tabpanel">
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="container card shadow-sm p-4">
         <span>
             <a class="close material-icons md-32" href="{{ route('partner.saldo') }}">
@@ -63,9 +66,8 @@
                     {{__('Tanggal dan Waktu Transaksi')}}
                 </label>
                 <br>
-                <label class="mb-2"
-                    style="font-size: 18px;">
-                    {{date('d M Y H:i', strtotime($transaksi_saldo->waktu ?? ''))}} WIB
+                <label class="mb-2" style="font-size: 18px;">
+                    {{Carbon::parse($transaksi_saldo->updated_at)->translatedFormat('d F Y H:i').' WIB' ?? '-'}}
                 </label>
                 <br>
                 <label class="font-weight-bold mb-0"
@@ -89,7 +91,7 @@
                 <br>
                 <label class="mb-2"
                     style="font-size: 18px;">
-                    Rp. {{$transaksi_saldo->jumlah_saldo}}
+                    {{rupiah($transaksi_saldo->jumlah_saldo)}}
                 </label>
                 <br>
             </div>

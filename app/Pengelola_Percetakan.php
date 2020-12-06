@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 class Pengelola_Percetakan extends Authenticable implements HasMedia
 {
@@ -36,10 +37,10 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     /**
      * Get all of the user's images.
      */
-    // public function media()
-    // {
-    //     return $this->morphMany(Media::class, 'model');
-    // }
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'model');
+    }
 
     public function products()
     {
@@ -60,4 +61,29 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     {
         return $this->hasMany('App\Pesanan', 'id_pengelola');
     }
+
+    public function transaksiSaldo()
+    {
+        return $this->hasMany('App\Transaksi_saldo', 'id_transaksi');
+    }
+
+    // public function hapus()
+    // {
+
+    //     // $this->atk()->delete();
+    //     // $this->products()->delete();
+    //     return parent::delete();
+    // }
+
+    // // this is a recommended way to declare event handlers
+    // public static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::deleting(function ($partner) { // before delete() method call this
+    //         $partner->atk()->delete();
+    //         $partner->products()->delete();
+    //         // do the rest of the cleanup...
+    //     });
+    // }
 }

@@ -1,32 +1,54 @@
-<div class="card mb-3 pl-4 pr-4 pt-3 pb-3">
-    <div class="row justify-content-left ml-0 mb-2">
-        <div class="align-self-center mb-3 mr-2">
-            <img src="https://ptetutorials.com/images/user-profile.png" width="40" height="40" alt="no logo">
+<div class="card shadow-sm mb-3 pl-4 pr-4 pt-3 pb-3">
+    <div class="row justify-content-left ml-0 mr-0 mb-4">
+        <div class="col-md-auto my-auto ml-0 mr-0">
+            <img
+                @if (!empty($value->member->getFirstMediaUrl()))
+                    src="{{$value->member->getFirstMediaUrl()}}"
+                @else
+                    src="https://ptetutorials.com/images/user-profile.png"
+                @endif width="56" height="56" alt="no logo" style="object-fit: cover; border-radius: 30px; border:solid 2px #BC41BE;">
         </div>
-        <div class="col-md-9">
-            <p class="text-truncate font-weight-bold mb-0" style="font-size: 18px;">
-                {{__('Ali Susi') }}
-            </p>
-            <p style="font-size: 12px;">
-                {{__('17 Agustus 2020') }}
-            </p>
+        <div class="col-md-6">
+            <label class="text-truncate font-weight-bold mb-0" style="font-size: 18px;">
+                {{$value->member->nama_lengkap}}
+            </label>
+            <br>
+            <label style="font-size: 12px;">
+                {{date('d M Y', strtotime($value->waktu))}}
+            </label>
         </div>
-        <div class="row justify-content-left float-right mr-2">
-            <label class="SemiBold ml-4" style="font-size: 18px;">
-
-                {{-- @foreach ($collection as $item) --}}
-                <i class="material-icons md-32 align-middle" style="color:#FCFF82;">
-                    star
-                </i>
-                {{-- @endforeach --}}
-
-                {{__('Sangat Senang') }}
+        <div class="col-md-5 row justify-content-end">
+            <label class="SemiBold" style="font-size: 18px;">
+                @for ($i = 0; $i < $value->rating; $i++)
+                    <i class="material-icons md-32 align-middle" style="color:#FCFF82;">
+                        star
+                    </i>
+                @endfor
+                @if ($value->rating == 1.0)
+                    {{__('Sangat Buruk') }}
+                @elseif ($value->rating == 2.0)
+                    {{__('Buruk') }}
+                @elseif ($value->rating == 3.0)
+                    {{__('Lumayan') }}
+                @elseif ($value->rating == 4.0)
+                    {{__('Baik') }}
+                @else
+                    {{__('Sangat Baik') }}
+                @endif
             </label>
         </div>
     </div>
     <p class="mb-4" style="font-size: 18px;">
-        {{__('Puas banget bisa ngeprint disini ajiiiibbbbssss') }}
+        {{$value->pesan}}
     </p>
-    <img class="img-responsive mr-0" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-        alt="" style="width:100px; height:100px;">
+    @if (!empty($value->getFirstMediaUrl('foto_ulasan')))
+        <a data-fancybox="gallery" href="{{$value->getFirstMediaUrl('foto_ulasan')}}">
+            <img class="img-responsive mr-0" src="{{$value->getFirstMediaUrl('foto_ulasan')}}" alt="no picture" style="width:100px; height:100px; object-fit:contain; border-radius:8px; border:solid 1px #C4C4C4;">
+        </a>
+    @endif
+
+    <input type="text" name="fotoUlasan" id="fotoUlasan" value="{{$value->getFirstMediaUrl('foto_ulasan')}}" hidden>
+    <input type="text" name="fotoMember" id="fotoMember" value="{{$value->member->getFirstMediaUrl()}}" hidden>
+    <input type="text" name="namaMember" id="namaMember" value="{{$value->member->nama_lengkap}}" hidden>
+    {{-- <input type="text" name="tanggalUlasan" id="tanggalUlasan" value="{{date('d M Y', strtotime($value->waktu))}}" hidden> --}}
 </div>

@@ -1,6 +1,9 @@
 @extends('layouts.member')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Riwayat Transaksi Saya') }}</h1>
     <div class="mb-4">
@@ -41,20 +44,15 @@
                 </thead>
                 <tbody style="font-size: 14px;">
                     @foreach ($transaksi_saldo as $ts)
-                    @if (($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran') && ($ts->status === 'Berhasil' || $ts->status === 'Gagal') && $ts->id_member === $member->id_member)
-                        <tr
-                            @if ($ts->jenis_transaksi === 'TopUp')
-                                onclick="window.location.href='saldo/riwayat/{{ $ts->id_transaksi }}'"
-                            @else
-                                onclick="window.location.href='{{ route('detail.pesanan') }}'"
-                            @endif>
-                            <td class="align-middle" scope="row">{{ $ts->id_transaksi }}</td>
-                            <td class="align-middle">{{ $ts->jenis_transaksi }}</td>
-                            <td class="align-middle">{{ $ts->waktu }}</td>
-                            <td class="align-middle">Rp. {{ $ts->jumlah_saldo }}</td>
-                            <td class="align-middle">{{ $ts->keterangan }}</td>
-                        </tr>
-                    @endif
+                        @if (($ts->jenis_transaksi === 'TopUp' || $ts->jenis_transaksi === 'Pembayaran') && ($ts->status === 'Berhasil' || $ts->status === 'Gagal') && $ts->id_member === $member->id_member)
+                            <tr onclick="window.location.href='{{route('riwayat.saldo',$ts->id_transaksi) }}'">
+                                <td class="align-middle" scope="row">{{ $ts->id_transaksi }}</td>
+                                <td class="align-middle">{{ $ts->jenis_transaksi }}</td>
+                                <td class="align-middle">{{ Carbon::parse($ts->updated_at)->diffForHumans() }}</td>
+                                <td class="align-middle">{{ rupiah($ts->jumlah_saldo) }}</td>
+                                <td class="align-middle">{{ $ts->keterangan }}</td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>

@@ -29,10 +29,9 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                         color: #BC41BE;">
                         edit
                     </a>
-                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg"
-                        onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
+                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg" onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
                 @else
-                    <img id="gambarPartner" src="https://unsplash.it/600/400"
+                    <img id="gambarMember" src="https://unsplash.it/600/400"
                         class="img-responsive" style="width:120px;height:120px; border-radius:10px;" alt="Foto Kosong">
                     <a href="" id="editPhotoButton" class="bg-light-purple material-icons text-decorations-none" onclick="document.getElementById('imgupload').click();"
                         style="border-radius:3px;
@@ -43,8 +42,7 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                         color: #BC41BE;">
                         edit
                     </a>
-                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg"
-                        onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
+                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg" onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
                 @endif
             </div>
             <label class="SemiBold mb-1" style="font-size: 24px;">

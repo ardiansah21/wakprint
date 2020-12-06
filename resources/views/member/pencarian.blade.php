@@ -362,7 +362,8 @@
     });
 
 
-    $(function(){
+    $(document).ready(function(){
+        var fotoProduk = $('#fotoProduk').val();
 
         $('#ambilDiTempatLabel').on('click', function(){
             if ($('#ambilDiTempat').is(':checked')) {
@@ -373,7 +374,6 @@
             }
             searching();
         });
-
         $('#antarKeTempatLabel').on('click', function(){
             if ($('#antarKeTempat').is(':checked')) {
                 $('#antarKeTempat').val(0);
@@ -494,7 +494,7 @@
                                                 // else{
                                                 //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
                                                 // }
-                                                produkItem +='<img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
+                                                produkItem +='<img class="card-img-top cursor-pointer" src='+fotoProduk+' onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
                                                 produkItem +='<div class="card-body cursor-pointer" onclick="window.location.href=">';
                                                     produkItem +='<div class="row justify-content-between">';
                                                         produkItem +='<label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">'+produks['nama_partner_dari_produk'][i]+'</label>';

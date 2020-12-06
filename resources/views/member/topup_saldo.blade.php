@@ -46,7 +46,7 @@
                     onclick="window.location.href='/saldo/pembayaran/{{ $ts->id_transaksi }}'"
                     {{-- onclick="window.location.href='{{ route('saldo.pembayaran')->with($ts->id_transaksi) }}'" --}}
                     @else
-                    onclick="window.location.href='{{ route('detail.pesanan') }}'"
+                    onclick="window.location.href='{{ route('pesanan.detail') }}'"
                     @endif
                     {{-- {{ action('MemberController@show', ['id'=>$ts->id_transaksi]) }} --}}
                     {{-- data-toggle="modal" data-target="#topUpModal"

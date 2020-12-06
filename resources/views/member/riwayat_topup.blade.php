@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="card shadow-sm p-4 mt-5 mb-5">
         <span>
             <button class="close material-icons md-32"
@@ -14,7 +17,7 @@
         </span>
         <br>
         <label class="mb-5" id="idTransaksi" name="id_transaksi" style="font-size: 18px;">
-            ID Transaksi Top Up Kamu : {{$transaksi_saldo->id_transaksi}}
+            {{'ID Transaksi Kamu : '. $transaksi_saldo->id_transaksi}}
         </label>
         <div class="mb-5">
             <label class="SemiBold mt-2 mb-0" style="font-size: 18px;">
@@ -30,15 +33,14 @@
             </label>
             <br>
             <label class="text-primary-danger font-weight-bold" id="waktuTransaksi" name="waktu" style="font-size: 48px;">
-                Rp. {{$transaksi_saldo->jumlah_saldo}}
+                {{rupiah($transaksi_saldo->jumlah_saldo)}}
             </label>
             <br>
             <label class="mt-2" id="waktuTransaksi" name="waktu" style="font-size: 18px;">
-                {{__('Telah dibayar sebelum') }} {{date('l, d M Y H:i', strtotime($transaksi_saldo->waktu))}}
+                {{__('Telah dibayar pada : ') }} {{Carbon::parse($transaksi_saldo->updated_at)->translatedFormat('d F Y')}}
             </label>
         </div>
-        <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold"
-            style="font-size: 24px;">
+        <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold" disabled style="font-size: 24px;">
             {{__('Selesai') }}
         </button>
     </div>

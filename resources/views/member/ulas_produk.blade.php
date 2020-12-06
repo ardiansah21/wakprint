@@ -5,8 +5,8 @@
     <div class="container mt-5 mb-5">
         <h1 class="font-weight-bold mb-0" style="font-size: 48px;">{{__('Ulas') }}</h1>
         <label class="text-sm mb-2 ml-1" style="font-size: 18px;">{{__('Beri nilai dan ulas produk yang telah dipesan') }}</label>
-        {{-- @foreach ($collection as $item) --}}
-        <form action="{{ route('ulasan.ulasansaya') }}">
+        <form action="{{ route('ulasan.store', $produk->id_produk) }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="row mt-5">
                 <div class="col-md-4">
                     <div class="card shadow mb-2" style="border-radius: 10px;">
@@ -30,26 +30,25 @@
                                     </div>
                                 </div>
                             @endif
-                            {{-- <form id="favorit-form" action="{{ route('partner.ubah-status') }}" method="POST"> --}}
-                                {{-- @csrf --}}
-                                {{-- <label class="switch"> --}}
-                                {{-- <input id="statusFavorit" class="statusFavorit" type="checkbox" value="{{$produk->id_produk}}" name="status_favorit" onchange="event.preventDefault(); document.getElementById('favorit-form').submit();"
-                                    checked hidden> --}}
-                                {{-- </label> --}}
-
-                                <input id="id_produk" name="id_produk" value="{{$produk->id_produk}}" hidden>
-                                {{-- <form action="{{route('favorit.status')}}" method="POST">
-                                    @csrf
-
-                                </form> --}}
-                                <i class="fa fa-heart fa-2x fa-responsive cursor-pointer" onclick="window.location.href='{{route('favorit.status')}}'"
-                                    style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                                </i>
-                            {{-- </form> --}}
-
-                            <img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px;"
-                            alt="Card image cap"/>
+                            <form id="favorit-form" action="{{ route('favorit.status', $produk->id_produk) }}" method="POST">
+                                @csrf
+                                <input id="id_produk" name="id_produk" value="{{ $produk->id_produk }}" hidden>
+                                @auth
+                                    @if ($member->cekProdukFavorit($member->id_member, $produk->id_produk))
+                                        <button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer text-danger"
+                                            style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
+                                    @else
+                                        <button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer"
+                                            style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
+                                    @endif
+                                @endauth
+                            </form>
+                            <img class="card-img-top cursor-pointer"
+                            @if (!empty($produk->getFirstMediaUrl('foto_produk')))
+                                src="{{$produk->getFirstMediaUrl('foto_produk')}}"
+                            @else
+                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                            @endif onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px; object-fit:cover;" alt="no picture"/>
                             <div class="card-body cursor-pointer" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'">
                                 <div class="row justify-content-between">
                                     <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$produk->partner->nama_toko ?? '-'}}</label>
@@ -181,33 +180,33 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <label class="mb-5 ml-0" style="font-size: 24px; color:#BABABA">{{__('Dipesan pada: 21 Februari 2020, 20:35 WIB') }}</label>
+                    <label class="mb-5 ml-0" style="font-size: 24px; color:#BABABA">{{__('Dipesan pada: '.date('d M Y H:i', strtotime($pesanan->created_at)).' WIB') }}</label>
                     <div class="row justify-content-left mb-4 ml-0">
                         <div class="rating">
                             <label>
-                                <input type="radio" name="stars" value="1" />
+                                <input id="rating1" type="radio" name="stars" value="{{1.0}}" />
                                 <span class="material-icons md-60">star</span>
                             </label>
                             <label>
-                                <input type="radio" name="stars" value="2" />
-                                <span class="material-icons md-60">star</span>
-                                <span class="material-icons md-60">star</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="stars" value="3" />
-                                <span class="material-icons md-60">star</span>
+                                <input id="rating2" type="radio" name="stars" value="{{2.0}}" />
                                 <span class="material-icons md-60">star</span>
                                 <span class="material-icons md-60">star</span>
                             </label>
                             <label>
-                                <input type="radio" name="stars" value="4" />
-                                <span class="material-icons md-60">star</span>
+                                <input id="rating3" type="radio" name="stars" value="{{3.0}}" />
                                 <span class="material-icons md-60">star</span>
                                 <span class="material-icons md-60">star</span>
                                 <span class="material-icons md-60">star</span>
                             </label>
                             <label>
-                                <input type="radio" name="stars" value="5" />
+                                <input id="rating4" type="radio" name="stars" value="{{4.0}}" />
+                                <span class="material-icons md-60">star</span>
+                                <span class="material-icons md-60">star</span>
+                                <span class="material-icons md-60">star</span>
+                                <span class="material-icons md-60">star</span>
+                            </label>
+                            <label>
+                                <input id="rating5" type="radio" name="stars" value="{{5.0}}" checked/>
                                 <span class="material-icons md-60">star</span>
                                 <span class="material-icons md-60">star</span>
                                 <span class="material-icons md-60">star</span>
@@ -215,42 +214,49 @@
                                 <span class="material-icons md-60">star</span>
                             </label>
                         </div>
-                        <label class="mt-2 ml-4" style="font-size: 36px;">{{__('Senang') }}</label>
+                        <label id="ratingLabel" class="mt-2 ml-4" style="font-size: 36px;">{{__('Sangat Baik')}}</label>
                     </div>
                     <div class="row justify-content-between mb-3">
                         <div class="col-md-9">
                             <div class="form-group mb-4">
-                                <textarea class="form-control"
-                                aria-label="Deskripsi Ulasan"
-                                placeholder="Masukkan komentar Anda disini..."
-                                style="font-size:18px; height:141px;"></textarea>
+                                <textarea class="form-control" name="pesan" aria-label="Deskripsi Ulasan" placeholder="Masukkan komentar Anda disini..." style="font-size:18px; height:141px;"></textarea>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary-wakprint btn-block SemiBold"
-                                style="border-radius:30px; font-size:24px;">
+                                <button type="submit" class="btn btn-primary-wakprint btn-block SemiBold" style="border-radius:30px; font-size:24px;">
                                     {{__('Kirim Ulasan') }}
                                 </button>
                             </div>
                         </div>
                         <div class="col-md-auto">
                             <div class="form-group">
-                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                class="img-responsive justify-content-center align-self-center center-block mb-4"
-                                alt=""
-                                width="141px"
-                                height="141px"
-                                style="border-radius:8px 8px 8px 8px;">
-                                <a href="" class="btn btn-primary-yellow btn-block SemiBold align-self-center my-auto"
-                                style="border-radius:30px; font-size:20px;">
+                                <img id="gambarUlasan" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" class="img-responsive justify-content-center align-self-center center-block mb-4" alt="no picture" width="141px" height="141px" style="object-fit:contain; border:solid 2px #BC41BE; border-radius: 8px;">
+                                <a id="editGambarUlasan" class="btn btn-primary-yellow btn-block cursor-pointer SemiBold align-self-center my-auto" onclick="document.getElementById('imgupload').click();" style="border-radius:30px; font-size:20px;">
                                     {{__('Unggah') }}
                                 </a>
+                                <input id="imgupload" type="file" name="foto_ulasan" accept="image/png, image/jpeg"
+                                    onchange="document.getElementById('gambarUlasan').src=window.URL.createObjectURL(this.files[0]);" hidden>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
-        {{-- @endforeach --}}
-
     </div>
+    <script>
+        $('#rating1').on('change',function(){
+            $('#ratingLabel').text('Sangat Buruk');
+        });
+        $('#rating2').on('change',function(){
+            $('#ratingLabel').text('Buruk');
+        });
+        $('#rating3').on('change',function(){
+            $('#ratingLabel').text('Lumayan');
+        });
+        $('#rating4').on('change',function(){
+            $('#ratingLabel').text('Baik');
+        });
+        $('#rating5').on('change',function(){
+            $('#ratingLabel').text('Sangat Baik');
+        });
+    </script>
 @endsection

@@ -1,28 +1,18 @@
-<div class="modal fade"
-    id="detailBiayaModal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="detailBiayaModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-md"
-        role="document">
-        <div class="modal-content bg-light-purple"
-        style="border-radius:10px;">
-            <div class="modal-body"
-                style="font-size: 18px;">
+<div class="modal fade" id="detailBiayaModal" tabindex="-1" role="dialog" aria-labelledby="detailBiayaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content bg-light-purple" style="border-radius:10px;">
+            <div class="modal-body" style="font-size: 18px;">
                 <div class="p-4 ml-0 mr-0">
-                    <button class="close material-icons md-32"
-                        data-dismiss="modal">
+                    <button class="close material-icons md-32" data-dismiss="modal">
                         close
                     </button>
-                    <label class="font-weight-bold mb-4"
-                        style="font-size: 36px;">
+                    <label class="font-weight-bold mb-4" style="font-size: 36px;">
                         {{__('Rincian Harga') }}
                     </label>
                     <div class="row justify-content-between">
                         <div class="col-md-auto text-left">
                             <label class="mb-2">
-                                {{__('Jumlah File Pesanan') }}
+                                {{__('Jumlah Dokumen Pesanan') }}
                             </label>
                             <br>
                             <label class="mb-2">
@@ -31,114 +21,152 @@
                         </div>
                         <div class="col-md-auto text-right">
                             <label class="mb-2">
-                                {{__('2') }}
+                                {{count($pesanan->konfigurasiFile)}}
                             </label>
                             <br>
                             <label class="mb-2">
-                                {{__('2') }}
+                                {{count($pesanan->konfigurasiFile)}}
                             </label>
                         </div>
                     </div>
-                    <div class="row row-bordered mt-2 mb-4">
-                    </div>
-
-                    {{-- @foreach ($collection as $item) --}}
+                    <div class="row row-bordered mt-2 mb-4"></div>
                     <label class="font-weight-bold mt-2 mb-3">
-                        {{__('Cetak Skripsi Mahasiswa') }}
+                        {{__('Produk yang Dipesan')}}
                     </label>
                     <br>
-                    <label class="font-weight-bold mb-2">
-                        {{__('Skripsilagee.pdf') }}
-                    </label>
-                    <div class="row justify-content-between">
-                        <div class="col-md-6 text-left">
-                            <label>
-                                {{__('25 Halaman Hitam-Putih') }}
-                            </label>
+                    @foreach ($pesanan->konfigurasiFile as $p => $value)
+                        <label class="font-weight-bold mt-2 mb-3" style="font-size: 16px;">
+                            {{($p+1).'. '.$value->nama_produk}}
+                        </label>
+                        <br>
+                        <label class="font-weight-bold mb-2" style="font-size: 14px;">
+                            {{$value->nama_file}}
+                        </label>
+                        <div class="row justify-content-between">
+                            <div class="col-md-6 text-left">
+                                <label style="font-size: 16px;">
+                                    {{__($value->jumlah_halaman_hitamputih.' Halaman Hitam Putih') }}
+                                </label>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <label>
+                                    @if ($value->timbal_balik != 0)
+                                        {{rupiah($value->jumlah_halaman_hitamputih * $value->product->harga_timbal_balik_hitam_putih)}}
+                                    @else
+                                        {{rupiah($value->jumlah_halaman_hitamputih * $value->product->harga_hitam_putih)}}
+                                    @endif
+                                </label>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <label>
-                                {{__('Rp. 10.000') }}
-                            </label>
+                        <div class="row justify-content-between mb-3">
+                            <div class="col-md-6 text-left">
+                                <label>
+                                    {{__($value->jumlah_halaman_berwarna.' Halaman Berwarna') }}
+                                </label>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <label>
+                                    @if ($value->timbal_balik != 0)
+                                        {{rupiah($value->jumlah_halaman_berwarna * $value->product->harga_timbal_balik_berwarna)}}
+                                    @else
+                                        {{rupiah($value->jumlah_halaman_berwarna * $value->product->harga_berwarna)}}
+                                    @endif
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col-md-6 text-left">
-                            <label>
-                                {{__('25 Halaman Berwarna') }}
-                            </label>
+                        <div class="row justify-content-between mb-2">
+                            <div class="col-md-6 text-left">
+                                <label>
+                                    {{__('Jumlah Salinan') }}
+                                </label>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <label>
+                                    {{$value->jumlah_salinan}}
+                                </label>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <label>
-                                {{__('Rp. 15.000') }}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between mb-2">
-                        <div class="col-md-6 text-left">
-                            <label>
-                                {{__('Jumlah Salinan') }}
-                            </label>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <label>
-                                {{__('1') }}
-                            </label>
-                        </div>
-                    </div>
+                    @endforeach
                     <label class="font-weight-bold mt-2 mb-2">
-                        {{__('Fitur') }}
+                        {{__('Fitur yang Dipesan') }}
                     </label>
-
-                    {{-- @foreach ($collection as $item) --}}
-                    <div class="row justify-content-between mb-2">
-                        <div class="col-md-6 text-left">
-                            <label>
-                                {{__('Paket Jilid Lakban Hitam') }}
-                            </label>
+                    <br>
+                    @if (!empty(json_decode($value->fitur_terpilih)))
+                        @foreach (json_decode($value->fitur_terpilih) as $ft)
+                            <div class="row justify-content-between mb-2">
+                                <div class="col-md-6 text-left">
+                                    <label>
+                                        {{$ft->namaFitur}}
+                                    </label>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <label>
+                                        {{$ft->hargaFitur}}
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="row justify-content-between mb-2">
+                            <div class="col-md-6 text-left">
+                                <label>Tidak Ada</label>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <label>Rp. 0</label>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <label>
-                                {{__('Rp. 10.000') }}
-                            </label>
-                        </div>
-                    </div>
-                    {{-- @endforeach --}}
-
-                    <div class="row row-bordered mt-2 mb-4">
-                    </div>
-
+                    @endif
+                    <div class="row row-bordered mt-2 mb-4"></div>
                     <label class="font-weight-bold mb-2">
-                        {{__('ATK') }}
+                        {{__('ATK yang Dipesan') }}
                     </label>
-
-                    {{-- @foreach ($collection as $item) --}}
-                    <div class="row justify-content-between">
-                        <div class="col-md-6 text-left">
-                            <label>
-                                {{__('Pensil (x4)') }}
-                            </label>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <label>
-                                {{__('Rp. 2.000') }}
-                            </label>
-                        </div>
-                    </div>
-                    {{-- @endforeach --}}
-
+                    @foreach ($atks as $idx => $a)
+                        @if (!empty($a[0]) && !empty($a[1]) && !empty($a[2]) && !empty($a[3]))
+                            <div class="row justify-content-between">
+                                <div class="col-md-1 text-left">
+                                    <label>
+                                        {{ ($idx + 1).'.' }} &nbsp;
+                                    </label>
+                                </div>
+                                <div class="col-md-5 text-left">
+                                    <label>
+                                        {{ $a[0] }}
+                                        (x{{ $a[2] }})
+                                    </label>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <label>
+                                        {{ rupiah($a[3]) }}
+                                    </label>
+                                </div>
+                            </div>
+                        @else
+                            <div class="row justify-content-between">
+                                <div class="col-md-6 text-left">
+                                    <label>Tidak Ada</label>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <label>Rp. 0</label>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                     <label class="font-weight-bold mt-3 mb-2">
                         {{__('Biaya Pengiriman') }}
                     </label>
                     <div class="row justify-content-between mb-2">
                         <div class="col-md-6 text-left">
                             <label>
-                                {{__('Diantar ke Tempat') }}
+                                @if ($pesanan->metode_penerimaan != "Ditempat")
+                                    {{__('Antar ke Rumah')}}
+                                @else
+                                    {{__('Ambil di Tempat')}}
+                                @endif
                             </label>
                         </div>
                         <div class="col-md-6 text-right">
                             <label>
-                                {{__('Rp. 10.000') }}
+                                {{rupiah($pesanan->ongkos_kirim)}}
                             </label>
                         </div>
                     </div>
@@ -152,7 +180,7 @@
                         </div>
                         <div class="col-md-6 text-right">
                             <label>
-                                {{__('Rp. 20.000') }}
+                                {{rupiah($pesanan->biaya)}}
                             </label>
                         </div>
                     </div>

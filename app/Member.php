@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Pesanan;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
@@ -35,7 +34,7 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
 
     public function konfigurasi()
     {
-        return $this->hasMany('App\Konfigurasi_file', 'id_konfigurasi');
+        return $this->hasMany('App\Konfigurasi_file', 'id_member');
     }
 
     public static function cekProdukFavorit($idMember, $idProduk): bool
@@ -45,15 +44,29 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
         return in_array($idProduk, json_decode($produkFavorit));
     }
 
-    public function pesanans()
-    {
-        return $this->hasMany(Pesanan::class, 'id_member');
-    }
+    // public function pesanans()
+    // {
+    //     return $this->hasMany(Pesanan::class, 'id_member');
+    // }
 
-    //temp
     public function messages()
     {
         return $this->hasMany('App\Message', 'id_member');
+    }
+
+    public function transaksiSaldo()
+    {
+        return $this->hasMany('App\Transaksi_saldo', 'id_member');
+    }
+
+    public function pesanans()
+    {
+        return $this->hasMany('App\Pesanan', 'id_member');
+    }
+
+    public function ulasans()
+    {
+        return $this->hasMany('App\Ulasan', 'id_member');
     }
 
     ////

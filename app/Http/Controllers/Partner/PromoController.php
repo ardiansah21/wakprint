@@ -5,56 +5,39 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Pengelola_Percetakan;
 use App\Produk;
-use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PromoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $partner = Pengelola_Percetakan::find(Auth::id());
         $produk = Produk::all();
-        return view('pengelola.promo',[
+        return view('pengelola.promo', [
             'partner' => $partner,
-            'produk' => $produk
+            'produk' => $produk,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $partner = Auth::user();
-        $produk = Produk::all();
+        $produk = $partner->products;
+        // dd(route('partner.promo.search'));
 
-        return view('pengelola.tambah_promo', [
-            'partner' => $partner,
-            'produk' => $produk
-        ]);
+        return view('pengelola.tambah_promo', compact('partner'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function storeCreate(Request $request)
     {
-        // $produk = Produk::all();
-        // $produk = Produk::find($id);
-        // $partner = Pengelola_Percetakan::find(Auth::id());
+        $partner = Auth::user();
+        $arrIdProduk = array();
 
-        $idProduk = $request->checkbox_promo;
+        foreach (json_decode($request->idProduk) as $id) {
+            array_push($arrIdProduk, $id);
+        }
+
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $tanggalMulai = $request->tanggal_mulai_promo;
@@ -64,12 +47,11 @@ class PromoController extends Controller
         $tanggalSelesai = $request->tanggal_selesai_promo;
         $bulanSelesai = $request->bulan_selesai_promo;
         $tahunSelesai = $request->tahun_selesai_promo;
-        $tanggalMulaiPromo = date_create("$tanggalMulai-$bulanMulai-$tahunMulai");
-        $tanggalSelesaiPromo = date_create("$tanggalSelesai-$bulanSelesai-$tahunSelesai");
+        $tanggalMulaiPromo = date('Y-m-d', strtotime("$tanggalMulai $bulanMulai $tahunMulai"));
+        $tanggalSelesaiPromo = date('Y-m-d', strtotime("$tanggalSelesai $bulanSelesai $tahunSelesai"));
 
-        foreach ($idProduk as $id) {
-            $produk = Produk::find($id);
-            // $produk->id_produk = $idProduk;
+        foreach ($arrIdProduk as $id) {
+            $produk = $partner->products->find($id);
             $produk->status_diskon = $statusDiskon;
             $produk->maksimal_diskon = $maksimalDiskon;
             $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
@@ -78,68 +60,57 @@ class PromoController extends Controller
             $produk->save();
         }
 
-        //$produk->save();
-        //dd($idProduk);
-        // $produk->update([
-        //     'maksimal_diskon' => $maksimalDiskon,
-        //     'mulai_waktu_diskon' => $tanggalMulaiPromo,
-        //     'jumlah_diskon' => $jumlahDiskon,
-        //     'selesai_waktu_diskon' => $tanggalSelesaiPromo
-        // ]);
-
-
-
-        // dd($idProduk);
-        //$produk->save();
-
-        return redirect()->route('partner.promo.index');
+        return redirect()->route('partner.promo.index', ['partner' => $partner]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $partner = Pengelola_Percetakan::find(Auth::id());
-        $produk = Produk::find($id);
-        return view('pengelola.edit_promo',[
+        $partner = Auth::user();
+        $produk = $partner->products->find($id);
+        return view('pengelola.edit_promo', [
             'partner' => $partner,
-            'produk' => $produk
+            'produk' => $produk,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $partner = Auth::user();
+        // $arrIdProduk = array();
+
+        // // dd(json_decode($request->idProduk));
+
+        // foreach (json_decode($request->idProduk) as $id) {
+        //     array_push($arrIdProduk, $id);
+        // }
+
+        $statusDiskon = 'Tersedia';
+        $maksimalDiskon = $request->maksimal_diskon;
+        $tanggalMulai = $request->tanggal_mulai_promo;
+        $bulanMulai = $request->bulan_mulai_promo;
+        $tahunMulai = $request->tahun_mulai_promo;
+        $jumlahDiskon = $request->jumlah_diskon / 100;
+        $tanggalSelesai = $request->tanggal_selesai_promo;
+        $bulanSelesai = $request->bulan_selesai_promo;
+        $tahunSelesai = $request->tahun_selesai_promo;
+        $tanggalMulaiPromo = date('Y-m-d', strtotime("$tanggalMulai $bulanMulai $tahunMulai"));
+        $tanggalSelesaiPromo = date('Y-m-d', strtotime("$tanggalSelesai $bulanSelesai $tahunSelesai"));
+
+        // dd($tanggalSelesaiPromo);
+
+        // foreach ($arrIdProduk as $id) {
+        $produk = $partner->products->find($id);
+        $produk->status_diskon = $statusDiskon;
+        $produk->maksimal_diskon = $maksimalDiskon;
+        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
+        $produk->jumlah_diskon = $jumlahDiskon;
+        $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
+        $produk->save();
+        // }
+
+        return redirect()->route('partner.promo.index', ['partner' => $partner]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $produk = Produk::find($id);
@@ -153,15 +124,21 @@ class PromoController extends Controller
         return redirect()->back();
     }
 
-    public function searchProdukPartner(Request $request)
+    public function search(Request $request)
     {
-        $produk = new Produk();
-        $keyword = $request->keyword;
-        $produk =  Produk::where('nama','LIKE',"%$keyword%")
-                    ->orWhere('harga_hitam_putih','LIKE',"%$keyword%")
-                    ->get();
+        if ($request->ajax()) {
+            $partner = Auth::user();
+            $produk = $partner->products->first()->where('id_pengelola', $partner->id_pengelola)
+                ->where('status_diskon', 'TidakTersedia')
+                ->where('nama', 'like', '%' . $request->keyword . '%')
+            // ->where('harga_hitam_putih', $request->keyword)
+            // ->where('harga_berwarna', $request->keyword)
+            // ->where('deskripsi', 'like', '%' . $request->keyword . '%')
+                ->get();
 
-
-        return redirect()->back()->with('produk',$produk)->with('keyword', $keyword);
+            return response()->json([
+                'produk' => $produk,
+            ], 200);
+        }
     }
 }

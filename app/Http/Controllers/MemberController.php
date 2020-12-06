@@ -7,22 +7,25 @@ use App\Konfigurasi_file;
 use App\Lapor_produk;
 use App\Member;
 use App\Pengelola_Percetakan;
+use App\Pesanan;
 use App\Produk;
 use App\Transaksi_saldo;
+use App\Ulasan;
 use Carbon\Carbon;
 use File;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use imagick;
+use stdClass;
 use Str;
 use Validator;
-use \stdClass;
 
 class MemberController extends Controller
 {
 
-    private $id;
+    private $idProduk;
     private $f;
 
     public function __construct()
@@ -195,8 +198,8 @@ class MemberController extends Controller
                 }
             }
 
-            // $members = Auth::user();
-            // $members->cekProdukFavorit();
+            $members = Auth::user();
+            // $members->cekProdukFavorit;
 
             $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
                 ->where('nama_lengkap', 'like', '%' . $request->keyword . '%')
@@ -211,11 +214,11 @@ class MemberController extends Controller
                 ->orderBy('id_atk', 'asc')
                 ->get();
 
-            $idPartnerDariProduk = array();
+            $idProdukPartnerDariProduk = array();
             $namaPartnerDariProduk = array();
             $alamatPartnerDariProduk = array();
             foreach ($produks as $p) {
-                array_push($idPartnerDariProduk, $p->partner->id_pengelola);
+                array_push($idProdukPartnerDariProduk, $p->partner->id_pengelola);
                 array_push($namaPartnerDariProduk, $p->partner->nama_toko);
                 array_push($alamatPartnerDariProduk, $p->partner->alamat_toko);
             }
@@ -228,9 +231,10 @@ class MemberController extends Controller
             }
 
             return response()->json([
+                'members' => $members,
                 'produks' => $produks,
                 'partners' => $partners,
-                'id_partner_dari_produk' => $idPartnerDariProduk,
+                'id_partner_dari_produk' => $idProdukPartnerDariProduk,
                 'nama_partner_dari_produk' => $namaPartnerDariProduk,
                 'alamat_partner_dari_produk' => $alamatPartnerDariProduk,
                 'atk_id_partner' => $atkIdPartner,
@@ -251,12 +255,14 @@ class MemberController extends Controller
         return view('member.pencarian', compact('partner', 'produk', 'atk'))->render();
     }
 
-    public function detailPartner($id)
+    public function detailPartner($idProduk)
     {
-        $partner = Pengelola_Percetakan::find($id);
+        $partner = Pengelola_Percetakan::find($idProduk);
         $produk = $partner->products;
         $atk = Atk::all();
-        $ratingPartner = $produk->where('id_pengelola', $id)->avg('rating');
+        $ulasan = Ulasan::all();
+        $ratingPartner = $produk->where('id_pengelola', $idProduk)->avg('rating');
+        // $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
 
         if (empty($ratingPartner)) {
             $ratingPartner = $partner->rating_toko;
@@ -268,14 +274,23 @@ class MemberController extends Controller
         return view('member.detail_percetakan', compact('produk', 'partner', 'atk', 'ratingPartner'));
     }
 
-    public function detailProduk($id)
+    public function detailProduk($idProduk)
     {
-        $produk = Produk::find($id);
-        $atk = Atk::all();
+        $member = Auth::user();
+        $produk = Produk::find($idProduk);
+        $atk = $produk->atks();
         $fitur = json_decode($produk->fitur, true);
+        $ulasan = Ulasan::all();
         $ratingPartner = $produk->where('id_pengelola', $produk->partner->id_pengelola)->avg('rating');
+        $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
 
-        return view('member.detail_produk', compact('produk', 'fitur', 'atk', 'ratingPartner'));
+        return view('member.detail_produk', compact('member', 'produk', 'fitur', 'atk', 'ulasan', 'ratingPartner', 'ratingProduk'));
+    }
+
+    public function shareLink()
+    {
+        $urlCurrent = Share::currentPage()->facebook();
+        return $urlCurrent;
     }
 
     public function upload(Request $request)
@@ -288,7 +303,7 @@ class MemberController extends Controller
             'nama_file' => $file->getClientOriginalName(),
             'waktu' => now(),
         ]);
-        $idd = $k;
+        $idProdukd = $k;
         $path = $file->move(public_path('tmp/upload'), $file->getClientOriginalName());
         $pdf = $this->cekWarna($file, $path);
 
@@ -424,20 +439,21 @@ class MemberController extends Controller
         return view('member.detail_produk');
     }
 
-    public function laporProduk($id)
-    {
-        //dd(getDateBorn());
-        $produk = Produk::find($id);
-        $atk = Atk::all();
-        $fitur = json_decode($produk->fitur, true);
-        return view('member.lapor_produk', compact('produk', 'fitur', 'atk'));
-    }
-
-    public function storeLapor(Request $request, $id)
+    public function laporProduk($idProduk)
     {
         //dd(getDateBorn());
         $member = Auth::user();
-        $produk = Produk::find($id);
+        $produk = Produk::find($idProduk);
+        $atk = Atk::all();
+        $fitur = json_decode($produk->fitur, true);
+        return view('member.lapor_produk', compact('member', 'produk', 'fitur', 'atk'));
+    }
+
+    public function storeLapor(Request $request, $idProduk)
+    {
+        //dd(getDateBorn());
+        $member = Auth::user();
+        $produk = Produk::find($idProduk);
         $laporProduk = Lapor_produk::all();
 
         $pesan = $request->pesan;
@@ -455,14 +471,18 @@ class MemberController extends Controller
         return redirect()->route('detail.produk', $produk->id_produk)->with('alert', 'Laporan telah berhasil dikirim !');
     }
 
-    public function profile()
+    public function profile(Request $request)
     {
         //dd(getDateBorn());
         $member = Auth::user();
         $transaksi_saldo = Transaksi_saldo::all();
         $pengelola = Pengelola_Percetakan::all();
         $produk = Produk::all();
-        $konfigurasi = Konfigurasi_file::all();
+        $pesanan = $member->pesanans->first()->where('status', 'Pending')->orWhere('status', 'Diproses')->get();
+        $konfigurasi = $member->konfigurasi;
+
+        $request->session()->forget('alamatPesanan');
+        // session()->flush();
 
         return view('member.profil', [
             'member' => $member,
@@ -470,25 +490,26 @@ class MemberController extends Controller
             'pengelola_percetakan' => $pengelola,
             'produk' => $produk,
             'konfigurasi' => $konfigurasi,
+            'pesanan' => $pesanan,
             'tanggalLahir' => $this->getDateBorn()]
         );
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $idProduk)
     {
-        $transaksiSaldo = Transaksi_saldo::find($id);
+        $transaksiSaldo = Transaksi_saldo::find($idProduk);
         return view('member.profil', compact('transaksiSaldo'))->renderSections()['content'];
     }
 
     public function saldo()
     {
         $member = Auth::user();
-        // $id = Pengelola_Percetakan::find(Auth::id());
+        // $idProduk = Pengelola_Percetakan::find(Auth::id());
         $transaksi_saldo = Transaksi_saldo::all();
-        // $id = Auth::user($transaksi_saldo->id_pengelola);
+        // $idProduk = Auth::user($transaksi_saldo->id_pengelola);
         return view('member.topup_saldo', [
             'member' => $member,
-            // 'id' => $id,
+            // 'id' => $idProduk,
             'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
@@ -574,42 +595,38 @@ class MemberController extends Controller
 
         $dateBorn = date_create("$year-$month-$date");
 
+        if ($request->hasFile('foto_member')) {
+            // if(!empty($member->getMedia('default'))){
+            //     $member->getMedia('default');
+            // }
+            // else {
+            $member->clearMediaCollection();
+            $member->addMedia($request->file('foto_member'))->toMediaCollection();
+            // }
+        }
+
         if (empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))) {
             $member->update([
                 'nama_lengkap' => $request->nama,
                 'jenis_kelamin' => $request->jk,
                 'tanggal_lahir' => $dateBorn,
             ]);
-            if ($request->hasFile('foto_atk')) {
-                $member->addMedia($request->file('foto_atk'))->toMediaCollection();
-            }
-            // $member->clearMediaCollection();
-            // $member->addMedia($request->file('foto_member'))->toMediaCollection();
             return redirect()->route('profile')->with('alert', 'Profil berhasil diubah');
         } else {
             if (Auth::Check()) {
                 $request_data = $request->All();
                 $validator = $this->credentialRules($request_data);
                 if ($validator->fails()) {
-                    //return response()->json(array('error' => $validator->getMessageBag()->toArray()), 400);
-
                     return redirect()->route('profile.edit')->with('alert', 'Ubah Password Gagal, Silahkan Periksa Kembali Password yang Anda Ubah');
                 } else {
                     $current_password = Auth::user()->password;
                     if (Hash::check($request_data['current-password'], $current_password)) {
-                        // $member_id = Auth::user()->id_member;
-                        // $member = Member::find($member_id);
                         $member->update([
                             'nama_lengkap' => $request->nama,
                             'jenis_kelamin' => $request->jk,
                             'tanggal_lahir' => $dateBorn,
                             'password' => Hash::make($request->password),
                         ]);
-                        if ($request->hasFile('foto_atk')) {
-                            $member->addMedia($request->file('foto_atk'))->toMediaCollection();
-                        }
-                        // $member->clearMediaCollection();
-                        // $member->addMedia($request->file('foto_member'))->toMediaCollection();
                         return redirect()->route('profile')->with('alert', 'Profil dan Password telah berhasil diubah');
                     } else {
                         return redirect()->route('profile.edit')->with('alert', 'Silahkan Masukkan Password Lama dengan Benar !');
@@ -621,11 +638,6 @@ class MemberController extends Controller
                     'jenis_kelamin' => $request->jk,
                     'tanggal_lahir' => $dateBorn,
                 ]);
-                if ($request->hasFile('foto_atk')) {
-                    $member->addMedia($request->file('foto_atk'))->toMediaCollection();
-                }
-                // $member->clearMediaCollection();
-                // $member->addMedia($request->file('foto_member'))->toMediaCollection();
                 return redirect()->route('profile')->with('alert', 'Profil telah berhasil diubah');
             }
         }
@@ -635,11 +647,16 @@ class MemberController extends Controller
     {
         $member = Auth::user();
 
-        //tes parsing data dari order
-        if ($request->fromOrder) {
-            //dd('s');
-            return '<center style="font-size: 120px;"><h2><span style="font-size:180px;">&#128514;</span><br>ilham Pantek</h2></center>';
+        if ($request->hasSession("alamatPesanan")) {
+            // dd(true);
+            return view('member.alamat', compact('member'));
+            // return view('member.alamat', ['member' => $member, 'fromOrder' => true]);
         }
+
+        //tes parsing data dari order
+        // if ($request->fromOrder) {
+        //     return view('member.alamat', ['member' => $member, 'fromOrder' => true]);
+        // }
 
         // if ($request->session()->exists("alamatPesanan" . $member->id_member)){
         //     // $sessionAlamat = $request->session()->get("alamatPesanan". $member->id_member);
@@ -648,9 +665,9 @@ class MemberController extends Controller
         return view('member.alamat', compact('member'));
     }
 
-    public function tambahAlamat(Request $request)
+    public function tambahAlamat($idMember, Request $request)
     {
-        $member = Member::find(Auth::id());
+        $member = Member::find($idMember);
         $alamatLama = $member->alamat;
 
         if (empty($alamatLama)) {
@@ -684,12 +701,13 @@ class MemberController extends Controller
         return redirect()->route('alamat');
     }
 
-    //TODO: @imaha7 error modal edit enggak lama tertutup lagi. (test from chrome)
-    public function editAlamat($id, Request $request)
+    public function editAlamat($idMember, Request $request)
     {
-        $member = Member::find($id);
+        $member = Member::find(Auth::id());
+        $alamat = $member->alamat;
 
-        $alamatBaru = array(
+        $alamat['alamat'][$request->id] = [
+            'id' => $request->id,
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
@@ -698,9 +716,13 @@ class MemberController extends Controller
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kodepos,
             'Alamat Jalan' => $request->alamatjalan,
-        );
+        ];
 
-        $alamat['alamat'][$request->id] = $alamatBaru;
+        if ($alamat['IdAlamatUtama'] === $request->id) {
+            $alamat['IdAlamatUtama'] = $request->id;
+        }
+
+        array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
         $member->alamat = $alamat;
         $member->save();
 
@@ -709,21 +731,22 @@ class MemberController extends Controller
 
     public function pilihAlamat($id, Request $request)
     {
+        $sessionPesanan = $request->session()->get('alamatPesanan');
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
+
         $alamat['IdAlamatUtama'] = $alamat['alamat'][$id]['id'];
 
         $member->alamat = $alamat;
         $member->save();
 
-        if ($request->session()->exists("alamatPesanan")) {
-            $request->session()->forget("alamatPesanan");
-            return redirect()->route('konfigurasi.pesanan', ['konfigurasi' => $member->id_member]);
+        if ($request->session()->has($sessionPesanan)) {
+            $request->session()->forget('alamatPesanan');
+            // session()->flush();
+            return redirect()->route('konfigurasi.pesanan');
         } else {
             return redirect()->route('alamat');
-
         }
-
     }
 
     public function hapusAlamat($id, Request $request)
@@ -732,6 +755,7 @@ class MemberController extends Controller
         $alamat = $member->alamat;
         $new_array[] = array();
         $i = 0;
+
         foreach ($alamat['alamat'] as $key => $value) {
             if ($value['id'] != $id) {
                 $new_array[$i] = $value;
@@ -739,25 +763,26 @@ class MemberController extends Controller
                 $i++;
             }
         }
-        $alamat['alamat'] = $new_array;
 
-        if (empty($new_array['alamat'])) {
-
-            //unset($new_array['alamat']);
-            //unset($alamat['IdAlamatUtama']);
-            //unset($new_array['IdAlamatUtama']);
-            //dd($alamat['alamat']);
+        if (json_encode($new_array) === '[[]]') {
+            $alamat = array();
+        } else {
+            $alamat['alamat'] = $new_array;
+            if ($alamat['IdAlamatUtama'] === $request->id) {
+                $alamat['IdAlamatUtama'] = $alamat['alamat'][$i - 1]['id'];
+            }
         }
+
         $member->alamat = $alamat;
         $member->save();
 
         return redirect()->route('alamat');
     }
 
-    public function saldoPembayaran($id)
+    public function saldoPembayaran($idProduk)
     {
         $member = Auth::user();
-        $transaksi_saldo = Transaksi_saldo::find($id);
+        $transaksi_saldo = Transaksi_saldo::find($idProduk);
         $waktu = $transaksi_saldo->waktu;
 
         return view('member.pembayaran_topup', [
@@ -769,18 +794,21 @@ class MemberController extends Controller
     public function riwayat()
     {
         $member = Auth::user();
-        $transaksi_saldo = Transaksi_saldo::all();
+        $transaksi_saldo = $member->transaksiSaldo;
+        // $pesanan = $member->pesanans->first()->where('status', 'Selesai')->get();
+        $idPesanan = $transaksi_saldo->first()->pesanan->id_pesanan;
 
         return view('member.riwayat', [
             'member' => $member,
             'transaksi_saldo' => $transaksi_saldo,
+            'idPesanan' => $idPesanan,
         ]);
     }
 
-    public function riwayatSaldo($id)
+    public function riwayatSaldo($idProduk)
     {
         $member = Auth::user();
-        $transaksi_saldo = Transaksi_saldo::find($id);
+        $transaksi_saldo = Transaksi_saldo::find($idProduk);
 
         return view('member.riwayat_topup', [
             'member' => $member,
@@ -800,12 +828,9 @@ class MemberController extends Controller
     public function pesanan()
     {
         $member = Auth::user();
-        // $transaksi_saldo = Transaksi_saldo::all();
+        $pesanan = $member->pesanans;
 
-        return view('member.pesanan', [
-            'member' => $member,
-            // 'transaksi_saldo' => $transaksi_saldo
-        ]);
+        return view('member.pesanan', compact('member', 'pesanan'));
     }
 
     public function favorit()
@@ -821,7 +846,7 @@ class MemberController extends Controller
         ]);
     }
 
-    public function tambahFavorit(Request $request, $id)
+    public function tambahFavorit(Request $request, $idProduk)
     {
         $member = Member::find(Auth::id());
 
@@ -853,31 +878,158 @@ class MemberController extends Controller
     public function ulasan()
     {
         $member = Auth::user();
-        $produk = Produk::all();
-        // $transaksi_saldo = Transaksi_saldo::all();
+        $pesanan = $member->pesanans->where('status', 'Selesai');
 
-        return view('member.ulasan', [
-            'member' => $member,
-            'produk' => $produk,
+        $arrayBelumDiulas = [];
+        $arraySudahDiulas = [];
+
+        foreach ($pesanan as $p) {
+            foreach ($p->konfigurasiFile as $k) {
+                if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
+                    $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
+                    array_push($arraySudahDiulas, $ulasan);
+                } else {
+                    $temp = new stdClass();
+                    $temp->pesanan = $p;
+                    $temp->product = $k->product;
+                    array_push($arrayBelumDiulas, $temp);
+                }
+            }
+        }
+
+        return view('member.ulasan', compact('member', 'arrayBelumDiulas', 'arraySudahDiulas', 'pesanan'));
+    }
+
+    public function filterUlasan(Request $request)
+    {
+        if ($request->ajax()) {
+            $member = Auth::user();
+            $pesanan = $member->pesanans->where('status', 'Selesai');
+            $ulasan = Ulasan::where('id_member', $member->id_member)->get();
+            $filterKey = $request->keywordFilter;
+
+            $arrayBelumDiulas = [];
+            $arraySudahDiulas = [];
+            $arrayProdukUlasan = [];
+            $arrayFotoProdukUlasan = [];
+            $arrayPartnerProduk = [];
+            $arrayPesananUlasan = [];
+
+            foreach ($pesanan as $p) {
+                foreach ($p->konfigurasiFile as $k) {
+                    if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
+                        $ulasann = $member->ulasans->where('id_produk', $k->product->id_produk);
+                        array_push($arraySudahDiulas, $ulasann);
+                    } else {
+                        $temp = new stdClass();
+                        $temp->pesanan = $p;
+                        $temp->product = $k->product;
+                        array_push($arrayBelumDiulas, $temp);
+                    }
+                }
+            }
+
+            if ($request->keywordFilter === 'Sudah Diulas') {
+                foreach ($ulasan as $up => $value) {
+                    array_push($arrayProdukUlasan, $value->produk);
+                    array_push($arrayFotoProdukUlasan, $value->produk->getFirstMediaUrl('foto_produk'));
+                    array_push($arrayPartnerProduk, $value->produk->partner);
+                }
+
+                return response()->json(['ulasan' => $ulasan, 'arrayProdukUlasan' => $arrayProdukUlasan, 'arrayFotoProdukUlasan' => $arrayFotoProdukUlasan, 'arrayPartnerProduk' => $arrayPartnerProduk, 'filterKey' => $filterKey], 200);
+            } else {
+                foreach ($arrayBelumDiulas as $abd => $value) {
+                    array_push($arrayProdukUlasan, $value->product);
+                    array_push($arrayFotoProdukUlasan, $value->product->getFirstMediaUrl('foto_produk'));
+                    array_push($arrayPartnerProduk, $value->product->partner);
+                    array_push($arrayPesananUlasan, $value->pesanan);
+                }
+
+                return response()->json(['arrayBelumDiulas' => $arrayBelumDiulas, 'arrayProdukUlasan' => $arrayProdukUlasan, 'arrayFotoProdukUlasan' => $arrayFotoProdukUlasan, 'arrayPartnerProduk' => $arrayPartnerProduk, 'arrayPesananUlasan' => $arrayPesananUlasan, 'filterKey' => $filterKey], 200);
+            }
+        }
+    }
+
+    public function ulas($idProduk, $idPesanan)
+    {
+        $member = Auth::user();
+        $produk = Produk::find($idProduk);
+        $pesanan = Pesanan::find($idPesanan);
+
+        return view('member.ulas_produk', compact('produk', 'member', 'pesanan'));
+    }
+
+    public function storeUlasan(Request $request, $idProduk)
+    {
+        $member = Auth::user();
+        $produk = Produk::find($idProduk);
+        // $pesanan = Pesanan::find($idPesanan);
+        $ulasan = Ulasan::create([
+            'id_produk' => $produk->id_produk,
+            'id_member' => $member->id_member,
+            'rating' => $request->stars,
+            'pesan' => $request->pesan,
+            'waktu' => Carbon::now(),
+        ]);
+
+        if (!empty($request->file('foto_ulasan'))) {
+            $ulasan->addMedia($request->file('foto_ulasan'))->toMediaCollection('foto_ulasan');
+        }
+
+        return redirect()->route('ulasan.ulasansaya', [
+            $produk->id_produk,
+            $ulasan->id_ulasan,
         ]);
     }
 
-    public function ulas($id)
+    public function ulasanSaya($idProduk, $idUlasan)
     {
-        $produk = Produk::find($id);
-        return view('member.ulas_produk', compact('produk'));
+        $member = Auth::user();
+        $ulasan = Ulasan::find($idUlasan);
+        $produk = Produk::find($idProduk);
+        // $pesanan = Pesanan::find($idPesanan);
+
+        return view('member.ulasan_saya', compact('member', 'produk', 'ulasan'));
     }
 
-    public function ulasanSaya()
+    public function ulasanPartner($idProduk)
     {
-        return view('member.ulasan_saya');
+        $produk = Produk::find($idProduk);
+        $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
+        $ratingProduk = round($ulasan->avg('rating'), 1);
+
+        return view('member.ulasan_produk_pengelola', compact('produk', 'ulasan', 'ratingProduk'));
     }
 
-    public function ulasanPartner($id)
+    public function urutkanProdukPartner(Request $request)
     {
-        $partner = Pengelola_Percetakan::find($id);
-        // $produk = Produk::find($id);
-        return view('member.ulasan_produk_pengelola', compact('partner'));
+        if ($request->ajax()) {
+            if ($request->filterUrutkan === 'Rating Tertinggi ke Terendah') {
+                $produk = Produk::find($request->idProduk);
+                $ulasan = Ulasan::where('id_produk', $produk->id_produk)
+                    ->orderBy('rating', 'desc')
+                    ->get();
+                // $fotoUlasan = $ulasan->getFirstMediaUrl('foto_ulasan');
+                // $member = $ulasan->member;
+            } else if ($request->filterUrutkan === 'Rating Terendah ke Tertinggi') {
+                $produk = Produk::find($request->idProduk);
+                $ulasan = Ulasan::where('id_produk', $produk->id_produk)
+                    ->orderBy('rating', 'asc')
+                    ->get();
+
+                // $fotoUlasan = $ulasan->getFirstMediaUrl('foto_ulasan');
+                // $member = $ulasan->member;
+            } else {
+                $produk = Produk::find($request->idProduk);
+                $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
+                // $fotoUlasan = $ulasan->getFirstMediaUrl('foto_ulasan');
+                // $member = $ulasan->member;
+            }
+            return response()->json([
+                'ulasan' => $ulasan,
+                // 'fotoUlasan' => $fotoUlasan,
+            ], 200);
+        }
     }
 
     public function faq()

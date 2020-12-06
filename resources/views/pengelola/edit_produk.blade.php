@@ -379,7 +379,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         <img id="blah{{$i}}"
                             src="{{$f[$i]->foto_fitur ?? 'https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur'}}"
                             {{-- onerror="this.onerror=null; this.src='https:\/\/via.placeholder.com\/163/BC41BE\/fff.png?text=Fitur'" --}}
-                            class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px; "
+                            class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px; object-fit:contain;"
                             alt="foto produk">
                         <a id="editGambarProduk" class="pointer"
                             onclick="document.getElementById('imgupload{{$i}}').click();"

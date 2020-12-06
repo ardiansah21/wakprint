@@ -6,6 +6,7 @@ use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Lapor_produk;
 use App\Mail\TanggapiKeluhanMail;
+use App\Mail\TolakPartnerMail;
 use App\Member;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
@@ -21,10 +22,11 @@ class AdminController extends Controller
         $member = Member::all();
         $partner = Pengelola_Percetakan::all();
         $pesanan = Pesanan::all();
+        $transaksiSaldo = Transaksi_saldo::all();
 
         $jumlahMember = count($member);
         $jumlahPartner = count($partner);
-        $jumlahTransaksi = count($pesanan);
+        $jumlahTransaksi = count($pesanan) + count($transaksiSaldo);
 
         return view('admin.homepage', [
             'member' => $member,
@@ -69,18 +71,49 @@ class AdminController extends Controller
         return datatables(Pengelola_Percetakan::all())->make(true);
     }
 
-    public function saldoJson()
+    public function saldoMemberJson()
     {
-        $member = Member::all();
-        $partner = Pengelola_Percetakan::all();
-        $transaksiSaldo = Transaksi_saldo::all()->union($member);
-        // return datatables($transaksiSaldo)->addIndexColumn()->make(true);
-        return datatables(Transaksi_saldo::all())->make(true);
+        // $member = Member::all();
+        // $partner = Pengelola_Percetakan::all();
+        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'TopUp')->orWhere('jenis_transaksi', '=', 'Pembayaran');
+
+        return datatables($transaksiSaldo)
+            ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
+                $saldoMember = $transaksiSaldo->member->nama_lengkap;
+                return $saldoMember;
+            })
+            ->editColumn('jumlah_saldo', function ($transaksiSaldo) {
+                $jumlahPenarikan = "Rp. $transaksiSaldo->jumlah_saldo";
+                return $jumlahPenarikan;
+            })->make(true);
+    }
+
+    public function saldoPartnerJson()
+    {
+        // $member = Member::all();
+        // $partner = Pengelola_Percetakan::all();
+        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik');
+
+        return datatables($transaksiSaldo)
+            ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
+                $saldoPartner = $transaksiSaldo->partner->nama_lengkap;
+                return $saldoPartner;
+            })
+            ->editColumn('jumlah_saldo', function ($transaksiSaldo) {
+                $jumlahPenarikan = "Rp. $transaksiSaldo->jumlah_saldo";
+                return $jumlahPenarikan;
+            })->make(true);
     }
 
     public function keluhanJson()
     {
-        return datatables(Lapor_produk::all())->make(true);
+        $laporProduk = Lapor_produk::all();
+        return datatables($laporProduk)
+            ->editColumn('id_member', function ($laporProduk) {
+                $namaMember = $laporProduk->member->nama_lengkap;
+                return $namaMember;
+            })
+            ->make(true);
     }
 
     public function detailMember($id)
@@ -144,6 +177,48 @@ class AdminController extends Controller
         return view('admin.tolak_pengelola', compact('partner'));
     }
 
+    public function alasanTolakPartner($id, Request $request)
+    {
+        $partner = Pengelola_Percetakan::find($id);
+        if ($request->radioAlasan === "0") {
+            $isiAlasan = "Top-Up Tidak Mencapai Batas Minimal";
+        } else if ($request->radioAlasan === "1") {
+            $isiAlasan = "Terdapat Kendala pada Verifikasi Pendaftaran";
+        } else if ($request->radioAlasan === "2") {
+            $isiAlasan = "Saldo Tidak Mencukupi untuk Melakukan Transaksi";
+        } else if ($request->radioAlasan === "3") {
+            $isiAlasan = "Akun Dibekukan untuk Sementara";
+        } else {
+            $isiAlasan = $request->alasan;
+        }
+
+        $partner->atk->delete();
+        $partner->products->delete();
+        // $partner->boot();
+        // $partner->atk()->detach();
+        // $partner->products()->detach();
+        // $partner->atk->delete();
+        // $partner->products->delete();
+        $partner->delete();
+
+        // $laporan = Lapor_produk::find($request->id_laporan);
+        // $laporan->pesan_tanggapan = $request->tanggapan_keluhan;
+        // $laporan->save();
+        $m = (Mail::to($partner->email)->send(new TolakPartnerMail($partner, $isiAlasan)));
+        // dd($m);
+        try {
+            Mail::to($partner->email)->send(new TolakPartnerMail($partner, $isiAlasan));
+            // //TODO:  buat pesan sukses
+            // $laporan->status = 'Ditanggapi';
+            // $laporan->save();
+            return redirect()->route('admin.partner');
+        } catch (\Throwable $th) {
+            //TODO:  buat pesan gagal
+            dd('gagal kirim email');
+        }
+
+    }
+
     public function dataSaldo()
     {
         $member = Member::all();
@@ -153,15 +228,53 @@ class AdminController extends Controller
         return view('admin.konfirmasi_saldo', compact('member', 'partner', 'transaksi_saldo'));
     }
 
-    public function saldoTolak()
+    public function saldoTolak($id)
     {
-        $pengelola = Pengelola_Percetakan::all();
-        $member = Member::all();
+        $partner = Pengelola_Percetakan::find($id);
+        $transaksiSaldo = Transaksi_saldo::find($id);
 
-        return view('admin.tolak_pengelola', [
-            'member' => $member,
-            'pengelola_percetakan' => $pengelola,
-        ]);
+        return view('admin.tolak_pengelola', compact('transaksiSaldo', 'partner'));
+    }
+
+    public function storeTolak(Request $request, $id)
+    {
+        $transaksiSaldo = Transaksi_saldo::find($id);
+        $transaksiSaldo->status = "Gagal";
+        if ($request->radioAlasan === "0") {
+            $transaksiSaldo->keterangan = "Top-Up Tidak Mencapai Batas Minimal";
+        } else if ($request->radioAlasan === "1") {
+            $transaksiSaldo->keterangan = "Terdapat Kendala pada Verifikasi Pendaftaran";
+        } else if ($request->radioAlasan === "2") {
+            $transaksiSaldo->keterangan = "Saldo Tidak Mencukupi untuk Melakukan Transaksi";
+        } else if ($request->radioAlasan === "3") {
+            $transaksiSaldo->keterangan = "Akun Dibekukan untuk Sementara";
+        } else {
+            $transaksiSaldo->keterangan = $request->alasan;
+        }
+
+        $transaksiSaldo->save();
+
+        return redirect()->route('admin.saldo');
+    }
+
+    public function storeTerimaSaldoMember($id)
+    {
+        $transaksiSaldo = Transaksi_saldo::find($id);
+        $transaksiSaldo->status = "Berhasil";
+        $transaksiSaldo->keterangan = "Top Up Saldo Berhasil";
+        $transaksiSaldo->save();
+
+        return redirect()->route('admin.saldo');
+    }
+
+    public function storeTerimaSaldoPartner($id)
+    {
+        $transaksiSaldo = Transaksi_saldo::find($id);
+        $transaksiSaldo->status = "Berhasil";
+        $transaksiSaldo->keterangan = "Tarik Saldo Berhasil";
+        $transaksiSaldo->save();
+
+        return redirect()->route('admin.saldo');
     }
 
     public function keluhan()

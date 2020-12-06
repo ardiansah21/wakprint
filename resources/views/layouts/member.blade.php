@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {{--
+    <meta property="og:title" content="BAGI PRODUK" />
+    <meta property="og:image" content="https://miro.medium.com/max/3320/1*IFiz1vIYJsDdyGU3fCOwtQ.png" />
+    <meta property="og:type" content="website" /> --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -36,6 +40,17 @@
 
     {{-- Owl Carousel --}}
     <link rel="stylesheet" href="{{ asset('OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}" />
+
+    {{-- Fancy Box --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css" rel="stylesheet" />
+
+    {{-- SweetAlert2 --}}
+    {{--
+    <link rel="stylesheet" href="sweetalert2.min.css"> --}}
+    {{--
+    <link rel="stylesheet" href="sweetalert-master/src/sweetalert.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
     {{--
@@ -120,7 +135,7 @@
                                     <span class="material-icons md-32 mt-2 mr-2">notifications</span>
                                 </a>
                                 <ul class="dropdown-menu p-2"
-                                    style="top: 60px;right: 0px;left: unset;width: 500px;box-shadow: 0px 5px 7px -1px #c1c1c1;padding-bottom: 0px;padding: 0px;">
+                                    style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
                                     <li class="notification-box mb-2">
                                         <div class="row">
                                             <div class="col-lg-3 col-sm-3 col-3 text-center">
@@ -176,11 +191,11 @@
                                     @if (!empty(Auth::user()->getFirstMediaUrl()))
                                         <img class="align-middle border border-gray ml-2"
                                             src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45" alt="-"
-                                            style="border-radius: 30px;">
+                                            style="border-radius: 30px; object-fit:cover;">
                                     @else
                                         <img class="align-middle ml-2"
                                             src="https://ptetutorials.com/images/user-profile.png" width="45" height="45"
-                                            alt="-">
+                                            alt="-" style="object-fit:cover;">
                                     @endif
                                 </a>
                             </li>
@@ -252,22 +267,15 @@
                                     style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
                                     @if (!empty($member->getFirstMediaUrl()))
                                         <img src="{{ $member->getFirstMediaUrl() }}" class="img-responsive" alt="" width="300px"
-                                            height="300px" style="border-radius:8px 8px 8px 8px;">
+                                            height="300px" style="border-radius:8px; object-fit:cover;">
                                     @else
                                         <img src="https://unsplash.it/600/400" class="img-responsive" alt="" width="300px"
-                                            height="300px" style="border-radius:8px 8px 8px 8px;">
+                                            height="300px" style="border-radius:8px; object-fit:cover;">
                                     @endif
-
-                                    <div class="bg-dark"
-                                        style="position: absolute;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    top: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    left: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transform: translate(-50%, 140%); opacity:80%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: white;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width:300px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-radius:0px 0px 8px 8px;">
-                                        <label class="font-weight-bold text-truncate mx-auto"
-                                            style="font-size: 30px; width:100%;">{{ $member->nama_lengkap }}</label>
+                                    <div class="bg-dark pl-2 pr-2"
+                                        style="position: relative; top: -17%; left: 50%; transform: translate(-50%, 0%); opacity:80%; color: white; width:300px; border-radius:0px 0px 8px 8px;">
+                                        <label class="font-weight-bold text-truncate my-auto mx-auto"
+                                            style="font-size: 28px; width:100%;">{{ $member->nama_lengkap }}</label>
                                     </div>
                                 </div>
                                 <div class="mt-3">
@@ -459,8 +467,28 @@
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.jscroll.min.js') }}"></script>
     <script src="{{ asset('js/chatVue.js') }}"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    {{-- <script src="{{ asset('js/moment-timezone-with-data.js') }}"></script>
+    --}}
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data-1970-2030.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script> --}}
+
+    {{-- <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    --}}
+
+    {{-- <script src="sweetalert2.all.min.js"></script> --}}
+    {{-- <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script>
+    <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script> --}}
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    --}}
+
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    --}}
 
     @yield('script')
 </body>

@@ -1,178 +1,228 @@
 @extends('layouts.pengelola')
 
 @section('content')
-{{-- <form id="filter-form" action="{{ route('partner.filter.riwayat') }}" method="POST"> --}}
-    {{-- @csrf --}}
-    <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel">
-        <div class="bg-primary-purple text-white mb-5 ml-0" style="border-radius:10px;">
-            <div class="row justify-content-left card-body ml-0">
-                <div class="col-md-auto text-center align-self-center mr-0">
-                    <i class="material-icons md-48 align-middle">
-                        account_balance_wallet
-                    </i>
-                </div>
-                <div class="col-md-10">
-                    <div class="row justify-content-between">
-                        <div class="col-md-8">
-                            <label class="font-weight-bold mb-0" style="font-size: 36px;">
-                                Rp. {{$partner->jumlah_saldo ?? 0}}
-                            </label>
-                        </div>
-                        <div class="col-md-4 align-self-center text-right mr-0">
-                            <button class="btn btn-primary-yellow pl-5 pr-5 font-weight-bold"
-                                onclick="window.location.href='{{ route('partner.saldo.tarik') }}'"
-                                style="border-radius:30px
-                                    font-size: 16px;">
-                                {{__('Tarik')}}
-                            </button>
+    @php
+        use Carbon\Carbon;
+    @endphp
+        <div class="tab-pane fade show active" id="v-pills-beranda" role="tabpanel">
+            <div class="bg-primary-purple text-white mb-5 ml-0" style="border-radius:10px;">
+                <div class="row justify-content-left card-body ml-0">
+                    <div class="col-md-auto text-center align-self-center mr-0">
+                        <i class="material-icons md-48 align-middle">
+                            account_balance_wallet
+                        </i>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row justify-content-between">
+                            <div class="col-md-8">
+                                <label class="font-weight-bold mb-0" style="font-size: 36px;">
+                                    Rp. {{ $partner->jumlah_saldo ?? 0 }}
+                                </label>
+                            </div>
+                            <div class="col-md-4 align-self-center text-right mr-0">
+                                <button class="btn btn-primary-yellow pl-5 pr-5 font-weight-bold" onclick="window.location.href='{{ route('partner.saldo.tarik') }}'" style="border-radius:30px font-size: 16px;">
+                                    {{ __('Tarik') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <label class="font-weight-bold mb-4 ml-0" style="font-size: 36px;">
-            {{__('Riwayat Transaksi Saya')}}
-        </label>
-        <div class="row justify-content-between mb-4 ml-0 mr-0">
-            <div class="col-md-auto form-group">
-                @php
-                    $jenisDana = array(
-                        'Dana Masuk',
-                        'Dana Keluar'
-                    );
-                @endphp
-                <div class="dropdown" aria-required="true">
-                    <input name="keyword_jenis_transaksi" type="text" id="keyword_jenis_transaksi" Class="form-control"
-                        {{-- @php
-                            if (session()->has('keyword_jenis_transaksi')) {
-                                echo "value = '".session('keyword_jenis_transaksi')."' autofocus onfocus='this.value = this.value;'";
-                            }
-                        @endphp --}}
-                        hidden>
-                    <button id="jenisDanaButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                        id="dropdownJenisDana" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                        {{__('Jenis Dana')}}
-                    </button>
-                    <div id="jenisDanaList" class="dropdown-menu" aria-labelledby="dropdownJenisDana"
-                        style="font-size: 16px; width:100%;">
-                        @foreach ($jenisDana as $jd)
-                            <span class="dropdown-item cursor-pointer">
-                                {{$jd}}
-                            </span>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <label class="col-md-1 mb-0" style="font-size: 12px;">
-                {{__('Rentang Tanggal')}}
+            <label class="font-weight-bold mb-4 ml-0" style="font-size: 36px;">
+                {{ __('Riwayat Transaksi Saya') }}
             </label>
-            <div class="col-md-4">
-                <input class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus onselect="this.value = this.value;"
-                    {{-- @php
-                        if (session()->has('keyword_tanggal_awal')) {
-                            echo "value = '".session('keyword_tanggal_awal')."' autofocus onselect='this.value = this.value;'";
-                        }
-                    @endphp --}}
-                    >
-                {{-- <script>
-                        var $datepicker = $('#tanggal-awal');
-                        $datepicker.datepicker();
-                        $datepicker.datepicker('setDate', new Date());
-                    </script> --}}
-                <script>
-                    $('#tanggalAwal').datepicker({
-                        uiLibrary: 'bootstrap4'
-                    });
-                </script>
+            <div class="row justify-content-between mb-4 ml-0 mr-0">
+                <div class="col-md-auto form-group">
+                    @php
+                        $jenisDana = array('Semua', 'Dana Masuk', 'Dana Keluar');
+                    @endphp
+                    <div class="dropdown" aria-required="true">
+                        <input name="keyword_jenis_transaksi" type="text" id="keyword_jenis_transaksi" Class="form-control" hidden>
+                        <button id="jenisDanaButton"
+                            class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
+                            id="dropdownJenisDana" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="font-size: 16px; text-align:left;">
+                            {{ __('Jenis Dana') }}
+                        </button>
+                        <div id="jenisDanaList" class="dropdown-menu" aria-labelledby="dropdownJenisDana"
+                            style="font-size: 16px; width:100%;">
+                            @foreach ($jenisDana as $jd)
+                                <span class="dropdown-item cursor-pointer">
+                                    {{ $jd }}
+                                <input id="jenisDana" name="jenisDana" type="text" value="{{$jd}}" Class="form-control" hidden>
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <label class="col-md-1 mb-0" style="font-size: 12px;">
+                    {{ __('Rentang Tanggal') }}
+                </label>
+                <div class="col-md-4">
+                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus>
+                </div>
+                <div class="col-md-4">
+                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus>
+                </div>
             </div>
-            <div class="col-md-4">
-                <input class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus onselect="this.value = this.value;">
-                {{-- <script>
-                        var $datepicker = $('#tanggal-awal');
-                        $datepicker.datepicker();
-                        $datepicker.datepicker('setDate', new Date());
-                    </script> --}}
-                <script>
-                    $('#tanggalAkhir').datepicker({
-                        uiLibrary: 'bootstrap4'
-                    });
-                </script>
-            </div>
-        </div>
-        @if (!empty($transaksi_saldo))
-        <div class="table-scrollbar mb-4 ml-0 pr-2">
-            <table class="table table-hover">
-                <thead class="bg-primary-purple text-white" style="border-radius:25px 25px 15px 15px;
-                    font-size:16px;">
-                    <tr>
-                        <th scope="col-md-auto">{{__('ID')}}</th>
-                        <th scope="col-md-auto">{{__('Waktu')}}</th>
-                        <th scope="col-md-auto">{{__('Tanggal')}}</th>
-                        <th scope="col-md-auto">{{__('Jenis Dana')}}</th>
-                        <th scope="col-md-auto">{{__('Jumlah')}}</th>
-                        <th scope="col-md-auto">{{__('Detail Transaksi')}}</th>
-                    </tr>
-                </thead>
-                <tbody style="font-size:12px;">
-                    {{-- @if(session()->has('transaksi_saldo')) --}}
-                    @foreach($transaksi_saldo as $ts)
-                        {{-- @foreach(session('transaksi_saldo') as $ts) --}}
-                            @if (($ts->jenis_transaksi === 'Tarik' || $ts->jenis_transaksi === 'Pembayaran') && $ts->id_pengelola === $partner->id_pengelola)
+            @if (!empty($transaksi_saldo))
+                <div class="table-scrollbar mb-4 ml-0 pr-2">
+                    <table class="table table-hover">
+                        <thead class="bg-primary-purple text-white" style="border-radius:25px 25px 15px 15px; font-size:16px;">
                             <tr>
-                                <td scope="row">{{$ts->id_transaksi ?? ''}}</td>
-                                <td>{{date('H:i', strtotime($ts->waktu ?? ''))}}</td>
-                                <td>{{date('d/m/y', strtotime($ts->waktu ?? ''))}}</td>
-                                @if ($ts->jenis_transaksi === 'Tarik')
-                                    <td>{{__('Dana Keluar')}}</td>
-                                @else
-                                    <td>{{__('Dana Masuk')}}</td>
-                                @endif
-                                <td>Rp. {{$ts->jumlah_saldo ?? ''}}</td>
-                                <td>
-                                    <a class="text-primary-purple"
-                                        href="riwayat/{{ $ts->id_transaksi }}"
-                                        {{-- href="riwayat/{{ $ts->id_transaksi }}" --}}
-                                        >
-                                        {{__('Lihat') }}
-                                    </a>
-                                </td>
+                                <th scope="col-md-auto">{{ __('ID') }}</th>
+                                <th scope="col-md-auto">{{ __('Waktu') }}</th>
+                                <th scope="col-md-auto">{{ __('Tanggal') }}</th>
+                                <th scope="col-md-auto">{{ __('Jenis Dana') }}</th>
+                                <th scope="col-md-auto">{{ __('Jumlah') }}</th>
+                                <th scope="col-md-auto">{{ __('Detail Transaksi') }}</th>
                             </tr>
-                            @endif
-                        {{-- @endforeach --}}
-                    {{-- @endif --}}
-                    @endforeach
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody id="tbodySaldo" class="tbodySaldo" style="font-size:12px;">
+                            @foreach ($transaksi_saldo as $ts)
+                                @if (($ts->jenis_transaksi === 'Tarik' || ($ts->jenis_transaksi === 'Pembayaran' && ($ts->status === 'Berhasil' || $ts->status === 'Gagal'))) && $ts->id_pengelola === $partner->id_pengelola)
+                                    <tr>
+                                        <input id="idPartner" type="number" value="{{$ts->id_pengelola}}" hidden>
+                                        <input id="waktuTransaksi" type="text" value="{{ date('H:i', strtotime($ts->waktu ?? '')) }}" hidden>
+                                        <input id="tanggalTransaksi" type="text" value="{{ date('d/m/y', strtotime($ts->waktu ?? '')) }}" hidden>
+                                        <td scope="row">{{ $ts->id_transaksi ?? '' }}</td>
+                                        <td>{{Carbon::parse($ts->updated_at)->translatedFormat('H:i') ?? '-'}}</td>
+                                        <td>{{Carbon::parse($ts->updated_at)->translatedFormat('d F Y') ?? '-'}}</td>
+                                        @if ($ts->jenis_transaksi === 'Tarik')
+                                            <td>{{ __('Dana Keluar') }}</td>
+                                        @else
+                                            <td>{{ __('Dana Masuk') }}</td>
+                                        @endif
+                                        <td>{{ rupiah($ts->jumlah_saldo) ?? '' }}</td>
+                                        <td>
+                                            <a class="text-primary-purple" href="riwayat/{{ $ts->id_transaksi }}">
+                                                {{ __('Lihat') }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right mb-5">
+                    <button class="btn btn-outline-purple font-weight-bold pl-5 pr-5"
+                        onclick="window.location.href='{{ route('partner.saldo.export') }}'" style="border-radius:30px; font-size:16px;">
+                        {{ __('Export Excel') }}
+                    </button>
+                </div>
+            @else
+                <label>Riwayat Transaksi Kosong</label>
+            @endif
         </div>
-        <div class="text-right mb-5">
-            <button class="btn btn-outline-purple font-weight-bold pl-5 pr-5" style="border-radius:30px;
-                font-size:16px;">
-                {{__('Export Excel')}}
-            </button>
-        </div>
-        @else
-            <label>Riwayat Transaksi Kosong</label>
-        @endif
-    </div>
-{{-- </form> --}}
+        {{--
+    </form> --}}
 
 @endsection
 
 @section('script')
     <script>
-        var msg = '{{Session::get('alert')}}';
-        var exist = '{{Session::has('alert')}}';
-        if(exist){
+        var msg = "{{ Session::get('alert') }}";
+        var exist = "{{ Session::has('alert') }}";
+        var tanggalAwal = null;
+        var tanggalAkhir = null;
+
+        if (exist) {
             alert(msg);
         }
-        $('#jenisDanaList span').on('click', function () {
+        $('#jenisDanaList span').on('click', function() {
             $('#jenisDanaButton').text($(this).text());
             $('#keyword_jenis_transaksi').val($(this).text());
-            event.preventDefault();
-            document.getElementById('filter-form').submit();
+            $('#jenisDana').val($(this).text());
+            // $(this).val();
+            // event.preventDefault();
+            // document.getElementById('filter-form').submit();
+            filter();
         });
-        // $('#jenisDanaList span').on('select', function () {
-        //     $('#jenisdata').window.location.href = {{ route('partner.filter.riwayat') }}
-        // });
+
+        $('#tanggalAwal').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'yyyy-mm-dd',
+            clearBtn: true
+        });
+
+        $('#tanggalAwal').change(function() {
+            tanggalAwal = $(this).val();
+            filter();
+        });
+
+        $('#tanggalAkhir').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'yyyy-mm-dd',
+            clearBtn: true
+        });
+
+        $('#tanggalAkhir').change(function() {
+            tanggalAkhir = $(this).val();
+            filter();
+        });
+
+        function filter() {
+            var data = {
+                jenisDana: $('#jenisDana').val(),
+                idPartner: $('#idPartner').val(),
+                waktuTransaksi: $('#waktuTransaksi').val(),
+                tanggalTransaksi: $('#tanggalTransaksi').val(),
+                tanggalAwal: tanggalAwal,
+                tanggalAkhir: tanggalAkhir
+            };
+
+            $.ajaxSetup({
+                headers:{
+                    'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url:"{{ route('partner.saldo.filter') }}",
+                method:'GET',
+                data:data,
+                dataType:'json',
+
+                beforeSend:function(){
+                    $('.tbodySaldo').css('color', '#dfecf6');
+                    $('.tbodySaldo').html('<div class="text-center"><img class="mx-auto" id="imgLoading" style="position:absolute; left:40%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
+                },
+                uploadProgress: function () {
+                    $('#imgLoading').show();
+                },
+                success:function(transaksiSaldo)
+                {
+                    // var newDate = new Date(data.tanggalAwal);
+                    // alert(newDate);
+                    // alert(data.tanggalAwal);
+                    var rowListSaldo = '';
+                    for(i = 0; i < transaksiSaldo['transaksiSaldo'].length;i++){
+                        rowListSaldo += '<tr>';
+                            rowListSaldo += '<td scope="row">' + transaksiSaldo['transaksiSaldo'][i].id_transaksi + '</td>';
+                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].waktu).format('H:mm') + '</td>';
+                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].waktu).format('D/M/YYYY') + '</td>';
+                            if(transaksiSaldo['transaksiSaldo'][i].jenis_transaksi === 'Tarik'){
+                                rowListSaldo += '<td> Dana Keluar </td>';
+                            }
+                            else{
+                                rowListSaldo += '<td> Dana Masuk </td>';
+                            }
+                            rowListSaldo += '<td>Rp. ' + transaksiSaldo['transaksiSaldo'][i].jumlah_saldo + '</td>';
+                            rowListSaldo += '<td><a class="text-primary-purple" href="riwayat/'+ transaksiSaldo['transaksiSaldo'][i].id_transaksi +'">Lihat</a></td>';
+                        rowListSaldo += '<tr/>';
+                    }
+
+                    $('#imgLoading').hide();
+                    $('.tbodySaldo').css('color', '#000000');
+                    $('.tbodySaldo').html(rowListSaldo);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                    alert(thrownError);
+                }
+            })
+        };
+
     </script>
 @endsection

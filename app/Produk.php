@@ -56,6 +56,7 @@ class Produk extends Model implements HasMedia
 
     public function konfigurasiFile()
     {
+        // return $this->hasOne('App\Konfigurasi_file', 'id_konfigurasi');
         return $this->hasOne('App\Konfigurasi_file', 'id_produk');
         // return $this->belongsTo(Pengelola_Percetakan::all());
     }
@@ -63,5 +64,10 @@ class Produk extends Model implements HasMedia
     public function atks()
     {
         return ($this->partner)->atk;
+    }
+
+    public function ulasan()
+    {
+        return $this->hasMany('App\Ulasan', 'id_produk');
     }
 }

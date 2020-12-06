@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 use App\Transaksi_saldo;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class TransaksiSaldoTableSeeder extends Seeder
 {
@@ -29,9 +29,8 @@ class TransaksiSaldoTableSeeder extends Seeder
             'kode_pembayaran' => '775647231',
             'status' => 'Berhasil',
             'keterangan' => 'Tarik Saldo Berhasil',
-            'waktu' => Carbon::now(),
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ]);
         // Transaksi_saldo::create([
         //     'jenis_transaksi' => 'Pembayaran',
