@@ -1,8 +1,68 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+.list-user,
+.card-message {
+    overflow-y: auto;
+    height: 400px;
+}
+
+.list-user .list-group-item {
+    border: none;
+    &.active {
+        color: #495057;
+        background-color: #f7f7f7;
+    }
+}
+
+.card-message {
+    .list-group-item {
+        padding: 0;
+        border: none;
+    }
+    .list-message-item {
+        width: 80%;
+        @media screen and (min-width: 768px) {
+            width: 49%;
+        }
+        &.right {
+            float: right;
+        }
+    }
+}
+
+.rounded-circle {
+    width: 48px;
+}
+
+.svg-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.svg-icon path {
+    fill: #4691f6;
+}
+
+[badge]:after {
+    background: hsl(171, 100%, 41%);
+    border-radius: 10px;
+    color: #fff;
+    content: attr(badge);
+    font-size: 11px;
+    margin-top: -5px;
+    margin-left: -8px;
+    min-width: 20px;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+}
+
+[badge^="-"]:after,
+[badge="0"]:after,
+[badge=""]:after {
+    display: none;
+}

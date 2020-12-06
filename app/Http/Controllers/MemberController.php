@@ -880,11 +880,6 @@ class MemberController extends Controller
         return view('member.ulasan_produk_pengelola', compact('partner'));
     }
 
-    public function chat()
-    {
-        return view('member.chat');
-    }
-
     public function faq()
     {
         return view('member.faq');

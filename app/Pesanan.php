@@ -19,4 +19,8 @@ class Pesanan extends Model
     {
         return $this->belongsTo('App\Pengelola_Percetakan', 'id_pengelola');
     }
+    public function member()
+    {
+        return $this->belongsTo('App\Member', 'id_member');
+    }
 }

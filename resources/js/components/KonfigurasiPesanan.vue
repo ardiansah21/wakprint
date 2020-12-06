@@ -1,20 +1,10 @@
 <template>
     <div class="container mt-5 mb-5">
-        <label class="font-weight-bold" style="font-size: 48px">
-            Konfigurasi Pesanan
-        </label>
+        <label class="font-weight-bold" style="font-size: 48px">Konfigurasi Pesanan</label>
         <div class="row justify-content-between mb-5">
             <div class="col-md-4 mt-5" style="border-radius: 10px">
-                <div
-                    class="bg-light-purple pl-4 pr-4 pt-4 pb-4 mb-4"
-                    style="border-radius: 10px"
-                >
-                    <label
-                        class="font-weight-bold mb-3"
-                        style="font-size: 24px"
-                    >
-                        Penerimaan
-                    </label>
+                <div class="bg-light-purple pl-4 pr-4 pt-4 pb-4 mb-4" style="border-radius: 10px">
+                    <label class="font-weight-bold mb-3" style="font-size: 24px">Penerimaan</label>
                     <div
                         class="form-group custom-control custom-radio mb-4"
                         style="font-size: 14px"
@@ -28,16 +18,15 @@
                             v-model="penerimaan"
                             checked
                         />
-                        <label class="custom-control-label" for="rbAmbilTempat">
-                            Ambil di Tempat Percetakan
-                        </label>
+                        <label
+                            class="custom-control-label"
+                            for="rbAmbilTempat"
+                        >Ambil di Tempat Percetakan</label>
                         <label class="text-truncate-multiline mb-2">
                             <!-- {{ $konfigurasi->product->partner->alamat_toko ?? '-' }} -->
                         </label>
                     </div>
-                    <div
-                        class="form-group custom-control custom-radio mr-0 mb-4"
-                    >
+                    <div class="form-group custom-control custom-radio mr-0 mb-4">
                         <div class="row justify-content-between ml-0">
                             <input
                                 id="rbAntarTempat"
@@ -47,100 +36,83 @@
                                 v-model="penerimaan"
                                 value="Diantar"
                             />
-                            <label
-                                class="custom-control-label"
-                                for="rbAntarTempat"
-                            >
-                                Pengantaran
-                            </label>
+                            <label class="custom-control-label" for="rbAntarTempat">Pengantaran</label>
                             <a
                                 class="col-md-auto text-right mb-2"
                                 href="/profil/alamat?fromOrder=true"
                                 style="font-size: 12px"
                             >
                                 {{
-                                    member.alamat.length !== null ? "Ubah" : ""
+                                member.alamat.length !== null ? "Ubah" : ""
                                 }}
                             </a>
                         </div>
                         <label class="text-truncate SemiBold mb-2 ml-0">
+                            <!-- TODO: buat pengecekan jika belum ada alamat -->
                             {{
-                                member.alamat !== null
-                                    ? member.alamat.alamat[
-                                          member.alamat.IdAlamatUtama
-                                      ]["Nama Penerima"]
-                                    : member.nama_lengkap
+                            member.alamat !== '[]'
+                            ? member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Nama Penerima"]
+                            : member.nama_lengkap
                             }}
                         </label>
                         <label class="text-truncate-multiline mb-2 ml-0 mb-5">
                             {{
-                                member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
-                                ]["Alamat Jalan"]
+                            member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Alamat Jalan"]
                             }},
                             {{
-                                member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
-                                ]["Kelurahan"]
+                            member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Kelurahan"]
                             }},
                             {{
-                                member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
-                                ]["Kecamatan"]
+                            member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Kecamatan"]
                             }},
                             {{
-                                member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
-                                ]["Kabupaten Kota"]
+                            member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Kabupaten Kota"]
                             }},
                             {{
-                                member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
-                                ]["Provinsi"]
+                            member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Provinsi"]
                             }},
                             {{
-                                member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
-                                ]["Kode Pos"]
+                            member.alamat.alamat[
+                            member.alamat.IdAlamatUtama
+                            ]["Kode Pos"]
                             }},
                         </label>
                     </div>
-                    <div
-                        v-show="penerimaan === 'Diantar'"
-                        class="row justify-content-between"
-                    >
-                        <label class="col-md-auto font-weight-bold mb-2">
-                            Biaya
-                        </label>
+                    <div v-show="penerimaan === 'Diantar'" class="row justify-content-between">
+                        <label class="col-md-auto font-weight-bold mb-2">Biaya</label>
                         <label
                             class="col-md-auto font-weight-bold text-right mb-2"
-                        >
-                            {{ rupiah(ongkir) }}
-                        </label>
+                        >{{ rupiah(ongkir) }}</label>
                     </div>
                     <!-- <button
                         @click="() => this.$root.gotosite('/profil/alamat')"
                     >
                         test
-                    </button> -->
+                    </button>-->
                 </div>
                 <div
                     class="bg-light-purple pl-4 pr-4 pt-4 pb-4"
                     style="border-radius: 10px; font-size: 14px"
                 >
-                    <label
-                        class="font-weight-bold mb-3"
-                        style="font-size: 24px"
-                    >
-                        Ringkasan Pemesanan
-                    </label>
+                    <label class="font-weight-bold mb-3" style="font-size: 24px">Ringkasan Pemesanan</label>
                     <div class="row justify-content-between">
-                        <label id="subTotalFile" class="col-md-auto mb-2">
-                            Subtotal {{ konFileTerpilih.length }} file
-                        </label>
-                        <label class="col-md-auto text-right mb-2">
-                            {{ rupiah(onSubtotalFile()) }}
-                        </label>
+                        <label
+                            id="subTotalFile"
+                            class="col-md-auto mb-2"
+                        >Subtotal {{ konFileTerpilih.length }} file</label>
+                        <label class="col-md-auto text-right mb-2">{{ rupiah(onSubtotalFile()) }}</label>
                     </div>
                     <div
                         v-show="onSubtotalAtk().jumlahJenis > 0"
@@ -151,51 +123,39 @@
                             x {{ onSubtotalAtk().jumlahTotal }}
                             buah
                         </label>
-                        <label class="col-md-auto text-right mb-2">
-                            {{ rupiah(onSubtotalAtk().total) }}
-                        </label>
+                        <label
+                            class="col-md-auto text-right mb-2"
+                        >{{ rupiah(onSubtotalAtk().total) }}</label>
                     </div>
 
-                    <div
-                        v-show="penerimaan === 'Diantar'"
-                        class="row justify-content-between mb-2"
-                    >
-                        <label class="col-md-auto mb-2">
-                            Biaya Pengiriman</label
-                        >
-                        <label class="col-md-auto text-right mb-2">
-                            {{ rupiah(ongkir) }}</label
-                        >
+                    <div v-show="penerimaan === 'Diantar'" class="row justify-content-between mb-2">
+                        <label class="col-md-auto mb-2">Biaya Pengiriman</label>
+                        <label class="col-md-auto text-right mb-2">{{ rupiah(ongkir) }}</label>
                     </div>
                     <div class="row justify-content-between">
-                        <label class="col-md-auto SemiBold mb-2"> Total</label>
+                        <label class="col-md-auto SemiBold mb-2">Total</label>
                         <label
                             id="totalHargaPesanan"
                             class="col-md-auto SemiBold text-right mb-2"
-                            >{{ rupiah(onTotalBiaya()) }}
-                        </label>
+                        >{{ rupiah(onTotalBiaya()) }}</label>
                     </div>
                     <div class="row justify-content-between">
-                        <label class="col-md-auto SemiBold mb-2">
-                            Saldo Kamu</label
-                        >
+                        <label class="col-md-auto SemiBold mb-2">Saldo Kamu</label>
                         <label class="col-md-auto SemiBold text-right mb-2">
                             {{
-                                rupiah(
-                                    member.jumlah_saldo != null
-                                        ? member.jumlah_saldo
-                                        : 0
-                                )
+                            rupiah(
+                            member.jumlah_saldo != null
+                            ? member.jumlah_saldo
+                            : 0
+                            )
                             }}
                         </label>
                     </div>
                     <div class="row justify-content-between">
-                        <label class="col-md-auto SemiBold mb-2">
-                            Sisa Saldo Kamu</label
-                        >
-                        <label class="col-md-auto SemiBold text-right mb-3">
-                            {{ rupiah(member.jumlah_saldo - onTotalBiaya()) }}
-                        </label>
+                        <label class="col-md-auto SemiBold mb-2">Sisa Saldo Kamu</label>
+                        <label
+                            class="col-md-auto SemiBold text-right mb-3"
+                        >{{ rupiah(member.jumlah_saldo - onTotalBiaya()) }}</label>
                     </div>
                     <label
                         v-show="
@@ -219,18 +179,14 @@
                             v-model="isCheckAll"
                             id="PilihSemua"
                         />
-                        <label class="custom-control-label" for="PilihSemua">
-                            Pilih Semua
-                        </label>
+                        <label class="custom-control-label" for="PilihSemua">Pilih Semua</label>
                     </div>
                     <button
                         type="button"
                         class="btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center"
                         style="border-radius: 30px"
                         @click="this.$root.gotosite('konfigurasi-file')"
-                    >
-                        Tambah File
-                    </button>
+                    >Tambah File</button>
                 </div>
                 <table class="table table-hover mb-9">
                     <thead
@@ -249,13 +205,11 @@
                     <!-- <div
                 class="table-scrollbar pl-0 pr-2 mb-5"
                 style="max-height: 270px"
-            > -->
+                    >-->
                     <tbody style="font-size: 14px">
                         <tr v-for="(f, idx) in konFiles" :key="idx">
                             <td scope="row">
-                                <div
-                                    class="custom-control custom-checkbox mt-0 ml-1"
-                                >
+                                <div class="custom-control custom-checkbox mt-0 ml-1">
                                     <input
                                         :id="f.id_konfigurasi"
                                         type="checkbox"
@@ -264,36 +218,23 @@
                                         v-model="konFileTerpilih"
                                         @click="updateCheckall()"
                                     />
-                                    <label
-                                        class="custom-control-label"
-                                        :for="f.id_konfigurasi"
-                                    ></label>
+                                    <label class="custom-control-label" :for="f.id_konfigurasi"></label>
                                 </div>
                             </td>
-                            <td>
-                                {{ f.id_konfigurasi }}
-                            </td>
-                            <td>
-                                {{ f.nama_file }}
-                            </td>
-                            <td>
-                                {{ f.nama_produk }}
-                            </td>
+                            <td>{{ f.id_konfigurasi }}</td>
+                            <td>{{ f.nama_file }}</td>
+                            <td>{{ f.nama_produk }}</td>
                             <td>{{ rupiah(f.biaya) }}</td>
                             <td>
                                 <span>
-                                    <i class="material-icons mr-2 pointer">
-                                        edit
-                                    </i>
+                                    <i class="material-icons mr-2 pointer">edit</i>
                                     <i
                                         class="material-icons pointer"
                                         style="color: red"
                                         @click="
                                             onHapusKonfigurasi(f.id_konfigurasi)
                                         "
-                                    >
-                                        delete
-                                    </i>
+                                    >delete</i>
                                 </span>
                             </td>
                         </tr>
@@ -306,16 +247,14 @@
                     :key="i"
                     class="row justify-content-between ml-0 mr-2"
                 >
-                    <div
-                        class="col-md-4 form-group custom-control custom-checkbox"
-                    >
+                    <div class="col-md-4 form-group custom-control custom-checkbox">
                         <!-- <input
                             :id="atk.id_atk + '_atk'"
                             type="checkbox"
                             class="custom-control-input"
                             style="width: 100%"
                             v-model="jumlahPerAtk[atk.id_atk].terpilih"
-                        /> -->
+                        />-->
                         <input
                             type="checkbox"
                             :id="atk.id_atk + '_atk'"
@@ -329,7 +268,7 @@
                             :value="{
                                 id: atk.id_atk,
                                 jumlah: jumlahPerAtk[atk.id_atk],
-                            }" -->
+                        }"-->
                         <label
                             class="custom-control-label text-break align-middle"
                             :for="atk.id_atk + '_atk'"
@@ -339,8 +278,7 @@
                             <i
                                 class="material-icons align-middle ml-2"
                                 style="color: #c4c4c4"
-                                >help</i
-                            >
+                            >help</i>
                         </label>
                     </div>
                     <div class="col-md-auto form-group">
@@ -355,7 +293,7 @@
                             :disabled="isDisabled(atk.id_atk)"
                             @change="(val) => tt(val)"
                             @blur="tt(value)"
-                        ></vue-numeric-input> -->
+                        ></vue-numeric-input>-->
 
                         <vue-numeric-input
                             size="100px"
@@ -372,9 +310,7 @@
                             id="hargaAtkLabel"
                             class="SemiBold mb-2 ml-0"
                             style="width: 100%"
-                        >
-                            {{ rupiah(atk.harga) }}
-                        </label>
+                        >{{ rupiah(atk.harga) }}</label>
                     </div>
                 </div>
             </div>
@@ -383,9 +319,7 @@
             class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold mb-5"
             style="border-radius: 30px; font-size: 24px"
             @click="buatPesanan()"
-        >
-            Buat Pesanan
-        </button>
+        >Buat Pesanan</button>
     </div>
 </template>
 

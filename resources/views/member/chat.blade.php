@@ -1,150 +1,125 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
-
 @section('content')
-<div id="chat">
-    <div class="container">
+    <div v-if="pesanans.length > 0" class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Chats</div>
-
-                    <div class="panel-body">
-                        <chat-messages :messages="messages"></chat-messages>
-                    </div>
-                    <div class="panel-footer">
-                        <chat-form v-on:messagesent="addMessage" :user="{{ Auth::user() }}"></chat-form>
-                    </div>
+            <div class="col-md-4 ">
+                <h4>Pesanan</h4>
+                <div class="list-group">
+                    <a v-for="(pesanan, index) in pesanans" v-bind:key="index"
+                        class="pointer list-group-item list-group-item-action flex-column align-items-start"
+                        :class="[{'active': isActive === index}]" v-on:click="fetchMessages(pesanan.id)">
+                        <div class="d-flex w-10 justify-content-between">
+                            <h5 class="mb-1">@{{ pesanan . id }}</h5>
+                            {{-- <small>3 days ago</small> --}}
+                            <span v-if="pesanan.count" class="badge badge-danger">@{{ pesanan . count }}</span>
+                        </div>
+                        <p class="mb-1">@{{ pesanan . nama_toko }}</p>
+                        <p class="mb-1">@{{ pesanan . penerimaan }}</p>
+                        <p class="mb-1">@{{ pesanan . status }}</p>
+                        {{-- <small>Donec id elit .</small>
+                        --}}
+                    </a>
                 </div>
             </div>
-        </div>
-    </div>
-
-</div>
-
-
-<div class="container">
-    <div class="row mt-5 mb-5">
-        <div class="col-md-4 bg-light-purple" style="border-radius:5px;">
-            <div class="search-input mt-3 mb-3">
-                <div class="main-search-input-item">
-                    <input type="text" role="search" class="form-control" placeholder="Cari pengelola percetakan disini"
-                        aria-label="Cari percetakan atau produk disini" aria-describedby="basic-addon2"
-                        style="border:0px solid white; border-radius:30px; font-size:18px;">
-                    <i class="material-icons ml-1 pt-1 pb-1 pl-3 pr-3" style="position: absolute;
-                            top: 50%; left: 95%;
-                            transform:
-                            translate(-50%, -50%);
-                            -ms-transform: translate(-50%, -50%);">
-                        search
-                    </i>
-                </div>
-            </div>
-            <div class="my-custom-scrollbar mb-0">
-
-                {{-- @foreach ($collection as $item) --}}
-                <div class="row justify-content-between mb-4">
-                    <div class="align-self-center col-md-auto" style="max-width: 50px;">
-                        <img class="img-responsive" src="https://ptetutorials.com/images/user-profile.png" width="50"
-                            height="50" alt="no logo">
-                    </div>
-                    <div class="col-md-auto">
-                        <label class="d-inline-block text-truncate SemiBold mb-0"
-                            style="font-size:18px; max-width: 170px;">{{__('Ali Susi')}}</label>
-                        <br>
-                        <label class="d-inline-block text-truncate mb-0"
-                            style="font-size:14px; max-width: 170px;">{{__('Apa cerita kita hari')}}</label>
-                    </div>
-                    <div class="col-md-auto text-right">
-                        <label class="mb-2" style="font-size:12px; color:#575757">{{__('14:00 WIB')}}</label>
-                        <br>
-                        <label class="badge bg-primary-danger text-white pl-1 pr-1"
-                            style="border-radius: 50px;font-size:8px;">{{__('1')}}</label>
-                    </div>
-                </div>
-                {{-- @endforeach --}}
-
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="bg-light-purple mb-0 p-3 ml-3" style="border-radius:5px 5px 0px 0px;">
-                <div class="row justify-content-between mb-0 ml-0">
-                    <div class="col-md-1" style="max-width: 40px;">
-                        <img class="img-responsive" src="https://ptetutorials.com/images/user-profile.png" width="40"
-                            height="40" alt="no logo">
-                    </div>
-                    <div class="col-md-8 align-self-center">
-                        <label class="text-truncate SemiBold mb-0" style="font-size:18px; max-width:420px;">
-                            {{__('Ali Susisadsadsadssadassadsadasdsadsaasddadssadsas')}}
-                            <i class="material-icons md-18 text-primary-success ml-2">
-                                fiber_manual_record
-                            </i>
-                        </label>
-                    </div>
-                    <div class="col-md-auto text-right align-self-center">
-                        <div class="row justify-content-between">
-                            <i class="material-icons md-32 mr-4" style="color:#575757;">search</i>
-                            <i class="material-icons md-32 mr-4" style="color:#575757;">attach_file</i>
-                            <i class="material-icons md-32 mr-4" style="color:#575757;">more_vert</i>
+            <div class="col-md-8">
+                <div v-if="isActive != null">
+                    <div class="bg-light-purple mb-0">
+                        <div class="row  mb-0 ml-0">
+                            <div class="">
+                                <img class=" rounded-md rounded-circle img-responsive" :src="pengelola.avatar"
+                                    alt="no logo">
+                            </div>
+                            <div class="align-self-center ml-3">
+                                <label class="text-truncate SemiBold mb-0" style="font-size:18px; max-width:420px;">
+                                    {{-- @{{ users[this . isActive] . name }}
+                                    --}}
+                                    @{{ pengelola . nama }}
+                                    {{-- <i
+                                        class="material-icons md-18 text-primary-success ml-2">
+                                        fiber_manual_record
+                                    </i> --}}
+                                </label>
+                            </div>
+                            {{-- <div class="col-md-auto text-right align-self-center">
+                                <div class="row justify-content-between">
+                                    <i class="material-icons md-32 mr-4" style="color:#575757;">search</i>
+                                    <i class="material-icons md-32 mr-4" style="color:#575757;">attach_file</i>
+                                    <i class="material-icons md-32 mr-4" style="color:#575757;">more_vert</i>
+                                </div>
+                            </div> --}}
                         </div>
                     </div>
-                </div>
-            </div>
-            <div>
-                <div class="my-custom-scrollbar mb-4" style="height:550px;">
-                    <div class="mt-4 ml-4">
+                    {{-- //TODO tambah url detail pesanan --}}
+                    <a :href="'/urlDetailPesanan/'+ pesanans[isActive].id_pesanan ">Lihat detail Pesanan</a>
+                    <div class="card-body card-message" id="message-scroll">
+                        <div v-for="(message, index) in messages" v-bind:key="index" class="mt-4 ml-4">
+                            <div v-if="message.from_user == 'member'" class="d-flex justify-content-end ml-0 mb-4 mr-4">
+                                <div class="bg-primary-purple text-white pl-4 pr-4 pt-2 pb-2"
+                                    style="width:50%; border-radius:15px 15px 0px 15px;">
+                                    <p class="mb-0" style="font-size:14px;">
+                                        @{{ message . pesan }}
+                                    </p>
+                                    <p class="text-right mb-0 mr-2" style="font-size:12px;">
+                                        @{{ new Date(message . created_at) . toLocaleString() }}
+                                    </p>
+                                </div>
+                            </div>
 
-                        {{-- @foreach ($collection as $item) --}}
-                        <div class="d-flex justify-content-end ml-0 mb-4 mr-4">
-                            <div class="bg-primary-purple text-white pl-4 pr-4 pt-2 pb-2"
-                                style="width:50%; border-radius:15px 15px 0px 15px;">
+                            <div v-if="message.from_user == 'partner'" class="ml-0 pl-4 pr-4 pt-2 pb-2"
+                                style="background-color:#F4F4F4; width:50%; border-radius:15px 15px 15px 0px;">
                                 <p class="mb-0" style="font-size:14px;">
-                                    {{__('Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex neque,
-                                        molestias id nulla tempore error cum vero? Nam dignissimos sed blanditiis,
-                                        corporis ullam, placeat, nesciunt obcaecati debitis ex odio mollitia?')}}
+                                    @{{ message . pesan }}
                                 </p>
-                                <p class="text-right mb-0 mr-2" style="font-size:12px;">{{__('14:00')}}</p>
+                                <p class="text-right mb-0 mr-2" style="font-size:12px;">
+                                    @{{ new Date(message . created_at) . toLocaleString() }}
+                                </p>
+                            </div>
+
+                            {{-- <div class="row justify-content-between mb-4 mt-4 ml-4 mr-4">
+                                <div class="col-md-5 row row-bordered"></div>
+                                <p class="col-md-auto my-auto" style="color: #C4C4C4; font-size:12px;">
+                                    {{ __('Hari ini') }}
+                                </p>
+                                <div class="col-md-5 row row-bordered"></div>
+                            </div> --}}
+
+
+                        </div>
+                    </div>
+                    <form @submit.prevent="sendMessage" style="font-size:18px;">
+                        <div class="row mb-0 ml-0">
+                            <div class="form-group mb-0 align-self-center" style="width: 90%">
+                                <input v-model="form.pesan" type="text"
+                                    class=" form-control form-control-lg border-primary-purple pl-4 pr-4 pt-2 pb-2"
+                                    placeholder="Masukkan Pesan Anda disini" style="border-radius:30px;">
+                            </div>
+                            <div class=" align-self-center text-primary-purple" style="width: 10%">
+                                <button type="submit" class="btn text-primary-purple">
+                                    <i class="material-icons align-middle md-48">send</i>
+                                </button>
                             </div>
                         </div>
-                        <div class="ml-0 pl-4 pr-4 pt-2 pb-2"
-                            style="background-color:#F4F4F4; width:50%; border-radius:15px 15px 15px 0px;">
-                            <p class="mb-0" style="font-size:14px;">
-                                {{__('Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex neque,
-                                    molestias id nulla tempore error cum vero? Nam dignissimos sed blanditiis,
-                                    corporis ullam, placeat, nesciunt obcaecati debitis ex odio mollitia?')}}
-                            </p>
-                            <p class="text-right mb-0 mr-2" style="font-size:12px;">{{__('14:00')}}</p>
-                        </div>
-                        <div class="row justify-content-between mb-4 mt-4 ml-4 mr-4">
-                            <div class="col-md-5 row row-bordered"></div>
-                            <p class="col-md-auto my-auto" style="color: #C4C4C4; font-size:12px;">
-                                {{__('Hari ini')}}
-                            </p>
-                            <div class="col-md-5 row row-bordered"></div>
-                        </div>
-                        {{-- @endforeach --}}
-
-                    </div>
+                    </form>
+                </div>
+                <div v-else>
+                    <h3 class="text-primary  mt-5 text-center">Pilih pesanan untuk melihat percakapan</h3>
                 </div>
 
-                <form action="" style="font-size:18px;">
-                    <div class="row justify-content-between mb-0 ml-0">
-                        <div class="align-self-center col-md-1"
-                            style="color:#575757; margin-right:0px; margin-left:0px;">
-                            <i class="material-icons align-middle md-48 mr-4">emoji_emotions</i>
-                        </div>
-                        <div class="col-md-10 form-group mb-0">
-                            <input type="text"
-                                class="form-control form-control-lg border-primary-purple pl-4 pr-4 pt-2 pb-2"
-                                placeholder="Masukkan Pesan Anda disini" style="border-radius:30px;">
-                        </div>
-                        <div class="col-md-1 align-self-center text-primary-purple">
-                            <i class="material-icons align-middle md-48 mr-4">send</i>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
+    <div v-else>
+        <div class="container">
+
+            <div style="height: 700px" class="d-flex align-items-center">
+                <h3 class="text-*-center font-weight-bold">
+                    Untuk memulai chat anda harus melakukan proses pemesanan terlebih dahulu
+                </h3>
+            </div>
+        </div>
+    </div>
 @endsection
+
+{{-- @section('script')
+<script src="{{ asset('js/chatVue.js') }}"></script>
+@endsection --}}

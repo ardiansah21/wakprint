@@ -8,5 +8,5 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/konfigurasiPesanan.js') }}"></script>
+    <script src="{{ asset('js/konfigurasiPesananVue.js') }}"></script>
 @endsection

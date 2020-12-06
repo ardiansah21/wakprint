@@ -50,8 +50,62 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
         return $this->hasMany(Pesanan::class, 'id_member');
     }
 
+    //temp
     public function messages()
     {
         return $this->hasMany('App\Message', 'id_member');
     }
+
+    ////
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'avatar',
+    ];
+
+    /**
+     * Get the profile photo URL attribute.
+     *
+     * @return string
+     */
+    public function getAvatarAttribute()
+    {
+        return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
+    }
+
+    public function messagesTo()
+    {
+        return $this->hasOne(Message::class, 'to_id')->latest();
+    }
+
+    public function messagesFrom()
+    {
+        return $this->hasOne(Message::class, 'from_id')->latest();
+    }
+    //endTemp
+
+    // /**
+    //  * The accessors to append to the model's array form.
+    //  *
+    //  * @var array
+    //  */
+    // protected $appends = ['avatar'];
+
+    // public function getAvatarAttribute()
+    // {
+    //     return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
+    // }
+
+    public function chatTo()
+    {
+        return $this->hasOne('App\Chat', 'to_id')->lates();
+    }
+    public function chatFrom()
+    {
+        return $this->hasOne('App\Chat', 'from_id')->lates();
+    }
+
 }

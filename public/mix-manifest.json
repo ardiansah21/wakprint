@@ -1,5 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/chatPartnerVue.js": "/js/chatPartnerVue.js",
+    "/js/chatVue.js": "/js/chatVue.js",
     "/js/konfigurasiPesananVue.js": "/js/konfigurasiPesananVue.js"
 }

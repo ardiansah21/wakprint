@@ -8,11 +8,16 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
+        <meta name="user_id" content="{{ auth()->user()->id_member }}">
+        <meta name="user_login" content="{{ auth()->user() }}">
+    @endauth
 
     <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}" type="text/javascript"></script>
 
     <!-- Styles -->
@@ -51,41 +56,10 @@
 
 
     <style>
-        .chat {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .chat li {
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px dotted #B3A9A9;
-        }
-
-        .chat li .chat-body p {
-            margin: 0;
-            color: #777777;
-        }
-
-        .panel-body {
-            overflow-y: scroll;
-            height: 350px;
-        }
-
-        ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            background-color: #F5F5F5;
-        }
-
-        ::-webkit-scrollbar {
-            width: 12px;
-            background-color: #F5F5F5;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-            background-color: #555;
+        .btn:focus,
+        .btn:active {
+            outline: none !important;
+            box-shadow: none;
         }
 
     </style>
@@ -122,7 +96,20 @@
                                 </a>
                             </li>
                         @else
+                            {{-- <li class="nav-item">
+                                <a href="{{ route('home') }}" class="nav-link" :badge="notif">
+                                    <svg class="svg-icon" viewBox="0 0 20 20">
+                                        <path
+                                            d="M14.38,3.467l0.232-0.633c0.086-0.226-0.031-0.477-0.264-0.559c-0.229-0.081-0.48,0.033-0.562,0.262l-0.234,0.631C10.695,2.38,7.648,3.89,6.616,6.689l-1.447,3.93l-2.664,1.227c-0.354,0.166-0.337,0.672,0.035,0.805l4.811,1.729c-0.19,1.119,0.445,2.25,1.561,2.65c1.119,0.402,2.341-0.059,2.923-1.039l4.811,1.73c0,0.002,0.002,0.002,0.002,0.002c0.23,0.082,0.484-0.033,0.568-0.262c0.049-0.129,0.029-0.266-0.041-0.377l-1.219-2.586l1.447-3.932C18.435,7.768,17.085,4.676,14.38,3.467 M9.215,16.211c-0.658-0.234-1.054-0.869-1.014-1.523l2.784,0.998C10.588,16.215,9.871,16.447,9.215,16.211 M16.573,10.27l-1.51,4.1c-0.041,0.107-0.037,0.227,0.012,0.33l0.871,1.844l-4.184-1.506l-3.734-1.342l-4.185-1.504l1.864-0.857c0.104-0.049,0.188-0.139,0.229-0.248l1.51-4.098c0.916-2.487,3.708-3.773,6.222-2.868C16.187,5.024,17.489,7.783,16.573,10.27">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </li> --}}
+
                             <li class="nav-item mr-2" style="display: flex; align-items:center;">
+                                <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
+                                    style="border-radius: 30px;top:0px;">
+                                </span>
                                 <a class="nav-link SemiBold" href="{{ route('chat') }}"
                                     style="color: black; font-size: 24px;">{{ __('Chat') }}</a>
                             </li>
@@ -132,13 +119,8 @@
                                     <span class="badge badge-danger" style="border-radius: 30px;top:0px;">0</span>
                                     <span class="material-icons md-32 mt-2 mr-2">notifications</span>
                                 </a>
-                                <ul class="dropdown-menu p-2" style="top: 60px;
-                                                                right: 0px;
-                                                                left: unset;
-                                                                width: 500px;
-                                                                box-shadow: 0px 5px 7px -1px #c1c1c1;
-                                                                padding-bottom: 0px;
-                                                                padding: 0px;">
+                                <ul class="dropdown-menu p-2"
+                                    style="top: 60px;right: 0px;left: unset;width: 500px;box-shadow: 0px 5px 7px -1px #c1c1c1;padding-bottom: 0px;padding: 0px;">
                                     <li class="notification-box mb-2">
                                         <div class="row">
                                             <div class="col-lg-3 col-sm-3 col-3 text-center">
@@ -278,12 +260,12 @@
 
                                     <div class="bg-dark"
                                         style="position: absolute;
-                                                                                                            top: 50%;
-                                                                                                            left: 50%;
-                                                                                                            transform: translate(-50%, 140%); opacity:80%;
-                                                                                                            color: white;
-                                                                                                            width:300px;
-                                                                                                            border-radius:0px 0px 8px 8px;">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    top: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    left: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transform: translate(-50%, 140%); opacity:80%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    color: white;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width:300px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-radius:0px 0px 8px 8px;">
                                         <label class="font-weight-bold text-truncate mx-auto"
                                             style="font-size: 30px; width:100%;">{{ $member->nama_lengkap }}</label>
                                     </div>
@@ -470,10 +452,13 @@
     </div>
 
     <!-- Script -->
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.jscroll.min.js') }}"></script>
+    <script src="{{ asset('js/chatVue.js') }}"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script> --}}
 
