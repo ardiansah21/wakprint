@@ -2,8 +2,8 @@
 
 @section('content')
     <div id="konfigurasiPesanan">
-        <konfigurasi-pesanan :member="{{ Auth::user() }}" :kon-files="{{ $pesanan->konfigurasiFile }}"
-            :atks="{{ $pesanan->partner->atk }}"></konfigurasi-pesanan>
+        <konfigurasi-pesanan-component :member="{{ Auth::user() }}" :kon-files="{{ $pesanan->konfigurasiFile }}"
+            :atks="{{ $pesanan->partner->atk }}"></konfigurasi-pesanan-component>
     </div>
 @endsection
 

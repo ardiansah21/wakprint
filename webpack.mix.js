@@ -11,9 +11,8 @@ const mix = require("laravel-mix");
  |
  */
 
-mix.js("resources/js/app.js", "public/js")
-    .js("resources/js/bootstrap.js", "public/js")
-    .js("resources/js/konfigurasiPesananVue.js", "public/js")
-    .js("resources/js/chatVue.js", "public/js")
-    .js("resources/js/chatPartnerVue.js", "public/js")
+mix.js("resources/js/bootstrap.js", "public/js")
+    .js("resources/js/appMember.js", "public/js")
+    .js("resources/js/appPartner.js", "public/js")
+    .js("resources/js/appAdmin.js", "public/js")
     .sass("resources/sass/app.scss", "public/css");

@@ -460,13 +460,15 @@
     </div>
 
     <!-- Script -->
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/appMember.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.jscroll.min.js') }}"></script>
-    <script src="{{ asset('js/chatVue.js') }}"></script>
+
     <script src="{{ asset('js/share.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

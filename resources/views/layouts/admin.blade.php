@@ -169,6 +169,9 @@
         </main>
     </div>
 </body>
+<script src="{{ asset('js/appAdmin.js') }}"></script>
+<script src="{{ asset('js/bootsrap.js') }}"></script>
+
 @yield('script')
 
 </html>

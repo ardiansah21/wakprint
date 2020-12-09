@@ -3,25 +3,25 @@ const { default: Axios } = require("axios");
 
 window.Vue = require("vue");
 
-const chat = new Vue({
-    el: "#app",
-    data: {
-        // user_login: document.querySelector('meta[name="user_login"]').content,
-        id: document.querySelector('meta[name="user_id"]').content,
-        pesanans: [],
-        isActive: null,
-        form: {
-            from_user: "member",
-            id_pesanan: "",
-            id_member: "",
-            id_pengelola: "",
-            pesan: ""
-        },
-        messages: [],
-        pengelola: {
-            nama: "",
-            avatar: ""
-        }
+Vue.component("chat-component", {
+    data() {
+        return {
+            id: document.querySelector('meta[name="user_id"]').content,
+            pesanans: [],
+            isActive: null,
+            form: {
+                from_user: "member",
+                id_pesanan: "",
+                id_member: "",
+                id_pengelola: "",
+                pesan: ""
+            },
+            messages: [],
+            pengelola: {
+                nama: "",
+                avatar: ""
+            }
+        };
     },
     methods: {
         fetchPesanan() {
@@ -79,25 +79,6 @@ const chat = new Vue({
                 }
             );
         },
-        // pushMessage(data, pesanan_id, action = "") {
-        //     var idx = this.pesanans.findIndex(p => p.id_pesanan === pesanan_id);
-        //     if (idx != -1 && action == "push") {
-        //         this.pesanans.splice(idx, 1); //menghapus list pesanan
-        //     }
-        //     /**
-        //      * if untuk pesan submit
-        //      */
-        //     if (action == "") {
-        //         var pesanan = this.pesanans[idx];
-        //         this.pesanans.splice(idx, 1);
-        //         this.pesanans.unshift(pesanan);
-        //     } else {
-        //         /**
-        //          * else untuk pesan dari laravel echo
-        //          */
-        //         this.pesanans.unshift(data);
-        //     }
-        // },
         // agar scroll ke arah pesan yang baru
         scrollToEnd: function() {
             let container = this.$el.querySelector("#message-scroll");
@@ -112,20 +93,12 @@ const chat = new Vue({
         console.log("tadaaaa");
         this.fetchPesanan();
         this.fetchPusher();
+        console.log(this.$root);
     },
     watch: {
         messages: _.debounce(function() {
-                this.scrollToEnd();
-            }, 10)
-            // pesanans: _.debounce(function() {
-            //     this.notifChat = 0;
-            //     this.pesanans.filter(e => {
-            //         console.log(e.count);
-            //         if (e.count) {
-            //             this.notifChat++;
-            //         }
-            //     });
-            // }, 10)
+            this.scrollToEnd();
+        }, 10)
     },
     computed: {
         notifChat: {

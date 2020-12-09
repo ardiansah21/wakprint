@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1908,6 +1908,548 @@ module.exports = {
   trim: trim
 };
 
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KonfigurasiPesanan.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_numeric_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-numeric-input */ "./node_modules/vue-numeric-input/dist/vue-numeric-input.min.js");
+/* harmony import */ var vue_numeric_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_numeric_input__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["member", "konFiles", "atks"],
+  data: function data() {
+    return {
+      isCheckAll: true,
+      konFileTerpilih: [],
+      //id
+      atkTerpilih: [],
+      //id
+      jumlahPerAtk: [],
+      penerimaan: "Ditempat",
+      ongkir: 10000
+    };
+  },
+  methods: {
+    checkAll: function checkAll() {
+      this.isCheckAll = !this.isCheckAll;
+      this.konFileTerpilih = [];
+
+      if (this.isCheckAll) {
+        // Check all
+        for (var key in this.konFiles) {
+          this.konFileTerpilih.push(this.konFiles[key].id_konfigurasi);
+        }
+      }
+    },
+    updateCheckall: function updateCheckall() {
+      if (this.konFileTerpilih.length == this.konFiles.length) {
+        this.isCheckAll = false;
+      } else {
+        this.isCheckAll = true;
+      }
+    },
+    isDisabled: function isDisabled(id) {
+      return !this.atkTerpilih.includes(id); // return this.atkTerpilih.find((o) => o.id === id) == undefined;
+    },
+    onSubtotalFile: function onSubtotalFile() {
+      var _this = this;
+
+      var totalBiayaFile = 0;
+      this.konFileTerpilih.forEach(function (v) {
+        totalBiayaFile += _this.konFiles[indexWhere(_this.konFiles, function (f) {
+          return f.id_konfigurasi == v;
+        })].biaya;
+      });
+      return totalBiayaFile;
+    },
+    onSubtotalAtk: function onSubtotalAtk() {
+      var _this2 = this;
+
+      var atk = new Object();
+      atk.total = 0;
+      atk.jumlahJenis = 0;
+      atk.jumlahTotal = 0;
+      this.atkTerpilih.forEach(function (v, i) {
+        var idx = indexWhere(_this2.atks, function (atk) {
+          return atk.id_atk == v;
+        });
+        atk.total += _this2.jumlahPerAtk[v] * _this2.atks[idx].harga;
+        atk.jumlahTotal += _this2.jumlahPerAtk[v];
+      });
+      atk.jumlahJenis = this.atkTerpilih.length;
+      return atk;
+    },
+    onDetailAtkShare: function onDetailAtkShare() {
+      var _this3 = this;
+
+      var arr = new Array();
+      this.atkTerpilih.forEach(function (v, i) {
+        var atk = new Array();
+        var idx = indexWhere(_this3.atks, function (atk) {
+          return atk.id_atk == v;
+        });
+        atk[0] = _this3.atks[idx].nama;
+        atk[1] = _this3.atks[idx].harga;
+        atk[2] = _this3.jumlahPerAtk[v];
+        atk[3] = atk[1] * atk[2];
+        arr.push(atk);
+      });
+      return arr;
+    },
+    onTotalBiaya: function onTotalBiaya() {
+      var _ongkir = this.penerimaan === "Diantar" ? this.ongkir : 0;
+
+      return _ongkir + this.onSubtotalFile() + this.onSubtotalAtk().total;
+    },
+    rupiah: function rupiah(val) {
+      return "Rp." + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.");
+    },
+    onHapusKonfigurasi: function onHapusKonfigurasi(id) {
+      axios["delete"]("/konfigurasi-file/delete/" + id).then(function (res) {
+        if (res.status == 204) {
+          alert("Konfigurasi File Berhasil di hapus");
+          location.reload();
+        }
+      });
+    },
+    buatPesanan: function buatPesanan() {
+      var _this4 = this;
+
+      axios.post("/konfigurasi-pesanan/create", {
+        konFileTerpilih: this.konFileTerpilih,
+        atks: this.onDetailAtkShare(),
+        penerimaan: this.penerimaan,
+        subTotalFile: this.onSubtotalFile(),
+        ongkir: this.ongkir,
+        totalBiaya: this.onTotalBiaya()
+      }).then(function (response) {
+        if (response.status == 201) {
+          var data = response.data;
+
+          _this4.$root.gotosite("/konfigurasi-pesanan/konfirmasi?" + "atks=" + data.atks + "&konFileTerpilih=" + data.konFileTerpilih + "&penerimaan=" + data.penerimaan + "&subTotalFile=" + data.subTotalFile + "&ongkir=" + data.ongkir + "&totalBiaya=" + data.totalBiaya);
+        }
+
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  created: function created() {
+    var _this5 = this;
+
+    this.konFiles.forEach(function (v) {
+      _this5.konFileTerpilih.push(v.id_konfigurasi);
+    }); // this.atks.forEach((v) => {
+    //     this.jumlahPerAtk[v.id_atk] = { terpilih: Boolean, jumlah: 1 };
+    // });
+
+    this.atks.forEach(function (v) {
+      _this5.jumlahPerAtk[v.id_atk] = 1;
+    });
+  },
+  mounted: function mounted() {},
+  components: {
+    VueNumericInput: vue_numeric_input__WEBPACK_IMPORTED_MODULE_0___default.a
+  }
+});
+
+function indexWhere(array, conditionFn) {
+  var item = array.find(conditionFn);
+  return array.indexOf(item);
+}
 
 /***/ }),
 
@@ -6840,6 +7382,112 @@ function arrayColumn(array, columnName) {
 
 })));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.vue-numeric-input .btn {\n    background: #bc41be !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
 
 
 /***/ }),
@@ -44758,6 +45406,545 @@ try {
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/addStyles.js":
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getTarget = function (target, parent) {
+  if (parent){
+    return parent.querySelector(target);
+  }
+  return document.querySelector(target);
+};
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(target, parent) {
+                // If passing function in options, then use it for resolve "head" element.
+                // Useful for Shadow Root style i.e
+                // {
+                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+                // }
+                if (typeof target === 'function') {
+                        return target();
+                }
+                if (typeof memo[target] === "undefined") {
+			var styleTarget = getTarget.call(this, target, parent);
+			// Special case to return head of iframe instead of iframe itself
+			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[target] = styleTarget;
+		}
+		return memo[target]
+	};
+})();
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(/*! ./urls */ "./node_modules/style-loader/lib/urls.js");
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+        if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertAt.before, target);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+
+	if(options.attrs.nonce === undefined) {
+		var nonce = getNonce();
+		if (nonce) {
+			options.attrs.nonce = nonce;
+		}
+	}
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function getNonce() {
+	if (false) {}
+
+	return __webpack_require__.nc;
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = typeof options.transform === 'function'
+		 ? options.transform(obj.css) 
+		 : options.transform.default(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/urls.js":
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/timers-browserify/main.js":
 /*!************************************************!*\
   !*** ./node_modules/timers-browserify/main.js ***!
@@ -44830,6 +46017,819 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (this && this.clearImmediate);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=template&id=103b5a03&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/KonfigurasiPesanan.vue?vue&type=template&id=103b5a03& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container mt-5 mb-5" }, [
+    _c(
+      "label",
+      { staticClass: "font-weight-bold", staticStyle: { "font-size": "48px" } },
+      [_vm._v("Konfigurasi Pesanan")]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-between mb-5" }, [
+      _c(
+        "div",
+        {
+          staticClass: "col-md-4 mt-5",
+          staticStyle: { "border-radius": "10px" }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "bg-light-purple pl-4 pr-4 pt-4 pb-4 mb-4",
+              staticStyle: { "border-radius": "10px" }
+            },
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "font-weight-bold mb-3",
+                  staticStyle: { "font-size": "24px" }
+                },
+                [_vm._v("Penerimaan")]
+              ),
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.penerimaan) +
+                  "\n                "
+              ),
+              _c(
+                "div",
+                {
+                  staticClass: "form-group custom-control custom-radio mb-4",
+                  staticStyle: { "font-size": "14px" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.penerimaan,
+                        expression: "penerimaan"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      id: "rbAmbilTempat",
+                      name: "radio",
+                      type: "radio",
+                      value: "Ditempat",
+                      checked: ""
+                    },
+                    domProps: { checked: _vm._q(_vm.penerimaan, "Ditempat") },
+                    on: {
+                      change: function($event) {
+                        _vm.penerimaan = "Ditempat"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "rbAmbilTempat" }
+                    },
+                    [_vm._v("Ambil di Tempat Percetakan")]
+                  ),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "text-truncate-multiline mb-2" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "form-group custom-control custom-radio mr-0 mb-4"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "row justify-content-between ml-0" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.penerimaan,
+                            expression: "penerimaan"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: {
+                          id: "rbAntarTempat",
+                          name: "radio",
+                          type: "radio",
+                          value: "Diantar"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.penerimaan, "Diantar")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.penerimaan = "Diantar"
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: "rbAntarTempat" }
+                        },
+                        [_vm._v("Pengantaran")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "col-md-auto text-right mb-2",
+                          staticStyle: { "font-size": "12px" },
+                          attrs: { href: "/profil/alamat?fromOrder=true" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm.member.alamat.length !== null ? "Ubah" : ""
+                              ) +
+                              "\n                        "
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "text-truncate SemiBold mb-2 ml-0" },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(
+                            _vm.member.alamat.length !== 0
+                              ? _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Nama Penerima"]
+                              : _vm.member.nama_lengkap
+                          ) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.member.alamat.length !== 0
+                    ? _c(
+                        "label",
+                        {
+                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Alamat Jalan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kelurahan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kecamatan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kabupaten Kota"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Provinsi"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kode Pos"]
+                              ) +
+                              ",\n                    "
+                          )
+                        ]
+                      )
+                    : _c(
+                        "label",
+                        {
+                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
+                        },
+                        [
+                          _vm._v(
+                            "\n                        -\n                    "
+                          )
+                        ]
+                      )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.penerimaan === "Diantar",
+                      expression: "penerimaan === 'Diantar'"
+                    }
+                  ],
+                  staticClass: "row justify-content-between"
+                },
+                [
+                  _c(
+                    "label",
+                    { staticClass: "col-md-auto font-weight-bold mb-2" },
+                    [_vm._v("Biaya")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass:
+                        "col-md-auto font-weight-bold text-right mb-2"
+                    },
+                    [_vm._v(_vm._s(_vm.rupiah(_vm.ongkir)))]
+                  )
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "bg-light-purple pl-4 pr-4 pt-4 pb-4",
+              staticStyle: { "border-radius": "10px", "font-size": "14px" }
+            },
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "font-weight-bold mb-3",
+                  staticStyle: { "font-size": "24px" }
+                },
+                [_vm._v("Ringkasan Pemesanan")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "row justify-content-between" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-auto mb-2",
+                    attrs: { id: "subTotalFile" }
+                  },
+                  [
+                    _vm._v(
+                      "Subtotal " + _vm._s(_vm.konFileTerpilih.length) + " file"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("label", { staticClass: "col-md-auto text-right mb-2" }, [
+                  _vm._v(_vm._s(_vm.rupiah(_vm.onSubtotalFile())))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.onSubtotalAtk().jumlahJenis > 0,
+                      expression: "onSubtotalAtk().jumlahJenis > 0"
+                    }
+                  ],
+                  staticClass: "row justify-content-between"
+                },
+                [
+                  _c("label", { staticClass: "col-md-auto mb-2" }, [
+                    _vm._v(
+                      "\n                        Subtotal " +
+                        _vm._s(_vm.onSubtotalAtk().jumlahJenis) +
+                        " jenis atk\n                        x " +
+                        _vm._s(_vm.onSubtotalAtk().jumlahTotal) +
+                        "\n                        buah\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "col-md-auto text-right mb-2" }, [
+                    _vm._v(_vm._s(_vm.rupiah(_vm.onSubtotalAtk().total)))
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.penerimaan === "Diantar",
+                      expression: "penerimaan === 'Diantar'"
+                    }
+                  ],
+                  staticClass: "row justify-content-between mb-2"
+                },
+                [
+                  _c("label", { staticClass: "col-md-auto mb-2" }, [
+                    _vm._v("Biaya Pengiriman")
+                  ]),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "col-md-auto text-right mb-2" }, [
+                    _vm._v(_vm._s(_vm.rupiah(_vm.ongkir)))
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "row justify-content-between" }, [
+                _c("label", { staticClass: "col-md-auto SemiBold mb-2" }, [
+                  _vm._v("Total")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-auto SemiBold text-right mb-2",
+                    attrs: { id: "totalHargaPesanan" }
+                  },
+                  [_vm._v(_vm._s(_vm.rupiah(_vm.onTotalBiaya())))]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row justify-content-between" }, [
+                _c("label", { staticClass: "col-md-auto SemiBold mb-2" }, [
+                  _vm._v("Saldo Kamu")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "col-md-auto SemiBold text-right mb-2" },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(
+                          _vm.rupiah(
+                            _vm.member.jumlah_saldo != null
+                              ? _vm.member.jumlah_saldo
+                              : 0
+                          )
+                        ) +
+                        "\n                    "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row justify-content-between" }, [
+                _c("label", { staticClass: "col-md-auto SemiBold mb-2" }, [
+                  _vm._v("Sisa Saldo Kamu")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "col-md-auto SemiBold text-right mb-3" },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm.rupiah(_vm.member.jumlah_saldo - _vm.onTotalBiaya())
+                      )
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.member.jumlah_saldo == null ||
+                        _vm.onTotalBiaya() > _vm.member.jumlah_saldo,
+                      expression:
+                        "\n                        member.jumlah_saldo == null ||\n                        onTotalBiaya() > member.jumlah_saldo\n                    "
+                    }
+                  ],
+                  staticClass: "text-muted text-justify mb-2"
+                },
+                [
+                  _vm._v(
+                    '\n                    Saldo kamu tidak mencukupi, silahkan melakukan pengisian\n                    saldo setelah pesanan kamu dibuat"\n                '
+                  )
+                ]
+              )
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-md-8 ml-0 mt-5",
+          staticStyle: { "font-size": "18px" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "row justify-content-between mb-4 ml-0 mr-2" },
+            [
+              _c(
+                "div",
+                { staticClass: "custom-control custom-checkbox mt-2 ml-1" },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.isCheckAll,
+                        expression: "isCheckAll"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: { type: "checkbox", id: "PilihSemua" },
+                    domProps: {
+                      checked: Array.isArray(_vm.isCheckAll)
+                        ? _vm._i(_vm.isCheckAll, null) > -1
+                        : _vm.isCheckAll
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.checkAll()
+                      },
+                      change: function($event) {
+                        var $$a = _vm.isCheckAll,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.isCheckAll = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.isCheckAll = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.isCheckAll = $$c
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "PilihSemua" }
+                    },
+                    [_vm._v("Pilih Semua")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center",
+                  staticStyle: { "border-radius": "30px" },
+                  attrs: {
+                    type: "button",
+                    onclick: "window.location.href='/konfigurasi-file'"
+                  }
+                },
+                [_vm._v("\n                    Tambah File\n                ")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("table", { staticClass: "table table-hover mb-9" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              { staticStyle: { "font-size": "14px" } },
+              _vm._l(_vm.konFiles, function(f, idx) {
+                return _c("tr", { key: idx }, [
+                  _c("td", { attrs: { scope: "row" } }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "custom-control custom-checkbox mt-0 ml-1"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.konFileTerpilih,
+                              expression: "konFileTerpilih"
+                            }
+                          ],
+                          staticClass: "custom-control-input",
+                          attrs: { id: f.id_konfigurasi, type: "checkbox" },
+                          domProps: {
+                            value: f.id_konfigurasi,
+                            checked: Array.isArray(_vm.konFileTerpilih)
+                              ? _vm._i(_vm.konFileTerpilih, f.id_konfigurasi) >
+                                -1
+                              : _vm.konFileTerpilih
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateCheckall()
+                            },
+                            change: function($event) {
+                              var $$a = _vm.konFileTerpilih,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = f.id_konfigurasi,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.konFileTerpilih = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.konFileTerpilih = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.konFileTerpilih = $$c
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", {
+                          staticClass: "custom-control-label",
+                          attrs: { for: f.id_konfigurasi }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(f.id_konfigurasi))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(f.nama_file))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(f.nama_produk))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.rupiah(f.biaya)))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", [
+                      _c("i", { staticClass: "material-icons mr-2 pointer" }, [
+                        _vm._v("edit")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "i",
+                        {
+                          staticClass: "material-icons pointer",
+                          staticStyle: { color: "red" },
+                          on: {
+                            click: function($event) {
+                              return _vm.onHapusKonfigurasi(f.id_konfigurasi)
+                            }
+                          }
+                        },
+                        [_vm._v("delete")]
+                      )
+                    ])
+                  ])
+                ])
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("label", { staticClass: "SemiBold mb-2 ml-0 mr-2" }, [
+            _vm._v("ATK")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.atks, function(atk, i) {
+            return _c(
+              "div",
+              { key: i, staticClass: "row justify-content-between ml-0 mr-2" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-md-4 form-group custom-control custom-checkbox"
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.atkTerpilih,
+                          expression: "atkTerpilih"
+                        }
+                      ],
+                      staticClass: "custom-control-input",
+                      staticStyle: { width: "100%" },
+                      attrs: { type: "checkbox", id: atk.id_atk + "_atk" },
+                      domProps: {
+                        value: atk.id_atk,
+                        checked: Array.isArray(_vm.atkTerpilih)
+                          ? _vm._i(_vm.atkTerpilih, atk.id_atk) > -1
+                          : _vm.atkTerpilih
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.atkTerpilih,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = atk.id_atk,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.atkTerpilih = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.atkTerpilih = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.atkTerpilih = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass:
+                          "custom-control-label text-break align-middle",
+                        staticStyle: { width: "100%" },
+                        attrs: { for: atk.id_atk + "_atk" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(atk.nama) +
+                            "\n                        "
+                        ),
+                        _c(
+                          "i",
+                          {
+                            staticClass: "material-icons align-middle ml-2",
+                            staticStyle: { color: "#c4c4c4" }
+                          },
+                          [_vm._v("help")]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-auto form-group" },
+                  [
+                    _c("vue-numeric-input", {
+                      attrs: {
+                        size: "100px",
+                        align: "center",
+                        min: 1,
+                        max: atk.jumlah,
+                        step: 1,
+                        disabled: _vm.isDisabled(atk.id_atk)
+                      },
+                      model: {
+                        value: _vm.jumlahPerAtk[atk.id_atk],
+                        callback: function($$v) {
+                          _vm.$set(_vm.jumlahPerAtk, atk.id_atk, $$v)
+                        },
+                        expression: "jumlahPerAtk[atk.id_atk]"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4 text-right" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "SemiBold mb-2 ml-0",
+                      staticStyle: { width: "100%" },
+                      attrs: { id: "hargaAtkLabel" }
+                    },
+                    [_vm._v(_vm._s(_vm.rupiah(atk.harga)))]
+                  )
+                ])
+              ]
+            )
+          })
+        ],
+        2
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-primary-wakprint btn-lg btn-block font-weight-bold mb-5",
+        staticStyle: { "border-radius": "30px", "font-size": "24px" },
+        on: {
+          click: function($event) {
+            return _vm.buatPesanan()
+          }
+        }
+      },
+      [_vm._v("\n        Buat Pesanan\n    ")]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "thead",
+      {
+        staticClass: "bg-primary-purple text-white",
+        staticStyle: { "border-radius": "25px 25px 15px 15px" }
+      },
+      [
+        _c("tr", [
+          _c("th", { attrs: { scope: "col-md-auto" } }),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col-md-auto" } }, [_vm._v("ID")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col-md-auto" } }, [_vm._v("Nama File")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col-md-auto" } }, [_vm._v("Produk")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col-md-auto" } }, [_vm._v("Biaya")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col-md-auto" } })
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
 
 /***/ }),
 
@@ -45748,6 +47748,17 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-numeric-input/dist/vue-numeric-input.min.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/vue-numeric-input/dist/vue-numeric-input.min.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return t[r].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var n={};return e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/",e(e.s=7)}([function(t,e){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,e,n){t.exports=!n(6)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,e,n){(function(e){t.exports=function(t){var n=[];return n.toString=function(){return this.map(function(n){var r=function(t,n){var r=t[1]||"",i=t[3];if(!i)return r;if(n){var o=(u=i,"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+new e(JSON.stringify(u)).toString("base64")+" */");return[r].concat(i.sources.map(function(t){return"/*# sourceURL="+i.sourceRoot+t+" */"})).concat([o]).join("\n")}var u;return[r].join("\n")}(n,t);return n[2]?"@media "+n[2]+"{"+r+"}":r}).join("")},n.i=function(t,e){"string"==typeof t&&(t=[[null,t,""]]);for(var r={},i=0;i<this.length;i++){var o=this[i][0];"number"==typeof o&&(r[o]=!0)}for(i=0;i<t.length;i++){var u=t[i];"number"==typeof u[0]&&r[u[0]]||(e&&!u[2]?u[2]=e:e&&(u[2]="("+u[2]+") and ("+e+")"),n.push(u))}},n}}).call(e,n(11).Buffer)},function(t,e,n){function r(t){for(var e=0;e<t.length;e++){var n=t[e],r=f[n.id];if(r){r.refs++;for(var i=0;i<r.parts.length;i++)r.parts[i](n.parts[i]);for(;i<n.parts.length;i++)r.parts.push(o(n.parts[i]));r.parts.length>n.parts.length&&(r.parts.length=n.parts.length)}else{var u=[];for(i=0;i<n.parts.length;i++)u.push(o(n.parts[i]));f[n.id]={id:n.id,refs:1,parts:u}}}}function i(){var t=document.createElement("style");return t.type="text/css",c.appendChild(t),t}function o(t){var e,n,r=document.querySelector('style[data-vue-ssr-id~="'+t.id+'"]');if(r){if(l)return d;r.parentNode.removeChild(r)}if(g){var o=p++;r=h||(h=i()),e=u.bind(null,r,o,!1),n=u.bind(null,r,o,!0)}else r=i(),e=function(t,e){var n=e.css,r=e.media,i=e.sourceMap;if(r&&t.setAttribute("media",r),i&&(n+="\n/*# sourceURL="+i.sources[0]+" */",n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(i))))+" */"),t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}.bind(null,r),n=function(){r.parentNode.removeChild(r)};return e(t),function(r){if(r){if(r.css===t.css&&r.media===t.media&&r.sourceMap===t.sourceMap)return;e(t=r)}else n()}}function u(t,e,n,r){var i=n?"":r.css;if(t.styleSheet)t.styleSheet.cssText=y(e,i);else{var o=document.createTextNode(i),u=t.childNodes;u[e]&&t.removeChild(u[e]),u.length?t.insertBefore(o,u[e]):t.appendChild(o)}}var s="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!s)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var a=n(16),f={},c=s&&(document.head||document.getElementsByTagName("head")[0]),h=null,p=0,l=!1,d=function(){},g="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());t.exports=function(t,e,n){l=n;var i=a(t,e);return r(i),function(e){for(var n=[],o=0;o<i.length;o++){var u=i[o];(s=f[u.id]).refs--,n.push(s)}for(e?r(i=a(t,e)):i=[],o=0;o<n.length;o++){var s;if(0===(s=n[o]).refs){for(var c=0;c<s.parts.length;c++)s.parts[c]();delete f[s.id]}}}};var b,y=(b=[],function(t,e){return b[t]=e,b.filter(Boolean).join("\n")})},function(t,e){var n=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=n)},function(t,e){var n=t.exports={version:"2.6.11"};"number"==typeof __e&&(__e=n)},function(t,e){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(8),i=function(t,e){t.component(r.a.name,r.a)};r.a.install=i,e.default=r.a},function(t,e,n){"use strict";var r=n(20),i=n(36),o=function(t){n(9),n(17)},u=n(19)(r.a,i.a,!1,o,"data-v-4015f724",null);e.a=u.exports},function(t,e,n){var r=n(10);"string"==typeof r&&(r=[[t.i,r,""]]),r.locals&&(t.exports=r.locals),n(3)("1bbd3224",r,!0)},function(t,e,n){(t.exports=n(2)(!1)).push([t.i,"input[type=number][data-v-4015f724]::-webkit-inner-spin-button,input[type=number][data-v-4015f724]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number][data-v-4015f724]{-moz-appearance:textfield}button[data-v-4015f724]:focus{outline:none}",""])},function(t,e,n){"use strict";(function(t){function r(){return o.TYPED_ARRAY_SUPPORT?2147483647:1073741823}function i(t,e){if(r()<e)throw new RangeError("Invalid typed array length");return o.TYPED_ARRAY_SUPPORT?(t=new Uint8Array(e)).__proto__=o.prototype:(null===t&&(t=new o(e)),t.length=e),t}function o(t,e,n){if(!(o.TYPED_ARRAY_SUPPORT||this instanceof o))return new o(t,e,n);if("number"==typeof t){if("string"==typeof e)throw new Error("If encoding is specified then the first argument must be a string");return a(this,t)}return u(this,t,e,n)}function u(t,e,n,r){if("number"==typeof e)throw new TypeError('"value" argument must not be a number');return"undefined"!=typeof ArrayBuffer&&e instanceof ArrayBuffer?function(t,e,n,r){if(e.byteLength,n<0||e.byteLength<n)throw new RangeError("'offset' is out of bounds");if(e.byteLength<n+(r||0))throw new RangeError("'length' is out of bounds");return e=void 0===n&&void 0===r?new Uint8Array(e):void 0===r?new Uint8Array(e,n):new Uint8Array(e,n,r),o.TYPED_ARRAY_SUPPORT?(t=e).__proto__=o.prototype:t=f(t,e),t}(t,e,n,r):"string"==typeof e?function(t,e,n){if("string"==typeof n&&""!==n||(n="utf8"),!o.isEncoding(n))throw new TypeError('"encoding" must be a valid string encoding');var r=0|h(e,n),u=(t=i(t,r)).write(e,n);return u!==r&&(t=t.slice(0,u)),t}(t,e,n):function(t,e){if(o.isBuffer(e)){var n=0|c(e.length);return 0===(t=i(t,n)).length?t:(e.copy(t,0,0,n),t)}if(e){if("undefined"!=typeof ArrayBuffer&&e.buffer instanceof ArrayBuffer||"length"in e)return"number"!=typeof e.length||(r=e.length)!=r?i(t,0):f(t,e);if("Buffer"===e.type&&j(e.data))return f(t,e.data)}var r;throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.")}(t,e)}function s(t){if("number"!=typeof t)throw new TypeError('"size" argument must be a number');if(t<0)throw new RangeError('"size" argument must not be negative')}function a(t,e){if(s(e),t=i(t,e<0?0:0|c(e)),!o.TYPED_ARRAY_SUPPORT)for(var n=0;n<e;++n)t[n]=0;return t}function f(t,e){var n=e.length<0?0:0|c(e.length);t=i(t,n);for(var r=0;r<n;r+=1)t[r]=255&e[r];return t}function c(t){if(t>=r())throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x"+r().toString(16)+" bytes");return 0|t}function h(t,e){if(o.isBuffer(t))return t.length;if("undefined"!=typeof ArrayBuffer&&"function"==typeof ArrayBuffer.isView&&(ArrayBuffer.isView(t)||t instanceof ArrayBuffer))return t.byteLength;"string"!=typeof t&&(t=""+t);var n=t.length;if(0===n)return 0;for(var r=!1;;)switch(e){case"ascii":case"latin1":case"binary":return n;case"utf8":case"utf-8":case void 0:return Y(t).length;case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return 2*n;case"hex":return n>>>1;case"base64":return N(t).length;default:if(r)return Y(t).length;e=(""+e).toLowerCase(),r=!0}}function p(t,e,n){var r=t[e];t[e]=t[n],t[n]=r}function l(t,e,n,r,i){if(0===t.length)return-1;if("string"==typeof n?(r=n,n=0):n>2147483647?n=2147483647:n<-2147483648&&(n=-2147483648),n=+n,isNaN(n)&&(n=i?0:t.length-1),n<0&&(n=t.length+n),n>=t.length){if(i)return-1;n=t.length-1}else if(n<0){if(!i)return-1;n=0}if("string"==typeof e&&(e=o.from(e,r)),o.isBuffer(e))return 0===e.length?-1:d(t,e,n,r,i);if("number"==typeof e)return e&=255,o.TYPED_ARRAY_SUPPORT&&"function"==typeof Uint8Array.prototype.indexOf?i?Uint8Array.prototype.indexOf.call(t,e,n):Uint8Array.prototype.lastIndexOf.call(t,e,n):d(t,[e],n,r,i);throw new TypeError("val must be string, number or Buffer")}function d(t,e,n,r,i){function o(t,e){return 1===s?t[e]:t.readUInt16BE(e*s)}var u,s=1,a=t.length,f=e.length;if(void 0!==r&&("ucs2"===(r=String(r).toLowerCase())||"ucs-2"===r||"utf16le"===r||"utf-16le"===r)){if(t.length<2||e.length<2)return-1;s=2,a/=2,f/=2,n/=2}if(i){var c=-1;for(u=n;u<a;u++)if(o(t,u)===o(e,-1===c?0:u-c)){if(-1===c&&(c=u),u-c+1===f)return c*s}else-1!==c&&(u-=u-c),c=-1}else for(n+f>a&&(n=a-f),u=n;u>=0;u--){for(var h=!0,p=0;p<f;p++)if(o(t,u+p)!==o(e,p)){h=!1;break}if(h)return u}return-1}function g(t,e,n,r){n=Number(n)||0;var i=t.length-n;r?(r=Number(r))>i&&(r=i):r=i;var o=e.length;if(o%2!=0)throw new TypeError("Invalid hex string");r>o/2&&(r=o/2);for(var u=0;u<r;++u){var s=parseInt(e.substr(2*u,2),16);if(isNaN(s))return u;t[n+u]=s}return u}function b(t,e,n,r){return L(Y(e,t.length-n),t,n,r)}function y(t,e,n,r){return L(function(t){for(var e=[],n=0;n<t.length;++n)e.push(255&t.charCodeAt(n));return e}(e),t,n,r)}function m(t,e,n,r){return y(t,e,n,r)}function v(t,e,n,r){return L(N(e),t,n,r)}function w(t,e,n,r){return L(function(t,e){for(var n,r,i,o=[],u=0;u<t.length&&!((e-=2)<0);++u)n=t.charCodeAt(u),r=n>>8,i=n%256,o.push(i),o.push(r);return o}(e,t.length-n),t,n,r)}function x(t,e,n){return 0===e&&n===t.length?D.fromByteArray(t):D.fromByteArray(t.slice(e,n))}function _(t,e,n){n=Math.min(t.length,n);for(var r=[],i=e;i<n;){var o,u,s,a,f=t[i],c=null,h=f>239?4:f>223?3:f>191?2:1;if(i+h<=n)switch(h){case 1:f<128&&(c=f);break;case 2:128==(192&(o=t[i+1]))&&(a=(31&f)<<6|63&o)>127&&(c=a);break;case 3:o=t[i+1],u=t[i+2],128==(192&o)&&128==(192&u)&&(a=(15&f)<<12|(63&o)<<6|63&u)>2047&&(a<55296||a>57343)&&(c=a);break;case 4:o=t[i+1],u=t[i+2],s=t[i+3],128==(192&o)&&128==(192&u)&&128==(192&s)&&(a=(15&f)<<18|(63&o)<<12|(63&u)<<6|63&s)>65535&&a<1114112&&(c=a)}null===c?(c=65533,h=1):c>65535&&(c-=65536,r.push(c>>>10&1023|55296),c=56320|1023&c),r.push(c),i+=h}return function(t){var e=t.length;if(e<=F)return String.fromCharCode.apply(String,t);for(var n="",r=0;r<e;)n+=String.fromCharCode.apply(String,t.slice(r,r+=F));return n}(r)}function E(t,e,n){var r="";n=Math.min(t.length,n);for(var i=e;i<n;++i)r+=String.fromCharCode(127&t[i]);return r}function A(t,e,n){var r="";n=Math.min(t.length,n);for(var i=e;i<n;++i)r+=String.fromCharCode(t[i]);return r}function R(t,e,n){var r=t.length;(!e||e<0)&&(e=0),(!n||n<0||n>r)&&(n=r);for(var i="",o=e;o<n;++o)i+=O(t[o]);return i}function T(t,e,n){for(var r=t.slice(e,n),i="",o=0;o<r.length;o+=2)i+=String.fromCharCode(r[o]+256*r[o+1]);return i}function P(t,e,n){if(t%1!=0||t<0)throw new RangeError("offset is not uint");if(t+e>n)throw new RangeError("Trying to access beyond buffer length")}function B(t,e,n,r,i,u){if(!o.isBuffer(t))throw new TypeError('"buffer" argument must be a Buffer instance');if(e>i||e<u)throw new RangeError('"value" argument is out of bounds');if(n+r>t.length)throw new RangeError("Index out of range")}function S(t,e,n,r){e<0&&(e=65535+e+1);for(var i=0,o=Math.min(t.length-n,2);i<o;++i)t[n+i]=(e&255<<8*(r?i:1-i))>>>8*(r?i:1-i)}function U(t,e,n,r){e<0&&(e=4294967295+e+1);for(var i=0,o=Math.min(t.length-n,4);i<o;++i)t[n+i]=e>>>8*(r?i:3-i)&255}function C(t,e,n,r,i,o){if(n+r>t.length)throw new RangeError("Index out of range");if(n<0)throw new RangeError("Index out of range")}function I(t,e,n,r,i){return i||C(t,0,n,4),k.write(t,e,n,r,23,4),n+4}function M(t,e,n,r,i){return i||C(t,0,n,8),k.write(t,e,n,r,52,8),n+8}function O(t){return t<16?"0"+t.toString(16):t.toString(16)}function Y(t,e){var n;e=e||1/0;for(var r=t.length,i=null,o=[],u=0;u<r;++u){if((n=t.charCodeAt(u))>55295&&n<57344){if(!i){if(n>56319){(e-=3)>-1&&o.push(239,191,189);continue}if(u+1===r){(e-=3)>-1&&o.push(239,191,189);continue}i=n;continue}if(n<56320){(e-=3)>-1&&o.push(239,191,189),i=n;continue}n=65536+(i-55296<<10|n-56320)}else i&&(e-=3)>-1&&o.push(239,191,189);if(i=null,n<128){if((e-=1)<0)break;o.push(n)}else if(n<2048){if((e-=2)<0)break;o.push(n>>6|192,63&n|128)}else if(n<65536){if((e-=3)<0)break;o.push(n>>12|224,n>>6&63|128,63&n|128)}else{if(!(n<1114112))throw new Error("Invalid code point");if((e-=4)<0)break;o.push(n>>18|240,n>>12&63|128,n>>6&63|128,63&n|128)}}return o}function N(t){return D.toByteArray(function(t){if((t=function(t){return t.trim?t.trim():t.replace(/^\s+|\s+$/g,"")}(t).replace(V,"")).length<2)return"";for(;t.length%4!=0;)t+="=";return t}(t))}function L(t,e,n,r){for(var i=0;i<r&&!(i+n>=e.length||i>=t.length);++i)e[i+n]=t[i];return i}var D=n(13),k=n(14),j=n(15);e.Buffer=o,e.SlowBuffer=function(t){return+t!=t&&(t=0),o.alloc(+t)},e.INSPECT_MAX_BYTES=50,o.TYPED_ARRAY_SUPPORT=void 0!==t.TYPED_ARRAY_SUPPORT?t.TYPED_ARRAY_SUPPORT:function(){try{var t=new Uint8Array(1);return t.__proto__={__proto__:Uint8Array.prototype,foo:function(){return 42}},42===t.foo()&&"function"==typeof t.subarray&&0===t.subarray(1,1).byteLength}catch(t){return!1}}(),e.kMaxLength=r(),o.poolSize=8192,o._augment=function(t){return t.__proto__=o.prototype,t},o.from=function(t,e,n){return u(null,t,e,n)},o.TYPED_ARRAY_SUPPORT&&(o.prototype.__proto__=Uint8Array.prototype,o.__proto__=Uint8Array,"undefined"!=typeof Symbol&&Symbol.species&&o[Symbol.species]===o&&Object.defineProperty(o,Symbol.species,{value:null,configurable:!0})),o.alloc=function(t,e,n){return function(t,e,n,r){return s(e),e<=0?i(t,e):void 0!==n?"string"==typeof r?i(t,e).fill(n,r):i(t,e).fill(n):i(t,e)}(null,t,e,n)},o.allocUnsafe=function(t){return a(null,t)},o.allocUnsafeSlow=function(t){return a(null,t)},o.isBuffer=function(t){return!(null==t||!t._isBuffer)},o.compare=function(t,e){if(!o.isBuffer(t)||!o.isBuffer(e))throw new TypeError("Arguments must be Buffers");if(t===e)return 0;for(var n=t.length,r=e.length,i=0,u=Math.min(n,r);i<u;++i)if(t[i]!==e[i]){n=t[i],r=e[i];break}return n<r?-1:r<n?1:0},o.isEncoding=function(t){switch(String(t).toLowerCase()){case"hex":case"utf8":case"utf-8":case"ascii":case"latin1":case"binary":case"base64":case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return!0;default:return!1}},o.concat=function(t,e){if(!j(t))throw new TypeError('"list" argument must be an Array of Buffers');if(0===t.length)return o.alloc(0);var n;if(void 0===e)for(e=0,n=0;n<t.length;++n)e+=t[n].length;var r=o.allocUnsafe(e),i=0;for(n=0;n<t.length;++n){var u=t[n];if(!o.isBuffer(u))throw new TypeError('"list" argument must be an Array of Buffers');u.copy(r,i),i+=u.length}return r},o.byteLength=h,o.prototype._isBuffer=!0,o.prototype.swap16=function(){var t=this.length;if(t%2!=0)throw new RangeError("Buffer size must be a multiple of 16-bits");for(var e=0;e<t;e+=2)p(this,e,e+1);return this},o.prototype.swap32=function(){var t=this.length;if(t%4!=0)throw new RangeError("Buffer size must be a multiple of 32-bits");for(var e=0;e<t;e+=4)p(this,e,e+3),p(this,e+1,e+2);return this},o.prototype.swap64=function(){var t=this.length;if(t%8!=0)throw new RangeError("Buffer size must be a multiple of 64-bits");for(var e=0;e<t;e+=8)p(this,e,e+7),p(this,e+1,e+6),p(this,e+2,e+5),p(this,e+3,e+4);return this},o.prototype.toString=function(){var t=0|this.length;return 0===t?"":0===arguments.length?_(this,0,t):function(t,e,n){var r=!1;if((void 0===e||e<0)&&(e=0),e>this.length)return"";if((void 0===n||n>this.length)&&(n=this.length),n<=0)return"";if((n>>>=0)<=(e>>>=0))return"";for(t||(t="utf8");;)switch(t){case"hex":return R(this,e,n);case"utf8":case"utf-8":return _(this,e,n);case"ascii":return E(this,e,n);case"latin1":case"binary":return A(this,e,n);case"base64":return x(this,e,n);case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return T(this,e,n);default:if(r)throw new TypeError("Unknown encoding: "+t);t=(t+"").toLowerCase(),r=!0}}.apply(this,arguments)},o.prototype.equals=function(t){if(!o.isBuffer(t))throw new TypeError("Argument must be a Buffer");return this===t||0===o.compare(this,t)},o.prototype.inspect=function(){var t="",n=e.INSPECT_MAX_BYTES;return this.length>0&&(t=this.toString("hex",0,n).match(/.{2}/g).join(" "),this.length>n&&(t+=" ... ")),"<Buffer "+t+">"},o.prototype.compare=function(t,e,n,r,i){if(!o.isBuffer(t))throw new TypeError("Argument must be a Buffer");if(void 0===e&&(e=0),void 0===n&&(n=t?t.length:0),void 0===r&&(r=0),void 0===i&&(i=this.length),e<0||n>t.length||r<0||i>this.length)throw new RangeError("out of range index");if(r>=i&&e>=n)return 0;if(r>=i)return-1;if(e>=n)return 1;if(e>>>=0,n>>>=0,r>>>=0,i>>>=0,this===t)return 0;for(var u=i-r,s=n-e,a=Math.min(u,s),f=this.slice(r,i),c=t.slice(e,n),h=0;h<a;++h)if(f[h]!==c[h]){u=f[h],s=c[h];break}return u<s?-1:s<u?1:0},o.prototype.includes=function(t,e,n){return-1!==this.indexOf(t,e,n)},o.prototype.indexOf=function(t,e,n){return l(this,t,e,n,!0)},o.prototype.lastIndexOf=function(t,e,n){return l(this,t,e,n,!1)},o.prototype.write=function(t,e,n,r){if(void 0===e)r="utf8",n=this.length,e=0;else if(void 0===n&&"string"==typeof e)r=e,n=this.length,e=0;else{if(!isFinite(e))throw new Error("Buffer.write(string, encoding, offset[, length]) is no longer supported");e|=0,isFinite(n)?(n|=0,void 0===r&&(r="utf8")):(r=n,n=void 0)}var i=this.length-e;if((void 0===n||n>i)&&(n=i),t.length>0&&(n<0||e<0)||e>this.length)throw new RangeError("Attempt to write outside buffer bounds");r||(r="utf8");for(var o=!1;;)switch(r){case"hex":return g(this,t,e,n);case"utf8":case"utf-8":return b(this,t,e,n);case"ascii":return y(this,t,e,n);case"latin1":case"binary":return m(this,t,e,n);case"base64":return v(this,t,e,n);case"ucs2":case"ucs-2":case"utf16le":case"utf-16le":return w(this,t,e,n);default:if(o)throw new TypeError("Unknown encoding: "+r);r=(""+r).toLowerCase(),o=!0}},o.prototype.toJSON=function(){return{type:"Buffer",data:Array.prototype.slice.call(this._arr||this,0)}};var F=4096;o.prototype.slice=function(t,e){var n,r=this.length;if(t=~~t,e=void 0===e?r:~~e,t<0?(t+=r)<0&&(t=0):t>r&&(t=r),e<0?(e+=r)<0&&(e=0):e>r&&(e=r),e<t&&(e=t),o.TYPED_ARRAY_SUPPORT)(n=this.subarray(t,e)).__proto__=o.prototype;else{var i=e-t;n=new o(i,void 0);for(var u=0;u<i;++u)n[u]=this[u+t]}return n},o.prototype.readUIntLE=function(t,e,n){t|=0,e|=0,n||P(t,e,this.length);for(var r=this[t],i=1,o=0;++o<e&&(i*=256);)r+=this[t+o]*i;return r},o.prototype.readUIntBE=function(t,e,n){t|=0,e|=0,n||P(t,e,this.length);for(var r=this[t+--e],i=1;e>0&&(i*=256);)r+=this[t+--e]*i;return r},o.prototype.readUInt8=function(t,e){return e||P(t,1,this.length),this[t]},o.prototype.readUInt16LE=function(t,e){return e||P(t,2,this.length),this[t]|this[t+1]<<8},o.prototype.readUInt16BE=function(t,e){return e||P(t,2,this.length),this[t]<<8|this[t+1]},o.prototype.readUInt32LE=function(t,e){return e||P(t,4,this.length),(this[t]|this[t+1]<<8|this[t+2]<<16)+16777216*this[t+3]},o.prototype.readUInt32BE=function(t,e){return e||P(t,4,this.length),16777216*this[t]+(this[t+1]<<16|this[t+2]<<8|this[t+3])},o.prototype.readIntLE=function(t,e,n){t|=0,e|=0,n||P(t,e,this.length);for(var r=this[t],i=1,o=0;++o<e&&(i*=256);)r+=this[t+o]*i;return r>=(i*=128)&&(r-=Math.pow(2,8*e)),r},o.prototype.readIntBE=function(t,e,n){t|=0,e|=0,n||P(t,e,this.length);for(var r=e,i=1,o=this[t+--r];r>0&&(i*=256);)o+=this[t+--r]*i;return o>=(i*=128)&&(o-=Math.pow(2,8*e)),o},o.prototype.readInt8=function(t,e){return e||P(t,1,this.length),128&this[t]?-1*(255-this[t]+1):this[t]},o.prototype.readInt16LE=function(t,e){e||P(t,2,this.length);var n=this[t]|this[t+1]<<8;return 32768&n?4294901760|n:n},o.prototype.readInt16BE=function(t,e){e||P(t,2,this.length);var n=this[t+1]|this[t]<<8;return 32768&n?4294901760|n:n},o.prototype.readInt32LE=function(t,e){return e||P(t,4,this.length),this[t]|this[t+1]<<8|this[t+2]<<16|this[t+3]<<24},o.prototype.readInt32BE=function(t,e){return e||P(t,4,this.length),this[t]<<24|this[t+1]<<16|this[t+2]<<8|this[t+3]},o.prototype.readFloatLE=function(t,e){return e||P(t,4,this.length),k.read(this,t,!0,23,4)},o.prototype.readFloatBE=function(t,e){return e||P(t,4,this.length),k.read(this,t,!1,23,4)},o.prototype.readDoubleLE=function(t,e){return e||P(t,8,this.length),k.read(this,t,!0,52,8)},o.prototype.readDoubleBE=function(t,e){return e||P(t,8,this.length),k.read(this,t,!1,52,8)},o.prototype.writeUIntLE=function(t,e,n,r){t=+t,e|=0,n|=0,r||B(this,t,e,n,Math.pow(2,8*n)-1,0);var i=1,o=0;for(this[e]=255&t;++o<n&&(i*=256);)this[e+o]=t/i&255;return e+n},o.prototype.writeUIntBE=function(t,e,n,r){t=+t,e|=0,n|=0,r||B(this,t,e,n,Math.pow(2,8*n)-1,0);var i=n-1,o=1;for(this[e+i]=255&t;--i>=0&&(o*=256);)this[e+i]=t/o&255;return e+n},o.prototype.writeUInt8=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,1,255,0),o.TYPED_ARRAY_SUPPORT||(t=Math.floor(t)),this[e]=255&t,e+1},o.prototype.writeUInt16LE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,2,65535,0),o.TYPED_ARRAY_SUPPORT?(this[e]=255&t,this[e+1]=t>>>8):S(this,t,e,!0),e+2},o.prototype.writeUInt16BE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,2,65535,0),o.TYPED_ARRAY_SUPPORT?(this[e]=t>>>8,this[e+1]=255&t):S(this,t,e,!1),e+2},o.prototype.writeUInt32LE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,4,4294967295,0),o.TYPED_ARRAY_SUPPORT?(this[e+3]=t>>>24,this[e+2]=t>>>16,this[e+1]=t>>>8,this[e]=255&t):U(this,t,e,!0),e+4},o.prototype.writeUInt32BE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,4,4294967295,0),o.TYPED_ARRAY_SUPPORT?(this[e]=t>>>24,this[e+1]=t>>>16,this[e+2]=t>>>8,this[e+3]=255&t):U(this,t,e,!1),e+4},o.prototype.writeIntLE=function(t,e,n,r){if(t=+t,e|=0,!r){var i=Math.pow(2,8*n-1);B(this,t,e,n,i-1,-i)}var o=0,u=1,s=0;for(this[e]=255&t;++o<n&&(u*=256);)t<0&&0===s&&0!==this[e+o-1]&&(s=1),this[e+o]=(t/u>>0)-s&255;return e+n},o.prototype.writeIntBE=function(t,e,n,r){if(t=+t,e|=0,!r){var i=Math.pow(2,8*n-1);B(this,t,e,n,i-1,-i)}var o=n-1,u=1,s=0;for(this[e+o]=255&t;--o>=0&&(u*=256);)t<0&&0===s&&0!==this[e+o+1]&&(s=1),this[e+o]=(t/u>>0)-s&255;return e+n},o.prototype.writeInt8=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,1,127,-128),o.TYPED_ARRAY_SUPPORT||(t=Math.floor(t)),t<0&&(t=255+t+1),this[e]=255&t,e+1},o.prototype.writeInt16LE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,2,32767,-32768),o.TYPED_ARRAY_SUPPORT?(this[e]=255&t,this[e+1]=t>>>8):S(this,t,e,!0),e+2},o.prototype.writeInt16BE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,2,32767,-32768),o.TYPED_ARRAY_SUPPORT?(this[e]=t>>>8,this[e+1]=255&t):S(this,t,e,!1),e+2},o.prototype.writeInt32LE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,4,2147483647,-2147483648),o.TYPED_ARRAY_SUPPORT?(this[e]=255&t,this[e+1]=t>>>8,this[e+2]=t>>>16,this[e+3]=t>>>24):U(this,t,e,!0),e+4},o.prototype.writeInt32BE=function(t,e,n){return t=+t,e|=0,n||B(this,t,e,4,2147483647,-2147483648),t<0&&(t=4294967295+t+1),o.TYPED_ARRAY_SUPPORT?(this[e]=t>>>24,this[e+1]=t>>>16,this[e+2]=t>>>8,this[e+3]=255&t):U(this,t,e,!1),e+4},o.prototype.writeFloatLE=function(t,e,n){return I(this,t,e,!0,n)},o.prototype.writeFloatBE=function(t,e,n){return I(this,t,e,!1,n)},o.prototype.writeDoubleLE=function(t,e,n){return M(this,t,e,!0,n)},o.prototype.writeDoubleBE=function(t,e,n){return M(this,t,e,!1,n)},o.prototype.copy=function(t,e,n,r){if(n||(n=0),r||0===r||(r=this.length),e>=t.length&&(e=t.length),e||(e=0),r>0&&r<n&&(r=n),r===n)return 0;if(0===t.length||0===this.length)return 0;if(e<0)throw new RangeError("targetStart out of bounds");if(n<0||n>=this.length)throw new RangeError("sourceStart out of bounds");if(r<0)throw new RangeError("sourceEnd out of bounds");r>this.length&&(r=this.length),t.length-e<r-n&&(r=t.length-e+n);var i,u=r-n;if(this===t&&n<e&&e<r)for(i=u-1;i>=0;--i)t[i+e]=this[i+n];else if(u<1e3||!o.TYPED_ARRAY_SUPPORT)for(i=0;i<u;++i)t[i+e]=this[i+n];else Uint8Array.prototype.set.call(t,this.subarray(n,n+u),e);return u},o.prototype.fill=function(t,e,n,r){if("string"==typeof t){if("string"==typeof e?(r=e,e=0,n=this.length):"string"==typeof n&&(r=n,n=this.length),1===t.length){var i=t.charCodeAt(0);i<256&&(t=i)}if(void 0!==r&&"string"!=typeof r)throw new TypeError("encoding must be a string");if("string"==typeof r&&!o.isEncoding(r))throw new TypeError("Unknown encoding: "+r)}else"number"==typeof t&&(t&=255);if(e<0||this.length<e||this.length<n)throw new RangeError("Out of range index");if(n<=e)return this;var u;if(e>>>=0,n=void 0===n?this.length:n>>>0,t||(t=0),"number"==typeof t)for(u=e;u<n;++u)this[u]=t;else{var s=o.isBuffer(t)?t:Y(new o(t,r).toString()),a=s.length;for(u=0;u<n-e;++u)this[u+e]=s[u%a]}return this};var V=/[^+\/0-9A-Za-z-_]/g}).call(e,n(12))},function(t,e){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(n=window)}t.exports=n},function(t,e,n){"use strict";function r(t){var e=t.length;if(e%4>0)throw new Error("Invalid string. Length must be a multiple of 4");var n=t.indexOf("=");return-1===n&&(n=e),[n,n===e?0:4-n%4]}function i(t,e,n){for(var r,i,u=[],s=e;s<n;s+=3)r=(t[s]<<16&16711680)+(t[s+1]<<8&65280)+(255&t[s+2]),u.push(o[(i=r)>>18&63]+o[i>>12&63]+o[i>>6&63]+o[63&i]);return u.join("")}e.byteLength=function(t){var e=r(t),n=e[0],i=e[1];return 3*(n+i)/4-i},e.toByteArray=function(t){var e,n,i=r(t),o=i[0],a=i[1],f=new s(function(t,e,n){return 3*(e+n)/4-n}(0,o,a)),c=0,h=a>0?o-4:o;for(n=0;n<h;n+=4)e=u[t.charCodeAt(n)]<<18|u[t.charCodeAt(n+1)]<<12|u[t.charCodeAt(n+2)]<<6|u[t.charCodeAt(n+3)],f[c++]=e>>16&255,f[c++]=e>>8&255,f[c++]=255&e;return 2===a&&(e=u[t.charCodeAt(n)]<<2|u[t.charCodeAt(n+1)]>>4,f[c++]=255&e),1===a&&(e=u[t.charCodeAt(n)]<<10|u[t.charCodeAt(n+1)]<<4|u[t.charCodeAt(n+2)]>>2,f[c++]=e>>8&255,f[c++]=255&e),f},e.fromByteArray=function(t){for(var e,n=t.length,r=n%3,u=[],s=0,a=n-r;s<a;s+=16383)u.push(i(t,s,s+16383>a?a:s+16383));return 1===r?(e=t[n-1],u.push(o[e>>2]+o[e<<4&63]+"==")):2===r&&(e=(t[n-2]<<8)+t[n-1],u.push(o[e>>10]+o[e>>4&63]+o[e<<2&63]+"=")),u.join("")};for(var o=[],u=[],s="undefined"!=typeof Uint8Array?Uint8Array:Array,a="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",f=0,c=a.length;f<c;++f)o[f]=a[f],u[a.charCodeAt(f)]=f;u["-".charCodeAt(0)]=62,u["_".charCodeAt(0)]=63},function(t,e){e.read=function(t,e,n,r,i){var o,u,s=8*i-r-1,a=(1<<s)-1,f=a>>1,c=-7,h=n?i-1:0,p=n?-1:1,l=t[e+h];for(h+=p,o=l&(1<<-c)-1,l>>=-c,c+=s;c>0;o=256*o+t[e+h],h+=p,c-=8);for(u=o&(1<<-c)-1,o>>=-c,c+=r;c>0;u=256*u+t[e+h],h+=p,c-=8);if(0===o)o=1-f;else{if(o===a)return u?NaN:1/0*(l?-1:1);u+=Math.pow(2,r),o-=f}return(l?-1:1)*u*Math.pow(2,o-r)},e.write=function(t,e,n,r,i,o){var u,s,a,f=8*o-i-1,c=(1<<f)-1,h=c>>1,p=23===i?Math.pow(2,-24)-Math.pow(2,-77):0,l=r?0:o-1,d=r?1:-1,g=e<0||0===e&&1/e<0?1:0;for(e=Math.abs(e),isNaN(e)||e===1/0?(s=isNaN(e)?1:0,u=c):(u=Math.floor(Math.log(e)/Math.LN2),e*(a=Math.pow(2,-u))<1&&(u--,a*=2),(e+=u+h>=1?p/a:p*Math.pow(2,1-h))*a>=2&&(u++,a/=2),u+h>=c?(s=0,u=c):u+h>=1?(s=(e*a-1)*Math.pow(2,i),u+=h):(s=e*Math.pow(2,h-1)*Math.pow(2,i),u=0));i>=8;t[n+l]=255&s,l+=d,s/=256,i-=8);for(u=u<<i|s,f+=i;f>0;t[n+l]=255&u,l+=d,u/=256,f-=8);t[n+l-d]|=128*g}},function(t,e){var n={}.toString;t.exports=Array.isArray||function(t){return"[object Array]"==n.call(t)}},function(t,e){t.exports=function(t,e){for(var n=[],r={},i=0;i<e.length;i++){var o=e[i],u=o[0],s={id:t+":"+i,css:o[1],media:o[2],sourceMap:o[3]};r[u]?r[u].parts.push(s):n.push(r[u]={id:u,parts:[s]})}return n}},function(t,e,n){var r=n(18);"string"==typeof r&&(r=[[t.i,r,""]]),r.locals&&(t.exports=r.locals),n(3)("ab02cf70",r,!0)},function(t,e,n){(t.exports=n(2)(!1)).push([t.i,'.vue-numeric-input{position:relative;display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box}.vue-numeric-input .numeric-input{padding-right:1.8rem;padding-left:1.8rem;-webkit-box-sizing:border-box;box-sizing:border-box;font-size:inherit;border:1px solid #ccc;border-radius:2px;display:block;line-height:1.5rem;width:100%}.vue-numeric-input .btn,.vue-numeric-input .numeric-input{-webkit-transition:all .1s ease 0s;transition:all .1s ease 0s}.vue-numeric-input .btn{position:absolute;width:1.5rem;margin:0;cursor:default;text-align:center;background:rgba(0,0,0,.1);border:solid rgba(0,0,0,.1);-webkit-box-shadow:rgba(0,0,0,.1) -1px -1px 3px inset,hsla(0,0%,100%,.7) 1px 1px 3px inset;box-shadow:inset -1px -1px 3px rgba(0,0,0,.1),inset 1px 1px 3px hsla(0,0%,100%,.7)}.vue-numeric-input .btn:hover{background:rgba(0,0,0,.2)}.vue-numeric-input .btn:active{-webkit-box-shadow:rgba(0,0,0,.2) 0 1px 3px inset,hsla(0,0%,100%,.5) -1px -1px 4px inset;box-shadow:inset 0 1px 3px rgba(0,0,0,.2),inset -1px -1px 4px hsla(0,0%,100%,.5)}.vue-numeric-input .btn:disabled{opacity:.5;-webkit-box-shadow:none;box-shadow:none;cursor:not-allowed}.vue-numeric-input .numeric-input.no-control{padding:2px 5px}.vue-numeric-input .btn-increment{right:2px;top:2px;bottom:2px;border-radius:2px;border-width:1px}.vue-numeric-input .btn-increment .btn-icon{position:absolute;width:100%;height:100%;top:0;left:0}.vue-numeric-input .btn-increment .btn-icon:before{height:.0625rem;width:50%}.vue-numeric-input .btn-increment .btn-icon:after,.vue-numeric-input .btn-increment .btn-icon:before{position:absolute;visibility:visible;background-color:#111;content:"";left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.vue-numeric-input .btn-increment .btn-icon:after{height:50%;width:.0625rem}.vue-numeric-input .btn-decrement{left:2px;top:2px;bottom:2px;border-radius:2px;border-width:1px}.vue-numeric-input .btn-decrement .btn-icon{position:absolute;width:100%;height:100%;top:0;left:0}.vue-numeric-input .btn-decrement .btn-icon:before{position:absolute;visibility:visible;height:.0625rem;width:50%;background-color:#111;content:"";left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.vue-numeric-input .btn-decrement .btn-icon:after{visibility:hidden;content:"";clear:both;height:0}.vue-numeric-input.updown .numeric-input{padding-right:1.8rem;padding-left:5px}.vue-numeric-input.updown .btn-increment{right:2px;top:2px;bottom:50%;border-radius:2px 2px 0 0;border-width:1px 1px 0}.vue-numeric-input.updown .btn-increment .btn-icon{top:50%;left:50%;width:0;height:0;border-width:0 .45rem .45rem;border-color:transparent transparent #111;border-style:solid;margin:-.25rem 0 0 -.4rem}.vue-numeric-input.updown .btn-increment .btn-icon:after,.vue-numeric-input.updown .btn-increment .btn-icon:before{visibility:hidden;display:block;content:"";clear:both;height:0}.vue-numeric-input.updown .btn-decrement{right:2px;top:50%;bottom:2px;left:auto;border-radius:0 0 2px 2px;border-width:0 1px 1px}.vue-numeric-input.updown .btn-decrement .btn-icon{top:50%;left:50%;width:0;height:0;border-width:.45rem .45rem 0;border-color:#111 transparent transparent;border-style:solid;margin:-.25rem 0 0 -.4rem}',""])},function(t,e){t.exports=function(t,e,n,r,i,o){var u,s=t=t||{},a=typeof t.default;"object"!==a&&"function"!==a||(u=t,s=t.default);var f,c="function"==typeof s?s.options:s;if(e&&(c.render=e.render,c.staticRenderFns=e.staticRenderFns,c._compiled=!0),n&&(c.functional=!0),i&&(c._scopeId=i),o?(f=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),r&&r.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(o)},c._ssrRegister=f):r&&(f=r),f){var h=c.functional,p=h?c.render:c.beforeCreate;h?(c._injectStyles=f,c.render=function(t,e){return f.call(e),p(t,e)}):c.beforeCreate=p?[].concat(p,f):[f]}return{esModule:u,exports:s,options:c}}},function(t,e,n){"use strict";var r=n(21),i=n.n(r);e.a={name:"vue-numeric-input",props:{name:String,value:Number,placeholder:String,min:{type:Number,default:-1/0},max:{type:Number,default:1/0},step:{type:Number,default:1},align:{type:String,default:"left"},size:{type:String,default:"150px"},precision:{type:Number,validator:function(t){return t>=0&&i()(t)}},autofocus:{type:Boolean,default:!1},readonly:{type:Boolean,default:!1},disabled:{type:Boolean,default:!1},controls:{type:Boolean,default:!0},controlsType:{type:String,default:"plusminus"}},data:function(){return{numericValue:null,interval:null,startTime:null,handler:Function}},watch:{value:{immediate:!0,handler:function(t){var e=t;e&&((e=this.toPrecision(e,this.precision))>=this.max&&(e=this.max),e<=this.min&&(e=this.min),e!==t&&this.$emit("input",e)),this.numericValue=e}}},methods:{toNumber:function(t){var e=parseFloat(t);return!isNaN(t)&&isFinite(t)||(e=0),e},toPrecision:function(t,e){return void 0!==e?parseFloat(t.toFixed(e)):t},increment:function(){this.readonly||this.updateValue(this.toNumber(this.numericValue)+this.step)},decrement:function(){this.readonly||this.updateValue(this.toNumber(this.numericValue)-this.step)},inputHandler:function(t){this.updateValue(this.toNumber(t),t)},updateValue:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,n=this.numericValue;(t=this.toPrecision(t,this.precision))>=this.max&&(t=this.max),t<=this.min&&(t=this.min),t!==n?(this.numericValue=t,this.$emit("input",t)):this.$refs.input.value=e&&t===this.toNumber(e)?e:t},start:function(t){document.addEventListener("mouseup",this.stop),this.startTime=new Date,this.handler=t,clearInterval(this.interval),this.interval=setInterval(t,100)},stop:function(t){document.removeEventListener(t.type,this.stop),new Date-this.startTime<100&&this.handler(),clearInterval(this.interval),this.interval=null,this.handler=null,this.startTime=null,this.value!==this.numericValue&&this.$emit("change",this.numericValue)},onBlur:function(t){this.$emit("blur",t)},onFocus:function(t){this.$emit("focus",t)},onChange:function(t){this.$emit("change",this.numericValue)},focus:function(){this.disabled||this.$refs.input.focus()},blur:function(){this.$refs.input.blur()}},beforeDestroy:function(){clearInterval(this.interval),this.interval=null,this.handler=null,this.startTime=null}}},function(t,e,n){t.exports={default:n(22),__esModule:!0}},function(t,e,n){n(23),t.exports=n(5).Number.isInteger},function(t,e,n){var r=n(24);r(r.S,"Number",{isInteger:n(35)})},function(t,e,n){var r=n(4),i=n(5),o=n(25),u=n(27),s=n(34),a=function(t,e,n){var f,c,h,p=t&a.F,l=t&a.G,d=t&a.S,g=t&a.P,b=t&a.B,y=t&a.W,m=l?i:i[e]||(i[e]={}),v=m.prototype,w=l?r:d?r[e]:(r[e]||{}).prototype;for(f in l&&(n=e),n)(c=!p&&w&&void 0!==w[f])&&s(m,f)||(h=c?w[f]:n[f],m[f]=l&&"function"!=typeof w[f]?n[f]:b&&c?o(h,r):y&&w[f]==h?function(t){var e=function(e,n,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(e);case 2:return new t(e,n)}return new t(e,n,r)}return t.apply(this,arguments)};return e.prototype=t.prototype,e}(h):g&&"function"==typeof h?o(Function.call,h):h,g&&((m.virtual||(m.virtual={}))[f]=h,t&a.R&&v&&!v[f]&&u(v,f,h)))};a.F=1,a.G=2,a.S=4,a.P=8,a.B=16,a.W=32,a.U=64,a.R=128,t.exports=a},function(t,e,n){var r=n(26);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,i){return t.call(e,n,r,i)}}return function(){return t.apply(e,arguments)}}},function(t,e){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,e,n){var r=n(28),i=n(33);t.exports=n(1)?function(t,e,n){return r.f(t,e,i(1,n))}:function(t,e,n){return t[e]=n,t}},function(t,e,n){var r=n(29),i=n(30),o=n(32),u=Object.defineProperty;e.f=n(1)?Object.defineProperty:function(t,e,n){if(r(t),e=o(e,!0),r(n),i)try{return u(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return"value"in n&&(t[e]=n.value),t}},function(t,e,n){var r=n(0);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,e,n){t.exports=!n(1)&&!n(6)(function(){return 7!=Object.defineProperty(n(31)("div"),"a",{get:function(){return 7}}).a})},function(t,e,n){var r=n(0),i=n(4).document,o=r(i)&&r(i.createElement);t.exports=function(t){return o?i.createElement(t):{}}},function(t,e,n){var r=n(0);t.exports=function(t,e){if(!r(t))return t;var n,i;if(e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;if("function"==typeof(n=t.valueOf)&&!r(i=n.call(t)))return i;if(!e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;throw TypeError("Can't convert object to primitive value")}},function(t,e){t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},function(t,e){var n={}.hasOwnProperty;t.exports=function(t,e){return n.call(t,e)}},function(t,e,n){var r=n(0),i=Math.floor;t.exports=function(t){return!r(t)&&isFinite(t)&&i(t)===t}},function(t,e,n){"use strict";var r={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{class:["vue-numeric-input","updown"===t.controlsType?"updown":""],style:{width:t.size?""+t.size:"Inherit"}},[n("input",{ref:"input",class:["numeric-input",this.controls?"":"no-control"],style:{textAlign:this.align},attrs:{name:t.name,type:"number",placeholder:t.placeholder,max:t.max,min:t.min,autofocus:t.autofocus,disabled:t.disabled,readonly:t.readonly},domProps:{value:t.numericValue},on:{input:function(e){t.inputHandler(e.target.value)},change:t.onChange,blur:t.onBlur,focus:t.onFocus}}),t._v(" "),t.controls?n("button",{staticClass:"btn btn-decrement",attrs:{type:"button",disabled:t.disabled||t.numericValue<=t.min},on:{mousedown:function(e){t.start(t.decrement)},touchstart:function(e){e.preventDefault(),t.start(t.decrement)},touchend:function(e){e.preventDefault(),t.stop(e)}}},[n("i",{staticClass:"btn-icon"})]):t._e(),t._v(" "),t.controls?n("button",{staticClass:"btn btn-increment",attrs:{type:"button",disabled:t.disabled||t.numericValue>=t.max},on:{mousedown:function(e){t.start(t.increment)},touchstart:function(e){e.preventDefault(),t.start(t.increment)},touchend:function(e){e.preventDefault(),t.stop(e)}}},[n("i",{staticClass:"btn-icon"})]):t._e()])},staticRenderFns:[]};e.a=r}])});
 
 /***/ }),
 
@@ -57801,248 +59812,75 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
+/***/ "./resources/js/appMember.js":
+/*!***********************************!*\
+  !*** ./resources/js/appMember.js ***!
+  \***********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_pencarianProdukParnerComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/pencarianProdukParnerComponent.vue */ "./resources/js/components/pencarianProdukParnerComponent.vue");
-/* harmony import */ var _components_cardProdukComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/cardProdukComponent.vue */ "./resources/js/components/cardProdukComponent.vue");
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+/* harmony import */ var _components_KonfigurasiPesanan_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/KonfigurasiPesanan.vue */ "./resources/js/components/KonfigurasiPesanan.vue");
+/* harmony import */ var _components_pencarianProdukParnerComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/pencarianProdukParnerComponent.vue */ "./resources/js/components/pencarianProdukParnerComponent.vue");
+/* harmony import */ var _components_cardProdukComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/cardProdukComponent.vue */ "./resources/js/components/cardProdukComponent.vue");
+/* harmony import */ var _chatVue_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chatVue.js */ "./resources/js/chatVue.js");
+/* harmony import */ var _chatVue_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_chatVue_js__WEBPACK_IMPORTED_MODULE_3__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component(
-//     "example-component",
-//     require("./components/ExampleComponent.vue").default
-// );
-// Vue.component(
-//     "chat-messages",
-//     require("./components/ChatMessages.vue").default
-// );
-// Vue.component("chat-form", require("./components/ChatForm.vue").default);
-// /**
-//  * Next, we will create a fresh Vue application instance and attach it to
-//  * the page. Then, you may begin adding components to this application
-//  * or customize the JavaScript scaffolding to fit your unique needs.
-//  */
-// const app = new Vue({
-//     el: "#app"
-// });
-// window.onload = function() {
-//     const app = new Vue({
-//         el: "#chat",
-//         data: {
-//             messages: []
-//         },
-//         created() {
-//             this.fetchMessages();
-//             Echo.private("chat").listen("MessageSent", e => {
-//                 this.messages.push({
-//                     message: e.message.message,
-//                     user: e.user
-//                 });
-//             });
-//         },
-//         methods: {
-//             fetchMessages() {
-//                 axios.get("/messages").then(response => {
-//                     this.messages = response.data;
-//                 });
-//             },
-//             addMessage(message) {
-//                 this.messages.push(message);
-//                 axios.post("/messages", message).then(response => {
-//                     console.log(response.data);konfigurasiPesanan
-//                 });
-//             }
-//         }
-//     });
-// };
-// const cAtk = new Vue({
-//     el: "#vATK"
-// });
-// Vue.component(
-//     "tes-component",
-//     require("./components/tesComponent.vue").default
-// );
-// const app = new Vue({
-//     el: "#app",
-//     components: {
-//         cardProdukComponent,
-//         pencarianProdukParnerComponent
-//     },
-//     data: {
-//         id: document.querySelector('meta[name="user_id"]').content,
-//         search: "",
-//         messages: [],
-//         users: [],
-//         form: {
-//             to_id: "",
-//             content: ""
-//         },
-//         isActive: null,
-//         notif: 0
-//     },
-//     methods: {
-//         // mengeluarkan semua user
-//         fetchUsers() {
-//             let q = _.isEmpty(this.search) ? "all" : this.search;
-//             axios.get("/message/user/" + q).then(({ data }) => {
-//                 this.users = data;
-//             });
-//         },
-//         // mengeluarkan semua messages dari user yang dipilih
-//         fetchMessages(id) {
-//             this.form.to_id = id;
-//             axios.get("/message/user-message/" + id).then(({ data }) => {
-//                 this.messages = data;
-//                 this.isActive = this.users.findIndex(s => s.id === id);
-//                 this.users[this.isActive].count = 0;
-//                 this.notif--;
-//             });
-//         },
-//         // mengirim pesan yang dikirim
-//         sendMessage() {
-//             axios.post("message/user-message", this.form).then(({ data }) => {
-//                 this.pushMessage(data, data.to_id);
-//                 this.form.content = "";
-//                 this.search = "";
-//             });
-//         },
-//         // fungsi untuk push laravel echo dan pusher
-//         fetchPusher() {
-//             Echo.channel("user-message." + this.id).listen(
-//                 "MessageEvent",
-//                 e => {
-//                     this.pushMessage(e, e.from_id, "push");
-//                 }
-//             );
-//         },
-//         // semua akan di eksekusi disini
-//         pushMessage(data, user_id, action = "") {
-//             let index = this.users.findIndex(s => s.id === user_id);
-//             if (index != -1 && action == "push") {
-//                 this.users.splice(index, 1); // menghapus user
-//             }
-//             /**
-//              * if untuk pesan submit
-//              */
-//             if (action == "") {
-//                 this.users[index].content = data.content;
-//                 this.users[index].to_id = data.to_id;
-//                 let user = this.users[index];
-//                 this.users.splice(index, 1);
-//                 this.users.unshift(user);
-//             } else {
-//                 /**
-//                  * else untuk pesan dari laravel echo
-//                  */
-//                 this.users.unshift(data); // menambahkan user baru ke atas
-//             }
-//             /**
-//              * Jika dia melihat pesan user yang dipilih
-//              */
-//             if (this.form.to_id != "") {
-//                 index = this.users.findIndex(s => s.id === this.form.to_id);
-//                 this.users[index].count = 0;
-//                 this.isActive = index;
-//                 if (this.form.to_id == user_id) {
-//                     this.messages.push({
-//                         avatar: data.avatar,
-//                         content: data.content,
-//                         created_at: data.created_at,
-//                         from_id: data.from_id
-//                     });
-//                     axios.get("/message/user-message/" + user_id + "/read");
-//                 }
-//             }
-//         },
-//         // agar scroll ke arah pesan yang baru
-//         scrollToEnd: function() {
-//             let container = this.$el.querySelector("#card-message-scroll");
-//             container.scrollTop = container.scrollHeight;
-//         }
-//     },
-//     mounted() {
-//         this.fetchUsers(); // memanggil semua user yang di chat
-//         this.fetchPusher(); // untuk menjalankan laravel echo dan pusher
-//     },
-//     watch: {
-//         // untuk mencari user
-//         search: _.debounce(function() {
-//             this.fetchUsers();
-//         }, 500),
-//         // untuk menambahakan jumlah notifikasi berdasarkan perubahan variable users
-//         users: _.debounce(function() {
-//             this.notif = 0;
-//             this.users.filter(e => {
-//                 if (e.count) {
-//                     this.notif++;
-//                 }
-//             });
-//         }),
-//         // setiap ada pesan baru akan memanggil this.scrollToEnd()
-//         messages: _.debounce(function() {
-//             this.scrollToEnd();
-//         }, 10)
-//     },
-//     async beforeCreate() {
-//         // await new Promise(resolve => setTimeout(resolve, 5000));
-//         //     this.member = await axios.get("/member").then(res => {
-//         //         return res.data;
-//         //     });
-//         //     this.loading = false;
-//     },
-//     created() {}search: _.debounce(function() {
-// this.fetchUsers();
-// }, 500),
-// // untuk menambahakan jumlah notifikasi berdasarkan perubahan variable users
-// users: _.debounce(function() {
-//         this.notif = 0;
-//         this.users.filter(e => {
-//             if (e.count) {
-//                 this.notif++;
-//             }
-//         });
-//     }),
-//     // setiap ada pesan baru akan memanggil this.scrollToEnd()
-//     messages: _.debounce(function() {
-//         this.scrollToEnd();
-//     }, 10)
-//     // });
 
 
 
-var app = new Vue({
+
+var appMember = new Vue({
   el: "#app",
   components: {
-    cardProdukComponent: _components_cardProdukComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    pencarianProdukParnerComponent: _components_pencarianProdukParnerComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    konfigurasiPesananComponent: _components_KonfigurasiPesanan_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    cardProdukComponent: _components_cardProdukComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    pencarianProdukParnerComponent: _components_pencarianProdukParnerComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  data: {},
-  methods: {},
-  mounted: function mounted() {},
-  watch: {},
-  beforeCreate: function beforeCreate() {},
-  created: function created() {}
+  data: {
+    pesanans: []
+  },
+  methods: {
+    gotosite: function gotosite(url) {
+      window.location.href = url;
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/chat/pesanan").then(function (_ref) {
+      var data = _ref.data;
+      _this.pesanans = data;
+    });
+    Echo.channel("channel-chat-member." + document.querySelector('meta[name="user_id"]').content).listen("ChatEvent", function (e) {
+      var idx = _this.pesanans.findIndex(function (p) {
+        return p.id_pesanan === e.id_pesanan;
+      });
+
+      _this.pesanans[idx].count++;
+      var audio = new Audio("/storage/ringtone/glass_ping.mp3");
+      audio.play();
+    });
+  },
+  computed: {
+    notifChat: {
+      get: function get() {
+        var count = 0;
+        this.pesanans.filter(function (e) {
+          if (e.count > 0) {
+            count++;
+          }
+        });
+        return count;
+      },
+      set: function set(val) {
+        return val;
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -58069,7 +59907,9 @@ try {
   window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
-} catch (e) {}
+} catch (e) {
+  console.log(e);
+}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -58093,6 +59933,237 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: "ap1" // , forceTLS: true
 
 });
+
+/***/ }),
+
+/***/ "./resources/js/chatVue.js":
+/*!*********************************!*\
+  !*** ./resources/js/chatVue.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// require("./bootstrap");
+var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
+    Axios = _require["default"];
+
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+Vue.component("chat-component", {
+  data: function data() {
+    return {
+      id: document.querySelector('meta[name="user_id"]').content,
+      pesanans: [],
+      isActive: null,
+      form: {
+        from_user: "member",
+        id_pesanan: "",
+        id_member: "",
+        id_pengelola: "",
+        pesan: ""
+      },
+      messages: [],
+      pengelola: {
+        nama: "",
+        avatar: ""
+      }
+    };
+  },
+  methods: {
+    fetchPesanan: function fetchPesanan() {
+      var _this = this;
+
+      Axios.get("/chat/pesanan").then(function (_ref) {
+        var data = _ref.data;
+        _this.pesanans = data;
+        var urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has("pesanan")) {
+          _this.fetchMessages(parseInt(urlParams.get("pesanan")));
+        }
+      });
+    },
+    fetchMessages: function fetchMessages(id) {
+      var _this2 = this;
+
+      var idx = this.pesanans.findIndex(function (p) {
+        return p.id === id;
+      });
+
+      if (idx != -1) {
+        this.form.id_pesanan = this.pesanans[idx].id_pesanan;
+        this.form.id_member = this.pesanans[idx].id_member;
+        this.form.id_pengelola = this.pesanans[idx].id_pengelola;
+        this.pengelola.nama = this.pesanans[idx].nama_pengelola;
+        this.pengelola.avatar = this.pesanans[idx].avatar;
+        Axios.get("/chat/message/" + id).then(function (_ref2) {
+          var data = _ref2.data;
+          _this2.messages = data;
+          _this2.isActive = _this2.pesanans.findIndex(function (p) {
+            return p.id == id;
+          });
+          _this2.pesanans[_this2.isActive].count = 0;
+          _this2.notifChat--;
+        });
+      }
+    },
+    sendMessage: function sendMessage() {
+      var _this3 = this;
+
+      Axios.post("/chat/message", this.form).then(function (_ref3) {
+        var data = _ref3.data;
+        _this3.form.pesan = ""; // this.pushMessage(data, data.id_pesanan);
+
+        _this3.messages.push(data);
+      });
+    },
+    fetchPusher: function fetchPusher() {
+      var _this4 = this;
+
+      Echo.channel("channel-chat-member." + this.id).listen("ChatEvent", function (e) {
+        console.log(e); // this.pushMessage(e, e.id_pesanan, "push");
+
+        _this4.playSoundNotif();
+
+        var idx = _this4.pesanans.findIndex(function (p) {
+          return p.id_pesanan === e.id_pesanan;
+        });
+
+        _this4.pesanans[idx].count++;
+
+        if (_this4.form.id_pesanan == e.id_pesanan) {
+          _this4.messages.push(e);
+
+          _this4.pesanans[idx].count = 0;
+          _this4.isActive = idx;
+          Axios.get("/chat/message/" + _this4.form.id_pesanan + "/read");
+        }
+      });
+    },
+    // agar scroll ke arah pesan yang baru
+    scrollToEnd: function scrollToEnd() {
+      var container = this.$el.querySelector("#message-scroll");
+      container.scrollTop = container.scrollHeight;
+    },
+    playSoundNotif: function playSoundNotif() {
+      var audio = new Audio("/storage/ringtone/glass_ping.mp3");
+      audio.play();
+    }
+  },
+  mounted: function mounted() {
+    console.log("tadaaaa");
+    this.fetchPesanan();
+    this.fetchPusher();
+    console.log(this.$root);
+  },
+  watch: {
+    messages: _.debounce(function () {
+      this.scrollToEnd();
+    }, 10)
+  },
+  computed: {
+    notifChat: {
+      get: function get() {
+        var count = 0;
+        this.pesanans.filter(function (e) {
+          if (e.count > 0) {
+            count++;
+          }
+        });
+        return count;
+      },
+      set: function set(val) {
+        return val;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/KonfigurasiPesanan.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/KonfigurasiPesanan.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _KonfigurasiPesanan_vue_vue_type_template_id_103b5a03___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KonfigurasiPesanan.vue?vue&type=template&id=103b5a03& */ "./resources/js/components/KonfigurasiPesanan.vue?vue&type=template&id=103b5a03&");
+/* harmony import */ var _KonfigurasiPesanan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./KonfigurasiPesanan.vue?vue&type=script&lang=js& */ "./resources/js/components/KonfigurasiPesanan.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _KonfigurasiPesanan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _KonfigurasiPesanan_vue_vue_type_template_id_103b5a03___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _KonfigurasiPesanan_vue_vue_type_template_id_103b5a03___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/KonfigurasiPesanan.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/KonfigurasiPesanan.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/KonfigurasiPesanan.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./KonfigurasiPesanan.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/KonfigurasiPesanan.vue?vue&type=template&id=103b5a03&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/KonfigurasiPesanan.vue?vue&type=template&id=103b5a03& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_template_id_103b5a03___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./KonfigurasiPesanan.vue?vue&type=template&id=103b5a03& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/KonfigurasiPesanan.vue?vue&type=template&id=103b5a03&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_template_id_103b5a03___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_KonfigurasiPesanan_vue_vue_type_template_id_103b5a03___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -58234,26 +60305,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/***/ 1:
+/*!*****************************************!*\
+  !*** multi ./resources/js/appMember.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/js/appMember.js */"./resources/js/appMember.js");
 
 
 /***/ })

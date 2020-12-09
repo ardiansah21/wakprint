@@ -422,6 +422,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["member", "konFiles", "atks"],
@@ -1857,51 +1915,65 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "label",
-                    { staticClass: "text-truncate-multiline mb-2 ml-0 mb-5" },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Alamat Jalan"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kelurahan"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kecamatan"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kabupaten Kota"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Provinsi"]
-                          ) +
-                          ",\n                        " +
-                          _vm._s(
-                            _vm.member.alamat.alamat[
-                              _vm.member.alamat.IdAlamatUtama
-                            ]["Kode Pos"]
-                          ) +
-                          ",\n                    "
+                  _vm.member.alamat.alamat != "[]"
+                    ? _c(
+                        "label",
+                        {
+                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Alamat Jalan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kelurahan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kecamatan"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kabupaten Kota"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Provinsi"]
+                              ) +
+                              ",\n                        " +
+                              _vm._s(
+                                _vm.member.alamat.alamat[
+                                  _vm.member.alamat.IdAlamatUtama
+                                ]["Kode Pos"]
+                              ) +
+                              ",\n                    "
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : _c(
+                        "label",
+                        {
+                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
+                        },
+                        [
+                          _vm._v(
+                            "\n                        -\n                    "
+                          )
+                        ]
+                      )
                 ]
               ),
               _vm._v(" "),
@@ -2185,14 +2257,12 @@ var render = function() {
                   staticClass:
                     "btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center",
                   staticStyle: { "border-radius": "30px" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return this.$root.gotosite("konfigurasi-file")
-                    }
+                  attrs: {
+                    type: "button",
+                    onclick: "window.location.href='/konfigurasi-file'"
                   }
                 },
-                [_vm._v("Tambah File")]
+                [_vm._v("\n                    Tambah File\n                ")]
               )
             ]
           ),
@@ -2440,7 +2510,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("Buat Pesanan")]
+      [_vm._v("\n        Buat Pesanan\n    ")]
     )
   ])
 }
@@ -14710,13 +14780,23 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/konfigurasiPesananVue.js ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-Vue.component("konfigurasi-pesanan", __webpack_require__(/*! ./components/KonfigurasiPesanan.vue */ "./resources/js/components/KonfigurasiPesanan.vue")["default"]);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_KonfigurasiPesanan_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/KonfigurasiPesanan.vue */ "./resources/js/components/KonfigurasiPesanan.vue");
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // Vue.component(
+//     "konfigurasi-pesanan",
+//     require("./components/KonfigurasiPesanan.vue").default
+// );
+
+
 var konfigurasiPesanan = new Vue({
   el: "#konfigurasiPesanan",
+  components: {
+    konfigurasiPesananComponent: _components_KonfigurasiPesanan_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   methods: {
     gotosite: function gotosite(producturl) {
       window.location.href = producturl;

@@ -1,28 +1,27 @@
-// require("./bootstrap");
 const { default: Axios } = require("axios");
 
 window.Vue = require("vue");
 
-const chatPartner = new Vue({
-    el: "#app",
-    data: {
-        // user_login: document.querySelector('meta[name="user_login"]').content,
-        id: document.querySelector('meta[name="user_id"]').content,
-        pesanans: [],
-        isActive: null,
-        form: {
-            from_user: "partner",
-            id_pesanan: "",
-            id_member: "",
-            id_pengelola: "",
-            pesan: ""
-        },
-        messages: [],
-        member: {
-            nama: "",
-            avatar: ""
-        }
-        // notifChat: ""
+Vue.component("chat-partner-component", {
+    data() {
+        return {
+            // user_login: document.querySelector('meta[name="user_login"]').content,
+            id: document.querySelector('meta[name="user_id"]').content,
+            pesanans: [],
+            isActive: null,
+            form: {
+                from_user: "partner",
+                id_pesanan: "",
+                id_member: "",
+                id_pengelola: "",
+                pesan: ""
+            },
+            messages: [],
+            member: {
+                nama: "",
+                avatar: ""
+            }
+        };
     },
     methods: {
         fetchPesanan() {
@@ -80,25 +79,6 @@ const chatPartner = new Vue({
                 }
             );
         },
-        // pushMessage(data, pesanan_id, action = "") {
-        //     var idx = this.pesanans.findIndex(p => p.id_pesanan === pesanan_id);
-        //     if (idx != -1 && action == "push") {
-        //         this.pesanans.splice(idx, 1); //menghapus list pesanan
-        //     }
-        //     /**
-        //      * if untuk pesan submit
-        //      */
-        //     if (action == "") {
-        //         var pesanan = this.pesanans[idx];
-        //         this.pesanans.splice(idx, 1);
-        //         this.pesanans.unshift(pesanan);
-        //     } else {
-        //         /**
-        //          * else untuk pesan dari laravel echo
-        //          */
-        //         this.pesanans.unshift(data);
-        //     }
-        // },
         // agar scroll ke arah pesan yang baru
         scrollToEnd: function() {
             let container = this.$el.querySelector("#message-scroll");
@@ -106,7 +86,6 @@ const chatPartner = new Vue({
         },
         playSoundNotif() {
             var audio = new Audio("/storage/ringtone/glass_ping.mp3");
-            // storage_pa
             audio.play();
         }
     },

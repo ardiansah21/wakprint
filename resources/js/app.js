@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("./bootstrap");
+// require("./bootstrap");
 
-window.Vue = require("vue");
+// window.Vue = require("vue");
 
 /**
  * The following block of code may be used to automatically register your
@@ -227,19 +227,19 @@ window.Vue = require("vue");
 //     }, 10)
 //     // });
 
-import pencarianProdukParnerComponent from "./components/pencarianProdukParnerComponent.vue";
-import cardProdukComponent from "./components/cardProdukComponent.vue";
+// import pencarianProdukParnerComponent from "./components/pencarianProdukParnerComponent.vue";
+// import cardProdukComponent from "./components/cardProdukComponent.vue";
 
-const app = new Vue({
-    el: "#app",
-    components: {
-        cardProdukComponent,
-        pencarianProdukParnerComponent
-    },
-    data: {},
-    methods: {},
-    mounted() {},
-    watch: {},
-    beforeCreate() {},
-    created() {}
-});
+// const app = new Vue({
+//     el: "#app",
+//     components: {
+//         cardProdukComponent,
+//         pencarianProdukParnerComponent
+//     },
+//     data: {},
+//     methods: {},
+//     mounted() {},
+//     watch: {},
+//     beforeCreate() {},
+//     created() {}
+// });

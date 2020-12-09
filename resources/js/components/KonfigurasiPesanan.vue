@@ -12,6 +12,7 @@
                     <label class="font-weight-bold mb-3" style="font-size: 24px"
                         >Penerimaan</label
                     >
+                    {{ penerimaan }}
                     <div
                         class="form-group custom-control custom-radio mb-4"
                         style="font-size: 14px"
@@ -62,7 +63,7 @@
                         <label class="text-truncate SemiBold mb-2 ml-0">
                             <!-- TODO: buat pengecekan jika belum ada alamat -->
                             {{
-                                member.alamat !== "[]"
+                                member.alamat.length !== 0
                                     ? member.alamat.alamat[
                                           member.alamat.IdAlamatUtama
                                       ]["Nama Penerima"]
@@ -70,7 +71,7 @@
                             }}
                         </label>
                         <label
-                            v-if="member.alamat.alamat != '[]'"
+                            v-if="member.alamat.length !== 0"
                             class="text-truncate-multiline mb-2 ml-0 mb-5"
                         >
                             {{
