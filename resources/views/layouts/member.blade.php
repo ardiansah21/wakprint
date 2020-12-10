@@ -205,7 +205,7 @@
             </div>
         </nav>
         @guest
-            <main>
+            <main style="min-height: 620px">
                 @yield('content')
             </main>
             <footer class="footer">
