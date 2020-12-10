@@ -17,10 +17,10 @@
                 </div>
             </div>
             <!-- <span>{{this.$root.member.nama_lengkap}}</span> -->
-            <!-- :class="{'text-danger' : isFavorite(produk.id_produk)}" -->
-            <!-- @click="setFavorite(produk.id_produk)" -->
             <button
                 class="btn fa fa-heart fa-2x fa-responsive cursor-pointer"
+                :class="{'text-danger' : isFavorite}"
+                @click="setFavorite(produk.id_produk)"
                 style="
                     position: absolute;
                     top: 5%;
@@ -117,44 +117,25 @@
 
 <script>
 export default {
-    props: ["produk"],
+    props: ["produk", "isFavorite"],
     data() {
-        return {
-            favorit: [],
-        };
-    },
-    computed: {},
-    updated() {
-        this.favorit = JSON.parse(
-            this.$parent.$parent.$data.member.produk_favorit
-        );
-
-        // this.$parent.$parent.$data.member.produk_favorit;
+        return {};
     },
     methods: {
         setFavorite(id) {
-            axios.post("/favorit/status", { id_produk: id }).then((res) => {
-                console.log(res);
-            });
-        },
-        isFavorite(id) {
-            // console.log(await this.$root.$root.member.produk_favorit);
-            var a = this.$root.$root.member.produk_favorit;
-            // var b = JSON.parse(a);
-            var c = Array.from(a);
-            // console.log(c);
-
-            var tt = false;
-            c.forEach((v, i) => {
-                if (v === id) {
-                    tt = true;
-                } else {
-                    tt = false;
-                }
-            });
-            return tt;
+            axios
+                .post("/favorit/status/" + id, {
+                    id_produk: id,
+                    fromAxios: true,
+                })
+                .then((res) => {
+                    this.$emit("update-favorite", res.data);
+                });
         },
     },
+    computed: {},
+    updated() {},
+    beforeUpdate() {},
 };
 </script>
 

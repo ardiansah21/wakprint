@@ -95,8 +95,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/ulasan/ulasan-saya/{idProduk}/{idUlasan}', 'MemberController@ulasanSaya')->name('ulasan.ulasansaya');
     Route::post('ulasan/ulasan-saya/{idProduk}', 'MemberController@storeUlasan')->name('ulasan.store');
 
-    Route::get('chat', 'MemberController@chat')->name('chat');
-
     Route::get('produk/lapor/{id}', 'MemberController@laporProduk')->name('produk.lapor');
     Route::post('produk/lapor/store/{id}', 'MemberController@storeLapor')->name('lapor.store');
 
@@ -216,7 +214,17 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
     });
 });
 
-// //tessjson
+//chat
+Route::get('/partner/chat', 'ChatController@indexPartner')->middleware('auth:partner')->name('partner.chat');
+Route::group(['prefix' => 'chat'], function () {
+    Route::get('/', 'ChatController@index')->middleware('auth')->name('chat');
+    Route::get('pesanan', 'ChatController@pesanan');
+    Route::get('message/{id}', 'ChatController@message');
+    Route::get('message/{id}/read', 'ChatController@read');
+    Route::post('message', 'ChatController@send');
+});
+
+// tessjson
 Route::get('/testjson', 'ProductController@index');
 
 // Route::get('table', 'ProductController@table');
@@ -261,8 +269,3 @@ Route::get('session/put', 'SessionController@put');
 Route::get('session/push', 'SessionController@push');
 Route::get('session/del', 'SessionController@delete');
 Route::get('session/tes', 'SessionController@tes');
-
-//chat
-Route::get('chattest', 'ChatsController@index');
-Route::get('messages', 'ChatsController@fetchMessages');
-Route::post('messages', 'ChatsController@sendMessage');

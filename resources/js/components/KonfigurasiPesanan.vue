@@ -1,20 +1,18 @@
 <template>
     <div class="container mt-5 mb-5">
-        <label class="font-weight-bold" style="font-size: 48px">
-            Konfigurasi Pesanan
-        </label>
+        <label class="font-weight-bold" style="font-size: 48px"
+            >Konfigurasi Pesanan</label
+        >
         <div class="row justify-content-between mb-5">
             <div class="col-md-4 mt-5" style="border-radius: 10px">
                 <div
                     class="bg-light-purple pl-4 pr-4 pt-4 pb-4 mb-4"
                     style="border-radius: 10px"
                 >
-                    <label
-                        class="font-weight-bold mb-3"
-                        style="font-size: 24px"
+                    <label class="font-weight-bold mb-3" style="font-size: 24px"
+                        >Penerimaan</label
                     >
-                        Penerimaan
-                    </label>
+                    {{ penerimaan }}
                     <div
                         class="form-group custom-control custom-radio mb-4"
                         style="font-size: 14px"
@@ -28,9 +26,9 @@
                             v-model="penerimaan"
                             checked
                         />
-                        <label class="custom-control-label" for="rbAmbilTempat">
-                            Ambil di Tempat Percetakan
-                        </label>
+                        <label class="custom-control-label" for="rbAmbilTempat"
+                            >Ambil di Tempat Percetakan</label
+                        >
                         <label class="text-truncate-multiline mb-2">
                             <!-- {{ $konfigurasi->product->partner->alamat_toko ?? '-' }} -->
                         </label>
@@ -50,9 +48,8 @@
                             <label
                                 class="custom-control-label"
                                 for="rbAntarTempat"
+                                >Pengantaran</label
                             >
-                                Pengantaran
-                            </label>
                             <a
                                 class="col-md-auto text-right mb-2"
                                 href="/profil/alamat?fromOrder=true"
@@ -64,15 +61,19 @@
                             </a>
                         </div>
                         <label class="text-truncate SemiBold mb-2 ml-0">
+                            <!-- TODO: buat pengecekan jika belum ada alamat -->
                             {{
-                                member.alamat !== null
+                                member.alamat.length !== 0
                                     ? member.alamat.alamat[
                                         member.alamat.IdAlamatUtama
                                     ]["Nama Penerima"]
                                     : member.nama_lengkap
                             }}
                         </label>
-                        <label v-if="member.alamat.alamat != '[]'" class="text-truncate-multiline mb-2 ml-0 mb-5">
+                        <label
+                            v-if="member.alamat.length !== 0"
+                            class="text-truncate-multiline mb-2 ml-0 mb-5"
+                        >
                             {{
                                 member.alamat.alamat[
                                     member.alamat.IdAlamatUtama
@@ -104,7 +105,10 @@
                                 ]["Kode Pos"]
                             }},
                         </label>
-                        <label v-else class="text-truncate-multiline mb-2 ml-0 mb-5">
+                        <label
+                            v-else
+                            class="text-truncate-multiline mb-2 ml-0 mb-5"
+                        >
                             -
                         </label>
                     </div>
@@ -112,38 +116,34 @@
                         v-show="penerimaan === 'Diantar'"
                         class="row justify-content-between"
                     >
-                        <label class="col-md-auto font-weight-bold mb-2">
-                            Biaya
-                        </label>
+                        <label class="col-md-auto font-weight-bold mb-2"
+                            >Biaya</label
+                        >
                         <label
                             class="col-md-auto font-weight-bold text-right mb-2"
+                            >{{ rupiah(ongkir) }}</label
                         >
-                            {{ rupiah(ongkir) }}
-                        </label>
                     </div>
                     <!-- <button
                         @click="() => this.$root.gotosite('/profil/alamat')"
                     >
                         test
-                    </button> -->
+                    </button>-->
                 </div>
                 <div
                     class="bg-light-purple pl-4 pr-4 pt-4 pb-4"
                     style="border-radius: 10px; font-size: 14px"
                 >
-                    <label
-                        class="font-weight-bold mb-3"
-                        style="font-size: 24px"
+                    <label class="font-weight-bold mb-3" style="font-size: 24px"
+                        >Ringkasan Pemesanan</label
                     >
-                        Ringkasan Pemesanan
-                    </label>
                     <div class="row justify-content-between">
-                        <label id="subTotalFile" class="col-md-auto mb-2">
-                            Subtotal {{ konFileTerpilih.length }} file
-                        </label>
-                        <label class="col-md-auto text-right mb-2">
-                            {{ rupiah(onSubtotalFile()) }}
-                        </label>
+                        <label id="subTotalFile" class="col-md-auto mb-2"
+                            >Subtotal {{ konFileTerpilih.length }} file</label
+                        >
+                        <label class="col-md-auto text-right mb-2">{{
+                            rupiah(onSubtotalFile())
+                        }}</label>
                     </div>
                     <div
                         v-show="onSubtotalAtk().jumlahJenis > 0"
@@ -154,33 +154,31 @@
                             x {{ onSubtotalAtk().jumlahTotal }}
                             buah
                         </label>
-                        <label class="col-md-auto text-right mb-2">
-                            {{ rupiah(onSubtotalAtk().total) }}
-                        </label>
+                        <label class="col-md-auto text-right mb-2">{{
+                            rupiah(onSubtotalAtk().total)
+                        }}</label>
                     </div>
 
                     <div
                         v-show="penerimaan === 'Diantar'"
                         class="row justify-content-between mb-2"
                     >
-                        <label class="col-md-auto mb-2">
-                            Biaya Pengiriman</label
-                        >
-                        <label class="col-md-auto text-right mb-2">
-                            {{ rupiah(ongkir) }}</label
-                        >
+                        <label class="col-md-auto mb-2">Biaya Pengiriman</label>
+                        <label class="col-md-auto text-right mb-2">{{
+                            rupiah(ongkir)
+                        }}</label>
                     </div>
                     <div class="row justify-content-between">
-                        <label class="col-md-auto SemiBold mb-2"> Total</label>
+                        <label class="col-md-auto SemiBold mb-2">Total</label>
                         <label
                             id="totalHargaPesanan"
                             class="col-md-auto SemiBold text-right mb-2"
-                            >{{ rupiah(onTotalBiaya()) }}
-                        </label>
+                            >{{ rupiah(onTotalBiaya()) }}</label
+                        >
                     </div>
                     <div class="row justify-content-between">
-                        <label class="col-md-auto SemiBold mb-2">
-                            Saldo Kamu</label
+                        <label class="col-md-auto SemiBold mb-2"
+                            >Saldo Kamu</label
                         >
                         <label class="col-md-auto SemiBold text-right mb-2">
                             {{
@@ -193,12 +191,12 @@
                         </label>
                     </div>
                     <div class="row justify-content-between">
-                        <label class="col-md-auto SemiBold mb-2">
-                            Sisa Saldo Kamu</label
+                        <label class="col-md-auto SemiBold mb-2"
+                            >Sisa Saldo Kamu</label
                         >
-                        <label class="col-md-auto SemiBold text-right mb-3">
-                            {{ rupiah(member.jumlah_saldo - onTotalBiaya()) }}
-                        </label>
+                        <label class="col-md-auto SemiBold text-right mb-3">{{
+                            rupiah(member.jumlah_saldo - onTotalBiaya())
+                        }}</label>
                     </div>
                     <label
                         v-show="
@@ -222,9 +220,9 @@
                             v-model="isCheckAll"
                             id="PilihSemua"
                         />
-                        <label class="custom-control-label" for="PilihSemua">
-                            Pilih Semua
-                        </label>
+                        <label class="custom-control-label" for="PilihSemua"
+                            >Pilih Semua</label
+                        >
                     </div>
                     <button
                         type="button"
@@ -251,7 +249,7 @@
                     <!-- <div
                 class="table-scrollbar pl-0 pr-2 mb-5"
                 style="max-height: 270px"
-            > -->
+                    >-->
                     <tbody style="font-size: 14px">
                         <tr v-for="(f, idx) in konFiles" :key="idx">
                             <td scope="row">
@@ -272,15 +270,9 @@
                                     ></label>
                                 </div>
                             </td>
-                            <td>
-                                {{ f.id_konfigurasi }}
-                            </td>
-                            <td>
-                                {{ f.nama_file }}
-                            </td>
-                            <td>
-                                {{ f.nama_produk }}
-                            </td>
+                            <td>{{ f.id_konfigurasi }}</td>
+                            <td>{{ f.nama_file }}</td>
+                            <td>{{ f.nama_produk }}</td>
                             <td>{{ rupiah(f.biaya) }}</td>
                             <td>
                                 <span>
@@ -295,9 +287,8 @@
                                         @click="
                                             onHapusKonfigurasi(f.id_konfigurasi)
                                         "
+                                        >delete</i
                                     >
-                                        delete
-                                    </i>
                                 </span>
                             </td>
                         </tr>
@@ -319,7 +310,7 @@
                             class="custom-control-input"
                             style="width: 100%"
                             v-model="jumlahPerAtk[atk.id_atk].terpilih"
-                        /> -->
+                        />-->
                         <input
                             type="checkbox"
                             :id="atk.id_atk + '_atk'"
@@ -333,7 +324,7 @@
                             :value="{
                                 id: atk.id_atk,
                                 jumlah: jumlahPerAtk[atk.id_atk],
-                            }" -->
+                        }"-->
                         <label
                             class="custom-control-label text-break align-middle"
                             :for="atk.id_atk + '_atk'"
@@ -359,7 +350,7 @@
                             :disabled="isDisabled(atk.id_atk)"
                             @change="(val) => tt(val)"
                             @blur="tt(value)"
-                        ></vue-numeric-input> -->
+                        ></vue-numeric-input>-->
 
                         <vue-numeric-input
                             size="100px"
@@ -376,9 +367,8 @@
                             id="hargaAtkLabel"
                             class="SemiBold mb-2 ml-0"
                             style="width: 100%"
+                            >{{ rupiah(atk.harga) }}</label
                         >
-                            {{ rupiah(atk.harga) }}
-                        </label>
                     </div>
                 </div>
             </div>

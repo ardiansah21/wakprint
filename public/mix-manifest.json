@@ -1,5 +1,7 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/konfigurasiPesananVue.js": "/js/konfigurasiPesananVue.js"
+    "/js/appAdmin.js": "/js/appAdmin.js",
+    "/js/appMember.js": "/js/appMember.js",
+    "/js/appPartner.js": "/js/appPartner.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/css/app.css": "/css/app.css"
 }

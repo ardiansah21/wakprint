@@ -1012,6 +1012,9 @@ class MemberController extends Controller
         $member->save();
 
         // dd($member->produk_favorit);
+        if ($request->fromAxios) {
+            return response()->json($member->produk_favorit, 200);
+        }
 
         return redirect()->back();
     }
@@ -1171,11 +1174,6 @@ class MemberController extends Controller
                 // 'fotoUlasan' => $fotoUlasan,
             ], 200);
         }
-    }
-
-    public function chat()
-    {
-        return view('member.chat');
     }
 
     public function faq()

@@ -53,7 +53,12 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
         return $this->hasMany('App\Atk', 'id_pengelola');
     }
 
+    //TODO diganti dengan yang ada s nya di cek lagi mana aja yang tidak menggunakan s
     public function pesanan()
+    {
+        return $this->hasMany('App\Pesanan', 'id_pengelola');
+    }
+    public function pesanans()
     {
         return $this->hasMany('App\Pesanan', 'id_pengelola');
     }

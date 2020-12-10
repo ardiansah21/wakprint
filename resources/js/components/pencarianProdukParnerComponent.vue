@@ -172,7 +172,11 @@
                     style="position: absolute;"
                 />
                 <div v-for="(p, i) in filteredListProduct" :key="i" class="col-md-6 mb-4">
-                    <card-produk-component :produk="p"></card-produk-component>
+                    <card-produk-component
+                        :produk="p"
+                        :isFavorite="produk_favorit_member.includes(p.id_produk)"
+                        @update-favorite="produk_favorit_member = $event"
+                    ></card-produk-component>
                 </div>
             </div>
         </div>
@@ -197,6 +201,7 @@ export default {
             jenis_printer: [],
             fitur: [],
             fiturTerpilih: [],
+            produk_favorit_member: [],
         };
     },
     methods: {
@@ -294,6 +299,10 @@ export default {
         this.jenis_printer = this.jenis_printer_show;
 
         // this.fitur = [...new Set(arrayColumn)]
+
+        this.produk_favorit_member = await axios.get("/member").then((res) => {
+            return JSON.parse(res.data.produk_favorit);
+        });
     },
 };
 function arrayColumn(array, columnName) {

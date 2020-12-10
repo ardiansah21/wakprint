@@ -7,14 +7,36 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     /**
-     * Fields that are mass assignable
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['message'];
+    protected $fillable = [
+        'from_id', 'to_id', 'content', 'read_at',
+    ];
 
-    public function member()
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'read_at' => 'datetime',
+    ];
+
+    public function users()
     {
-        return $this->belongsTo('App\Member');
+        return $this->belongsTo(Member::class, 'from_id');
     }
+
+    public function userFrom()
+    {
+        return $this->belongsTo(Member::class, 'from_id');
+    }
+
+    public function userTo()
+    {
+        return $this->belongsTo(Member::class, 'to_id');
+    }
+
 }

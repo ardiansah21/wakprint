@@ -8,11 +8,15 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
+        <meta name="user_id" content="{{ auth()->guard('partner')->user()->id_pengelola }}">
+    @endauth
 
     <title>@yield('title','Wakprint') </title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+
+
     {{-- <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"
         type="text/javascript"></script> --}}
 
@@ -45,7 +49,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
+    </script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <script src="{{ asset('js/scriptPengelola.js') }}"></script>
     <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"></script>
@@ -89,7 +94,10 @@
 
                         @else
                             <li class="nav-item mr-2" style="display: flex; align-items:center;">
-                                <a class="nav-link SemiBold" href="#"
+                                <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
+                                    style="border-radius: 30px;top:0px;">
+                                </span>
+                                <a class="nav-link SemiBold" href="{{ route('partner.chat') }}"
                                     style="color: black; font-size: 18px;">{{ __('Chat') }}</a>
                             </li>
                             <li class="nav-item mr-0" style="display: flex; align-items:center;">
@@ -98,14 +106,19 @@
                                 </a>
                             </li>
                             <li class="nav-item mr-0">
-                                <a class="nav-link" href="{{ route('partner.profile') }}" style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
+                                <a class="nav-link" href="{{ route('partner.profile') }}"
+                                    style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
                                     <span class="text-primary-purple text-truncate mr-2" style="width:80%;">
                                         {{ Auth::user()->nama_lengkap }}
                                     </span>
                                     @if (!empty(Auth::user()->getFirstMediaUrl()))
-                                        <img class="align-middle border border-gray ml-2" src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45" alt="no logo" style="border-radius: 30px; object-fit:contain;">
+                                        <img class="align-middle border border-gray ml-2"
+                                            src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45"
+                                            alt="no logo" style="border-radius: 30px; object-fit:contain;">
                                     @else
-                                        <img class="align-middle ml-2" src="https://ptetutorials.com/images/user-profile.png" width="45" height="45" alt="no logo">
+                                        <img class="align-middle ml-2"
+                                            src="https://ptetutorials.com/images/user-profile.png" width="45" height="45"
+                                            alt="no logo">
                                     @endif
                                 </a>
                             </li>
@@ -125,6 +138,7 @@
                     @case('partner.promo.edit')
                     @case('partner.atk.create')
                     @case('partner.atk.edit')
+                    @case('partner.chat')
                     @yield('content')
                     @break
                     @default
@@ -235,12 +249,13 @@
 </body>
 
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-</script> --}}
-{{-- <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
---}}
-{{-- ...Some more scripts... --}}
+
+
+<script src="{{ asset('js/appPartner.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/scriptPengelola.js') }}"></script>
+<script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"></script>
+
 
 {{-- <script
     src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>

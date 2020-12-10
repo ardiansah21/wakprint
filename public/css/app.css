@@ -10928,3 +10928,70 @@ a.text-dark:focus {
   }
 }
 
+.list-user,
+.card-message {
+  overflow-y: auto;
+  height: 400px;
+}
+
+.list-user .list-group-item {
+  border: none;
+}
+
+.list-user .list-group-item.active {
+  color: #495057;
+  background-color: #f7f7f7;
+}
+
+.card-message .list-group-item {
+  padding: 0;
+  border: none;
+}
+
+.card-message .list-message-item {
+  width: 80%;
+}
+
+@media screen and (min-width: 768px) {
+  .card-message .list-message-item {
+    width: 49%;
+  }
+}
+
+.card-message .list-message-item.right {
+  float: right;
+}
+
+.rounded-circle {
+  width: 48px;
+}
+
+.svg-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.svg-icon path {
+  fill: #4691f6;
+}
+
+[badge]:after {
+  background: #00d1b2;
+  border-radius: 10px;
+  color: #fff;
+  content: attr(badge);
+  font-size: 11px;
+  margin-top: -5px;
+  margin-left: -8px;
+  min-width: 20px;
+  padding: 2px;
+  position: absolute;
+  text-align: center;
+}
+
+[badge^="-"]:after,
+[badge="0"]:after,
+[badge=""]:after {
+  display: none;
+}
+

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessagesTable extends Migration
+class CreateForeignTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
-            $table->integer('id_member')->unsigned();
-            $table->text('message');
-            $table->timestamps();
-            // $table->timestamps();
+        Schema::table('konfigurasi_file', function (Blueprint $table) {
+            $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
         });
     }
 
@@ -29,6 +25,9 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::table('konfigurasi_file', function (Blueprint $table) {
+            $table->dropForeign(['id_pesanan']);
+        });
+
     }
 }
