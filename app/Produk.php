@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -24,6 +25,30 @@ class Produk extends Model implements HasMedia
     ];
 
     protected $guarded = [];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['selesai_waktu_diskon'];
+
+    /**
+     * Get the
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getStatusDiskonAttribute($value)
+    {
+        if ($this->selesai_waktu_diskon <= Carbon::now() || $this->mulai_waktu_diskon > Carbon::now()) {
+            $this->update(['status_diskon' => "TidakTersedia"]);
+            return "TidakTersedia";
+        } else {
+            $this->update(['status_diskon' => "Tersedia"]);
+            return "Tersedia";
+        }
+    }
 
     // public function fotoProduk()
     // {

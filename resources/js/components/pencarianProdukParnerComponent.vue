@@ -1,7 +1,9 @@
 <template>
     <div>
         <div class="search-input mr-0 ml-2 mb-4">
-            <div class="input-group main-search-input-p mr-0 justify-content-between">
+            <div
+                class="input-group main-search-input-p mr-0 justify-content-between"
+            >
                 <input
                     v-model="search"
                     id="keyword"
@@ -18,7 +20,9 @@
                     "
                 />
 
-                <i id="cari" class="material-icons my-auto mx-1" style>search</i>
+                <i id="cari" class="material-icons my-auto mx-1" style
+                    >search</i
+                >
             </div>
         </div>
 
@@ -78,35 +82,42 @@
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false"
-                            style="font-size: 16px; text-align:left;"
-                        >{{urutkan == '' ? "Urutkan" : urutkan}}</button>
+                            style="font-size: 16px; text-align: left"
+                        >
+                            {{ urutkan == "" ? "Urutkan" : urutkan }}
+                        </button>
 
                         <div
                             id="filterProdukList"
                             class="dropdown-menu"
                             aria-labelledby="dropdownKertas"
-                            style="font-size: 16px;"
+                            style="font-size: 16px"
                         >
                             <span
                                 class="dropdown-item cursor-pointer"
                                 @click="onSort('Terbaru')"
-                            >Terbaru</span>
+                                >Terbaru</span
+                            >
                             <span
                                 class="dropdown-item cursor-pointer"
                                 @click="onSort('Harga Berwarna Tertinggi')"
-                            >Harga Berwarna Tertinggi</span>
+                                >Harga Berwarna Tertinggi</span
+                            >
                             <span
                                 class="dropdown-item cursor-pointer"
                                 @click="onSort('Harga Berwarna Terendah')"
-                            >Harga Berwarna Terendah</span>
+                                >Harga Berwarna Terendah</span
+                            >
                             <span
                                 class="dropdown-item cursor-pointer"
                                 @click="onSort('Harga Hitam-Putih Tertinggi')"
-                            >Harga Hitam-Putih Tertinggi</span>
+                                >Harga Hitam-Putih Tertinggi</span
+                            >
                             <span
                                 class="dropdown-item cursor-pointer"
                                 @click="onSort('Harga Hitam-Putih Terendah')"
-                            >Harga Hitam-Putih Terendah</span>
+                                >Harga Hitam-Putih Terendah</span
+                            >
                         </div>
                     </div>
                 </div>
@@ -117,8 +128,8 @@
                             v-for="(jp, i) in jenis_printer_show"
                             :key="i"
                             class="btn btn-yellow-wakprint btn-outline-black ml-1 mr-1 pt-1 pb-1 pl-4 pr-4"
-                            style="border-radius:30px; font-size:18px;"
-                            :class="{active : jenis_printer.includes(jp) }"
+                            style="border-radius: 30px; font-size: 18px"
+                            :class="{ active: jenis_printer.includes(jp) }"
                         >
                             <input
                                 :id="jp"
@@ -127,7 +138,7 @@
                                 :value="jp"
                                 v-model="jenis_printer"
                             />
-                            {{jp}}
+                            {{ jp }}
                         </label>
                     </div>
                 </div>
@@ -135,46 +146,88 @@
         </div>
         <div
             class="container bg-light-purple pt-3 pb-3 pl-4 pr-4 mb-4 ml-2"
-            style="border-radius:5px;"
+            style="border-radius: 5px"
         >
-            <label class="SemiBold mb-2 ml-0" style="font-size: 18px;">Fitur</label>
+            <label class="SemiBold mb-2 ml-0" style="font-size: 18px"
+                >Fitur</label
+            >
             <br />
-            <div class="container" style="font-size: 18px;">
-                <div class="row justify-content-left ml-0">
-                    <div class="custom-control custom-checkbox ml-1 mr-4">
-                        <input
-                            type="checkbox"
-                            name="checkbox_paketp"
-                            class="custom-control-input"
-                            id="checkboxPaketp"
-                            value="p"
-                        />
-                        <label class="custom-control-label" for="checkboxPaketp">
-                            Pasdadasdasd
-                            <i
-                                class="material-icons md-18 align-middle ml-2"
-                                style="color:#C4C4C4"
-                            >help</i>
-                        </label>
+            <div class="container" style="font-size: 18px">
+                <div
+                    v-for="(f, i) in fitur"
+                    :key="i"
+                    class="row custom-control custom-checkbox justify-content-left ml-0"
+                >
+                    <div class="ml-1 mr-4">
+                        <div class="row">
+                            <input
+                                type="checkbox"
+                                class="custom-control-input"
+                                :id="f.uniqid"
+                                :value="f"
+                                v-model="fiturTerpilih"
+                            />
+                            <label class="custom-control-label" :for="f.uniqid">
+                                {{ f.nama }}
+                                <!-- <i v-tooltip ="{
+                                    content: f.deskripsi,
+                                    placement: 'right-center',
+                                    classes: ['info'],
+                                    targetClasses: ['it-has-a-tooltip'],
+                                    offset: 16,
+                                    delay: {
+                                    show: 500,
+                                    hide: 300,
+                                    },}"
+                                class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">help</i> -->
+                            </label>
+                            <v-popover
+                                trigger="hover"
+                                :placement="'right'"
+                                :offset="0"
+                                :delay="{ show: 500, hide: 300 }"
+                            >
+                                <i
+                                    class="material-icons md-18 align-middle ml-2"
+                                    style="color: #c4c4c4"
+                                    >help</i
+                                >
+                                <template slot="popover">
+                                    <img
+                                        v-show="f.foto_fitur"
+                                        :src="f.foto_fitur"
+                                        class="img-thumbnail ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                                        alt="foto fitur"
+                                    />
+                                    <h5>{{ f.deskripsi }}</h5>
+                                </template>
+                            </v-popover>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="mr-0 ml-2">
             <div class="produk row justify-content-between mb-4 ml-0 mr-0">
-                <h1
-                    class="center"
-                    v-show="filteredListProduct.length == 0"
-                >Maaf produk tidak ditemukan</h1>
-                <img
+                <h1 class="center" v-show="filteredListProduct.length == 0">
+                    Maaf produk tidak ditemukan
+                </h1>
+                <!-- <img
                     v-show="this.$root.loading"
                     src="https://flevix.com/wp-content/uploads/2019/07/Curve-Loading.gif"
                     style="position: absolute;"
-                />
-                <div v-for="(p, i) in filteredListProduct" :key="i" class="col-md-6 mb-4">
+                /> -->
+                <!-- {{filteredListProduct}} -->
+                <div
+                    v-for="(p, i) in filteredListProduct"
+                    :key="i"
+                    class="col-md-6 mb-4"
+                >
                     <card-produk-component
                         :produk="p"
-                        :isFavorite="produk_favorit_member.includes(p.id_produk)"
+                        :isFavorite="
+                            produk_favorit_member.includes(p.id_produk)
+                        "
                         @update-favorite="produk_favorit_member = $event"
                     ></card-produk-component>
                 </div>
@@ -279,14 +332,31 @@ export default {
                     var byTypePrinter = this.jenis_printer.includes(
                         p.jenis_printer
                     );
-                    return byQuery && byTypePageSheet && byTypePrinter;
+                    var byTypeFeature = true;
+                    if (this.fiturTerpilih.length != 0) {
+                        for (let i = 0; i < this.fiturTerpilih.length; i++) {
+                            const ft = this.fiturTerpilih[i].nama;
+                            if (p.fitur.includes(ft)) {
+                                byTypeFeature = byTypeFeature && true;
+                            } else {
+                                byTypeFeature = byTypeFeature && false;
+                            }
+                        }
+                    }
+
+                    return (
+                        byQuery &&
+                        byTypePageSheet &&
+                        byTypePrinter &&
+                        byTypeFeature
+                    );
                 }),
                 col(),
                 up
             );
         },
     },
-    async created() {
+    created() {
         this.jenis_kertas = [
             ...new Set(arrayColumn(this.produks, "jenis_kertas")),
         ];
@@ -298,11 +368,15 @@ export default {
         ];
         this.jenis_printer = this.jenis_printer_show;
 
-        // this.fitur = [...new Set(arrayColumn)]
-
-        this.produk_favorit_member = await axios.get("/member").then((res) => {
-            return JSON.parse(res.data.produk_favorit);
+        [...new Set(arrayColumn(this.produks, "fitur"))].forEach((f) => {
+            this.fitur = JSON.parse(f);
         });
+
+        // this.fiturTerpilih = this.fitur;
+
+        if (Object.keys(this.$root.user_login).length !== 0) {
+            this.produk_favorit_member = this.$root.user_login.produk_favorit;
+        }
     },
 };
 function arrayColumn(array, columnName) {
