@@ -545,7 +545,11 @@
                         </button>
                         <button class="btn btn-primary-wakprint btn-lg font-weight-bold pl-4 pr-4"
                             style="border-radius:30px; font-size: 18px;"
-                            onclick="window.location.href='{{ route('konfigurasi.produk', $produk->id_produk) }}'">
+                            @if (request()->fromKonfigurasi == true)
+                                onclick="window.location.href='{{ route('konfigurasi.produk', [$produk->id_produk,'id_konfigurasi' => request()->id_konfigurasi,'fromKonfigurasi' => 'true']) }}'"
+                            @else
+                                onclick="window.location.href='{{ route('konfigurasi.produk', $produk->id_produk) }}'"
+                            @endif>
                             {{ __('Gunakan Produk') }}
                         </button>
                     </div>

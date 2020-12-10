@@ -11,92 +11,14 @@
             style="font-size: 36px;">
             {{__('Ubah Promo') }}
         </label>
-        {{-- <br>
-        <label class="mb-2">
-            {{__('Pilih Promo untuk Diubah') }}
-        </label>
-            <form id="search-form" action="{{ route('partner.search.produk') }}" method="post">
-                @csrf
-                <div class="form-group search-input mb-4">
-                    <div class="main-search-input-item">
-                        <input id="keyword" name="keyword" type="text" role="search" name="keyword" class="form-control"
-                            @php
-                                if (session()->has('keyword')) {
-                                    echo "value = '".session('keyword')."' autofocus onfocus='this.value = this.value;'";
-                                }
-                            @endphp placeholder="Cari produk anda disini..." aria-label="Cari produk disini" aria-describedby="basic-addon2" style="border:0px solid white; border-radius:30px; font-size:16px;">
-                            <i class="material-icons pointer ml-1 pt-1 pb-1 pl-3 pr-3" onclick="event.preventDefault(); document.getElementById('search-form').submit();" style="position: absolute; top: 50%; left: 98%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                                search
-                            </i>
-                    </div>
-                </div>
-            </form> --}}
             <form id="submit-form" action="{{ route('partner.promo.store.update',$produk->id_produk) }}" method="POST">
                 @csrf
-                {{-- <div class="row justify-content-between mb-0">
-                    @if (session()->has('produk'))
-                        @foreach (session('produk') as $p)
-                            @if ($p->id_pengelola === $partner->id_pengelola)
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm mb-4 mx-2" style="min-height: 200px;">
-                                        <div class="card-body">
-                                            <div class="row justify-content-between">
-                                                <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2"
-                                                    style="font-size: 14px;">
-                                                    {{$p->nama ?? '-'}}
-                                                </label>
-                                                <div class="col-md-2 text-right" style="font-size: 12px;">
-                                                    <input type="checkbox"
-                                                        name="checkbox_promo[]"
-                                                        class=""
-                                                        @if($p->id_produk)
-                                                            checked
-                                                        @endif
-                                                        value="{{ $p->id_produk }}"
-                                                        id="checkboxPromo">
-                                                </div>
-                                            </div>
-                                            <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
-                                                {{__('Deskripsi Produk')}}
-                                            </label>
-                                            <label class="card-text text-truncate-multiline" style="font-size: 12px;">
-                                                {{$p->deskripsi ?? '-'}}
-                                            </label>
-                                        </div>
-                                        <div class="card-footer bg-primary-purple">
-                                            <div class="row justify-content-between mb-0 mr-0 ml-0">
-                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 14px;">
-                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                </label>
-                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 10px; border-radius:5px;">
-                                                    {{__('Hitam-Putih')}}
-                                                </label>
-                                                <br>
-                                                @if (!empty($p->harga_berwarna))
-                                                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 14px;">
-                                                        Rp. {{$p->harga_berwarna}}
-                                                    </label>
-                                                    <label class="card-text SemiBold badge-sm bg-primary-yellow px-1" style="font-size: 10px; border-radius:5px;">
-                                                        {{__('Berwarna')}}
-                                                    </label>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    @endif
-                </div> --}}
                 <div class="card shadow-sm mb-5" style="min-height: 200px; width:30%;">
                     <div class="card-body">
                         <div class="row justify-content-between" style="min-height:50px;">
                             <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2" style="font-size: 14px;">
                                 {{$produk->nama ?? '-'}}
                             </label>
-                            {{-- <div class="col-md-2 text-right" style="font-size: 12px;">
-                                <input type="checkbox" id="checkbox_promo{{$p}}" name="checkbox_promo" value="{{ $produk->id_produk }}">
-                            </div> --}}
                         </div>
                         <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
                             {{__('Deskripsi Produk')}}
@@ -331,7 +253,6 @@
 
 @section('script')
     <script>
-
         $('#tanggalMulaiPromoList span').on('click', function () {
             $('#tanggalMulaiPromoButton').text($(this).text());
             $('#tanggal_mulai_promo').val($(this).text());
@@ -344,7 +265,6 @@
             $('#tahunMulaiPromoButton').text($(this).text());
             $('#tahun_mulai_promo').val($(this).text());
         });
-
         $('#tanggalSelesaiPromoList span').on('click', function () {
             $('#tanggalSelesaiPromoButton').text($(this).text());
             $('#tanggal_selesai_promo').val($(this).text());

@@ -327,28 +327,30 @@
                 </form>
             </div>
             <script>
-                $('#batalkanBtn').click(function(){
-                    swal({title: "Apakah Anda yakin ingin membatalkan pemesanan ?",
-                        text: "Pesanan Anda akan dihapus secara permanen dan diharuskan untuk membuat ulang pesanan Anda dari awal",
-                        icon: "warning",
-                        buttons: {
-                            cancel : 'Jangan Dulu',
-                            confirm : {text:'Hapus',className:'btn-primary-danger'},
-                        },
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {
-                            // $("#deleteKonfirmasiPesananForm").submit();
-                            swal("Pesanan telah berhasil dihapus !", {
-                                icon: "success",
-                            }).then(function() {
-                                window.location.href='{{route('konfirmasi.pesanan.delete',"")}}' + '/' + $('#idPesanan').val();
-                            });
-                        } else {
-                            swal({text:"Anda telah membatalkan untuk menghapus pesanan ini",
-                                button: "Lanjutkan Pemesanan",
-                            });
-                        }
+                document.addEventListener('DOMContentLoaded', function () {
+                    $('#batalkanBtn').click(function(){
+                        swal({title: "Apakah Anda yakin ingin membatalkan pemesanan ?",
+                            text: "Pesanan Anda akan dihapus secara permanen dan diharuskan untuk membuat ulang pesanan Anda dari awal",
+                            icon: "warning",
+                            buttons: {
+                                cancel : 'Jangan Dulu',
+                                confirm : {text:'Hapus'},
+                            },
+                            dangerMode: true,
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                // $("#deleteKonfirmasiPesananForm").submit();
+                                swal("Pesanan telah berhasil dihapus !", {
+                                    icon: "success",
+                                }).then(function() {
+                                    window.location.href='{{route('konfirmasi.pesanan.delete',"")}}' + '/' + $('#idPesanan').val();
+                                });
+                            } else {
+                                swal({text:"Anda telah membatalkan untuk menghapus pesanan ini",
+                                    button: "Lanjutkan Pemesanan",
+                                });
+                            }
+                        });
                     });
                 });
             </script>

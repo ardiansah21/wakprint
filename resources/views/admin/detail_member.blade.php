@@ -33,9 +33,8 @@
                 {{__('Laki-Laki') }}
                 @elseif ($member->jenis_kelamin === 'P')
                 {{__('Perempuan') }}
-                @else{
+                @else
                 {{__('-') }}
-                }
                 @endif
             </label>
         </div>

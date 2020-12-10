@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="card shadow-sm p-4 mt-5 mb-5">
         <span>
             <button class="close material-icons md-32"
@@ -30,11 +33,11 @@
             </label>
             <br>
             <label class="text-primary-danger font-weight-bold" id="waktuTransaksi" name="waktu" style="font-size: 48px;">
-                {{date('l, d M Y H:i', strtotime($transaksi_saldo->waktu))}}
+                {{Carbon::parse($transaksi_saldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i').' WIB'}}
             </label>
             <br>
             <label class="mt-2" id="waktuTransaksi" name="waktu" style="font-size: 18px;">
-                {{__('Mohon menyelesaikan pembayaran sebelum') }} {{date('l, d M Y H:i', strtotime($transaksi_saldo->waktu))}}
+                {{__('Mohon menyelesaikan pembayaran sebelum ' . Carbon::parse($transaksi_saldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i').' WIB') }}
             </label>
         </div>
         <div class="card pt-4 pb-4 pl-4 pr-4 mb-5">
@@ -63,8 +66,7 @@
                 </label>
             </span>
         </div>
-        <button class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold mb-5"
-            style="font-size: 24px;">
+        <button class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold mb-5" onclick="window.location.href='{{route('saldo.topup.batal',$transaksi_saldo->id_transaksi)}}'" style="font-size: 24px;">
             {{__('Batalkan Pemesanan') }}
         </button>
     </div>

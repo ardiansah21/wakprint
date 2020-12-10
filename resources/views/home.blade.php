@@ -3,66 +3,57 @@
 
 @section('content')
 
-<div class="pt-5 pb-5 img-responsive d-flex justify-content-center pl-0 pr-0"
-    style="background-image: url(img/bg-unggah.png);background-size: cover;">
-    <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5"
-        style="width:250px;height:250px; background-color:transparent !important;">
-        <form action="{{ route('upload.pdf') }}" class="dropzone" method="POST" enctype="multipart/form-data"
-            style="width:100% ;background-color:transparent !important;">
+<div class="pt-5 pb-5 img-responsive d-flex justify-content-center pl-0 pr-0" style="background-image: url(img/bg-unggah.png);background-size: cover;">
+    <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5" style="width:250px;height:250px; background-color:transparent !important;">
+        <form action="{{ route('upload.pdf') }}" class="dropzone" method="POST" enctype="multipart/form-data" style="width:100% ;background-color:transparent !important;">
             @csrf
             <div class="dz-message" data-dz-message>
-                <label class="SemiBold my-auto"
-                    style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
+                <label class="SemiBold my-auto" style="text-align:center; font-size: 24px">{{__('Letak Dokumen Disini') }}</label>
             </div>
         </form>
     </div>
-    {{-- onclick="event.preventDefault(); document.getElementById('frm-upload').click() --}}
     <div id="kamuMauPrintApa">
         <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
-        <label class="SemiBold mb-4 ml-1"
-            style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
+        <label class="SemiBold mb-4 ml-1" style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
         <br>
-        <button id="a" type="button"
-            class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center"
-            style="border-radius:30px; font-size: 24px;" onclick="openDialog()">
+        <button id="a" type="button" class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center" style="border-radius:30px; font-size: 24px;" onclick="openDialog()">
             <i class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
             {{__('Unggah') }}
         </button>
-
-        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data"
-            style="display: none;">
+        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
             <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf" hidden />
         </form>
         </div>
     </div>
 </div>
-
 </div>
 <div class="container">
     <div class="pt-5 pb-5">
         <h1 class="font-weight-bold text-center mb-5" style="font-size: 48px">{{__('Cara Pemesanan') }}</h1>
         <div class="row">
             <div class="col-md-4">
-                <img src="img/uploaddata.png" class="img-responsive d-flex justify-content-center center mb-4" alt=""
-                    width="100px" height="100px">
+                <img src="img/uploaddata.png" class="img-responsive d-flex justify-content-center center mb-4" alt="" width="100px" height="100px">
                 <h4 class="SemiBold text-primary-purple text-center" style="font-size: 24px">{{__('Unggah Data') }}</h4>
                 <p class="text-center" style="font-size: 18px">{{__('Unggah data dan masukan detail pesanan') }}</p>
             </div>
             <div class="col-md-4">
-                <img src="img/caripercetakan.png" class="img-responsive center mb-4" alt="" width="100px"
-                    height="100px">
+                <img src="img/caripercetakan.png" class="img-responsive center mb-4" alt="" width="100px" height="100px">
                 <h4 class="SemiBold text-primary-purple text-center" style="font-size: 24px">
-                    {{__('Cari Tempat Percetakan') }}</h4>
-                <p class="text-center" style="font-size: 18px">{{__('Cari lokasi tempat percetakan sesuai kebutuhan') }}
+                    {{__('Cari Tempat Percetakan') }}
+                </h4>
+                <p class="text-center" style="font-size: 18px">
+                    {{__('Cari lokasi tempat percetakan sesuai kebutuhan') }}
                 </p>
             </div>
             <div class="col-md-4">
                 <img src="img/ambildokumen.png" class="img-responsive center mb-4" alt="" width="100px" height="100px">
-                <h4 class="SemiBold text-primary-purple text-center" style="font-size: 24px">{{__('Ambil Dokumen') }}
+                <h4 class="SemiBold text-primary-purple text-center" style="font-size: 24px">
+                    {{__('Ambil Dokumen') }}
                 </h4>
                 <p class="text-center" style="font-size: 18px">
-                    {{__('Lakukan pembayaran dan ambil dokumen langsung di tempat percetakan') }}</p>
+                    {{__('Lakukan pembayaran dan ambil dokumen langsung di tempat percetakan') }}
+                </p>
             </div>
         </div>
     </div>
@@ -79,16 +70,8 @@
     <div class="row">
         <div class="main-search-input mb-5 ml-0">
             <div class="main-search-input-item">
-                <input type="text" role="search" class="form-control p-4"
-                    placeholder="Cari percetakan atau produk disini" aria-label="Cari percetakan atau produk disini"
-                    aria-describedby="basic-addon2" style="border:0px solid white; border-radius:30px; font-size:24px;">
-                <button
-                    class="btn btn-primary-yellow btn-rounded shadow-sm ml-1 pt-1 pb-1 pl-5 pr-5 SemiBold text-center"
-                    onclick="window.location.href='{{route('pencarian')}}'"
-                    style="position: absolute; font-size:24px;
-                        top: 50%; left: 92%;
-                        transform: translate(-50%, -50%);
-                        -ms-transform: translate(-50%, -50%);">
+                <input type="text" role="search" class="form-control p-4" id="keywordPencarian" name="keywordPencarian" placeholder="Cari percetakan atau produk disini" aria-label="Cari percetakan atau produk disini" aria-describedby="basic-addon2" style="border:0px solid white; border-radius:30px; font-size:24px;">
+                <button class="btn btn-primary-yellow btn-rounded shadow-sm ml-1 pt-1 pb-1 pl-5 pr-5 SemiBold text-center" onclick="window.location.href='{{route('pencarian',request()->input('keywordPencarian'))}}'" style="position: absolute; font-size:24px; top: 50%; left: 92%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                     {{__('Cari') }}
                 </button>
             </div>
@@ -189,7 +172,7 @@
         // });
         myDropzone.on("success", function(file, xhr, formData){
                 document.body.innerHTML += '<form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"> @csrf <input type="text" name="namaFile" value="'+xhr.pdf.namaFile+'"> <input type="text" name="jumlahHalaman" value="'+xhr.pdf.jumlahHalaman+'"> <input type="text" name="jumlahHalBerwarna" value="'+xhr.pdf.jumlahHalBerwarna+'"> <input type="text" name="jumlahHalHitamPutih" value="'+xhr.pdf.jumlahHalHitamPutih+'"> <input type="text" name="path" value="'+xhr.pdf.path+'"></form>';
-                 document.getElementById("Form").submit();
+                document.getElementById("Form").submit();
         });
     //     myDropzone.on("sending", function(file, xhr, formData) {
     //         formData.append("filesize", file.size);

@@ -16,7 +16,7 @@
                         <div class="row justify-content-between">
                             <div class="col-md-8">
                                 <label class="font-weight-bold mb-0" style="font-size: 36px;">
-                                    Rp. {{ $partner->jumlah_saldo ?? 0 }}
+                                    {{ rupiah($partner->jumlah_saldo) ?? 0 }}
                                 </label>
                             </div>
                             <div class="col-md-4 align-self-center text-right mr-0">
@@ -59,10 +59,10 @@
                     {{ __('Rentang Tanggal') }}
                 </label>
                 <div class="col-md-4">
-                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus>
+                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus>
                 </div>
                 <div class="col-md-4">
-                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus>
+                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus>
                 </div>
             </div>
             @if (!empty($transaksi_saldo))
@@ -86,7 +86,7 @@
                                         <input id="waktuTransaksi" type="text" value="{{ date('H:i', strtotime($ts->waktu ?? '')) }}" hidden>
                                         <input id="tanggalTransaksi" type="text" value="{{ date('d/m/y', strtotime($ts->waktu ?? '')) }}" hidden>
                                         <td scope="row">{{ $ts->id_transaksi ?? '' }}</td>
-                                        <td>{{Carbon::parse($ts->updated_at)->translatedFormat('H:i') ?? '-'}}</td>
+                                        <td>{{Carbon::parse($ts->updated_at)->translatedFormat('H:i'). ' WIB' ?? '-'}}</td>
                                         <td>{{Carbon::parse($ts->updated_at)->translatedFormat('d F Y') ?? '-'}}</td>
                                         @if ($ts->jenis_transaksi === 'Tarik')
                                             <td>{{ __('Dana Keluar') }}</td>
@@ -128,15 +128,29 @@
         var tanggalAkhir = null;
 
         if (exist) {
-            alert(msg);
+            if(msg === 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !' || msg === 'Saldo Anda Kosong !'){
+                swal({title: "Konfirmasi Tarik Saldo Anda",
+                    text: msg,
+                    icon: "warning",
+                    buttons: "OK",
+                    dangerMode: true,
+                });
+            }
+            else{
+                swal({title: "Konfirmasi Tarik Saldo Anda",
+                    text: msg,
+                    icon: "success",
+                    buttons: "OK",
+                    dangerMode: false,
+                });
+            }
+
+            // alert(msg);
         }
         $('#jenisDanaList span').on('click', function() {
             $('#jenisDanaButton').text($(this).text());
             $('#keyword_jenis_transaksi').val($(this).text());
             $('#jenisDana').val($(this).text());
-            // $(this).val();
-            // event.preventDefault();
-            // document.getElementById('filter-form').submit();
             filter();
         });
 
@@ -162,6 +176,10 @@
             filter();
         });
 
+        function rupiah(val) {
+            return ("Rp. " + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1."));
+        }
+
         function filter() {
             var data = {
                 jenisDana: $('#jenisDana').val(),
@@ -186,7 +204,7 @@
 
                 beforeSend:function(){
                     $('.tbodySaldo').css('color', '#dfecf6');
-                    $('.tbodySaldo').html('<div class="text-center"><img class="mx-auto" id="imgLoading" style="position:absolute; left:40%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
+                    $('.tbodySaldo').html('<div><img class="mx-auto" id="imgLoading" style="position:relative; left:400%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
                 },
                 uploadProgress: function () {
                     $('#imgLoading').show();
@@ -200,15 +218,15 @@
                     for(i = 0; i < transaksiSaldo['transaksiSaldo'].length;i++){
                         rowListSaldo += '<tr>';
                             rowListSaldo += '<td scope="row">' + transaksiSaldo['transaksiSaldo'][i].id_transaksi + '</td>';
-                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].waktu).format('H:mm') + '</td>';
-                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].waktu).format('D/M/YYYY') + '</td>';
+                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('H:mm') + ' WIB</td>';
+                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('D MMMM Y') + '</td>';
                             if(transaksiSaldo['transaksiSaldo'][i].jenis_transaksi === 'Tarik'){
                                 rowListSaldo += '<td> Dana Keluar </td>';
                             }
                             else{
                                 rowListSaldo += '<td> Dana Masuk </td>';
                             }
-                            rowListSaldo += '<td>Rp. ' + transaksiSaldo['transaksiSaldo'][i].jumlah_saldo + '</td>';
+                            rowListSaldo += '<td>' + rupiah(transaksiSaldo['transaksiSaldo'][i].jumlah_saldo) + '</td>';
                             rowListSaldo += '<td><a class="text-primary-purple" href="riwayat/'+ transaksiSaldo['transaksiSaldo'][i].id_transaksi +'">Lihat</a></td>';
                         rowListSaldo += '<tr/>';
                     }

@@ -44863,7 +44863,6 @@ var render = function() {
         _vm._v(" "),
         _c("button", {
           staticClass: "btn fa fa-heart fa-2x fa-responsive cursor-pointer",
-          class: { "text-danger": _vm.isFavorite(_vm.produk.id_produk) },
           staticStyle: {
             position: "absolute",
             top: "5%",
@@ -44871,11 +44870,6 @@ var render = function() {
             transform: "translate(-50%, -50%)",
             "-ms-transform": "translate(-50%, -50%)",
             background: "transparent"
-          },
-          on: {
-            click: function($event) {
-              return _vm.setFavorite(_vm.produk.id_produk)
-            }
           }
         }),
         _vm._v(" "),

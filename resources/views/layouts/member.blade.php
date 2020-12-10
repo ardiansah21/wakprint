@@ -16,7 +16,7 @@
     <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}" type="text/javascript"></script>
 
     <!-- Styles -->
@@ -43,8 +43,6 @@
     {{-- <link rel="stylesheet" href="sweetalert2.min.css"> --}}
     {{-- <link rel="stylesheet" href="sweetalert-master/src/sweetalert.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
     {{--
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -471,27 +469,18 @@
     </div>
 
     <!-- Script -->
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('/js/jquery.jscroll.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.jscroll.min.js') }}"></script>
     <script src="{{ asset('js/share.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    {{-- <script src="{{ asset('js/moment-timezone-with-data.js') }}"></script> --}}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-timezone-with-data-1970-2030.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script> --}}
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
-
-    {{-- <script src="sweetalert2.all.min.js"></script> --}}
-    {{-- <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script>
-    <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script> --}}
-    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
-
-    <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
-    {{-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script> --}}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     @yield('script')
 </body>

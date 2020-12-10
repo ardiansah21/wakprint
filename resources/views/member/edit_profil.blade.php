@@ -1,13 +1,10 @@
-@auth
-@php
-//$m = Auth::user();
-$month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-@endphp
-@endauth
-
 @extends('layouts.member')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+        $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
+    @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <div class="mb-4 ">
             <h1 class="font-weight-bold mb-0" style="font-size: 48px;">{{ __('Ubah Profil') }}</h1>
@@ -62,38 +59,119 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                     {{ __('Tanggal Lahir') }}
                 </label>
                 <div class="row">
-                    <div class="col-md-auto">
-                        <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="date" style="font-size: 18px;">
-                            @for($date = 1; $date < 32; $date++)
-                                {{-- @if (!empty($member->tanggal_lahir))
-                                    <option value="{{ $date }}">
-                                        {{ $date }}
-                                    </option> --}}
-                                {{-- @else --}}
-                                    <option value="{{ $date }}">
-                                        {{ $date }}
-                                    </option>
-                                {{-- @endif --}}
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="col-md-auto">
-                        <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="month" style="font-size: 18px;">
-                            @for($i = 1; $i < 13; $i++)
-                                <option value="{{ $i }}">
-                                    {{ $month[$i-1] }}
+                    <div class="form-group col-md-auto">
+                        <div class="dropdown" aria-required="true">
+                            <input name="date" type="text" id="date"
+                                @if (!empty($member->tanggal_lahir))
+                                    value="{{Carbon::parse($member->tanggal_lahir)->translatedFormat('d')}}"
+                                @endif class="form-control" hidden>
+                            <button id="dateButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
+                                @if (!empty($member->tanggal_lahir))
+                                    {{Carbon::parse($member->tanggal_lahir)->translatedFormat('d')}}
+                                @else
+                                    {{__('1')}}
+                                @endif
+                            </button>
+                            <div id="dateList" class="dropdown-menu" aria-labelledby="dropdownDate" style="font-size: 16px; width:100%;">
+                                @for($i=1;$i<32;$i++)
+                                    <span class="dropdown-item cursor-pointer ">{{$i}}</span>
+                                @endfor
+                            </div>
+                        </div>
+                        {{-- <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="date" style="font-size: 18px;">
+                            @if (!empty($member->tanggal_lahir))
+                                <option value="{{ Carbon::parse($member->tanggal_lahir)->translatedFormat('d') }}">
+                                    {{ Carbon::parse($member->tanggal_lahir)->translatedFormat('d') }}
                                 </option>
-                            @endfor
-                        </select>
+                                @for($date = 1; $date < 32; $date++)
+                                    <option value="{{ $date }}">
+                                            {{$date}}
+                                    </option>
+                                @endfor
+                            @else
+                                @for($date = 1; $date < 32; $date++)
+                                    <option value="{{ $date }}">
+                                            {{$date}}
+                                    </option>
+                                @endfor
+                            @endif
+                        </select> --}}
+                    </div>
+                    <div class="form-group col-md-auto">
+                        <div class="dropdown" aria-required="true">
+                            <input name="month" type="text" id="month"
+                                @if (!empty($member->tanggal_lahir))
+                                    value="{{Carbon::parse($member->tanggal_lahir)->translatedFormat('F')}}"
+                                @endif class="form-control" hidden>
+                            <button id="monthButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownMonth" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
+                                @if (!empty($member->tanggal_lahir))
+                                    {{Carbon::parse($member->tanggal_lahir)->translatedFormat('F')}}
+                                @else
+                                    {{__('Januari')}}
+                                @endif
+                            </button>
+                            <div id="monthList" class="dropdown-menu" aria-labelledby="dropdownMonth" style="font-size: 16px; width:100%;">
+                                @for($i=1;$i<13;$i++)
+                                    <span class="dropdown-item cursor-pointer ">{{$month[$i-1]}}</span>
+                                @endfor
+                            </div>
+                        </div>
+                        {{-- <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="month" style="font-size: 18px;">
+                            @if (!empty($member->tanggal_lahir))
+                                <option value="{{ Carbon::parse($member->tanggal_lahir)->translatedFormat('F') }}">
+                                    {{ Carbon::parse($member->tanggal_lahir)->translatedFormat('F') }}
+                                </option>
+                                @for($i = 1; $i < 13; $i++)
+                                    <option value="{{ $i }}">
+                                        {{ $month[$i-1] }}
+                                    </option>
+                                @endfor
+                            @else
+                                @for($i = 1; $i < 13; $i++)
+                                    <option value="{{ $i }}">
+                                        {{ $month[$i-1] }}
+                                    </option>
+                                @endfor
+                            @endif
+                        </select> --}}
                     </div>
                     <div class="col-md-auto">
-                        <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="year" style="font-size: 18px;">
+                        <div class="dropdown" aria-required="true">
+                            <input name="year" type="text" id="year"
+                                @if (!empty($member->tanggal_lahir))
+                                    value="{{Carbon::parse($member->tanggal_lahir)->translatedFormat('Y')}}"
+                                @endif class="form-control" hidden>
+                            <button id="yearButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
+                                @if (!empty($member->tanggal_lahir))
+                                    {{Carbon::parse($member->tanggal_lahir)->translatedFormat('Y')}}
+                                @else
+                                    {{__('2015')}}
+                                @endif
+                            </button>
+                            <div id="yearList" class="dropdown-menu" aria-labelledby="dropdownYear" style="font-size: 16px; width:100%;">
+                                @for($i = 2015; $i > 1979; $i--)
+                                    <span class="dropdown-item cursor-pointer ">{{$i}}</span>
+                                @endfor
+                            </div>
+                        </div>
+                        {{-- <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="year" style="font-size: 18px;">
+                            @if (!empty($member->tanggal_lahir))
+                                <option value="{{ Carbon::parse($member->tanggal_lahir)->translatedFormat('Y') }}">
+                                    {{ Carbon::parse($member->tanggal_lahir)->translatedFormat('Y') }}
+                                </option>
                                 @for($year = 2015; $year > 1979; $year--)
                                     <option value="{{ $year }}">
                                         {{ $year }}
                                     </option>
                                 @endfor
-                        </select>
+                            @else
+                                @for($year = 2015; $year > 1979; $year--)
+                                    <option value="{{ $year }}">
+                                        {{ $year }}
+                                    </option>
+                                @endfor
+                            @endif
+                        </select> --}}
                     </div>
                 </div>
             </div>
@@ -103,7 +181,6 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                 </label>
                 <div class="row ml-0" style="font-size: 18px;">
                     <div class="form-group custom-control custom-radio col-md-3">
-
                         <input id="rbLK" name="jk" value="L" {{ $member->jenis_kelamin == 'L' ? 'checked' : '' }}
                             class="custom-control-input" type="radio">
                         <label class="custom-control-label" for="rbLK">
@@ -145,7 +222,6 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-
                 </div>
             </div>
             <div class="form-group">
@@ -209,7 +285,6 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
             if(exist){
                 alert(msg);
             }
-
             $("#editPhotoButton").on("click",function(){
                 $('#imgupload').trigger('click'); return false;
             });
@@ -217,7 +292,18 @@ $month=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
             $("#gambarMember").on("change","#imgupload",function(){
                 document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);
             });
+            $('#dateList span').on('click', function () {
+                $('#dateButton').text($(this).text());
+                $('#date').val($(this).text());
+            });
+            $('#monthList span').on('click', function () {
+                $('#monthButton').text($(this).text());
+                $('#month').val($(this).text());
+            });
+            $('#yearList span').on('click', function () {
+                $('#yearButton').text($(this).text());
+                $('#year').val($(this).text());
+            });
         });
-
     </script>
 @endsection

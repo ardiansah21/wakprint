@@ -67,8 +67,8 @@
                             {{
                                 member.alamat !== null
                                     ? member.alamat.alamat[
-                                          member.alamat.IdAlamatUtama
-                                      ]["Nama Penerima"]
+                                        member.alamat.IdAlamatUtama
+                                    ]["Nama Penerima"]
                                     : member.nama_lengkap
                             }}
                         </label>
@@ -230,8 +230,7 @@
                         type="button"
                         class="btn btn-primary-yellow btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center"
                         style="border-radius: 30px"
-                        onclick="window.location.href='/konfigurasi-file'"
-                    >
+                        onclick="window.location.href='/konfigurasi-file'">
                         Tambah File
                     </button>
                 </div>
@@ -285,7 +284,9 @@
                             <td>{{ rupiah(f.biaya) }}</td>
                             <td>
                                 <span>
-                                    <i class="material-icons mr-2 pointer">
+                                    <i
+                                        class="material-icons mr-2 pointer"
+                                        @click="onEditKonfigurasi(f.id_konfigurasi)">
                                         edit
                                     </i>
                                     <i
@@ -476,6 +477,9 @@ export default {
                 val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
             );
         },
+        onEditKonfigurasi: function (id) {
+            window.location.href="konfigurasi-file/edit/" + id;
+        },
         onHapusKonfigurasi: function (id) {
             axios.delete("/konfigurasi-file/delete/" + id).then((res) => {
                 if (res.status == 204) {
@@ -484,18 +488,15 @@ export default {
                 }
             });
         },
-
         buatPesanan: function () {
-            axios
-                .post("/konfigurasi-pesanan/create", {
+            axios.post("/konfigurasi-pesanan/create", {
                     konFileTerpilih: this.konFileTerpilih,
                     atks: this.onDetailAtkShare(),
                     penerimaan: this.penerimaan,
                     subTotalFile: this.onSubtotalFile(),
                     ongkir: this.ongkir,
                     totalBiaya: this.onTotalBiaya(),
-                })
-                .then((response) => {
+                }).then((response) => {
                     if (response.status == 201) {
                         var data = response.data;
                         this.$root.gotosite(

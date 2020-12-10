@@ -49,7 +49,7 @@ Route::get('/', 'MemberController@index')->name('home');
 
 Route::get('pencarian/cari', 'MemberController@cari')->name('cari');
 Route::get('ulasan/partner/urutkan/{id}', 'MemberController@urutkanProdukPartner')->name('urutkan.ulasan-produk.partner');
-Route::post('search', 'SearchController@search')->name('search');
+// Route::post('search', 'SearchController@search')->name('search');
 
 //test upload
 // Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
@@ -76,10 +76,12 @@ Route::middleware('auth')->group(function () {
     Route::get('profil/alamat/pilih/{id}', 'MemberController@pilihAlamat')->name('alamat.pilih');
     Route::get('saldo', 'MemberController@saldo')->name('saldo');
     Route::post('saldo/topup', 'MemberController@topUpSaldo')->name('saldo.topup');
+    Route::get('saldo/topup/batal/{id}', 'MemberController@batalTopUpSaldo')->name('saldo.topup.batal');
     Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
     Route::get('saldo/riwayat/{id}', 'MemberController@riwayatSaldo')->name('riwayat.saldo');
 
     Route::get('riwayat', 'MemberController@riwayat')->name('riwayat');
+    Route::get('riwayat/filter', 'MemberController@filterRiwayat')->name('riwayat.filter');
 
     Route::get('pesanan', 'MemberController@pesanan')->name('pesanan');
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('pesanan.detail');
@@ -104,7 +106,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
     Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
-    //TODO buat view edit konfigurasi
+    Route::get('/konfigurasi-file/edit/{id}', 'KonfigurasiController@editKonfigurasi')->name('konfigurasi.edit');
+    Route::post('/konfigurasi-file/edit/store/{id}', 'KonfigurasiController@storeEditKonfigurasi')->name('konfigurasi.edit.store');
+
     // Route::put('/konfigurasi-file/edit', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
 
     Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');

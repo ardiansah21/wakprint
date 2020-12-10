@@ -47,7 +47,6 @@
                                         echo "Semua halaman";
                                         else echo json_decode($k->halaman_terpilih);
                                     @endphp
-
                                 </label>
                             </div>
                             <div class="mb-4">
@@ -173,6 +172,12 @@
                                 {{ rupiah($k->biaya) }}
                             </label>
                         </div>
+                        @php
+                            $arrSubtotal = [];
+                            for ($i=0; $i < count($pesanan->konfigurasiFile); $i++) { 
+                                array_push($arrSubtotal, $pesanan->konfigurasiFile[$i]->biaya);
+                            }
+                        @endphp
                 </div>
             @endforeach
 
@@ -189,7 +194,7 @@
                         </div>
                         <div class="col-md-auto text-right">
                             <label class="SemiBold mb-2">
-                                {{ rupiah($subTotalFile) }}
+                                {{ rupiah(array_sum($arrSubtotal)) }}
                             </label>
                         </div>
                     </div>

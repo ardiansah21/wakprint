@@ -19,6 +19,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     protected $attributes = [
         'rating_toko' => 5.0,
         'status_toko' => 'Buka',
+        'ntkwh' => 0,
     ];
     //  protected $guard = 'partner';
     protected $guarded = [];

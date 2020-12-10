@@ -3,8 +3,6 @@
 
 @section('content')
 <div class="container">
-    <form id="search-form" action="{{ route('search') }}" method="POST">
-        @csrf
         <div class="row justify-content-between mb-5 mt-5">
             <div class="col-md-4">
                 <div class="btn-group btn-group-toggle mt-2 mb-4" data-toggle="buttons">
@@ -134,18 +132,14 @@
                     <div class="col-md-3">
                         <div class="dropdown">
                             <input id="filter_pencarian" name="filter_pencarian" type="text" Class="form-control" hidden>
-                            <button id="filterPencarianButton"
-                                class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                                id="dropdownFilterPencarian" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" style="font-size: 16px; text-align:left;">
+                            <button id="filterPencarianButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownFilterPencarian" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                 {{__('Urutkan') }}
                             </button>
                             @php
                                 $filterPencarian= array('Terbaru', 'Harga Tertinggi', 'Harga Terendah');
                             @endphp
-                            <div id="filterPencarianList" class="dropdown-menu"
-                                aria-labelledby="dropdownFilterPencarian" style="font-size: 16px; width:100%;">
-                                @foreach ( $filterPencarian as $fp)
+                            <div id="filterPencarianList" class="dropdown-menu" aria-labelledby="dropdownFilterPencarian" style="font-size: 16px; width:100%;">
+                                @foreach ($filterPencarian as $fp)
                                     <span class="dropdown-item cursor-pointer ">
                                         {{$fp}}
                                     </span>
@@ -213,7 +207,6 @@
                 </div>
             </div>
         </div>
-    </form>
 </div>
 
 
@@ -307,63 +300,44 @@
 @section('script')
 <script>
 
-    $(function() {
-        $('body').on('click', '.pagination a', function(e) {
-            e.preventDefault();
+    // $(function() {
+    //     $('body').on('click', '.pagination a', function(e) {
+    //         e.preventDefault();
 
-            // $('.produk').css('color', '#dfecf6');
-            // $('.produk').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/img/loading.gif" />');
+    //         // $('.produk').css('color', '#dfecf6');
+    //         // $('.produk').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/img/loading.gif" />');
 
-            var url = $(this).attr('href');
-            getArticles(url);
-            // window.history.pushState("", "", url);
-        });
+    //         var url = $(this).attr('href');
+    //         getArticles(url);
+    //         // window.history.pushState("", "", url);
+    //     });
 
-        function getArticles(url) {
-            $.ajax({
-                url : url
-            }).done(function (data) {
-                $('.produk').html(data);
-            }).fail(function () {
-                alert('Produk tidak ditemukan.');
-            });
-        }
-    });
+    //     function getArticles(url) {
+    //         $.ajax({
+    //             url : url
+    //         }).done(function (data) {
+    //             $('.produk').html(data);
+    //         }).fail(function () {
+    //             alert('Produk tidak ditemukan.');
+    //         });
+    //     }
+    // });
 
-    $('ul.pagination').hide();
-    $(function() {
-        $('.infinite-scroll').jscroll({
-            autoTrigger: true,
-            loadingHtml: '<img class="center-block" src="/img/loading.gif" alt="Loading..." />',
-            padding: 0,
-            nextSelector: '.pagination li.active + li a',
-            contentSelector: 'div.infinite-scroll',
-            callback: function() {
-                $('ul.pagination').remove();
-            }
-        });
-    });
-
-    $(document).ready(function(){
-        $('#keyword').on('keyup',function(){
-            var keyword = $('#keyword').val();
-            $.ajax({
-                url:"{{route('pencarian')}}",
-                type:"POST",
-                data:{
-                    "_token": "{{ csrf_token() }}",
-                    'keyword':keyword,
-                },
-                success:function(data){
-                    $('#pencarianItems').html(data);
-                }
-            })
-        });
-    });
-
+    // $('ul.pagination').hide();
+    // $(function() {
+    //     $('.infinite-scroll').jscroll({
+    //         autoTrigger: true,
+    //         loadingHtml: '<img class="center-block" src="/img/loading.gif" alt="Loading..." />',
+    //         padding: 0,
+    //         nextSelector: '.pagination li.active + li a',
+    //         contentSelector: 'div.infinite-scroll',
+    //         callback: function() {
+    //             $('ul.pagination').remove();
+    //         }
+    //     });
+    // });
 
     $(document).ready(function(){
-        var fotoProduk = $('#fotoProduk').val();
 
         $('#ambilDiTempatLabel').on('click', function(){
             if ($('#ambilDiTempat').is(':checked')) {
@@ -424,6 +398,10 @@
             searching();
         });
 
+        function rupiah(val) {
+            return ("Rp. " + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1."));
+        }
+
         function searching() {
             var data = {
                 keyword: $('#keyword').val(),
@@ -442,7 +420,7 @@
             });
 
             $.ajax({
-                url:'{{ route('cari') }}',
+                url:"{{ route('cari',['id_konfigurasi' => request()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}",
                 method:'GET',
                 data:data,
                 dataType:'json',
@@ -463,7 +441,17 @@
                         if (produks['produks'].length != 0) {
                                 for (i = 0; i < produks['produks'].length; i++) {
                                     var idProduk = produks['produks'][i].id_produk;
-                                    var urlDetailProduk = "{{ route("detail.produk","") }}" + "/" + idProduk;
+                                    var idKonfigurasi = produks['idKonfigurasi'];
+                                    var fromKonfigurasi = ("{{request()->fromKonfigurasi}}" === 'true');
+
+                                    if (fromKonfigurasi != true){
+                                        var urlDetailProduk = "{{ route("detail.produk","") }}" + "/" + idProduk;
+                                    }
+                                    else{
+                                        var urlDetailProduk = "{{ route("detail.produk","") }}" + "/" + idProduk + "?id_konfigurasi=" + "{{request()->id_konfigurasi}}" + "&fromKonfigurasi=true";
+                                    }
+
+                                    console.log(fromKonfigurasi);
 
                                     var jumlahDiskonGray = produks['produks'][i].harga_hitam_putih * produks['produks'][i].jumlah_diskon;
                                     var jumlahDiskonWarna = produks['produks'][i].harga_berwarna * produks['produks'][i].jumlah_diskon;
@@ -494,8 +482,13 @@
                                                 // else{
                                                 //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
                                                 // }
-                                                produkItem +='<img class="card-img-top cursor-pointer" src='+fotoProduk+' onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
-                                                produkItem +='<div class="card-body cursor-pointer" onclick="window.location.href=">';
+                                                if($('#fotoProduk').val() != null){
+                                                    produkItem +='<img class="card-img-top cursor-pointer" src="'+ $('#fotoProduk').val() +'" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
+                                                }
+                                                else{
+                                                    produkItem +='<img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
+                                                }
+                                                produkItem +='<div class="card-body cursor-pointer">';
                                                     produkItem +='<div class="row justify-content-between">';
                                                         produkItem +='<label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">'+produks['nama_partner_dari_produk'][i]+'</label>';
                                                         produkItem +='<label class="col-md-auto card-text text-right mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i>100 m</label>';
@@ -512,31 +505,31 @@
                                                         produkItem +='<div>'
                                                             if (produks['produks'][i].harga_hitam_putih != null && produks['produks'][i].harga_berwarna != null && produks['produks'][i].jumlah_diskon != null) {
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>';
-                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">Rp. <del>'+produks['produks'][i].harga_hitam_putih+'</del></label>';
-                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">Rp. '+hargaHitamPutih+'</label>';
+                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;"><del>'+rupiah(produks['produks'][i].harga_hitam_putih)+'</del></label>';
+                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">'+rupiah(hargaHitamPutih)+'</label>';
                                                                 produkItem +='</br>';
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>';
-                                                                produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">Rp. '+produks['produks'][i].harga_berwarna+'</label>';
-                                                                produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">Rp. '+hargaBerwarna+'</label>';
+                                                                produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 12px;"><del>'+rupiah(produks['produks'][i].harga_berwarna)+'</del></label>';
+                                                                produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">'+rupiah(hargaBerwarna)+'</label>';
                                                             }
                                                             else if(produks['produks'][i].harga_hitam_putih != null && produks['produks'][i].jumlah_diskon != null){
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>';
-                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">Rp. <del>'+produks['produks'][i].harga_hitam_putih+'</del></label>';
-                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">Rp. '+hargaHitamPutih+'</label>';
+                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;"><del>'+rupiah(produks['produks'][i].harga_hitam_putih)+'</del></label>';
+                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">'+rupiah(hargaHitamPutih)+'</label>';
                                                                 produkItem +='</br>';
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>';
                                                                 produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">Tidak Tersedia</label>';
                                                             }
                                                             else if(produks['produks'][i].harga_berwarna != null){
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>';
-                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">Rp. '+produks['produks'][i].harga_hitam_putih+'</label>';
+                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">'+rupiah(produks['produks'][i].harga_hitam_putih)+'</label>';
                                                                 produkItem +='</br>';
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>';
-                                                                produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">Rp. '+produks['produks'][i].harga_berwarna+'</label>';
+                                                                produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">'+rupiah(produks['produks'][i].harga_berwarna)+'</label>';
                                                             }
                                                             else{
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>';
-                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">Rp. '+produks['produks'][i].harga_hitam_putih+'</label>';
+                                                                produkItem +='<label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">'+rupiah(produks['produks'][i].harga_hitam_putih)+'</label>';
                                                                 produkItem +='</br>';
                                                                 produkItem +='<i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>';
                                                                 produkItem +='<label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">Tidak Tersedia</label>';

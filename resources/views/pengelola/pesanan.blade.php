@@ -52,7 +52,7 @@
             <tbody id="tbodyPesanan" class="tbodyPesanan" style="font-size: 12px;">
                 @foreach ($partner->pesanan as $p => $value)
                     @if ($value->status != "Pending" && $value->transaksiSaldo->status != "Pending")
-                        <tr onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">
+                        <tr class="cursor-pointer" onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">
                             <td scope="row">{{$value->id_pesanan}}</td>
                             <td>{{Carbon::parse($value->updated_at)->translatedFormat('H:i')}} WIB</td>
                             <td>{{Carbon::parse($value->updated_at)->translatedFormat('d F Y')}}</td>
@@ -111,30 +111,28 @@
                 success:function(pesanan)
                 {
                     var rowListPesanan = '';
-                    console.log(pesanan['transaksiSaldo'].status);
-                    console.log(pesanan['pesanan']);
-                    console.log(pesanan['pesanan'].length);
-                    console.log(pesanan['transaksiSaldo']);
-                    for(i = 0; i < pesanan['pesanan'].length;i++){
-                        // for (j = 0; j < pesanan['transaksiSaldo'].length; j++) {
-                            var linkDetailPesanan = "{{ route('partner.detail.pesanan',"") }}" + "/" + pesanan['pesanan'][i].id_pesanan;
-                            if (pesanan['pesanan'][i].status != "Pending" && pesanan['transaksiSaldo'].status != "Pending") {
-                                rowListPesanan += '<tr onclick="window.location.href="' + linkDetailPesanan + '">';
-                                    rowListPesanan += '<td scope="row">' + pesanan['pesanan'][i].id_pesanan + '</td>';
-                                    rowListPesanan += '<td>' + moment(pesanan['pesanan'][i].updated_at).format('H:mm') + ' WIB</td>';
-                                    rowListPesanan += '<td>' + moment(pesanan['pesanan'][i].updated_at).format('d MMMM Y') + '</td>';
-                                    rowListPesanan += '<td>' + pesanan['konfigurasi'].length + '</td>';
-                                    if(pesanan['pesanan'][i].metode_penerimaan != 'Ditempat'){
-                                        rowListPesanan += '<td> Antar ke Rumah </td>';
-                                    }
-                                    else{
-                                        rowListPesanan += '<td> Ambil di Tempat </td>';
-                                    }
-                                    rowListPesanan += '<td>'+ pesanan['pesanan'][i].status +'</td>';
-                                rowListPesanan += '<tr/>';
-                            }
-                        // }
+                    for(i = 0; i < pesanan['pesanan'].length; i++) {
+                        var urlDetailProduk = "pesanan/detail/" + pesanan['pesanan'][i].id_pesanan;
+                        rowListPesanan += '<tr class="cursor-pointer">';
+                            rowListPesanan += '<td scope="row">' + pesanan['pesanan'][i].id_pesanan + '</td>';
+                            rowListPesanan += '<td>' + moment(pesanan['pesanan'][i].updated_at).format('H:mm') + ' WIB</td>';
+                            rowListPesanan += '<td>' + moment(pesanan['pesanan'][i].updated_at).format('D MMMM Y') + '</td>';
+                            rowListPesanan += '<td>' + pesanan['konfigurasi'].length + '</td>';
+                            rowListPesanan += '<td>';
+                                if(pesanan['pesanan'][i].metode_penerimaan != 'Ditempat'){
+                                    rowListPesanan += 'Antar ke Rumah';
+                                }
+                                else{
+                                    rowListPesanan += 'Ambil di Tempat';
+                                }
+                            rowListPesanan += '</td>';
+                            rowListPesanan += '<td>'+ pesanan['pesanan'][i].status +'</td>';
+                        rowListPesanan += '<tr/>';
                     }
+
+                    $('.tbodyPesanan').on( 'click', 'tr', function () {
+                        document.location.href = urlDetailProduk;
+                    });
 
                     $('#imgLoading').hide();
                     $('.tbodyPesanan').html(rowListPesanan);
@@ -143,8 +141,8 @@
                     alert(xhr.responseText);
                     alert(thrownError);
                 }
-            })
-        };
+            });
+        }
     </script>
 </div>
 @endsection

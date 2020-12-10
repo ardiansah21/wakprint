@@ -40,7 +40,11 @@ class KonfigurasiController extends Controller
         $p = Produk::find($produkId);
         $request->session()->put('produkKonfigurasiFile', $p);
 
-        return redirect()->route('konfigurasi.file');
+        if ($request->fromKonfigurasi == true) {
+            return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi]);
+        } else {
+            return redirect()->route('konfigurasi.file');
+        }
     }
 
     public function prosesCekWarna(Request $request)
@@ -60,9 +64,7 @@ class KonfigurasiController extends Controller
 
     public function tambahKonfigurasi(Request $request)
     {
-        // dd(json_decode($request->fiturTerpilih));
         $member = Auth::user();
-        // $konfigurasi = Konfigurasi_file::all();
 
         $konfigurasi = Konfigurasi_file::create([
             'id_member' => $member->id_member,
@@ -70,6 +72,7 @@ class KonfigurasiController extends Controller
             'nama_file' => $request->namaFile,
             'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
             'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
+            'status_halaman' => $request->statusHalaman,
             'halaman_terpilih' => json_encode($request->halamanTerpilih),
             'jumlah_salinan' => $request->jumlahSalinan,
             'paksa_hitamputih' => $request->paksaHitamPutih,
@@ -82,15 +85,10 @@ class KonfigurasiController extends Controller
 
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
 
-        //dd($konfigurasi);
-        //return redirect()->route('konfigurasi.pesanan',['konfigurasi' => $konfigurasi]);
-
         $request->session()->forget('fileUpload');
         $request->session()->forget('produkKonfigurasiFile');
         $request->session()->forget('KonfigurasiCekwarna');
         return redirect()->action('KonfigurasiController@konfigurasiPesanan', ['konfigurasi' => $konfigurasi]);
-
-        // return view('',['konfigurasi' => $konfigurasi]);
 
     }
 
@@ -115,10 +113,10 @@ class KonfigurasiController extends Controller
         }
     }
 
-    public function editKonfigurasi($id, Request $request)
+    public function storeEditKonfigurasi($id, Request $request)
     {
-        $konfigurasi = Konfigurasi_file::find($id);
         $member = Auth::user();
+        $konfigurasi = $member->konfigurasi->first()->find($id);
 
         $konfigurasi->update([
             'id_member' => $member->id_member,
@@ -126,83 +124,69 @@ class KonfigurasiController extends Controller
             'nama_file' => $request->namaFile,
             'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
             'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
+            'status_halaman' => $request->statusHalaman,
             'halaman_terpilih' => json_encode($request->halamanTerpilih),
             'jumlah_salinan' => $request->jumlahSalinan,
             'paksa_hitamputih' => $request->paksaHitamPutih,
+            'timbal_balik' => $request->timbalBalik,
             'biaya' => $request->biaya,
             'catatan_tambahan' => $request->catatanTambahan,
             'nama_produk' => $request->namaProduk,
-            'fitur_terpilih' => json_encode($request->fiturTerpilih),
+            'fitur_terpilih' => $request->fiturTerpilih,
         ]);
-        $konfigurasi->clearMediaCollection();
-        $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
+
+        if (!empty($request->fileKonfigurasi)) {
+            $media = $konfigurasi->getFirstMedia('file_konfigurasi');
+            $media->delete();
+            $konfigurasi->addMedia($request->fileKonfigurasi)->toMediaCollection('file_konfigurasi');
+            // if ($request->session()->has('produkKonfigurasiFile')) {
+            //     $konfigurasi->addMedia($konfigurasi->getFirstMedia('file_konfigurasi'))->toMediaCollection('file_konfigurasi');
+            // } else {
+            //     $konfigurasi->addMedia($request->fileKonfigurasi)->toMediaCollection('file_konfigurasi');
+            // }
+        }
+
+        $request->session()->forget('fileUpload');
+        $request->session()->forget('produkKonfigurasiFile');
+        $request->session()->forget('KonfigurasiCekwarna');
 
         if ($konfigurasi) {
-            return response()->json(['status' => 'success'], 200);
+            return redirect()->route('konfigurasi.pesanan');
         }
         return response()->json(['status' => 'error'], 400);
     }
 
+    public function editKonfigurasi($id, Request $request)
+    {
+        $member = Auth::user();
+        $konfigurasi = $member->konfigurasi->find($id);
+        $pdf = $konfigurasi->getFirstMediaPath('file_konfigurasi');
+
+        function countPages($path)
+        {
+            $pdftext = file_get_contents($path);
+            $num = preg_match_all("/\/Page\W/", $pdftext, $dummy);
+            return $num;
+        }
+
+        $countPage = countPages($pdf);
+        // $pdf = new Pdf(public_path('storage/' . $konfigurasi->id_konfigurasi . '/' . $konfigurasi->getMedia('file_konfigurasi')->first()->file_name));
+        // $countPage = $pdf->getNumberOfPages();
+        $produk = $konfigurasi->product;
+
+        return view('member.edit_konfigurasi_file', compact('member', 'konfigurasi', 'produk', 'countPage'));
+    }
+
     public function hapusKonfigurasi($id)
     {
-        $konfigurasi = Konfigurasi_file::find($id);
+        $member = Auth::user();
+        $konfigurasi = $member->konfigurasi->first()->find($id);
+        // $pesanan = $konfigurasi->pesanan;
         $konfigurasi->delete();
+        // $pesanan->delete();
         return response()->json(['status' => 'success'], 204);
     }
 
-    /*
-    public function konfigurasiPesanan(Request $request)
-    {
-    $member = Auth::user();
-
-    if (empty($request->konfigurasi)) {
-    if ($request->session()->has("pesanan-" . $member->id_member)) {
-    $pesanan = $request->session()->get("pesanan-" . $member->id_member);
-    $atk = $pesanan->konfigurasiFile[0]->product->partner->atk;
-
-    return view('member.konfigurasi_pesanan', compact('pesanan', 'atk', 'member'));
-    }
-    } else {
-    $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
-    $atk = $konfigurasi->product->partner->atk;
-
-    if ($request->session()->has("pesanan-" . $konfigurasi->id_member)) {
-    $pesanan = $request->session()->get("pesanan-" . $konfigurasi->id_member);
-    // $konfigurasi->id_pesanan = $pesanan->id_pesanan;
-    // $konfigurasi->save();
-
-    $request->session()->put("alamatPesanan");
-
-    // if($request->session()->has("pesanan-" . $member->id_member)){
-    //     // $request->session()->get("alamatPesanan");
-    //     // dd(true);
-    // }
-    // $request->session()->save();
-    // dd($konfigurasi);
-
-    return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
-    } else {
-    $pesanan = Pesanan::create([
-    'id_pengelola' => $konfigurasi->product->partner->id_pengelola,
-    'id_member' => $konfigurasi->id_member,
-    'metode_penerimaan' => 'Ditempat',
-    'biaya' => $konfigurasi->biaya,
-    'status' => 'Pending'
-    ]);
-
-    $konfigurasi->id_pesanan = $pesanan->id_pesanan;
-    $konfigurasi->save();
-
-    $request->session()->put("pesanan-" . $konfigurasi->id_member, $pesanan);
-    $request->session()->put("alamatPesanan");
-
-    // dd($konfigurasi);
-
-    return view('member.konfigurasi_pesanan', compact('pesanan', 'konfigurasi', 'member', 'atk'));
-    }
-    }
-    }
-     */
     public function konfigurasiPesanan(Request $request)
     {
         $konfigurasi = Konfigurasi_file::find($request->konfigurasi);
@@ -211,7 +195,6 @@ class KonfigurasiController extends Controller
             if ($konfigurasi) {
                 $konfigurasi->pesanan()->associate($pesanan)->save();
             }
-
             return view('member.konfigurasi_pesanan', ['pesanan' => $pesanan]);
         }
         if ($konfigurasi) {
@@ -224,7 +207,6 @@ class KonfigurasiController extends Controller
             $konfigurasi->pesanan()->associate($pesanan)->save();
             return view('member.konfigurasi_pesanan', ['pesanan' => $pesanan]);
         }
-        $request->session()->put('alamatPesanan');
 
         return redirect()->back()->with('error', 'anda belum membuat pesanan');
     }

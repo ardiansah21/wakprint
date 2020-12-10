@@ -98,24 +98,26 @@
                     </tr>
                 </thead>
                 <tbody style="font-size: 14px;">
-                    @foreach ($pesanan as $p)
-                        @if (!empty($p->status))
-                            <tr class="cursor-pointer" onclick="window.location.href='{{ route('konfirmasi.pembayaran',$p->id_pesanan) }}'">
-                                <td scope="row">{{$p->id_pesanan}}</td>
-                                <td>{{Carbon::parse($p->updated_at)->translatedFormat('d F Y')}}</td>
-                                <td>{{count($p->konfigurasiFile)}}</td>
-                                <td>
-                                    @if ($p->metode_penerimaan != "Ditempat")
-                                        {{__('Antar ke Rumah')}}
-                                    @else
-                                        {{__('Ambil di Tempat')}}
-                                    @endif
-                                </td>
-                                <td>{{rupiah($p->biaya)}}</td>
-                                <td>{{$p->status}}</td>
-                            </tr>
-                        @endif
-                    @endforeach
+                    @if (!empty($pesanan))
+                        @foreach ($pesanan as $p)
+                            @if (!empty($p->status))
+                                <tr class="cursor-pointer" onclick="window.location.href='{{ route('konfirmasi.pembayaran',$p->id_pesanan) }}'">
+                                    <td scope="row">{{$p->id_pesanan}}</td>
+                                    <td>{{Carbon::parse($p->updated_at)->translatedFormat('d F Y')}}</td>
+                                    <td>{{count($p->konfigurasiFile)}}</td>
+                                    <td>
+                                        @if ($p->metode_penerimaan != "Ditempat")
+                                            {{__('Antar ke Rumah')}}
+                                        @else
+                                            {{__('Ambil di Tempat')}}
+                                        @endif
+                                    </td>
+                                    <td>{{rupiah($p->biaya)}}</td>
+                                    <td>{{$p->status}}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
