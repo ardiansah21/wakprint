@@ -158,7 +158,7 @@ class PartnerController extends Controller
             return redirect()->route('partner.saldo')->with('alert', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
         } else {
             $jenisTransaksi = 'Tarik';
-            $partner->jumlah_saldo = $partner->jumlah_saldo - $jumlahSaldo;
+            // $partner->jumlah_saldo = $partner->jumlah_saldo - $jumlahSaldo;
             $kodePembayaran = Str::random(20);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
@@ -173,7 +173,7 @@ class PartnerController extends Controller
                 'keterangan' => $keterangan,
             ]);
 
-            $partner->save();
+            // $partner->save();
 
             return redirect()->route('partner.saldo')->with('alert', 'Penarikan Saldo Anda Sedang Diproses');
         }

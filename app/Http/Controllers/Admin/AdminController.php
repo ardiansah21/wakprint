@@ -256,11 +256,19 @@ class AdminController extends Controller
     public function storeTerimaSaldoMember($id)
     {
         $transaksiSaldo = Transaksi_saldo::find($id);
-        $transaksiSaldo->status = "Berhasil";
-        $transaksiSaldo->keterangan = "Top Up Saldo Berhasil";
-        $transaksiSaldo->member->jumlah_saldo += $transaksiSaldo->jumlah_saldo;
-        $transaksiSaldo->member->save();
-        $transaksiSaldo->save();
+        if ($transaksiSaldo->jenis_transaksi === 'TopUp') {
+            $transaksiSaldo->status = "Berhasil";
+            $transaksiSaldo->keterangan = "Top Up Saldo Berhasil";
+            $transaksiSaldo->member->jumlah_saldo += $transaksiSaldo->jumlah_saldo;
+            $transaksiSaldo->member->save();
+            $transaksiSaldo->save();
+        } else {
+            $transaksiSaldo->status = "Berhasil";
+            $transaksiSaldo->keterangan = "Pembayaran Berhasil";
+            $transaksiSaldo->member->jumlah_saldo = ($transaksiSaldo->member->jumlah_saldo + $transaksiSaldo->jumlah_saldo) - $transaksiSaldo->jumlah_saldo;
+            $transaksiSaldo->member->save();
+            $transaksiSaldo->save();
+        }
 
         return redirect()->route('admin.saldo');
     }

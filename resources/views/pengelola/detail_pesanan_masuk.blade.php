@@ -421,27 +421,29 @@
 
         {{-- pop up tolak --}}
         {{-- @include('pengelola.popup_tolak_pesanan') --}}
-
-        <script>
-            var arrCheckCetakBtn = [];
-            var arrTotalIndex = [];
-            $('.btnCheck').each(function(index,value){
-                arrTotalIndex.push(index);
-                $('#btnCetak' + index).click(function(){
-                    arrCheckCetakBtn.push(index);
-                    $('#btnCetak' + index).css('background-color', '#E5E5E5', 'color', '#BABABA');
-                    $('#btnCetak' + index).css('color', '#BABABA');
-                    $('#btnCetak' + index).text('Dicetak');
-
-                    if (arrCheckCetakBtn.length === arrTotalIndex.length) {
-                        $('#btnCetak' + index).prop('disabled', true);
-                        $('#selesaikanBtn').prop('disabled', false);
-                    } else {
-                        $('#btnCetak' + index).prop('disabled', false);
-                        $('#selesaikanBtn').prop('disabled', true);
-                    }
-                });
-            })
-        </script>
     </div>
+@endsection
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script>
+        var arrCheckCetakBtn = [];
+        var arrTotalIndex = [];
+        $('.btnCheck').each(function(index,value){
+            arrTotalIndex.push(index);
+            $('#btnCetak' + index).click(function(){
+                arrCheckCetakBtn.push(index);
+                $('#btnCetak' + index).css('background-color', '#E5E5E5', 'color', '#BABABA');
+                $('#btnCetak' + index).css('color', '#BABABA');
+                $('#btnCetak' + index).text('Dicetak');
+
+                if (arrCheckCetakBtn.length === arrTotalIndex.length) {
+                    $('#btnCetak' + index).prop('disabled', true);
+                    $('#selesaikanBtn').prop('disabled', false);
+                } else {
+                    $('#btnCetak' + index).prop('disabled', false);
+                    $('#selesaikanBtn').prop('disabled', true);
+                }
+            });
+        })
+    </script>
 @endsection

@@ -55888,7 +55888,7 @@ Vue.component("chat-partner-component", {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/js/appPartner.js */"./resources/js/appPartner.js");
+module.exports = __webpack_require__(/*! /home/vagrant/wakprint/resources/js/appPartner.js */"./resources/js/appPartner.js");
 
 
 /***/ })

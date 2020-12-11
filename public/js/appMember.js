@@ -2306,6 +2306,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["member", "konFiles", "atks"],
@@ -2395,6 +2396,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     rupiah: function rupiah(val) {
       return "Rp." + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.");
+    },
+    onEditKonfigurasi: function onEditKonfigurasi(id) {
+      window.location.href = "konfigurasi-file/edit/" + id;
     },
     onHapusKonfigurasi: function onHapusKonfigurasi(id) {
       axios["delete"]("/konfigurasi-file/delete/" + id).then(function (res) {
@@ -7398,7 +7402,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.vue-numeric-input .btn {\n    background: #bc41be !important;\n}\n", ""]);
+exports.push([module.i, "\n.vue-numeric-input .btn {\r\n    background: #bc41be !important;\n}\r\n", ""]);
 
 // exports
 
@@ -46629,9 +46633,22 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c("span", [
-                      _c("i", { staticClass: "material-icons mr-2 pointer" }, [
-                        _vm._v("edit")
-                      ]),
+                      _c(
+                        "i",
+                        {
+                          staticClass: "material-icons mr-2 pointer",
+                          on: {
+                            click: function($event) {
+                              return _vm.onEditKonfigurasi(f.id_konfigurasi)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    edit\n                                "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c(
                         "i",
@@ -60047,12 +60064,21 @@ Vue.component("chat-component", {
     playSoundNotif: function playSoundNotif() {
       var audio = new Audio("/storage/ringtone/glass_ping.mp3");
       audio.play();
+    },
+    colorStatus: function colorStatus(status) {
+      if (status === 'Pending' || status === 'Diproses') {
+        return '{background-color: #FCFF82, color: black, font-size: 12px}';
+      } else if (status === 'Berhasil') {
+        return '{background-color: #7BD6AF, color: white, font-size: 12px}';
+      } else {
+        return '{background-color: #FF4949, color: white, font-size: 12px}';
+      }
     }
   },
   mounted: function mounted() {
     console.log("tadaaaa");
-    this.fetchPesanan();
-    this.fetchPusher();
+    this.fetchPesanan(); // this.fetchPusher();
+
     console.log(this.$root);
   },
   watch: {
@@ -60312,7 +60338,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/js/appMember.js */"./resources/js/appMember.js");
+module.exports = __webpack_require__(/*! /home/vagrant/wakprint/resources/js/appMember.js */"./resources/js/appMember.js");
 
 
 /***/ })

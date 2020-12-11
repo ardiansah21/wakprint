@@ -77,6 +77,7 @@
         }
 
     </style>
+    @yield('style')
 </head>
 
 <body>
@@ -307,7 +308,7 @@
                                             aria-selected="false" style="font-size: 24px; color:#BC41BE">
                                             <i class="material-icons align-middle md-32 mr-2"
                                                 style="color:#BC41BE">account_balance_wallet</i>
-                                            Rp. {{ $member->jumlah_saldo ?? 0 }}
+                                            {{ rupiah($member->jumlah_saldo) ?? rupiah(0) }}
                                         </a>
                                         <a class="nav-link {{ set_active('riwayat') }} SemiBold mb-4"
                                             id="v-pills-riwayat-tab mb-3" href="{{ route('riwayat') }}" role="tab"

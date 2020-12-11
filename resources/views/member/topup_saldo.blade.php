@@ -56,7 +56,7 @@
                     >
                     <td class="align-middle" scope="row">{{$ts->id_transaksi ?? '-'}}</td>
                     <td class="align-middle">{{$ts->jenis_transaksi ?? '-'}}</td>
-                    <td class="align-middle">Rp. {{$ts->jumlah_saldo ?? '-'}}</td>
+                    <td class="align-middle">{{rupiah($ts->jumlah_saldo) ?? '-'}}</td>
                     <td class="align-middle">{{$ts->keterangan ?? '-'}}</td>
                 </tr>
                 @endif

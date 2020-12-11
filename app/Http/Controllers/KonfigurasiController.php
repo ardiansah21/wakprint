@@ -273,6 +273,7 @@ class KonfigurasiController extends Controller
         $pesanan->update([
             'atk_terpilih' => $request->atkTerpilih,
             'alamat_penerima' => $request->alamatPenerima,
+            'metode_penerimaan' => $request->metodePenerimaan,
             'ongkos_kirim' => $request->ongkir,
             'atk_terpilih' => $request->atkTerpilih,
             'biaya' => $request->totalBiaya,
@@ -324,6 +325,11 @@ class KonfigurasiController extends Controller
     {
         $pesanan = Pesanan::find($idPesanan);
         $transaksiSaldo = $pesanan->transaksiSaldo;
+
+        if ($transaksiSaldo->status != 'Pending') {
+            $pesanan->member->jumlah_saldo += $transaksiSaldo->jumlah_saldo;
+            $pesanan->member->save();
+        }
 
         $pesanan->status = "Batal";
         $transaksiSaldo->status = "Gagal";

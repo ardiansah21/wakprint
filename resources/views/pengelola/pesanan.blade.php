@@ -71,7 +71,10 @@
             </tbody>
         </table>
     </div>
-
+</div>
+@endsection
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script>
         $('#filterPesananList span').on('click', function() {
             $('#filterPesananBtn').text($(this).text());
@@ -144,7 +147,6 @@
             });
         }
     </script>
-</div>
 @endsection
 
 

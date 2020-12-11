@@ -58,8 +58,13 @@
             </div>
         </div>
     </div>
-
-    {{-- @section('script') --}}
+@endsection
+@section('script')
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- Data Tables Import Online -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script>
         var saldoMemberTable = $('#memberSaldoTable').DataTable({
             scrollY: 300,
@@ -153,22 +158,6 @@
             ]
         });
 
-        // var table = $('#partnerTable').DataTable();
-        // $('#partnerTable tbody').on( 'click', 'tr', function () {
-        //     var id = table.row(this).data();
-        //     document.location.href='partner/detail/' + id.id_pengelola;
-        //     // if ($(this).hasClass('selected')) {
-        //     //     $(this).removeClass('selected');
-        //     // }
-        //     // else {
-        //     //     table.$('tr.selected').removeClass('selected');
-        //     //     $(this).addClass('selected');
-        //     //}
-        // });
-
-        // $('#pills-saldo-member-tab').addClass('active');
-        // $('#pills-saldo-pengelola-tab').removeClass('active');
-
         $('li.a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             var currentTab = $(e.target).text(); // get current tab
             switch (currentTab) {
@@ -198,7 +187,6 @@
                     $('li a[href="pills-saldo-member"]').tab('show');
             }
         });
-        // });
 
     </script>
 @endsection

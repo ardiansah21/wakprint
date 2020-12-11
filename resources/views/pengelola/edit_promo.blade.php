@@ -126,9 +126,9 @@
                         <div class="row justify-content-left mb-3">
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" Class="form-control" hidden>
+                                    <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" value="{{intval(substr($produk->mulai_waktu_diskon, 8, 2))}}" Class="form-control" hidden>
                                     <button id="tanggalMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('d')}}
+                                        {{intval(substr($produk->mulai_waktu_diskon, 8, 2))}}
                                     </button>
                                     <div id="tanggalMulaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTanggalMulaiPromo" style="font-size: 16px; width:100%;">
                                         @for($i=1;$i<32;$i++)
@@ -141,7 +141,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="bulan_mulai_promo" type="text" id="bulan_mulai_promo" Class="form-control" hidden>
+                                    <input name="bulan_mulai_promo" type="text" id="bulan_mulai_promo" value="{{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('F')}}" Class="form-control" hidden>
                                     <button id="bulanMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('F')}}
                                     </button>
@@ -156,7 +156,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tahun_mulai_promo" type="text" id="tahun_mulai_promo" Class="form-control" hidden>
+                                    <input name="tahun_mulai_promo" type="text" id="tahun_mulai_promo" value="{{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('Y')}}" Class="form-control" hidden>
                                     <button id="tahunMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('Y')}}
                                     </button>
@@ -189,9 +189,9 @@
                         <div class="row justify-content-left mb-3">
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" Class="form-control" hidden>
+                                    <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" value="{{intval(substr($produk->selesai_waktu_diskon, 8, 2))}}" Class="form-control" hidden>
                                     <button id="tanggalSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('d')}}
+                                        {{intval(substr($produk->selesai_waktu_diskon, 8, 2))}}
                                     </button>
                                     <div id="tanggalSelesaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTanggalSelesaiPromo" style="font-size: 16px; width:100%;">
                                         @for($i=1;$i<32;$i++)
@@ -204,7 +204,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="bulan_selesai_promo" type="text" id="bulan_selesai_promo" Class="form-control" hidden>
+                                    <input name="bulan_selesai_promo" type="text" id="bulan_selesai_promo" value="{{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('F')}}" Class="form-control" hidden>
                                     <button id="bulanSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('F')}}
                                     </button>
@@ -219,7 +219,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" Class="form-control" value="" hidden>
+                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" value="{{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('Y')}}" Class="form-control" value="" hidden>
                                     <button id="tahunSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('Y')}}
                                     </button>

@@ -92,7 +92,7 @@ Vue.component("chat-component", {
     mounted() {
         console.log("tadaaaa");
         this.fetchPesanan();
-        this.fetchPusher();
+        // this.fetchPusher();
         console.log(this.$root);
     },
     watch: {

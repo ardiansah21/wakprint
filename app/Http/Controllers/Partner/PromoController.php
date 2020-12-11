@@ -24,7 +24,6 @@ class PromoController extends Controller
     {
         $partner = Auth::user();
         $produk = $partner->products;
-        // dd(route('partner.promo.search'));
 
         return view('pengelola.tambah_promo', compact('partner'));
     }
@@ -38,17 +37,18 @@ class PromoController extends Controller
             array_push($arrIdProduk, $id);
         }
 
+        $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $tanggalMulai = $request->tanggal_mulai_promo;
-        $bulanMulai = $request->bulan_mulai_promo;
+        $bulanMulai = $months[$request->bulan_mulai_promo];
         $tahunMulai = $request->tahun_mulai_promo;
         $jumlahDiskon = $request->jumlah_diskon / 100;
         $tanggalSelesai = $request->tanggal_selesai_promo;
-        $bulanSelesai = $request->bulan_selesai_promo;
+        $bulanSelesai = $months[$request->bulan_selesai_promo];
         $tahunSelesai = $request->tahun_selesai_promo;
-        $tanggalMulaiPromo = date('Y-m-d', strtotime("$tanggalMulai $bulanMulai $tahunMulai"));
-        $tanggalSelesaiPromo = date('Y-m-d', strtotime("$tanggalSelesai $bulanSelesai $tahunSelesai"));
+        $tanggalMulaiPromo = "$tahunMulai-$bulanMulai-$tanggalMulai";
+        $tanggalSelesaiPromo = "$tahunSelesai-$bulanSelesai-$tanggalSelesai";
 
         foreach ($arrIdProduk as $id) {
             $produk = $partner->products->find($id);
@@ -76,29 +76,20 @@ class PromoController extends Controller
     public function update(Request $request, $id)
     {
         $partner = Auth::user();
-        // $arrIdProduk = array();
-
-        // // dd(json_decode($request->idProduk));
-
-        // foreach (json_decode($request->idProduk) as $id) {
-        //     array_push($arrIdProduk, $id);
-        // }
+        $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
 
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $tanggalMulai = $request->tanggal_mulai_promo;
-        $bulanMulai = $request->bulan_mulai_promo;
+        $bulanMulai = $months[$request->bulan_mulai_promo];
         $tahunMulai = $request->tahun_mulai_promo;
         $jumlahDiskon = $request->jumlah_diskon / 100;
         $tanggalSelesai = $request->tanggal_selesai_promo;
-        $bulanSelesai = $request->bulan_selesai_promo;
+        $bulanSelesai = $months[$request->bulan_selesai_promo];
         $tahunSelesai = $request->tahun_selesai_promo;
-        $tanggalMulaiPromo = date('Y-m-d', strtotime("$tanggalMulai $bulanMulai $tahunMulai"));
-        $tanggalSelesaiPromo = date('Y-m-d', strtotime("$tanggalSelesai $bulanSelesai $tahunSelesai"));
+        $tanggalMulaiPromo = "$tahunMulai-$bulanMulai-$tanggalMulai";
+        $tanggalSelesaiPromo = "$tahunSelesai-$bulanSelesai-$tanggalSelesai";
 
-        // dd($tanggalSelesaiPromo);
-
-        // foreach ($arrIdProduk as $id) {
         $produk = $partner->products->find($id);
         $produk->status_diskon = $statusDiskon;
         $produk->maksimal_diskon = $maksimalDiskon;
@@ -106,7 +97,6 @@ class PromoController extends Controller
         $produk->jumlah_diskon = $jumlahDiskon;
         $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
         $produk->save();
-        // }
 
         return redirect()->route('partner.promo.index', ['partner' => $partner]);
     }
@@ -131,9 +121,6 @@ class PromoController extends Controller
             $produk = $partner->products->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status_diskon', 'TidakTersedia')
                 ->where('nama', 'like', '%' . $request->keyword . '%')
-            // ->where('harga_hitam_putih', $request->keyword)
-            // ->where('harga_berwarna', $request->keyword)
-            // ->where('deskripsi', 'like', '%' . $request->keyword . '%')
                 ->get();
 
             return response()->json([

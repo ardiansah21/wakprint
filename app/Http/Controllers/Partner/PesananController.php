@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Pengelola_Percetakan;
 use App\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,8 @@ class PesananController extends Controller
         $pesanan->status = "Batal";
         $pesanan->transaksiSaldo->status = "Gagal";
         $pesanan->transaksiSaldo->keterangan = "Pesanan telah ditolak oleh pihak percetakan";
+        $pesanan->member->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
+        $pesanan->member->save();
         $pesanan->transaksiSaldo->save();
         $pesanan->save();
 
@@ -56,11 +59,13 @@ class PesananController extends Controller
 
     public function selesaikanPesanan($idPesanan)
     {
-        $partner = Auth::user();
+        $partner = Pengelola_Percetakan::find(Auth::id());
         $pesanan = $partner->pesanan->find($idPesanan);
         $pesanan->status = "Selesai";
         $pesanan->transaksiSaldo->status = "Berhasil";
         $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
+        $partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
+        $partner->save();
         $pesanan->transaksiSaldo->save();
         $pesanan->save();
 
@@ -94,7 +99,9 @@ class PesananController extends Controller
                             ->get();
                     }
                 } else {
-                    $pesanan = $partner->pesanan->first()->orderBy('updated_at', 'desc')->get();
+                    $pesanan = $partner->pesanan->first()->where('status', '!=', 'Pending')
+                        ->orderBy('updated_at', 'desc')
+                        ->get();
                 }
             } else if ($request->urutkanPesanan === 'Harga Tertinggi') {
                 if (!empty($request->keywordFilterPesanan)) {

@@ -55699,7 +55699,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/ardiansah/CodeSkripsi/wakprint/resources/js/appAdmin.js */"./resources/js/appAdmin.js");
+module.exports = __webpack_require__(/*! /home/vagrant/wakprint/resources/js/appAdmin.js */"./resources/js/appAdmin.js");
 
 
 /***/ })

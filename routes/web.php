@@ -98,7 +98,6 @@ Route::middleware('auth')->group(function () {
     Route::get('produk/lapor/{id}', 'MemberController@laporProduk')->name('produk.lapor');
     Route::post('produk/lapor/store/{id}', 'MemberController@storeLapor')->name('lapor.store');
 
-    //konfigurasi
     Route::post('/konfigurasi-file/upload', 'KonfigurasiController@uploadFile')->name('konfigurasi.upload');
     Route::get('/konfigurasi-file/produk/{produkId}', 'KonfigurasiController@selectedProduk')->name('konfigurasi.produk');
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
@@ -106,9 +105,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
     Route::get('/konfigurasi-file/edit/{id}', 'KonfigurasiController@editKonfigurasi')->name('konfigurasi.edit');
     Route::post('/konfigurasi-file/edit/store/{id}', 'KonfigurasiController@storeEditKonfigurasi')->name('konfigurasi.edit.store');
-
-    // Route::put('/konfigurasi-file/edit', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
-
     Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
