@@ -598,7 +598,6 @@ class MemberController extends Controller
         $transaksi_saldo = Transaksi_saldo::all();
         $pengelola = Pengelola_Percetakan::all();
         $produk = Produk::all();
-        // dd($member->pesanans);
         if ($member->pesanans != "[]") {
             $pesanan = $member->pesanans->first()->where('status', 'Pending')->orWhere('status', 'Diproses')->get();
         } else {

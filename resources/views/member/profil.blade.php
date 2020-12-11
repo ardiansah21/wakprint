@@ -2,31 +2,31 @@
 
 @section('content')
     @php
-        use Carbon\Carbon;
+    use Carbon\Carbon;
     @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <div class="row justify-content-between mb-2 ml-0 mr-0">
             <div class="">
                 <label class="font-weight-bold" style="font-size: 48px;">
-                    {{__('Profil Saya') }}
+                    {{ __('Profil Saya') }}
                 </label>
             </div>
             <div class="my-auto">
-                <a class="align-self-center text-right text-primary-purple" href="{{route('profile.edit')}}"
+                <a class="align-self-center text-right text-primary-purple" href="{{ route('profile.edit') }}"
                     style="font-size: 18px;">
-                    {{__('Ubah Profil') }}
+                    {{ __('Ubah Profil') }}
                 </a>
             </div>
         </div>
         <table class="table borderless align-middle mb-5" style="font-size: 24px;
-            table-layout: fixed;
-            word-wrap: break-word;
-            border-collapse: separate;
-            border-spacing: 0 0em;">
+                        table-layout: fixed;
+                        word-wrap: break-word;
+                        border-collapse: separate;
+                        border-spacing: 0 0em;">
             <tbody class="ml-0 mr-0">
                 <tr class="mb-0">
                     <td class="SemiBold">
-                        {{__('Nama Lengkap') }}
+                        {{ __('Nama Lengkap') }}
                     </td>
                     <td>
                         {{ $member->nama_lengkap }}
@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <td class="SemiBold">
-                        {{__('Tanggal Lahir') }}
+                        {{ __('Tanggal Lahir') }}
                     </td>
                     <td>
                         {{ $tanggalLahir }}
@@ -42,21 +42,21 @@
                 </tr>
                 <tr>
                     <td class="SemiBold">
-                        {{__('Jenis Kelamin') }}
+                        {{ __('Jenis Kelamin') }}
                     </td>
                     <td>
                         @if ($member->jenis_kelamin === 'L')
-                            {{__('Laki-Laki')}}
+                            {{ __('Laki-Laki') }}
                         @elseif ($member->jenis_kelamin === 'P')
-                            {{__('Perempuan')}}
+                            {{ __('Perempuan') }}
                         @else
-                            {{__('-')}}
+                            {{ __('-') }}
                         @endif
                     </td>
                 </tr>
                 <tr>
                     <td class="SemiBold">
-                        {{__('Email') }}
+                        {{ __('Email') }}
                     </td>
                     <td class="row justify-content-left ml-0">
                         @if (!empty($member->email_verified_at))
@@ -76,7 +76,7 @@
                 </tr>
                 <tr>
                     <td class="SemiBold">
-                        {{__('Nomor HP') }}
+                        {{ __('Nomor HP') }}
                     </td>
                     <td>
                         {{ $member->nomor_hp }}
@@ -125,47 +125,49 @@
             <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
                 <thead class="bg-primary-purple text-white" style="font-size: 18px;">
                     <tr>
-                        <th scope="col-md-auto">{{__('ID') }}</th>
-                        <th scope="col-md-auto">{{__('File') }}</th>
-                        <th scope="col-md-auto">{{__('Kapan') }}</th>
-                        <th scope="col-md-auto">{{__('Biaya') }}</th>
-                        <th scope="col-md-auto">{{__('Sisa Waktu') }}</th>
+                        <th scope="col-md-auto">{{ __('ID') }}</th>
+                        <th scope="col-md-auto">{{ __('File') }}</th>
+                        <th scope="col-md-auto">{{ __('Kapan') }}</th>
+                        <th scope="col-md-auto">{{ __('Biaya') }}</th>
+                        <th scope="col-md-auto">{{ __('Sisa Waktu') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($konfigurasi as $k => $value)
                         @if (!empty($value) && $value->id_member === $member->id_member)
                             <tr style="font-size: 14px;">
-                                <td scope="row">{{$value->id_konfigurasi}}</td>
-                                <td><a href="#">{{$value->nama_file}}</a></td>
-                                <td>{{date('l, d M Y H:i', strtotime($value->waktu))}}</td>
-                                <td>Rp. {{$value->biaya}}</td>
-                                <td
-                                    @for($i = 0; $i < count($arrKonfigurasi); $i++)
-                                        id="sisaWaktuBayar{{$i}}"
-                                    @endfor
-                                >{{__('1h 5m') }}
-                                    <span class="material-icons md-18 align-middle text-danger ml-2">
-                                        delete
-                                    </span>
-                                </td>
-                            </tr>
-                        @endif
+                                <td scope="row">{{ $value->id_konfigurasi }}</td>
+                                <td><a href="#">{{ $value->nama_file }}</a></td>
+                                <td>{{ date('l, d M Y H:i', strtotime($value->waktu)) }}</td>
+                                <td>Rp. {{ $value->biaya }}</td>
+                                <td @for ($i = 0; $i < count($arrKonfigurasi); $i++)
+                                    id="sisaWaktuBayar{{ $i }}"
+                        @endfor
+                        >{{ __('1h 5m') }}
+                        <span class="material-icons md-18 align-middle text-danger ml-2">
+                            delete
+                        </span>
+                        </td>
+                        </tr>
+                    @endif
                     @endforeach
-                    <input id="arrKonfigurasi" type="number" value="{{count($arrKonfigurasi)}}" hidden>
+                    <input id="arrKonfigurasi" type="number" value="{{ count($arrKonfigurasi) }}" hidden>
                 </tbody>
             </table>
         </div> --}}
         <script>
-            var msg = '{{Session::get('alert')}}';
-            var exist = '{{Session::has('alert')}}';
-            if(exist){
+            var msg = '{{ Session::get('
+            alert ') }}';
+            var exist = '{{ Session::has('
+            alert ') }}';
+            if (exist) {
                 alert(msg);
             }
 
             function startTimer(duration, display) {
-                var timer = duration, minutes, seconds;
-                setInterval(function () {
+                var timer = duration,
+                    minutes, seconds;
+                setInterval(function() {
                     minutes = parseInt(timer / 60, 10);
                     seconds = parseInt(timer % 60, 10);
 
@@ -180,7 +182,7 @@
                 }, 1000);
             }
 
-            function countDownTimer(timeLeft){
+            function countDownTimer(timeLeft) {
                 // Set the date we're counting down to
                 var countDownDate = new Date(timeLeft).getTime();
 
@@ -201,8 +203,8 @@
 
                     // Display the result in the element with id="demo"
                     for (i = 0; i < $('#arrKonfigurasi').val(); i++) {
-                        document.getElementById("sisaWaktuBayar" + i).innerHTML = days + "d " + hours + "h "
-                        + minutes + "m " + seconds + "s ";
+                        document.getElementById("sisaWaktuBayar" + i).innerHTML = days + "d " + hours + "h " +
+                            minutes + "m " + seconds + "s ";
                     }
 
                     // If the count down is finished, write some text
@@ -216,7 +218,7 @@
                 }, 1000);
             }
 
-            window.onload = function () {
+            window.onload = function() {
                 // var timeLeft = "Nov 4, 2020 20:03:00";
                 // countDownTimer(timeLeft);
                 // var display = document.querySelector('#sisaWaktuBayar');
@@ -227,6 +229,7 @@
                 //     // console.log(i);
                 // }
             };
+
         </script>
     </div>
 
