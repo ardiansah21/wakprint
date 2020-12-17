@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,8 +30,6 @@ class RedirectIfAuthenticated
         //         break;
         // }
 
-
-
         // if (Auth::guard($guard)->check()) {
         //     return redirect(RouteServiceProvider::HOME);
         // }
@@ -42,19 +39,19 @@ class RedirectIfAuthenticated
                 if (Auth::guard($guard)->check()) {
                     return redirect('/partner');
                 }
-            break;
+                break;
 
             case 'admin':
                 if (Auth::guard($guard)->check()) {
                     return redirect('/admin');
                 }
-            break;
+                break;
 
             default:
                 if (Auth::guard($guard)->check()) {
                     return redirect('/');
                 }
-            break;
+                break;
         }
 
         return $next($request);

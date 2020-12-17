@@ -6,6 +6,7 @@ use App\Atk;
 use App\Konfigurasi_file;
 use App\Lapor_produk;
 use App\Member;
+use App\Notifications\PesananNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Produk;
@@ -1259,6 +1260,15 @@ class MemberController extends Controller
     public function tentang()
     {
         return view('member.tentang');
+    }
+
+    public function notif()
+    {
+        $member = Member::find(Auth::id());
+        $pesanan = Pesanan::find(1);
+        $member->notify(new PesananNotification('pembayaranPending', $pesanan));
+        return "udahh dikirim";
+        // Notification::send($member, new PesananNotification($pesanan));
     }
 
 }

@@ -99,4 +99,33 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     //         // do the rest of the cleanup...
     //     });
     // }
+
+    //notif
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'Notif-Broadcast.Partner.' . $this->id_pengelola;
+    }
+
+    public function routeNotificationFor($channel)
+    {
+
+        switch ($channel) {
+            case 'PusherPushNotifications':
+                return 'Notif.Partner.' . $this->id_pengelola;
+                break;
+            case 'mail':
+                return $this->email;
+                break;
+            case 'database':
+                return $this->notifications();
+                break;
+
+            default:
+                $class = str_replace('\\', '.', get_class($this));
+
+                return $class . '.' . $this->getKey();
+                break;
+        }
+
+    }
 }

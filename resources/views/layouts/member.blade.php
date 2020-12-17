@@ -109,78 +109,51 @@
                                 </a>
                             </li>
                         @else
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('home') }}" class="nav-link" :badge="notif">
-                                    <svg class="svg-icon" viewBox="0 0 20 20">
-                                        <path
-                                            d="M14.38,3.467l0.232-0.633c0.086-0.226-0.031-0.477-0.264-0.559c-0.229-0.081-0.48,0.033-0.562,0.262l-0.234,0.631C10.695,2.38,7.648,3.89,6.616,6.689l-1.447,3.93l-2.664,1.227c-0.354,0.166-0.337,0.672,0.035,0.805l4.811,1.729c-0.19,1.119,0.445,2.25,1.561,2.65c1.119,0.402,2.341-0.059,2.923-1.039l4.811,1.73c0,0.002,0.002,0.002,0.002,0.002c0.23,0.082,0.484-0.033,0.568-0.262c0.049-0.129,0.029-0.266-0.041-0.377l-1.219-2.586l1.447-3.932C18.435,7.768,17.085,4.676,14.38,3.467 M9.215,16.211c-0.658-0.234-1.054-0.869-1.014-1.523l2.784,0.998C10.588,16.215,9.871,16.447,9.215,16.211 M16.573,10.27l-1.51,4.1c-0.041,0.107-0.037,0.227,0.012,0.33l0.871,1.844l-4.184-1.506l-3.734-1.342l-4.185-1.504l1.864-0.857c0.104-0.049,0.188-0.139,0.229-0.248l1.51-4.098c0.916-2.487,3.708-3.773,6.222-2.868C16.187,5.024,17.489,7.783,16.573,10.27">
-                                        </path>
-                                    </svg>
-                                </a>
-                            </li> --}}
+                            <li class="nav-item mr-1" style="display: flex; align-items:center;">
 
-                            <li class="nav-item mr-2" style="display: flex; align-items:center;">
-                                <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
-                                    style="border-radius: 30px;top:0px;">
-                                </span>
                                 <a class="nav-link SemiBold" href="{{ route('chat') }}"
-                                    style="color: black; font-size: 24px;">{{ __('Chat') }}</a>
+                                    style="color: black; font-size: 24px;">{{ __('Chat') }}
+                                    <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
+                                        style="font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 30%;top: -20px;left: -10px;position: relative;">
+                                    </span>
+                                </a>
                             </li>
                             <li class="nav-item dropdown mr-0" style="display: flex; align-items:center;">
-                                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false" style="color: black">
-                                    <span class="badge badge-danger" style="border-radius: 30px;top:0px;">0</span>
-                                    <span class="material-icons md-32 mt-2 mr-2">notifications</span>
+                                <a class="nav-link material-icons md-32" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black">
+                                    notifications
+                                    {{-- <span
+                                        class="material-icons md-32 mt-2 mr-2">notifications</span>
+                                    --}}
                                 </a>
-                                <ul class="dropdown-menu p-2"
+                                <span v-show="notif>0" v-text="notif" class="badge badge-danger"
+                                    style="background-color: red;font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 35%;position: absolute;top: 3px;right: 0;"></span>
+                                <ul class="dropdown-menu "
                                     style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
-                                    <li class="notification-box mb-2">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                                <img src="https://ptetutorials.com/images/user-profile.png"
-                                                    class="w-50 rounded-circle my-auto">
+                                    <li class="text-right mr-3">
+                                        <h5 v-if="notif>0" @click="readAll" class="pointer"
+                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'">
+                                            Tandai sudah dibaca semua
+                                        </h5>
+
+                                        <h5 v-else class=" m-4">Anda tidak memiliki notifikasi saat ini</h5>
+                                    </li>
+                                    <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)"
+                                        class="list-group-item list-group-item-action pointer">
+                                        <div class="col">
+                                            <strong class="text-black">@{{ notif . title }}</strong>
+                                            <div>
+                                                @{{ notif . description }}
                                             </div>
-                                            <div class="col-lg-9 col-sm-9 col-9">
-                                                <strong class="text-black">David John</strong>
-                                                <div>
-                                                    Lorem ipsum dolor sit amet, consectetur
-                                                </div>
-                                                <small class="text-light-gray">27.11.2015, 15:00</small>
-                                            </div>
+                                            <small class="text-light-gray">@{{ notif . created_at }}</small>
                                         </div>
                                     </li>
-                                    <li class="notification-box mb-2">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                                <img src="https://ptetutorials.com/images/user-profile.png"
-                                                    class="w-50 rounded-circle my-auto">
-                                            </div>
-                                            <div class="col-lg-9 col-sm-9 col-9">
-                                                <strong class="text-black">David John</strong>
-                                                <div>
-                                                    Lorem ipsum dolor sit amet, consectetur
-                                                </div>
-                                                <small class="text-light-gray">27.11.2015, 15:00</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="notification-box mb-2">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-sm-3 col-3 text-center">
-                                                <img src="https://ptetutorials.com/images/user-profile.png"
-                                                    class="w-50 rounded-circle my-auto">
-                                            </div>
-                                            <div class="col-lg-9 col-sm-9 col-9">
-                                                <strong class="text-black">David John</strong>
-                                                <div>
-                                                    Lorem ipsum dolor sit amet, consectetur
-                                                </div>
-                                                <small class="text-light-gray">27.11.2015, 15:00</small>
-                                            </div>
-                                        </div>
-                                    </li>
+
                                 </ul>
                             </li>
+
+                            {{-- <notifications-dropdown></notifications-dropdown>
+                            --}}
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}"
                                     style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
@@ -309,7 +282,7 @@
                                             {{ rupiah($member->jumlah_saldo) ?? rupiah(0) }}
                                         </a>
                                         <a class="nav-link {{ set_active('riwayat') }} SemiBold mb-4"
-                                            id="v-pills-riwayat-tab mb-3" href="{{ route('riwayat') }}" role="tab"
+                                            id="v-pills-riwayat-tapostb mb-3" href="{{ route('riwayat') }}" role="tab"
                                             aria-controls="v-pills-riwayat" aria-selected="false" style="font-size: 24px;">
                                             <i class="material-icons align-middle md-32 mr-2">history</i>
                                             {{ __('Riwayat Transaksi') }}

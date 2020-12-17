@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Message;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
@@ -119,6 +120,35 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     public function chatFrom()
     {
         return $this->hasOne('App\Chat', 'from_id')->lates();
+    }
+
+    //notif
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'Notif-Broadcast.Member.' . $this->id_member;
+    }
+
+    public function routeNotificationFor($channel)
+    {
+
+        switch ($channel) {
+            case 'PusherPushNotifications':
+                return 'Notif.Member.' . $this->id_member;
+                break;
+            case 'mail':
+                return $this->email;
+                break;
+            case 'database':
+                return $this->notifications();
+                break;
+
+            default:
+                $class = str_replace('\\', '.', get_class($this));
+
+                return $class . '.' . $this->getKey();
+                break;
+        }
+
     }
 
 }

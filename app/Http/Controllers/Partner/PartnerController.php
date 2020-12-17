@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Exports\TransaksiSaldoPartnerExport;
 use App\Http\Controllers\Controller;
+use App\Notifications\PesananPartnerNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
@@ -308,5 +309,14 @@ class PartnerController extends Controller
     public function pengujianDeteksiWarna()
     {
         return view('pengujian');
+    }
+
+    public function notif()
+    {
+        $member = Pengelola_Percetakan::find(Auth::id());
+        $pesanan = Pesanan::find(1);
+        $member->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
+        return "udahh dikirim";
+        // Notification::send($member, new PesananPartnerNotification($pesanan));
     }
 }
