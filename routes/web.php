@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\StoreProductRequest;
 use App\Http\Controllers\KonFileController;
+use App\Http\Controllers\MemberController;
+use Illuminate\Notifications\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +119,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfirmasi-pembayaran/cancel/{idPesanan}', 'KonfigurasiController@cancelPesanan')->name('konfirmasi.pesanan.cancel');
     Route::get('/konfirmasi-pembayaran/selesai/{idPesanan}', 'KonfigurasiController@selesaikanPesanan')->name('konfirmasi.pesanan.selesai');
 
+    //tes notifikasi
+    Route::get('/tesnotif', 'MemberController@notif');
+
 });
 
 //Pengelola percetakan
@@ -172,6 +177,8 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::post('filter/riwayat', 'PartnerController@filterSaldo')->name('filter.riwayat');
         Route::post('search/produk', 'PromoController@searchProdukPartner')->name('search.produk');
 
+        //tes notif partner
+        Route::get('/tesnotifpartner', 'PartnerController@notif');
     });
 });
 
@@ -265,3 +272,10 @@ Route::get('session/put', 'SessionController@put');
 Route::get('session/push', 'SessionController@push');
 Route::get('session/del', 'SessionController@delete');
 Route::get('session/tes', 'SessionController@tes');
+
+//Notifikasi
+Route::prefix('/notif')->group(function () {
+    Route::get('/', 'NotificationController@index');
+    Route::post('read', 'NotificationController@read');
+    Route::get('read-all', 'NotificationController@readAll');
+});

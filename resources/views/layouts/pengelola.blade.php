@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
         <meta name="user_id" content="{{ auth()->guard('partner')->user()->id_pengelola }}">
+        <meta name="user_login" content="{{ auth()->guard('partner')->user() }}">
     @endauth
 
     <title>@yield('title','Wakprint') </title>
@@ -96,17 +97,44 @@
                             @endif
 
                         @else
-                            <li class="nav-item mr-2" style="display: flex; align-items:center;">
-                                <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
-                                    style="border-radius: 30px;top:0px;">
-                                </span>
-                                <a class="nav-link SemiBold" href="{{ route('partner.chat') }}"
-                                    style="color: black; font-size: 18px;">{{ __('Chat') }}</a>
-                            </li>
-                            <li class="nav-item mr-0" style="display: flex; align-items:center;">
-                                <a class="nav-link" href="#" style="color: black">
-                                    <i class="material-icons md-24 mt-2 mr-2">notifications</i>
+                            <li class="nav-item mr-1" style="display: flex; align-items:center;">
+
+                                <a class="nav-link SemiBold" href="{{ route('chat') }}"
+                                    style="color: black; font-size: 24px;">{{ __('Chat') }}
+                                    <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
+                                        style="font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 30%;top: -20px;left: -10px;position: relative;">
+                                    </span>
                                 </a>
+                            </li>
+                            <li class="nav-item dropdown mr-0" style="display: flex; align-items:center;">
+                                <a class="nav-link material-icons md-32" href="" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black">
+                                    notifications
+                                </a>
+                                <span v-show="notif>0" v-text="notif" class="badge badge-danger"
+                                    style="background-color: red;font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 35%;position: absolute;top: 3px;right: 0;"></span>
+                                <ul class="dropdown-menu "
+                                    style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
+                                    <li class="text-right mr-3">
+                                        <h5 v-if="notif>0" @click="readAll" class="pointer"
+                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'">
+                                            Tandai sudah dibaca semua
+                                        </h5>
+
+                                        <h5 v-else class=" m-4">Anda tidak memiliki notifikasi saat ini</h5>
+                                    </li>
+                                    <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)"
+                                        class="list-group-item list-group-item-action pointer">
+                                        <div class="col">
+                                            <strong class="text-black">@{{ notif . title }}</strong>
+                                            <div>
+                                                @{{ notif . description }}
+                                            </div>
+                                            <small class="text-light-gray">@{{ notif . created_at }}</small>
+                                        </div>
+                                    </li>
+
+                                </ul>
                             </li>
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('partner.profile') }}"
@@ -254,8 +282,8 @@
 
 
 
-<script src="{{ asset('js/appPartner.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/appPartner.js') }}"></script>
 <script src="{{ asset('js/scriptPengelola.js') }}"></script>
 <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"></script>
 
