@@ -214,7 +214,7 @@
                     <span class="input-group-text bg-white"
                         style="border-radius: 0px 5px 5px 0px;">
                             <i id="togglePassword" toggle="#password-field"
-                            class="fa fa-fw fa-eye field_icon toggle-password">
+                            class="fa fa-fw fa-eye field_icon toggle-password1">
                             </i>
                         </span>
                     @error('password')
@@ -227,17 +227,12 @@
             <div class="form-group">
                 <label for="password" class="mb-2">{{__('Password Baru')}}</label>
                 <div class="input-group mb-3">
-                    <input type="password"
-                    name="password"
-                    class="form-control form-control-lg"
-                    placeholder="Masukkan Kata Sandi Baru"
-                    data-toggle="password"
-                    autofocus>
+                    <input id="new-password" type="password" name="password" class="form-control form-control-lg" placeholder="Masukkan Kata Sandi Baru" data-toggle="password" autofocus>
                     <div class="input-group-append">
                         <span class="input-group-text bg-white"
                         style="border-radius: 0px 5px 5px 0px;">
                             <i id="togglePassword" toggle="#password-field"
-                            class="fa fa-fw fa-eye field_icon toggle-password">
+                            class="fa fa-fw fa-eye field_icon toggle-password2">
                             </i>
                         </span>
                     </div>
@@ -248,7 +243,7 @@
                     {{__('Konfirmasi Password Baru')}}
                 </label>
                 <div class="input-group mb-3">
-                    <input type="password"
+                    <input id="confirm-password" type="password"
                     name="confirm-password"
                     class="form-control form-control-lg"
                     placeholder="Konfirmasi Kata Sandi Baru"
@@ -258,7 +253,7 @@
                         style="border-radius: 0px 5px 5px 0px;">
                             <i id="togglePassword"
                             toggle="#password-field"
-                            class="fa fa-fw fa-eye field_icon toggle-password">
+                            class="fa fa-fw fa-eye field_icon toggle-password3">
                             </i>
                         </span>
                     </div>
@@ -280,11 +275,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            var msg = '{{Session::get('alert')}}';
-            var exist = '{{Session::has('alert')}}';
-            if(exist){
-                alert(msg);
-            }
             $("#editPhotoButton").on("click",function(){
                 $('#imgupload').trigger('click'); return false;
             });
@@ -304,6 +294,37 @@
                 $('#yearButton').text($(this).text());
                 $('#year').val($(this).text());
             });
+
+            $("body").on('click', '.toggle-password1', function() {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var inputCurrentPass = $("#current-password");
+                if (inputCurrentPass.attr("type") === "password") {
+                    inputCurrentPass.attr("type", "text");
+                } else {
+                    inputCurrentPass.attr("type", "password");
+                }
+            });
+
+            $("body").on('click', '.toggle-password2', function() {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var inputNewPass = $("#new-password");
+                if (inputNewPass.attr("type") === "password") {
+                    inputNewPass.attr("type", "text");
+                } else {
+                    inputNewPass.attr("type", "password");
+                }
+            });
+
+            $("body").on('click', '.toggle-password3', function() {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var inputConfirmPass = $("#confirm-password");
+                if (inputConfirmPass.attr("type") === "password") {
+                    inputConfirmPass.attr("type", "text");
+                } else {
+                    inputConfirmPass.attr("type", "password");
+                }
+            });
         });
+
     </script>
 @endsection

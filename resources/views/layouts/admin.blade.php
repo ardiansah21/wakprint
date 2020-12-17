@@ -14,7 +14,6 @@
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script>
     --}}
-    //TODO cek ada error atau enggak aku tambahain ini
     <script src="{{ asset('js/bootsrap.js') }}"></script>
 
 
@@ -30,7 +29,7 @@
     <link href="{{ asset('DataTables/DataTables-1.10.21/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     --}}
 
-    
+
     <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 
@@ -157,6 +156,7 @@
             @endif
         </main>
     </div>
+    @include('sweetalert::alert')
 </body>
 <script src="{{ asset('js/appAdmin.js') }}"></script>
 <script src="{{ asset('js/bootsrap.js') }}"></script>

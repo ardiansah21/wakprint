@@ -24,7 +24,7 @@
                         <tr>
                             <td scope="row">{{$a->id_atk}}</td>
                             <td>{{$a->nama}}</td>
-                            <td>Rp. {{$a->harga}}</td>
+                            <td>{{rupiah($a->harga)}}</td>
                             <td>{{$a->jumlah}}</td>
                             <td class="text-right">
                                 <a href="{{ route('partner.atk.edit',$a->id_atk) }}" style="margin-left: -50px;">
@@ -32,11 +32,6 @@
                                         edit
                                     </i>
                                 </a>
-                                {{-- <a href="{{ route('partner.atk.destroy',$a->id_atk) }}">
-                                    <i class="material-icons md-18" style="color: #FF4949;">
-                                        delete
-                                    </i>
-                                </a> --}}
                                 <i class="material-icons md-18 pointer p-1 mr-2"
                                     style="color: #FF4949;" onclick="event.preventDefault();
                                     document.getElementById('delete-form{{$a->id_atk}}').submit();">
@@ -50,9 +45,9 @@
                         </tr>
                     @endif
                 @endforeach
-
             </tbody>
         </table>
     </div>
 </div>
 @endsection
+

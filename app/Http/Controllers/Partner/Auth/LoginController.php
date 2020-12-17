@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Partner\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +18,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -39,18 +38,26 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function showLoginForm() //Go web.php then you will find this route
+
     {
         return view('pengelola.login');
     }
 
     public function login(Request $request) //Go web.php then you will find this route
+
     {
-         $this->validateLogin($request);
+        $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+            $partner = $this->guard()->user();
+            if (empty($partner->email_verified_at)) {
+                alert()->info('Maaf', 'Akun Anda belum diverifikasi oleh admin kami, silahkan tunggu beberapa saat yah');
+                return redirect()->back();
+            } else {
+                return $this->sendLoginResponse($request);
+            }
         }
 
         return $this->sendFailedLoginResponse($request);
@@ -64,7 +71,7 @@ class LoginController extends Controller
 
         return redirect('partner/login');
     }
-    protected function guard() 
+    protected function guard()
     {
         return Auth::guard('partner');
     }

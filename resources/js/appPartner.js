@@ -15,18 +15,18 @@ const appPartner = new Vue({
         axios.get("/chat/pesanan").then(({ data }) => {
             this.pesanans = data;
         });
-        Echo.channel(
-            "chanel-chat-partner." +
-            document.querySelector('meta[name="user_id"]').content
-        ).listen("chatEvent", e => {
-            var idx = this.pesanans.findIndex(
-                p => p.id_pesanan === e.id_pesanan
-            );
-            this.pesanans[idx].count++;
+        // Echo.channel(
+        //     "chanel-chat-partner." +
+        //     document.querySelector('meta[name="user_id"]').content
+        // ).listen("chatEvent", e => {
+        //     var idx = this.pesanans.findIndex(
+        //         p => p.id_pesanan === e.id_pesanan
+        //     );
+        //     this.pesanans[idx].count++;
 
-            var audio = new Audio("/storage/ringtone/glass_ping.mp3");
-            audio.play();
-        });
+        //     var audio = new Audio("/storage/ringtone/glass_ping.mp3");
+        //     audio.play();
+        // });
     },
     computed: {
         notifChat: {

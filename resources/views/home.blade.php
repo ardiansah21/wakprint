@@ -71,7 +71,7 @@
         <div class="main-search-input mb-5 ml-0">
             <div class="main-search-input-item">
                 <input type="text" role="search" class="form-control p-4" id="keywordPencarian" name="keywordPencarian" placeholder="Cari percetakan atau produk disini" aria-label="Cari percetakan atau produk disini" aria-describedby="basic-addon2" style="border:0px solid white; border-radius:30px; font-size:24px;">
-                <button class="btn btn-primary-yellow btn-rounded shadow-sm ml-1 pt-1 pb-1 pl-5 pr-5 SemiBold text-center" onclick="window.location.href='{{route('pencarian',request()->input('keywordPencarian'))}}'" style="position: absolute; font-size:24px; top: 50%; left: 92%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
+                <button id="cariBtn" class="btn btn-primary-yellow btn-rounded shadow-sm ml-1 pt-1 pb-1 pl-5 pr-5 SemiBold text-center" style="position: absolute; font-size:24px; top: 50%; left: 92%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
                     {{__('Cari') }}
                 </button>
             </div>
@@ -212,6 +212,11 @@
             autoplayTimeout:5000,
             autoplayHoverPause:true
         });
+    });
+
+    $('#cariBtn').click(function(){
+        var urlCari = "{{route('pencarian')}}" + "?keyword=" + $('#keywordPencarian').val();
+        window.location.href=urlCari;
     });
 </script>
 @endsection

@@ -13,11 +13,6 @@ use stdClass;
 class ProdukController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $partner = Auth::user();
@@ -28,23 +23,12 @@ class ProdukController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $partner = Pengelola_Percetakan::find(Auth::id());
         return view('pengelola.tambah_produk', compact('partner'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -71,7 +55,7 @@ class ProdukController extends Controller
 
                         array_push($fiturFinal, $this->setFitur(
                             $value2['nama'],
-                            $value2['harga'],
+                            (int) str_replace('.', '', $value2['harga']),
                             $value2['deskripsi'],
                             $foto_fitur
                         ));
@@ -81,15 +65,14 @@ class ProdukController extends Controller
                 }
             }
         }
-        // return $fiturFinal;
 
         $produk = Produk::create([
             'id_pengelola' => Auth::id(),
             'nama' => $request->nama,
-            'harga_hitam_putih' => $request->harga_hitam_putih,
-            'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
-            'harga_berwarna' => $request->harga_berwarna,
-            'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
+            'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
+            'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
+            'harga_berwarna' => (int) str_replace('.', '', $request->harga_berwarna),
+            'harga_timbal_balik_berwarna' => (int) str_replace('.', '', $request->harga_timbal_balik_berwarna),
             'berwarna' => $request->berwarna == 'True' ? '1' : '0',
             'hitam_putih' => $request->hitam_putih == 'True' ? '1' : '0',
             'deskripsi' => $request->deskripsi,
@@ -105,26 +88,15 @@ class ProdukController extends Controller
             }
         }
         $produk->save();
-        return redirect()->route('partner.produk.index');
+
+        return redirect()->route('partner.produk.index')->with('success', 'Anda berhasil menambahkan produk baru Anda');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
 
@@ -145,13 +117,6 @@ class ProdukController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Produk $produk)
     {
         $fiturFinal = array();
@@ -167,7 +132,7 @@ class ProdukController extends Controller
 
                                 $file->move($path, $name);
                                 $foto_fitur = url('/storage/_fitur') . '/' . $name;
-                            }else {
+                            } else {
                                 $lastNameFile = basename(json_decode($produk->fitur)[array_search($value2['uniqid'], array_column(json_decode($produk->fitur), 'uniqid'))]->foto_fitur);
                                 $path = public_path('storage/_fitur');
                                 unlink($path . '/' . $lastNameFile);
@@ -184,7 +149,7 @@ class ProdukController extends Controller
 
                         array_push($fiturFinal, $this->setFitur(
                             $value2['nama'],
-                            $value2['harga'],
+                            (int) str_replace('.', '', $value2['harga']),
                             $value2['deskripsi'],
                             $foto_fitur
                         ));
@@ -199,10 +164,10 @@ class ProdukController extends Controller
             [
                 'id_pengelola' => Auth::id(),
                 'nama' => $request->nama,
-                'harga_hitam_putih' => $request->harga_hitam_putih,
-                'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
-                'harga_berwarna' => $request->harga_berwarna,
-                'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
+                'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
+                'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
+                'harga_berwarna' => (int) str_replace('.', '', $request->harga_berwarna),
+                'harga_timbal_balik_berwarna' => (int) str_replace('.', '', $request->harga_timbal_balik_berwarna),
                 'berwarna' => $request->berwarna == 'True' ? '1' : '0',
                 'hitam_putih' => $request->hitam_putih == 'True' ? '1' : '0',
                 'deskripsi' => $request->deskripsi,
@@ -231,29 +196,18 @@ class ProdukController extends Controller
             }
         }
         $produk->save();
-        return redirect()->route('partner.produk.index');
+        return redirect()->route('partner.produk.index')->with('success', 'Anda berhasil mengubah informasi produk Anda');
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $produk = Produk::find($id);
         $produk->clearMediaCollection();
         $produk->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Anda berhasil menghapus produk Anda');
     }
 
-    /**
-     * Menyimpan sementara gambar yang di unggah.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     */
     public function storeMedia(Request $request)
     {
         $path = storage_path('tmp/uploads');
@@ -274,11 +228,6 @@ class ProdukController extends Controller
         ]);
     }
 
-    /**
-     * Mengduplikasi produk.
-     *
-     * @param  int  $id
-     */
     public function duplicate($id)
     {
 
@@ -311,7 +260,7 @@ class ProdukController extends Controller
                 ->toMediaCollection($media->collection_name);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Anda berhasil menduplikat produk Anda');
     }
 
 //Helper
@@ -331,18 +280,17 @@ class ProdukController extends Controller
 
     public function getFiturTemplate($keyword, $harga = null)
     {
-        //TODO tambah deskripsi dan foto di setiap fitur template di bawah ini
         $fiturTemplate = array(
-            $this->setFitur('Kliping', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Lem', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Baut', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Kawat', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Spiral', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Hekter', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Tulang Kliping', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Penjepit Kertas', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Plastik Transparan', null, 'deskripsinya, fotonya taruh di sebelah'),
-            $this->setFitur('Kertas Jeruk', null, 'deskripsinya, fotonya taruh di sebelah'),
+            $this->setFitur('Kliping', 'https://ecs7.tokopedia.net/img/cache/700/product-1/2017/11/3/24128252/24128252_b0f7c29c-5096-4d76-9d7e-91fee75f553c_320_427.jpg', 'Kliping adalah guntingan artikel atau berita dari surat kabar, majalah, dan sebagainya yang dianggap penting untuk disimpan atau didokumentasikan.'),
+            $this->setFitur('Lem', 'https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-lem-panas-perfect-binding.jpg', 'Jilid lem panas dilakukan dengan cara merekatkan bagian pinggir kertas ke punggung sampul buku bagian dalam menggunakan lem atau perekat. Teknik ini cocok untuk buku yang cukup tebal, dengan soft cover maupun hard cover.'),
+            $this->setFitur('Baut', 'https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-baut-screw-binding.jpg', 'Teknik jilid baut mirip dengan jilid spiral, yaitu melubangi tepi halaman untuk menyatukan kertas. Bedanya adalah yang digunakan untuk menyatukan halaman adalah baut yang dikencangkan. Tentunya dipilih baut khusus yang juga bisa menunjang estetika buku. Penjilidan ini seringnya dipakai untuk buku hard cover yang dibuat khusus seperti katalog warna, katalog pameran, buku menu, dll.'),
+            $this->setFitur('Kawat', 'https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-kawat-staples-tengah-saddle-stitching.jpg', 'Jilid Kawat ini cocok untuk dokumen dengan soft cover dan ketebalan yang tipis antara 4-80 halaman seperti booklet, majalah, atau buku modul tipis.'),
+            $this->setFitur('Spiral', 'https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-spiral-wire-binding.jpg', 'Jilid spiral dilakukan dengan cara melubangi tepi halaman di satu sisi lalu menyatukannya dengan kawat atau plastik berbentuk roll. Teknik ini biasanya dipakai untuk buku dengan bahan kertas yang cukup tebal namun tidak memiliki terlalu banyak halaman.'),
+            $this->setFitur('Hekter', 'https://qph.fs.quoracdn.net/main-qimg-92ca56763f43afe14652d15eadc59264', 'Hasil cetakan Anda akan sekaligus dihekter untuk membuat dokumen Anda terlihat rapi dan tidak berantakan.'),
+            $this->setFitur('Tulang Kliping', 'https://ecs7.tokopedia.net/img/cache/700/product-1/2017/11/3/24128252/24128252_b0f7c29c-5096-4d76-9d7e-91fee75f553c_320_427.jpg', 'Hasil cetakan Anda akan sekaligus diberikan tulang kliping pada saat proses pencetakan dokumen telah selesai.'),
+            $this->setFitur('Penjepit Kertas', 'https://cdn0-production-images-kly.akamaized.net/eJOTPdEE8EJmfGT90UZpzbdbhHI=/640x640/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2887278/original/001566000_1566293636-rainbow-made-colorful-paper-clips_23-2148092020freepika.jpg', 'Hasil cetakan Anda akan sekaligus dijepit dengan penjepit kertas untuk membuat dokumen Anda terlihat rapi dan tidak berantakan.'),
+            $this->setFitur('Plastik Transparan', 'https://1.bp.blogspot.com/-ZNjTq20AXBE/Vp13uSac7YI/AAAAAAAAABQ/3-V4wH-wlsA/s1600/IMG-20160104-WA0002.jpg', 'Hasil cetakan Anda akan sekaligus diberikan plastik transparan untuk halaman depan pada dokumen Anda.'),
+            $this->setFitur('Kertas Jeruk', 'https://cdn.siplah.pesonaedu.id/uploads/6f84a30ff9f80054908cb570c0a86c6743e9f6683f18602a0d89901bf781fc64/51826/image.png', 'Hasil cetakan Anda akan sekaligus diberikan kertas jeruk untuk halaman belakang pada dokumen Anda.'),
         );
 
         // $key = array_search($keyword, array_column($fiturTemplate, 'name'));
@@ -350,31 +298,4 @@ class ProdukController extends Controller
         $fiturTemplate[$key]['harga'] = $harga;
         return $fiturTemplate[$key];
     }
-
 }
-/**
- * KEEP
- *
- * **/
-// public function update(UpdateProdukRequest $request, Produk $produk)
-// {
-//     $produk->update($request->all());
-
-//     if (count($produk->document) > 0) {
-//         foreach ($produk->document as $media) {
-//             if (!in_array($media->file_name, $request->input('document', []))) {
-//                 $media->delete();
-//             }
-//         }
-//     }
-
-//     $media = $produk->document->pluck('file_name')->toArray();
-
-//     foreach ($request->input('document', []) as $file) {
-//         if (count($media) === 0 || !in_array($file, $media)) {
-//             $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document');
-//         }
-//     }
-
-//     return redirect()->route('admin.produks.index');
-// }

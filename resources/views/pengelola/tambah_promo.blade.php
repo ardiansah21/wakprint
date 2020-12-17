@@ -40,7 +40,7 @@
                                                     {{$value->nama ?? '-'}}
                                                 </label>
                                                 <div class="col-md-2 text-right" style="font-size: 12px;">
-                                                    <input type="checkbox" id="checkbox_promo{{$p}}" name="checkbox_promo" value="{{ $value->id_produk }}">
+                                                    <input type="checkbox" id="checkbox_promo{{$p}}" name="checkbox_promo" value="{{ $value->id_produk }}" required>
                                                 </div>
                                             </div>
                                             <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
@@ -93,14 +93,14 @@
                                 {{__('Rp.') }}
                             </label>
                             <div class="col-md-11 form-group mb-4">
-                                <input type="text" name="maksimal_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="300.000" aria-label="300.000" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
+                                <input type="text" name="maksimal_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="300.000" aria-label="300.000" oninput="this.value=formatRupiah(this.value,'')" aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;" required>
                             </div>
                         </div>
                         <label class="mb-2">
                             {{__('Tanggal Promo Mulai') }}
                         </label>
                         <div class="row justify-content-left mb-3">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" Class="form-control" value="" hidden>
                                     <button id="tanggalMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="bulan_mulai_promo" type="text" id="bulan_mulai_promo" Class="form-control" value="" hidden>
                                     <button id="bulanMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -130,7 +130,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="tahun_mulai_promo" type="text" id="tahun_mulai_promo" Class="form-control" value="" hidden>
                                     <button id="tahunMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -153,7 +153,23 @@
                         </label>
                         <div class="form-group row justify-content-left mb-2">
                             <div class="col-md-3 input-group mb-4">
-                                <input type="number" name="jumlah_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="10" aria-label="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" aria-describedby="inputGroup-sizing-sm" style="width:100%; font-size:16px;">
+                                <input type="number" name="jumlah_diskon" class="form-control form-control-lg pt-2 pb-2" min="1" max="100" maxlength="3" placeholder="10" aria-label="10"
+                                    oninput="
+                                    if(this.value != 0){
+                                        this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                        if(this.value > 100){
+                                            this.value = 100;
+                                        }
+                                    }
+                                    else{
+                                        this.value = 1;
+                                        this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                        if(this.value > 100){
+                                            this.value = 100;
+                                        }
+                                    }
+                                "
+                                aria-describedby="inputGroup-sizing-sm" style="width:100%; font-size:16px;" required>
                             </div>
                             <label class="col-md-auto text-left mb-0 mr-0 ml-0 mt-2">
                                 {{__('%') }}
@@ -163,7 +179,7 @@
                             {{__('Tanggal Promo Selesai') }}
                         </label>
                         <div class="row justify-content-left mb-3">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" Class="form-control" value="" hidden>
                                     <button id="tanggalSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -178,7 +194,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="bulan_selesai_promo" type="text" id="bulan_selesai_promo" Class="form-control" value="" hidden>
                                     <button id="bulanSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -195,7 +211,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" Class="form-control" value="" hidden>
+                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" class="form-control" value="" hidden>
                                     <button id="tahunSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{__('Tahun')}}
                                     </button>
@@ -260,6 +276,12 @@
                     if(pos > -1){
                         arrIdProduk.splice(pos, 1);
                     }
+                }
+                if(arrIdProduk.length != 0){
+                    $('input[type=checkbox]').prop('required',false);
+                }
+                else{
+                    $('input[type=checkbox]').prop('required',true);
                 }
                 $('#idProduk').val(JSON.stringify(arrIdProduk));
             });

@@ -37,21 +37,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function cari(Request $request)
-    {
-        // menangkap data pencarian
-        $cariMember = $request->carimember;
-        dd($cariMember);
-        // mengambil data dari table pegawai sesuai pencarian data
-        $member = Member::all()
-            ->where('pegawai_nama', 'like', "%" . $cariMember . "%")
-            ->paginate();
-
-        // mengirim data pegawai ke view index
-        //return view('index',['pegawai' => $pegawai]);
-
-    }
-
     public function dataMember()
     {
         $member = Member::all();
@@ -125,7 +110,7 @@ class AdminController extends Controller
     {
         $member = Member::find($id);
         $member->delete();
-        return redirect()->route('admin.member');
+        return redirect()->route('admin.member')->with('success', 'Anda telah berhasil menghapus akun ' . $member->nama_lengkap);
     }
 
     public function getDateBorn($id)
@@ -163,13 +148,12 @@ class AdminController extends Controller
         $partner->email_verified_at = Carbon::now()->format('Y:m:d H:i:s');
 
         $partner->save();
-        return redirect()->route('admin.partner');
+        return redirect()->route('admin.partner')->with('success', 'Anda telah berhasil memverifikasi akun ' . $partner->nama_lengkap);
     }
 
     public function tolakPartner($id)
     {
         $partner = Pengelola_Percetakan::find($id);
-        // $partner->save();
         return view('admin.tolak_pengelola', compact('partner'));
     }
 
@@ -188,29 +172,13 @@ class AdminController extends Controller
             $isiAlasan = $request->alasan;
         }
 
-        $partner->atk->delete();
-        $partner->products->delete();
-        // $partner->boot();
-        // $partner->atk()->detach();
-        // $partner->products()->detach();
-        // $partner->atk->delete();
-        // $partner->products->delete();
         $partner->delete();
-
-        // $laporan = Lapor_produk::find($request->id_laporan);
-        // $laporan->pesan_tanggapan = $request->tanggapan_keluhan;
-        // $laporan->save();
         $m = (Mail::to($partner->email)->send(new TolakPartnerMail($partner, $isiAlasan)));
-        // dd($m);
         try {
             Mail::to($partner->email)->send(new TolakPartnerMail($partner, $isiAlasan));
-            // //TODO:  buat pesan sukses
-            // $laporan->status = 'Ditanggapi';
-            // $laporan->save();
-            return redirect()->route('admin.partner');
+            return redirect()->route('admin.partner')->with('success', 'Anda telah berhasil menolak verifikasi akun ' . $partner->nama_lengkap);
         } catch (\Throwable $th) {
-            //TODO:  buat pesan gagal
-            dd('gagal kirim email');
+            alert()->error('Maaf', 'Gagal mengirimkan email penolakan verifikasi akun ' . $partner->nama_lengkap . '. Silahkan coba beberapa saat.');
         }
 
     }
@@ -250,7 +218,7 @@ class AdminController extends Controller
 
         $transaksiSaldo->save();
 
-        return redirect()->route('admin.saldo');
+        return redirect()->route('admin.saldo')->with('success', 'Anda telah berhasil menolak ' . $transaksiSaldo->jenis_transaksi . ' saldo.');
     }
 
     public function storeTerimaSaldoMember($id)
@@ -270,7 +238,7 @@ class AdminController extends Controller
             $transaksiSaldo->save();
         }
 
-        return redirect()->route('admin.saldo');
+        return redirect()->route('admin.saldo')->with('success', 'Anda telah berhasil mengkonfirmasi ' . $transaksiSaldo->jenis_transaksi . ' saldo.');
     }
 
     public function storeTerimaSaldoPartner($id)
@@ -282,7 +250,7 @@ class AdminController extends Controller
         $transaksiSaldo->partner->save();
         $transaksiSaldo->save();
 
-        return redirect()->route('admin.saldo');
+        return redirect()->route('admin.saldo')->with('success', 'Anda telah berhasil mengkonfirmasi ' . $transaksiSaldo->jenis_transaksi . ' saldo.');
     }
 
     public function keluhan()
@@ -308,16 +276,13 @@ class AdminController extends Controller
         $laporan->pesan_tanggapan = $request->tanggapan_keluhan;
         $laporan->save();
         $m = (Mail::to($laporan->member->email)->send(new TanggapiKeluhanMail($laporan)));
-        // dd($m);
         try {
             Mail::to($laporan->member->email)->send(new TanggapiKeluhanMail($laporan));
-            //TODO:  buat pesan sukses
             $laporan->status = 'Ditanggapi';
             $laporan->save();
-            return redirect()->route('admin.keluhan');
+            return redirect()->route('admin.keluhan')->with('success', 'Tanggapan telah berhasil dikirimkan ke email ' . $laporan->member->nama_lengkap . '.');
         } catch (\Throwable $th) {
-            //TODO:  buat pesan gagal
-            dd('gagal kirim email');
+            alert()->error('Maaf', 'Tanggapan gagal dikirimkan ke email ' . $laporan->member->nama_lengkap . '. Silahkan coba beberapa saat.');
         }
     }
 }

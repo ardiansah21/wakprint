@@ -40,16 +40,16 @@ const appMember = new Vue({
                 this.pesanans = data;
             });
 
-            Echo.channel(
-                "channel-chat-member." + this.user_login.id_member
-            ).listen("ChatEvent", e => {
-                var idx = this.pesanans.findIndex(
-                    p => p.id_pesanan === e.id_pesanan
-                );
-                this.pesanans[idx].count++;
-                var audio = new Audio("/storage/ringtone/glass_ping.mp3");
-                audio.play();
-            });
+            // Echo.channel(
+            //     "channel-chat-member." + this.user_login.id_member
+            // ).listen("ChatEvent", e => {
+            //     var idx = this.pesanans.findIndex(
+            //         p => p.id_pesanan === e.id_pesanan
+            //     );
+            //     this.pesanans[idx].count++;
+            //     var audio = new Audio("/storage/ringtone/glass_ping.mp3");
+            //     audio.play();
+            // });
         } else this.user_login = {};
     },
     computed: {

@@ -28,7 +28,11 @@
                 </label>
                 <br>
                 <label class="SemiBold mt-2 mb-0" style="font-size: 18px;">
-                    {{__('Jumlah Top Up Saldo Anda') }}
+                    @if ($transaksi_saldo->jenis_transaksi === 'Pembayaran')
+                        {{__('Total Pembayaran Anda') }}
+                    @else
+                        {{__('Jumlah Top Up Saldo Anda') }}
+                    @endif
                 </label>
                 <br>
                 <label class="text-primary-danger font-weight-bold" id="waktuTransaksi" name="waktu" style="font-size: 48px;">

@@ -24,7 +24,7 @@
     </div>
     @if (!empty($transaksi_saldo))
         <div class="custom-scrollbar-ulasan mb-5 ml-1">
-            <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
+            <table id="riwayatTable" class="table table-hover" style="border-radius:25px 25px 15px 15px;">
                 <thead class="bg-primary-purple text-white">
                     <tr style="font-size: 18px;">
                         <th class="align-middle" scope="col">{{__('ID') }}</th>
@@ -93,6 +93,7 @@
             {
                 var rowListSaldo = '';
                 for(i = 0; i < transaksi_saldo['transaksi_saldo'].length;i++){
+                    var urlRiwayat = "saldo/riwayat/" + transaksi_saldo['transaksi_saldo'][i].id_transaksi;
                     rowListSaldo += '<tr>';
                         rowListSaldo += '<td scope="row">' + transaksi_saldo['transaksi_saldo'][i].id_transaksi + '</td>';
                         rowListSaldo += '<td scope="row">' + transaksi_saldo['transaksi_saldo'][i].jenis_transaksi + '</td>';
@@ -100,6 +101,10 @@
                         rowListSaldo += '<td>' + rupiah(transaksi_saldo['transaksi_saldo'][i].jumlah_saldo) + '</td>';
                         rowListSaldo += '<td>'+ transaksi_saldo['transaksi_saldo'][i].keterangan +'</td>';
                     rowListSaldo += '<tr/>';
+
+                    $('#riwayatTable tbody').on('click', 'tr', function () {
+                        document.location.href=urlRiwayat;
+                    });
                 }
 
                 $('#imgLoading').hide();

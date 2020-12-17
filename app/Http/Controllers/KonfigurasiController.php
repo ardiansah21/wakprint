@@ -20,8 +20,8 @@ class KonfigurasiController extends Controller
     {
         $file = $request->file('fileUpload');
         $fileName = $file->getClientOriginalName();
-        $file->move(public_path('tmp/upload'), $fileName);
-        $path = public_path('tmp/upload') . "/" . $fileName;
+        $file->move(public_path('tmp/upload/'), $fileName);
+        $path = public_path('tmp/upload/') . $fileName;
 
         $countPage = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
         // $countPage = 5;
@@ -49,9 +49,7 @@ class KonfigurasiController extends Controller
 
     public function prosesCekWarna(Request $request)
     {
-        // dd($request->path);
         if ($request->ajax()) {
-
             $pdf = cekWarnaNew(
                 $request->path,
                 $request->percenMin
@@ -344,12 +342,15 @@ class KonfigurasiController extends Controller
     public function selesaikanPesanan($idPesanan)
     {
         $pesanan = Pesanan::find($idPesanan);
+        $partner = $pesanan->partner;
         $transaksiSaldo = $pesanan->transaksiSaldo;
 
         $pesanan->status = "Selesai";
         $transaksiSaldo->status = "Berhasil";
         $transaksiSaldo->keterangan = "Pesanan telah selesai";
+        $partner->jumlah_saldo += $transaksiSaldo->jumlah_saldo;
 
+        $partner->save();
         $pesanan->save();
         $transaksiSaldo->save();
 

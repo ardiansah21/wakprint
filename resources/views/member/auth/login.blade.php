@@ -76,6 +76,10 @@
             style="border-radius:30px;font-size: 24px;">
                 {{__('Masuk dengan Facebook')}}
             </button>
+            <button class="btn btn-outline-primary btn-lg btn-block font-weight-bold mb-4"
+            style="border-radius:30px;font-size: 24px;">
+                {{__('Masuk sebagai Pengelola Percetakan')}}
+            </button>
             <label class="row justify-content-center mb-4"
             style="font-size: 18px;">
                 {{__('Belum punya akun ?')}}

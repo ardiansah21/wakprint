@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-    use Carbon\Carbon;
+        use Carbon\Carbon;
     @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <div class="row justify-content-between mb-2 ml-0 mr-0">
@@ -18,11 +18,7 @@
                 </a>
             </div>
         </div>
-        <table class="table borderless align-middle mb-5" style="font-size: 24px;
-                        table-layout: fixed;
-                        word-wrap: break-word;
-                        border-collapse: separate;
-                        border-spacing: 0 0em;">
+        <table class="table borderless align-middle mb-5" style="font-size: 24px; table-layout: fixed; word-wrap: break-word; border-collapse: separate; border-spacing: 0 0em;">
             <tbody class="ml-0 mr-0">
                 <tr class="mb-0">
                     <td class="SemiBold">
@@ -121,49 +117,7 @@
                 </tbody>
             </table>
         </div>
-        {{-- <div class="table-scrollbar mb-5 mr-0">
-            <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
-                <thead class="bg-primary-purple text-white" style="font-size: 18px;">
-                    <tr>
-                        <th scope="col-md-auto">{{ __('ID') }}</th>
-                        <th scope="col-md-auto">{{ __('File') }}</th>
-                        <th scope="col-md-auto">{{ __('Kapan') }}</th>
-                        <th scope="col-md-auto">{{ __('Biaya') }}</th>
-                        <th scope="col-md-auto">{{ __('Sisa Waktu') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($konfigurasi as $k => $value)
-                        @if (!empty($value) && $value->id_member === $member->id_member)
-                            <tr style="font-size: 14px;">
-                                <td scope="row">{{ $value->id_konfigurasi }}</td>
-                                <td><a href="#">{{ $value->nama_file }}</a></td>
-                                <td>{{ date('l, d M Y H:i', strtotime($value->waktu)) }}</td>
-                                <td>Rp. {{ $value->biaya }}</td>
-                                <td @for ($i = 0; $i < count($arrKonfigurasi); $i++)
-                                    id="sisaWaktuBayar{{ $i }}"
-                        @endfor
-                        >{{ __('1h 5m') }}
-                        <span class="material-icons md-18 align-middle text-danger ml-2">
-                            delete
-                        </span>
-                        </td>
-                        </tr>
-                    @endif
-                    @endforeach
-                    <input id="arrKonfigurasi" type="number" value="{{ count($arrKonfigurasi) }}" hidden>
-                </tbody>
-            </table>
-        </div> --}}
         <script>
-            var msg = '{{ Session::get('
-            alert ') }}';
-            var exist = '{{ Session::has('
-            alert ') }}';
-            if (exist) {
-                alert(msg);
-            }
-
             function startTimer(duration, display) {
                 var timer = duration,
                     minutes, seconds;

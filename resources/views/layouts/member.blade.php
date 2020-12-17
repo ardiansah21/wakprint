@@ -20,8 +20,6 @@
     <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}" type="text/javascript"></script>
 
@@ -205,7 +203,7 @@
             </div>
         </nav>
         @guest
-            <main style="min-height: 620px">
+            <main style="">
                 @yield('content')
             </main>
             <footer class="footer">
@@ -459,10 +457,9 @@
         @endauth
     </div>
 
-    <!-- Script -->
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/appMember.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery.jscroll.min.js') }}"></script>
@@ -471,20 +468,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-timezone-with-data-1970-2030.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script>
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix){
+                if(angka === '0'){
+                    angka = '1';
+                }
 
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/appMember.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
-    <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('/js/jquery.jscroll.min.js') }}"></script>
-    <script src="{{ asset('js/share.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment-timezone-with-data-1970-2030.js"></script>
-    
+                var number_string = angka.replace(/[^\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                if(ribuan){
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+        }
+        moment.locale('id');
+    </script>
+    @include('sweetalert::alert')
     @yield('script')
 </body>
 

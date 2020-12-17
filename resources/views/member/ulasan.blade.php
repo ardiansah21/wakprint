@@ -1,6 +1,9 @@
 @extends('layouts.member')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Ulasan') }}</h1>
         <div class="dropdown mb-4">
@@ -39,7 +42,7 @@
                                     <label class="card-text text-truncate mb-2" style="font-size: 18px;">{{$value->product->partner->nama_toko}}</label>
                                     <div class="row align-middle" style="font-size: 14px;">
                                         <div class="col-md-9 my-auto">
-                                            <label class="card-text text-muted">{{__('Dipesan pada: '.$value->pesanan->created_at->format('d M Y H:i').' WIB') }}</label>
+                                            <label class="card-text text-muted">{{__('Dipesan pada: '.Carbon::parse($value->pesanan->updated_at)->translatedFormat('d F Y H:i').' WIB') }}</label>
                                         </div>
                                         <div class="text-right col-md-3">
                                             <a href="{{ route('ulasan.ulas', ['idProduk' => $value->product->id_produk, 'idPesanan' => $value->pesanan->id_pesanan]) }}" class="btn btn-primary-wakprint btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center" style="border-radius:30px">
@@ -55,6 +58,10 @@
                 @endforeach
         </div>
     </div>
+
+@endsection
+@section('script')
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script>
 
         $('#urutkanUlasanList span').on('click', function () {
@@ -108,7 +115,7 @@
                                                 itemUlasan += '<label class="card-text text-truncate mb-2" style="font-size: 18px;">'+ulasan['arrayPartnerProduk'][i].nama_toko+'</label>';
                                                 itemUlasan += '<div class="row align-middle" style="font-size: 14px;">';
                                                     itemUlasan += '<div class="col-md-9 my-auto">';
-                                                        itemUlasan += '<label class="card-text text-muted">Diulas pada: ' + moment.tz(ulasan['ulasan'][i].created_at, "Asia/Jakarta").format('DD MMM Y hh:mm') + ' WIB </label>';
+                                                        itemUlasan += '<label class="card-text text-muted">Diulas pada: ' + moment(ulasan['ulasan'][i].updated_at).format('D MMMM Y H:mm') + ' WIB </label>';
                                                     itemUlasan += '</div>';
                                                     itemUlasan += '<div class="text-right col-md-3">';
                                                         itemUlasan += '<a href="'+ urlUlasanSaya +'" class="btn btn-primary-wakprint btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center" style="border-radius:30px">';
@@ -140,7 +147,7 @@
                                                 itemUlasan += '<label class="card-text text-truncate mb-2" style="font-size: 18px;">'+ulasan['arrayPartnerProduk'][i].nama_toko+'</label>';
                                                 itemUlasan += '<div class="row align-middle" style="font-size: 14px;">';
                                                     itemUlasan += '<div class="col-md-9 my-auto">';
-                                                        itemUlasan += '<label class="card-text text-muted">Diulas pada: ' + moment.tz(ulasan['arrayPesananUlasan'][i].created_at, "Asia/Jakarta").format('DD MMM Y hh:mm') + ' WIB </label>';
+                                                        itemUlasan += '<label class="card-text text-muted">Dipesan pada: ' + moment(ulasan['arrayPesananUlasan'][i].updated_at, ).format('DD MMMM Y H:mm') + ' WIB </label>';
                                                     itemUlasan += '</div>';
                                                     itemUlasan += '<div class="text-right col-md-3">';
                                                         itemUlasan += '<a href="'+urlUlasProduk+'" class="btn btn-primary-wakprint btn-rounded ml-1 pt-1 pb-1 pl-4 pr-4 font-weight-bold text-center" style="border-radius:30px">';
@@ -158,8 +165,14 @@
                         $('.ulasan').html(itemUlasan);
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.responseText);
-                        alert(thrownError);
+                        swal({title: "Kesalahan Sistem",
+                            text: "Maaf, terdapat kesalahan sistem mohon untuk refresh halaman Anda",
+                            icon: "warning",
+                            buttons:"OK",
+                            dangerMode: true,
+                        })
+                        // alert(xhr.responseText);
+                        // alert(thrownError);
                     }
                 });
         }

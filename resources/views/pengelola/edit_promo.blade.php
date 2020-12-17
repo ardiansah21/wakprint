@@ -117,7 +117,7 @@
                                 {{__('Rp.') }}
                             </label>
                             <div class="col-md-11 form-group mb-4">
-                                <input type="text" name="maksimal_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="300.000" aria-label="300.000" value="{{ $produk->maksimal_diskon }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
+                                <input type="text" name="maksimal_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="300.000" aria-label="300.000" value="{{ number_format($produk->maksimal_diskon,0,".",".") }}" oninput="this.value=formatRupiah(this.value,'')" aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
                             </div>
                         </div>
                         <label class="mb-2">
@@ -177,7 +177,23 @@
                         </label>
                         <div class="form-group row justify-content-left mb-2">
                             <div class="col-md-3 input-group mb-4">
-                                <input type="number" name="jumlah_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="10" aria-label="10" value="{{ $produk->jumlah_diskon * 100 }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" aria-describedby="inputGroup-sizing-sm" style="width:100%; font-size:16px;">
+                                <input type="number" name="jumlah_diskon" class="form-control form-control-lg pt-2 pb-2" min="1" max="100" placeholder="10" aria-label="10" value="{{ $produk->jumlah_diskon * 100 }}"
+                                    oninput="
+                                        if(this.value != 0){
+                                            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                            if(this.value > 100){
+                                                this.value = 100;
+                                            }
+                                        }
+                                        else{
+                                            this.value = 1;
+                                            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                            if(this.value > 100){
+                                                this.value = 100;
+                                            }
+                                        }
+                                    "
+                                    aria-describedby="inputGroup-sizing-sm" style="width:100%; font-size:16px;">
                             </div>
                             <label class="col-md-auto text-left mb-0 mr-0 ml-0 mt-2">
                                 {{__('%') }}

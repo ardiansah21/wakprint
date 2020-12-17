@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
-use App\Pengelola_Percetakan;
 use App\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,8 +12,6 @@ class PesananController extends Controller
     public function index()
     {
         $partner = Auth::user();
-        // $a = json_encode($partner->pesanan);
-        // dd($partner->pesanan->first()->where('id_pengelola', $partner->id_pengelola)->get());
         return view('pengelola.pesanan', compact('partner'));
     }
 
@@ -23,11 +20,6 @@ class PesananController extends Controller
         $partner = Auth::user();
         $pesanan = $partner->pesanan->find($idPesanan);
         $atks = json_decode($pesanan->atk_terpilih);
-
-        // function unduh(Media $mediaItem)
-        // {
-        //     return response()->download($mediaItem->getPath(), $mediaItem->file_name);
-        // }
 
         return view('pengelola.detail_pesanan_masuk', compact('pesanan', 'partner', 'atks'));
     }
@@ -39,6 +31,7 @@ class PesananController extends Controller
         $pesanan->status = "Diproses";
         $pesanan->save();
 
+        alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
         return redirect()->back();
     }
 
@@ -54,21 +47,23 @@ class PesananController extends Controller
         $pesanan->transaksiSaldo->save();
         $pesanan->save();
 
+        alert()->error('Yahh', 'Pesanan telah ditolak');
         return redirect()->route('partner.pesanan');
     }
 
     public function selesaikanPesanan($idPesanan)
     {
-        $partner = Pengelola_Percetakan::find(Auth::id());
-        $pesanan = $partner->pesanan->find($idPesanan);
-        $pesanan->status = "Selesai";
-        $pesanan->transaksiSaldo->status = "Berhasil";
-        $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
-        $partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
-        $partner->save();
-        $pesanan->transaksiSaldo->save();
-        $pesanan->save();
+        // $partner = Pengelola_Percetakan::find(Auth::id());
+        // $pesanan = $partner->pesanan->find($idPesanan);
+        // $pesanan->status = "Selesai";
+        // $pesanan->transaksiSaldo->status = "Berhasil";
+        // $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
+        // $partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
+        // $partner->save();
+        // $pesanan->transaksiSaldo->save();
+        // $pesanan->save();
 
+        alert()->success('Pesanan Selesai Dicetak', 'Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan');
         return redirect()->route('partner.pesanan');
     }
 

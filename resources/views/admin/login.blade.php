@@ -69,7 +69,6 @@
                             </div>
                     </div>
                 </div>
-                
                 <div class="form-group mb-4 mt-4">
                     <button type="submit"class="btn btn-primary-wakprint btn-block SemiBold"
                         style="font-size: 22px;">
@@ -79,4 +78,16 @@
             </form>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script>
+        $("body").on('click', '.toggle-password', function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $("#password");
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+    </script>
 @endsection

@@ -209,16 +209,22 @@
                                 </label>
                                 <br>
                                 @php
-                                    $jumlahDiskonGray = session()->get('produkKonfigurasiFile')->harga_hitam_putih * session()->get('produkKonfigurasiFile')->jumlah_diskon;
-                                    $jumlahDiskonWarna = session()->get('produkKonfigurasiFile')->harga_berwarna * session()->get('produkKonfigurasiFile')->jumlah_diskon;
-
-                                    if($jumlahDiskonGray > session()->get('produkKonfigurasiFile')->maksimal_diskon){
-                                        $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - session()->get('produkKonfigurasiFile')->maksimal_diskon;
-                                        $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+                                    if(session()->get('produkKonfigurasiFile')->status_diskon != "Tersedia"){
+                                        $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih;
+                                        $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna;
                                     }
                                     else{
-                                        $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - $jumlahDiskonGray;
-                                        $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - $jumlahDiskonWarna;
+                                        $jumlahDiskonGray = session()->get('produkKonfigurasiFile')->harga_hitam_putih * session()->get('produkKonfigurasiFile')->jumlah_diskon;
+                                        $jumlahDiskonWarna = session()->get('produkKonfigurasiFile')->harga_berwarna * session()->get('produkKonfigurasiFile')->jumlah_diskon;
+
+                                        if($jumlahDiskonGray > session()->get('produkKonfigurasiFile')->maksimal_diskon){
+                                            $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+                                            $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+                                        }
+                                        else{
+                                            $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - $jumlahDiskonGray;
+                                            $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - $jumlahDiskonWarna;
+                                        }
                                     }
                                 @endphp
                                 <div class="row justify-content-between ml-0 mr-0">
@@ -335,6 +341,7 @@
                 <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="" hidden />
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
+
                         $(function(){
                         $(document).ready(function () {
                                 $.ajaxSetup({
@@ -346,7 +353,7 @@
                                     type: 'GET',
                                     url: '{{route("konfigurasi.cekwarna")}}',
                                     data: {
-                                        path:"{{(session()->get('fileUpload'))->path}}",
+                                        path:"{{str_replace('\\', '/', (session()->get('fileUpload'))->path)}}",
                                         percenMin:"{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}",
                                         idProduk:"{{session()->get('produkKonfigurasiFile')->id_produk}}",
                                         namaFile:"{{(session()->get('fileUpload'))->name}}",
@@ -395,8 +402,8 @@
                                         var halamanAkhir = parseInt($('#halamanAkhir').val());
                                         var jumlahSalinan = parseInt($('#jumlahSalin').val());
                                         var nilaiSemuaHalaman = $('#semuaHal').val();
-                                        var hargaHitamPutih = '{{(session()->get('produkKonfigurasiFile'))->harga_hitam_putih}}';
-                                        var hargaBerwarna = '{{(session()->get('produkKonfigurasiFile'))->harga_berwarna}}';
+                                        var hargaHitamPutih = '{{$hargaHitamPutih}}';
+                                        var hargaBerwarna = '{{$hargaBerwarna}}';
                                         var hargaHitamPutihTimbalBalik = '{{(session()->get('produkKonfigurasiFile'))->harga_timbal_balik_hitam_putih}}';
                                         var hargaBerwarnaTimbalBalik = '{{(session()->get('produkKonfigurasiFile'))->harga_timbal_balik_berwarna}}';
                                         var nilaiPaksaHitamPutih = parseInt(pdf['jumlahHalBerwarna'] + pdf['jumlahHalHitamPutih']);

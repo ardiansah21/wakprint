@@ -66,7 +66,12 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a id="logo" class="navbar-brand wakprint" href="/partner"
+                <a id="logo" class="navbar-brand wakprint"
+                    @if (empty(Auth::user()->email_verified_at))
+                        href="/partner/login"
+                    @else
+                        href="/partner"
+                    @endif
                     style="font-size: 24px;">{{ __('Wakprint') }}</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
                     data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
@@ -253,6 +258,7 @@
             @endauth
         </main>
     </div>
+    @include('sweetalert::alert')
 </body>
 
 
@@ -267,6 +273,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+<script>
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix){
+            if(angka === '0'){
+                angka = '1';
+            }
+
+            var number_string = angka.replace(/[^\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if(ribuan){
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+    }
+    moment.locale('id');
+</script>
 
 @yield('script')
 

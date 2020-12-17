@@ -134,6 +134,9 @@
             </form>
         @endswitch
     </div>
+@endsection
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script>
         $(document).ready(function() {
             $('input[type=radio]').each(function(index, value) {
@@ -150,6 +153,5 @@
                 });
             });
         });
-
     </script>
 @endsection

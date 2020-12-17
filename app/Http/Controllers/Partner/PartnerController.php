@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,8 +17,6 @@ class PartnerController extends Controller
     public function index()
     {
         $partner = Auth::user();
-        // $pesanan = $partner->pesanan;
-        // dd($pesanan->first()->status);
         $arrTotalPelanggan = array();
         $arrJumlahDokumen = array();
 
@@ -57,9 +54,7 @@ class PartnerController extends Controller
         $partner = Pengelola_Percetakan::find(Auth::id());
 
         $jamBuka = $request->jambuka;
-        // $jamBuka->format('H');
         $menitBuka = $request->menitbuka;
-        // $menitBuka->format('i');
         $jamTutup = $request->jamtutup;
         $menitTutup = $request->menittutup;
 
@@ -67,6 +62,11 @@ class PartnerController extends Controller
             'AmbilDiTempat' => $request->ambiltempat,
             'AntarKeTempat' => $request->antartempat,
         );
+
+        if ($jamBuka > 24 || $jamTutup > 24) {
+            alert()->error('Maaf', 'Terdapat kesalahan format pada jam operasional percetakan Anda, silahkan periksa kembali yah');
+            return redirect()->back();
+        }
 
         $opBuka = date_create("$jamBuka:$menitBuka");
         $opTutup = date_create("$jamTutup:$menitTutup");
@@ -110,7 +110,7 @@ class PartnerController extends Controller
             }
         }
 
-        return redirect()->route('partner.profile')->with('alert', 'Profil berhasil diubah');
+        return redirect()->route('partner.profile')->with('success', 'Profil berhasil diubah');
     }
 
     public function riwayatTransaksi($id)
@@ -150,19 +150,19 @@ class PartnerController extends Controller
     public function storeTarikSaldo(Request $request)
     {
         $partner = Pengelola_Percetakan::find(Auth::id());
-        $jumlahSaldo = $request->jumlah_saldo;
+        $jumlahSaldo = (int) str_replace('.', '', $request->jumlah_saldo);
 
         if ($partner->jumlah_saldo <= 0) {
-            return redirect()->route('partner.saldo')->with('alert', 'Saldo Anda Kosong !');
+            alert()->error('Maaf', 'Saldo Anda kosong');
+            return redirect()->route('partner.saldo');
         } else if ($jumlahSaldo > $partner->jumlah_saldo) {
-            return redirect()->route('partner.saldo')->with('alert', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
+            alert()->error('Maaf', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
+            return redirect()->route('partner.saldo');
         } else {
             $jenisTransaksi = 'Tarik';
-            // $partner->jumlah_saldo = $partner->jumlah_saldo - $jumlahSaldo;
             $kodePembayaran = Str::random(20);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
-            $waktu = Carbon::now()->format('Y:m:d H:i:s');
 
             Transaksi_saldo::create([
                 'id_pengelola' => $partner->id_pengelola,
@@ -173,9 +173,7 @@ class PartnerController extends Controller
                 'keterangan' => $keterangan,
             ]);
 
-            // $partner->save();
-
-            return redirect()->route('partner.saldo')->with('alert', 'Penarikan Saldo Anda Sedang Diproses');
+            return redirect()->route('partner.saldo')->with('success', 'Penarikan Saldo Anda Sedang Diproses');
         }
     }
 
@@ -189,12 +187,23 @@ class PartnerController extends Controller
         if ($request->ajax()) {
             if ($request->jenisDana === 'Dana Masuk') {
                 if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Pembayaran')
-                        ->where('id_pengelola', '=', $request->idPartner)
-                        ->where('status', '!=', null)
-                        ->where('updated_at', '=', $request->tanggalAwal)
-                        ->orWhere('updated_at', '=', $request->tanggalAkhir)
-                        ->get();
+                    if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
+                            ->where('jenis_transaksi', 'Tarik')
+                            ->orWhere('jenis_transaksi', 'Pembayaran')
+                            ->where('status', '!=', null)
+                            ->where('updated_at', $request->tanggalAwal)
+                            ->orWhere('updated_at', $request->tanggalAkhir)
+                            ->get();
+                    } else {
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
+                            ->where('jenis_transaksi', null)
+                            ->orWhere('jenis_transaksi', null)
+                            ->where('status', '!=', null)
+                            ->where('updated_at', null)
+                            ->orWhere('updated_at', null)
+                            ->get();
+                    }
                 } else {
                     $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Pembayaran')
                         ->where('id_pengelola', '=', $request->idPartner)
@@ -203,12 +212,23 @@ class PartnerController extends Controller
                 }
             } else if ($request->jenisDana === 'Dana Keluar') {
                 if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
-                        ->where('id_pengelola', '=', $request->idPartner)
-                        ->where('status', '!=', null)
-                        ->where('updated_at', '=', $request->tanggalAwal)
-                        ->orWhere('updated_at', '=', $request->tanggalAkhir)
-                        ->get();
+                    if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
+                            ->where('jenis_transaksi', 'Tarik')
+                            ->orWhere('jenis_transaksi', 'Pembayaran')
+                            ->where('status', '!=', null)
+                            ->where('updated_at', $request->tanggalAwal)
+                            ->orWhere('updated_at', $request->tanggalAkhir)
+                            ->get();
+                    } else {
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
+                            ->where('jenis_transaksi', null)
+                            ->orWhere('jenis_transaksi', null)
+                            ->where('status', '!=', null)
+                            ->where('updated_at', null)
+                            ->orWhere('updated_at', null)
+                            ->get();
+                    }
                 } else {
                     $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
                         ->where('id_pengelola', '=', $request->idPartner)
@@ -217,12 +237,23 @@ class PartnerController extends Controller
                 }
             } else {
                 if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
-                        ->where('jenis_transaksi', '!=', 'TopUp')
-                        ->where('status', '!=', null)
-                        ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                    if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
+                            ->where('jenis_transaksi', 'Tarik')
+                            ->orWhere('jenis_transaksi', 'Pembayaran')
+                            ->where('status', '!=', null)
+                            ->where('updated_at', $request->tanggalAwal)
+                            ->orWhere('updated_at', $request->tanggalAkhir)
+                            ->get();
+                    } else {
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
+                            ->where('jenis_transaksi', null)
+                            ->orWhere('jenis_transaksi', null)
+                            ->where('status', '!=', null)
+                            ->where('updated_at', null)
+                            ->orWhere('updated_at', null)
+                            ->get();
+                    }
                 } else {
                     $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->idPartner)
                         ->where('jenis_transaksi', '!=', 'TopUp')
@@ -251,7 +282,7 @@ class PartnerController extends Controller
         $partner = Pengelola_Percetakan::find(Auth::id());
         $partner->status_toko = $status;
         $partner->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Percetakan Anda telah ' . $status);
     }
 
     public function storeMedia(Request $request)

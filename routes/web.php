@@ -128,6 +128,12 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
     Route::get('register', 'Auth\RegisterController@showRegisterPage')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
 
+//partner Password Reset routes
+    Route::post('/password/email', 'Auth\PartnerForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::post('/password/reset', 'Auth\PartnerResetPasswordController@reset')->name('password.update');
+    Route::get('/password/reset', 'Auth\PartnerForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::get('/password/reset/{token}', 'Auth\PartnerResetPasswordController@showResetForm')->name('password.reset');
+
     Route::get('pengujian', 'PartnerController@pengujianDeteksiWarna')->name('pengujian');
 
     Route::middleware('auth:partner')->group(function () {
@@ -158,9 +164,6 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
 
         Route::get('promo/create/search', 'PromoController@search')->name('promo.search');
         Route::resource('promo', 'PromoController');
-        // Route::controller('promo', 'PromoController');
-        // Route::get('promo', 'PromoController@index')->name('promo.index');
-        // Route::get('promo/create', 'PromoController@create')->name('promo.create');
         Route::post('promo/store/create', 'PromoController@storeCreate')->name('promo.store.create');
         Route::post('promo/store/update/{id}', 'PromoController@update')->name('promo.store.update');
 

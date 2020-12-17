@@ -53,12 +53,6 @@
                     star
                 </i>
                 {{ round($ratingPartner, 1) }} / 5
-                {{-- {{ $produk->partner->rating_toko }} / 5 --}}
-                {{-- @foreach ($produk as $p)
-                    --}}
-                    {{-- {{ collect([$produk->rating])->avg() }} / 5
-                    --}}
-                    {{-- @endforeach --}}
             </label>
             @if ($produk->partner->ambil_di_tempat === 0 && $produk->partner->antar_ke_tempat === 0)
                 <label class="mr-4" style="font-size: 18px;" hidden>
@@ -181,30 +175,19 @@
                                     <i class="material-icons md-28 text-primary-purple">
                                         chevron_left
                                     </i>
-                                    {{-- <span class="carousel-control-prev-icon"
-                                        aria-hidden="true"></span> --}}
                                 </a>
                             </div>
                             <div id="foto-percetakan-carousel"
                                 class="col-md-9 owl-carousel owl-theme owl-loaded owl-drag owl-loading">
-                                {{-- @if (count($produk->getMedia('foto_produk')) > 0)
-                                    --}}
-                                    @foreach ($produk->partner->getMedia('foto_percetakan') as $p => $value)
-                                        <img id="klikFotoPercetakan{{ $p }}"
-                                            class="img-responsive imgPercetakan cursor-pointer" src="{{ $value->getUrl() }}"
-                                            alt="no picture" onclick="changeFotoPercetakan(this.src)"
-                                            style="width:50px; height:50px; object-fit:cover;" />
-                                    @endforeach
-                                    {{--
-                                @endif --}}
+                                @foreach ($produk->partner->getMedia('foto_percetakan') as $p => $value)
+                                    <img id="klikFotoPercetakan{{ $p }}" class="img-responsive imgPercetakan cursor-pointer" src="{{ $value->getUrl() }}" alt="no picture" onclick="changeFotoPercetakan(this.src)" style="width:50px; height:50px; object-fit:cover;" />
+                                @endforeach
                             </div>
                             <div class="col-md-1 owl-nav align-self-center">
                                 <a class="foto-percetakan-next cursor-pointer" role="presentation">
                                     <i class="material-icons md-28 text-primary-purple">
                                         chevron_right
                                     </i>
-                                    {{-- <span class="carousel-control-next-icon"
-                                        aria-hidden="true"></span> --}}
                                 </a>
                             </div>
                         </div>
@@ -298,7 +281,7 @@
                                         </div>
                                         <div class="col-md-4 text-right">
                                             <label class="mb-2">
-                                                Rp. {{ $a->harga }}
+                                                {{ rupiah($a->harga) }}
                                             </label>
                                         </div>
                                     </div>
@@ -365,10 +348,6 @@
                                                 style="background:transparent;"></button>
                                         @endif
                                     @endauth
-                                    {{-- <button type="submit"
-                                        class="btn fa fa-heart fa-2x fa-responsive cursor-pointer mr-4"
-                                        style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
-                                    --}}
                                 </form>
                                 <a class="social-button"
                                     href="https://www.facebook.com/sharer/sharer.php?u=https://wakprint.com/produk/detail/{{ $produk->id_produk }}"
@@ -451,30 +430,26 @@
                             <br>
                             @if (!empty($produk->jumlah_diskon))
                                 <label class="text-break font-weight-bold mb-2" style="font-size: 20px;">
-                                    Rp. <del>{{ $produk->harga_hitam_putih ?? '-' }}</del> {{ $hargaHitamPutih ?? '-' }} /
-                                    Hal
-                                    (Hitam-Putih)
+                                    <del style="font-size: 16px;">{{ rupiah($produk->harga_hitam_putih) ?? '-' }}</del> {{ rupiah($hargaHitamPutih) ?? '-' }} / Hal (Hitam-Putih)
                                 </label>
                                 <br>
                                 @if (!empty($produk->harga_berwarna))
-                                    <label class="text-break text-primary-purple font-weight-bold mb-2"
-                                        style="font-size: 20px;">
-                                        Rp. <del>{{ $produk->harga_berwarna ?? '-' }}</del> {{ $hargaBerwarna ?? '-' }} /
-                                        Hal (Berwarna)
+                                    <label class="text-break text-primary-purple font-weight-bold mb-2" style="font-size: 20px;">
+                                        <del style="font-size: 16px;">{{ rupiah($produk->harga_berwarna) ?? '-' }}</del> {{ rupiah($hargaBerwarna) ?? '-' }} / Hal (Berwarna)
                                     </label>
                                 @endif
                             @elseif(!empty($produk->harga_berwarna))
                                 <label class="text-break font-weight-bold mb-2" style="font-size: 20px;">
-                                    Rp. {{ $produk->harga_hitam_putih ?? '-' }} / Hal (Hitam-Putih)
+                                    {{ rupiah($produk->harga_hitam_putih) ?? '-' }} / Hal (Hitam-Putih)
                                 </label>
                                 <br>
                                 <label class="text-break text-primary-purple font-weight-bold mb-4"
                                     style="font-size: 20px;">
-                                    Rp. {{ $produk->harga_berwarna ?? '-' }} / Hal (Warna)
+                                    {{ rupiah($produk->harga_berwarna) ?? '-' }} / Hal (Warna)
                                 </label>
                             @else
                                 <label class="text-break font-weight-bold mb-2" style="font-size: 20px;">
-                                    Rp. {{ $produk->harga_hitam_putih ?? '-' }} / Hal (Hitam-Putih)
+                                    {{ rupiah($produk->harga_hitam_putih) ?? '-' }} / Hal (Hitam-Putih)
                                 </label>
                             @endif
                         </div>
@@ -487,7 +462,7 @@
                                     help
                                 </i>
                                 <label class="col-md-4 text-break text-right SemiBold mb-2" style="font-size: 14px;">
-                                    Rp. {{ $produk->harga_timbal_balik_hitam_putih }} / Hal
+                                    {{ rupiah($produk->harga_timbal_balik_hitam_putih) }} / Hal
                                 </label>
                             @endif
                         </div>
@@ -501,7 +476,7 @@
                                 </i>
                                 <label class="col-md-4 text-break text-right text-primary-purple SemiBold mb-2"
                                     style="font-size: 14px;">
-                                    Rp. {{ $produk->harga_timbal_balik_berwarna }} / Hal
+                                    {{ rupiah($produk->harga_timbal_balik_berwarna) }} / Hal
                                 </label>
                             @endif
                         </div>
@@ -520,7 +495,7 @@
                                     </i>
                                     <label class="col-md-5 text-break text-right font-weight-bold mb-2"
                                         style="font-size: 14px;">
-                                        + Rp. {{ $value['harga'] }} / Hal
+                                        + {{ rupiah($value['harga']) }}
                                     </label>
                                 @endforeach
                             </div>
@@ -562,14 +537,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            var msg = '{{ Session::get('
-            alert ') }}';
-            var exist = '{{ Session::has('
-            alert ') }}';
-            if (exist) {
-                alert(msg);
-            }
-
             var fotoProdukCarousel = $("#foto-produk-carousel");
             var fotoPercetakanCarousel = $("#foto-percetakan-carousel");
 
@@ -627,10 +594,6 @@
             document.getElementById('fotoPercetakanUtama').src = src;
             document.getElementById('linkFotoPercetakan').href = src;
         }
-
-        // $('#shareProduk').on('click',function(){
-        //     window.location = "http://www.url-to-real-shared-page";
-        // });
 
     </script>
 @endsection

@@ -23,7 +23,7 @@
             </div>
             <div class="form-group mb-0">
                 <label for="password" class="">{{ __('Password') }}</label>
-                <div>
+                <div class="input-group">
                     <input id="password" type="password" class="form-control form-control-lg
                         @error('password')
                         is-invalid
@@ -33,6 +33,15 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-white"
+                            style="border-radius: 0px 5px 5px 0px;">
+                            <i id="togglePassword"
+                                toggle="#password-field"
+                                class="fa fa-fw fa-eye field_icon toggle-password">
+                            </i>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="form-group text-right mb-5">
@@ -61,6 +70,14 @@
                 style="border-radius:30px;font-size: 24px;">
                 {{__('Masuk dengan Facebook')}}
             </button>
+            <label class="row justify-content-center mb-0" style="font-size: 18px; text-align:center">
+                {{__('Atau')}}
+            </label>
+            <br>
+            <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold mb-4" onclick="window.location.href='partner/login'"
+                style="border-radius:30px;font-size: 24px;">
+                {{__('Masuk sebagai Pengelola Percetakan')}}
+            </button>
             <label class="row justify-content-center mb-4" style="font-size: 18px;">
                 {{__('Belum punya akun ?')}}
                 <a class="text-primary-purple ml-2" href="{{ route('register') }}">
@@ -70,6 +87,17 @@
         </div>
     </div>
 </div>
+<script>
+    $("body").on('click', '.toggle-password', function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $("#password");
+        if (input.attr("type") === "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
 @endsection
 
 {{-- @extends('layouts.app')

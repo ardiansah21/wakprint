@@ -133,7 +133,7 @@
                             >color_lens</i
                         >
                         <label
-                            class="card-text SemiBold text-white my-auto mr-2"
+                            class="card-text SemiBold text-primary-yellow my-auto mr-2"
                             style="font-size: 16px"
                         >
                             <del
@@ -146,7 +146,7 @@
                         </label>
                         <label
                             v-show="this.produk.status_diskon === 'Tersedia'"
-                            class="card-text SemiBold text-white my-auto mr-2"
+                            class="card-text SemiBold text-primary-yellow my-auto mr-2"
                             style="font-size: 16px"
                             >{{ harga_berwarna_diskon }}</label
                         >

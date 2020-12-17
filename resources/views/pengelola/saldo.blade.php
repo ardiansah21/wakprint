@@ -122,31 +122,9 @@
 
 @section('script')
     <script>
-        var msg = "{{ Session::get('alert') }}";
-        var exist = "{{ Session::has('alert') }}";
         var tanggalAwal = null;
         var tanggalAkhir = null;
 
-        if (exist) {
-            if(msg === 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !' || msg === 'Saldo Anda Kosong !'){
-                swal({title: "Konfirmasi Tarik Saldo Anda",
-                    text: msg,
-                    icon: "warning",
-                    buttons: "OK",
-                    dangerMode: true,
-                });
-            }
-            else{
-                swal({title: "Konfirmasi Tarik Saldo Anda",
-                    text: msg,
-                    icon: "success",
-                    buttons: "OK",
-                    dangerMode: false,
-                });
-            }
-
-            // alert(msg);
-        }
         $('#jenisDanaList span').on('click', function() {
             $('#jenisDanaButton').text($(this).text());
             $('#keyword_jenis_transaksi').val($(this).text());
@@ -203,7 +181,6 @@
                 dataType:'json',
 
                 beforeSend:function(){
-                    $('.tbodySaldo').css('color', '#dfecf6');
                     $('.tbodySaldo').html('<div><img class="mx-auto" id="imgLoading" style="position:relative; left:400%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
                 },
                 uploadProgress: function () {
@@ -211,9 +188,6 @@
                 },
                 success:function(transaksiSaldo)
                 {
-                    // var newDate = new Date(data.tanggalAwal);
-                    // alert(newDate);
-                    // alert(data.tanggalAwal);
                     var rowListSaldo = '';
                     for(i = 0; i < transaksiSaldo['transaksiSaldo'].length;i++){
                         rowListSaldo += '<tr>';
@@ -232,7 +206,6 @@
                     }
 
                     $('#imgLoading').hide();
-                    $('.tbodySaldo').css('color', '#000000');
                     $('.tbodySaldo').html(rowListSaldo);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
