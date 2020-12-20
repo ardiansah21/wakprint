@@ -98,8 +98,7 @@
             </div>
             @if (!empty($partner->email_verified_at))
                 <div class="text-right mr-0">
-                    <label class="col-auto btn btn-primary-wakprint btn-lg font-weight-bold pl-5 pr-5"
-                        style="border-radius:30px; font-size:18px;">
+                    <label class="col-auto badge badge-pill bg-primary-purple text-white font-weight-bold pl-5 pr-5 mb-0" style="opacity: 0.7; border-radius:30px; border: 1px solid #BC41BE; padding-top:12px; padding-bottom:12px; font-size:18px;">
                         {{ __('Disetujui') }}
                     </label>
                 </div>

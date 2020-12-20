@@ -1,82 +1,5 @@
 @extends('layouts.pengelola')
 
-
-{{-- @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Partner {{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('partner.register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="nama" class="col-md-4 col-form-label text-md-right">{{ __('nama') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="nama" type="text" class="form-control{{ $errors->has('nama') ? ' is-invalid' : '' }}" name="nama" value="{{ old('nama') }}" required autofocus>
-
-                                @if ($errors->has('nama'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nama') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}
-
 @section('content')
     <div class="container">
         <div class="card shadow col-md-6 mx-auto pt-4 pl-4 pr-4 mt-5 mb-5"
@@ -97,7 +20,7 @@
                     <br>
                     <input id="nama"
                         type="text"
-                        class="form-control form-control-lg {{ $errors->has('nama') ? ' is-invalid' : '' }}" 
+                        class="form-control form-control-lg {{ $errors->has('nama') ? ' is-invalid' : '' }}"
                         placeholder="Masukkan Nama Lengkap Anda"
                         name="nama"
                         value="{{ old('nama') }}"
@@ -134,7 +57,7 @@
                     </label>
                     <input id="nomor_hp"
                         type="nomor_hp"
-                        class="form-control form-control-lg {{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" 
+                        class="form-control form-control-lg {{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}"
                         name="nomor_hp"
                         value="{{ old('nomor_hp') }}"
                         autocomplete="nomor_hp"
@@ -178,11 +101,11 @@
                         <label for="nomor_rekening"
                             class="mb-2">
                             {{__('Nomor Rekening')}}
-                        </label> 
+                        </label>
                         <input id="nomor_rekening"
                                 type="text"
                                 name="nomor_rekening"
-                                value="{{ old('nomor_rekening') }}" 
+                                value="{{ old('nomor_rekening') }}"
                                 class="form-control form-control-lg {{ $errors->has('nomor_rekening') ? ' is-invalid' : '' }}"
                                 placeholder="Masukkan Nomor Rekening Anda"
                                 >
@@ -197,12 +120,12 @@
                     <label for="nama_toko"
                         class="mb-2">
                         {{__('Nama Tempat Percetakan')}}
-                    </label> 
+                    </label>
                     <div class="mb-3">
                         <input id="nama_toko"
                             type="text"
                             name="nama_toko"
-                            value="{{ old('nama_toko') }}" 
+                            value="{{ old('nama_toko') }}"
                             class="form-control form-control-lg {{ $errors->has('nama_toko') ? ' is-invalid' : '' }}"
                             placeholder="Masukkan Nama Tempat Percetakan Anda"
                             >
@@ -217,11 +140,11 @@
                     <label for="deskripsi_toko"
                         class="mb-2">
                         {{__('Deskripsi Tempat Percetakan')}}
-                    </label> 
+                    </label>
                     <div class="mb-3">
                         <textarea id="deskripsi_toko"
                             type="text"
-                            name="deskripsi_toko" 
+                            name="deskripsi_toko"
                             class="form-control form-control-lg {{ $errors->has('deskripsi_toko') ? ' is-invalid' : '' }}"
                             placeholder="Masukkan Deskripsi Percetakan Anda"
                             >{{ old('deskripsi_toko') }}</textarea>
@@ -236,7 +159,7 @@
                     <label for="alamat_percetakan"
                         class="mb-2">
                         {{__('Alamat Tempat Percetakan')}}
-                    </label> 
+                    </label>
                     <div class="mb-3">
                         <textarea id="alamat_toko"
                             type="text"
@@ -257,9 +180,9 @@
                     <div class="input-group mb-3">
                         <input id="password"
                             type="password"
-                            class="form-control form-control-lg {{ $errors->has('password') ? ' is-invalid' : '' }}" 
+                            class="form-control form-control-lg {{ $errors->has('password') ? ' is-invalid' : '' }}"
                             name="password"
-                            
+
                             autocomplete="new-password"
                             data-toggle="password"
                             placeholder="Masukkan Kata Sandi">
@@ -271,9 +194,9 @@
                         <div class="input-group-append">
                             <span class="input-group-text bg-white"
                                 style="border-radius: 0px 5px 5px 0px;">
-                                <i id="togglePassword" 
-                                toggle="#password-field" 
-                                class="fa fa-fw fa-eye field_icon toggle-password">
+                                <i id="togglePassword"
+                                toggle="#password-field"
+                                class="fa fa-fw fa-eye field_icon toggle-password1">
                                 </i>
                             </span>
                         </div>
@@ -285,8 +208,7 @@
                         {{__('Konfirmasi Password')}}
                     </label>
                     <div class="input-group mb-3">
-                        <input id="password_confirmation" 
-                            
+                        <input id="password_confirmation"
                             type="password"
                             name="password_confirmation"
                             class="form-control form-control-lg {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
@@ -303,7 +225,7 @@
                                     style="border-radius: 0px 5px 5px 0px;">
                                     <i id="togglePassword"
                                         toggle="#password-field"
-                                        class="fa fa-fw fa-eye field_icon toggle-password">
+                                        class="fa fa-fw fa-eye field_icon toggle-password2">
                                     </i>
                                 </span>
                             </div>
@@ -315,7 +237,7 @@
                             type="checkbox"
                             name="termsCheck"
                             class="form-check-input custom-control-input"
-                            
+
                             autofocus>
                         <label for="termsCheck"
                             class="form-check-label custom-control-label"
@@ -342,4 +264,24 @@
             </form>
         </div>
     </div>
+    <script>
+        $("body").on('click', '.toggle-password1', function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var inputPassword = $("#password");
+            if (inputPassword.attr("type") === "password") {
+                inputPassword.attr("type", "text");
+            } else {
+                inputPassword.attr("type", "password");
+            }
+        });
+        $("body").on('click', '.toggle-password2', function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var inputKonfirmasiPassword = $("#password_confirmation");
+            if (inputKonfirmasiPassword.attr("type") === "password") {
+                inputKonfirmasiPassword.attr("type", "text");
+            } else {
+                inputKonfirmasiPassword.attr("type", "password");
+            }
+        });
+    </script>
 @endsection

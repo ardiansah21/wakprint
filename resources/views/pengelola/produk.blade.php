@@ -31,7 +31,7 @@
                                                     color_lens
                                                 </i>
                                                 <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
+                                                    {{rupiah($p->harga_hitam_putih) ?? '-'}}
                                                 </label>
                                                 <br>
                                                 @if (!empty($p->harga_berwarna))
@@ -40,7 +40,7 @@
                                                     </i>
                                                     <label class="card-text SemiBold text-primary-yellow my-auto mr-2"
                                                         style="font-size: 16px;">
-                                                        Rp. {{$p->harga_berwarna}}
+                                                        {{rupiah($p->harga_berwarna)}}
                                                     </label>
                                                     @else
                                                     <i class="material-icons md-24 text-primary-yellow align-middle mr-2">
@@ -132,4 +132,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+
+    </script>
 @endsection

@@ -71,7 +71,13 @@
                                                         </label>
                                                 @else
                                                     <span>
-                                                        <a onclick="window.location.href='{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}'" text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
+                                                        <a 
+                                                            @if (request()->fromOrder == true)
+                                                                onclick="window.location.href='{{route('alamat.pilih',[$member->alamat['alamat'][$i]['id'],'fromOrder' => 'true'])}}'"
+                                                            @else
+                                                                onclick="window.location.href='{{route('alamat.pilih',$member->alamat['alamat'][$i]['id'])}}'"
+                                                            @endif
+                                                            text-decoration="none" class="material-icons text-decoration-none cursor-pointer mr-2" style="color: #BC41BE;">
                                                             check_circle
                                                         </a>
                                                     </span>

@@ -16,6 +16,7 @@
                     <th class="align-middle" scope="col-md-auto">{{__('Produk')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Jumlah Diskon')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Maksimal Diskon')}}</th>
+                    <th class="align-middle" scope="col-md-auto">{{__('Tanggal Mulai')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Tanggal Berakhir')}}</th>
                     <th class="align-middle" scope="col-md-auto"></th>
                 </tr>
@@ -28,6 +29,7 @@
                             <td>{{$p->nama}}</td>
                             <td>{{$p->jumlah_diskon * 100}} %</td>
                             <td>{{rupiah($p->maksimal_diskon)}}</td>
+                            <td>{{Carbon::parse($p->mulai_waktu_diskon)->translatedFormat('d F Y')}}</td>
                             <td>{{Carbon::parse($p->selesai_waktu_diskon)->translatedFormat('d F Y')}}</td>
                             <td>
                                 <a href="{{ route('partner.promo.edit',$p->id_produk) }}" style="margin-left: -50px;">

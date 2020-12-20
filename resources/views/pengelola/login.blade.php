@@ -111,8 +111,8 @@
                     </div>
                 </div>
                 <div class="form-group text-right mb-5">
-                    @if (Route::has('password.request'))
-                        <a class="text-primary-purple ml-0" href="{{ route('password.request') }}" style="font-size: 14px;">
+                    @if (Route::has('partner.password.request'))
+                        <a class="text-primary-purple ml-0" href="{{ route('partner.password.request') }}" style="font-size: 14px;">
                             {{__('Lupa kata sandi ?') }}
                         </a>
                     @endif
@@ -131,4 +131,15 @@
             </form>
         </div>
     </div>
+    <script>
+        $("body").on('click', '.toggle-password', function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $("#password");
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+    </script>
 @endsection

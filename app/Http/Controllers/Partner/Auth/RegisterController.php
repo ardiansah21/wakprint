@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Partner\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use App\Pengelola_Percetakan;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -25,7 +22,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -48,7 +45,7 @@ class RegisterController extends Controller
 
     public function showRegisterPage()
     {
-            return view('pengelola.register');
+        return view('pengelola.register');
     }
 
     /**
@@ -90,11 +87,11 @@ class RegisterController extends Controller
             'nomor_rekening' => $data['nomor_rekening'],
             'nama_toko' => $data['nama_toko'],
             'deskripsi_toko' => $data['deskripsi_toko'],
-            'alamat_toko' => json_encode($data['alamat_toko'])
+            'alamat_toko' => json_encode($data['alamat_toko']),
         ]);
     }
 
-    protected function guard() 
+    protected function guard()
     {
         return Auth::guard('partner');
     }
@@ -106,9 +103,14 @@ class RegisterController extends Controller
         event(new Registered($partner = $this->create($request->all())));
 
         $this->guard()->login($partner);
-        
+
+        if (empty($this->guard()->user()->email_verified_at)) {
+            alert()->info('Menunggu Konfirmasi', 'Akun Anda telah berhasil dibuat, silahkan tunggu verifikasi akun Anda dari Admin kami yah');
+            return redirect()->back();
+        }
+
         return $request->wantsJson()
-                    ? new Response('', 201)
-                    : redirect($this->redirectPath());
+        ? new Response('', 201)
+        : redirect($this->redirectPath());
     }
 }

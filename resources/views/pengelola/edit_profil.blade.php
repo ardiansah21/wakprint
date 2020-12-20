@@ -11,16 +11,12 @@
         <label class="mb-2" style="font-size: 16px;">
             {{__('Foto Tempat Percetakan') }}
         </label>
-
         <div class="needsclick dropzone mb-3" id="document-dropzone"
             style=" border:1px solid #EBD1EC; border-radius:10px; color: #BC41BE; background-color:#EBD1EC;">
             <div class="dz-message" data-dz-message style="font-size: 18px;">
                 <span>{{__('Klik atau Tarik Foto Percetakan Anda Disini') }}</span>
             </div>
         </div>
-
-        {{-- <div class="scrolling-wrapper mb-0"> --}}
-
         <div class="row justify-content-left" hidden style="height:200px;">
             <div class="col-md-auto" style="position: relative">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
@@ -45,8 +41,6 @@
                 </button>
             </div>
         </div>
-        {{-- </div> --}}
-
         <label class="mb-2">
             {{__('Nama Tempat Percetakan') }}
         </label>
@@ -83,19 +77,25 @@
         <br>
         <label class="mb-4">
             {{__('Buka') }}
-            <input type="datetime" maxlength="2" value="{{ date_create("$partner->jam_op_buka")->format('H')}}"
+            <input type="datetime-local" maxlength="2"
+                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
+                value="{{ date_create("$partner->jam_op_buka")->format('H')}}"
                 class="form-input mr-2 ml-2" name="jambuka" style="width:48px;
                     font-size: 16px;">
             :
-            <input type="datetime" name="menitbuka" maxlength="2"
-                value="{{ date_create("$partner->jam_op_buka")->format('i')}}" class="form-input mr-2 ml-2" style="width:48px;
+            <input type="datetime-local" name="menitbuka" maxlength="2"
+                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
+                value="{{ date_create("$partner->jam_op_buka")->format('i')}}"
+                class="form-input mr-2 ml-2" style="width:48px;
                     font-size: 16px;">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{__('Tutup') }}
-            <input type="datetime" maxlength="2" name="jamtutup" class="form-input mr-2 ml-2"
+            <input type="datetime-local" maxlength="2" name="jamtutup" class="form-input mr-2 ml-2"
+                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
                 value="{{ date_create("$partner->jam_op_tutup")->format('H')}}" style="width:48px;
                     font-size: 16px;"> :
-            <input type="datetime" maxlength="2" name="menittutup" class="form-input mr-2 ml-2"
+            <input type="datetime-local" maxlength="2" name="menittutup" class="form-input mr-2 ml-2"
+                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
                 value="{{ date_create("$partner->jam_op_tutup")->format('i')}}" style="width:48px;
                     font-size: 16px;">
         </label>
@@ -151,27 +151,6 @@
                     <label class="col-md-1 align-self-center mb-2" style="font-size:14px;">
                         {{__('%') }}
                     </label>
-                    {{-- <div class="dropdown" aria-required="true">
-                        <input name="atkdwh" type="text" id="atkdwh" Class="form-control" value="{{ $partner->ntkwh ?? '' }}"
-                    hidden>
-                    <button id="atkdwhButton"
-                        class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray"
-                        id="dropdownAtkdwh" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;
-                                text-align:left;">
-                        {{$partner->atkdwh ?? 'Pilih Tingkat Akurasi Deteksi Warna Halaman'}}
-                    </button>
-                    @php
-                    $atkdwh= array('Penuh', 'Tinggi', 'Sedang', 'Rendah', 'Sangat Rendah');
-                    @endphp
-                    <div id="atkdwhList" class="dropdown-menu" aria-labelledby="dropdownAtkdwh"
-                        style="font-size: 16px; width:100%;">
-                        @foreach ( $atkdwh as $a)
-                        <span class="dropdown-item cursor-pointer ">
-                            {{$a}}
-                        </span>
-                        @endforeach
-                    </div>
-                </div> --}}
             </div>
             <div class="text-right mr-0">
                 <a class="text-primary-purple font-weight-bold" href="{{route('partner.pengujian')}}">
@@ -288,23 +267,11 @@
 </div>
 </div>
 <div class="text-right mb-5">
-    <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0" style="border-radius:30px;
-                    font-size:18px;">
+    <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0" style="border-radius:30px; font-size:18px;">
         {{__('Simpan Perubahan') }}
     </button>
 </div>
 </form>
-
-<script>
-    var msg = '{{Session::get('alert')}}';
-        var exist = '{{Session::has('alert')}}';
-        if(exist){
-            alert(msg);
-        }
-</script>
-
-{{-- pop up info --}}
-@include('pengelola.tingkat_akurasi')
 </div>
 @endsection
 
@@ -313,7 +280,7 @@
     var uploadedDocumentMap = {};
     Dropzone.options.documentDropzone = {
         url: '{{ route('partner.profile.storeMedia') }}',
-        maxFilesize: 3, // MB
+        maxFilesize: 3,
         addRemoveLinks: true,
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"

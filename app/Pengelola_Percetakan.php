@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\PartnerResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,6 +21,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     protected $attributes = [
         'rating_toko' => 5.0,
         'status_toko' => 'Buka',
+        'ntkwh' => 0,
     ];
     //  protected $guard = 'partner';
     protected $guarded = [];
@@ -33,6 +35,17 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PartnerResetPasswordNotification($token));
     }
 
     /**

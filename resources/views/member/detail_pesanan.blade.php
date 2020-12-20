@@ -47,7 +47,6 @@
                                         echo "Semua halaman";
                                         else echo json_decode($k->halaman_terpilih);
                                     @endphp
-
                                 </label>
                             </div>
                             <div class="mb-4">
@@ -173,6 +172,12 @@
                                 {{ rupiah($k->biaya) }}
                             </label>
                         </div>
+                        @php
+                            $arrSubtotal = [];
+                            for ($i=0; $i < count($pesanan->konfigurasiFile); $i++) { 
+                                array_push($arrSubtotal, $pesanan->konfigurasiFile[$i]->biaya);
+                            }
+                        @endphp
                 </div>
             @endforeach
 
@@ -189,7 +194,7 @@
                         </div>
                         <div class="col-md-auto text-right">
                             <label class="SemiBold mb-2">
-                                {{ rupiah($subTotalFile) }}
+                                {{ rupiah(array_sum($arrSubtotal)) }}
                             </label>
                         </div>
                     </div>
@@ -264,7 +269,11 @@
                         </div>
                         <div class="col-md-6 SemiBold text-right">
                             <label>
-                                {{ rupiah($penerimaan == 'Diantar' ? $ongkir : 0) }}
+                                @if ($penerimaan != 'Diantar')
+                                    {{ rupiah(0) }}
+                                @else
+                                    {{ rupiah(10000) }}
+                                @endif
                             </label>
                         </div>
                     </div>
@@ -412,23 +421,36 @@
                         </label>
                     </div>
                 @else
-                    <div class="col-md-auto mb-4">
-                        <button onclick="window.location.href='{{route('konfirmasi.pesanan.cancel',$pesanan->id_pesanan)}}'" class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold"
-                            style="font-size: 24px;">
-                            {{__('Batalkan Pemesanan') }}
-                        </button>
-                    </div>
-                    <div class="col-md-auto mb-4">
-                        <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold pl-4 pr-4"
-                            style="font-size: 24px;">
-                            {{__('Chat Pengelola') }}
-                        </button>
-                    </div>
-                    <div class="col-md-auto mb-4">
-                        <button onclick="window.location.href='{{route('konfirmasi.pesanan.selesai',$pesanan->id_pesanan)}}'" class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold pl-4 pr-4"
-                            style="font-size: 24px;">{{__('Pesanan Sudah Ditangan') }}
-                        </button>
-                    </div>
+                    @if ($pesanan->status === 'Pending')
+                        <div class="col-md-auto mb-4">
+                            <button onclick="window.location.href='{{route('konfirmasi.pesanan.cancel',$pesanan->id_pesanan)}}'" class="btn btn-outline-danger-primary btn-lg btn-block font-weight-bold" style="font-size: 24px;">
+                                {{__('Batalkan Pemesanan') }}
+                            </button>
+                        </div>
+                        <div class="col-md-auto justify-content-end mb-4">
+                            <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold pl-4 pr-4" onclick="window.location.href='/chat'"
+                                style="font-size: 24px;">
+                                {{__('Chat Pengelola') }}
+                            </button>
+                        </div>
+                        <div class="col-md-auto mb-4">
+                            <button onclick="window.location.href='{{route('konfirmasi.pesanan.selesai',$pesanan->id_pesanan)}}'" class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold pl-4 pr-4"
+                                style="font-size: 24px;">{{__('Pesanan Sudah Ditangan') }}
+                            </button>
+                        </div>
+                    @else
+                        <div class="col-md-6 justify-content-end mb-4">
+                            <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold pl-4 pr-4" onclick="window.location.href='/chat'"
+                                style="font-size: 24px;">
+                                {{__('Chat Pengelola') }}
+                            </button>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <button onclick="window.location.href='{{route('konfirmasi.pesanan.selesai',$pesanan->id_pesanan)}}'" class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold pl-4 pr-4"
+                                style="font-size: 24px;">{{__('Pesanan Sudah Ditangan') }}
+                            </button>
+                        </div>
+                    @endif
                 @endif
             </div>
         @else

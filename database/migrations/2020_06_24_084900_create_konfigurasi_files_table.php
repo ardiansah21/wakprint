@@ -21,6 +21,7 @@ class CreateKonfigurasiFilesTable extends Migration
             $table->string('nama_file', 255);
             $table->smallInteger('jumlah_halaman_berwarna')->nullable();
             $table->smallInteger('jumlah_halaman_hitamputih')->nullable();
+            $table->enum('status_halaman', ['Semua', 'Range', 'Kustom'])->nullable();
             $table->json('halaman_terpilih')->nullable();
             $table->smallInteger('jumlah_salinan')->default(0);
             $table->boolean('timbal_balik')->default(false);

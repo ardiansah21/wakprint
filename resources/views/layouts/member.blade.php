@@ -20,7 +20,6 @@
     <title>@yield('title','Wakprint') </title>
 
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}" type="text/javascript"></script>
 
@@ -50,8 +49,6 @@
     {{--
     <link rel="stylesheet" href="sweetalert-master/src/sweetalert.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
     {{--
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -78,6 +75,7 @@
         }
 
     </style>
+    @yield('style')
 </head>
 
 <body>
@@ -178,7 +176,7 @@
             </div>
         </nav>
         @guest
-            <main style="min-height: 620px">
+            <main style="">
                 @yield('content')
             </main>
             <footer class="footer">
@@ -281,7 +279,7 @@
                                             aria-selected="false" style="font-size: 24px; color:#BC41BE">
                                             <i class="material-icons align-middle md-32 mr-2"
                                                 style="color:#BC41BE">account_balance_wallet</i>
-                                            Rp. {{ $member->jumlah_saldo ?? 0 }}
+                                            {{ rupiah($member->jumlah_saldo) ?? rupiah(0) }}
                                         </a>
                                         <a class="nav-link {{ set_active('riwayat') }} SemiBold mb-4"
                                             id="v-pills-riwayat-tapostb mb-3" href="{{ route('riwayat') }}" role="tab"
@@ -432,52 +430,43 @@
         @endauth
     </div>
 
-    <!-- Script -->
-
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/appMember.js') }}"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('/js/jquery.jscroll.min.js') }}"></script>
-
+    <script src="{{ asset('js/jquery.jscroll.min.js') }}"></script>
     <script src="{{ asset('js/share.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    {{-- <script src="{{ asset('js/moment-timezone-with-data.js') }}"></script>
-    --}}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-timezone-with-data-1970-2030.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script> --}}
-
-    {{-- <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-    --}}
-
-    {{-- <script src="sweetalert2.all.min.js"></script> --}}
-    {{-- <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script>
-    <script src="{{ asset('sweetalert-master/src/sweetalert.js') }}"></script> --}}
-    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    --}}
-
-    <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
-    {{-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-    --}}
-
-    {{-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
     <script>
-        const beamsClient = new PusherPushNotifications.Client({
-            instanceId: '0c6761bf-20c1-49a9-a69f-54cf93cc75d5',
-        });
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix){
+                if(angka === '0'){
+                    angka = '1';
+                }
 
-        beamsClient.start()
-            .then(() => beamsClient.addDeviceInterest('hello'))
-            .then(() => console.log('Successfully registered and subscribed!'))
-            .catch(console.error);
+                var number_string = angka.replace(/[^\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-    </script> --}}
+                // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                if(ribuan){
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
 
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+        }
+        moment.locale('id');
+    </script>
+    @include('sweetalert::alert')
     @yield('script')
 </body>
 

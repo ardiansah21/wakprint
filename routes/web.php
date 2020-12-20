@@ -51,7 +51,7 @@ Route::get('/', 'MemberController@index')->name('home');
 
 Route::get('pencarian/cari', 'MemberController@cari')->name('cari');
 Route::get('ulasan/partner/urutkan/{id}', 'MemberController@urutkanProdukPartner')->name('urutkan.ulasan-produk.partner');
-Route::post('search', 'SearchController@search')->name('search');
+// Route::post('search', 'SearchController@search')->name('search');
 
 //test upload
 // Route::post('/konfigurasi/upload', 'MemberController@upload')->name('upload.file.home');
@@ -78,10 +78,12 @@ Route::middleware('auth')->group(function () {
     Route::get('profil/alamat/pilih/{id}', 'MemberController@pilihAlamat')->name('alamat.pilih');
     Route::get('saldo', 'MemberController@saldo')->name('saldo');
     Route::post('saldo/topup', 'MemberController@topUpSaldo')->name('saldo.topup');
+    Route::get('saldo/topup/batal/{id}', 'MemberController@batalTopUpSaldo')->name('saldo.topup.batal');
     Route::get('saldo/pembayaran/{id}', 'MemberController@saldoPembayaran')->name('saldo.pembayaran');
     Route::get('saldo/riwayat/{id}', 'MemberController@riwayatSaldo')->name('riwayat.saldo');
 
     Route::get('riwayat', 'MemberController@riwayat')->name('riwayat');
+    Route::get('riwayat/filter', 'MemberController@filterRiwayat')->name('riwayat.filter');
 
     Route::get('pesanan', 'MemberController@pesanan')->name('pesanan');
     Route::get('pesanan/detail', 'MemberController@detailPesanan')->name('pesanan.detail');
@@ -98,15 +100,13 @@ Route::middleware('auth')->group(function () {
     Route::get('produk/lapor/{id}', 'MemberController@laporProduk')->name('produk.lapor');
     Route::post('produk/lapor/store/{id}', 'MemberController@storeLapor')->name('lapor.store');
 
-    //konfigurasi
     Route::post('/konfigurasi-file/upload', 'KonfigurasiController@uploadFile')->name('konfigurasi.upload');
     Route::get('/konfigurasi-file/produk/{produkId}', 'KonfigurasiController@selectedProduk')->name('konfigurasi.produk');
     Route::get('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna')->name('konfigurasi.cekwarna');
     Route::post('/konfigurasi-file/tambah', 'KonfigurasiController@tambahKonfigurasi')->name('konfigurasi.tambah');
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
-    //TODO buat view edit konfigurasi
-    // Route::put('/konfigurasi-file/edit', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
-
+    Route::get('/konfigurasi-file/edit/{id}', 'KonfigurasiController@editKonfigurasi')->name('konfigurasi.edit');
+    Route::post('/konfigurasi-file/edit/store/{id}', 'KonfigurasiController@storeEditKonfigurasi')->name('konfigurasi.edit.store');
     Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
@@ -132,6 +132,12 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
 
     Route::get('register', 'Auth\RegisterController@showRegisterPage')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
+
+//partner Password Reset routes
+    Route::post('/password/email', 'Auth\PartnerForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::post('/password/reset', 'Auth\PartnerResetPasswordController@reset')->name('password.update');
+    Route::get('/password/reset', 'Auth\PartnerForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::get('/password/reset/{token}', 'Auth\PartnerResetPasswordController@showResetForm')->name('password.reset');
 
     Route::get('pengujian', 'PartnerController@pengujianDeteksiWarna')->name('pengujian');
 
@@ -163,9 +169,6 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
 
         Route::get('promo/create/search', 'PromoController@search')->name('promo.search');
         Route::resource('promo', 'PromoController');
-        // Route::controller('promo', 'PromoController');
-        // Route::get('promo', 'PromoController@index')->name('promo.index');
-        // Route::get('promo/create', 'PromoController@create')->name('promo.create');
         Route::post('promo/store/create', 'PromoController@storeCreate')->name('promo.store.create');
         Route::post('promo/store/update/{id}', 'PromoController@update')->name('promo.store.update');
 

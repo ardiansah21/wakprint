@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 class Konfigurasi_file extends Model implements HasMedia
 {
@@ -16,19 +17,27 @@ class Konfigurasi_file extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('default')->singleFile();
+        $this->addMediaCollection('file_konfigurasi');
+        // ->singleFile();
     }
 
-    public function member(){
-        return $this->belongsTo('App\Member','id_member');
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'model');
     }
 
-    public function product(){
-        return $this->belongsTo('App\Produk','id_produk');
+    public function member()
+    {
+        return $this->belongsTo('App\Member', 'id_member');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Produk', 'id_produk');
     }
 
     public function pesanan()
     {
-        return $this->belongsTo('App\Pesanan','id_pesanan');
+        return $this->belongsTo('App\Pesanan', 'id_pesanan');
     }
 }

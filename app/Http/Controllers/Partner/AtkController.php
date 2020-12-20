@@ -13,7 +13,7 @@ class AtkController extends Controller
     {
         $partner = Auth::user();
         $atk = Atk::all();
-        return view('pengelola.atk',compact('partner','atk'));
+        return view('pengelola.atk', compact('partner', 'atk'));
     }
 
     public function create()
@@ -24,7 +24,7 @@ class AtkController extends Controller
     public function edit($id)
     {
         $atk = Atk::find($id);
-        return view('pengelola.edit_atk',compact('atk'));
+        return view('pengelola.edit_atk', compact('atk'));
     }
 
     public function store(Request $request)
@@ -34,36 +34,32 @@ class AtkController extends Controller
         $atk = Atk::create([
             'id_pengelola' => $partner->id_pengelola,
             'nama' => $request->nama,
-            'harga' => $request->harga,
+            'harga' => (int) str_replace('.', '', $request->harga),
             'jumlah' => $request->jumlah,
-            'status' => 'Tersedia'
+            'status' => 'Tersedia',
         ]);
 
-        $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+        if ($request->hasFile('foto_atk')) {
+            $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+        }
 
-        return redirect()->route('partner.atk.index');
+        return redirect()->route('partner.atk.index')->with('success', 'Anda berhasil menambahkan item Atk yang baru');
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        // $atk = Atk::find($id)->update([
-        //     'nama' => $request->nama,
-        //     'harga' => $request->harga,
-        //     'jumlah' => $request->jumlah
-        // ]);
-
         $atk = Atk::find($id);
         $atk->update([
             'nama' => $request->nama,
-            'harga' => $request->harga,
-            'jumlah' => $request->jumlah
+            'harga' => (int) str_replace('.', '', $request->harga),
+            'jumlah' => $request->jumlah,
         ]);
         // $atk->clearMediaCollection();
         if ($request->hasFile('foto_atk')) {
             $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
         }
 
-        return redirect()->route('partner.atk.index');
+        return redirect()->route('partner.atk.index')->with('success', 'Item Atk Anda berhasil diubah');
     }
 
     public function destroy($id)
@@ -71,7 +67,7 @@ class AtkController extends Controller
         $atk = Atk::find($id);
         $atk->clearMediaCollection();
         $atk->delete();
-        return redirect()->route('partner.atk.index');
+        return redirect()->route('partner.atk.index')->with('success', 'Item Atk Anda berhasil dihapus');
     }
 
 }

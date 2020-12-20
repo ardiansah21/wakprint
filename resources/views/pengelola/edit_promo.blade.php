@@ -11,92 +11,14 @@
             style="font-size: 36px;">
             {{__('Ubah Promo') }}
         </label>
-        {{-- <br>
-        <label class="mb-2">
-            {{__('Pilih Promo untuk Diubah') }}
-        </label>
-            <form id="search-form" action="{{ route('partner.search.produk') }}" method="post">
-                @csrf
-                <div class="form-group search-input mb-4">
-                    <div class="main-search-input-item">
-                        <input id="keyword" name="keyword" type="text" role="search" name="keyword" class="form-control"
-                            @php
-                                if (session()->has('keyword')) {
-                                    echo "value = '".session('keyword')."' autofocus onfocus='this.value = this.value;'";
-                                }
-                            @endphp placeholder="Cari produk anda disini..." aria-label="Cari produk disini" aria-describedby="basic-addon2" style="border:0px solid white; border-radius:30px; font-size:16px;">
-                            <i class="material-icons pointer ml-1 pt-1 pb-1 pl-3 pr-3" onclick="event.preventDefault(); document.getElementById('search-form').submit();" style="position: absolute; top: 50%; left: 98%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                                search
-                            </i>
-                    </div>
-                </div>
-            </form> --}}
             <form id="submit-form" action="{{ route('partner.promo.store.update',$produk->id_produk) }}" method="POST">
                 @csrf
-                {{-- <div class="row justify-content-between mb-0">
-                    @if (session()->has('produk'))
-                        @foreach (session('produk') as $p)
-                            @if ($p->id_pengelola === $partner->id_pengelola)
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm mb-4 mx-2" style="min-height: 200px;">
-                                        <div class="card-body">
-                                            <div class="row justify-content-between">
-                                                <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2"
-                                                    style="font-size: 14px;">
-                                                    {{$p->nama ?? '-'}}
-                                                </label>
-                                                <div class="col-md-2 text-right" style="font-size: 12px;">
-                                                    <input type="checkbox"
-                                                        name="checkbox_promo[]"
-                                                        class=""
-                                                        @if($p->id_produk)
-                                                            checked
-                                                        @endif
-                                                        value="{{ $p->id_produk }}"
-                                                        id="checkboxPromo">
-                                                </div>
-                                            </div>
-                                            <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
-                                                {{__('Deskripsi Produk')}}
-                                            </label>
-                                            <label class="card-text text-truncate-multiline" style="font-size: 12px;">
-                                                {{$p->deskripsi ?? '-'}}
-                                            </label>
-                                        </div>
-                                        <div class="card-footer bg-primary-purple">
-                                            <div class="row justify-content-between mb-0 mr-0 ml-0">
-                                                <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 14px;">
-                                                    Rp. {{$p->harga_hitam_putih ?? '-'}}
-                                                </label>
-                                                <label class="card-text SemiBold badge-sm badge-light px-1" style="font-size: 10px; border-radius:5px;">
-                                                    {{__('Hitam-Putih')}}
-                                                </label>
-                                                <br>
-                                                @if (!empty($p->harga_berwarna))
-                                                    <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 14px;">
-                                                        Rp. {{$p->harga_berwarna}}
-                                                    </label>
-                                                    <label class="card-text SemiBold badge-sm bg-primary-yellow px-1" style="font-size: 10px; border-radius:5px;">
-                                                        {{__('Berwarna')}}
-                                                    </label>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    @endif
-                </div> --}}
                 <div class="card shadow-sm mb-5" style="min-height: 200px; width:30%;">
                     <div class="card-body">
                         <div class="row justify-content-between" style="min-height:50px;">
                             <label class="card-title col-md-10 text-truncate-multiline font-weight-bold mb-2" style="font-size: 14px;">
                                 {{$produk->nama ?? '-'}}
                             </label>
-                            {{-- <div class="col-md-2 text-right" style="font-size: 12px;">
-                                <input type="checkbox" id="checkbox_promo{{$p}}" name="checkbox_promo" value="{{ $produk->id_produk }}">
-                            </div> --}}
                         </div>
                         <label class="card-title font-weight-bold mb-0" style="font-size: 14px;">
                             {{__('Deskripsi Produk')}}
@@ -195,7 +117,7 @@
                                 {{__('Rp.') }}
                             </label>
                             <div class="col-md-11 form-group mb-4">
-                                <input type="text" name="maksimal_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="300.000" aria-label="300.000" value="{{ $produk->maksimal_diskon }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
+                                <input type="text" name="maksimal_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="300.000" aria-label="300.000" value="{{ number_format($produk->maksimal_diskon,0,".",".") }}" oninput="this.value=formatRupiah(this.value,'')" aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
                             </div>
                         </div>
                         <label class="mb-2">
@@ -204,9 +126,9 @@
                         <div class="row justify-content-left mb-3">
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" Class="form-control" hidden>
+                                    <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" value="{{intval(substr($produk->mulai_waktu_diskon, 8, 2))}}" Class="form-control" hidden>
                                     <button id="tanggalMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('d')}}
+                                        {{intval(substr($produk->mulai_waktu_diskon, 8, 2))}}
                                     </button>
                                     <div id="tanggalMulaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTanggalMulaiPromo" style="font-size: 16px; width:100%;">
                                         @for($i=1;$i<32;$i++)
@@ -219,7 +141,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="bulan_mulai_promo" type="text" id="bulan_mulai_promo" Class="form-control" hidden>
+                                    <input name="bulan_mulai_promo" type="text" id="bulan_mulai_promo" value="{{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('F')}}" Class="form-control" hidden>
                                     <button id="bulanMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('F')}}
                                     </button>
@@ -234,7 +156,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tahun_mulai_promo" type="text" id="tahun_mulai_promo" Class="form-control" hidden>
+                                    <input name="tahun_mulai_promo" type="text" id="tahun_mulai_promo" value="{{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('Y')}}" Class="form-control" hidden>
                                     <button id="tahunMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('Y')}}
                                     </button>
@@ -255,7 +177,23 @@
                         </label>
                         <div class="form-group row justify-content-left mb-2">
                             <div class="col-md-3 input-group mb-4">
-                                <input type="number" name="jumlah_diskon" class="form-control form-control-lg pt-2 pb-2" placeholder="10" aria-label="10" value="{{ $produk->jumlah_diskon * 100 }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" aria-describedby="inputGroup-sizing-sm" style="width:100%; font-size:16px;">
+                                <input type="number" name="jumlah_diskon" class="form-control form-control-lg pt-2 pb-2" min="1" max="100" placeholder="10" aria-label="10" value="{{ $produk->jumlah_diskon * 100 }}"
+                                    oninput="
+                                        if(this.value != 0){
+                                            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                            if(this.value > 100){
+                                                this.value = 100;
+                                            }
+                                        }
+                                        else{
+                                            this.value = 1;
+                                            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                            if(this.value > 100){
+                                                this.value = 100;
+                                            }
+                                        }
+                                    "
+                                    aria-describedby="inputGroup-sizing-sm" style="width:100%; font-size:16px;">
                             </div>
                             <label class="col-md-auto text-left mb-0 mr-0 ml-0 mt-2">
                                 {{__('%') }}
@@ -267,9 +205,9 @@
                         <div class="row justify-content-left mb-3">
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" Class="form-control" hidden>
+                                    <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" value="{{intval(substr($produk->selesai_waktu_diskon, 8, 2))}}" Class="form-control" hidden>
                                     <button id="tanggalSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('d')}}
+                                        {{intval(substr($produk->selesai_waktu_diskon, 8, 2))}}
                                     </button>
                                     <div id="tanggalSelesaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTanggalSelesaiPromo" style="font-size: 16px; width:100%;">
                                         @for($i=1;$i<32;$i++)
@@ -282,7 +220,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="bulan_selesai_promo" type="text" id="bulan_selesai_promo" Class="form-control" hidden>
+                                    <input name="bulan_selesai_promo" type="text" id="bulan_selesai_promo" value="{{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('F')}}" Class="form-control" hidden>
                                     <button id="bulanSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('F')}}
                                     </button>
@@ -297,7 +235,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
-                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" Class="form-control" value="" hidden>
+                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" value="{{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('Y')}}" Class="form-control" value="" hidden>
                                     <button id="tahunSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
                                         {{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('Y')}}
                                     </button>
@@ -331,7 +269,6 @@
 
 @section('script')
     <script>
-
         $('#tanggalMulaiPromoList span').on('click', function () {
             $('#tanggalMulaiPromoButton').text($(this).text());
             $('#tanggal_mulai_promo').val($(this).text());
@@ -344,7 +281,6 @@
             $('#tahunMulaiPromoButton').text($(this).text());
             $('#tahun_mulai_promo').val($(this).text());
         });
-
         $('#tanggalSelesaiPromoList span').on('click', function () {
             $('#tanggalSelesaiPromoButton').text($(this).text());
             $('#tanggal_selesai_promo').val($(this).text());

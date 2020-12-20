@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-    use Carbon\Carbon;
+        use Carbon\Carbon;
     @endphp
     <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
         <div class="row justify-content-between mb-2 ml-0 mr-0">
@@ -18,11 +18,7 @@
                 </a>
             </div>
         </div>
-        <table class="table borderless align-middle mb-5" style="font-size: 24px;
-                        table-layout: fixed;
-                        word-wrap: break-word;
-                        border-collapse: separate;
-                        border-spacing: 0 0em;">
+        <table class="table borderless align-middle mb-5" style="font-size: 24px; table-layout: fixed; word-wrap: break-word; border-collapse: separate; border-spacing: 0 0em;">
             <tbody class="ml-0 mr-0">
                 <tr class="mb-0">
                     <td class="SemiBold">
@@ -84,89 +80,44 @@
                 </tr>
             </tbody>
         </table>
-        @if (!empty($pesanan))
-            <h1 class="font-weight-bold mb-5 ml-2" style="font-size: 48px;">{{ __('Konfigurasi Terakhir') }}</h1>
-            <div class="table-scrollbar mb-5 ml-0 pr-2">
-                <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
-                    <thead class="bg-primary-purple text-white">
-                        <tr style="font-size: 18px;">
-                            <th scope="col-md-auto">{{ __('ID') }}</th>
-                            <th scope="col-md-auto">{{ __('Tanggal') }}</th>
-                            <th scope="col-md-auto">{{ __('Total File') }}</th>
-                            <th scope="col-md-auto">{{ __('Metode') }}</th>
-                            <th scope="col-md-auto">{{ __('Biaya') }}</th>
-                            <th scope="col-md-auto">{{ __('Status') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 14px;">
-
+        <h1 class="font-weight-bold mb-5 ml-2" style="font-size: 48px;">{{__('Konfigurasi Terakhir') }}</h1>
+        <div class="table-scrollbar mb-5 ml-0 pr-2">
+            <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
+                <thead class="bg-primary-purple text-white">
+                    <tr style="font-size: 18px;">
+                        <th scope="col-md-auto">{{__('ID') }}</th>
+                        <th scope="col-md-auto">{{__('Tanggal') }}</th>
+                        <th scope="col-md-auto">{{__('Total File') }}</th>
+                        <th scope="col-md-auto">{{__('Metode') }}</th>
+                        <th scope="col-md-auto">{{__('Biaya') }}</th>
+                        <th scope="col-md-auto">{{__('Status') }}</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 14px;">
+                    @if (!empty($pesanan))
                         @foreach ($pesanan as $p)
                             @if (!empty($p->status))
-                                <tr class="cursor-pointer"
-                                    onclick="window.location.href='{{ route('konfirmasi.pembayaran', $p->id_pesanan) }}'">
-                                    <td scope="row">{{ $p->id_pesanan }}</td>
-                                    <td>{{ Carbon::parse($p->updated_at)->translatedFormat('d F Y') }}</td>
-                                    <td>{{ count($p->konfigurasiFile) }}</td>
+                                <tr class="cursor-pointer" onclick="window.location.href='{{ route('konfirmasi.pembayaran',$p->id_pesanan) }}'">
+                                    <td scope="row">{{$p->id_pesanan}}</td>
+                                    <td>{{Carbon::parse($p->updated_at)->translatedFormat('d F Y')}}</td>
+                                    <td>{{count($p->konfigurasiFile)}}</td>
                                     <td>
-                                        @if ($p->metode_penerimaan != 'Ditempat')
-                                            {{ __('Antar ke Rumah') }}
+                                        @if ($p->metode_penerimaan != "Ditempat")
+                                            {{__('Antar ke Rumah')}}
                                         @else
-                                            {{ __('Ambil di Tempat') }}
+                                            {{__('Ambil di Tempat')}}
                                         @endif
                                     </td>
-                                    <td>{{ rupiah($p->biaya) }}</td>
-                                    <td>{{ $p->status }}</td>
+                                    <td>{{rupiah($p->biaya)}}</td>
+                                    <td>{{$p->status}}</td>
                                 </tr>
                             @endif
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endif
-
-        {{-- <div class="table-scrollbar mb-5 mr-0">
-            <table class="table table-hover" style="border-radius:25px 25px 15px 15px;">
-                <thead class="bg-primary-purple text-white" style="font-size: 18px;">
-                    <tr>
-                        <th scope="col-md-auto">{{ __('ID') }}</th>
-                        <th scope="col-md-auto">{{ __('File') }}</th>
-                        <th scope="col-md-auto">{{ __('Kapan') }}</th>
-                        <th scope="col-md-auto">{{ __('Biaya') }}</th>
-                        <th scope="col-md-auto">{{ __('Sisa Waktu') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($konfigurasi as $k => $value)
-                        @if (!empty($value) && $value->id_member === $member->id_member)
-                            <tr style="font-size: 14px;">
-                                <td scope="row">{{ $value->id_konfigurasi }}</td>
-                                <td><a href="#">{{ $value->nama_file }}</a></td>
-                                <td>{{ date('l, d M Y H:i', strtotime($value->waktu)) }}</td>
-                                <td>Rp. {{ $value->biaya }}</td>
-                                <td @for ($i = 0; $i < count($arrKonfigurasi); $i++)
-                                    id="sisaWaktuBayar{{ $i }}"
-                        @endfor
-                        >{{ __('1h 5m') }}
-                        <span class="material-icons md-18 align-middle text-danger ml-2">
-                            delete
-                        </span>
-                        </td>
-                        </tr>
                     @endif
-                    @endforeach
-                    <input id="arrKonfigurasi" type="number" value="{{ count($arrKonfigurasi) }}" hidden>
                 </tbody>
             </table>
-        </div> --}}
+        </div>
         <script>
-            var msg = '{{ Session::get('
-            alert ') }}';
-            var exist = '{{ Session::has('
-            alert ') }}';
-            if (exist) {
-                alert(msg);
-            }
-
             function startTimer(duration, display) {
                 var timer = duration,
                     minutes, seconds;

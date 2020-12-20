@@ -275,7 +275,11 @@
                         </div>
                         <div class="col-md-6 SemiBold text-right">
                             <label>
-                                {{ rupiah($penerimaan == 'Diantar' ? $ongkir : 0) }}
+                                @if ($penerimaan != 'Diantar')
+                                    {{ rupiah(0) }}
+                                @else
+                                    {{ rupiah(10000) }}
+                                @endif
                             </label>
                         </div>
                     </div>
@@ -318,7 +322,8 @@
                     <input type="number" name="idPesanan" id="idPesanan" value="{{$idPesanan}}" hidden>
                     <input type="text" name="atkTerpilih" id="atkTerpilih" value="{{$atkFinal}}" hidden>
                     <input type="number" id="ongkir" name="ongkir" value="{{$ongkir}}" hidden>
-                    <input type="text" name="alamatPenerima" id="alamatPenerima" value="{{$alamatPenerima}}" hidden>
+                    <input type="text" name="metodePenerimaan" id="metodePenerimaan" value="{{$penerimaan}}" hidden>
+                    <input type="text" name="alamatPenerima" id="alamatPenerima" value="{{$alamatPenerima ?? ''}}" hidden>
                     <input type="number" id="totalBiaya" name="totalBiaya" value="{{$totalBiaya}}" hidden>
                     <button type="submit" class="btn btn-primary-wakprint btn-lg font-weight-bold pl-4 pr-4"
                         style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size:24px;">
@@ -327,28 +332,30 @@
                 </form>
             </div>
             <script>
-                $('#batalkanBtn').click(function(){
-                    swal({title: "Apakah Anda yakin ingin membatalkan pemesanan ?",
-                        text: "Pesanan Anda akan dihapus secara permanen dan diharuskan untuk membuat ulang pesanan Anda dari awal",
-                        icon: "warning",
-                        buttons: {
-                            cancel : 'Jangan Dulu',
-                            confirm : {text:'Hapus',className:'btn-primary-danger'},
-                        },
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {
-                            // $("#deleteKonfirmasiPesananForm").submit();
-                            swal("Pesanan telah berhasil dihapus !", {
-                                icon: "success",
-                            }).then(function() {
-                                window.location.href='{{route('konfirmasi.pesanan.delete',"")}}' + '/' + $('#idPesanan').val();
-                            });
-                        } else {
-                            swal({text:"Anda telah membatalkan untuk menghapus pesanan ini",
-                                button: "Lanjutkan Pemesanan",
-                            });
-                        }
+                document.addEventListener('DOMContentLoaded', function () {
+                    $('#batalkanBtn').click(function(){
+                        swal({title: "Apakah Anda yakin ingin membatalkan pemesanan ?",
+                            text: "Pesanan Anda akan dihapus secara permanen dan diharuskan untuk membuat ulang pesanan Anda dari awal",
+                            icon: "warning",
+                            buttons: {
+                                cancel : 'Jangan Dulu',
+                                confirm : {text:'Hapus'},
+                            },
+                            dangerMode: true,
+                        }).then((willDelete) => {
+                            if (willDelete) {
+                                // $("#deleteKonfirmasiPesananForm").submit();
+                                swal("Pesanan telah berhasil dihapus !", {
+                                    icon: "success",
+                                }).then(function() {
+                                    window.location.href='{{route('konfirmasi.pesanan.delete',"")}}' + '/' + $('#idPesanan').val();
+                                });
+                            } else {
+                                swal({text:"Anda telah membatalkan untuk menghapus pesanan ini",
+                                    button: "Lanjutkan Pemesanan",
+                                });
+                            }
+                        });
                     });
                 });
             </script>

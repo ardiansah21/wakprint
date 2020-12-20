@@ -87,7 +87,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             <div class="custom-control custom-checkbox col-md-3 mb-2">
                 <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutih"
                     onchange="document.getElementById('harga_hitam_putih').disabled=!this.checked; document.getElementById('harga_timbal_balik_hitam_putih').disabled=!this.checked;"
-                    @if ($produk->hitam_putih) value="True" checked @endif
+                    @if (!empty($produk->harga_hitam_putih)) value="True" checked @endif
                 >
                 <label class="custom-control-label" for="checkboxHitamPutih">
                     {{__('Hitam-Putih') }}
@@ -103,12 +103,13 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_hitam_putih" name="harga_hitam_putih" type="number" min="0"
-                        value="{{$produk->harga_hitam_putih}}"
+                    <input id="harga_hitam_putih" name="harga_hitam_putih" type="text" min="0"
+                        value="{{number_format($produk->harga_hitam_putih,0,".",".")}}"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
+                        oninput="this.value=formatRupiah(this.value,'')"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                         aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%"
-                        @if(!$produk->hitam_putih) disabled @endif required >
+                        @if(!$produk->harga_hitam_putih) disabled @endif required >
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('/ Halaman') }}
@@ -125,12 +126,13 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_timbal_balik_hitam_putih" name="harga_timbal_balik_hitam_putih" type="number"
-                        value="{{$produk->harga_timbal_balik_hitam_putih}}" min="0"
+                    <input id="harga_timbal_balik_hitam_putih" name="harga_timbal_balik_hitam_putih" type="text"
+                        value="{{number_format($produk->harga_timbal_balik_hitam_putih,0,".",".")}}" min="0"
+                        oninput="this.value=formatRupiah(this.value,'')"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                         aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%"
-                        @if(!$produk->hitam_putih) disabled @endif
+                        @if(!$produk->harga_hitam_putih) disabled @endif
                     >
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
@@ -141,7 +143,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             <div class="custom-control custom-checkbox col-md-3 mb-2">
                 <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarna"
                     onchange="document.getElementById('harga_berwarna').disabled=!this.checked; document.getElementById('harga_timbal_balik_berwarna').disabled=!this.checked;"
-                    @if ($produk->berwarna) value="True" checked @endif
+                    @if (!empty($produk->harga_berwarna)) value="True" checked @endif
                 >
                 <label class="custom-control-label" for="checkboxBerwarna">
                     {{__('Berwarna') }}
@@ -157,11 +159,12 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_berwarna" name="harga_berwarna" type="number" min="0"
-                        value="{{$produk->harga_berwarna}}"
+                    <input id="harga_berwarna" name="harga_berwarna" type="text" min="0"
+                        value="{{number_format($produk->harga_berwarna,0,".",".")}}"
+                        oninput="this.value=formatRupiah(this.value,'')"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
-                        @if(!$produk->berwarna)disabled @endif
+                        @if(!$produk->harga_berwarna)disabled @endif
                     aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required>
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
@@ -179,12 +182,13 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('Rp') }}
                     </label>
-                    <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="number" min="0"
-                        value="{{$produk->harga_timbal_balik_berwarna}}"
+                    <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="text" min="0"
+                        value="{{number_format($produk->harga_timbal_balik_berwarna,0,".",".")}}"
+                        oninput="this.value=formatRupiah(this.value,'')"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
-                        placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk" @if(!$produk->berwarna)
-                    disabled @endif
-                    aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
+                        placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk" @if(!$produk->harga_berwarna)
+                        disabled @endif
+                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%">
                     <label class="col-md-2 align-middle mt-2 mb-2"
                         style="display: inline-block; width: 10%; text-align: left; padding-right:8px">
                         {{__('/ Halaman') }}
@@ -262,7 +266,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                 onchange="document.getElementById('kliping').disabled=!this.checked;">
                 <label class="custom-control-label" for="checkboxKliping">
                     {{__('Kliping') }}
-                    <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                    <i id="helpKliping" role="tooltip" class="material-icons md-18 align-middle" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div class='media'><img src='https://ecs7.tokopedia.net/img/cache/700/product-1/2017/11/3/24128252/24128252_b0f7c29c-5096-4d76-9d7e-91fee75f553c_320_427.jpg' class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'></div><div class='media-body'><h5 class='media-heading'>Kliping</h5><p>Kliping adalah guntingan artikel atau berita dari surat kabar, majalah, dan sebagainya yang dianggap penting untuk disimpan atau didokumentasikan.</p></div></div>" onmouseover="showPopUpHelpKliping()" onmouseout="hidePopUpHelpKliping()" style="color:#C4C4C4">
                         help
                     </i>
                 </label>
@@ -273,8 +277,9 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                     style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
                     {{__('Rp') }}
                 </label>
-                <input id="kliping" name="fitur[Kliping]" type="number" min="0"
-                    value="{{getCF($produk,'Kliping')->get('harga')}}" class="form-control pt-2 pb-2 optional-step-100"
+                <input id="kliping" name="fitur[Kliping]" type="text" min="0"
+                    value="{{getCF($produk,'Kliping')->get('harga')}}"
+                    oninput="this.value=formatRupiah(this.value,'')" class="form-control pt-2 pb-2 optional-step-100"
                     placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                     aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%" required
                     @if(getCF($produk,'Kliping')->get('nama')==null)disabled @endif
@@ -288,11 +293,15 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
         </div>
         @php
         $paket = array('Lem','Baut','Kawat','Spiral');
+        $index = 1;
         @endphp
         @foreach ($paket as $p)
         @php
         $key = array_search($p, array_column($fitur, 'nama'));
-        if (false !== $key){$f[$p] = $fitur[$key];}
+        if (false !== $key){
+            $f[$p] = $fitur[$key];
+            $fHargaFiturRupiah = number_format($f[$p]->harga,0,".",".");
+        }
         @endphp
         <div class="form-group row justify-content-between mb-3 ml-2 mr-0">
             <div class="col-md-6 custom-control custom-checkbox ml-3">
@@ -301,9 +310,10 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                     onchange="document.getElementById('{{ $p }}').disabled=!this.checked; ">
                 <label class="custom-control-label" for="checkbox{{$p}}">
                     {{$p}}
-                    <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                    <i id="helpJilid" class="material-icons help md-18 align-middle" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div class='media'><img src='https://ecs7.tokopedia.net/img/cache/700/product-1/2017/11/3/24128252/24128252_b0f7c29c-5096-4d76-9d7e-91fee75f553c_320_427.jpg' class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'></div><div class='media-body'><h5 class='media-heading'>Kliping</h5><p>Kliping adalah guntingan artikel atau berita dari surat kabar, majalah, dan sebagainya yang dianggap penting untuk disimpan atau didokumentasikan.</p></div></div>" onmouseover="showPopUpHelpJilid()" onmouseout="hidePopUpHelpJilid()" style="color:#C4C4C4">
                         help
                     </i>
+                    {{-- <input id="valueJilid" type="text" value="{{$p}}" hidden> --}}
                 </label>
             </div>
             <div class="row col-md-5"
@@ -312,7 +322,9 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                     style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
                     {{__('Rp') }}
                 </label>
-                <input id="{{ $p }}" name="fitur[{{ $p }}]" min="0" type="number" value="{{$f[$p]->harga ?? ''}}"
+                <input id="{{ $p }}" name="fitur[{{ $p }}]" min="0" type="text"
+                    oninput="this.value=formatRupiah(this.value,'')"
+                    value="{{$fHargaFiturRupiah ?? ''}}"
                     class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
                     aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
                     style="font-size: 16px; width:90%" required @if(!in_array($p,$namaFiturArr))disabled @endif>
@@ -326,7 +338,11 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
         @foreach ($nonPaket as $np)
         @php
         $nkey = array_search($np, array_column($fitur, 'nama'));
-        if (false !== $nkey){$nf[$np] = $fitur[$nkey];}
+        if (false !== $nkey){
+            $nf[$np] = $fitur[$nkey];
+            $fHargaNonFiturRupiah = number_format($nf[$p]->harga,0,".",".");
+        }
+
         @endphp
         <div class="row justify-content-between mb-3 ml-0 mr-0">
             <div class="col-md-6 custom-control custom-checkbox ml-0">
@@ -346,7 +362,9 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                     style=" display: inline-block; width: 10%; text-align: right; padding-right:8px">
                     {{__('Rp') }}
                 </label>
-                <input id="{{ $np }}" name="fitur[{{ $np }}]" type="number" min="0" value="{{$nf[$np]->harga ?? ''}}"
+                <input id="{{ $np }}" name="fitur[{{ $np }}]" type="text" min="0"
+                    value="{{$fHargaNonFiturRupiah ?? ''}}"
+                    oninput="this.value=formatRupiah(this.value,'')"
                     class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
                     aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
                     style="font-size: 16px; width:90%" required @if(!in_array($np,$namaFiturArr))disabled @endif>
@@ -404,8 +422,9 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                             <div class="row col-md-6 form-group "> <label class="align-self-center"
                                     style=" display: inline-block; width: 10%; text-align: right; padding-right:8px"> Rp
                                 </label>
-                                <input id="harga" name="fitur[tambahan][{{$i}}][harga]" type="number" min="0"
-                                    value="{{$f[$i]->harga}}" class="form-control pt-2 pb-2 optional-step-100"
+                                <input id="harga" name="fitur[tambahan][{{$i}}][harga]" type="text" min="0"
+                                    value="{{number_format($f[$i]->harga,0,".",".")}}" class="form-control pt-2 pb-2 optional-step-100"
+                                    oninput="this.value=formatRupiah(this.value,'')"
                                     placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
                                     aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; width:90%"
                                     required="">
@@ -447,69 +466,13 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
         </div>
     </form>
 </div>
-
-
-{{-- <li class="ml-0 mr-0">
-    <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">
-        <div class="col-md-2">
-            <img id="blah" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px;" alt="foto produk">
-            <a id="editGambarProduk" class="pointer" onclick="document.getElementById('imgupload').click();"
-                style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;">
-                <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2" style="border-radius: 5px;"> edit
-                </i>
-            </a>
-            <input id="imgupload" type="file" name="fotoProduk" hidden accept="image/png, image/jpeg"
-                onchange="document.getElementById('blah').src=window.URL.createObjectURL(this.files[0]);" hidden>
-        </div>
-        <div class="col-md-9">
-            <div class="row justify-content-between mr-1">
-                <div class="col-md-6 form-group mb-3">
-                    <input name="fitur[tambahan]['+i+'][nama]" id="nama" type="text"
-                        class="form-control form-control-lg pt-2 pb-2" placeholder="Masukkan Nama Paket" aria-label=""
-                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; " required>
-                </div>
-                <div class="row col-md-6 form-group "> <label class="align-self-center"
-                        style=" display: inline-block; width: 10%; text-align: right; padding-right:8px"> Rp </label>
-                    <input id="harga" name="fitur[tambahan]['+i+'][harga]" type="number" min="0"
-                        class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
-                        aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
-                        style="font-size: 16px; width:90%" required> </div>
-            </div>
-            <label class="mb-2 "> Deskripsi Fitur </label>
-            <div class="form-group mb-4 mr-0">
-                <textarea id="deskripsi" name="fitur[tambahan]['+i+'][deskripsi]" class="form-control d-flex"
-                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda"> </textarea>
-            </div>
-        </div>
-        <div class="col-md-auto align-self-center mr-0 mb-3">
-            <button id="hapus" class="btn btn-circle-trash shadow-sm" type="button" role="button">
-                <i class="fa fa-trash fa-2x" style="color: white" aria-hidden="true"></i>
-            </button>
-        </div>
-    </div>
-</li> --}}
-
-
-
-{{-- <script>
-    $('#tes').on('click', function () {
-    var APP_URL = {!! json_encode(url('/')) !!}
-    alert(APP_URL);
-});
-
-
-
-
-
-</script> --}}
 @endsection
 @section('script')
 <script>
     var uploadedDocumentMap = {}
     Dropzone.options.documentDropzone = {
         url: '{{ route('partner.produk.storeMedia') }}',
-        maxFilesize: 3, // MB
+        maxFilesize: 3,
         addRemoveLinks: true,
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -557,74 +520,102 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
         $('#jenisPrinter').val($(this).text());
     });
 
-$('#ukuranKertasList span').on('click', function () {
-    $('#ukuranKertasButton').text($(this).text());
-    $('#ukuranKertas').val($(this).text());
-});
+    $('#ukuranKertasList span').on('click', function () {
+        $('#ukuranKertasButton').text($(this).text());
+        $('#ukuranKertas').val($(this).text());
+    });
 
-$(document).ready(function() {
- var i = "{{$i}}";
- $("#tambahPaket").click(function() {
-     i++;
-     alert(i);
-     $("#areaTambah").append(
-        '<li class="ml-0 mr-0">'+
-        '    <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">'+
-        '        <div class="col-md-2">'+
-        '            <img id="blah'+i+'" src="https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur"'+
-        '                class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px; " alt="foto produk">'+
-        '            <a id="editGambarProduk" class="pointer" onclick="document.getElementById(\'imgupload'+i+'\').click();"'+
-        '                style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;">'+
-        '                <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2" style="border-radius: 5px;"> edit'+
-        '                </i>'+
-        '            </a>'+
-        '            <input id="imgupload'+i+'" type="file" name="fitur[tambahan]['+i+'][foto_fitur]" hidden accept="image/png, image/jpeg"'+
-        '                onchange="document.getElementById(\'blah'+i+'\').src=window.URL.createObjectURL(this.files[0]);" hidden>'+
-        '        </div>'+
-        '        <div class="col-md-9">'+
-        '            <div class="row justify-content-between mr-1">'+
-        '                <div class="col-md-6 form-group mb-3">'+
-        '                    <input name="fitur[tambahan]['+i+'][nama]" id="nama" type="text"'+
-        '                        class="form-control form-control-lg pt-2 pb-2" placeholder="Masukkan Nama Paket" aria-label=""'+
-        '                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; " required>'+
-        '                </div>'+
-        '                <div class="row col-md-6 form-group "> <label class="align-self-center"'+
-        '                        style=" display: inline-block; width: 10%; text-align: right; padding-right:8px"> Rp </label>'+
-        '                    <input id="harga" name="fitur[tambahan]['+i+'][harga]" type="number" min="0"'+
-        '                        class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"'+
-        '                        aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"'+
-        '                        style="font-size: 16px; width:90%" required> </div>'+
-        '            </div>'+
-        '            <label class="mb-2 "> Deskripsi Fitur </label>'+
-        '            <div class="form-group mb-4 mr-0">'+
-        '                <textarea id="deskripsi" name="fitur[tambahan]['+i+'][deskripsi]" class="form-control d-flex"'+
-        '                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda"></textarea>'+
-        '            </div>'+
-        '        </div>'+
-        '        <div class="col-md-auto align-self-center mr-0 mb-3">'+
-        '            <button id="hapus" class="btn btn-circle-trash shadow-sm" type="button" role="button">'+
-        '                <i class="fa fa-trash fa-2x" style="color: white" aria-hidden="true"></i>'+
-        '            </button>'+
-        '        </div>'+
-        '    </div>'+
-        '</li>'
-        );
+    function showPopUpHelpKliping() {
+        $('#helpKliping').popover('show');
+    }
+
+    function hidePopUpHelpKliping() {
+        $('#helpKliping').popover('hide');
+    }
+
+    function showPopUpHelpJilid() {
+        $('#helpJilid').popover('show');
+        // $('.help').each(function(index){
+        //     $('#helpJilid' + index).popover('show');
+        // });
+    }
+
+    function hidePopUpHelpJilid() {
+        $('#helpJilid').popover('hide');
+        // $('.help').each(function(index){
+        //     $('#helpJilid' + index).popover('hide');
+        // });
+        // for (let i = 0; i < 4; i++) {
+        //     $('#helpJilid' + $('#valueJilid').val()).popover('hide');
+        // }
+    }
+
+    $(document).ready(function() {
+    var i = "{{$i}}";
+    $("#tambahPaket").click(function() {
         i++;
-    });
+        $("#areaTambah").append(
+            '<li class="ml-0 mr-0">'+
+            '    <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">'+
+            '        <div class="col-md-2">'+
+            '            <img id="blah'+i+'" src="https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur"'+
+            '                class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px; " alt="foto produk">'+
+            '            <a id="editGambarProduk" class="pointer" onclick="document.getElementById(\'imgupload'+i+'\').click();"'+
+            '                style="color: black; position: relative;bottom: 40px;left:130px;right: 0px;">'+
+            '                <i class="material-icons md-18 badge-sm bg-primary-yellow p-1 mr-2" style="border-radius: 5px;"> edit'+
+            '                </i>'+
+            '            </a>'+
+            '            <input id="imgupload'+i+'" type="file" name="fitur[tambahan]['+i+'][foto_fitur]" hidden accept="image/png, image/jpeg"'+
+            '                onchange="document.getElementById(\'blah'+i+'\').src=window.URL.createObjectURL(this.files[0]);" hidden>'+
+            '        </div>'+
+            '        <div class="col-md-9">'+
+            '            <div class="row justify-content-between mr-1">'+
+            '                <div class="col-md-6 form-group mb-3">'+
+            '                    <input name="fitur[tambahan]['+i+'][nama]" id="nama" type="text"'+
+            '                        class="form-control form-control-lg pt-2 pb-2" placeholder="Masukkan Nama Paket" aria-label=""'+
+            '                        aria-describedby="inputGroup-sizing-sm" style="font-size: 16px; " required>'+
+            '                </div>'+
+            '                <div class="row col-md-6 form-group "> <label class="align-self-center"'+
+            '                        style=" display: inline-block; width: 10%; text-align: right; padding-right:8px"> Rp </label>'+
+            '                    <input id="harga" name="fitur[tambahan]['+i+'][harga]" type="text" min="0"'+
+            '                        class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"'+
+            '                        aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"'+
+            '                        style="font-size: 16px; width:90%" required> </div>'+
+            '            </div>'+
+            '            <label class="mb-2 "> Deskripsi Fitur </label>'+
+            '            <div class="form-group mb-4 mr-0">'+
+            '                <textarea id="deskripsi" name="fitur[tambahan]['+i+'][deskripsi]" class="form-control d-flex"'+
+            '                    aria-label="Deskripsi Fitur" placeholder="Masukkan Deskripsi Paket Tambahan Anda"></textarea>'+
+            '            </div>'+
+            '        </div>'+
+            '        <div class="col-md-auto align-self-center mr-0 mb-3">'+
+            '            <button id="hapus" class="btn btn-circle-trash shadow-sm" type="button" role="button">'+
+            '                <i class="fa fa-trash fa-2x" style="color: white" aria-hidden="true"></i>'+
+            '            </button>'+
+            '        </div>'+
+            '    </div>'+
+            '</li>'
+            );
+            i++;
+        });
 
-    $("#areaTambah").on("click","#hapus",function(){
-        $($(this).parents('li').get(0)).remove();
-    });
+        $("#areaTambah").on("click","#hapus",function(){
+            $($(this).parents('li').get(0)).remove();
+        });
 
-    $("#areaTambah").on("click","#editGambarProduk",function(){
-        $('#imgupload').trigger('click'); return false;
-    });
+        $("#areaTambah").on("click","#editGambarProduk",function(){
+            $('#imgupload').trigger('click'); return false;
+        });
 
-    $("#areaTambah").on("change","#imgupload",function(){
-        document.getElementById('blah').src=window.URL.createObjectURL(this.files[0]);
-    });
+        $("#areaTambah").on("change","#imgupload",function(){
+            document.getElementById('blah').src=window.URL.createObjectURL(this.files[0]);
+        });
 
-});
+        $('#areaTambah').on("input","#harga",function(){
+            this.value=formatRupiah(this.value,"");
+        });
+
+    });
 
 </script>
 @endsection

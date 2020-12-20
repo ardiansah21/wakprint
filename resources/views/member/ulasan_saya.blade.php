@@ -2,11 +2,12 @@
 @extends('layouts.member')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="container pt-5 pb-5">
         <h1 class="font-weight-bold mb-2" style="font-size: 48px;">{{__('Ulasan Saya') }}</h1>
         <label class="ml-1 mb-2" style="font-size: 18px;">{{__('Detail produk yang telah Anda ulas') }}</label>
-
-        {{-- @foreach ($collection as $item) --}}
         <div class="row justify-content-between ml-0 mr-0 mt-5">
             <div class="col-md-4">
                 <div class="card shadow mb-2" style="border-radius: 10px;">
@@ -44,11 +45,11 @@
                             @endauth
                         </form>
                         <img class="card-img-top cursor-pointer"
-                            @if (!empty($produk->getFirstMediaUrl('foto_produk')))
-                                src="{{$produk->getFirstMediaUrl('foto_produk')}}"
-                            @else
-                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                            @endif onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px; object-fit:cover;" alt="no picture"/>
+                        @if (!empty($produk->getFirstMediaUrl('foto_produk')))
+                            src="{{$produk->getFirstMediaUrl('foto_produk')}}"
+                        @else
+                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                        @endif onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px; object-fit:cover;" alt="no picture"/>
                         <div class="card-body cursor-pointer" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'">
                             <div class="row justify-content-between">
                                 <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$produk->partner->nama_toko ?? '-'}}</label>
@@ -57,23 +58,7 @@
                             <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px; min-height:75px;">{{$produk->nama ?? ''}}</label>
                             <label class="card-text text-truncate-multiline" style="font-size: 18px; min-height:65px;">{{$produk->partner->alamat_toko}}</label>
                             <div class="row justify-content-left ml-0 mr-0">
-                                {{-- <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">color_lens</i>
-                                    @if ($produk->berwarna === 0 && $produk->hitam_putih === 1)
-                                        {{__('Hitam-Putih')}}
-                                    @elseif ($produk->berwarna === 1 && $produk->hitam_putih === 0)
-                                        {{__('Berwarna')}}
-                                    @elseif ($produk->hitam_putih === 1 && $produk->berwarna === 1)
-                                        {{__('Berwarna')}}
-                                    @else
-                                        {{__('-')}}
-                                    @endif
-                                </label> --}}
                                 <label class="card-text text-truncate SemiBold mr-2" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">description</i>{{$produk->jenis_kertas ?? ''}}</label>
-                                {{-- @foreach ($fitur['paket'] as $key => $value) --}}
-                                    {{-- @if (!empty($key)) --}}
-                                        {{-- <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">menu_book</i> {{__('Jilid') }}</label> --}}
-                                    {{-- @endif --}}
-                                {{-- @endforeach --}}
                                 <label class="card-text text-truncate SemiBold" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-1">print</i>{{$produk->jenis_printer ?? ''}}</label>
                             </div>
                         </div>
@@ -95,74 +80,49 @@
                                     @endphp
                                     @if (!empty($produk->harga_hitam_putih) && !empty($produk->harga_berwarna) && !empty($produk->jumlah_diskon))
                                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm badge-light px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Hitam-Putih')}}
-                                        </label> --}}
-                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                            Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del>
+                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
+                                            <del>{{rupiah($produk->harga_hitam_putih) ?? '-'}}</del>
                                         </label>
                                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                            {{$hargaHitamPutih ?? '-'}}
+                                            {{rupiah($hargaHitamPutih) ?? '-'}}
                                         </label>
                                         <br>
                                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Berwarna')}}
-                                        </label> --}}
-                                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                            Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del>
+                                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 12px;">
+                                            <del>{{rupiah($produk->harga_berwarna) ?? '-'}}</del>
                                         </label>
                                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                            {{$hargaBerwarna ?? '-'}}
+                                            {{rupiah($hargaBerwarna) ?? '-'}}
                                         </label>
                                     @elseif(!empty($produk->harga_hitam_putih) && !empty($produk->jumlah_diskon))
                                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm badge-light px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Hitam-Putih')}}
-                                        </label> --}}
-                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                            Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del>
+                                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
+                                            <del>{{rupiah($produk->harga_hitam_putih) ?? '-'}}</del>
                                         </label>
                                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                            {{$hargaHitamPutih ?? '-'}}
+                                            {{rupiah($hargaHitamPutih) ?? '-'}}
                                         </label>
                                         <br>
                                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Berwarna')}}
-                                        </label> --}}
                                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                                             {{__('Tidak Tersedia')}}
                                         </label>
                                     @elseif(!empty($produk->harga_berwarna))
-                                        <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm badge-light px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Hitam-Putih')}}
-                                        </label> --}}
                                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                            Rp. {{$produk->harga_hitam_putih ?? '-'}}
+                                            {{rupiah($produk->harga_hitam_putih) ?? '-'}}
                                         </label>
                                         <br>
                                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Berwarna')}}
-                                        </label> --}}
                                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                            Rp. {{$produk->harga_berwarna ?? '-'}}
+                                            {{rupiah($produk->harga_berwarna) ?? '-'}}
                                         </label>
                                     @else
                                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm badge-light px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Hitam-Putih')}}
-                                        </label> --}}
                                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                            Rp. {{$produk->harga_hitam_putih ?? '-'}}
+                                            {{rupiah($produk->harga_hitam_putih) ?? '-'}}
                                         </label>
                                         <br>
                                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                                        {{-- <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                            {{__('Berwarna')}}
-                                        </label> --}}
                                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                                             {{__('Tidak Tersedia')}}
                                         </label>
@@ -183,7 +143,7 @@
             <div class="col-md-8">
                 <div class="row mb-5">
                     <div class="col-md-9 ml-0 my-auto">
-                        <h5 style="font-size: 24px; color:#BABABA">{{__('Diulas pada: '.date('d M Y H:i', strtotime($ulasan->created_at)).' WIB') }}</h5>
+                        <label class="mb-5 ml-0" style="font-size: 24px; color:#BABABA">{{__('Diulas pada: '.Carbon::parse($ulasan->updated_at)->translatedFormat('d F Y H:m').' WIB') }}</label>
                     </div>
                     <div class="col-md-3 align-self-right">
                         <button class="btn btn-primary-yellow btn-sm btn-block SemiBold" onclick="window.location.href='{{route('detail.produk', $produk->id_produk)}}'"
@@ -232,7 +192,5 @@
                 </div>
             </div>
         </div>
-        {{-- @endforeach --}}
-
     </div>
 @endsection

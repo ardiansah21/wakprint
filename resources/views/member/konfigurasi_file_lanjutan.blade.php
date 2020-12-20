@@ -46,12 +46,7 @@
         @else
             <div id="konfigurasi" class="row justify-content-between mb-5">
                 <div class="col-md-auto mt-5 mr-0">
-                    <div class="border-primary-purple" style="width:515px;
-                            height:560px;
-                            position:relative;
-                            float: none;
-                            display: table-cell;
-                            vertical-align: bottom;">
+                    <div class="border-primary-purple" style="width:515px; height:560px; position:relative; float: none; display: table-cell; vertical-align: bottom;">
                         <embed
                             src="{{url('tmp/upload/',(session()->get('fileUpload'))->name)."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}"
                             type="application/pdf" height="567px" width="515px" frameborder="0" onload="" />
@@ -105,17 +100,16 @@
                                 {{__('Pilih Halaman') }}
                             </label>
                             <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
-                                <input id="rbSemuaHal" name="radio" class="custom-control-input" type="radio" value="{{session()->get('fileUpload')->countPage}}"
+                                <input id="rbSemuaHal" name="radio" class="custom-control-input" type="radio" value="Semua"
                                     onchange="document.getElementById('halamanAwal').disabled; document.getElementById('halamanAkhir').disabled; document.getElementById('halamanKustom').disabled;"
                                     checked>
                                 <label class="custom-control-label" for="rbSemuaHal">
                                     {{__('Semua') }}
                                 </label>
+                                <input id="semuaHal" type="text mr-4" class="form-input semua" value="{{session()->get('fileUpload')->countPage}}" hidden>
                             </div>
-                            {{-- if(document.getElementById('halamanAwal').disabled){document.getElementById('rbSemuaHal').click();document.getElementById('rbSemuaHal').focus() }; --}}
                             <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;">
-                                <input id="rbSampaiHal" name="radio" class="custom-control-input" type="radio"
-                                    value="sampai">
+                                <input id="rbSampaiHal" name="radio" class="custom-control-input" type="radio" value="Range">
                                 <label class="custom-control-label" for="rbSampaiHal"
                                     onclick="document.getElementById('rbSampaiHal').click() ">
                                     <input id="halamanAwal" type="number" min="1"
@@ -136,7 +130,7 @@
                             </div>
                             <div class="form-group custom-control custom-radio mb-4" style="font-size: 18px;"
                                 onclick="document.getElementById('rbKustomHal').click(); document.getElementById('halamanKustom').focus()">
-                                <input id="rbKustomHal" name="radio" class="custom-control-input" type="radio" value="kustom">
+                                <input id="rbKustomHal" name="radio" class="custom-control-input" type="radio" value="Kustom">
                                 <label class="custom-control-label" for="rbKustomHal">
                                     {{__('Kustom') }}
                                 </label>
@@ -189,105 +183,124 @@
             <div id="produk" class="bg-light-purple p-4 mb-4"
                 style="border-radius:5px; min-height:300px; position: relative;">
                 @if (!session()->has('produkKonfigurasiFile'))
-                <div class="text-center"
-                    style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
-                    <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
-                        style="border-radius:30px; font-size:24px;" onclick="window.location='{{route('pencarian')}}'">
-                        <i class="material-icons md-36 align-middle mr-2">print</i>{{__('Pilih Produk Percetakan')}}
-                    </button>
-                </div>
-                @else
-                <div class="row justify-content-between">
-                    <div class="col-md-4">
-                        @include('member.card_produk',["p"=>session()->get('produkKonfigurasiFile')])
+                    <div class="text-center"
+                        style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                        <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
+                            style="border-radius:30px; font-size:24px;" onclick="window.location='{{route('pencarian')}}'">
+                            <i class="material-icons md-36 align-middle mr-2">print</i>{{__('Pilih Produk Percetakan')}}
+                        </button>
                     </div>
-                    <div class="col-md-8">
-                        <div class="ml-2">
-                            <div class="text-right">
-                                <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
-                                    style="border-radius:35px;font-size: 16px;"
-                                    onclick="window.location='{{route('pencarian')}}'">
-                                    {{__('Ubah Produk') }}
-                                </button>
-                            </div>
-                            <br>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Detail') }}
-                            </label>
-                            <br>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="" style="font-size:16px;">{{__('Berwarna') }}</label>
-                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_berwarna ?? 0 }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                <label class="" style="font-size:16px;">{{__('Hitam Putih') }}</label>
-                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_hitam_putih ?? 0 }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna ?? 0 }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">Rp. {{session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih ?? 0 }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-5">
-                                <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if (empty(session()->get('produkKonfigurasiFile')->partner->ntkwh))
-                                        {{__('0%')}}
-                                    @else
-                                        {{session()->get('produkKonfigurasiFile')->partner->ntkwh . "%" }}
-                                    @endif
-                                </label>
-                            </div>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur') }}</label>
-                            @php
-                                $fitur = json_decode(session()->get('produkKonfigurasiFile')->fitur,true);
-                            @endphp
-                            @if (!empty($fitur))
-                                @foreach ($fitur as $f => $value)
-                                    <div class="row justify-content-between ml-0 mr-0">
-                                        <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                        <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
-                                            <label class="custom-control-label" for="checkboxFitur{{$f}}">
-                                                {{$value['nama']}}
-                                                <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
-                                                    help
-                                                </i>
-                                            </label>
-                                        </div>
-                                        <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                        <label class="" style="font-size:16px;">{{__('Rp. ' .$value['harga']) }}</label>
-                                    </div>
-                                @endforeach
-                            @else
+                @else
+                    <div class="row justify-content-between">
+                        <div class="col-md-4">
+                            @include('member.card_produk',["p"=>session()->get('produkKonfigurasiFile')])
+                        </div>
+                        <div class="col-md-8">
+                            <div class="ml-2">
+                                <div class="text-right">
+                                    <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
+                                        style="border-radius:35px;font-size: 16px;"
+                                        onclick="window.location='{{route('pencarian')}}'">
+                                        {{__('Ubah Produk') }}
+                                    </button>
+                                </div>
                                 <br>
-                                <label>-</label>
-                            @endif
+                                <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Detail') }}
+                                </label>
+                                <br>
+                                @php
+                                    if(session()->get('produkKonfigurasiFile')->status_diskon != "Tersedia"){
+                                        $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih;
+                                        $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna;
+                                    }
+                                    else{
+                                        $jumlahDiskonGray = session()->get('produkKonfigurasiFile')->harga_hitam_putih * session()->get('produkKonfigurasiFile')->jumlah_diskon;
+                                        $jumlahDiskonWarna = session()->get('produkKonfigurasiFile')->harga_berwarna * session()->get('produkKonfigurasiFile')->jumlah_diskon;
 
+                                        if($jumlahDiskonGray > session()->get('produkKonfigurasiFile')->maksimal_diskon){
+                                            $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+                                            $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+                                        }
+                                        else{
+                                            $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - $jumlahDiskonGray;
+                                            $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - $jumlahDiskonWarna;
+                                        }
+                                    }
+                                @endphp
+                                <div class="row justify-content-between ml-0 mr-0">
+                                    <label class="" style="font-size:16px;">{{__('Berwarna') }}</label>
+                                    <label class="" style="font-size:16px;">
+                                        @if(session()->get('produkKonfigurasiFile')->status_diskon != 'Tersedia')
+                                            {{rupiah(session()->get('produkKonfigurasiFile')->harga_berwarna) ?? rupiah(0) }} / Halaman
+                                        @else
+                                            {{rupiah($hargaBerwarna) ?? rupiah(0) }} / Halaman
+                                        @endif
+                                    </label>
+                                </div>
+                                <div class="row justify-content-between ml-0 mr-0 mb-4">
+                                    <label class="" style="font-size:16px;">{{__('Hitam Putih') }}</label>
+                                    <label class="" style="font-size:16px;">
+                                        @if(session()->get('produkKonfigurasiFile')->status_diskon != 'Tersedia')
+                                            {{rupiah(session()->get('produkKonfigurasiFile')->harga_hitam_putih) ?? rupiah(0) }} / Halaman
+                                        @else
+                                            {{rupiah($hargaHitamPutih) ?? rupiah(0) }} / Halaman
+                                        @endif
+                                    </label>
+                                </div>
+                                <div class="row justify-content-between ml-0 mr-0">
+                                    <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}</label>
+                                    <label class="" style="font-size:16px;">{{rupiah(session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna) ?? 0 }} / Halaman</label>
+                                </div>
+                                <div class="row justify-content-between ml-0 mr-0 mb-4">
+                                    <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}</label>
+                                    <label class="" style="font-size:16px;">{{rupiah(session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih) ?? 0 }} / Halaman</label>
+                                </div>
+                                <div class="row justify-content-between ml-0 mr-0 mb-5">
+                                    <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}</label>
+                                    <label class="" style="font-size:16px;">
+                                        @if (empty(session()->get('produkKonfigurasiFile')->partner->ntkwh))
+                                            {{__('0%')}}
+                                        @else
+                                            {{session()->get('produkKonfigurasiFile')->partner->ntkwh . "%" }}
+                                        @endif
+                                    </label>
+                                </div>
+                                <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur') }}</label>
+                                @php
+                                    $fitur = json_decode(session()->get('produkKonfigurasiFile')->fitur,true);
+                                @endphp
+                                @if (!empty($fitur))
+                                    @foreach ($fitur as $f => $value)
+                                        <div class="row justify-content-between ml-0 mr-0">
+                                            <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
+                                                <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
+                                                <label class="custom-control-label" for="checkboxFitur{{$f}}">
+                                                    {{$value['nama']}}
+                                                    <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
+                                                        help
+                                                    </i>
+                                                </label>
+                                            </div>
+                                            <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
+                                            <label class="" style="font-size:16px;">{{ rupiah($value['harga']) }}</label>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <br>
+                                    <label>-</label>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <form id="cekwarna-form" action="{{route("konfigurasi.cekwarna")}}" method="POST" hidden>
-                    @csrf
-                    @if (empty(session()->get('produkKonfigurasiFile')->partner->ntkwh))
-                        <input type="text" name="percenMin" value="0" hidden>
-                    @else
-                        <input type="text" name="percenMin" value="{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}" hidden>
-                    @endif
-                    <input type="text" name="path" hidden>
-                </form>
-
-                {{-- <script>
-                    function prosesCekWarna() {
-                        document.getElementsByName("path").value = "{{session()->get('fileUpload')->path}}";
-                document.getElementsByName("percenMin").value = "{{session()->get('fileUpload')->path}}";
-
-                document.getElementById("cekwarna-form").submit;
-                }
-                </script> --}}
-
+                    <form id="cekwarna-form" action="{{route("konfigurasi.cekwarna")}}" method="POST" hidden>
+                        @csrf
+                        @if (empty(session()->get('produkKonfigurasiFile')->partner->ntkwh))
+                            <input type="text" name="percenMin" value="0" hidden>
+                        @else
+                            <input type="text" name="percenMin" value="{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}" hidden>
+                        @endif
+                        <input type="text" name="path" hidden>
+                    </form>
                 @endif
             </div>
             @if (!session()->has('produkKonfigurasiFile'))
@@ -305,7 +318,9 @@
             <div id="progressText" class="mx-auto d-block"></div>
         </div>
         <script>
-            $('#loading').hide();
+            document.addEventListener('DOMContentLoaded', function () {
+                $('#loading').hide();
+            });
         </script>
         @if (session()->has('fileUpload') && session()->has('produkKonfigurasiFile'))
             <form id="konfigurasiForm" action="{{route('konfigurasi.tambah')}}" method="POST">
@@ -315,6 +330,7 @@
                 <input type='text' name="namaFile" id="namaFile" value="{{(session()->get('fileUpload'))->name}}" hidden />
                 <input type='number' name="jumlahHalamanHitamPutih" id="jumlahHalamanHitamPutih" value="" hidden />
                 <input type='number' name="jumlahHalamanBerwarna" id="jumlahHalamanBerwarna" value="" hidden />
+                <input type='text' name="statusHalaman" id="statusHalaman" value="" hidden />
                 <input type='text' name="halamanTerpilih" id="halamanTerpilih" value="" hidden />
                 <input type='number' name="jumlahSalinan" id="jumlahSalinan" value="" hidden />
                 <input type='number' name="paksaHitamPutih" id="paksaHitamPutih" value="" hidden />
@@ -323,9 +339,10 @@
                 <input type='text' name="catatanTambahan" id="catatanTambahan" value="" hidden />
                 <input type='text' name="namaProduk" id="namaProduk" value="{{session()->get('produkKonfigurasiFile')->nama}}" hidden />
                 <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="" hidden />
-
                 <script>
-                    $(function () {
+                    document.addEventListener('DOMContentLoaded', function () {
+
+                        $(function(){
                         $(document).ready(function () {
                                 $.ajaxSetup({
                                     headers: {
@@ -336,12 +353,13 @@
                                     type: 'GET',
                                     url: '{{route("konfigurasi.cekwarna")}}',
                                     data: {
-                                        path:"{{(session()->get('fileUpload'))->path}}",
+                                        path:"{{str_replace('\\', '/', (session()->get('fileUpload'))->path)}}",
                                         percenMin:"{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}",
                                         idProduk:"{{session()->get('produkKonfigurasiFile')->id_produk}}",
                                         namaFile:"{{(session()->get('fileUpload'))->name}}",
                                         jumlahHalamanHitamPutih:0,
                                         jumlahHalamanBerwarna:0,
+                                        statusHalaman:null,
                                         halamanTerpilih:[],
                                         jumlahSalinan:$('#jumlahSalin').val(),
                                         paksaHitamPutih:0,
@@ -353,26 +371,26 @@
                                     },
                                     dataType: 'json',
                                     error: function (xhr, ajaxOptions, thrownError) {
-                                        //TODO : Ubah pesan error menajadi tampilan
-                                        // alert(xhr.responseText);
-                                        alert('Maaf terjadi error '+thrownError+' Silahkan coba kembali');
-
+                                        swal({title: "Maaf terjadi Kesalahan Sistem",
+                                            text: thrownError + ' Silahkan coba kembali',
+                                            icon: "warning",
+                                            buttons: "OK",
+                                            dangerMode: true,
+                                        });
                                     },
                                     beforeSend: function () {
                                         $('#loading').show();
                                         $('#hasil').hide();
-
                                     },
                                     complete: function () {
                                         $('#loading').hide();
                                         $('#hasil').show();
                                     },
                                     success: function (pdf) {
-                                        console.log(pdf);
-
                                         pdf.namaFile = '{{(session()->get('fileUpload'))->name}}';
                                         pdf.jumlahHalamanHitamPutih = pdf['jumlahHalHitamPutih'];
                                         pdf.jumlahHalamanBerwarna = pdf['jumlahHalBerwarna'];
+                                        pdf.statusHalaman = "";
                                         pdf.halamanTerpilih = [];
                                         pdf.jumlahSalinan = parseInt($('#jumlahSalin').val());
                                         pdf.paksaHitamPutih = 0;
@@ -383,9 +401,9 @@
                                         var halamanAwal = parseInt($('#halamanAwal').val());
                                         var halamanAkhir = parseInt($('#halamanAkhir').val());
                                         var jumlahSalinan = parseInt($('#jumlahSalin').val());
-                                        var nilaiSemuaHalaman = $('#rbSemuaHal').val();
-                                        var hargaHitamPutih = '{{(session()->get('produkKonfigurasiFile'))->harga_hitam_putih}}';
-                                        var hargaBerwarna = '{{(session()->get('produkKonfigurasiFile'))->harga_berwarna}}';
+                                        var nilaiSemuaHalaman = $('#semuaHal').val();
+                                        var hargaHitamPutih = '{{$hargaHitamPutih}}';
+                                        var hargaBerwarna = '{{$hargaBerwarna}}';
                                         var hargaHitamPutihTimbalBalik = '{{(session()->get('produkKonfigurasiFile'))->harga_timbal_balik_hitam_putih}}';
                                         var hargaBerwarnaTimbalBalik = '{{(session()->get('produkKonfigurasiFile'))->harga_timbal_balik_berwarna}}';
                                         var nilaiPaksaHitamPutih = parseInt(pdf['jumlahHalBerwarna'] + pdf['jumlahHalHitamPutih']);
@@ -479,7 +497,7 @@
                                             '            <label class="font-weight-bold mb-2 ml-0" style="font-size: 24px;">Catatan Tambahan' +
                                             '            </label>' +
                                             '            <div class="input-group mb-3" style="height:120px;">' +
-                                            '                <textarea id="catatanTambahan" class="form-control" style="font-size: 18px;"></textarea>' +
+                                            '                <textarea id="catatanTambahanArea" class="form-control" style="font-size: 18px;"></textarea>' +
                                             '            </div>' +
                                             '        </div>' +
                                             '        <div class="col-md-6 bg-light-purple pl-4 pr-4 pt-2 pb-2 mt-4 mr-0" style="border-radius:10px;' +
@@ -3794,6 +3812,9 @@
                                                 $('.'+related_class).prop('disabled',false);
 
                                                 if($('#rbSemuaHal').is(':checked')){
+                                                    $('#halamanKustom').prop('disabled',true);
+                                                    $('#halamanAwal').prop('disabled',true);
+                                                    $('#halamanAkhir').prop('disabled',true);
 
                                                     $('#jumlahHalCetak').html(
                                                         '<label id="jumlahHalCetak" class="my-auto" style="font-size: 16px;">' +
@@ -3940,6 +3961,10 @@
                                                     }
                                                 }
                                                 else if($('#rbSampaiHal').is(':checked')){
+                                                    $('#halamanKustom').prop('disabled',true);
+                                                    $('#halamanAwal').prop('disabled',false);
+                                                    $('#halamanAkhir').prop('disabled',false);
+
                                                     var batasBawah = 0;
                                                     var batasAtas = 0;
                                                     var jumlahHitamPutihFinal = 0;
@@ -4414,6 +4439,10 @@
                                                     }
                                                 }
                                                 else if($('#rbKustomHal').is(':checked')){
+                                                    $('#halamanKustom').prop('disabled',false);
+                                                    $('#halamanAwal').prop('disabled',true);
+                                                    $('#halamanAkhir').prop('disabled',true);
+
                                                     $('#halamanKustom').on('change input',function(){
                                                         nilaiKustomHal = $('#halamanKustom').val();
                                                         $.ajaxSetup({
@@ -4596,18 +4625,26 @@
                                                 pdf.biaya = hargaTotalKonfigurasi;
                                             }));
 
-                                            $('#catatanTambahan').on('change input',(function(){
-                                                catatanTambahan = $('#catatanTambahan').val();
-                                                pdf.catatanTambahan = catatanTambahan;
-
-                                                // console.log(catatanTambahan);
+                                            $('#catatanTambahanArea').on('change input',(function(){
+                                                pdf.catatanTambahan = $('#catatanTambahanArea').val();
                                             }));
 
                                             $('#simpanDanLanjutkan').on('click',(function(){
-                                                $('#idProduk').val();
-                                                $('#namaFile').val();
                                                 $('#jumlahHalamanHitamPutih').val(pdf.jumlahHalamanHitamPutih);
                                                 $('#jumlahHalamanBerwarna').val(pdf.jumlahHalamanBerwarna);
+                                                if($('#rbSemuaHal').is(':checked')){
+                                                    pdf.statusHalaman = $('#rbSemuaHal').val();
+                                                    $('#statusHalaman').val(pdf.statusHalaman);
+                                                }
+                                                else if($('#rbSampaiHal').is(':checked')){
+                                                    pdf.statusHalaman = $('#rbSampaiHal').val();
+                                                    $('#statusHalaman').val(pdf.statusHalaman);
+                                                }
+                                                else{
+                                                    pdf.statusHalaman = $('#rbKustomHal').val();
+                                                    $('#statusHalaman').val(pdf.statusHalaman);
+                                                }
+                                                $('#statusHalaman').val(pdf.statusHalaman);
                                                 $('#halamanTerpilih').val(pdf.halamanTerpilih);
                                                 $('#jumlahSalinan').val(pdf.jumlahSalinan);
                                                 $('#paksaHitamPutih').val(pdf.paksaHitamPutih);
@@ -4630,6 +4667,8 @@
                                 });
                         });
                     });
+                    });
+
 
                 </script>
             </form>

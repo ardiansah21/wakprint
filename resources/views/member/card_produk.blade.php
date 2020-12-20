@@ -31,21 +31,26 @@ $member = Auth::user();
                         style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
                 @endif
             @endauth
-            {{-- <button type="submit"
-                class="btn fa fa-heart fa-2x fa-responsive cursor-pointer"
-                style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>
-            --}}
         </form>
         <input id="fotoProduk" type="text" value="{{ $p->getFirstMediaUrl('foto_produk') }}" hidden>
-        <img class="card-img-top cursor-pointer" @if (count($p->getMedia('foto_produk')) > 0)
-        src="{{ $p->getFirstMediaUrl('foto_produk') }}"
-    @else
-        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-        @endif
-        onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'" style="height: 180px;
-        object-fit:cover; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan Foto"/>
+        <img class="card-img-top cursor-pointer"
+            @if (count($p->getMedia('foto_produk')) > 0)
+                src="{{ $p->getFirstMediaUrl('foto_produk') }}"
+            @else
+                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+            @endif
+            @if (request()->fromKonfigurasi == true)
+                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'id_konfigurasi' => request()->id_konfigurasi,'fromKonfigurasi' => 'true']) }}'"
+            @else
+                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
+            @endif
+            style="height: 180px; object-fit:cover; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan Foto"/>
         <div class="card-body cursor-pointer"
-            onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'">
+            @if (request()->fromKonfigurasi == true)
+                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'id_konfigurasi' => request()->id_konfigurasi,'fromKonfigurasi' => 'true']) }}'"
+            @else
+                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
+            @endif>
             <div class="row justify-content-between">
                 <label class="col-md-7 text-truncate ml-0"
                     style="font-size: 14px;">{{ $p->partner->nama_toko ?? '-' }}</label>
@@ -64,46 +69,50 @@ $member = Auth::user();
             </div>
         </div>
         <div class="card-footer card-footer-primary cursor-pointer"
-            onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
+            @if (request()->fromKonfigurasi == true)
+                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'fromKonfigurasi=true']) }}'"
+            @else
+                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
+            @endif
             style="border-radius: 0px 0px 10px 10px;">
             <div class="row justify-content-between ml-0 mr-0">
                 <div>
                     @php
-                    $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
-                    $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+                        $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                        $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
 
-                    if($jumlahDiskonGray > $p->maksimal_diskon){
-                    $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
-                    $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
-                    }
-                    else{
-                    $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
-                    $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
-                    }
+                        if($jumlahDiskonGray > $p->maksimal_diskon){
+                            $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                            $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                        }
+                        else{
+                            $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                            $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                        }
                     @endphp
                     @if (!empty($p->harga_hitam_putih) && !empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
-                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                            Rp. <del>{{ $p->harga_hitam_putih ?? '-' }}</del>
+                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
+                            <del>{{ rupiah($p->harga_hitam_putih) ?? '-' }}</del>
                         </label>
                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                            {{ $hargaHitamPutih ?? '-' }}
+                            {{ rupiah($hargaHitamPutih) ?? '-' }}
                         </label>
                         <br>
                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                            Rp. <del>{{ $p->harga_berwarna ?? '-' }}</del>
+                        <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 12px;">
+                            <del>{{ rupiah($p->harga_berwarna) ?? '-' }}</del>
                         </label>
                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                            {{ $hargaBerwarna ?? '-' }}
+                            {{ rupiah($hargaBerwarna) ?? '-' }}
                         </label>
                     @elseif(!empty($p->harga_hitam_putih) && !empty($p->jumlah_diskon))
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
-                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                            Rp. <del>{{ $p->harga_hitam_putih ?? '-' }}</del>
+                        <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
+                            <del>{{ rupiah($p->harga_hitam_putih) ?? '-' }}</del>
                         </label>
                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                            {{ $hargaHitamPutih ?? '-' }}
+                            {{ rupiah($hargaHitamPutih) ?? '-' }}
                         </label>
                         <br>
                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
@@ -113,25 +122,20 @@ $member = Auth::user();
                     @elseif(!empty($p->harga_berwarna))
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                            Rp. {{ $p->harga_hitam_putih ?? '-' }}
+                            {{ rupiah($p->harga_hitam_putih) ?? '-' }}
                         </label>
                         <br>
                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                            Rp. {{ $p->harga_berwarna ?? '-' }}
+                            {{ rupiah($p->harga_berwarna) ?? '-' }}
                         </label>
                     @else
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                            Rp. {{ $p->harga_hitam_putih ?? '-' }}
+                            {{ rupiah($p->harga_hitam_putih) ?? '-' }}
                         </label>
                         <br>
                         <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                        {{-- <label
-                            class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1 mr-2"
-                            style="font-size: 12px; border-radius:5px;">
-                            {{ __('Berwarna') }}
-                        </label> --}}
                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                             {{ __('Tidak Tersedia') }}
                         </label>

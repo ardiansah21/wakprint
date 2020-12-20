@@ -47,15 +47,17 @@
                         <div class="row col-md-6 form-group ">
                             <label class="align-self-center"
                                 style="display: inline-block; width: 10%; text-align: right; padding-right:8px"> Rp </label>
-                            <input id="harga" name="harga" type="number" min="0" value="{{ $atk->harga }}"
+                            <input id="harga" name="harga" type="text" min="0" value="{{ number_format($atk->harga,0,".",".") }}"
                                 class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga ATK"
                                 aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
+                                oninput="this.value=formatRupiah(this.value,'')"
                                 style="font-size: 16px; width:90%" required>
                         </div>
                         <div class="col-md-6 form-group mb-4">
                             <input id="jumlah" type="number" name="jumlah" min="0" value="{{ $atk->jumlah }}"
                                 class="form-control pt-2 pb-2" aria-label="Jumlah Atk" placeholder="Masukkan Jumlah Atk"
                                 aria-label="Masukkan Jumlah ATK" aria-describedby="inputGroup-sizing-sm"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                 style="font-size: 16px;" required>
                         </div>
                     </div>

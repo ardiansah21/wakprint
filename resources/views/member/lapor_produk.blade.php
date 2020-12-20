@@ -152,9 +152,7 @@
                         {{__('Kenapa kamu ingin melapor produk ini ?') }}
                     </label>
                     <div class="form-group mb-5">
-                        <textarea class="form-control" id="pesan" name="pesan"
-                            aria-placeholder="Deskripsi Laporan"
-                            style="height:241px;"></textarea>
+                        <textarea class="form-control" id="pesan" name="pesan" aria-placeholder="Deskripsi Laporan" required style="height:241px;"></textarea>
                     </div>
                     <div class="form-group text-center">
                         <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold" type="submit"

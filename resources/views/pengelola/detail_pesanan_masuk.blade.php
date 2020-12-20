@@ -392,7 +392,7 @@
             @elseif ($pesanan->status === "Batal" && $pesanan->transaksiSaldo->status === "Gagal")
                 <div class="text-right mr-0">
                     <div class="container mb-3">
-                        <label class="badge badge-pill bg-white text-primary-danger font-weight-bold pl-5 pr-5 mb-0"style="border-radius:30px; border: 1px solid #FF4949; padding-top:12px; padding-bottom:12px; font-size:18px;">
+                        <label class="badge badge-pill bg-white text-primary-danger font-weight-bold pl-5 pr-5 mb-0"style="opacity: 0.7; border-radius:30px; border: 1px solid #FF4949; padding-top:12px; padding-bottom:12px; font-size:18px;">
                             {{ __('Pesanan Dibatalkan') }}
                         </label>
                     </div>
@@ -401,14 +401,14 @@
                 <div class="text-right">
                     <div class="container mb-3">
                         <button id="selesaikanBtn" class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" disabled onclick="window.location.href='{{route('partner.detail.pesanan.selesai',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
-                            {{ __('Selesaikan Pesanan') }}
+                            {{ __('Selesai Mencetak') }}
                         </button>
                     </div>
                 </div>
             @else
                 <div class="text-right mr-0">
                     <div class="container mb-3">
-                        <label class="badge badge-pill bg-primary-purple text-white font-weight-bold pl-5 pr-5 mb-0"style="border-radius:30px; border: 1px solid #BC41BE; padding-top:12px; padding-bottom:12px; font-size:18px;">
+                        <label class="badge badge-pill bg-primary-purple text-white font-weight-bold pl-5 pr-5 mb-0" style="opacity: 0.7; border-radius:30px; border: 1px solid #BC41BE; padding-top:12px; padding-bottom:12px; font-size:18px;">
                             {{ __('Pesanan Selesai') }}
                         </label>
                     </div>
@@ -421,27 +421,41 @@
 
         {{-- pop up tolak --}}
         {{-- @include('pengelola.popup_tolak_pesanan') --}}
-
-        <script>
-            var arrCheckCetakBtn = [];
-            var arrTotalIndex = [];
-            $('.btnCheck').each(function(index,value){
-                arrTotalIndex.push(index);
-                $('#btnCetak' + index).click(function(){
-                    arrCheckCetakBtn.push(index);
-                    $('#btnCetak' + index).css('background-color', '#E5E5E5', 'color', '#BABABA');
-                    $('#btnCetak' + index).css('color', '#BABABA');
-                    $('#btnCetak' + index).text('Dicetak');
-
-                    if (arrCheckCetakBtn.length === arrTotalIndex.length) {
-                        $('#btnCetak' + index).prop('disabled', true);
-                        $('#selesaikanBtn').prop('disabled', false);
-                    } else {
-                        $('#btnCetak' + index).prop('disabled', false);
-                        $('#selesaikanBtn').prop('disabled', true);
-                    }
-                });
-            })
-        </script>
     </div>
+@endsection
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script>
+        var arrCheckCetakBtn = [];
+        var arrTotalIndex = [];
+
+        var msg = '{{ Session::get('alert') }}';
+        var exist = '{{ Session::has('alert') }}';
+        if (exist) {
+            swal({title: "Berhasil",
+                text: msg,
+                icon: "success",
+                button:"OK",
+                dangerMode: false,
+            });
+        }
+
+        $('.btnCheck').each(function(index,value){
+            arrTotalIndex.push(index);
+            $('#btnCetak' + index).click(function(){
+                arrCheckCetakBtn.push(index);
+                $('#btnCetak' + index).css('background-color', '#E5E5E5', 'color', '#BABABA');
+                $('#btnCetak' + index).css('color', '#BABABA');
+                $('#btnCetak' + index).text('Dicetak');
+
+                if (arrCheckCetakBtn.length === arrTotalIndex.length) {
+                    $('#btnCetak' + index).prop('disabled', true);
+                    $('#selesaikanBtn').prop('disabled', false);
+                } else {
+                    $('#btnCetak' + index).prop('disabled', false);
+                    $('#selesaikanBtn').prop('disabled', true);
+                }
+            });
+        })
+    </script>
 @endsection

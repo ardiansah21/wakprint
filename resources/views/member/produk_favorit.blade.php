@@ -1,10 +1,10 @@
 @extends('layouts.member')
 
 @section('content')
-    <div class="tab-pane fade show active ml-2 mr-0" role="tabpanel">
+    <div class="ml-2 mr-0">
         <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Produk Favorit') }}</h1>
         @if(!empty($produkFavorit))
-            <div class="custom-scrollbar-favorit">
+            <div>
                 <div class="row justify-content-between">
                     @foreach ($produk as $p)
                         @for($i=0; $i < count($produkFavorit); $i++)
