@@ -6,12 +6,13 @@ use App\Message;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Member extends Authenticable implements HasMedia, MustVerifyEmail
 {
-    use Notifiable, HasMediaTrait;
+    use Notifiable, HasMediaTrait, HasApiTokens;
 
     protected $table = "member";
 

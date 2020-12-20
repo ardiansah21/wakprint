@@ -5,8 +5,11 @@ namespace App\Notifications;
 use App\Transaksi_saldo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\PusherPushNotifications\PusherChannel;
+use NotificationChannels\PusherPushNotifications\PusherMessage;
 
 class TopUpNotification extends Notification implements ShouldQueue
 {
@@ -18,7 +21,7 @@ class TopUpNotification extends Notification implements ShouldQueue
         'berhasil',
         'gagal',
     ];
-
+    private $title, $description, $url;
     /**
      * Create a new notification instance.
      *
