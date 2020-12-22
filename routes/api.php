@@ -32,5 +32,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::get('/logout', 'AuthController@logout');
         Route::get('/', 'PartnerController@index');
 
+        Route::apiResource('atk', 'AtkController');
+
     });
 });
