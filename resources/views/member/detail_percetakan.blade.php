@@ -250,17 +250,17 @@
                             @foreach ($atk as $a)
                                 @if ($a->id_pengelola === $partner->id_pengelola)
                                     <div class="row justify-content-left" style="font-size: 14px;">
-                                        <div class="col-md-3 text-left">
+                                        <div class="col-md-5 text-left">
                                             <label class="mb-2">
                                                 {{ $a->nama }}
                                             </label>
                                         </div>
-                                        <div class="col-md-2">
+                                        {{-- <div class="col-md-2">
                                             <i class="material-icons md-18 align-middle ml-2 mr-4" style="color:#C4C4C4">
                                                 help
                                             </i>
-                                        </div>
-                                        <div class="col-md-3 text-right">
+                                        </div> --}}
+                                        <div class="col-md-3 text-left">
                                             <label class="mb-2">
                                                 x {{ $a->jumlah }}
                                             </label>

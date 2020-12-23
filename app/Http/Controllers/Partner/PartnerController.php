@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Exports\TransaksiSaldoPartnerExport;
 use App\Http\Controllers\Controller;
 use App\Notifications\PesananPartnerNotification;
+use App\Notifications\TarikSaldoNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
@@ -165,7 +166,7 @@ class PartnerController extends Controller
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
 
-            Transaksi_saldo::create([
+            $transaksiSaldo = Transaksi_saldo::create([
                 'id_pengelola' => $partner->id_pengelola,
                 'jenis_transaksi' => $jenisTransaksi,
                 'jumlah_saldo' => $jumlahSaldo,
@@ -174,6 +175,7 @@ class PartnerController extends Controller
                 'keterangan' => $keterangan,
             ]);
 
+            $partner->notify(new TarikSaldoNotification('pending', $transaksiSaldo));
             return redirect()->route('partner.saldo')->with('success', 'Penarikan Saldo Anda Sedang Diproses');
         }
     }

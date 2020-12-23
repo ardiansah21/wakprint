@@ -27,7 +27,7 @@
             <div class="row justify-content-between ml-0">
                 <label class="card-text font-weight-bold" style="font-size: 18px;">
                     <i class="material-icons md-24 mr-2 align-middle" style="color: #6081D7">location_on</i>
-                    {{ __('100 m') }}
+                    {{ __(($p->jarak/1000).' km') }}
                 </label>
 
                 <label class="card-text mr-4 font-weight-bold" style="font-size: 18px;">

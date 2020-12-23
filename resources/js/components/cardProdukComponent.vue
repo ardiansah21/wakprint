@@ -63,7 +63,7 @@
                         <i class="material-icons md-18 align-middle mr-0"
                             >location_on</i
                         >
-                        100 m
+                        {{produk.jarak/1000}} km
                     </label>
                 </div>
                 <label

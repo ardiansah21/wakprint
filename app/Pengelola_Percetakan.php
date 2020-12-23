@@ -31,6 +31,15 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'jarak',
+    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')->singleFile();
@@ -63,6 +72,12 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function atk()
     {
         return $this->hasMany('App\Atk', 'id_pengelola');
+    }
+
+    //simulasi jarak
+    public function getJarakAttribute()
+    {
+        return $this->id_pengelola * 100;
     }
 
     //TODO diganti dengan yang ada s nya di cek lagi mana aja yang tidak menggunakan s

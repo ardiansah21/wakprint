@@ -55,7 +55,7 @@
                             <div class="card-body cursor-pointer" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'">
                                 <div class="row justify-content-between">
                                     <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$produk->partner->nama_toko ?? '-'}}</label>
-                                    <label class="col-md-auto card-text text-right mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i> {{__('100 m') }}</label>
+                                    <label class="col-md-auto card-text text-right mr-0" style="font-size: 14px;"><i class="material-icons md-18 align-middle mr-0">location_on</i>{{ __(($produk->partner->jarak/1000).' km') }}</label>
                                 </div>
                                 <label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px; min-height:75px;">{{$produk->nama ?? ''}}</label>
                                 <label class="card-text text-truncate-multiline" style="font-size: 18px; min-height:65px;">{{$produk->partner->alamat_toko}}</label>

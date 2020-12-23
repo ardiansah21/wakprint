@@ -5,20 +5,23 @@ namespace App\Notifications;
 use App\Transaksi_saldo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\PusherPushNotifications\PusherChannel;
+use NotificationChannels\PusherPushNotifications\PusherMessage;
 
 class TopUpNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     private $transaksi, $status;
-    private $stausArr = [
+    private $statusArr = [
         'pending',
         'berhasil',
         'gagal',
     ];
-
+    private $title, $description, $url;
     /**
      * Create a new notification instance.
      *
@@ -37,13 +40,21 @@ class TopUpNotification extends Notification implements ShouldQueue
 
             switch ($status) {
                 case 'pending':
-                    $this->title = "pending";
-                    $this->description = " pending ini deskpripsi, tapi pendek, beneran pendek loh, ahh tapi sekarang udah panjang";
-                    $this->url = route('faq');
+                    $this->title = "Top Up Saldo Sedang Diproses";
+                    $this->description = "Silahkan melakukan pembayaran top up saldo Anda sebelum dapat dikonfirmasi kembali oleh Admin kami, terima kasih :)";
+                    $this->url = route('saldo.pembayaran', $transaksi->id_transaksi);
                     break;
-
+                case 'berhasil':
+                    $this->title = "Top Up Saldo Berhasil";
+                    $this->description = "Top up saldo Anda telah berhasil, saldo telah ditambahkan ke akun Anda, terima kasih telah melakukan top up saldo :)";
+                    $this->url = route('riwayat.saldo', $transaksi->id_transaksi);
+                    break;
+                case 'gagal':
+                    $this->title = "Top Up Saldo Gagal";
+                    $this->description = "Top up saldo Anda gagal diproses dikarenakan ada masalah pada proses pembayaran Anda, silahkan lakukan ulang proses top up saldo dari awal.";
+                    $this->url = route('riwayat.saldo', $transaksi->id_transaksi);
+                    break;
                 default:
-
                     break;
             }
 
@@ -74,7 +85,7 @@ class TopUpNotification extends Notification implements ShouldQueue
             ->greeting("Hay {$notifiable->nama_lengkap}!")
             ->line($this->description)
             ->action('Periksa Selengkapnya', $this->url)
-            ->line('Terima kasih telah menggunkan aplikasi Wakprint!');
+            ->line('Terima kasih telah menggunakan aplikasi Wakprint !');
     }
 
     /**

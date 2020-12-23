@@ -7,6 +7,7 @@ use App\Konfigurasi_file;
 use App\Lapor_produk;
 use App\Member;
 use App\Notifications\PesananNotification;
+use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Produk;
@@ -119,7 +120,7 @@ class MemberController extends Controller
             $idKonfigurasi = $request->id_konfigurasi;
             $fromKonfigurasi = $request->fromKonfigurasi;
 
-            if ($fromKonfigurasi == true) {
+            if ($fromKonfigurasi != 'false') {
                 if (!empty($members->pesanans) && $members->pesanans->where('status', null)) {
                     if ($request->filterPencarian === 'Harga Tertinggi') {
                         if ($request->fiturTambahan != null) {
@@ -238,21 +239,21 @@ class MemberController extends Controller
                         array_push($atkIdPartner, $a->partner->id_pengelola);
                         array_push($atkStatusPartner, $a->partner->status);
                     }
-                }
 
-                return response()->json([
-                    'members' => $members,
-                    'produks' => $produks,
-                    'partners' => $partners,
-                    'id_partner_dari_produk' => $idProdukPartnerDariProduk,
-                    'nama_partner_dari_produk' => $namaPartnerDariProduk,
-                    'alamat_partner_dari_produk' => $alamatPartnerDariProduk,
-                    'atk_id_partner' => $atkIdPartner,
-                    'atk_status_partner' => $atkStatusPartner,
-                    'atks' => $atks,
-                    'idKonfigurasi' => $idKonfigurasi,
-                    'fromKonfigurasi' => $fromKonfigurasi,
-                ], 200);
+                    return response()->json([
+                        'members' => $members,
+                        'produks' => $produks,
+                        'partners' => $partners,
+                        'id_partner_dari_produk' => $idProdukPartnerDariProduk,
+                        'nama_partner_dari_produk' => $namaPartnerDariProduk,
+                        'alamat_partner_dari_produk' => $alamatPartnerDariProduk,
+                        'atk_id_partner' => $atkIdPartner,
+                        'atk_status_partner' => $atkStatusPartner,
+                        'atks' => $atks,
+                        'idKonfigurasi' => $idKonfigurasi,
+                        'fromKonfigurasi' => $fromKonfigurasi,
+                    ], 200);
+                }
             } else {
                 if ($request->filterPencarian === 'Harga Tertinggi') {
                     if ($request->fiturTambahan != null) {
@@ -748,7 +749,7 @@ class MemberController extends Controller
 
         if ($request->hasFile('foto_member')) {
             $member->clearMediaCollection();
-            $member->addMedia($request->file('foto_member'))->toMediaCollection();
+            $member->addMedia($request->file('foto_member'))->toMediaCollection('avatar');
         }
 
         if (empty($request->input('current-password')) && empty($request->input('password')) && empty($request->input('confirm-password'))) {
@@ -967,8 +968,9 @@ class MemberController extends Controller
                     ->where('status', '!=', 'Pending')
                     ->get();
             } else {
-                $transaksi_saldo = $member->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
-                    ->where('status', '!=', 'Pending');
+                $transaksi_saldo = $member->transaksiSaldo->first()->where('jenis_transaksi', '!=', 'Tarik')
+                    ->where('status', '!=', 'Pending')
+                    ->get();
             }
             return response()->json([
                 'transaksi_saldo' => $transaksi_saldo,
@@ -989,7 +991,7 @@ class MemberController extends Controller
         $status = 'Pending';
         $keterangan = 'Top Up Sedang Diproses';
 
-        Transaksi_saldo::create([
+        $transaksi = Transaksi_saldo::create([
             'id_member' => $member->id_member,
             'jenis_transaksi' => $jenisTransaksi,
             'jumlah_saldo' => $jumlahSaldo,
@@ -999,17 +1001,20 @@ class MemberController extends Controller
         ]);
 
         alert()->success('Top Up Anda Sedang Diproses', 'Silahkan Periksa Riwayat Halaman Pembayaran !');
+        $member->notify(new TopUpNotification('pending', $transaksi));
         return redirect()->route('saldo');
     }
 
     public function batalTopUpSaldo($idTransaksi)
     {
+        $member = Auth::user();
         $transaksiSaldo = Transaksi_saldo::find($idTransaksi);
         $transaksiSaldo->jenis_transaksi = 'TopUp';
         $transaksiSaldo->status = 'Gagal';
         $transaksiSaldo->keterangan = 'Top Up Telah Dibatalkan';
         $transaksiSaldo->save();
 
+        $member->notify(new TopUpNotification('gagal', $transaksiSaldo));
         return redirect()->route('saldo')->with('success', 'Top Up Anda Telah Berhasil Dibatalkan');
     }
 

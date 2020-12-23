@@ -222,7 +222,7 @@
                         onchange="document.getElementById('kliping').disabled=!this.checked;">
                     <label class="custom-control-label" for="checkboxKliping">
                         {{ __('Kliping') }}
-                        <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                        <i id="helpKliping" role="tooltip" class="material-icons md-18 align-middle" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div class='media'><img src='https://ecs7.tokopedia.net/img/cache/700/product-1/2017/11/3/24128252/24128252_b0f7c29c-5096-4d76-9d7e-91fee75f553c_320_427.jpg' class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'></div><div class='media-body'><h5 class='media-heading'>Kliping</h5><p>Kliping adalah hasil cetakan Anda akan sekaligus diberikan tulang kliping, plastik transparan, dan kertas jeruk secara lengkap diberikan dalam 1 paket pada dokumen Anda.</p></div></div>" onmouseover="showPopUpHelpKliping()" onmouseout="hidePopUpHelpKliping()" style="color:#C4C4C4">
                             help
                         </i>
                     </label>
@@ -243,13 +243,10 @@
             <div class="row justify-content-left mb-2 ml-0">
                 <label class="h5">
                     {{ __('Jilid') }}
-                    <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
-                        help
-                    </i>
                 </label>
             </div>
             @php
-            $paket = array('Lem','Baut','Kawat','Spiral');
+                $paket = array('Lem','Baut','Kawat','Spiral');
             @endphp
             @foreach ($paket as $p)
                 <div class="form-group row justify-content-between mb-3 ml-2 mr-0">
@@ -258,7 +255,35 @@
                             onchange="document.getElementById('{{ $p }}').disabled=!this.checked; ">
                         <label class="custom-control-label" for="checkbox{{ $p }}">
                             {{ $p }}
-                            <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                            <i id="helpJilid{{$p}}" class="material-icons help md-18 align-middle" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
+                                data-content="
+                                    <div class='media'>
+                                        <img
+                                            @if($p === 'Lem')
+                                                src='https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-lem-panas-perfect-binding.jpg'
+                                            @elseif($p === 'Baut')
+                                                src='https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-baut-screw-binding.jpg'
+                                            @elseif($p === 'Kawat')
+                                                src='https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-kawat-staples-tengah-saddle-stitching.jpg'
+                                            @else
+                                                src='https://solusiprinting.com/wp-content/uploads/2020/03/Jilid-spiral-wire-binding.jpg'
+                                            @endif class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'>
+                                    </div>
+                                    <div class='media-body'>
+                                        <h5 class='media-heading'>{{'Jilid '.$p}}</h5>
+                                        <p>{{'Jilid '.$p}} adalah
+                                            @if($p === 'Lem')
+                                                jilid yang dilakukan dengan cara merekatkan bagian pinggir kertas ke punggung sampul buku bagian dalam menggunakan lem atau perekat. Teknik ini cocok untuk buku yang cukup tebal, dengan soft cover maupun hard cover.
+                                            @elseif($p === 'Baut')
+                                                teknik yang mirip dengan jilid spiral, yaitu melubangi tepi halaman untuk menyatukan kertas. Bedanya adalah yang digunakan untuk menyatukan halaman adalah baut yang dikencangkan. Tentunya dipilih baut khusus yang juga bisa menunjang estetika buku. Penjilidan ini seringnya dipakai untuk buku hard cover yang dibuat khusus seperti katalog warna, katalog pameran, buku menu, dll.
+                                            @elseif($p === 'Kawat')
+                                                jilid yang cocok untuk dokumen dengan soft cover dan ketebalan yang tipis antara 4-80 halaman seperti booklet, majalah, atau buku modul tipis.
+                                            @else
+                                                jilid yang dilakukan dengan cara melubangi tepi halaman di satu sisi lalu menyatukannya dengan kawat atau plastik berbentuk roll. Teknik ini biasanya dipakai untuk buku dengan bahan kertas yang cukup tebal namun tidak memiliki terlalu banyak halaman.
+                                            @endif
+                                        </p>
+                                    </div>"
+                                onmouseover="showPopUpHelpJilid('{{$p}}')" onmouseout="hidePopUpHelpJilid('{{$p}}')" style="color:#C4C4C4">
                                 help
                             </i>
                         </label>
@@ -287,7 +312,39 @@
                             onchange="document.getElementById('{{ $np }}').disabled=!this.checked; ">
                         <label class="custom-control-label" for="checkbox{{ $np }}">
                             {{ $np }}
-                            <i class="material-icons md-18 align-middle" style="color:#C4C4C4">
+                            <i id="helpNonPaket{{str_replace(' ','',$np)}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
+                                data-content=
+                                    "<div class='media'>
+                                        <img
+                                            @if($np === 'Hekter')
+                                                src='https://qph.fs.quoracdn.net/main-qimg-92ca56763f43afe14652d15eadc59264'
+                                            @elseif(str_replace(' ','',$np) == 'TulangKliping')
+                                                src='https://ecs7.tokopedia.net/img/cache/700/product-1/2017/11/3/24128252/24128252_b0f7c29c-5096-4d76-9d7e-91fee75f553c_320_427.jpg'
+                                            @elseif(str_replace(' ','',$np) === 'PenjepitKertas')
+                                                src='https://cdn0-production-images-kly.akamaized.net/eJOTPdEE8EJmfGT90UZpzbdbhHI=/640x640/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2887278/original/001566000_1566293636-rainbow-made-colorful-paper-clips_23-2148092020freepika.jpg'
+                                            @elseif(str_replace(' ','',$np) === 'PlastikTransparan')
+                                                src='https://1.bp.blogspot.com/-ZNjTq20AXBE/Vp13uSac7YI/AAAAAAAAABQ/3-V4wH-wlsA/s1600/IMG-20160104-WA0002.jpg'
+                                            @else
+                                                src='https://cdn.siplah.pesonaedu.id/uploads/6f84a30ff9f80054908cb570c0a86c6743e9f6683f18602a0d89901bf781fc64/51826/image.png'
+                                            @endif class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'>
+                                    </div>
+                                    <div class='media-body'>
+                                        <h5 class='media-heading'>{{$np}}</h5>
+                                        <p>{{$np}} adalah
+                                            @if($np === 'Hekter')
+                                                hasil cetakan Anda akan sekaligus dihekter untuk membuat dokumen Anda terlihat rapi dan tidak berantakan.
+                                            @elseif(str_replace(' ','',$np) === 'TulangKliping')
+                                                hasil cetakan Anda akan sekaligus diberikan tulang kliping pada saat proses pencetakan dokumen telah selesai.
+                                            @elseif(str_replace(' ','',$np) === 'PenjepitKertas')
+                                                hasil cetakan Anda akan sekaligus dijepit dengan penjepit kertas untuk membuat dokumen Anda terlihat rapi dan tidak berantakan.
+                                            @elseif(str_replace(' ','',$np) === 'PlastikTransparan')
+                                                hasil cetakan Anda akan sekaligus diberikan plastik transparan untuk halaman depan pada dokumen Anda.
+                                            @else
+                                                hasil cetakan Anda akan sekaligus diberikan kertas jeruk untuk halaman belakang pada dokumen Anda.
+                                            @endif
+                                        </p>
+                                    </div>"
+                                onmouseover="showPopUpHelpNonPaket('{{str_replace(' ','',$np)}}')" onmouseout="hidePopUpHelpNonPaket('{{str_replace(' ','',$np)}}')" style="color:#C4C4C4">
                                 help
                             </i>
                         </label>
@@ -365,6 +422,30 @@
             $('#ukuranKertasButton').text($(this).text());
             $('#ukuranKertas').val($(this).text());
         });
+
+        function showPopUpHelpKliping() {
+            $('#helpKliping').popover('show');
+        }
+
+        function hidePopUpHelpKliping() {
+            $('#helpKliping').popover('hide');
+        }
+
+        function showPopUpHelpJilid(value) {
+            $('#helpJilid' + value).popover('show');
+        }
+
+        function hidePopUpHelpJilid(value) {
+            $('#helpJilid' + value).popover('hide');
+        }
+
+        function showPopUpHelpNonPaket(value) {
+            $('#helpNonPaket' + value).popover('show');
+        }
+
+        function hidePopUpHelpNonPaket(value) {
+            $('#helpNonPaket' + value).popover('hide');
+        }
 
         $(document).ready(function() {
 

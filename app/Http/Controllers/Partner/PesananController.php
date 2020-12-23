@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\PesananNotification;
+use App\Notifications\PesananPartnerNotification;
 use App\Pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +33,7 @@ class PesananController extends Controller
         $pesanan->status = "Diproses";
         $pesanan->save();
 
+        $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan->id_pesanan));
         alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
         return redirect()->back();
     }
@@ -47,14 +50,16 @@ class PesananController extends Controller
         $pesanan->transaksiSaldo->save();
         $pesanan->save();
 
+        $pesanan->member->notify(new PesananNotification('pesananDiTolak', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananDiTolak', $pesanan));
         alert()->error('Yahh', 'Pesanan telah ditolak');
         return redirect()->route('partner.pesanan');
     }
 
     public function selesaikanPesanan($idPesanan)
     {
-        // $partner = Pengelola_Percetakan::find(Auth::id());
-        // $pesanan = $partner->pesanan->find($idPesanan);
+        $partner = Pengelola_Percetakan::find(Auth::id());
+        $pesanan = $partner->pesanan->find($idPesanan);
         // $pesanan->status = "Selesai";
         // $pesanan->transaksiSaldo->status = "Berhasil";
         // $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
@@ -63,6 +68,8 @@ class PesananController extends Controller
         // $pesanan->transaksiSaldo->save();
         // $pesanan->save();
 
+        $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
         alert()->success('Pesanan Selesai Dicetak', 'Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan');
         return redirect()->route('partner.pesanan');
     }
@@ -167,9 +174,9 @@ class PesananController extends Controller
                 } else {
                     $pesanan = $partner->pesanan->first()->where('status', '!=', 'Pending')->get();
                 }
-
-                $transaksiSaldo = $partner->pesanan->first()->transaksiSaldo;
             }
+
+            $transaksiSaldo = $partner->pesanan->first()->transaksiSaldo;
 
             return response()->json([
                 'pesanan' => $pesanan,

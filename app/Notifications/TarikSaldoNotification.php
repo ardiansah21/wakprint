@@ -2,21 +2,26 @@
 
 namespace App\Notifications;
 
+use App\Transaksi_saldo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\PusherPushNotifications\PusherChannel;
+use NotificationChannels\PusherPushNotifications\PusherMessage;
 
 class TarikSaldoNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     private $transaksi, $status;
-    private $stausArr = [
+    private $statusArr = [
         'pending',
         'berhasil',
         'gagal',
     ];
+    private $title, $description, $url;
     /**
      * Create a new notification instance.
      *
@@ -35,16 +40,23 @@ class TarikSaldoNotification extends Notification implements ShouldQueue
 
             switch ($status) {
                 case 'pending':
-                    $this->title = "pending";
-                    $this->description = " pending ini deskpripsi, tapi pendek, beneran pendek loh, ahh tapi sekarang udah panjang";
-                    $this->url = route('faq');
+                    $this->title = "Tarik Saldo Sedang Diproses";
+                    $this->description = "Tarik saldo Anda sedang dikonfirmasi kembali oleh Admin kami, mohon tunggu beberapa saat, terima kasih :)";
+                    $this->url = route('partner.riwayat.saldo', $transaksi->id_transaksi);
                     break;
-
+                case 'berhasil':
+                    $this->title = "Tarik Saldo Berhasil";
+                    $this->description = "Saldo telah dicairkan ke rekening akun Anda, terima kasih telah melakukan transaksi bersama kami :)";
+                    $this->url = route('partner.riwayat.saldo', $transaksi->id_transaksi);
+                    break;
+                case 'gagal':
+                    $this->title = "Tarik Saldo Gagal";
+                    $this->description = "Penarikan saldo Anda gagal diproses dikarenakan ada masalah pada proses konfirmasi melalui Admin kami, silahkan lakukan penarikan ulang saldo Anda kembali, mohon maaf atas ketidaknyamanannya.";
+                    $this->url = route('partner.riwayat.saldo', $transaksi->id_transaksi);
+                    break;
                 default:
-
                     break;
             }
-
         }
     }
 

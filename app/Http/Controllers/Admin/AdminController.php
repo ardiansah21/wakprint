@@ -8,6 +8,10 @@ use App\Lapor_produk;
 use App\Mail\TanggapiKeluhanMail;
 use App\Mail\TolakPartnerMail;
 use App\Member;
+use App\Notifications\PesananNotification;
+use App\Notifications\PesananPartnerNotification;
+use App\Notifications\TarikSaldoNotification;
+use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
@@ -218,6 +222,12 @@ class AdminController extends Controller
 
         $transaksiSaldo->save();
 
+        if ($transaksiSaldo->jenis_transaksi != 'Tarik') {
+            $transaksiSaldo->member->notify(new TopUpNotification('gagal', $transaksiSaldo));
+        } else {
+            $transaksiSaldo->partner->notify(new TarikSaldoNotification('gagal', $transaksiSaldo));
+        }
+
         return redirect()->route('admin.saldo')->with('success', 'Anda telah berhasil menolak ' . $transaksiSaldo->jenis_transaksi . ' saldo.');
     }
 
@@ -230,12 +240,15 @@ class AdminController extends Controller
             $transaksiSaldo->member->jumlah_saldo += $transaksiSaldo->jumlah_saldo;
             $transaksiSaldo->member->save();
             $transaksiSaldo->save();
+            $transaksiSaldo->member->notify(new TopUpNotification('berhasil', $transaksiSaldo));
         } else {
             $transaksiSaldo->status = "Berhasil";
             $transaksiSaldo->keterangan = "Pembayaran Berhasil";
             $transaksiSaldo->member->jumlah_saldo = ($transaksiSaldo->member->jumlah_saldo + $transaksiSaldo->jumlah_saldo) - $transaksiSaldo->jumlah_saldo;
             $transaksiSaldo->member->save();
             $transaksiSaldo->save();
+            $transaksiSaldo->member->notify(new PesananNotification('pembayaranBerhasil', $transaksiSaldo->pesanan));
+            $transaksiSaldo->partner->notify(new PesananPartnerNotification('pesananMasuk', $transaksiSaldo->pesanan));
         }
 
         return redirect()->route('admin.saldo')->with('success', 'Anda telah berhasil mengkonfirmasi ' . $transaksiSaldo->jenis_transaksi . ' saldo.');
@@ -250,6 +263,7 @@ class AdminController extends Controller
         $transaksiSaldo->partner->save();
         $transaksiSaldo->save();
 
+        $transaksiSaldo->partner->notify(new TarikSaldoNotification('berhasil', $transaksiSaldo));
         return redirect()->route('admin.saldo')->with('success', 'Anda telah berhasil mengkonfirmasi ' . $transaksiSaldo->jenis_transaksi . ' saldo.');
     }
 

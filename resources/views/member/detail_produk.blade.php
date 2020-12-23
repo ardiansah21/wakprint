@@ -264,17 +264,17 @@
                             @foreach ($atk as $a)
                                 @if ($a->id_pengelola === $produk->partner->id_pengelola)
                                     <div class="row justify-content-left" style="font-size: 14px;">
-                                        <div class="col-md-3 text-left">
+                                        <div class="col-md-5 text-left">
                                             <label class="mb-2">
                                                 {{ $a->nama }}
                                             </label>
                                         </div>
-                                        <div class="col-md-2">
+                                        {{-- <div class="col-md-2">
                                             <i class="material-icons md-18 align-middle ml-2 mr-4" style="color:#C4C4C4">
                                                 help
                                             </i>
-                                        </div>
-                                        <div class="col-md-3 text-right">
+                                        </div> --}}
+                                        <div class="col-md-3 text-left">
                                             <label class="mb-2">
                                                 x {{ $a->jumlah }}
                                             </label>
@@ -458,7 +458,7 @@
                                 <label class="col-md-6 text-break mb-2" style="font-size: 18px;">
                                     {{ __('Timbal Balik (Hitam-Putih)') }}
                                 </label>
-                                <i class="col-md-1 material-icons md-18 mt-1" style="color:#C4C4C4">
+                                <i id="helpTimbalBalikHitamPutih" class="col-md-1 material-icons md-18 cursor-pointer mt-1" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div class='media'><img src='https://3.bp.blogspot.com/-kREHGo3Rn3I/Uk6saAHRl4I/AAAAAAAAAg4/ZQDinoOQr_I/s1600/Cartridge-Tinta-Printer.jpg' class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'></div><div class='media-body'><h5 class='media-heading'>Timbal Balik Hitam Putih</h5><p>Dokumen Anda akan dicetak secara timbal balik dengan menggunakan warna tinta hitam-putih pada keseluruhan halaman, sehingga memungkinkan Anda untuk memperoleh harga yang lebih hemat</p></div></div>" onmouseover="showPopUpHelpTbHitamPutih()" onmouseout="hidePopUpHelpTbHitamPutih()" style="color:#C4C4C4">
                                     help
                                 </i>
                                 <label class="col-md-4 text-break text-right SemiBold mb-2" style="font-size: 14px;">
@@ -471,7 +471,7 @@
                                 <label class="col-md-6 text-break text-primary-purple mb-2" style="font-size: 18px;">
                                     {{ __('Timbal Balik (Warna)') }}
                                 </label>
-                                <i class="col-md-1 material-icons md-18 mt-1" style="color:#C4C4C4">
+                                <i id="helpTimbalBalikBerwarna" class="col-md-1 material-icons md-18 cursor-pointer mt-1" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div class='media'><img src='https://3.bp.blogspot.com/-kREHGo3Rn3I/Uk6saAHRl4I/AAAAAAAAAg4/ZQDinoOQr_I/s1600/Cartridge-Tinta-Printer.jpg' class='mr-3 mb-3' width='100%' height='156' alt='Sample Image'></div><div class='media-body'><h5 class='media-heading'>Timbal Balik Berwarna</h5><p>Dokumen Anda akan dicetak secara timbal balik dengan menggunakan warna tinta berwarna pada keseluruhan halaman, sehingga memungkinkan Anda untuk memperoleh harga yang lebih hemat</p></div></div>" onmouseover="showPopUpHelpTbBerwarna()" onmouseout="hidePopUpHelpTbBerwarna()" style="color:#C4C4C4">
                                     help
                                 </i>
                                 <label class="col-md-4 text-break text-right text-primary-purple SemiBold mb-2"
@@ -490,7 +490,20 @@
                                     <label class="col-md-6 text-break mb-2" style="font-size: 18px;">
                                         {{ $value['nama'] }}
                                     </label>
-                                    <i class="col-md-1 material-icons md-18 mt-1" style="color:#C4C4C4">
+                                    <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
+                                        data-content=
+                                            "<div class='media'>
+                                                @if(!empty($value['foto_fitur']))
+                                                    <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
+                                                @endif
+                                            </div>
+                                            <div class='media-body'>
+                                                <h5 class='media-heading'>
+                                                    {{$value['nama']}}
+                                                </h5>
+                                                <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
+                                            </div>"
+                                        onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
                                         help
                                     </i>
                                     <label class="col-md-5 text-break text-right font-weight-bold mb-2"
@@ -593,6 +606,30 @@
         function changeFotoPercetakan(src) {
             document.getElementById('fotoPercetakanUtama').src = src;
             document.getElementById('linkFotoPercetakan').href = src;
+        }
+
+        function showPopUpHelpTbHitamPutih() {
+            $('#helpTimbalBalikHitamPutih').popover('show');
+        }
+
+        function hidePopUpHelpTbHitamPutih() {
+            $('#helpTimbalBalikHitamPutih').popover('hide');
+        }
+
+        function showPopUpHelpTbBerwarna() {
+            $('#helpTimbalBalikBerwarna').popover('show');
+        }
+
+        function hidePopUpHelpTbBerwarna() {
+            $('#helpTimbalBalikBerwarna').popover('hide');
+        }
+
+        function showPopUpHelpFitur(value) {
+            $('#helpFitur' + value).popover('show');
+        }
+
+        function hidePopUpHelpFitur(value) {
+            $('#helpFitur' + value).popover('hide');
         }
 
     </script>

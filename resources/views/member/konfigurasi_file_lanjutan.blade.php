@@ -276,7 +276,20 @@
                                                 <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
                                                 <label class="custom-control-label" for="checkboxFitur{{$f}}">
                                                     {{$value['nama']}}
-                                                    <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
+                                                    <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
+                                                        data-content=
+                                                            "<div class='media'>
+                                                                @if(!empty($value['foto_fitur']))
+                                                                    <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
+                                                                @endif
+                                                            </div>
+                                                            <div class='media-body'>
+                                                                <h5 class='media-heading'>
+                                                                    {{$value['nama']}}
+                                                                </h5>
+                                                                <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
+                                                            </div>"
+                                                        onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
                                                         help
                                                     </i>
                                                 </label>
@@ -4663,12 +4676,21 @@
                                                 }
                                                 return pdf.halamanTerpilih;
                                             }
+
+
                                     }
                                 });
                         });
                     });
                     });
 
+                    function showPopUpHelpFitur(value) {
+                        $('#helpFitur' + value).popover('show');
+                    }
+
+                    function hidePopUpHelpFitur(value) {
+                        $('#helpFitur' + value).popover('hide');
+                    }
 
                 </script>
             </form>

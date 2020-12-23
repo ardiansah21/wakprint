@@ -13,13 +13,13 @@
             </span>
             <div class="row justify-content-left mb-3 mr-0">
                 <div class="col-md-1 align-self-center ml-0 mr-0">
-                    <img @if (!empty($laporProduk->member->getFirstMediaUrl()))
-                    src="{{ $laporProduk->member->getFirstMediaUrl() }}"
-                @else
-                    src="https://ptetutorials.com/images/user-profile.png"
-                    @endif
-                    width="48" height="48" alt="no logo" style="border-radius:30px; border:solid 2px #BC41BE;
-                    object-fit:contain;">
+                    <img
+                        @if (!empty($laporProduk->member->getFirstMediaUrl('avatar')))
+                            src="{{ $laporProduk->member->getFirstMediaUrl('avatar') }}"
+                        @else
+                            src="https://ptetutorials.com/images/user-profile.png"
+                        @endif
+                        width="48" height="48" alt="no logo" style="border-radius:30px; border:solid 2px #BC41BE; object-fit:contain;">
                 </div>
                 <div class="col-md-10 ml-0 mr-0">
                     <label class="text-truncate font-weight-bold mt-3" style="width: 100%;">
