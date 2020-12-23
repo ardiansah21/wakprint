@@ -16,6 +16,7 @@
         "jorenvanhocht/laravel-share": "^3.3",
         "laravel-notification-channels/pusher-push-notifications": "^2.3",
         "laravel/framework": "^7.0",
+        "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
         "laravelcollective/html": "^6.1",
@@ -53,7 +54,8 @@
             "database/factories"
         ],
         "files": [
-            "app/Helpers/Helper.php"
+            "app/Helpers/Helper.php",
+            "app/Helpers/ApiHelper.php"
         ]
     },
     "autoload-dev": {

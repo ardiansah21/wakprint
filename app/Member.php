@@ -6,12 +6,13 @@ use App\Message;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Member extends Authenticable implements HasMedia, MustVerifyEmail
 {
-    use Notifiable, HasMediaTrait;
+    use Notifiable, HasMediaTrait, HasApiTokens;
 
     protected $table = "member";
 
@@ -87,6 +88,9 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
      */
     public function getAvatarAttribute()
     {
+        if (!empty($this->getFirstMediaUrl('avatar'))) {
+            return $this->getFirstMediaUrl('avatar');
+        }
         return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
     }
 

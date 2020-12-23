@@ -11,14 +11,33 @@ class Atk extends Model implements HasMedia
     use HasMediaTrait;
     protected $table = "atk";
     protected $primaryKey = "id_atk";
-    protected $fillable = ['id_pengelola','nama','harga','jumlah','foto','status'];
+    protected $fillable = ['id_pengelola', 'nama', 'harga', 'jumlah', 'foto', 'status'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['url_image'];
+
+    /**
+     * Get the url_image atk
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getUrlImageAttribute($value)
+    {
+        return $this->getFirstMediaUrl('foto_atk');
+    }
 
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')->singleFile();
     }
 
-    public function partner(){
-        return $this->belongsTo('App\Pengelola_Percetakan','id_pengelola');
+    public function partner()
+    {
+        return $this->belongsTo('App\Pengelola_Percetakan', 'id_pengelola');
     }
 }

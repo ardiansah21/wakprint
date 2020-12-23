@@ -11,26 +11,28 @@
 |
  */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+//member
+Route::namespace ('API\Member')->prefix('v1/member')->group(function () {
+    Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'AuthController@register');
 
-// Route::get('/member', function (Request $request) {
-//     return $request->user();
-// });
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/logout', 'AuthController@logout');
 
-// Route::post('/login', function (Request $request) {
-//     // return $request;
+        Route::get('/', 'MemberController@index');
+    });
+});
 
-//     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-//         return response()->json(Auth::user(), 200);
-//     } else {
-//         return Response::make(['error' => "gagal login"], 401);
-//     }
+//partner
+Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
+    Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'AuthController@register');
 
-// });
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/logout', 'AuthController@logout');
+        Route::get('/', 'PartnerController@index');
 
-// Route::get('/member', function (Request $request) {
-//     // return $request->user();
-//     return response()->json(['asdasd' => "asdasda"], 200);
-// });
+        Route::apiResource('atk', 'AtkController');
+
+    });
+});

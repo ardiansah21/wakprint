@@ -5,13 +5,14 @@ namespace App;
 use App\Notifications\PartnerResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 
 class Pengelola_Percetakan extends Authenticable implements HasMedia
 {
-    use Notifiable, HasMediaTrait;
+    use Notifiable, HasMediaTrait, HasApiTokens;
 
     protected $table = "pengelola_percetakan";
     protected $primaryKey = 'id_pengelola';
