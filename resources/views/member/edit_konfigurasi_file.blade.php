@@ -333,7 +333,11 @@
                             <div class="text-right">
                                 <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
                                     style="border-radius:35px;font-size: 16px;"
-                                    onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true'])}}'">
+                                    @if(count($member->konfigurasi) > 1)
+                                        onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true'])}}'"
+                                    @else
+                                        onclick="window.location='{{route('pencarian')}}'"
+                                    @endif>
                                     {{__('Ubah Produk') }}
                                 </button>
                             </div>

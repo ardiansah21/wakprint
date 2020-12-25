@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Atk;
-use App\Konfigurasi_file;
 use App\Lapor_produk;
 use App\Member;
 use App\Notifications\PesananNotification;
@@ -69,12 +68,19 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         // $member = Auth::user();
-        $produk = Produk::all();
-        $partner = Pengelola_Percetakan::all();
-        $atk = Atk::all();
+        $produk = Produk::where('rating', '>=', 4)
+        // ->where('jarak', '<=', 1000)
+            ->where('harga_hitam_putih', '<=', 2000)
+            ->where('harga_berwarna', '<=', 2000)
+            ->get();
+
+        $partner = Pengelola_Percetakan::where('rating_toko', '>=', 4)
+        // ->where('jarak', '<=', 1000)
+            ->get();
         // $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
 
-        return view('home', compact('produk', 'partner', 'atk', 'request'));
+        $atk = Atk::all();
+        return view('home', compact('produk', 'partner', 'atk'));
     }
 
     // temp dropzone
@@ -110,7 +116,8 @@ class MemberController extends Controller
 
     public function konfigurasiFile(Request $request)
     {
-        return view('member.konfigurasi_file_lanjutan');
+        $member = Member::find(Auth::id());
+        return view('member.konfigurasi_file_lanjutan', compact('member'));
     }
 
     public function cari(Request $request)
@@ -479,12 +486,12 @@ class MemberController extends Controller
             'file' => 'required',
         ]);
         $file = $request->file('file');
-        $k = Konfigurasi_file::insertGetId([
-            'nama_file' => $file->getClientOriginalName(),
-            'waktu' => now(),
-        ]);
-        $idProdukd = $k;
-        $path = $file->move(public_path('tmp/upload'), $file->getClientOriginalName());
+        // $k = Konfigurasi_file::insertGetId([
+        //     'nama_file' => $file->getClientOriginalName(),
+        //     'waktu' => now(),
+        // ]);
+        // $idProdukd = $k;
+        $path = $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload'), $file->getClientOriginalName());
         $pdf = $this->cekWarna($file, $path);
 
         $produk = Produk::all();
@@ -987,7 +994,7 @@ class MemberController extends Controller
         $transaksiSaldo->status = 'Berhasil';
         $transaksiSaldo->keterangan = 'Top Up Telah Berhasil Dilakukan';
         $jumlahSaldo = (int) str_replace('.', '', $request->jumlah_saldo);
-        $kodePembayaran = Str::random(20);
+        $kodePembayaran = $jumlahSaldo + rand(1, 999);
         $status = 'Pending';
         $keterangan = 'Top Up Sedang Diproses';
 

@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
-use Str;
 
 class KonfigurasiController extends Controller
 {
@@ -22,8 +21,8 @@ class KonfigurasiController extends Controller
     {
         $file = $request->file('fileUpload');
         $fileName = $file->getClientOriginalName();
-        $file->move(public_path('tmp/upload/'), $fileName);
-        $path = public_path('tmp/upload/') . $fileName;
+        $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR), $fileName);
+        $path = public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR) . $fileName;
 
         $countPage = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
         // $countPage = 5;
@@ -247,7 +246,7 @@ class KonfigurasiController extends Controller
                 'id_member' => $member->id_member,
                 'jenis_transaksi' => 'Pembayaran',
                 'jumlah_saldo' => $request->totalBiaya,
-                'kode_pembayaran' => Str::random(20),
+                'kode_pembayaran' => $request->totalBiaya + rand(1, 999),
                 'status' => 'Pending',
                 'keterangan' => 'Pembayaran sedang diproses',
             ]);
@@ -260,7 +259,7 @@ class KonfigurasiController extends Controller
                 'id_member' => $member->id_member,
                 'jenis_transaksi' => 'Pembayaran',
                 'jumlah_saldo' => $request->totalBiaya,
-                'kode_pembayaran' => Str::random(20),
+                'kode_pembayaran' => $request->totalBiaya + rand(1, 999),
                 'status' => 'Berhasil',
                 'keterangan' => 'Pembayaran telah berhasil dilakukan',
             ]);

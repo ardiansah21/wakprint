@@ -186,7 +186,12 @@
                     <div class="text-center"
                         style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                         <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
-                            style="border-radius:30px; font-size:24px;" onclick="window.location='{{route('pencarian')}}'">
+                            style="border-radius:30px; font-size:24px;"
+                            @if(count($member->konfigurasi) > 1)
+                                onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true'])}}'"
+                            @else
+                                onclick="window.location='{{route('pencarian')}}'"
+                            @endif>
                             <i class="material-icons md-36 align-middle mr-2">print</i>{{__('Pilih Produk Percetakan')}}
                         </button>
                     </div>
@@ -200,7 +205,11 @@
                                 <div class="text-right">
                                     <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
                                         style="border-radius:35px;font-size: 16px;"
-                                        onclick="window.location='{{route('pencarian')}}'">
+                                        @if(count($member->konfigurasi) > 1)
+                                            onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true'])}}'"
+                                        @else
+                                            onclick="window.location='{{route('pencarian')}}'"
+                                        @endif>
                                         {{__('Ubah Produk') }}
                                     </button>
                                 </div>
@@ -353,9 +362,7 @@
                 <input type='text' name="namaProduk" id="namaProduk" value="{{session()->get('produkKonfigurasiFile')->nama}}" hidden />
                 <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="" hidden />
                 <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-
-                        $(function(){
+                    $(function(){
                         $(document).ready(function () {
                                 $.ajaxSetup({
                                     headers: {
@@ -4681,7 +4688,6 @@
                                     }
                                 });
                         });
-                    });
                     });
 
                     function showPopUpHelpFitur(value) {

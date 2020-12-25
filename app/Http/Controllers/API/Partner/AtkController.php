@@ -95,7 +95,6 @@ class AtkController extends Controller
             $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
         }
 
-        // return redirect()->route('partner.atk.index')->with('success', 'Item Atk Anda berhasil diubah');
         return responseSuccess('Item Atk Anda berhasil diubah', $atk);
     }
 
@@ -108,9 +107,10 @@ class AtkController extends Controller
     public function destroy(Atk $atk)
     {
         if ($atk->delete()) {
+            $atk->clearMediaCollection();
             return responseSuccess('Atk berhasil di hapus');
         }
-        return responseError('Gagagl menghapus atk, silahkan coba kembali');
+        return responseError('Gagal menghapus atk, silahkan coba kembali');
     }
 
 }

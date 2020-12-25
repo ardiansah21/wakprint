@@ -12,7 +12,6 @@ use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Str;
 
 class PartnerController extends Controller
 {
@@ -162,7 +161,7 @@ class PartnerController extends Controller
             return redirect()->route('partner.saldo');
         } else {
             $jenisTransaksi = 'Tarik';
-            $kodePembayaran = Str::random(20);
+            $kodePembayaran = $jumlahSaldo + rand(1, 999);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
 

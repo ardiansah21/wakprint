@@ -148,15 +148,9 @@
                                     <span class="text-primary-purple text-truncate mr-2" style="width:80%;">
                                         {{ Auth::user()->nama_lengkap }}
                                     </span>
-                                    @if (!empty(Auth::user()->getFirstMediaUrl('default')))
-                                        <img class="align-middle border border-gray ml-2"
-                                            src="{{ Auth::user()->getFirstMediaUrl('default') }}" width="45" height="45"
-                                            alt="" style="border-radius: 30px; object-fit:contain;">
-                                    @else
-                                        <img class="align-middle ml-2"
-                                            src="https://ptetutorials.com/images/user-profile.png" width="45" height="45"
-                                            alt="no logo">
-                                    @endif
+                                    <img class="align-middle border border-gray ml-2"
+                                        src="{{ Auth::user()->getFirstMediaUrl('avatar') }}" width="45" height="45"
+                                        alt="" style="border-radius: 30px; object-fit:contain;">
                                 </a>
                             </li>
                         @endguest
