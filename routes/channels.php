@@ -25,5 +25,5 @@ Broadcast::channel('Notif-Broadcast.Member.{id}', function ($user) {
     return Auth::check();
 });
 Broadcast::channel('Notif-Broadcast.Partner.{id}', function ($user) {
-    return Auth::guard('partner')->check();
-}, ['guards' => ['web', 'partner']]);
+    return Auth::guard('partner')->check() || auth('sanctum')->check();
+}, ['guards' => ['web', 'partner', 'sanctum']]);
