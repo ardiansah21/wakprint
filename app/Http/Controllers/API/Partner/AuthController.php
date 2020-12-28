@@ -57,9 +57,11 @@ class AuthController extends Controller
             // return responseError("Email anda tidak di temukan");
         }
 
-        $user = Pengelola_Percetakan::where('email', $request->email)->first();
+        if ($user = Pengelola_Percetakan::where('email', $request->email)->first()) {
+            return responseError("Email anda tidak di temukan", null, 422);
+        }
         if (!Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Opps..        // return responseError("Email anda tidak di temukan"); password anda salah'], 422);
+            return responseSuccess('Opps..  password anda salah', null, 422);
         }
 
         //$abilities = $user->role == 'admin' ? ['user:index', 'user:create'] : ['user:index'];
