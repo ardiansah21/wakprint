@@ -51,21 +51,23 @@
             </thead>
             <tbody id="tbodyPesanan" class="tbodyPesanan" style="font-size: 12px;">
                 @foreach ($partner->pesanan as $p => $value)
-                    @if ($value->status != "Pending" && $value->transaksiSaldo->status != "Pending")
-                        <tr class="cursor-pointer" onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">
-                            <td scope="row">{{$value->id_pesanan}}</td>
-                            <td>{{Carbon::parse($value->updated_at)->translatedFormat('H:i')}} WIB</td>
-                            <td>{{Carbon::parse($value->updated_at)->translatedFormat('d F Y')}}</td>
-                            <td>{{count($value->konfigurasiFile)}}</td>
-                            <td>
-                                @if ($value->metode_penerimaan != "Ditempat")
-                                    {{__('Antar ke Rumah')}}
-                                @else
-                                    {{__('Ambil di Tempat')}}
-                                @endif
-                            </td>
-                            <td>{{$value->status}}</td>
-                        </tr>
+                    @if (!empty($value))
+                        @if (($value->status != "Pending" && !empty($value->status)) && $value->transaksiSaldo->status != "Pending")
+                            <tr class="cursor-pointer" onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">
+                                <td scope="row">{{$value->id_pesanan}}</td>
+                                <td>{{Carbon::parse($value->updated_at)->translatedFormat('H:i')}} WIB</td>
+                                <td>{{Carbon::parse($value->updated_at)->translatedFormat('d F Y')}}</td>
+                                <td>{{count($value->konfigurasiFile)}}</td>
+                                <td>
+                                    @if ($value->metode_penerimaan != "Ditempat")
+                                        {{__('Antar ke Rumah')}}
+                                    @else
+                                        {{__('Ambil di Tempat')}}
+                                    @endif
+                                </td>
+                                <td>{{$value->status}}</td>
+                            </tr>
+                        @endif
                     @endif
                 @endforeach
             </tbody>

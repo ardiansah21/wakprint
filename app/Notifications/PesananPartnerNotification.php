@@ -40,16 +40,28 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
 
             switch ($opsi) {
                 case 'pesananMasuk':
-                    $this->title = "pesanan Masuk, hahahha MIskin ya wkwkw";
-                    $this->description = "ini deskpripsi, tapi pendek, beneran pendek loh, ahh tapi sekarang udah panjang";
-                    $this->url = route('tentang');
+                    $this->title = "Pesanan Masuk";
+                    $this->description = "Anda telah menerima pesanan masuk dari pelanggan, silahkan konfirmasi pesanan yang Anda terima yah :)";
+                    $this->url = route('partner.detail.pesanan', $pesanan->id_pesanan);
                     break;
-
+                case 'pesananSelesai':
+                    $this->title = "Pesanan Selesai Dicetak";
+                    $this->description = "Anda telah menyelesaikan proses pencetakan dokumen pesanan dari pelanggan, silahkan konfirmasi kembali ke pelanggan melalui chat yah :)";
+                    $this->url = route('partner.detail.pesanan', $pesanan->id_pesanan);
+                    break;
+                case 'pesananDiTolak':
+                    $this->title = "Pesanan Ditolak";
+                    $this->description = "Anda telah menolak pesanan dari pelanggan, mohon maaf atas ketidaknyamanannya";
+                    $this->url = route('partner.pesanan');
+                    break;
+                case 'pesananDibatalkan':
+                    $this->title = "Pesanan Dibatalkan";
+                    $this->description = "Pelanggan telah membatalkan pesanannya secara sepihak, mohon maaf atas ketidaknyamanannya";
+                    $this->url = route('partner.pesanan');
+                    break;
                 default:
-
                     break;
             }
-
         }
     }
 

@@ -1,36 +1,45 @@
 <?php
 
-namespace App\Http\Controllers\Partner;
+namespace App\Http\Controllers\API\Partner;
 
 use App\Http\Controllers\Controller;
-use App\Pengelola_Percetakan;
 use App\Produk;
-use File;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use stdClass;
+use Illuminate\Support\Facades\Validator;
 
 class ProdukController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $partner = Auth::user();
-        $produk = Produk::orderByDesc('id_produk')->get();
-        return view('pengelola.produk', [
-            'produk' => $produk,
-            'partner' => $partner,
-        ]);
+        if (!empty(request()->user()->products)) {
+            return responseSuccess('data seluruh produk', request()->user()->products);
+        }
+        return responseError('Data Tidak Ada');
     }
 
-    public function create()
-    {
-        $partner = Pengelola_Percetakan::find(Auth::id());
-        return view('pengelola.tambah_produk', compact('partner'));
-    }
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'nama' => ['required', 'string', 'max:150'],
+            'harga_hitam_putih' => ['required', 'numeric'],
+            'jenis_kertas' => ['required', 'string'],
+            'jenis_printer' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
 
         $fiturFinal = array();
 
@@ -67,7 +76,7 @@ class ProdukController extends Controller
         }
 
         $produk = Produk::create([
-            'id_pengelola' => Auth::id(),
+            'id_pengelola' => request()->user()->id_pengelola,
             'nama' => $request->nama,
             'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
             'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
@@ -89,36 +98,41 @@ class ProdukController extends Controller
         }
         $produk->save();
 
-        return redirect()->route('partner.produk.index')->with('success', 'Anda berhasil menambahkan produk baru Anda');
+        return responseSuccess('Anda berhasil menambahkan produk baru Anda', $produk, 201);
     }
 
-    public function show($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Produk  $produk
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Produk $produk)
     {
-        //
+        return responseSuccess('data detail produk ' . $produk->id_produk, $produk);
+        // return responseSuccess('show atk id = ' . $atk->id_atk, collect($atk)->except(['media', 'id_pengelola']));
     }
 
-    public function edit($id)
-    {
-
-        $produk = Produk::find($id);
-        $fitur = json_decode($produk->fitur);
-        return view('pengelola.edit_produk', compact('produk'));
-    }
-
-    public function getCollectFitur(Produk $produk, string $nama)
-    {
-        $fitur = json_decode($produk->fitur);
-        try {
-            $hasil = collect((collect($fitur)->where('nama', $nama))[0]);
-            return $hasil;
-        } catch (\Throwable $th) {
-            return collect();
-        }
-
-    }
-
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Produk  $produk
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Produk $produk)
     {
+        $validator = Validator::make($request->all(), [
+            'nama' => ['required', 'string', 'max:150'],
+            'harga_hitam_putih' => ['required', 'numeric'],
+            'jenis_kertas' => ['required', 'string'],
+            'jenis_printer' => ['required', 'string'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
         $fiturFinal = array();
         if (!empty($request->fitur)) {
             foreach ($request->fitur as $key => $value) {
@@ -162,7 +176,7 @@ class ProdukController extends Controller
 
         $produk->update(
             [
-                'id_pengelola' => Auth::id(),
+                'id_pengelola' => request()->user()->id_pengelola,
                 'nama' => $request->nama,
                 'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
                 'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
@@ -196,42 +210,26 @@ class ProdukController extends Controller
             }
         }
         $produk->save();
-        return redirect()->route('partner.produk.index')->with('success', 'Anda berhasil mengubah informasi produk Anda');
-
+        return responseSuccess('Anda berhasil mengubah produk Anda', $produk);
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Produk  $produk
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Produk $produk)
     {
-        $produk = Produk::find($id);
-        $produk->clearMediaCollection();
-        $produk->delete();
-        return redirect()->back()->with('success', 'Anda berhasil menghapus produk Anda');
-    }
-
-    public function storeMedia(Request $request)
-    {
-        $path = storage_path('tmp/uploads');
-
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
+        if ($produk->delete()) {
+            $produk->clearMediaCollection();
+            return responseSuccess('Anda berhasil menghapus produk Anda');
         }
-
-        $file = $request->file('file');
-
-        $name = uniqid() . '_' . trim($file->getClientOriginalName());
-
-        $file->move($path, $name);
-
-        return response()->json([
-            'name' => $name,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
+        return responseError('Gagal menghapus produk, silahkan coba kembali');
     }
 
-    public function duplicate($id)
+    public function duplicate(Produk $produkA)
     {
-
-        $produkA = Produk::find($id);
         $produkB = $produkA->replicate();
         $produkB->status = "TidakTersedia";
         $produkB->nama = $produkA->nama . " [ SALINAN ]";
@@ -260,10 +258,9 @@ class ProdukController extends Controller
                 ->toMediaCollection($media->collection_name);
         }
 
-        return redirect()->back()->with('success', 'Anda berhasil menduplikat produk Anda');
+        return responseSuccess('Anda berhasil menduplikat produk Anda', $produkA);
     }
 
-//Helper
     public function setFitur($nama, $harga, $deskripsi = null, $foto_fitur = null)
     {
         $fitur = new stdClass();
@@ -293,7 +290,6 @@ class ProdukController extends Controller
             $this->setFitur('Kertas Jeruk', 'https://cdn.siplah.pesonaedu.id/uploads/6f84a30ff9f80054908cb570c0a86c6743e9f6683f18602a0d89901bf781fc64/51826/image.png', 'Hasil cetakan Anda akan sekaligus diberikan kertas jeruk untuk halaman belakang pada dokumen Anda.'),
         );
 
-        // $key = array_search($keyword, array_column($fiturTemplate, 'name'));
         $key = array_search($keyword, array_column($fiturTemplate, 'nama'));
         $fiturTemplate[$key]['harga'] = $harga;
         return $fiturTemplate[$key];

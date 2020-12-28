@@ -34,6 +34,15 @@ class Produk extends Model implements HasMedia
     protected $dates = ['selesai_waktu_diskon'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'jarak',
+    ];
+
+    /**
      * Get the
      *
      * @param  string  $value
@@ -94,5 +103,11 @@ class Produk extends Model implements HasMedia
     public function ulasan()
     {
         return $this->hasMany('App\Ulasan', 'id_produk');
+    }
+
+    //simulasi jarak
+    public function getJarakAttribute()
+    {
+        return $this->partner->id_pengelola * 100;
     }
 }

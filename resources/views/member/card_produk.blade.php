@@ -54,8 +54,10 @@ $member = Auth::user();
             <div class="row justify-content-between">
                 <label class="col-md-7 text-truncate ml-0"
                     style="font-size: 14px;">{{ $p->partner->nama_toko ?? '-' }}</label>
-                <label class="col-md-auto card-text text-right mr-0" style="font-size: 14px;"><i
-                        class="material-icons md-18 align-middle mr-0">location_on</i> {{ __('100 m') }}</label>
+                <label class="col-md-auto card-text text-right mr-0" style="font-size: 14px;">
+                    <i class="material-icons md-18 align-middle mr-0">location_on</i>
+                        {{ __(($p->partner->jarak/1000).' km') }}
+                </label>
             </div>
             <label class="card-title text-truncate-multiline font-weight-bold"
                 style="font-size: 24px; min-height:75px;">{{ $p->nama ?? '' }}</label>

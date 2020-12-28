@@ -10121,7 +10121,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.vue-numeric-input .btn {\r\n    background: #bc41be !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.vue-numeric-input .btn {\n    background: #bc41be !important;\n}\n", ""]);
 
 // exports
 
@@ -53324,11 +53324,7 @@ var render = function() {
                 },
                 [_vm._v("Penerimaan")]
               ),
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.penerimaan) +
-                  "\n                "
-              ),
+              _vm._v(" "),
               _c(
                 "div",
                 {
@@ -53996,14 +53992,6 @@ var render = function() {
                           "\n                        " +
                             _vm._s(atk.nama) +
                             "\n                        "
-                        ),
-                        _c(
-                          "i",
-                          {
-                            staticClass: "material-icons align-middle ml-2",
-                            staticStyle: { color: "#c4c4c4" }
-                          },
-                          [_vm._v("help")]
                         )
                       ]
                     )
@@ -54195,7 +54183,32 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _vm._m(1),
+            _c("div", { staticClass: "row justify-content-between" }, [
+              _c("label", {
+                staticClass: "col-md-7 text-truncate ml-0",
+                staticStyle: { "font-size": "14px" }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-auto card-text text-right mr-0",
+                  staticStyle: { "font-size": "14px" }
+                },
+                [
+                  _c(
+                    "i",
+                    { staticClass: "material-icons md-18 align-middle mr-0" },
+                    [_vm._v("location_on")]
+                  ),
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.produk.jarak / 1000) +
+                      " km\n                "
+                  )
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c(
               "label",
@@ -54451,31 +54464,6 @@ var staticRenderFns = [
         )
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-between" }, [
-      _c("label", {
-        staticClass: "col-md-7 text-truncate ml-0",
-        staticStyle: { "font-size": "14px" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "col-md-auto card-text text-right mr-0",
-          staticStyle: { "font-size": "14px" }
-        },
-        [
-          _c("i", { staticClass: "material-icons md-18 align-middle mr-0" }, [
-            _vm._v("location_on")
-          ]),
-          _vm._v("\n                    100 m\n                ")
-        ]
-      )
-    ])
   }
 ]
 render._withStripped = true

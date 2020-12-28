@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Partner;
 use App\Exports\TransaksiSaldoPartnerExport;
 use App\Http\Controllers\Controller;
 use App\Notifications\PesananPartnerNotification;
+use App\Notifications\TarikSaldoNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Str;
 
 class PartnerController extends Controller
 {
@@ -161,11 +161,11 @@ class PartnerController extends Controller
             return redirect()->route('partner.saldo');
         } else {
             $jenisTransaksi = 'Tarik';
-            $kodePembayaran = Str::random(20);
+            $kodePembayaran = $jumlahSaldo + rand(1, 999);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
 
-            Transaksi_saldo::create([
+            $transaksiSaldo = Transaksi_saldo::create([
                 'id_pengelola' => $partner->id_pengelola,
                 'jenis_transaksi' => $jenisTransaksi,
                 'jumlah_saldo' => $jumlahSaldo,
@@ -174,6 +174,7 @@ class PartnerController extends Controller
                 'keterangan' => $keterangan,
             ]);
 
+            $partner->notify(new TarikSaldoNotification('pending', $transaksiSaldo));
             return redirect()->route('partner.saldo')->with('success', 'Penarikan Saldo Anda Sedang Diproses');
         }
     }

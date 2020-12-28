@@ -17,9 +17,10 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:pengelola_percetakan'],
             'password' => ['required', 'string', 'min:8'],
             'nomor_hp' => ['required', 'string', 'max:13', 'unique:pengelola_percetakan'],
+            'nama_bank' => ['required', 'string', 'max:100'],
+            'nomor_rekening' => ['required', 'string', 'max:20'],
             'nama_toko' => 'required',
             'alamat_toko' => 'required',
-            'deskripsi_toko' => 'required',
             'device_name' => 'required',
         ]);
 
@@ -33,6 +34,8 @@ class AuthController extends Controller
         $new_user->email = $request->get('email');
         $new_user->password = Hash::make($request->get('password'));
         $new_user->nomor_hp = $request->nomor_hp;
+        $new_user->nama_bank = $request->nama_bank;
+        $new_user->nomor_rekening = $request->nomor_rekening;
         $new_user->nama_toko = $request->nama_toko;
         $new_user->alamat_toko = $request->alamat_toko;
         $new_user->deskripsi_toko = $request->deskripsi_toko;

@@ -6,7 +6,6 @@
             <label class="font-weight-bold mb-5" style="font-size: 48px;">
                 Pesanan Kamu
             </label>
-
             @foreach ($pesanan->konfigurasiFile as $idx => $k)
                 <div class="row justify-content-between shadow-sm mb-5 pt-3 ml-0 mr-0"
                     @if ($idx % 2 == 0)
@@ -174,7 +173,7 @@
                         </div>
                         @php
                             $arrSubtotal = [];
-                            for ($i=0; $i < count($pesanan->konfigurasiFile); $i++) { 
+                            for ($i=0; $i < count($pesanan->konfigurasiFile); $i++) {
                                 array_push($arrSubtotal, $pesanan->konfigurasiFile[$i]->biaya);
                             }
                         @endphp

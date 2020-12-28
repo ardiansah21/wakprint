@@ -110,7 +110,6 @@
                             </li>
                         @else
                             <li class="nav-item mr-1" style="display: flex; align-items:center;">
-
                                 <a class="nav-link SemiBold" href="{{ route('chat') }}"
                                     style="color: black; font-size: 24px;">{{ __('Chat') }}
                                     <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
@@ -122,38 +121,29 @@
                                 <a class="nav-link material-icons md-32" href="#" id="navbarDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black">
                                     notifications
-                                    {{-- <span
-                                        class="material-icons md-32 mt-2 mr-2">notifications</span>
-                                    --}}
                                 </a>
                                 <span v-show="notif>0" v-text="notif" class="badge badge-danger"
                                     style="background-color: red;font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 35%;position: absolute;top: 3px;right: 0;"></span>
-                                <ul class="dropdown-menu "
-                                    style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
-                                    <li class="text-right mr-3">
-                                        <h5 v-if="notif>0" @click="readAll" class="pointer"
-                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'">
-                                            Tandai sudah dibaca semua
-                                        </h5>
-
-                                        <h5 v-else class=" m-4">Anda tidak memiliki notifikasi saat ini</h5>
+                                <ul class="table-scrollbar dropdown-menu" style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
+                                    <li style="background-color: #EBD1EC; color: #BC41BE;">
+                                        <label class="SemiBold mt-2 mb-2 ml-3 mr-3" style="font-size: 18px;">Notifikasi</label>
                                     </li>
-                                    <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)"
-                                        class="list-group-item list-group-item-action pointer">
-                                        <div class="col">
-                                            <strong class="text-black">@{{ notif . title }}</strong>
-                                            <div>
-                                                @{{ notif . description }}
-                                            </div>
-                                            <small class="text-light-gray">@{{ notif . created_at }}</small>
+                                    <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)" class="list-group-item list-group-item-action pointer" >
+                                        <div class="">
+                                            <label class="SemiBold" style="font-size: 16px;">@{{ notif . title }}</label>
+                                            <label class="mb-0" style="font-size: 14px;">@{{ notif . description }}</label>
+                                            <label class="text-light-gray" style="font-size: 12px;">@{{ notif . created_at }}</label>
                                         </div>
                                     </li>
-
+                                    <li class="text-right">
+                                        <label v-if="notif>0" @click="readAll" class="pointer mr-3"
+                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'" style="font-size: 12px;">
+                                            Tandai sudah dibaca semua
+                                        </label>
+                                        <label v-else class="m-4">Anda tidak memiliki notifikasi saat ini</h5>
+                                    </li>
                                 </ul>
                             </li>
-
-                            {{-- <notifications-dropdown></notifications-dropdown>
-                            --}}
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}"
                                     style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
@@ -230,8 +220,8 @@
                             <div class="col-md-4">
                                 <div class="bg-light-purple text-center"
                                     style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
-                                    @if (!empty($member->getFirstMediaUrl()))
-                                        <img src="{{ $member->getFirstMediaUrl() }}" class="img-responsive" alt="" width="300px"
+                                    @if (!empty($member->getFirstMediaUrl('avatar')))
+                                        <img src="{{ $member->getFirstMediaUrl('avatar') }}" class="img-responsive" alt="" width="300px"
                                             height="300px" style="border-radius:8px; object-fit:cover;">
                                     @else
                                         <img src="https://unsplash.it/600/400" class="img-responsive" alt="" width="300px"
@@ -281,13 +271,6 @@
                                             <i class="material-icons align-middle md-32 mr-2">history</i>
                                             {{ __('Riwayat Transaksi') }}
                                         </a>
-                                        {{-- <a
-                                            class="nav-link {{ set_active('konfigurasi.pesanan') }} SemiBold mb-2"
-                                            id="v-pills-konfigurasi-tab" href="{{ route('konfigurasi.pesanan') }}" role="tab"
-                                            aria-controls="v-pills-konfigurasi" aria-selected="false" style="font-size: 24px;">
-                                            <i class="material-icons align-middle md-32 mr-2">phonelink_setup</i>
-                                            {{ __('Konfigurasi File') }}
-                                        </a> --}}
                                         <a class="nav-link {{ set_active('pesanan') }} SemiBold mb-4" id="v-pills-pesanan-tab"
                                             href="{{ route('pesanan') }}" role="tab" aria-controls="v-pills-pesanan"
                                             aria-selected="false" style="font-size: 24px;">
@@ -423,10 +406,9 @@
             </main>
         @endauth
     </div>
-
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/appMember.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script> --}}
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery.jscroll.min.js') }}"></script>

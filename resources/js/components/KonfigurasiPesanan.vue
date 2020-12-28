@@ -12,7 +12,7 @@
                     <label class="font-weight-bold mb-3" style="font-size: 24px"
                         >Penerimaan</label
                     >
-                    {{ penerimaan }}
+                    <!-- {{ penerimaan }} -->
                     <div
                         class="form-group custom-control custom-radio mb-4"
                         style="font-size: 14px"
@@ -331,11 +331,11 @@
                             style="width: 100%"
                         >
                             {{ atk.nama }}
-                            <i
+                            <!-- <i
                                 class="material-icons align-middle ml-2"
                                 style="color: #c4c4c4"
                                 >help</i
-                            >
+                            > -->
                         </label>
                     </div>
                     <div class="col-md-auto form-group">

@@ -186,7 +186,12 @@
                     <div class="text-center"
                         style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                         <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
-                            style="border-radius:30px; font-size:24px;" onclick="window.location='{{route('pencarian')}}'">
+                            style="border-radius:30px; font-size:24px;"
+                            @if(count($member->konfigurasi) > 1)
+                                onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true'])}}'"
+                            @else
+                                onclick="window.location='{{route('pencarian')}}'"
+                            @endif>
                             <i class="material-icons md-36 align-middle mr-2">print</i>{{__('Pilih Produk Percetakan')}}
                         </button>
                     </div>
@@ -200,7 +205,11 @@
                                 <div class="text-right">
                                     <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
                                         style="border-radius:35px;font-size: 16px;"
-                                        onclick="window.location='{{route('pencarian')}}'">
+                                        @if(count($member->konfigurasi) > 1)
+                                            onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true'])}}'"
+                                        @else
+                                            onclick="window.location='{{route('pencarian')}}'"
+                                        @endif>
                                         {{__('Ubah Produk') }}
                                     </button>
                                 </div>
@@ -276,7 +285,20 @@
                                                 <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
                                                 <label class="custom-control-label" for="checkboxFitur{{$f}}">
                                                     {{$value['nama']}}
-                                                    <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">
+                                                    <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
+                                                        data-content=
+                                                            "<div class='media'>
+                                                                @if(!empty($value['foto_fitur']))
+                                                                    <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
+                                                                @endif
+                                                            </div>
+                                                            <div class='media-body'>
+                                                                <h5 class='media-heading'>
+                                                                    {{$value['nama']}}
+                                                                </h5>
+                                                                <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
+                                                            </div>"
+                                                        onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
                                                         help
                                                     </i>
                                                 </label>
@@ -340,9 +362,7 @@
                 <input type='text' name="namaProduk" id="namaProduk" value="{{session()->get('produkKonfigurasiFile')->nama}}" hidden />
                 <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="" hidden />
                 <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-
-                        $(function(){
+                    $(function(){
                         $(document).ready(function () {
                                 $.ajaxSetup({
                                     headers: {
@@ -4663,12 +4683,20 @@
                                                 }
                                                 return pdf.halamanTerpilih;
                                             }
+
+
                                     }
                                 });
                         });
                     });
-                    });
 
+                    function showPopUpHelpFitur(value) {
+                        $('#helpFitur' + value).popover('show');
+                    }
+
+                    function hidePopUpHelpFitur(value) {
+                        $('#helpFitur' + value).popover('hide');
+                    }
 
                 </script>
             </form>

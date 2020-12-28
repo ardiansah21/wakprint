@@ -107,7 +107,6 @@
 
                         @else
                             <li class="nav-item mr-1" style="display: flex; align-items:center;">
-
                                 <a class="nav-link SemiBold" href="{{ route('chat') }}"
                                     style="color: black; font-size: 24px;">{{ __('Chat') }}
                                     <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
@@ -122,27 +121,25 @@
                                 </a>
                                 <span v-show="notif>0" v-text="notif" class="badge badge-danger"
                                     style="background-color: red;font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 35%;position: absolute;top: 3px;right: 0;"></span>
-                                <ul class="dropdown-menu "
-                                    style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
-                                    <li class="text-right mr-3">
-                                        <h5 v-if="notif>0" @click="readAll" class="pointer"
-                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'">
-                                            Tandai sudah dibaca semua
-                                        </h5>
-
-                                        <h5 v-else class=" m-4">Anda tidak memiliki notifikasi saat ini</h5>
+                                <ul class="table-scrollbar dropdown-menu" style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
+                                    <li style="background-color: #EBD1EC; color: #BC41BE;">
+                                        <label class="SemiBold mt-2 mb-2 ml-3 mr-3" style="font-size: 18px;">Notifikasi</label>
                                     </li>
                                     <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)"
-                                        class="list-group-item list-group-item-action pointer">
-                                        <div class="col">
-                                            <strong class="text-black">@{{ notif . title }}</strong>
-                                            <div>
-                                                @{{ notif . description }}
-                                            </div>
-                                            <small class="text-light-gray">@{{ notif . created_at }}</small>
+                                        class="list-group-item list-group-item-action pointer" >
+                                        <div class="">
+                                            <label class="SemiBold" style="font-size: 16px;">@{{ notif . title }}</label>
+                                            <label class="mb-0" style="font-size: 14px;">@{{ notif . description }}</label>
+                                            <label class="text-light-gray" style="font-size: 12px;">@{{ notif . created_at }}</label>
                                         </div>
                                     </li>
-
+                                    <li class="text-right">
+                                        <label v-if="notif>0" @click="readAll" class="pointer mr-3"
+                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'" style="font-size: 12px;">
+                                            Tandai sudah dibaca semua
+                                        </label>
+                                        <label v-else class="m-4">Anda tidak memiliki notifikasi saat ini</h5>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item mr-0">
@@ -151,15 +148,9 @@
                                     <span class="text-primary-purple text-truncate mr-2" style="width:80%;">
                                         {{ Auth::user()->nama_lengkap }}
                                     </span>
-                                    @if (!empty(Auth::user()->getFirstMediaUrl()))
-                                        <img class="align-middle border border-gray ml-2"
-                                            src="{{ Auth::user()->getFirstMediaUrl() }}" width="45" height="45"
-                                            alt="no logo" style="border-radius: 30px; object-fit:contain;">
-                                    @else
-                                        <img class="align-middle ml-2"
-                                            src="https://ptetutorials.com/images/user-profile.png" width="45" height="45"
-                                            alt="no logo">
-                                    @endif
+                                    <img class="align-middle border border-gray ml-2"
+                                        src="{{ Auth::user()->getFirstMediaUrl('avatar') }}" width="45" height="45"
+                                        alt="" style="border-radius: 30px; object-fit:contain;">
                                 </a>
                             </li>
                         @endguest
@@ -288,10 +279,6 @@
     </div>
     @include('sweetalert::alert')
 </body>
-
-
-
-
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/appPartner.js') }}"></script>
 <script src="{{ asset('js/scriptPengelola.js') }}"></script>
@@ -303,7 +290,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
 <script>
-    /* Fungsi formatRupiah */
     function formatRupiah(angka, prefix){
             if(angka === '0'){
                 angka = '1';

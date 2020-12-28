@@ -44,16 +44,43 @@ class PesananNotification extends Notification implements ShouldQueue
 
             switch ($opsi) {
                 case 'pembayaranPending':
-                    $this->title = "Pembayaran pending, hahahha MIskin ya wkwkw";
-                    $this->description = "ini deskpripsi, tapi pendek, beneran pendek loh, ahh tapi sekarang udah panjang";
-                    $this->url = route('tentang');
+                    $this->title = "Menunggu Pembayaran Anda";
+                    $this->description = "Silahkan lakukan pembayaran sesuai dengan kode pembayaran yang Anda terima sebelum masa berlakunya habis yah";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
                     break;
-
+                case 'pembayaranBerhasil':
+                    $this->title = "Pembayaran Anda Berhasil";
+                    $this->description = "Pesanan Anda sedang menunggu konfirmasi dari pihak percetakan, silahkan tunggu beberapa saat dan konfirmasi ke pihak percetakan melalui chat yah :)";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
+                    break;
+                case 'pesananDiterimaPercetakan':
+                    $this->title = "Pesanan Anda Diterima Pihak Percetakan";
+                    $this->description = "Pesanan Anda telah diterima oleh pihak percetakan, silahkan tunggu hingga proses pencetakan pesanan Anda selesai yah :)";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
+                    break;
+                case 'pesananSelesaiDiCetak':
+                    $this->title = "Pesanan Anda Telah Dicetak oleh Pihak Percetakan";
+                    $this->description = "Pesanan Anda telah selesai dicetak oleh pihak percetakan, silahkan melakukan pengambilan dokumen sesuai dengan metode yang Anda pilih yah :)";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
+                    break;
+                case 'pesananSelesai':
+                    $this->title = "Pesanan Anda Selesai";
+                    $this->description = "Pesanan Anda telah dikonfirmasi selesai dan sudah berada di tangan Anda, terima kasih telah melakukan pemesanan bersama kami yah :)";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
+                    break;
+                case 'pesananDiTolak':
+                    $this->title = "Pesanan Anda Ditolak";
+                    $this->description = "Maaf, pesanan Anda telah ditolak oleh pihak percetakan, mohon maaf atas ketidaknyamanannya yah";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
+                    break;
+                case 'pesananDiBatalkan':
+                    $this->title = "Pesanan Anda Dibatalkan";
+                    $this->description = "Maaf, pesanan telah Anda batalkan, mohon maaf atas ketidaknyamanannya yah";
+                    $this->url = route('konfirmasi.pembayaran', $pesanan->id_pesanan);
+                    break;
                 default:
-
                     break;
             }
-
         }
     }
 

@@ -31,8 +31,28 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/logout', 'AuthController@logout');
         Route::get('/', 'PartnerController@index');
+        Route::get('/saldo', 'PartnerController@saldoIndex');
+        Route::get('/saldo/riwayat/{id}', 'PartnerController@showSaldo');
+        Route::post('/saldo/tarik/store', 'PartnerController@storeTarikSaldo');
+        Route::post('/ubah-status', 'PartnerController@statusToko');
+        Route::post('/profil/update/{id}', 'PartnerController@profileUpdate');
+        // Route::get('/pesanan', 'PesananController@index');
+        // Route::get('/pesanan/detail/{id}', 'PesananController@detailPesanan');
+        // Route::put('/pesanan/detail/terima/{id}', 'PesananController@terimaPesanan');
+        // Route::get('/pesanan/detail/tolak/{id}', 'PesananController@tolakPesanan');
+        // Route::get('/pesanan/detail/selesai/{id}', 'PesananController@selesaikanPesanan');
 
-        Route::apiResource('atk', 'AtkController');
-
+        Route::get('/pesanan/tolak/{pesanan}', 'PesananController@tolakPesanan');
+        Route::get('/pesanan/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
+        // Route::post('/pesanan/tolak/{id}', 'PesananController@tolakPesanan');
+        // Route::apiResource('pesanan', 'PesananController');
+        // Route::get('/pesanan/terima/{id}', 'PesananController@terimaPesanan');
+        Route::apiResource('/atk', 'AtkController');
+        Route::get('/produk/duplicate/{produkA}', 'ProdukController@duplicate');
+        Route::apiResource('/produk', 'ProdukController');
+        Route::put('/promo/store/{produk}', 'PromoController@store');
+        Route::put('/promo/update/{produk}', 'PromoController@update');
+        Route::put('/promo/delete/{produk}', 'PromoController@destroy');
+        Route::apiResource('/promo', 'PromoController');
     });
 });

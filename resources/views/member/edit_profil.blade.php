@@ -14,9 +14,9 @@
         <form action="{{ route('profile.edit') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-4" style="border-radius:10px;">
-                @if (!empty($member->getFirstMediaUrl()))
-                    <img id="gambarMember" src="{{ $member->getFirstMediaUrl() }}"
-                        class="img-responsive" style="width:120px; height:120px; border-radius:10px;" alt="Foto Kosong">
+                @if (!empty($member->getFirstMediaUrl('avatar')))
+                    <img id="gambarMember" src="{{ $member->getFirstMediaUrl('avatar') }}"
+                        class="img-responsive" style="width:120px; height:120px; border-radius:10px;" alt="">
                     <a id="editPhotoButton" class="bg-light-purple material-icons text-decorations-none pointer" onclick="document.getElementById('imgupload').click();"
                         style="border-radius:3px;
                         position: relative;
@@ -78,24 +78,6 @@
                                 @endfor
                             </div>
                         </div>
-                        {{-- <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="date" style="font-size: 18px;">
-                            @if (!empty($member->tanggal_lahir))
-                                <option value="{{ Carbon::parse($member->tanggal_lahir)->translatedFormat('d') }}">
-                                    {{ Carbon::parse($member->tanggal_lahir)->translatedFormat('d') }}
-                                </option>
-                                @for($date = 1; $date < 32; $date++)
-                                    <option value="{{ $date }}">
-                                            {{$date}}
-                                    </option>
-                                @endfor
-                            @else
-                                @for($date = 1; $date < 32; $date++)
-                                    <option value="{{ $date }}">
-                                            {{$date}}
-                                    </option>
-                                @endfor
-                            @endif
-                        </select> --}}
                     </div>
                     <div class="form-group col-md-auto">
                         <div class="dropdown" aria-required="true">
@@ -116,24 +98,6 @@
                                 @endfor
                             </div>
                         </div>
-                        {{-- <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="month" style="font-size: 18px;">
-                            @if (!empty($member->tanggal_lahir))
-                                <option value="{{ Carbon::parse($member->tanggal_lahir)->translatedFormat('F') }}">
-                                    {{ Carbon::parse($member->tanggal_lahir)->translatedFormat('F') }}
-                                </option>
-                                @for($i = 1; $i < 13; $i++)
-                                    <option value="{{ $i }}">
-                                        {{ $month[$i-1] }}
-                                    </option>
-                                @endfor
-                            @else
-                                @for($i = 1; $i < 13; $i++)
-                                    <option value="{{ $i }}">
-                                        {{ $month[$i-1] }}
-                                    </option>
-                                @endfor
-                            @endif
-                        </select> --}}
                     </div>
                     <div class="col-md-auto">
                         <div class="dropdown" aria-required="true">
@@ -154,24 +118,6 @@
                                 @endfor
                             </div>
                         </div>
-                        {{-- <select class="btn btn-default dropdown dropdown-toggle border border-gray" name="year" style="font-size: 18px;">
-                            @if (!empty($member->tanggal_lahir))
-                                <option value="{{ Carbon::parse($member->tanggal_lahir)->translatedFormat('Y') }}">
-                                    {{ Carbon::parse($member->tanggal_lahir)->translatedFormat('Y') }}
-                                </option>
-                                @for($year = 2015; $year > 1979; $year--)
-                                    <option value="{{ $year }}">
-                                        {{ $year }}
-                                    </option>
-                                @endfor
-                            @else
-                                @for($year = 2015; $year > 1979; $year--)
-                                    <option value="{{ $year }}">
-                                        {{ $year }}
-                                    </option>
-                                @endfor
-                            @endif
-                        </select> --}}
                     </div>
                 </div>
             </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Konfigurasi_file;
 use App\Member;
+use App\Notifications\PesananNotification;
+use App\Notifications\PesananPartnerNotification;
 use App\Pesanan;
 use App\Produk;
 use App\Transaksi_saldo;
@@ -12,7 +14,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
-use Str;
 
 class KonfigurasiController extends Controller
 {
@@ -20,8 +21,8 @@ class KonfigurasiController extends Controller
     {
         $file = $request->file('fileUpload');
         $fileName = $file->getClientOriginalName();
-        $file->move(public_path('tmp/upload/'), $fileName);
-        $path = public_path('tmp/upload/') . $fileName;
+        $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR), $fileName);
+        $path = public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR) . $fileName;
 
         $countPage = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
         // $countPage = 5;
@@ -245,11 +246,12 @@ class KonfigurasiController extends Controller
                 'id_member' => $member->id_member,
                 'jenis_transaksi' => 'Pembayaran',
                 'jumlah_saldo' => $request->totalBiaya,
-                'kode_pembayaran' => Str::random(20),
+                'kode_pembayaran' => $request->totalBiaya + rand(1, 999),
                 'status' => 'Pending',
                 'keterangan' => 'Pembayaran sedang diproses',
             ]);
             $transaksiSaldo->save();
+            $member->notify(new PesananNotification('pembayaranPending', $pesanan));
         } else {
             $transaksiSaldo = Transaksi_saldo::create([
                 'id_pesanan' => $idPesanan,
@@ -257,7 +259,7 @@ class KonfigurasiController extends Controller
                 'id_member' => $member->id_member,
                 'jenis_transaksi' => 'Pembayaran',
                 'jumlah_saldo' => $request->totalBiaya,
-                'kode_pembayaran' => Str::random(20),
+                'kode_pembayaran' => $request->totalBiaya + rand(1, 999),
                 'status' => 'Berhasil',
                 'keterangan' => 'Pembayaran telah berhasil dilakukan',
             ]);
@@ -266,6 +268,8 @@ class KonfigurasiController extends Controller
 
             $member->save();
             $transaksiSaldo->save();
+            $member->notify(new PesananNotification('pembayaranBerhasil', $pesanan));
+            $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
         }
 
         $pesanan->update([
@@ -293,6 +297,8 @@ class KonfigurasiController extends Controller
         $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
+        $member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananDibatalkan', $pesanan));
         // dd(json_decode($pesanan->atk_terpilih));
         return redirect()->route('pesanan');
     }
@@ -336,6 +342,9 @@ class KonfigurasiController extends Controller
         $pesanan->save();
         $transaksiSaldo->save();
 
+        $pesanan->member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananDibatalkan', $pesanan));
+
         return redirect()->route('pesanan');
     }
 
@@ -353,6 +362,8 @@ class KonfigurasiController extends Controller
         $partner->save();
         $pesanan->save();
         $transaksiSaldo->save();
+
+        $pesanan->member->notify(new PesananNotification('pesananSelesai', $pesanan));
 
         return redirect()->route('pesanan');
     }
