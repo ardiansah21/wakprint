@@ -28,10 +28,18 @@ class PartnerController extends Controller
             array_push($arrJumlahDokumen, $value->nama_file);
         }
 
-        $totalPelanggan = count($arrTotalPelanggan);
-        $jumlahDokumen = count($arrJumlahDokumen);
+        $data = [
+            "user" => request()->user(),
+            "totalPelanggan" => count($arrTotalPelanggan),
+            "totalTransaksi" => count($arrJumlahDokumen),
+        ];
 
-        return responseSuccess("data partner yang login", [request()->user(), $totalPelanggan, $jumlahDokumen]);
+        return responseSuccess("data start app partner", $data);
+    }
+
+    public function user()
+    {
+        responseSuccess("data partner yang login", request()->user());
     }
 
     public function profileUpdate(Request $request, Pengelola_Percetakan $partner)
