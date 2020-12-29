@@ -39,7 +39,7 @@ class PartnerController extends Controller
 
     public function user()
     {
-        responseSuccess("data partner yang login", request()->user());
+        return responseSuccess("data partner yang login", request()->user());
     }
 
     public function profileUpdate(Request $request, Pengelola_Percetakan $partner)
