@@ -31,6 +31,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/logout', 'AuthController@logout');
         Route::get('/', 'PartnerController@index');
+        Route::get('/user', 'PartnerController@user');
         Route::get('/saldo', 'PartnerController@saldoIndex');
         Route::get('/saldo/riwayat/{id}', 'PartnerController@showSaldo');
         Route::post('/saldo/tarik/store', 'PartnerController@storeTarikSaldo');
