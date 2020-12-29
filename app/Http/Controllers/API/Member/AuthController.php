@@ -46,9 +46,13 @@ class AuthController extends Controller
             'password' => 'required',
             'device_name' => 'required',
         ]);
+
+        if (Member::where('email', $request->email)->exists()) {
+            return responseError("Email anda tidak di temukan", null, 422);
+        }
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
-            // return responseError("Email anda tidak di temukan");
         }
 
         $user = Member::where('email', $request->email)->first();

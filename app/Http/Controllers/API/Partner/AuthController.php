@@ -55,16 +55,18 @@ class AuthController extends Controller
             'password' => 'required',
             'device_name' => 'required',
         ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-            // return responseError("Email anda tidak di temukan");
-        }
 
-        if ($user = Pengelola_Percetakan::where('email', $request->email)->first()) {
+        if (!Pengelola_Percetakan::where('email', $request->email)->exists()) {
             return responseError("Email anda tidak di temukan", null, 422);
         }
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        $user = Pengelola_Percetakan::where('email', $request->email)->first();
         if (!Hash::check($request->password, $user->password)) {
-            return responseSuccess('Opps..  password anda salah', null, 422);
+            return responseError('Opps..  password anda salah', null, 422);
         }
 
         //$abilities = $user->role == 'admin' ? ['user:index', 'user:create'] : ['user:index'];

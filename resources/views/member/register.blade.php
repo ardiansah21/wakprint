@@ -45,7 +45,7 @@
                     {{__('Konfirmasi Password')}}
                 </label>
                 <div class="input-group mb-3">
-                    <input required 
+                    <input required
                     type="password"
                     name="confirm-password"
                     class="form-control form-control-lg {{ $errors->has('confirm-password') ? ' is-invalid' : '' }}"
@@ -57,9 +57,9 @@
                         </span>
                     @endif
                     <div class="input-group-append">
-                        <span class="input-group-text bg-white" 
+                        <span class="input-group-text bg-white"
                         style="border-radius: 0px 5px 5px 0px;">
-                            <i id="togglePassword" 
+                            <i id="togglePassword"
                             toggle="#password-field"
                             class="fa fa-fw fa-eye field_icon toggle-password">
                             </i>
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" 
+                <button type="submit"
                 class="btn btn-primary-wakprint btn-lg btn-block SemiBold"
                 style="font-size: 24px;">
                     {{__('Daftar')}}
@@ -85,7 +85,7 @@
             </div>
         </form>
         <div class="mb-2">
-            <label class="row justify-content-center mb-0"
+            {{-- <label class="row justify-content-center mb-0"
             style="font-size: 18px; text-align:center">
                 {{__('Atau')}}
             </label>
@@ -97,7 +97,7 @@
             <button class="btn btn-outline-primary btn-lg btn-block font-weight-bold mb-4"
             style="border-radius:30px;font-size: 24px;">
                 {{__('Daftar dengan Facebook')}}
-            </button>
+            </button> --}}
             <label class="row justify-content-center mb-4"
             style="font-size: 18px;">
                 {{__('Sudah punya akun ?')}}

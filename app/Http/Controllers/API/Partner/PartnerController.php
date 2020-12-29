@@ -28,10 +28,18 @@ class PartnerController extends Controller
             array_push($arrJumlahDokumen, $value->nama_file);
         }
 
-        $totalPelanggan = count($arrTotalPelanggan);
-        $jumlahDokumen = count($arrJumlahDokumen);
+        $data = [
+            "user" => request()->user(),
+            "totalPelanggan" => count($arrTotalPelanggan),
+            "totalTransaksi" => count($arrJumlahDokumen),
+        ];
 
-        return responseSuccess("data partner yang login", [request()->user(), $totalPelanggan, $jumlahDokumen]);
+        return responseSuccess("data start app partner", $data);
+    }
+
+    public function user()
+    {
+        return responseSuccess("data partner yang login", request()->user());
     }
 
     public function profileUpdate(Request $request, Pengelola_Percetakan $partner)
@@ -177,7 +185,7 @@ class PartnerController extends Controller
         $partner->status_toko = $status;
 
         if ($partner->save()) {
-            return responseSuccess("Percetakan Anda telah " . $status, $partner->status_toko);
+            return responseSuccess("Percetakan Anda telah " . $status, $partner);
         }
         return responseError("Gagal merubah status percetakan Anda, silahkan coba lagi yah");
     }
