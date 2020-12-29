@@ -185,7 +185,7 @@ class PartnerController extends Controller
         $partner->status_toko = $status;
 
         if ($partner->save()) {
-            return responseSuccess("Percetakan Anda telah " . $status, $partner->status_toko);
+            return responseSuccess("Percetakan Anda telah " . $status, $partner);
         }
         return responseError("Gagal merubah status percetakan Anda, silahkan coba lagi yah");
     }
