@@ -24,12 +24,7 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('Notif-Broadcast.Member.{id}', function ($user) {
     return Auth::check();
 });
-// Broadcast::channel('Notif-Broadcast.Partner.{id}', function ($user) {
-//     // return Auth::guard('partner')->check() || auth('auth:sanctum')->check();
-//     return true;
-// }, ['guards' => ['web', 'partner', 'auth:sanctum', 'api', 'sanctum']]);
 
 Broadcast::channel('Notif-Broadcast.Partner.{id}', function ($user) {
-    // return Auth::guard('partner')->check() || auth('auth:sanctum')->check();
-    return true;
-});
+    return (Auth::guard('partner')->check() || auth('sanctum')->check());
+}, ['guards' => ['partner', 'sanctum']]);
