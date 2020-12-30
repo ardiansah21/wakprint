@@ -58,37 +58,37 @@ class PartnerController extends Controller
 
         $partner = request()->user();
 
-        $jamBuka = $request->jambuka;
-        $menitBuka = $request->menitbuka;
-        $jamTutup = $request->jamtutup;
-        $menitTutup = $request->menittutup;
+        // $jamBuka = $request->jambuka;
+        // $menitBuka = $request->menitbuka;
+        // $jamTutup = $request->jamtutup;
+        // $menitTutup = $request->menittutup;
 
-        $metodePelayanan[] = array(
-            'AmbilDiTempat' => $request->ambiltempat,
-            'AntarKeTempat' => $request->antartempat,
-        );
+        // $metodePelayanan[] = array(
+        //     'AmbilDiTempat' => $request->ambiltempat,
+        //     'AntarKeTempat' => $request->antartempat,
+        // );
 
-        if ($jamBuka > 24 || $jamTutup > 24) {
-            return responseError('Maaf', 'Terdapat kesalahan format pada jam operasional percetakan Anda, silahkan periksa kembali yah');
-        }
+        // if ($jamBuka > 24 || $jamTutup > 24) {
+        //     return responseError('Maaf', 'Terdapat kesalahan format pada jam operasional percetakan Anda, silahkan periksa kembali yah');
+        // }
 
-        $opBuka = date_create("$jamBuka:$menitBuka");
-        $opTutup = date_create("$jamTutup:$menitTutup");
+        // $opBuka = date_create("$jamBuka:$menitBuka");
+        // $opTutup = date_create("$jamTutup:$menitTutup");
 
         $partner->nama_toko = $request->nama_toko;
         $partner->deskripsi_toko = $request->deskripsi_toko;
         $partner->alamat_toko = $request->alamat_toko;
-        // $partner->url_google_maps = $request->url_google_maps;
-        // $partner->jam_op_buka = $opBuka;
-        // $partner->jam_op_tutup = $opTutup;
-        // $partner->syaratkententuan = $request->syaratkententuan;
+        $partner->url_google_maps = $request->url_google_maps;
+        $partner->jam_op_buka = $request->jam_op_buka;
+        $partner->jam_op_tutup = $request->jam_op_tutup;
+        $partner->syaratkententuan = $request->syaratkententuan;
         $partner->nama_lengkap = $request->nama_lengkap;
         $partner->nomor_hp = $request->nomor_hp;
         $partner->nama_bank = $request->nama_bank;
         $partner->nomor_rekening = $request->nomor_rekening;
         $partner->ambil_di_tempat = $request->ambil_di_tempat == 'Ambil di Tempat' ? '1' : '0';
         $partner->antar_ke_tempat = $request->antar_ke_tempat == 'Diantar ke Tempat' ? '1' : '0';
-        $partner->ntkwh = 0;
+        $partner->ntkwh = $request->ntkwh;
 
         if ($request->hasFile('avatar')) {
             $partner->clearMediaCollection();
