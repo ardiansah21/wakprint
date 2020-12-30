@@ -58,6 +58,10 @@ class PartnerController extends Controller
 
         $partner = request()->user();
 
+        if ($request->ntkwh > 100) {
+            return responseError('Maaf nilai persentase toleransi minimum halaman berwarna tidak boleh lebih dari 100% yah');
+        }
+
         // $jamBuka = $request->jambuka;
         // $menitBuka = $request->menitbuka;
         // $jamTutup = $request->jamtutup;
