@@ -130,7 +130,12 @@ class PesananNotification extends Notification implements ShouldQueue
             ->sound('success')
             ->title($this->title)
             ->body($this->description)
-            ->link($this->url);
+            ->link($this->url)
+            ->withAndroid(
+                PusherMessage::create()
+                    ->title($this->title)
+                    ->body($this->body)
+            );
 
     }
     /**
