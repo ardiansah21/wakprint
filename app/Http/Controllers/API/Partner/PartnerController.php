@@ -86,8 +86,8 @@ class PartnerController extends Controller
         $partner->nomor_hp = $request->nomor_hp;
         $partner->nama_bank = $request->nama_bank;
         $partner->nomor_rekening = $request->nomor_rekening;
-        $partner->ambil_di_tempat = $request->ambil_di_tempat == 'Ambil di Tempat' ? '1' : '0';
-        $partner->antar_ke_tempat = $request->antar_ke_tempat == 'Diantar ke Tempat' ? '1' : '0';
+        $partner->ambil_di_tempat = $request->ambil_di_tempat;
+        $partner->antar_ke_tempat = $request->antar_ke_tempat;
         $partner->ntkwh = $request->ntkwh;
 
         if ($request->hasFile('avatar')) {
