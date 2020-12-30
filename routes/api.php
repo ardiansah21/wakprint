@@ -10,6 +10,7 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 //member
 Route::namespace ('API\Member')->prefix('v1/member')->group(function () {
