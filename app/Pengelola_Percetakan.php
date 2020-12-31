@@ -30,8 +30,6 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'jam_op_buka' => 'datetime',
-        'jam_op_tutup' => 'datetime',
     ];
 
     /**
@@ -55,16 +53,6 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
             return $this->getFirstMediaUrl('avatar');
         }
         return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
-    }
-
-    public function getJamOpBukaAttribute()
-    {
-        return date_create($this->jam_op_buka);
-    }
-
-    public function getJamOpTutupAttribute()
-    {
-        return date_create($this->jam_op_tutup);
     }
 
     public function registerMediaCollections(): void
