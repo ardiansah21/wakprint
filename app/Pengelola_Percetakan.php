@@ -30,6 +30,8 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'jam_op_buka' => 'datetime',
+        'jam_op_tutup' => 'datetime',
     ];
 
     /**
