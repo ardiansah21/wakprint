@@ -48,7 +48,6 @@ class PartnerController extends Controller
             'nama_lengkap' => ['required', 'string', 'max:100'],
             'nama_toko' => ['required', 'string', 'max:150'],
             'alamat_toko' => ['required', 'string', 'max:191'],
-            'nomor_hp' => ['required', 'string', 'max:16'],
             'nama_bank' => ['required', 'string', 'max:100'],
             'nomor_rekening' => ['required', 'string', 'max:100'],
         ]);
