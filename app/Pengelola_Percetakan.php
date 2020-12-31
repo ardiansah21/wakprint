@@ -57,6 +57,16 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
         return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
     }
 
+    public function getJamOpBukaAttribute()
+    {
+        return date_create($this->jam_op_buka);
+    }
+
+    public function getJamOpTutupAttribute()
+    {
+        return date_create($this->jam_op_tutup);
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')->singleFile();
