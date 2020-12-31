@@ -89,8 +89,8 @@ class PartnerController extends Controller
 
         $partner->save();
         if ($request->file('foto_partner') != null) {
-            $partner->clearMediaCollection('avatar');
-            $partner->addMedia($request->file('foto_partner'))->toMediaCollection('avatar');
+            $partner->clearMediaCollection();
+            $partner->addMedia($request->file('foto_partner'))->toMediaCollection();
         }
 
         if (count($partner->getMedia('foto_percetakan')) > 0) {
