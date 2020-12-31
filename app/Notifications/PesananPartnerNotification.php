@@ -114,7 +114,8 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
             ->withAndroid(
                 PusherMessage::create()
                     ->title($this->title)
-                    ->body($this->body)
+                    ->body($this->description)
+                    ->sound('')
             );
     }
 
