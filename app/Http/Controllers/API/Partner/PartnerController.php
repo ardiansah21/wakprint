@@ -86,7 +86,6 @@ class PartnerController extends Controller
         $partner->jam_op_tutup = $request->jam_op_tutup;
         $partner->syaratkententuan = $request->syaratkententuan;
         $partner->nama_lengkap = $request->nama_lengkap;
-        $partner->nomor_hp = $request->nomor_hp;
         $partner->nama_bank = $request->nama_bank;
         $partner->nomor_rekening = $request->nomor_rekening;
         $partner->ambil_di_tempat = $request->ambil_di_tempat;
