@@ -11,7 +11,7 @@ return [
     | reset options for your application. You may change these defaults
     | as required, but they're a perfect start for most applications.
     |
-    */
+     */
 
     'defaults' => [
         'guard' => 'web',
@@ -33,7 +33,7 @@ return [
     |
     | Supported: "session", "token"
     |
-    */
+     */
 
     'guards' => [
         'web' => [
@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'sanctum',
             'provider' => 'members',
             'hash' => false,
         ],
@@ -52,7 +52,7 @@ return [
         ],
 
         'partner-api' => [
-            'driver' => 'token',
+            'driver' => 'sanctum',
             'provider' => 'partners',
             'hash' => false,
         ],
@@ -77,7 +77,7 @@ return [
     |
     | Supported: "database", "eloquent"
     |
-    */
+     */
 
     'providers' => [
         'members' => [
@@ -112,7 +112,7 @@ return [
     | considered valid. This security feature keeps tokens short-lived so
     | they have less time to be guessed. You may change this as needed.
     |
-    */
+     */
 
     'passwords' => [
         'members' => [
@@ -138,7 +138,7 @@ return [
     | times out and the member is prompted to re-enter their password via the
     | confirmation screen. By default, the timeout lasts for three hours.
     |
-    */
+     */
 
     'password_timeout' => 10800,
 

@@ -13,11 +13,11 @@
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 //member
-Route::namespace ('API\Member')->prefix('v1/member')->group(function () {
+Route::namespace ('API\Member')->prefix('v1')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
 
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
 
         Route::get('/', 'MemberController@index');
@@ -29,7 +29,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
 
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('auth:partner-api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
         Route::get('/', 'PartnerController@index');
         Route::get('/user', 'PartnerController@user');
@@ -57,4 +57,11 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::put('/promo/delete/{produk}', 'PromoController@destroy');
         Route::apiResource('/promo', 'PromoController');
     });
+});
+
+//Notif
+Route::prefix('v1/notif')->middleware("auth:" . activeGuard())->group(function () {
+    Route::get('/', 'NotificationController@index');
+    Route::post('read', 'NotificationController@read');
+    Route::get('read-all', 'NotificationController@readAll');
 });

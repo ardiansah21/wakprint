@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Pesanan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\PusherPushNotifications\PusherChannel;
@@ -23,7 +24,7 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
         'pesananDiTolak',
         'pesananDiBatalkan',
     ];
-    private $title, $description, $url;
+    private $title, $description, $url, $pageAndroid = "detailPesanan";
 
     /**
      * Create a new notification instance.
@@ -97,6 +98,8 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
+            'pesanan' => $this->pesanan,
+            'pageAndroid' => $this->pageAndroid,
             'created_at' => date("d M Y H:i:s"),
         ];
     }
@@ -133,6 +136,24 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
             ->line($this->description)
             ->action('Periksa Selengkapnya', $this->url)
             ->line('Terima kasih telah menggunkan aplikasi Wakprint!');
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'title' => $this->title,
+            'description' => $this->description,
+            'url' => $this->url,
+            'pesanan' => $this->pesanan,
+            'pageAndroid' => $this->pageAndroid,
+            'created_at' => date("d M Y H:i:s"),
+        ]);
     }
 
 }
