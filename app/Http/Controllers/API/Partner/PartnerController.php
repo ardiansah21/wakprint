@@ -8,7 +8,6 @@ use App\Pengelola_Percetakan;
 use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Str;
 
 class PartnerController extends Controller
 {
@@ -48,7 +47,6 @@ class PartnerController extends Controller
             'nama_lengkap' => ['required', 'string', 'max:100'],
             'nama_toko' => ['required', 'string', 'max:150'],
             'alamat_toko' => ['required', 'string', 'max:191'],
-            'nomor_hp' => ['required', 'string', 'max:16'],
             'nama_bank' => ['required', 'string', 'max:100'],
             'nomor_rekening' => ['required', 'string', 'max:100'],
         ]);
@@ -62,23 +60,6 @@ class PartnerController extends Controller
             return responseError('Maaf nilai persentase toleransi minimum halaman berwarna tidak boleh lebih dari 100% yah');
         }
 
-        // $jamBuka = $request->jambuka;
-        // $menitBuka = $request->menitbuka;
-        // $jamTutup = $request->jamtutup;
-        // $menitTutup = $request->menittutup;
-
-        // $metodePelayanan[] = array(
-        //     'AmbilDiTempat' => $request->ambiltempat,
-        //     'AntarKeTempat' => $request->antartempat,
-        // );
-
-        // if ($jamBuka > 24 || $jamTutup > 24) {
-        //     return responseError('Maaf', 'Terdapat kesalahan format pada jam operasional percetakan Anda, silahkan periksa kembali yah');
-        // }
-
-        // $opBuka = date_create("$jamBuka:$menitBuka");
-        // $opTutup = date_create("$jamTutup:$menitTutup");
-
         $partner->nama_toko = $request->nama_toko;
         $partner->deskripsi_toko = $request->deskripsi_toko;
         $partner->alamat_toko = $request->alamat_toko;
@@ -87,7 +68,6 @@ class PartnerController extends Controller
         $partner->jam_op_tutup = $request->jam_op_tutup;
         $partner->syaratkententuan = $request->syaratkententuan;
         $partner->nama_lengkap = $request->nama_lengkap;
-        $partner->nomor_hp = $request->nomor_hp;
         $partner->nama_bank = $request->nama_bank;
         $partner->nomor_rekening = $request->nomor_rekening;
         $partner->ambil_di_tempat = $request->ambil_di_tempat;
@@ -134,8 +114,7 @@ class PartnerController extends Controller
 
     public function showSaldo(Transaksi_saldo $transaksiSaldo)
     {
-        $transaksiSaldo = request()->user()->transaksiSaldo->where('id_transaksi', 22);
-        if ($transaksiSaldo != "[]") {
+        if (!empty($transaksiSaldo) || $transaksiSaldo != "[]") {
             return responseSuccess("detail riwayat saldo partner", $transaksiSaldo);
         }
         return responseError("detail riwayat saldo partner kosong");
@@ -155,12 +134,12 @@ class PartnerController extends Controller
         $jumlahSaldo = (int) str_replace('.', '', $request->jumlah_saldo);
 
         if ($partner->jumlah_saldo <= 0) {
-            return responseError('Maaf', 'Saldo Anda kosong');
+            return responseError('Maaf Saldo Anda kosong');
         } else if ($jumlahSaldo > $partner->jumlah_saldo) {
-            return responseError('Maaf', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
+            return responseError('Maaf Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
         } else {
             $jenisTransaksi = 'Tarik';
-            $kodePembayaran = Str::random(20);
+            $kodePembayaran = $jumlahSaldo + rand(1, 999);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
 

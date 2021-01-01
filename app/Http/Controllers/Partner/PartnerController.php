@@ -89,7 +89,7 @@ class PartnerController extends Controller
 
         $partner->save();
         if ($request->file('foto_partner') != null) {
-            $partner->clearMediaCollection('avatar');
+            $partner->clearMediaCollection();
             $partner->addMedia($request->file('foto_partner'))->toMediaCollection('avatar');
         }
 
