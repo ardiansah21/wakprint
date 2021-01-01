@@ -134,9 +134,9 @@ class PartnerController extends Controller
         $jumlahSaldo = (int) str_replace('.', '', $request->jumlah_saldo);
 
         if ($partner->jumlah_saldo <= 0) {
-            return responseError('Maaf', 'Saldo Anda kosong');
+            return responseError('Maaf Saldo Anda kosong');
         } else if ($jumlahSaldo > $partner->jumlah_saldo) {
-            return responseError('Maaf', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
+            return responseError('Maaf Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
         } else {
             $jenisTransaksi = 'Tarik';
             $kodePembayaran = $jumlahSaldo + rand(1, 999);
