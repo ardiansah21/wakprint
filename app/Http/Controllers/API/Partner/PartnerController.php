@@ -8,7 +8,6 @@ use App\Pengelola_Percetakan;
 use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Str;
 
 class PartnerController extends Controller
 {
@@ -60,23 +59,6 @@ class PartnerController extends Controller
         if ($request->ntkwh > 100) {
             return responseError('Maaf nilai persentase toleransi minimum halaman berwarna tidak boleh lebih dari 100% yah');
         }
-
-        // $jamBuka = $request->jambuka;
-        // $menitBuka = $request->menitbuka;
-        // $jamTutup = $request->jamtutup;
-        // $menitTutup = $request->menittutup;
-
-        // $metodePelayanan[] = array(
-        //     'AmbilDiTempat' => $request->ambiltempat,
-        //     'AntarKeTempat' => $request->antartempat,
-        // );
-
-        // if ($jamBuka > 24 || $jamTutup > 24) {
-        //     return responseError('Maaf', 'Terdapat kesalahan format pada jam operasional percetakan Anda, silahkan periksa kembali yah');
-        // }
-
-        // $opBuka = date_create("$jamBuka:$menitBuka");
-        // $opTutup = date_create("$jamTutup:$menitTutup");
 
         $partner->nama_toko = $request->nama_toko;
         $partner->deskripsi_toko = $request->deskripsi_toko;
@@ -158,7 +140,7 @@ class PartnerController extends Controller
             return responseError('Maaf', 'Saldo Anda Tidak Mencukupi Untuk Melakukan Penarikan Saldo !');
         } else {
             $jenisTransaksi = 'Tarik';
-            $kodePembayaran = Str::random(20);
+            $kodePembayaran = $jumlahSaldo + rand(1, 999);
             $status = 'Pending';
             $keterangan = 'Penarikan Saldo Sedang Diproses';
 
