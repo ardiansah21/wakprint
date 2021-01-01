@@ -114,8 +114,7 @@ class PartnerController extends Controller
 
     public function showSaldo(Transaksi_saldo $transaksiSaldo)
     {
-        $transaksiSaldo = request()->user()->transaksiSaldo->where('id_transaksi', 22);
-        if ($transaksiSaldo != "[]") {
+        if (!empty($transaksiSaldo) || $transaksiSaldo != "[]") {
             return responseSuccess("detail riwayat saldo partner", $transaksiSaldo);
         }
         return responseError("detail riwayat saldo partner kosong");
