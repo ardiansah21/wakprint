@@ -34,6 +34,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::get('/', 'PartnerController@index');
         Route::get('/user', 'PartnerController@user');
         Route::get('/saldo', 'PartnerController@saldoIndex');
+        Route::get('/saldo/filter', 'PartnerController@filterSaldo');
         Route::get('/saldo/riwayat/{transaksiSaldo}', 'PartnerController@showSaldo');
         Route::post('/saldo/tarik/store', 'PartnerController@storeTarikSaldo');
         Route::post('/ubah-status', 'PartnerController@statusToko');
