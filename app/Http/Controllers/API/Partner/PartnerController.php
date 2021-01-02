@@ -157,7 +157,7 @@ class PartnerController extends Controller
         }
     }
 
-    public function filterSaldo(Request $request)
+    public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
     {
         if ($request->jenisDana === 'Dana Masuk') {
             if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
@@ -226,7 +226,8 @@ class PartnerController extends Controller
                 }
             } else {
                 $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->user()->id_pengelola)
-                    ->where('jenis_transaksi', '!=', 'TopUp')
+                    ->where('jenis_transaksi', 'Tarik')
+                    ->orWhere('jenis_transaksi', 'Pembayaran')
                     ->where('status', '!=', null)
                     ->get();
             }
