@@ -159,7 +159,7 @@ class PartnerController extends Controller
 
     public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
     {
-        if (!isEmpty($request->jenisDana) && $request->jenisDana === 'Dana Masuk') {
+        if (!empty($request->jenisDana) && $request->jenisDana === 'Dana Masuk') {
             if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
                 if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
                     $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
@@ -180,7 +180,7 @@ class PartnerController extends Controller
                     ->where('status', '!=', null)
                     ->get();
             }
-        } else if (!isEmpty($request->jenisDana) && $request->jenisDana === 'Dana Keluar') {
+        } else if (!empty($request->jenisDana) && $request->jenisDana === 'Dana Keluar') {
             if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
                 if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
                     $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
