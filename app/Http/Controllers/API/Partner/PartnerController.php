@@ -163,14 +163,16 @@ class PartnerController extends Controller
             if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
                 if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
                     $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', 'Tarik')
-                        ->orWhere('jenis_transaksi', 'Pembayaran')
+                        ->where('jenis_transaksi', '=', 'Pembayaran')
                         ->where('status', '!=', null)
                         ->where('updated_at', $request->tanggalAwal)
                         ->orWhere('updated_at', $request->tanggalAkhir)
                         ->get();
                 } else {
-                    $transaksiSaldo = request()->user()->transaksiSaldo;
+                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
+                        ->where('jenis_transaksi', '=', 'Pembayaran')
+                        ->where('status', '!=', null)
+                        ->get();
                 }
             } else {
                 $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
