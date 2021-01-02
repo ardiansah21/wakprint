@@ -231,7 +231,7 @@ class PartnerController extends Controller
                     ->get();
             }
         }
-        return responseSuccess("Data Saldo Anda", $transaksiSaldo);
+        return responseSuccess("Data Saldo Anda : .$request->jenisDana", $transaksiSaldo);
     }
 
     public function statusToko(Request $request)
