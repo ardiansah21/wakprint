@@ -94,6 +94,7 @@ const appMember = new Vue({
             Echo.private(
                 "Notif-Broadcast.Member." + this.user_login.id_member
             ).notification(notification => {
+                console.log(Notification);
                 this.notification.push(notification);
 
                 var audio = new Audio("/storage/ringtone/glass_ping.mp3");
