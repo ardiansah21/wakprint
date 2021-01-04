@@ -50,11 +50,11 @@ class PromoController extends Controller
         }
 
         $partner = request()->user();
-        $arrIdProduk = array();
+        // $arrIdProduk = array();
 
-        foreach (json_decode($request->id_produk) as $id) {
-            array_push($arrIdProduk, $id);
-        }
+        // foreach (json_decode($request->id_produk) as $id) {
+        //     array_push($arrIdProduk, $id);
+        // }
 
         // $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
         $statusDiskon = 'Tersedia';
@@ -81,7 +81,7 @@ class PromoController extends Controller
             return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        foreach ($arrIdProduk as $id) {
+        foreach ($request->id_produk as $id) {
             $produk = $partner->products->find($id);
             $produk->status_diskon = $statusDiskon;
             $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
