@@ -38,7 +38,7 @@ class PromoController extends Controller
     public function store(Request $request, Produk $produk)
     {
         $validator = Validator::make($request->all(), [
-            // 'id_produk' => ['required', 'numeric'],
+            'id_produk' => ['required', ['numeric']],
             'jumlah_diskon' => ['required', 'numeric'],
             'maksimal_diskon' => ['required', 'numeric'],
             'mulai_waktu_diskon' => ['required', 'date'],
@@ -49,12 +49,12 @@ class PromoController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        // $partner = Auth::user();
-        // $arrIdProduk = array();
+        $partner = request()->user();
+        $arrIdProduk = array();
 
-        // foreach (json_decode($request->idProduk) as $id) {
-        //     array_push($arrIdProduk, $id);
-        // }
+        foreach (json_decode($request->id_produk) as $id) {
+            array_push($arrIdProduk, $id);
+        }
 
         // $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
         $statusDiskon = 'Tersedia';
@@ -72,24 +72,25 @@ class PromoController extends Controller
         $tanggalSelesaiPromo = $request->selesai_waktu_diskon;
 
         if ($tanggalMulaiPromo < Carbon::now()->format('Y-m-d')) {
-            return responseError('Maaf', 'Waktu mulai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
+            return responseError('Maaf waktu mulai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
         } else if ($tanggalSelesaiPromo < Carbon::now()->format('Y-m-d')) {
-            return responseError('Maaf', 'Waktu selesai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
+            return responseError('Maaf waktu selesai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
         }
 
         if ($tanggalMulaiPromo > $tanggalSelesaiPromo) {
-            return responseError('Maaf', 'Waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
+            return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        // foreach ($arrIdProduk as $id) {
-        // $produk = $partner->products->find($id);
-        $produk->status_diskon = $statusDiskon;
-        $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
-        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
-        $produk->jumlah_diskon = $jumlahDiskon;
-        $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
-        $produk->save();
-        // }
+        foreach ($arrIdProduk as $id) {
+            $produk = $partner->products->find($id);
+            $produk->status_diskon = $statusDiskon;
+            $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
+            $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
+            $produk->jumlah_diskon = $jumlahDiskon;
+            $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
+            $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
+            $produk->save();
+        }
 
         return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $produk, 201);
     }
@@ -104,7 +105,7 @@ class PromoController extends Controller
     public function update(Request $request, Produk $produk)
     {
         $validator = Validator::make($request->all(), [
-            // 'id_produk' => ['required', 'numeric'],
+            'id_produk' => ['required', 'numeric'],
             'jumlah_diskon' => ['required', 'numeric'],
             'maksimal_diskon' => ['required', 'numeric'],
             'mulai_waktu_diskon' => ['required', 'date'],
@@ -135,19 +136,20 @@ class PromoController extends Controller
         $tanggalSelesaiPromo = $request->selesai_waktu_diskon;
 
         if ($tanggalMulaiPromo < Carbon::now()->format('Y-m-d')) {
-            return responseError('Maaf', 'Waktu mulai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
+            return responseError('Maaf waktu mulai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
         } else if ($tanggalSelesaiPromo < Carbon::now()->format('Y-m-d')) {
-            return responseError('Maaf', 'Waktu selesai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
+            return responseError('Maaf waktu selesai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
         }
 
         if ($tanggalMulaiPromo > $tanggalSelesaiPromo) {
-            return responseError('Maaf', 'Waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
+            return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
         $produk->status_diskon = $statusDiskon;
         $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
         $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
         $produk->jumlah_diskon = $jumlahDiskon;
+        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
         $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
         $produk->save();
 
