@@ -17,8 +17,8 @@ class PromoController extends Controller
      */
     public function index()
     {
-        return responseSuccess("data seluruh promo produk", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
-            return collect($item)->only([
+        return responseSuccess("data seluruh promo produk", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function () {
+            return collect()->only([
                 'id_produk',
                 'nama',
                 'jumlah_diskon',
