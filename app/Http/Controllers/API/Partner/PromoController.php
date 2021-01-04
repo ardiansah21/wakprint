@@ -38,7 +38,7 @@ class PromoController extends Controller
     public function store(Request $request, Produk $produk)
     {
         $validator = Validator::make($request->all(), [
-            'id_produk' => ['required', ['numeric']],
+            'id_produk' => ['required', 'numeric'],
             'jumlah_diskon' => ['required', 'numeric'],
             'maksimal_diskon' => ['required', 'numeric'],
             'mulai_waktu_diskon' => ['required', 'date'],
@@ -81,16 +81,16 @@ class PromoController extends Controller
             return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        foreach ($request->id_produk as $id) {
-            $produk = $partner->products->find($id);
-            $produk->status_diskon = $statusDiskon;
-            $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
-            $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
-            $produk->jumlah_diskon = $jumlahDiskon;
-            $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
-            $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
-            $produk->save();
-        }
+        // foreach ($request->id_produk as $id) {
+        $produk = $partner->products->find($request->id_produk);
+        $produk->status_diskon = $statusDiskon;
+        $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
+        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
+        $produk->jumlah_diskon = $jumlahDiskon;
+        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
+        $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
+        $produk->save();
+        // }
 
         return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $produk, 201);
     }
