@@ -17,7 +17,7 @@ class PromoController extends Controller
      */
     public function index()
     {
-        return responseSuccess("data seluruh promo produk", array(collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
+        return responseSuccess("data seluruh promo produk", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
             return collect($item)->only([
                 'id_produk',
                 'nama',
@@ -26,7 +26,7 @@ class PromoController extends Controller
                 'mulai_waktu_diskon',
                 'selesai_waktu_diskon',
             ]);
-        })));
+        }));
     }
 
     /**
