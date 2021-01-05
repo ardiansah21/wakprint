@@ -18,7 +18,7 @@ class PesananController extends Controller
      */
     public function index()
     {
-        return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->first());
+        return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
     }
 
     public function getPesananMasuk()
@@ -29,7 +29,7 @@ class PesananController extends Controller
             ->get();
 
         if (!empty($transaksiSaldo) && !empty(request()->user()->pesanans->where('status', 'Pending'))) {
-            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans);
+            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
         } else {
             return responseError("data pesanan masuk partner tidak ada");
         }
