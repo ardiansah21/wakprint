@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\PesananNotification;
 use App\Notifications\PesananPartnerNotification;
 use App\Pesanan;
+use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 
 class PesananController extends Controller
@@ -15,9 +16,52 @@ class PesananController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
+        // $validator = Validator::make($request->all(), [
+        //     'status_pesanan' => ['required', 'string'],
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json(['error' => $validator->errors()], 422);
+        // }
+
+        if (empty($request->status_pesanan)) {
+            return responseError("request status kosong", request()->user()->pesanans->where('status', 'Batal'));
+        } else {
+            if ($request->status_pesanan == "Diproses") {
+                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Diproses'));
+            } else if ($request->status_pesanan == "Selesai") {
+                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Selesai'));
+            } else if ($request->status_pesanan == "Batal") {
+                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Batal'));
+            } else {
+                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
+            }
+        }
+    }
+
+    public function getPesananMasuk()
+    {
+        // $jumlahFile = count(request()->user()->pesanans->first()->konfigurasiFile);
+
+        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', request()->user()->id_pengelola)
+            ->where('jenis_transaksi', 'Pembayaran')
+            ->where('status', 'Berhasil')
+            ->get();
+
+        if (!empty($transaksiSaldo) && !empty(request()->user()->pesanans->where('status', 'Pending'))) {
+            // $data = array(
+            //     "pesanan" => request()->user()->pesanans->where('status', 'Pending'),
+            //     "konfigurasi_file" => request()->user()->pesanans->where('status', 'Pending')->first()->konfigurasiFile,
+            // );
+            // return responseSuccess("data pesanan masuk partner yang login", $data);
+
+            // return responseSuccess("data pesanan masuk partner yang login", json_decode(json_encode($data), true));
+            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
+        } else {
+            return responseError("data pesanan masuk partner tidak ada");
+        }
     }
 
     /**
