@@ -25,7 +25,8 @@ class PesananController extends Controller
     {
         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', request()->user()->id_pengelola)
             ->where('jenis_transaksi', 'Pembayaran')
-            ->where('status', 'Berhasil');
+            ->where('status', 'Berhasil')
+            ->get();
 
         if (!empty($transaksiSaldo)) {
             return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
