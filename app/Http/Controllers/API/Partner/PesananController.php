@@ -18,7 +18,15 @@ class PesananController extends Controller
      */
     public function index()
     {
-        return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
+        if (request()->status == "Diproses") {
+            return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Diproses'));
+        } else if (request()->status == "Selesai") {
+            return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Selesai'));
+        } else if (request()->status == "Batal") {
+            return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Batal'));
+        } else {
+            return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
+        }
     }
 
     public function getPesananMasuk()
