@@ -27,14 +27,14 @@ class PesananController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        if (empty($request->status)) {
+        if (empty($request->status_pesanan)) {
             return responseError("request status kosong", request()->user()->pesanans->where('status', 'Batal'));
         } else {
-            if ($request->status == "Diproses") {
+            if ($request->status_pesanan == "Diproses") {
                 return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Diproses'));
-            } else if ($request->status == "Selesai") {
+            } else if ($request->status_pesanan == "Selesai") {
                 return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Selesai'));
-            } else if ($request->status == "Batal") {
+            } else if ($request->status_pesanan == "Batal") {
                 return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Batal'));
             } else {
                 return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
