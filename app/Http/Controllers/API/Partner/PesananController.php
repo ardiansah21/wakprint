@@ -23,8 +23,8 @@ class PesananController extends Controller
     public function getPesananMasuk()
     {
         $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
-            ->where('status', 'Berhasil')
-            ->get();
+            ->where('status', 'Berhasil');
+
         if (!empty($transaksiSaldo)) {
             return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
         } else {
