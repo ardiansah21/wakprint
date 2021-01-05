@@ -48,6 +48,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::get('/pesanan/tolak/{pesanan}', 'PesananController@tolakPesanan');
         Route::get('/pesanan/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::get('/pesanan/pesanan-masuk', 'PesananController@getPesananMasuk');
+        Route::apiResource('/pesanan', 'PesananController');
         // Route::post('/pesanan/tolak/{id}', 'PesananController@tolakPesanan');
         // Route::apiResource('pesanan', 'PesananController');
         // Route::get('/pesanan/terima/{id}', 'PesananController@terimaPesanan');
