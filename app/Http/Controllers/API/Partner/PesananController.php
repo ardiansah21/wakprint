@@ -29,7 +29,7 @@ class PesananController extends Controller
             ->get();
 
         if (!empty($transaksiSaldo)) {
-            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending')->get());
+            return responseSuccess("data pesanan masuk partner yang login", collect(request()->user()->pesanans->where('status', 'Pending')));
         } else {
             return responseError("data pesanan masuk partner tidak ada");
         }
