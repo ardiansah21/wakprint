@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\PesananNotification;
 use App\Notifications\PesananPartnerNotification;
 use App\Pesanan;
+use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 
 class PesananController extends Controller
@@ -22,7 +23,8 @@ class PesananController extends Controller
 
     public function getPesananMasuk()
     {
-        $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
+        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', request()->user()->id_pengelola)
+            ->where('jenis_transaksi', 'Pembayaran')
             ->where('status', 'Berhasil');
 
         if (!empty($transaksiSaldo)) {
