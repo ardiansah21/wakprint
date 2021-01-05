@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Notifications\PesananNotification;
 use App\Notifications\PesananPartnerNotification;
 use App\Pesanan;
-use App\Transaksi_saldo;
 use Illuminate\Http\Request;
+use stdClass;
 
 class PesananController extends Controller
 {
@@ -43,25 +43,26 @@ class PesananController extends Controller
 
     public function getPesananMasuk()
     {
-        // $jumlahFile = count(request()->user()->pesanans->first()->konfigurasiFile);
+        // $data = request()->user()->pesanans->filter(function ($p) {
+        //     return $p->isPaid() && $p->status == 'Pending';
+        // });
 
-        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', request()->user()->id_pengelola)
-            ->where('jenis_transaksi', 'Pembayaran')
-            ->where('status', 'Berhasil')
-            ->get();
-
-        if (!empty($transaksiSaldo) && !empty(request()->user()->pesanans->where('status', 'Pending'))) {
-            // $data = array(
-            //     "pesanan" => request()->user()->pesanans->where('status', 'Pending'),
-            //     "konfigurasi_file" => request()->user()->pesanans->where('status', 'Pending')->first()->konfigurasiFile,
-            // );
-            // return responseSuccess("data pesanan masuk partner yang login", $data);
-
-            // return responseSuccess("data pesanan masuk partner yang login", json_decode(json_encode($data), true));
-            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
-        } else {
-            return responseError("data pesanan masuk partner tidak ada");
+        $dataArr = array();
+        foreach (request()->user()->pesanans as $p) {
+            if ($p->isPaid() && $p->status == 'Pending') {
+                $data = new stdClass();
+                $data->id_pesanan = $p->id_pesanan;
+                $data->metode_penerimaan = $p->metode_penerimaan;
+                $data->biaya = $p->biaya;
+                $data->updated_at = $p->updated_at;
+                // $data->nama_file = $p->konfigurasiFile->get('nama_file');
+                $data->nama_lengkap = $p->member->nama_lengkap;
+                array_push($dataArr, $data);
+            }
         }
+
+        return responseSuccess("data pesanan masuk partner", $dataArr);
+
     }
 
     /**
