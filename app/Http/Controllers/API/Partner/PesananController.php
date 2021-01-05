@@ -23,13 +23,19 @@ class PesananController extends Controller
 
     public function getPesananMasuk()
     {
+        $jumlahFile = count(request()->user()->pesanans->konfigurasiFile);
+
         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', request()->user()->id_pengelola)
             ->where('jenis_transaksi', 'Pembayaran')
             ->where('status', 'Berhasil')
             ->get();
 
         if (!empty($transaksiSaldo) && !empty(request()->user()->pesanans->where('status', 'Pending'))) {
-            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
+            $data = [
+                "jumlah_file" => $jumlahFile,
+                "pesanan" => request()->user()->pesanans->where('status', 'Pending'),
+            ];
+            return responseSuccess("data pesanan masuk partner yang login", $data);
         } else {
             return responseError("data pesanan masuk partner tidak ada");
         }
