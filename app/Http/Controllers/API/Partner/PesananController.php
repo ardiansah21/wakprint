@@ -31,14 +31,14 @@ class PesananController extends Controller
             ->get();
 
         if (!empty($transaksiSaldo) && !empty(request()->user()->pesanans->where('status', 'Pending'))) {
-            $data = array(
-                "pesanan" => request()->user()->pesanans->where('status', 'Pending'),
-                "konfigurasi_file" => request()->user()->pesanans->where('status', 'Pending')->first()->konfigurasiFile,
-            );
-            return responseSuccess("data pesanan masuk partner yang login", $data);
+            // $data = array(
+            //     "pesanan" => request()->user()->pesanans->where('status', 'Pending'),
+            //     "konfigurasi_file" => request()->user()->pesanans->where('status', 'Pending')->first()->konfigurasiFile,
+            // );
+            // return responseSuccess("data pesanan masuk partner yang login", $data);
 
             // return responseSuccess("data pesanan masuk partner yang login", json_decode(json_encode($data), true));
-            // return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
+            return responseSuccess("data pesanan masuk partner yang login", request()->user()->pesanans->where('status', 'Pending'));
         } else {
             return responseError("data pesanan masuk partner tidak ada");
         }
