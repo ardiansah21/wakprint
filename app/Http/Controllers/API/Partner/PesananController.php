@@ -23,7 +23,7 @@ class PesananController extends Controller
 
     public function getPesananMasuk()
     {
-        $jumlahFile = count(request()->user()->pesanans->konfigurasiFile);
+        $jumlahFile = count(request()->user()->pesanans->first()->konfigurasiFile);
 
         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', request()->user()->id_pengelola)
             ->where('jenis_transaksi', 'Pembayaran')
