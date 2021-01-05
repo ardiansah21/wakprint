@@ -65,3 +65,11 @@ Route::prefix('v1/notif')->middleware('auth:' . activeGuard())->group(function (
     Route::post('read', 'NotificationController@read');
     Route::get('read-all', 'NotificationController@readAll');
 });
+
+//chat
+Route::group(['prefix' => 'v1/chat'], function () {
+    Route::get('pesanan', 'ChatController@pesanan');
+    Route::get('message/{id}', 'ChatController@message');
+    Route::get('message/{id}/read', 'ChatController@read');
+    Route::post('message', 'ChatController@send');
+});
