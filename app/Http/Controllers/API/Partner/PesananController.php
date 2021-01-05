@@ -18,7 +18,7 @@ class PesananController extends Controller
      */
     public function index()
     {
-        return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
+        return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->first());
     }
 
     public function getPesananMasuk()
