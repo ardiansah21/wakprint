@@ -35,7 +35,7 @@ class PesananController extends Controller
                 request()->user()->pesanans->where('status', 'Pending'),
                 $jumlahFile,
             ];
-            return responseSuccess("data pesanan masuk partner yang login", json_decode($data));
+            return responseSuccess("data pesanan masuk partner yang login", json_decode(json_encode($data), false));
         } else {
             return responseError("data pesanan masuk partner tidak ada");
         }
