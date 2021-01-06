@@ -208,7 +208,9 @@ class PesananController extends Controller
                 }
             } else {
                 if ($partner->pesanans->first()->isPaid()) {
-                    $pesanan = $partner->pesanans->first()->where('status', '!=', null)->get();
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('status', '!=', null)
+                        ->get();
                 }
             }
         }
