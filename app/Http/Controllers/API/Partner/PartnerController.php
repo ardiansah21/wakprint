@@ -160,6 +160,7 @@ class PartnerController extends Controller
 
     public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
     {
+        return Carbon::parse($request->tanggal_awal)->translatedFormat('YYYY-mm-dd');
         if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Masuk') {
             if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
