@@ -165,12 +165,10 @@ class PartnerController extends Controller
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '=', 'Pembayaran')
                         ->where('status', '!=', null)
                         ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                        ->orWhere('updated_at', $request->tanggalAkhir);
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '=', 'Pembayaran')
-                        ->where('status', '!=', null)
-                        ->get();
+                        ->where('status', '!=', null);
                 }
             } else {
                 $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '=', 'Pembayaran')
@@ -183,20 +181,17 @@ class PartnerController extends Controller
                         ->orWhere('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
                         ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                        ->orWhere('updated_at', $request->tanggalAkhir);
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', null)
                         ->orWhere('jenis_transaksi', null)
                         ->where('status', '!=', null)
                         ->where('updated_at', null)
-                        ->orWhere('updated_at', null)
-                        ->get();
+                        ->orWhere('updated_at', null);
                 }
             } else {
                 $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '=', 'Tarik')
-                    ->where('status', '!=', null)
-                    ->get();
+                    ->where('status', '!=', null);
             }
         } else {
             if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
@@ -205,21 +200,18 @@ class PartnerController extends Controller
                         ->orWhere('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
                         ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                        ->orWhere('updated_at', $request->tanggalAkhir);
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', null)
                         ->orWhere('jenis_transaksi', null)
                         ->where('status', '!=', null)
                         ->where('updated_at', null)
-                        ->orWhere('updated_at', null)
-                        ->get();
+                        ->orWhere('updated_at', null);
                 }
             } else {
                 $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                     ->orWhere('jenis_transaksi', 'Pembayaran')
-                    ->where('status', '!=', null)
-                    ->get();
+                    ->where('status', '!=', null);
             }
         }
         return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
