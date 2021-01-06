@@ -18,14 +18,6 @@ class PesananController extends Controller
      */
     public function index(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'status_pesanan' => ['required', 'string'],
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json(['error' => $validator->errors()], 422);
-        // }
-
         if (empty($request->status_pesanan)) {
             return responseError("request status kosong", request()->user()->pesanans->where('status', 'Batal'));
         } else {
