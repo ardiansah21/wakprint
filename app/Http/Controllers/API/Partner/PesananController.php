@@ -158,7 +158,7 @@ class PesananController extends Controller
                 }
             } else {
                 $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->orderBy('biaya', 'asc')
+                    ->orderBy('biaya', 'desc')
                     ->get();
             }
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
