@@ -119,22 +119,16 @@ class PesananController extends Controller
                 if ($request->keyword_filter === 'Ambil di Tempat') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Ditempat')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('updated_at', 'desc')
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Diantar')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('updated_at', 'desc')
                         ->get();
                 } else {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', $request->keyword_filter)
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('updated_at', 'desc')
                         ->get();
                 }
@@ -149,22 +143,16 @@ class PesananController extends Controller
                 if ($request->keyword_filter === 'Ambil di Tempat') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Ditempat')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'desc')
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Diantar')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'desc')
                         ->get();
                 } else {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', $request->keyword_filter)
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'desc')
                         ->get();
                 }
@@ -178,22 +166,16 @@ class PesananController extends Controller
                 if ($request->keyword_filter === 'Ambil di Tempat') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Ditempat')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'asc')
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Diantar')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'asc')
                         ->get();
                 } else {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', $request->keyword_filter)
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'asc')
                         ->get();
                 }
@@ -207,20 +189,14 @@ class PesananController extends Controller
                 if ($request->keyword_filter === 'Ambil di Tempat') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Ditempat')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', 'Diantar')
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->get();
                 } else {
                     $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('metode_penerimaan', $request->keyword_filter)
-                        ->where('status', '!=', 'Pending')
-                        ->orWhere('status', $request->keyword_filter)
                         ->get();
                 }
             } else {
