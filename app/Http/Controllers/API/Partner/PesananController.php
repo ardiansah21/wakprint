@@ -18,18 +18,29 @@ class PesananController extends Controller
      */
     public function index(Request $request)
     {
-        if (empty($request->status_pesanan)) {
-            return responseError("request status kosong", request()->user()->pesanans->where('status', 'Batal'));
-        } else {
-            if ($request->status_pesanan == "Diproses") {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Diproses'));
-            } else if ($request->status_pesanan == "Selesai") {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Selesai'));
-            } else if ($request->status_pesanan == "Batal") {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Batal'));
-            } else {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
+        if ($request->status_pesanan == "Pending") {
+            $dataArr = array();
+            foreach (request()->user()->pesanans as $p) {
+                if ($p->isPaid() && $p->status == 'Pending') {
+                    $data = new stdClass();
+                    $data->id_pesanan = $p->id_pesanan;
+                    $data->metode_penerimaan = $p->metode_penerimaan;
+                    $data->biaya = $p->biaya;
+                    $data->updated_at = $p->updated_at;
+                    // $data->nama_file = $p->konfigurasiFile->get('nama_file');
+                    $data->nama_lengkap = $p->member->nama_lengkap;
+                    array_push($dataArr, $data);
+                }
             }
+            return responseSuccess("data pesanan masuk partner yang pending", $dataArr);
+        } else if ($request->status_pesanan == "Diproses") {
+            return responseSuccess("data pesanan partner yang diproses", request()->user()->pesanans->where('status', 'Diproses'));
+        } else if ($request->status_pesanan == "Selesai") {
+            return responseSuccess("data pesanan partner yang selesai", request()->user()->pesanans->where('status', 'Selesai'));
+        } else if ($request->status_pesanan == "Batal") {
+            return responseSuccess("data pesanan partner yang batal", request()->user()->pesanans->where('status', 'Batal'));
+        } else {
+            return responseSuccess("data semua pesanan partner", request()->user()->pesanans);
         }
     }
 
