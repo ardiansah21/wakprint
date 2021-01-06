@@ -28,7 +28,7 @@ class PesananController extends Controller
                     $data->metode_penerimaan = $p->metode_penerimaan;
                     $data->biaya = $p->biaya;
                     $data->jumlah_file = count($p->konfigurasiFile);
-                    $data->nama_file = $p->konfigurasiFile->get('nama_file');
+                    $data->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
                     $data->updated_at = $p->updated_at;
                     array_push($dataArr, $data);
                 }
