@@ -164,7 +164,9 @@ class PartnerController extends Controller
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
-                        ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
+                        ->where('updated_at', '>=', $request->tanggal_awal)
+                        ->where('updated_at', '<=', $request->tanggal_akhir);
+                    // ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null);
@@ -178,7 +180,9 @@ class PartnerController extends Controller
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                         ->where('status', '!=', null)
-                        ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
+                        ->where('updated_at', '>=', $request->tanggal_awal)
+                        ->where('updated_at', '<=', $request->tanggal_akhir);
+                    // ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', null)
                         ->where('status', '!=', null)
@@ -194,7 +198,9 @@ class PartnerController extends Controller
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                         ->orWhere('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
-                        ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
+                        ->where('updated_at', '>=', $request->tanggal_awal)
+                        ->where('updated_at', '<=', $request->tanggal_akhir);
+                    // ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', null)
                         ->orWhere('jenis_transaksi', null)
