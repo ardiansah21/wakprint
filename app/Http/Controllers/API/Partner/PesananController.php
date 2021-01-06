@@ -134,7 +134,8 @@ class PesananController extends Controller
                 }
             } else {
                 $pesanan = $partner->pesanans->first()->where('status', '!=', 'Pending')
-                    ->orderBy('updated_at', 'desc');
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
             }
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
             if (!empty($request->keyword_filter)) {
