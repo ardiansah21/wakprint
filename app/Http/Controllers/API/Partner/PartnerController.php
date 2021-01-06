@@ -174,8 +174,7 @@ class PartnerController extends Controller
                 }
             } else {
                 $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '=', 'Pembayaran')
-                    ->where('status', '!=', null)
-                    ->get();
+                    ->where('status', '!=', null);
             }
         } else if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Keluar') {
             if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
