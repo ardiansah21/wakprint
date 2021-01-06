@@ -33,4 +33,10 @@ class Pesanan extends Model
     {
         return $this->hasOne('App\Transaksi_saldo', 'id_pesanan');
     }
+
+    public static function isPaid()
+    {
+        return auth(activeGuard())->user()->pesanans->first()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
+            ->where('status', 'Berhasil')->exists() ? true : false;
+    }
 }

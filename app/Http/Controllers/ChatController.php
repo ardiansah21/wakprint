@@ -30,18 +30,31 @@ class ChatController extends Controller
 
     public function pesanan()
     {
-        if (auth()->guard('partner')->check()) {
-            $pesanans = auth()->guard('partner')->user()->pesanan;
-        } else {
-            $pesanans = Auth::user()->pesanans;
+        // if (auth()->guard('partner')->check()) {
+        //     $pesanans = auth()->guard('partner')->user()->pesanan;
+        // } else {
+        //     $pesanans = Auth::user()->pesanans;
+        // }
+
+        // if (auth()->guard('partner')->check()) {
+        //     $pesanans = auth()->guard('partner')->user()->pesanan;
+        // } elseif (auth()->guard('partner-api')->check()) {
+        //     $pesanans = auth()->guard('partner-api')->user()->pesanan;
+        // } else {
+        //     $pesanans = Auth::user()->pesanans;
+        // }
+        if (!activeGuard()) {
+            return response()->json(['error' => "Unauthenticated."], 401);
         }
+        $pesanans = auth(activeGuard())->user()->pesanan;
+
         $itemListPesanan = array();
 
         foreach ($pesanans as $pesanan) {
             //TODO pengecekan apakah pesanan tersebut sudah bayar
 
             $data = new stdClass();
-            if (Auth::guard('partner')->check()) {
+            if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
                 $data->id = $pesanan->id_pesanan;
                 $data->nama_member = $pesanan->member->nama_lengkap;
                 $data->penerimaan = $pesanan->metode_penerimaan;
@@ -69,7 +82,11 @@ class ChatController extends Controller
             array_push($itemListPesanan, $data);
         }
 
+        if (request()->is('api/*')) {
+            return responseSuccess("data seluruh pesanan chat", $itemListPesanan);
+        }
         return $itemListPesanan;
+
     }
 
     //untuk partner
@@ -83,7 +100,7 @@ class ChatController extends Controller
     {
         $chat = Chat::where('id_pesanan', $id)->get();
         if (!$chat->isEmpty()) {
-            if (Auth::guard('partner')->check()) {
+            if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
                 // $count = Chat::where('id_pesanan', $id)
                 //     ->where('from_user', "member")
                 //     ->whereNull('read_at')->count();
@@ -114,8 +131,13 @@ class ChatController extends Controller
             //     $temp->count = $c->count;
             //     array_push($message, $temp);
             // }
+
+            if (request()->is('api/*')) {
+                return responseSuccess("seluruh chat di pesanan " . $id, $chat);
+            }
             return $chat;
         }
+        return responseSuccess("Belum ada pesan", null);
     }
 
     protected function send(Request $request)
@@ -125,18 +147,19 @@ class ChatController extends Controller
 
         event(new ChatEvent($message));
 
+        $message->read_at = null;
+
+        if (request()->is('api/*')) {
+            return responseSuccess("Pesan telah terkirim", $message);
+        }
         return $message;
-
-        // event(new MessageEvent($message));
-
-        // $message = new MessageResource($message);
-
-        // return response()->json($message);
     }
 
     protected function read($id)
     {
-        if (Auth::guard('partner')->check()) {
+        return auth(activeGuard())->user()->pesanan;
+
+        if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
             Chat::where('id_pesanan', $id)
                 ->where('from_user', "member")
                 ->whereNull('read_at')
