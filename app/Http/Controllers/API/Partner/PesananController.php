@@ -45,30 +45,6 @@ class PesananController extends Controller
         }
     }
 
-    public function getPesananMasuk()
-    {
-        // $data = request()->user()->pesanans->filter(function ($p) {
-        //     return $p->isPaid() && $p->status == 'Pending';
-        // });
-
-        $dataArr = array();
-        foreach (request()->user()->pesanans as $p) {
-            if ($p->isPaid() && $p->status == 'Pending') {
-                $data = new stdClass();
-                $data->id_pesanan = $p->id_pesanan;
-                $data->metode_penerimaan = $p->metode_penerimaan;
-                $data->biaya = $p->biaya;
-                $data->updated_at = $p->updated_at;
-                // $data->nama_file = $p->konfigurasiFile->get('nama_file');
-                $data->nama_lengkap = $p->member->nama_lengkap;
-                array_push($dataArr, $data);
-            }
-        }
-
-        return responseSuccess("data pesanan masuk partner", $dataArr);
-
-    }
-
     /**
      * Display the specified resource.
      *
