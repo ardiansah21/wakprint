@@ -24,11 +24,12 @@ class PesananController extends Controller
                 if ($p->isPaid() && $p->status == 'Pending') {
                     $data = new stdClass();
                     $data->id_pesanan = $p->id_pesanan;
+                    $data->nama_lengkap = $p->member->nama_lengkap;
                     $data->metode_penerimaan = $p->metode_penerimaan;
                     $data->biaya = $p->biaya;
+                    $data->jumlah_file = count($p->konfigurasiFile);
+                    $data->nama_file = $p->konfigurasiFile->get('nama_file');
                     $data->updated_at = $p->updated_at;
-                    // $data->nama_file = $p->konfigurasiFile->get('nama_file');
-                    $data->nama_lengkap = $p->member->nama_lengkap;
                     array_push($dataArr, $data);
                 }
             }
