@@ -117,91 +117,108 @@ class PesananController extends Controller
         if ($request->urutkan_pesanan === 'Terbaru') {
             if (!empty($request->keyword_filter)) {
                 if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Ditempat')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('updated_at', 'desc')
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Diantar')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('updated_at', 'desc')
                         ->get();
                 } else {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', $request->keyword_filter)
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('updated_at', 'desc')
                         ->get();
                 }
             } else {
-                $pesanan = $partner->pesanans->first()->where('status', '!=', 'Pending')
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->where('status', '!=', null)
                     ->orderBy('updated_at', 'desc')
                     ->get();
             }
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
             if (!empty($request->keyword_filter)) {
                 if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Ditempat')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'desc')
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Diantar')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'desc')
                         ->get();
                 } else {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', $request->keyword_filter)
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'desc')
                         ->get();
                 }
             } else {
-                $pesanan = $partner->pesanans->first()->orderBy('biaya', 'asc')->get();
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->orderBy('biaya', 'asc')
+                    ->get();
             }
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
             if (!empty($request->keyword_filter)) {
                 if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Ditempat')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'asc')
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Diantar')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'asc')
                         ->get();
                 } else {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', $request->keyword_filter)
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->orderBy('biaya', 'asc')
                         ->get();
                 }
             } else {
-                $pesanan = $partner->pesanans->first()->orderBy('biaya', 'asc');
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->orderBy('biaya', 'asc')
+                    ->get();
             }
         } else {
             if (!empty($request->keyword_filter)) {
                 if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Ditempat')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->get();
                 } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', 'Diantar')
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->get();
                 } else {
-                    $pesanan = $partner->pesanans->first()->where('metode_penerimaan', $request->keyword_filter)
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
                         ->where('status', '!=', 'Pending')
                         ->orWhere('status', $request->keyword_filter)
                         ->get();
