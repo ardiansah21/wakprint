@@ -195,8 +195,8 @@ class PesananController extends Controller
                         ->orWhere('status', $request->keyword_filter);
                 }
             } else {
-                if ($partner->pesanans->isPaid()) {
-                    $pesanan = $partner->pesanans->first()->where('status', '!=', null);
+                if ($partner->pesanans->first()->isPaid()) {
+                    $pesanan = $partner->pesanans->first()->where('status', '!=', null)->get();
                 }
             }
         }
