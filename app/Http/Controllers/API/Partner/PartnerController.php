@@ -160,76 +160,59 @@ class PartnerController extends Controller
     public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
     {
         if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Masuk') {
-            if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', '=', 'Pembayaran')
+            if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
+                if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
+                    $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
-                        ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                        ->where('updated_at', '>=', $request->tanggal_awal)
+                        ->where('updated_at', '<=', $request->tanggal_akhir);
+                    // ->where('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d'))
+                    // ->where('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d'));
+                    // ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d')]);
                 } else {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', '=', 'Pembayaran')
-                        ->where('status', '!=', null)
-                        ->get();
+                    $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
+                        ->where('status', '!=', null);
                 }
             } else {
-                $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                    ->where('jenis_transaksi', '=', 'Pembayaran')
-                    ->where('status', '!=', null)
-                    ->get();
+                $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
+                    ->where('status', '!=', null);
             }
         } else if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Keluar') {
-            if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', 'Tarik')
-                        ->orWhere('jenis_transaksi', 'Pembayaran')
+            if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
+                if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
+                    $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                         ->where('status', '!=', null)
-                        ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                        ->where('updated_at', '>=', $request->tanggal_awal)
+                        ->where('updated_at', '<=', $request->tanggal_akhir);
+                    // ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
                 } else {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', null)
-                        ->orWhere('jenis_transaksi', null)
+                    $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', null)
                         ->where('status', '!=', null)
-                        ->where('updated_at', null)
-                        ->orWhere('updated_at', null)
-                        ->get();
+                        ->where('updated_at', null);
                 }
             } else {
-                $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
-                    ->where('id_pengelola', '=', $request->user()->id_pengelola)
-                    ->where('status', '!=', null)
-                    ->get();
+                $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
+                    ->where('status', '!=', null);
             }
         } else {
-            if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', 'Tarik')
+            if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
+                if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
+                    $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                         ->orWhere('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
-                        ->where('updated_at', $request->tanggalAwal)
-                        ->orWhere('updated_at', $request->tanggalAkhir)
-                        ->get();
+                        ->where('updated_at', '>=', $request->tanggal_awal)
+                        ->where('updated_at', '<=', $request->tanggal_akhir);
+                    // ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
                 } else {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->user()->id_pengelola)
-                        ->where('jenis_transaksi', null)
+                    $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', null)
                         ->orWhere('jenis_transaksi', null)
                         ->where('status', '!=', null)
-                        ->where('updated_at', null)
-                        ->orWhere('updated_at', null)
-                        ->get();
+                        ->where('updated_at', null);
                 }
             } else {
-                $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->user()->id_pengelola)
-                    ->where('jenis_transaksi', 'Tarik')
+                $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                     ->orWhere('jenis_transaksi', 'Pembayaran')
-                    ->where('status', '!=', null)
-                    ->get();
+                    ->where('status', '!=', null);
             }
         }
         return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);

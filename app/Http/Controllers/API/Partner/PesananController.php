@@ -18,51 +18,31 @@ class PesananController extends Controller
      */
     public function index(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'status_pesanan' => ['required', 'string'],
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json(['error' => $validator->errors()], 422);
-        // }
-
-        if (empty($request->status_pesanan)) {
-            return responseError("request status kosong", request()->user()->pesanans->where('status', 'Batal'));
+        if ($request->status_pesanan == "Pending") {
+            $dataArr = array();
+            foreach (request()->user()->pesanans as $p) {
+                if ($p->isPaid() && $p->status == 'Pending') {
+                    $data = new stdClass();
+                    $data->id_pesanan = $p->id_pesanan;
+                    $data->nama_lengkap = $p->member->nama_lengkap;
+                    $data->metode_penerimaan = $p->metode_penerimaan;
+                    $data->biaya = $p->biaya;
+                    $data->jumlah_file = count($p->konfigurasiFile);
+                    $data->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+                    $data->updated_at = $p->updated_at;
+                    array_push($dataArr, $data);
+                }
+            }
+            return responseSuccess("data pesanan masuk partner yang pending", $dataArr);
+        } else if ($request->status_pesanan == "Diproses") {
+            return responseSuccess("data pesanan partner yang diproses", request()->user()->pesanans->where('status', 'Diproses'));
+        } else if ($request->status_pesanan == "Selesai") {
+            return responseSuccess("data pesanan partner yang selesai", request()->user()->pesanans->where('status', 'Selesai'));
+        } else if ($request->status_pesanan == "Batal") {
+            return responseSuccess("data pesanan partner yang batal", request()->user()->pesanans->where('status', 'Batal'));
         } else {
-            if ($request->status_pesanan == "Diproses") {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Diproses'));
-            } else if ($request->status_pesanan == "Selesai") {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Selesai'));
-            } else if ($request->status_pesanan == "Batal") {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans->where('status', 'Batal'));
-            } else {
-                return responseSuccess("data pesanan partner yang login", request()->user()->pesanans);
-            }
+            return responseSuccess("data semua pesanan partner", request()->user()->pesanans);
         }
-    }
-
-    public function getPesananMasuk()
-    {
-        // $data = request()->user()->pesanans->filter(function ($p) {
-        //     return $p->isPaid() && $p->status == 'Pending';
-        // });
-
-        $dataArr = array();
-        foreach (request()->user()->pesanans as $p) {
-            if ($p->isPaid() && $p->status == 'Pending') {
-                $data = new stdClass();
-                $data->id_pesanan = $p->id_pesanan;
-                $data->metode_penerimaan = $p->metode_penerimaan;
-                $data->biaya = $p->biaya;
-                $data->updated_at = $p->updated_at;
-                $data->nama_file = $p->konfigurasiFile->only('nama_file');
-                $data->nama_lengkap = $p->member->nama_lengkap;
-                array_push($dataArr, $data);
-            }
-        }
-
-        return responseSuccess("data pesanan masuk partner", $dataArr);
-
     }
 
     /**
@@ -73,8 +53,22 @@ class PesananController extends Controller
      */
     public function show(Pesanan $pesanan)
     {
-        $atks = json_decode($pesanan->find('atk_terpilih'));
-        return responseSuccess("detail pesanan partner yang login", [$pesanan, $atks]);
+        $data = new stdClass();
+        $data->id_pesanan = $pesanan->id_pesanan;
+        $data->nama_lengkap = $pesanan->member->nama_lengkap;
+        $data->metode_penerimaan = $pesanan->metode_penerimaan;
+        $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->alamat_toko = request()->user()->alamat_toko;
+        $data->status = $pesanan->status;
+        $data->biaya = $pesanan->biaya;
+        $data->jumlah_file = count($pesanan->konfigurasiFile);
+        $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+        $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        // $data->atk_terpilih = array_map('string', explode(',', $pesanan->atk_terpilih));
+        $data->updated_at = $pesanan->updated_at;
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
+
+        return responseSuccess("detail pesanan partner yang login", $data);
     }
 
     /**
@@ -129,5 +123,105 @@ class PesananController extends Controller
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
         return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $pesanan);
+    }
+
+    public function filterPesanan(Request $request)
+    {
+        $partner = request()->user();
+        if ($request->urutkan_pesanan === 'Terbaru') {
+            if (!empty($request->keyword_filter)) {
+                if ($request->keyword_filter === 'Ambil di Tempat') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
+                        ->orderBy('updated_at', 'desc')
+                        ->get();
+                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
+                        ->orderBy('updated_at', 'desc')
+                        ->get();
+                } else {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
+                        ->orderBy('updated_at', 'desc')
+                        ->get();
+                }
+            } else {
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->where('status', '!=', null)
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+            }
+        } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
+            if (!empty($request->keyword_filter)) {
+                if ($request->keyword_filter === 'Ambil di Tempat') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
+                        ->orderBy('biaya', 'desc')
+                        ->get();
+                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
+                        ->orderBy('biaya', 'desc')
+                        ->get();
+                } else {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
+                        ->orderBy('biaya', 'desc')
+                        ->get();
+                }
+            } else {
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->orderBy('biaya', 'desc')
+                    ->get();
+            }
+        } else if ($request->urutkan_pesanan === 'Harga Terendah') {
+            if (!empty($request->keyword_filter)) {
+                if ($request->keyword_filter === 'Ambil di Tempat') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
+                        ->orderBy('biaya', 'asc')
+                        ->get();
+                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
+                        ->orderBy('biaya', 'asc')
+                        ->get();
+                } else {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
+                        ->orderBy('biaya', 'asc')
+                        ->get();
+                }
+            } else {
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->orderBy('biaya', 'asc')
+                    ->get();
+            }
+        } else {
+            if (!empty($request->keyword_filter)) {
+                if ($request->keyword_filter === 'Ambil di Tempat') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Ditempat')
+                        ->get();
+                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', 'Diantar')
+                        ->get();
+                } else {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('metode_penerimaan', $request->keyword_filter)
+                        ->get();
+                }
+            } else {
+                if ($partner->pesanans->first()->isPaid()) {
+                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('status', '!=', null)
+                        ->get();
+                }
+            }
+        }
+
+        return responseSuccess("Hasil filter data pesanan", $pesanan);
     }
 }
