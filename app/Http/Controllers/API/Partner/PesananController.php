@@ -53,8 +53,7 @@ class PesananController extends Controller
      */
     public function show(Pesanan $pesanan)
     {
-        $atks = json_decode($pesanan->find('atk_terpilih'));
-        return responseSuccess("detail pesanan partner yang login", [$pesanan, $atks]);
+        return responseSuccess("detail pesanan partner yang login", $pesanan);
     }
 
     /**
