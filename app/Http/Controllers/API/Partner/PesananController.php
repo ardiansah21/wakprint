@@ -63,7 +63,7 @@ class PesananController extends Controller
         $data->biaya = $pesanan->biaya;
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
-        $data->atk_terpilih = json_decode(json_encode($pesanan->atk_terpilih), true);
+        $data->atk_terpilih = json_encode($pesanan->atk_terpilih);
         $data->updated_at = $pesanan->updated_at;
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
