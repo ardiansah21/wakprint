@@ -76,6 +76,7 @@ class PromoController extends Controller
             $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
             $produk->jumlah_diskon = $jumlahDiskon;
             $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
+            $produk->push();
             $produk->save();
         }
 

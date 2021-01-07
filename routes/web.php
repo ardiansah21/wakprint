@@ -1,12 +1,13 @@
 <?php
 
+use App\Member;
 use App\Produk;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\StoreProductRequest;
-use App\Http\Controllers\KonFileController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Notifications\Notification;
+use App\Http\Controllers\KonFileController;
 
 /*
 |--------------------------------------------------------------------------
