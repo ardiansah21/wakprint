@@ -171,7 +171,7 @@ class ChatController extends Controller
                 ->whereNull('read_at')
                 ->update(['read_at' => now()]);
         }
-        responseSuccess("Chat dengan pesanan " . $id . " sudah dibaca", null);
+        return responseSuccess("Chat dengan pesanan " . $id . " sudah dibaca semua", null);
     }
 
 }
