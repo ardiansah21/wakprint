@@ -52,34 +52,35 @@ class ChatController extends Controller
 
         foreach ($pesanans as $pesanan) {
             //TODO pengecekan apakah pesanan tersebut sudah bayar
+            if ($pesanan->isPaid() && $pesanan->status == 'Pending') {
+                $data = new stdClass();
+                if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
+                    $data->id = $pesanan->id_pesanan;
+                    $data->nama_member = $pesanan->member->nama_lengkap;
+                    $data->penerimaan = $pesanan->metode_penerimaan;
+                    $data->status = $pesanan->status;
 
-            $data = new stdClass();
-            if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
-                $data->id = $pesanan->id_pesanan;
-                $data->nama_member = $pesanan->member->nama_lengkap;
-                $data->penerimaan = $pesanan->metode_penerimaan;
-                $data->status = $pesanan->status;
+                    $data->id_pesanan = $pesanan->id_pesanan;
+                    $data->id_member = $pesanan->id_member;
+                    $data->id_pengelola = $pesanan->id_pengelola;
+                    $data->avatar = ($pesanan->member)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->member->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->member)->getFirstMediaUrl('avatar');
+                    $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "member")->whereNull('read_at')->count();
+                } else {
 
-                $data->id_pesanan = $pesanan->id_pesanan;
-                $data->id_member = $pesanan->id_member;
-                $data->id_pengelola = $pesanan->id_pengelola;
-                $data->avatar = ($pesanan->member)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->member->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->member)->getFirstMediaUrl('avatar');
-                $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "member")->whereNull('read_at')->count();
-            } else {
+                    $data->id = $pesanan->id_pesanan;
+                    $data->nama_toko = $pesanan->partner->nama_toko;
+                    $data->penerimaan = $pesanan->metode_penerimaan;
+                    $data->status = $pesanan->status;
 
-                $data->id = $pesanan->id_pesanan;
-                $data->nama_toko = $pesanan->partner->nama_toko;
-                $data->penerimaan = $pesanan->metode_penerimaan;
-                $data->status = $pesanan->status;
-
-                $data->id_pesanan = $pesanan->id_pesanan;
-                $data->id_member = $pesanan->id_member;
-                $data->id_pengelola = $pesanan->id_pengelola;
-                $data->nama_pengelola = $pesanan->partner->nama_lengkap;
-                $data->avatar = ($pesanan->partner)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->partner->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->partner)->getFirstMediaUrl('avatar');
-                $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "partner")->whereNull('read_at')->count();
+                    $data->id_pesanan = $pesanan->id_pesanan;
+                    $data->id_member = $pesanan->id_member;
+                    $data->id_pengelola = $pesanan->id_pengelola;
+                    $data->nama_pengelola = $pesanan->partner->nama_lengkap;
+                    $data->avatar = ($pesanan->partner)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->partner->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->partner)->getFirstMediaUrl('avatar');
+                    $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "partner")->whereNull('read_at')->count();
+                }
+                array_push($itemListPesanan, $data);
             }
-            array_push($itemListPesanan, $data);
         }
 
         if (request()->is('api/*')) {
@@ -157,7 +158,7 @@ class ChatController extends Controller
 
     protected function read($id)
     {
-        return auth(activeGuard())->user()->pesanan;
+        // return auth(activeGuard())->user()->pesanan;
 
         if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
             Chat::where('id_pesanan', $id)
@@ -170,6 +171,7 @@ class ChatController extends Controller
                 ->whereNull('read_at')
                 ->update(['read_at' => now()]);
         }
+        return responseSuccess("Chat dengan pesanan " . $id . " sudah dibaca semua", null);
     }
 
 }
