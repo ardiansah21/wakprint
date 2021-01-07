@@ -53,7 +53,12 @@ class PesananController extends Controller
      */
     public function show(Pesanan $pesanan)
     {
-        return responseSuccess("detail pesanan partner yang login", $pesanan);
+        $data = array(
+            "pesanan" => $pesanan,
+            "jumlah_file" => count($pesanan->konfigurasiFile),
+        );
+
+        return responseSuccess("detail pesanan partner yang login", json_decode(json_encode($data), true));
     }
 
     /**
