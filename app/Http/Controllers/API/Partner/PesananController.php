@@ -57,19 +57,14 @@ class PesananController extends Controller
         $data->id_pesanan = $pesanan->id_pesanan;
         $data->nama_lengkap = $pesanan->member->nama_lengkap;
         $data->metode_penerimaan = $pesanan->metode_penerimaan;
+        $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->status = $pesanan->status;
         $data->biaya = $pesanan->biaya;
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
         $data->updated_at = $pesanan->updated_at;
 
         return responseSuccess("detail pesanan partner yang login", $data);
-
-        // $data = array(
-        //     "pesanan" => $pesanan,
-        //     "jumlah_file" => count($pesanan->konfigurasiFile),
-        // );
-
-        // return responseSuccess("detail pesanan partner yang login", json_decode(json_encode($data), true));
     }
 
     /**
