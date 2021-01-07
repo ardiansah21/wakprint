@@ -58,11 +58,14 @@ class PesananController extends Controller
         $data->nama_lengkap = $pesanan->member->nama_lengkap;
         $data->metode_penerimaan = $pesanan->metode_penerimaan;
         $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->alamat_toko = request()->user()->alamat_toko;
         $data->status = $pesanan->status;
         $data->biaya = $pesanan->biaya;
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+        $data->atk_terpilih = $pesanan->atk_terpilih;
         $data->updated_at = $pesanan->updated_at;
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
         return responseSuccess("detail pesanan partner yang login", $data);
     }
