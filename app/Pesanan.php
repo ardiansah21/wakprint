@@ -42,4 +42,9 @@ class Pesanan extends Model
         return auth(activeGuard())->user()->pesanans->first()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
             ->where('status', 'Berhasil')->exists() ? true : false;
     }
+
+    public function getNamaFileAttribute()
+    {
+        return $this->nama_file;
+    }
 }
