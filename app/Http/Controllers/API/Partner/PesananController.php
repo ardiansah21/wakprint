@@ -157,12 +157,11 @@ class PesananController extends Controller
         }
         foreach ($partner->pesanans as $p) {
             array_push($namaFile, $p->konfigurasiFile->pluck('nama_file')->all());
-            array_push($atkTerpilih, json_decode($p->atk_terpilih, true));
+            array_push($atkTerpilih, $p->atk_terpilih);
         }
         $pesanan->nama_file = $namaFile;
         $pesanan->nama_member = $partner->pesanans->first()->member->nama_lengkap;
-        $pesanan->atk_terpilih = $atkTerpilih;
-        // $pesanan->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all(); fotreach
+        $pesanan->atk_terpilih = json_decode($atkTerpilih, true);
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
     }
