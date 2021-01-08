@@ -163,23 +163,19 @@ class PartnerController extends Controller
         if ($request->jenis_dana === 'Dana Masuk') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                 ->where('status', '!=', null)
-                ->where('created_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
-                ->orWhere('created_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'))
-                ->where('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
-                ->orWhere('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'));
-            // ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
+                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')])
+                ->get();
         } else if ($request->jenis_dana === 'Dana Keluar') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                 ->where('status', '!=', null)
-                ->where('updated_at', '>=', $request->tanggal_awal)
-                ->where('updated_at', '<=', $request->tanggal_akhir);
-            // ->whereBetween('updated_at', [$request->tanggal_awal, $request->tanggal_akhir]);
+                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')])
+                ->get();
         } else {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                 ->orWhere('jenis_transaksi', 'Pembayaran')
                 ->where('status', '!=', null)
-                ->where('updated_at', '>=', $request->tanggal_awal)
-                ->where('updated_at', '<=', $request->tanggal_akhir);
+                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')])
+                ->get();
         }
         return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
     }
