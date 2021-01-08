@@ -163,8 +163,7 @@ class PartnerController extends Controller
         if ($request->jenis_dana === 'Dana Masuk') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                 ->where('status', '!=', null)
-                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')])
-                ->get();
+                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
         } else if ($request->jenis_dana === 'Dana Keluar') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                 ->where('status', '!=', null)
