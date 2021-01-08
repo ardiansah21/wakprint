@@ -169,8 +169,7 @@ class PartnerController extends Controller
                 ->where('status', '!=', null)
                 ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
         } else {
-            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
-                ->orWhere('jenis_transaksi', 'Pembayaran')
+            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'TopUp')
                 ->where('status', '!=', null)
                 ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
         }
