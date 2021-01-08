@@ -137,7 +137,7 @@ class PesananController extends Controller
         }
 
         if ($request->urutkan_pesanan === 'Terbaru') {
-            $pesanan->where('id_pengelola', $partner->id_pengelola)
+            $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
             // ->orWhere('id_pesanan', $request->keyword_filter)
