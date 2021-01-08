@@ -164,9 +164,9 @@ class PartnerController extends Controller
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                 ->where('status', '!=', null)
                 ->where('created_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
-                ->where('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
                 ->orWhere('created_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'))
-                ->where('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'));
+                ->where('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
+                ->orWhere('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'));
             // ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
         } else if ($request->jenis_dana === 'Dana Keluar') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
