@@ -127,7 +127,7 @@ class PesananController extends Controller
     public function filterPesanan(Request $request)
     {
         $partner = request()->user();
-        $pesanan = $partner->pesanans->first();
+        $pesanan = $partner->pesanans;
 
         foreach ($pesanan as $p) {
             $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
@@ -137,26 +137,26 @@ class PesananController extends Controller
         }
 
         if ($request->urutkan_pesanan === 'Terbaru') {
-            $pesanan->where('id_pengelola', $partner->id_pengelola)
+            $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('updated_at', 'desc')
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
-            $pesanan->where('id_pengelola', $partner->id_pengelola)
+            $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->where('status', '!=', null)
                 ->orderBy('biaya', 'desc')
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
-            $pesanan->where('id_pengelola', $partner->id_pengelola)
+            $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->where('status', '!=', null)
                 ->orderBy('biaya', 'asc')
                 ->get();
         } else {
             if ($partner->pesanans->first()->isPaid()) {
-                $pesanan->where('id_pengelola', $partner->id_pengelola)
+                $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                     ->orWhere('id_pesanan', $request->keyword_filter)
                     ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->where('status', '!=', null)
