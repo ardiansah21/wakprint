@@ -160,19 +160,13 @@ class PartnerController extends Controller
 
     public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
     {
-        // $dtime = DateTime::createFromFormat("Y-m-d", $request->tanggal_awal);
-        // $timestamp = $dtime->getTimestamp();
-        // return Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s');
         if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Masuk') {
             if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
-                    // ->where('updated_at', '>=', strtotime($request->tanggal_awal))
-                    // ->where('updated_at', '<=', strtotime($request->tanggal_akhir));
                         ->where('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
-                        ->where('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'));
-                    // ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d')]);
+                        ->orWhere('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'));
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null);
