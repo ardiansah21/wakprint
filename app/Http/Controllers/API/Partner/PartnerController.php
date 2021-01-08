@@ -162,7 +162,7 @@ class PartnerController extends Controller
     {
         // $dtime = DateTime::createFromFormat("Y-m-d", $request->tanggal_awal);
         // $timestamp = $dtime->getTimestamp();
-        return Carbon::parse($request->tanggal_awal)->timestamp;
+        return Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d HH:mm:ss');
         if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Masuk') {
             if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
