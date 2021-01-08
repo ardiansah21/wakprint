@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\TarikSaldoNotification;
 use App\Pengelola_Percetakan;
 use App\Transaksi_saldo;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -159,6 +160,9 @@ class PartnerController extends Controller
 
     public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
     {
+        $dtime = DateTime::createFromFormat("Y-m-d", $request->tanggal_awal);
+        $timestamp = $dtime->getTimestamp();
+        return $timestamp;
         if (!empty($request->jenis_dana) && $request->jenis_dana === 'Dana Masuk') {
             if (!empty($request->tanggal_awal) || !empty($request->tanggal_akhir)) {
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
