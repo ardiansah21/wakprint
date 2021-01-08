@@ -9,6 +9,9 @@ class Pesanan extends Model
     protected $table = "pesanan";
     protected $primaryKey = 'id_pesanan';
     protected $guarded = [];
+    protected $appends = [
+        'nama_file',
+    ];
 
     public function konfigurasiFile()
     {
