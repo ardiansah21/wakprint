@@ -161,7 +161,7 @@ class PesananController extends Controller
         }
         $pesanan->nama_file = $namaFile;
         $pesanan->nama_member = $partner->pesanans->first()->member->nama_lengkap;
-        $pesanan->atk_terpilih = json_decode($atkTerpilih, true);
+        $pesanan->atk_terpilih = $atkTerpilih;
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
     }
