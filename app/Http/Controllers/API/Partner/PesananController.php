@@ -127,38 +127,41 @@ class PesananController extends Controller
     public function filterPesanan(Request $request)
     {
         $partner = request()->user();
-        if ($request->urutkan_pesanan === 'Terbaru') {
-            $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', '!=', null)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('updated_at', 'desc')
-                ->get();
-        } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
-            $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->where('status', '!=', null)
-                ->orderBy('biaya', 'desc')
-                ->get();
-        } else if ($request->urutkan_pesanan === 'Harga Terendah') {
-            $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->where('status', '!=', null)
-                ->orderBy('biaya', 'asc')
-                ->get();
-        } else {
-            if ($partner->pesanans->first()->isPaid()) {
-                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                    ->where('status', '!=', null)
-                    ->get();
-            }
-        }
+        $pesanan = $partner->pesanans->first();
 
         foreach ($pesanan as $p) {
             $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
             $p->jumlah_file = count($p->konfigurasiFile);
             $p->nama_member = $partner->pesanans->first()->member->nama_lengkap;
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+        }
+
+        if ($request->urutkan_pesanan === 'Terbaru') {
+            $pesanan->where('id_pengelola', $partner->id_pengelola)
+                ->where('status', '!=', null)
+                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                ->orderBy('updated_at', 'desc')
+                ->get();
+        } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
+            $pesanan->where('id_pengelola', $partner->id_pengelola)
+                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                ->where('status', '!=', null)
+                ->orderBy('biaya', 'desc')
+                ->get();
+        } else if ($request->urutkan_pesanan === 'Harga Terendah') {
+            $pesanan->where('id_pengelola', $partner->id_pengelola)
+                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                ->where('status', '!=', null)
+                ->orderBy('biaya', 'asc')
+                ->get();
+        } else {
+            if ($partner->pesanans->first()->isPaid()) {
+                $pesanan->where('id_pengelola', $partner->id_pengelola)
+                    ->orWhere('id_pesanan', $request->keyword_filter)
+                    ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                    ->where('status', '!=', null)
+                    ->get();
+            }
         }
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
