@@ -157,7 +157,7 @@ class PesananController extends Controller
         } else {
             if ($partner->pesanans->first()->isPaid()) {
                 $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->orWhere('id_pesanan', $request->keyword_filter)
+                    ->where('id_pesanan', $request->keyword_filter)
                     ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->where('status', '!=', null)
                     ->get();
