@@ -161,9 +161,10 @@ class PartnerController extends Controller
     public function filterSaldo(Request $request)
     {
         if ($request->jenis_dana === 'Dana Masuk') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('jenis_transaksi', 'Pembayaran')
+            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                 ->where('status', '!=', null)
-                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
+                ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')])
+                ->get();
         } else if ($request->jenis_dana === 'Dana Keluar') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Tarik')
                 ->where('status', '!=', null)
