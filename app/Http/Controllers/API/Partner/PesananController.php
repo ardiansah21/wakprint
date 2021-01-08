@@ -137,7 +137,7 @@ class PesananController extends Controller
         }
 
         if ($request->urutkan_pesanan === 'Terbaru') {
-            $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
+            $pesanan->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
             // ->orWhere('id_pesanan', $request->keyword_filter)
@@ -149,24 +149,21 @@ class PesananController extends Controller
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
             // ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('biaya', 'desc')
-                ->get();
+                ->orderBy('biaya', 'desc');
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
             $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
             // ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('biaya', 'asc')
-                ->get();
+                ->orderBy('biaya', 'asc');
         } else {
             if ($partner->pesanans->first()->isPaid()) {
                 $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                     ->where('status', '!=', null)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 // ->orWhere('id_pesanan', $request->keyword_filter)
-                // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                    ->get();
+                // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%');
             }
         }
 
