@@ -129,14 +129,31 @@ class PesananController extends Controller
         $partner = request()->user();
         $data = $partner->pesanans;
 
+        foreach ($data as $p) {
+            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+            $p->jumlah_file = count($p->konfigurasiFile);
+            $p->nama_member = $p->first()->member->nama_lengkap;
+            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+        }
+
         if ($request->urutkan_pesanan === 'Terbaru') {
-            $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', '!=', null)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('id_pesanan', $request->keyword_filter)
-            // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('updated_at', 'desc')
-                ->get();
+            // $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
+            //     ->where('status', '!=', null)
+            //     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+            //     ->orWhere('id_pesanan', $request->keyword_filter)
+            // // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
+            //     ->orderBy('updated_at', 'desc')
+            //     ->get();
+
+            return responseSuccess("Hasil filter data pesanan", $data->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->where('status', '!=', null)
+                    ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                    ->orWhere('id_pesanan', $request->keyword_filter)
+                    ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
+                    ->orderBy('updated_at', 'desc')
+                    ->get()
+            );
+
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
             $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
@@ -164,12 +181,12 @@ class PesananController extends Controller
             }
         }
 
-        foreach ($data as $p) {
-            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-            $p->jumlah_file = count($p->konfigurasiFile);
-            $p->nama_member = $p->first()->member->nama_lengkap;
-            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-        }
+        // foreach ($data as $p) {
+        //     $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+        //     $p->jumlah_file = count($p->konfigurasiFile);
+        //     $p->nama_member = $p->first()->member->nama_lengkap;
+        //     $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+        // }
 
         return responseSuccess("Hasil filter data pesanan", $data);
     }
