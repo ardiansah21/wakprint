@@ -128,99 +128,34 @@ class PesananController extends Controller
     {
         $partner = request()->user();
         if ($request->urutkan_pesanan === 'Terbaru') {
-            if (!empty($request->keyword_filter)) {
-                if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Ditempat')
-                        ->orderBy('updated_at', 'desc')
-                        ->get();
-                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Diantar')
-                        ->orderBy('updated_at', 'desc')
-                        ->get();
-                } else {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', $request->keyword_filter)
-                        ->orderBy('updated_at', 'desc')
-                        ->get();
-                }
-            } else {
-                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->where('status', '!=', null)
-                    ->orderBy('updated_at', 'desc')
-                    ->get();
-            }
+            $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                ->where('status', '!=', null)
+                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                ->orderBy('updated_at', 'desc')
+                ->get();
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
-            if (!empty($request->keyword_filter)) {
-                if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Ditempat')
-                        ->orderBy('biaya', 'desc')
-                        ->get();
-                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Diantar')
-                        ->orderBy('biaya', 'desc')
-                        ->get();
-                } else {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', $request->keyword_filter)
-                        ->orderBy('biaya', 'desc')
-                        ->get();
-                }
-            } else {
-                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->orderBy('biaya', 'desc')
-                    ->get();
-            }
+            $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                ->where('status', '!=', null)
+                ->orderBy('biaya', 'desc')
+                ->get();
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
-            if (!empty($request->keyword_filter)) {
-                if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Ditempat')
-                        ->orderBy('biaya', 'asc')
-                        ->get();
-                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Diantar')
-                        ->orderBy('biaya', 'asc')
-                        ->get();
-                } else {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', $request->keyword_filter)
-                        ->orderBy('biaya', 'asc')
-                        ->get();
-                }
-            } else {
-                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->orderBy('biaya', 'asc')
-                    ->get();
-            }
+            $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                ->where('status', '!=', null)
+                ->orderBy('biaya', 'asc')
+                ->get();
         } else {
-            if (!empty($request->keyword_filter)) {
-                if ($request->keyword_filter === 'Ambil di Tempat') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Ditempat')
-                        ->get();
-                } else if ($request->keyword_filter === 'Antar ke Rumah' || $request->keyword_filter === 'Diantar') {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', 'Diantar')
-                        ->get();
-                } else {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('metode_penerimaan', $request->keyword_filter)
-                        ->get();
-                }
-            } else {
-                if ($partner->pesanans->first()->isPaid()) {
-                    $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
-                        ->where('status', '!=', null)
-                        ->get();
-                    $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-                }
+            if ($partner->pesanans->first()->isPaid()) {
+                $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                    ->where('status', '!=', null)
+                    ->get();
             }
         }
+        $pesanan->nama_file = $partner->pesanans->konfigurasiFile->pluck('nama_file')->all();
+        $pesanan->nama_member = $partner->pesanans->member->nama_lengkap;
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         // $pesanan->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all(); fotreach
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
