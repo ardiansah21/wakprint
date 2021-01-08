@@ -132,7 +132,7 @@ class PesananController extends Controller
         foreach ($pesanan as $p) {
             $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
             $p->jumlah_file = count($p->konfigurasiFile);
-            $p->nama_member = $partner->pesanans->first()->member->nama_lengkap;
+            $p->nama_member = $p->first()->member->nama_lengkap;
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
         }
 
@@ -141,7 +141,7 @@ class PesananController extends Controller
                 ->where('status', '!=', null)
                 ->where('id_pesanan', $request->keyword_filter)
                 ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
+            // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('updated_at', 'desc')
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
@@ -149,7 +149,7 @@ class PesananController extends Controller
                 ->where('status', '!=', null)
                 ->where('id_pesanan', $request->keyword_filter)
                 ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
+            // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('biaya', 'desc')
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
@@ -157,7 +157,7 @@ class PesananController extends Controller
                 ->where('status', '!=', null)
                 ->where('id_pesanan', $request->keyword_filter)
                 ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
+            // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('biaya', 'asc')
                 ->get();
         } else {
@@ -166,7 +166,7 @@ class PesananController extends Controller
                     ->where('status', '!=', null)
                     ->where('id_pesanan', $request->keyword_filter)
                     ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                    ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
+                // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
                     ->get();
             }
         }
