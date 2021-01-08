@@ -175,10 +175,11 @@ class PartnerController extends Controller
         }
 
         if (!empty($transaksiSaldo)) {
-            if (count($transaksiSaldo) > 1) {
-                return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
-            }
-            return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, [$transaksiSaldo->first()]);
+            return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
+            // if (count($transaksiSaldo) > 1) {
+            //     return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
+            // }
+            // return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, [$transaksiSaldo->first()]);
         }
 
         return responseError("Data Saldo Anda : " . $request->jenis_dana . " Tidak Ditemukan");
