@@ -131,7 +131,7 @@ class PesananController extends Controller
 
         if ($request->urutkan_pesanan === 'Terbaru') {
             $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', '!=', null)
+                ->where('status', $request->status_pesanan)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
@@ -140,7 +140,7 @@ class PesananController extends Controller
 
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
             $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', '!=', null)
+                ->where('status', $request->status_pesanan)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
@@ -148,7 +148,7 @@ class PesananController extends Controller
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
             $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', '!=', null)
+                ->where('status', $request->status_pesanan)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
@@ -157,7 +157,7 @@ class PesananController extends Controller
         } else {
             if ($data->first()->isPaid()) {
                 $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                    ->where('status', '!=', null)
+                    ->where('status', $request->status_pesanan)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->orWhere('id_pesanan', $request->keyword_filter)
                 // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
