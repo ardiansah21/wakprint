@@ -127,6 +127,7 @@ class PesananController extends Controller
     public function filterPesanan(Request $request)
     {
         $partner = request()->user();
+        $namaFile = array();
         if ($request->urutkan_pesanan === 'Terbaru') {
             $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
@@ -153,7 +154,10 @@ class PesananController extends Controller
                     ->get();
             }
         }
-        $pesanan->nama_file = $partner->pesanans->konfigurasiFile->pluck('nama_file')->all();
+        foreach ($partner->pesanans as $p) {
+            array_push($namaFile, $p->konfigurasiFile->pluck('nama_file')->all());
+        }
+        $pesanan->nama_file = $namaFile;
         $pesanan->nama_member = $partner->pesanans->member->nama_lengkap;
         $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         // $pesanan->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all(); fotreach
