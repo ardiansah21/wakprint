@@ -154,14 +154,14 @@ class PesananController extends Controller
                     ->where('status', '!=', null)
                     ->get();
             }
-            foreach ($partner->pesanans as $p) {
-                array_push($namaFile, $p->konfigurasiFile->pluck('nama_file')->all());
-                array_push($atkTerpilih, $p->atk_terpilih);
-            }
-            $pesanan->nama_file = $namaFile;
-            $pesanan->nama_member = $partner->pesanans->first()->member->nama_lengkap;
-            $pesanan->atk_terpilih = json_decode(json_encode($atkTerpilih), true);
         }
+        foreach ($partner->pesanans as $p) {
+            array_push($namaFile, $p->konfigurasiFile->pluck('nama_file')->all());
+            array_push($atkTerpilih, $p->atk_terpilih);
+        }
+        $pesanan->nama_file = $namaFile;
+        $pesanan->nama_member = $partner->pesanans->first()->member->nama_lengkap;
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
     }
