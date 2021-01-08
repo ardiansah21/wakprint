@@ -158,7 +158,7 @@ class PartnerController extends Controller
         }
     }
 
-    public function filterSaldo(Request $request, Transaksi_saldo $transaksiSaldo)
+    public function filterSaldo(Request $request)
     {
         if ($request->jenis_dana === 'Dana Masuk') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
