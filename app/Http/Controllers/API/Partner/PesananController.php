@@ -128,6 +128,7 @@ class PesananController extends Controller
     {
         $partner = request()->user();
         $namaFile = array();
+        $atkTerpilih = array();
         if ($request->urutkan_pesanan === 'Terbaru') {
             $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
@@ -156,10 +157,11 @@ class PesananController extends Controller
         }
         foreach ($partner->pesanans as $p) {
             array_push($namaFile, $p->konfigurasiFile->pluck('nama_file')->all());
+            array_push($atkTerpilih, json_decode($p->atk_terpilih, true));
         }
         $pesanan->nama_file = $namaFile;
         $pesanan->nama_member = $partner->pesanans->first()->member->nama_lengkap;
-        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->atk_terpilih = $atkTerpilih;
         // $pesanan->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all(); fotreach
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
