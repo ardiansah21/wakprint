@@ -165,9 +165,8 @@ class PartnerController extends Controller
                 if ($request->tanggal_awal <= $request->tanggal_akhir || $request->tanggal_akhir >= $request->tanggal_awal) {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null)
-                        ->where('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
-                        ->orWhere('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'))
-                        ->get();
+                        ->whereDate('updated_at', '>=', Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'))
+                        ->whereDate('updated_at', '<=', Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s'));
                 } else {
                     $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
                         ->where('status', '!=', null);
