@@ -142,8 +142,7 @@ class PesananController extends Controller
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
             // ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('updated_at', 'desc')
-                ->get();
+                ->orderBy('updated_at', 'desc');
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
             $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
