@@ -127,27 +127,6 @@ class PesananController extends Controller
     public function filterPesanan(Request $request)
     {
         $partner = request()->user();
-        // $pesanan = array();
-        // $namaFile = array();
-        // $atkTerpilih = array();
-        // foreach ($partner->pesanans as $p) {
-        //     // $data = new stdClass();
-        //     // $data->id_pesanan = $p->id_pesanan;
-        //     // $data->id_pengelola = $p->id_pengelola;
-        //     // $data->id_member = $p->id_member;
-        //     // $data->atk_terpilih = array_push($atkTerpilih, $p->atk_terpilih);
-        //     // $data->metode_penerimaan = $p->metode_penerimaan;
-        //     // $data->alamat_penerima = $p->alamat_penerima;
-        //     // $data->ongkos_kirim = $p->ongkos_kirim;
-        //     // $data->biaya = $p->biaya;
-        //     // $data->status = $p->status;
-        //     // $data->created_at = $p->created_at;
-        //     // $data->updated_at = $p->updated_at;
-
-        //     // array_push($pesanan, $data);
-        //     // array_push($atkTerpilih, $p->atk_terpilih);
-        //     // array_push($namaFile, $p->konfigurasiFile->pluck('nama_file')->all());
-        // }
         if ($request->urutkan_pesanan === 'Terbaru') {
             $pesanan = $partner->pesanans->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
@@ -177,12 +156,10 @@ class PesananController extends Controller
 
         foreach ($pesanan as $p) {
             $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+            $p->jumlah_file = count($p->konfigurasiFile);
             $p->nama_member = $partner->pesanans->first()->member->nama_lengkap;
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
         }
-        // $pesanan->nama_file = $namaFile;
-        // $pesanan->nama_member = $partner->pesanans->first()->member->nama_lengkap;
-        // $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
 
         return responseSuccess("Hasil filter data pesanan", $pesanan);
     }
