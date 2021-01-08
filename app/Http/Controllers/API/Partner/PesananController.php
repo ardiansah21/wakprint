@@ -135,27 +135,32 @@ class PesananController extends Controller
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('updated_at', 'desc');
+                ->orderBy('updated_at', 'desc')
+                ->get();
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
             $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('biaya', 'desc');
+                ->orderBy('biaya', 'desc')
+                ->get();
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
             $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
                 ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                 ->orWhere('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('biaya', 'asc');
+                ->orderBy('biaya', 'asc')
+                ->get();
         } else {
-            if ($partner->pesanans->first()->isPaid()) {
+            if ($pesanan->first()->isPaid()) {
                 $pesanan->first()->where('id_pengelola', $partner->id_pengelola)
                     ->where('status', '!=', null)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                    ->orWhere('id_pesanan', $request->keyword_filter);
+                    ->orWhere('id_pesanan', $request->keyword_filter)
+                    ->get();
+
                 // ->orWhere('nama_file', 'like', '%' . $request->keyword_filter . '%');
             }
         }
