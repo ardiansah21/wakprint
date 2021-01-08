@@ -129,13 +129,6 @@ class PesananController extends Controller
         $partner = request()->user();
         $data = $partner->pesanans;
 
-        foreach ($data as $p) {
-            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-            $p->jumlah_file = count($p->konfigurasiFile);
-            $p->nama_member = $p->first()->member->nama_lengkap;
-            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-        }
-
         if ($request->urutkan_pesanan === 'Terbaru') {
             $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
                 ->where('status', '!=', null)
@@ -169,6 +162,13 @@ class PesananController extends Controller
                 // ->orWhere('nama_member', 'like', '%' . $request->keyword_filter . '%')
                     ->get();
             }
+        }
+
+        foreach ($data as $p) {
+            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+            $p->jumlah_file = count($p->konfigurasiFile);
+            $p->nama_member = $p->first()->member->nama_lengkap;
+            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
         }
 
         return responseSuccess("Hasil filter data pesanan", $data);
