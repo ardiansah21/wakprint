@@ -173,7 +173,15 @@ class PartnerController extends Controller
                 ->where('status', '!=', null)
                 ->whereBetween('updated_at', [Carbon::parse($request->tanggal_awal)->translatedFormat('Y-m-d H:m:s'), Carbon::parse($request->tanggal_akhir)->translatedFormat('Y-m-d H:m:s')]);
         }
-        return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, array($transaksiSaldo));
+
+        if (!empty($transaksiSaldo)) {
+            if (count($transaksiSaldo) > 1) {
+                return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
+            }
+            return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, [$transaksiSaldo]);
+        }
+
+        return responseError("Data Saldo Anda : " . $request->jenis_dana . " Tidak Ditemukan");
     }
 
     public function statusToko(Request $request)
