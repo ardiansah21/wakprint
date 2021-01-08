@@ -141,7 +141,7 @@ class PesananController extends Controller
                 ->where('status', '!=', null)
                 ->where('id_pesanan', $request->keyword_filter)
                 ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere($pesanan->nama_file, 'like', '%' . $request->keyword_filter . '%')
+                ->orWhere($pesanan->first()->nama_file, 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('updated_at', 'desc')
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
@@ -149,7 +149,7 @@ class PesananController extends Controller
                 ->where('status', '!=', null)
                 ->where('id_pesanan', $request->keyword_filter)
                 ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere($pesanan->nama_file, 'like', '%' . $request->keyword_filter . '%')
+                ->orWhere($pesanan->first()->nama_file, 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('biaya', 'desc')
                 ->get();
         } else if ($request->urutkan_pesanan === 'Harga Terendah') {
@@ -157,7 +157,7 @@ class PesananController extends Controller
                 ->where('status', '!=', null)
                 ->where('id_pesanan', $request->keyword_filter)
                 ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere($pesanan->nama_file, 'like', '%' . $request->keyword_filter . '%')
+                ->orWhere($pesanan->first()->nama_file, 'like', '%' . $request->keyword_filter . '%')
                 ->orderBy('biaya', 'asc')
                 ->get();
         } else {
@@ -166,7 +166,7 @@ class PesananController extends Controller
                     ->where('status', '!=', null)
                     ->where('id_pesanan', $request->keyword_filter)
                     ->orWhere('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                    ->orWhere($pesanan->nama_file, 'like', '%' . $request->keyword_filter . '%')
+                    ->orWhere($pesanan->first()->nama_file, 'like', '%' . $request->keyword_filter . '%')
                     ->get();
             }
         }
