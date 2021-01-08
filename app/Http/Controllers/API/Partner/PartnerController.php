@@ -178,7 +178,7 @@ class PartnerController extends Controller
             if (count($transaksiSaldo) > 1) {
                 return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
             }
-            return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, json_decode(json_encode([$transaksiSaldo]), false));
+            return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, collect($transaksiSaldo));
         }
 
         return responseError("Data Saldo Anda : " . $request->jenis_dana . " Tidak Ditemukan");
