@@ -78,6 +78,7 @@ class PesananController extends Controller
 
             $k->fitur_terpilih = $arrFiturTerpilih;
             $k->alamat_toko = request()->user()->alamat_toko;
+            $k->produk = $k->product;
         }
 
         return responseSuccess("detail pesanan partner yang login", $data);
