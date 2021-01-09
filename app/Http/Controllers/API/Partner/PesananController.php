@@ -70,7 +70,6 @@ class PesananController extends Controller
         $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasiFile as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
-            // $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
             foreach ($k->fitur_terpilih as $ft) {
@@ -78,6 +77,7 @@ class PesananController extends Controller
             }
 
             $k->fitur_terpilih = $arrFiturTerpilih;
+            $k->alamat_toko = request()->user()->alamat_toko;
         }
 
         return responseSuccess("detail pesanan partner yang login", $data);
