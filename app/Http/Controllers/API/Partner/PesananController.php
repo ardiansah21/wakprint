@@ -69,6 +69,7 @@ class PesananController extends Controller
 
         foreach ($pesanan->konfigurasiFile as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
+            $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
         }
 
         return responseSuccess("detail pesanan partner yang login", $data);
