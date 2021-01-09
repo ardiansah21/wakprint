@@ -67,12 +67,17 @@ class PesananController extends Controller
         $data->updated_at = $pesanan->updated_at;
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
+        $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasiFile as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             // $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
-            $k->fitur_terpilih = [$k->fitur_terpilih->first()->namaFitur, $k->fitur_terpilih->first()->hargaFitur];
+            foreach ($k->fitur_terpilih as $ft) {
+                $arrFiturTerpilih = [$ft->namaFitur, $ft->hargaFitur];
+            }
+
+            $k->fitur_terpilih = $arrFiturTerpilih;
         }
 
         return responseSuccess("detail pesanan partner yang login", $data);
