@@ -74,7 +74,7 @@ class PesananController extends Controller
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
             foreach ($k->fitur_terpilih as $ft) {
-                $arrFiturTerpilih = [$ft['namaFitur'], $ft['hargaFitur']];
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
             }
 
             $k->fitur_terpilih = $arrFiturTerpilih;
