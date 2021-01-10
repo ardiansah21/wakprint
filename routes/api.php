@@ -40,7 +40,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::post('/ubah-status', 'PartnerController@statusToko');
         Route::patch('/profil/update/{id}', 'PartnerController@profileUpdate');
         Route::get('/pesanan/filter', 'PesananController@filterPesanan');
-        // Route::get('/pesanan/terima/{pesanan}', 'PesananController@terimaPesanan');
+        Route::get('/pesanan/terima/{pesanan}', 'PesananController@terimaPesanan');
         Route::get('/pesanan/tolak/{pesanan}', 'PesananController@tolakPesanan');
         Route::get('/pesanan/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanan', 'PesananController');

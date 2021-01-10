@@ -92,10 +92,11 @@ class PesananController extends Controller
      * @param  \App\Pesanan  $pesanan
      * @return \Illuminate\Http\Response
      */
-    public function update(Pesanan $pesanan)
+    public function terimaPesanan(Pesanan $pesanan)
     {
-        $pesanan->update(['status' => request()->status]);
+        $pesanan->update(['status' => 'Diproses']);
         $pesanan->save();
+        $pesanan->push();
         $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
         return responseSuccess("Yeyy pesanan telah diterima !, Silahkan lanjutkan proses pencetakan dokumen pelanggan", $pesanan);
     }
