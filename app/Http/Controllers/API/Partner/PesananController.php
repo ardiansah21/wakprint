@@ -130,6 +130,9 @@ class PesananController extends Controller
     public function selesaiCetakPesanan(Pesanan $pesanan)
     {
         $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->status = "Diproses";
+        $pesanan->save();
+        $pesanan->push();
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
         return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $pesanan);
