@@ -94,6 +94,7 @@ class PesananController extends Controller
      */
     public function terimaPesanan(Pesanan $pesanan)
     {
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         $pesanan->update(['status' => 'Diproses']);
         $pesanan->save();
         $pesanan->push();
@@ -110,6 +111,7 @@ class PesananController extends Controller
      */
     public function tolakPesanan(Pesanan $pesanan)
     {
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         $pesanan->status = "Batal";
         $pesanan->transaksiSaldo->status = "Gagal";
         $pesanan->transaksiSaldo->keterangan = "Pesanan telah ditolak oleh pihak percetakan";
@@ -125,10 +127,20 @@ class PesananController extends Controller
         return responseSuccess("Yahh, Pesanan telah ditolak", $pesanan);
     }
 
+    public function selesaiCetakPesanan(Pesanan $pesanan)
+    {
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
+        return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $pesanan);
+    }
+
     public function selesaikanPesanan(Pesanan $pesanan)
     {
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         $pesanan->status = "Selesai";
         $pesanan->save();
+        $pesanan->push();
         $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
         $pesanan->transaksiSaldo->push();
         $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
@@ -136,7 +148,7 @@ class PesananController extends Controller
 
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
-        return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $pesanan);
+        return responseSuccess("Pesanan Telah Selesai, terima kasih telah melakukan transaksi dengan wakprint yah :)", $pesanan);
     }
 
     public function filterPesanan(Request $request)
