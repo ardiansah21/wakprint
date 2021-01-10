@@ -185,8 +185,8 @@ class PesananController extends Controller
             $p->jumlah_file = count($p->konfigurasiFile);
             $p->nama_lengkap = $p->first()->member->nama_lengkap;
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-            foreach ($p->first()->konfigurasiFile as $k) {
-                foreach ($k->fitur_terpilih as $ft) {
+            foreach ($p->konfigurasiFile as $k) {
+                foreach ($k->first()->fitur_terpilih as $ft) {
                     array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
                 }
 
