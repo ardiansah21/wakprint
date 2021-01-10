@@ -130,7 +130,6 @@ class PesananController extends Controller
     public function selesaiCetakPesanan(Pesanan $pesanan)
     {
         $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-        $pesanan->status = "Diproses";
         $pesanan->save();
         $pesanan->push();
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
