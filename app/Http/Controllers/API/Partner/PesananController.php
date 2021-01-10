@@ -129,8 +129,20 @@ class PesananController extends Controller
 
     public function selesaiCetakPesanan(Pesanan $pesanan)
     {
-        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
+        $data = new stdClass();
+        $data->id_pesanan = $pesanan->id_pesanan;
+        $data->nama_lengkap = $pesanan->member->nama_lengkap;
+        $data->metode_penerimaan = $pesanan->metode_penerimaan;
+        $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->alamat_toko = request()->user()->alamat_toko;
+        $data->status = $pesanan->status;
+        $data->biaya = $pesanan->biaya;
+        $data->jumlah_file = count($pesanan->konfigurasiFile);
+        $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+        $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->updated_at = $pesanan->updated_at;
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
+
         $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasiFile as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
@@ -145,11 +157,10 @@ class PesananController extends Controller
             $k->alamat_toko = request()->user()->alamat_toko;
             $k->produk = $k->product;
         }
-        $pesanan->save();
-        $pesanan->push();
+
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
-        return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $pesanan);
+        return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $data);
     }
 
     public function selesaikanPesanan(Pesanan $pesanan)
