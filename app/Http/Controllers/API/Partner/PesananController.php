@@ -109,17 +109,16 @@ class PesananController extends Controller
      */
     public function tolakPesanan(Pesanan $pesanan)
     {
-
-        // $pesanan = json_encode($pesanan, true);
-        // return responseSuccess("dsdf", $pesanan);
         $pesanan->status = "Batal";
-        // $pesanan->status = request()->status;
-        // $pesanan->transaksiSaldo->status = "Gagal";
-        // $pesanan->transaksiSaldo->keterangan = "Pesanan telah ditolak oleh pihak percetakan";
-        // $pesanan->member->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
-        // $pesanan->member->save();
-        // $pesanan->transaksiSaldo->save();
+        $pesanan->transaksiSaldo->status = "Gagal";
+        $pesanan->transaksiSaldo->keterangan = "Pesanan telah ditolak oleh pihak percetakan";
+        $pesanan->member->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
+        $pesanan->member->save();
+        $pesanan->member->push();
+        $pesanan->transaksiSaldo->save();
+        $pesanan->transaksiSaldo->push();
         $pesanan->save();
+        $pesanan->push();
         $pesanan->member->notify(new PesananNotification('pesananDiTolak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananDiTolak', $pesanan));
         return responseSuccess("Yahh, Pesanan telah ditolak", $pesanan);
