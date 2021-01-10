@@ -130,6 +130,21 @@ class PesananController extends Controller
     public function selesaiCetakPesanan(Pesanan $pesanan)
     {
         $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
+        $arrFiturTerpilih = [];
+        foreach ($pesanan->konfigurasiFile as $k) {
+            $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
+            $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+
+            foreach ($k->fitur_terpilih as $ft) {
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            }
+
+            $k->fitur_terpilih = $arrFiturTerpilih;
+            $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
+            $k->alamat_toko = request()->user()->alamat_toko;
+            $k->produk = $k->product;
+        }
         $pesanan->save();
         $pesanan->push();
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
