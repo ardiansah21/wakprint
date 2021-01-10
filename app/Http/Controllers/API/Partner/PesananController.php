@@ -142,6 +142,7 @@ class PesananController extends Controller
     {
         $partner = request()->user();
         $data = $partner->pesanans;
+        $arrFiturTerpilih = [];
 
         if ($request->urutkan_pesanan === 'Terbaru') {
             $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
@@ -184,6 +185,14 @@ class PesananController extends Controller
             $p->jumlah_file = count($p->konfigurasiFile);
             $p->nama_lengkap = $p->first()->member->nama_lengkap;
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+        }
+
+        foreach ($data->konfigurasiFile as $k) {
+            foreach ($k->fitur_terpilih as $ft) {
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            }
+
+            $k->fitur_terpilih = $arrFiturTerpilih;
         }
 
         return responseSuccess("Hasil filter data pesanan", $data);
