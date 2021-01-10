@@ -187,7 +187,7 @@ class PesananController extends Controller
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
         }
 
-        foreach ($data->first()->konfigurasiFile as $k) {
+        foreach ($partner->pesanans->first()->konfigurasiFile as $k) {
             foreach ($k->fitur_terpilih as $ft) {
                 array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
             }
