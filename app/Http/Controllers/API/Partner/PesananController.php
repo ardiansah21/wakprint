@@ -234,7 +234,7 @@ class PesananController extends Controller
         $pesanan->partner->push();
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
-        return responseSuccess("Pesanan Telah Selesai, terima kasih telah melakukan transaksi dengan wakprint yah :)", $data);
+        return responseSuccess("Pesanan Telah Selesai, terima kasih telah melakukan transaksi dengan wakprint yah :)", $pesanan);
     }
 
     public function filterPesanan(Request $request)
