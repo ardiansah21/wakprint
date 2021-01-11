@@ -32,8 +32,11 @@ class PromoController extends Controller
 
     public function show(Produk $produk)
     {
-        $produk->jarak = $produk->partner->jarak;
-        return responseSuccess('data detail promo produk ' . $produk->id_produk, $produk);
+        $data = new stdClass();
+        $data = $produk;
+        $data->jarak = $produk->partner->jarak;
+
+        return responseSuccess('data detail promo produk ' . $data->id_produk, $data);
     }
 
     /**
