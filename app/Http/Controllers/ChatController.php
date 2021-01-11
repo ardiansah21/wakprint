@@ -51,8 +51,8 @@ class ChatController extends Controller
         $itemListPesanan = array();
 
         foreach ($pesanans as $pesanan) {
-            //TODO pengecekan apakah pesanan tersebut sudah bayar
-            if ($pesanan->isPaid() && $pesanan->status == 'Pending') {
+
+            if ($pesanan->isPaid() && !isEmpty($pesanan->status)) {
                 $data = new stdClass();
                 if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
                     $data->id = $pesanan->id_pesanan;
