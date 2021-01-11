@@ -52,7 +52,7 @@ class ChatController extends Controller
 
         foreach ($pesanans as $pesanan) {
 
-            if ($pesanan->isPaid() && !isEmpty($pesanan->status)) {
+            if ($pesanan->isPaid() && $pesanan->status !== null) {
                 $data = new stdClass();
                 if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
                     $data->id = $pesanan->id_pesanan;
