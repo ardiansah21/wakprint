@@ -17,7 +17,11 @@ class ProdukController extends Controller
     public function index()
     {
         if (!empty(request()->user()->products)) {
-            return responseSuccess('data seluruh produk', request()->user()->products);
+            if (empty(request()->status_promo)) {
+                return responseSuccess('data seluruh produk', request()->user()->products);
+            } else {
+                return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia'));
+            }
         }
         return responseError('Data Tidak Ada');
     }
