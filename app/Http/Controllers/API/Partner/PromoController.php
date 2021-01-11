@@ -198,6 +198,7 @@ class PromoController extends Controller
                     ->where('nama', request()->keyword_produk)
                     ->first();
                 if (empty($produkPromo)) {
+                    $produkPromo = [];
                     return responseSuccess('data seluruh produk', $produkPromo);
                 } else {
                     return responseSuccess('data seluruh produk', array($produkPromo));
