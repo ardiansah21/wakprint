@@ -90,6 +90,7 @@ class PromoController extends Controller
         $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
         $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
         $produk->save();
+        $produk->push();
         // }
 
         return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $produk, 201);
@@ -170,6 +171,7 @@ class PromoController extends Controller
         $produk->jumlah_diskon = null;
         $produk->selesai_waktu_diskon = null;
         if ($produk->save()) {
+            $produk->push();
             return responseSuccess('Anda berhasil menghapus promo pada produk Anda', $produk);
         }
         return responseError('Anda gagal menghapus promo pada produk Anda, silahkan coba kembali yah');
