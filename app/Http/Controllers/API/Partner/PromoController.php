@@ -53,7 +53,7 @@ class PromoController extends Controller
         $partner = request()->user();
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
-        $jumlahDiskon = $request->jumlah_diskon / 100;
+        $jumlahDiskon = $request->jumlah_diskon;
         $tanggalMulaiPromo = $request->mulai_waktu_diskon;
         $tanggalSelesaiPromo = $request->selesai_waktu_diskon;
 
