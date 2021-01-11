@@ -179,7 +179,7 @@ class PromoController extends Controller
                 $produkPromo = request()->user()->products->where('status_diskon', 'TidakTersedia')
                     ->where('nama', request()->keyword_produk)
                     ->first();
-                if (empty($produkPromo)) {
+                if (isEmptyOrNullString($produkPromo)) {
                     $produkPromo = [];
                     return responseSuccess('data seluruh produk', $produkPromo);
                 } else {
