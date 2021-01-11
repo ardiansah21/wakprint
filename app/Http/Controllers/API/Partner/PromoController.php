@@ -36,7 +36,7 @@ class PromoController extends Controller
                 'maksimal_diskon',
                 'mulai_waktu_diskon',
                 'selesai_waktu_diskon',
-            ])->first();
+            ]);
         }));
     }
 
