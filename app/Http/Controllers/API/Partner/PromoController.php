@@ -197,7 +197,11 @@ class PromoController extends Controller
                 $produkPromo = request()->user()->products->where('status_diskon', 'TidakTersedia')
                     ->where('nama', request()->keyword_produk)
                     ->first();
-                return responseSuccess('data seluruh produk', array($produkPromo));
+                if (empty($produkPromo)) {
+                    return responseSuccess('data seluruh produk', $produkPromo);
+                } else {
+                    return responseSuccess('data seluruh produk', array($produkPromo));
+                }
             }
         }
         return responseError('Data Tidak Ada');
