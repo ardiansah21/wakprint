@@ -18,26 +18,26 @@ class PromoController extends Controller
      */
     public function index()
     {
-        return responseSuccess("data seluruh promo produk", request()->user()->products->where('status_diskon', 'Tersedia')->pluck(
-            [
-                'id_produk',
-                'nama',
-                'jumlah_diskon',
-                'maksimal_diskon',
-                'mulai_waktu_diskon',
-                'selesai_waktu_diskon',
-            ]
-        ));
-        // return responseSuccess("data seluruh promo produk", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
-        //     return collect($item)->only([
+        // return responseSuccess("data seluruh promo produk", request()->user()->products->where('status_diskon', 'Tersedia')->pluck(
+        //     [
         //         'id_produk',
         //         'nama',
         //         'jumlah_diskon',
         //         'maksimal_diskon',
         //         'mulai_waktu_diskon',
         //         'selesai_waktu_diskon',
-        //     ]);
-        // }));
+        //     ]
+        // ));
+        return responseSuccess("data seluruh promo produk", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
+            return collect($item)->only([
+                'id_produk',
+                'nama',
+                'jumlah_diskon',
+                'maksimal_diskon',
+                'mulai_waktu_diskon',
+                'selesai_waktu_diskon',
+            ]);
+        }));
     }
 
     /**
