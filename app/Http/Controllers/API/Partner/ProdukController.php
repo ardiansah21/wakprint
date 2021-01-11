@@ -23,7 +23,7 @@ class ProdukController extends Controller
                 if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
                     return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia'));
                 } else {
-                    return responseSuccess('data seluruh produk', request()->user()->products->first()->where('status_diskon', 'TidakTersedia'));
+                    return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia')->first());
                 }
             }
         }
