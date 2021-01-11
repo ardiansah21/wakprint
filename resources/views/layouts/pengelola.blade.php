@@ -107,7 +107,7 @@
 
                         @else
                             <li class="nav-item mr-1" style="display: flex; align-items:center;">
-                                <a class="nav-link SemiBold" href="{{ route('chat') }}"
+                                <a class="nav-link SemiBold" href="{{ route('partner.chat') }}"
                                     style="color: black; font-size: 24px;">{{ __('Chat') }}
                                     <span v-show="notifChat>0" v-text="notifChat" class="badge badge-danger"
                                         style="font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 30%;top: -20px;left: -10px;position: relative;">

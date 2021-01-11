@@ -46,7 +46,7 @@ class ChatController extends Controller
         if (!activeGuard()) {
             return response()->json(['error' => "Unauthenticated."], 401);
         }
-        $pesanans = auth(activeGuard())->user()->pesanan;
+        $pesanans = auth(activeGuard())->user()->pesanans;
 
         $itemListPesanan = array();
 
