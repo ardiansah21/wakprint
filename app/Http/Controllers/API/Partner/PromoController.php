@@ -83,7 +83,7 @@ class PromoController extends Controller
         }
 
         // foreach ($request->id_produk as $id) {
-        $produk = $partner->products->find($request->id_produk);
+        $produk = $partner->products->find($produk->id_produk);
         $produk->status_diskon = $statusDiskon;
         $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
         $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
