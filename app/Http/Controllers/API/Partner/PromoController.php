@@ -38,6 +38,7 @@ class PromoController extends Controller
      */
     public function store(Request $request, Produk $produk)
     {
+        return $request->id_produk;
         $validator = Validator::make($request->all(), [
             // 'id_produk' => ['required', 'numeric'],
             'jumlah_diskon' => ['required', 'numeric'],
@@ -51,11 +52,6 @@ class PromoController extends Controller
         }
 
         $partner = request()->user();
-        // $arrIdProduk = array();
-
-        // foreach (json_decode($request->id_produk) as $id) {
-        //     array_push($arrIdProduk, $id);
-        // }
 
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
