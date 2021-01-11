@@ -50,7 +50,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::apiResource('/produk', 'ProdukController');
         Route::put('/promo/store/{produk}', 'PromoController@store');
         Route::put('/promo/update/{produk}', 'PromoController@update');
-        Route::patch('/promo/delete/{produk}', 'PromoController@destroy');
+        Route::get('/promo/delete/{produk}', 'PromoController@destroy');
         Route::apiResource('/promo', 'PromoController');
     });
 });
