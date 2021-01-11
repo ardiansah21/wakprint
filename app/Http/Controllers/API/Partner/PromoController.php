@@ -29,7 +29,7 @@ class PromoController extends Controller
         //     ]
         // ));
         return responseSuccess("data seluruh promo produk", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
-            return collect($item)->only([
+            return collect([$item])->only([
                 'id_produk',
                 'nama',
                 'jumlah_diskon',
