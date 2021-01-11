@@ -83,18 +83,7 @@ class PromoController extends Controller
         $promo->mulai_waktu_diskon = $produk->mulai_waktu_diskon;
         $promo->selesai_waktu_diskon = $produk->selesai_waktu_diskon;
 
-        return responseSuccess("Anda berhasil menambah promo baru pada produk Anda", collect(request()->user()->products->where('status_diskon', 'Tersedia'))->map(function ($item) {
-            return collect($item)->only([
-                'id_produk',
-                'nama',
-                'jumlah_diskon',
-                'maksimal_diskon',
-                'mulai_waktu_diskon',
-                'selesai_waktu_diskon',
-            ]);
-        }), 201);
-
-        // return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $promo, 201);
+        return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $promo, 201);
     }
 
     /**
