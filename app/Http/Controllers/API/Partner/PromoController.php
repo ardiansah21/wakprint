@@ -39,7 +39,7 @@ class PromoController extends Controller
     public function store(Request $request, Produk $produk)
     {
         $validator = Validator::make($request->all(), [
-            'id_produk' => ['required', '[numeric]'],
+            'id_produk' => ['required', 'numeric'],
             'jumlah_diskon' => ['required', 'numeric'],
             'maksimal_diskon' => ['required', 'numeric'],
             'mulai_waktu_diskon' => ['required', 'date'],
