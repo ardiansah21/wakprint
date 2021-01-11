@@ -163,7 +163,7 @@ class PromoController extends Controller
 
         if ($produk->save()) {
             $produk->push();
-            return responseSuccess('Anda berhasil menghapus promo pada produk Anda', array($promo));
+            return responseSuccess('Anda berhasil menghapus promo pada produk Anda', $produk);
         }
         return responseError('Anda gagal menghapus promo pada produk Anda, silahkan coba kembali yah');
     }
