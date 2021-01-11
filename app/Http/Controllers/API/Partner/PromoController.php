@@ -191,11 +191,11 @@ class PromoController extends Controller
         if (!empty(request()->user()->products)) {
             if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
                 $produkPromo = request()->user()->products->where('status_diskon', 'TidakTersedia')
-                    ->where('nama', 'like', '%' . request()->keyword_produk . '%');
+                    ->where('nama', request()->keyword_produk);
                 return responseSuccess('data seluruh produk', $produkPromo);
             } else {
                 $produkPromo = request()->user()->products->where('status_diskon', 'TidakTersedia')
-                    ->where('nama', 'like', '%' . request()->keyword_produk . '%')
+                    ->where('nama', request()->keyword_produk)
                     ->first();
                 return responseSuccess('data seluruh produk', array($produkPromo));
             }
