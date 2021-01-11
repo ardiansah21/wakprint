@@ -49,7 +49,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::get('/produk/duplicate/{produkA}', 'ProdukController@duplicate');
         Route::apiResource('/produk', 'ProdukController');
         Route::patch('/promo/store/{id}', 'PromoController@store');
-        Route::put('/promo/update/{produk}', 'PromoController@update');
+        Route::patch('/promo/update/{produk}', 'PromoController@update');
         Route::get('/promo/delete/{produk}', 'PromoController@destroy');
         Route::get('/promo/filter-produk', 'PromoController@filterPromo');
         Route::apiResource('/promo', 'PromoController');
