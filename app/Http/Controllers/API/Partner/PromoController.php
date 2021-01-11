@@ -32,7 +32,7 @@ class PromoController extends Controller
 
     public function show(Produk $produk)
     {
-        return responseSuccess('data detail promo produk ' . $produk->id_produk, $produk->except(['jarak']));
+        return responseSuccess('data detail promo produk ' . $produk->id_produk, collect($produk->except(['jarak'])));
     }
 
     /**
