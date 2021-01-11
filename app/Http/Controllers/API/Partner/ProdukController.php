@@ -20,7 +20,11 @@ class ProdukController extends Controller
             if (empty(request()->status_promo)) {
                 return responseSuccess('data seluruh produk', request()->user()->products);
             } else {
-                return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia'));
+                if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
+                    return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia'));
+                } else {
+                    return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia')->get());
+                }
             }
         }
         return responseError('Data Tidak Ada');
