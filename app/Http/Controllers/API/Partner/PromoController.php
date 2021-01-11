@@ -39,7 +39,7 @@ class PromoController extends Controller
     public function store(Request $request, Produk $produk)
     {
         $validator = Validator::make($request->all(), [
-            // 'id_produk' => ['required', 'numeric'],
+            'id_produk' => ['required', ['numeric']],
             'jumlah_diskon' => ['required', 'numeric'],
             'maksimal_diskon' => ['required', 'numeric'],
             'mulai_waktu_diskon' => ['required', 'date'],
@@ -68,7 +68,7 @@ class PromoController extends Controller
             return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        foreach (json_decode($request->id_produk, true) as $id) {
+        foreach ($request->id_produk as $id) {
             $produk = $partner->products->find($id);
             $produk->status_diskon = $statusDiskon;
             $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
