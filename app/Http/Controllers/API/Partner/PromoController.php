@@ -68,7 +68,7 @@ class PromoController extends Controller
             return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        foreach (array($request->id_produk) as $id) {
+        foreach (json_decode($request->id_produk, true) as $id) {
             $produk = $partner->products->find($id);
             $produk->status_diskon = $statusDiskon;
             $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
