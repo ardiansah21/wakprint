@@ -185,4 +185,21 @@ class PromoController extends Controller
         }
         return responseError('Anda gagal menghapus promo pada produk Anda, silahkan coba kembali yah');
     }
+
+    public function filterPromo()
+    {
+        if (!empty(request()->user()->products)) {
+            if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
+                $produkPromo = request()->user()->products->where('status_diskon', 'TidakTersedia')
+                    ->where('nama', request()->keyword_produk);
+                return responseSuccess('data seluruh produk', $produkPromo);
+            } else {
+                $produkPromo = request()->user()->products->where('status_diskon', 'TidakTersedia')
+                    ->where('nama', request()->keyword_produk)
+                    ->first();
+                return responseSuccess('data seluruh produk', array($produkPromo));
+            }
+        }
+        return responseError('Data Tidak Ada');
+    }
 }
