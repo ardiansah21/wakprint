@@ -39,7 +39,7 @@ class PromoController extends Controller
     public function store(Request $request, Produk $produk)
     {
         $validator = Validator::make($request->all(), [
-            // 'id_produk' => ['required', 'numeric'],
+            'id_produk' => ['required', '[numeric]'],
             'jumlah_diskon' => ['required', 'numeric'],
             'maksimal_diskon' => ['required', 'numeric'],
             'mulai_waktu_diskon' => ['required', 'date'],
@@ -51,24 +51,9 @@ class PromoController extends Controller
         }
 
         $partner = request()->user();
-        // $arrIdProduk = array();
-
-        // foreach (json_decode($request->id_produk) as $id) {
-        //     array_push($arrIdProduk, $id);
-        // }
-
-        // $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
-        // $tanggalMulai = $request->tanggal_mulai_promo;
-        // $bulanMulai = $months[$request->bulan_mulai_promo];
-        // $tahunMulai = $request->tahun_mulai_promo;
         $jumlahDiskon = $request->jumlah_diskon / 100;
-        // $tanggalSelesai = $request->tanggal_selesai_promo;
-        // $bulanSelesai = $months[$request->bulan_selesai_promo];
-        // $tahunSelesai = $request->tahun_selesai_promo;
-        // $tanggalMulaiPromo = "$tahunMulai-$bulanMulai-$tanggalMulai";
-        // $tanggalSelesaiPromo = "$tahunSelesai-$bulanSelesai-$tanggalSelesai";
         $tanggalMulaiPromo = $request->mulai_waktu_diskon;
         $tanggalSelesaiPromo = $request->selesai_waktu_diskon;
 
@@ -82,19 +67,25 @@ class PromoController extends Controller
             return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        // foreach ($request->id_produk as $id) {
-        $produk = $partner->products->find($produk->id_produk);
-        $produk->status_diskon = $statusDiskon;
-        $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
-        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
-        $produk->jumlah_diskon = $jumlahDiskon;
-        $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
-        $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
-        $produk->save();
-        $produk->push();
-        // }
+        foreach ($request->id_produk as $id) {
+            $produk = $partner->products->find($id);
+            $produk->status_diskon = $statusDiskon;
+            $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
+            $produk->jumlah_diskon = $jumlahDiskon;
+            $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
+            $produk->selesai_waktu_diskon = $tanggalSelesaiPromo;
+            $produk->save();
+            $produk->push();
+        }
 
-        return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $produk, 201);
+        $promo = new stdClass();
+        $promo->status_diskon = $produk->status_diskon;
+        $promo->jumlah_diskon = $produk->jumlah_diskon;
+        $promo->maksimal_diskon = $produk->maksimal_diskon;
+        $promo->mulai_waktu_diskon = $produk->mulai_waktu_diskon;
+        $promo->selesai_waktu_diskon = $produk->selesai_waktu_diskon;
+
+        return responseSuccess('Anda berhasil menambahkan promo baru pada produk Anda', $promo, 201);
     }
 
     /**
@@ -174,9 +165,9 @@ class PromoController extends Controller
 
         $promo = new stdClass();
         $promo->status_diskon = $produk->status_diskon;
+        $promo->jumlah_diskon = $produk->jumlah_diskon;
         $promo->maksimal_diskon = $produk->maksimal_diskon;
         $promo->mulai_waktu_diskon = $produk->mulai_waktu_diskon;
-        $promo->jumlah_diskon = $produk->jumlah_diskon;
         $promo->selesai_waktu_diskon = $produk->selesai_waktu_diskon;
 
         if ($produk->save()) {
