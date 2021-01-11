@@ -98,6 +98,16 @@ class AtkController extends Controller
         return responseSuccess('Item Atk Anda berhasil diubah', $atk);
     }
 
+    public function uploadFotoAtk(Request $request, Atk $atk)
+    {
+        // $atk->clearMediaCollection();
+        if ($request->hasFile('foto_atk')) {
+            $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+        }
+
+        return responseSuccess('Foto Atk Anda berhasil diubah');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
