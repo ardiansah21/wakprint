@@ -108,6 +108,6 @@ class Produk extends Model implements HasMedia
     //simulasi jarak
     public function getJarakAttribute()
     {
-        return $this->partner->id_pengelola * 100;
+        return $this->id_pengelola * 100;
     }
 }
