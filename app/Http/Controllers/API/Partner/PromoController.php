@@ -7,6 +7,7 @@ use App\Produk;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class PromoController extends Controller
 {
@@ -170,9 +171,17 @@ class PromoController extends Controller
         $produk->mulai_waktu_diskon = null;
         $produk->jumlah_diskon = null;
         $produk->selesai_waktu_diskon = null;
+
+        $promo = new stdClass();
+        $promo->status_diskon = $produk->status_diskon;
+        $promo->maksimal_diskon = $produk->maksimal_diskon;
+        $promo->mulai_waktu_diskon = $produk->mulai_waktu_diskon;
+        $promo->jumlah_diskon = $produk->jumlah_diskon;
+        $promo->selesai_waktu_diskon = $produk->selesai_waktu_diskon;
+
         if ($produk->save()) {
             $produk->push();
-            return responseSuccess('Anda berhasil menghapus promo pada produk Anda', $produk);
+            return responseSuccess('Anda berhasil menghapus promo pada produk Anda', $promo);
         }
         return responseError('Anda gagal menghapus promo pada produk Anda, silahkan coba kembali yah');
     }
