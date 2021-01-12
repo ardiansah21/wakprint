@@ -76,6 +76,7 @@ class AtkController extends Controller
      */
     public function update(Request $request, Atk $atk)
     {
+        return $request->all();
         $validator = Validator::make($request->all(), [
             'nama' => ['required', 'string', 'max:255'],
             'harga' => ['required', 'numeric'],
