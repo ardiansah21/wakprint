@@ -76,7 +76,6 @@ class AtkController extends Controller
      */
     public function update(Request $request, Atk $atk)
     {
-        return $request->all();
         $validator = Validator::make($request->all(), [
             'nama' => ['required', 'string', 'max:255'],
             'harga' => ['required', 'numeric'],
@@ -104,9 +103,9 @@ class AtkController extends Controller
         // $atk->clearMediaCollection();
         if ($request->hasFile('foto_atk')) {
             $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+            return responseSuccess('Foto Atk Anda berhasil diubah');
         }
-
-        return responseSuccess('Foto Atk Anda berhasil diubah');
+        return responseSuccess('Foto Atk Anda kosong atau gagal');
     }
 
     /**
