@@ -100,11 +100,12 @@ class AtkController extends Controller
 
     public function uploadFotoAtk(Request $request, Atk $atk)
     {
-        return $request->all();
+        //return $request->all();
+
         // $atk->clearMediaCollection();
         if (!empty($request->foto_atk)) {
-            $atk->addMedia($request->foto_atk)->toMediaCollection();
-            return responseSuccess('Foto Atk Anda berhasil diubah');
+            $f = $atk->addMedia($request->foto_atk)->toMediaCollection();
+            return responseSuccess('Foto Atk Anda berhasil diubah', $f);
         }
         return responseError('Foto Atk Anda kosong atau gagal');
     }
