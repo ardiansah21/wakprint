@@ -39,6 +39,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::post('/saldo/tarik/store', 'PartnerController@storeTarikSaldo');
         Route::post('/ubah-status', 'PartnerController@statusToko');
         Route::patch('/profil/update/{id}', 'PartnerController@profileUpdate');
+        Route::post('/profil/store-media', 'PartnerController@storeMedia');
         Route::get('/pesanan/filter', 'PesananController@filterPesanan');
         Route::get('/pesanan/terima/{pesanan}', 'PesananController@terimaPesanan');
         Route::get('/pesanan/tolak/{pesanan}', 'PesananController@tolakPesanan');
