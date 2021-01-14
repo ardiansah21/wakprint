@@ -80,6 +80,7 @@ class AtkController extends Controller
             'harga' => ['required', 'numeric'],
             'jumlah' => ['required', 'numeric'],
         ]);
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
@@ -89,6 +90,7 @@ class AtkController extends Controller
             'harga' => (int) str_replace('.', '', $request->harga),
             'jumlah' => $request->jumlah,
         ]);
+
         if (!empty($request->foto_atk)) {
             $atk->addMedia($request->foto_atk)->toMediaCollection();
         }

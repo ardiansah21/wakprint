@@ -46,8 +46,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::get('/pesanan/selesai-cetak/{pesanan}', 'PesananController@selesaiCetakPesanan');
         Route::get('/pesanan/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanan', 'PesananController');
-        Route::post('/atk/upload-foto/{atk}', 'AtkController@uploadFotoAtk');
-        Route::post('/atk/update/{atk}', 'AtkController@update');
+        // Route::post('/atk/update/{atk}', 'AtkController@update');
         Route::apiResource('/atk', 'AtkController');
         Route::get('/produk/duplicate/{produkA}', 'ProdukController@duplicate');
         Route::apiResource('/produk', 'ProdukController');
