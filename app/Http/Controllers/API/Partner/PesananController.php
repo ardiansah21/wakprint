@@ -65,10 +65,9 @@ class PesananController extends Controller
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
         $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         $data->updated_at = $pesanan->updated_at;
-        $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
         $arrFiturTerpilih = [];
-        foreach ($data->konfigurasi_file as $k) {
+        foreach ($pesanan->konfigurasiFile as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
@@ -79,8 +78,11 @@ class PesananController extends Controller
             $k->fitur_terpilih = $arrFiturTerpilih;
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = request()->user()->alamat_toko;
-            $k->product->fitur = json_decode($k->product->first()->fitur, true);
+            $k->product->fitur = json_decode($k->product->fitur, true);
+            $k->produk = $k->product;
         }
+
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
         return responseSuccess("detail pesanan partner yang login", $data);
     }
