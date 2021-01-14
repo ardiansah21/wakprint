@@ -80,6 +80,9 @@ class PesananController extends Controller
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = request()->user()->alamat_toko;
             $k->produk = $k->product;
+            foreach ($k->produk as $p) {
+                $p->fitur = json_decode($p->fitur, true);
+            }
         }
 
         return responseSuccess("detail pesanan partner yang login", $data);
