@@ -18,6 +18,8 @@ class ProdukController extends Controller
     {
         if (!empty(request()->user()->products)) {
             if (empty(request()->status_promo)) {
+                $produk = request()->user()->products;
+                $produk->fitur = json_decode($produk->fitur, true);
                 return responseSuccess('data seluruh produk', request()->user()->products);
             } else {
                 if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
