@@ -62,7 +62,7 @@ class AtkController extends Controller
      */
     public function show(Atk $atk)
     {
-        $atk->url_image = $atk->getPath();
+        $atk->url_image = "https://wakprint.com/" . $atk->getFirstMediaUrl();
         return responseSuccess('show atk id = ' . $atk->id_atk, $atk);
         // return responseSuccess('show atk id = ' . $atk->id_atk, collect($atk)->except(['media', 'id_pengelola']));
 
