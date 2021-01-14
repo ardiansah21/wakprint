@@ -62,7 +62,7 @@ class AtkController extends Controller
      */
     public function show(Atk $atk)
     {
-        $atk->url_image = $atk->getFirstMediaUrl();
+        $atk->url_image = $atk->getFullUrl();
         return responseSuccess('show atk id = ' . $atk->id_atk, $atk);
         // return responseSuccess('show atk id = ' . $atk->id_atk, collect($atk)->except(['media', 'id_pengelola']));
 
