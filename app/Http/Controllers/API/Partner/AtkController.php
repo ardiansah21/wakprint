@@ -63,7 +63,7 @@ class AtkController extends Controller
     public function show(Atk $atk)
     {
         if (!empty($atk->getFirstMediaUrl())) {
-            $atk->url_image = $atk->getMedia()->getPath();
+            $atk->url_image = $atk->getFirstMediaUrl();
         } else {
             $atk->url_image = "https://ui-avatars.com/api/?name=ATK&background=BC41BE&color=F2FF58";
         }
