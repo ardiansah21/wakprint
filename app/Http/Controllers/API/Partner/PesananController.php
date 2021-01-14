@@ -81,7 +81,7 @@ class PesananController extends Controller
             $k->alamat_toko = request()->user()->alamat_toko;
             $k->produk = $k->product;
             foreach ($k->produk as $p) {
-                $p->fitur = json_decode($p->fitur, true);
+                $p->fitur = json_decode(json_encode($p->fitur), true);
             }
         }
 
