@@ -20,7 +20,7 @@ class PesananController extends Controller
     {
         $partner = Auth::user();
         $pesanan = $partner->pesanans->find($idPesanan);
-        $atks = json_decode($pesanan->atk_terpilih);
+        $atks = $pesanan->atk_terpilih;
 
         return view('pengelola.detail_pesanan_masuk', compact('pesanan', 'partner', 'atks'));
     }
