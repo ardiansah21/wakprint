@@ -119,7 +119,7 @@ class ProdukController extends Controller
             'jenis_kertas' => $request->jenis_kertas,
             'jenis_printer' => $request->jenis_printer,
             'status' => $request->status,
-            'fitur' => $request->fitur,
+            'fitur' => json_decode($request->fitur),
         ]);
 
         if ($request->input('document') != null) {
