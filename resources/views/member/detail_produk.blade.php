@@ -197,9 +197,9 @@
                             {{ __('Pemilik Percetakan') }}
                         </label>
                         <label class="text-truncate mb-4" style="width: 100%; font-size: 18px;">
-                            @if (!empty($produk->partner->getFirstMediaUrl()))
+                            @if (!empty($produk->partner->getFirstMediaUrl('avatar')))
                                 <img class="img-responsive align-self-center mr-2"
-                                    src="{{ $produk->partner->getFirstMediaUrl() }}" width="40" height="40" alt="no logo"
+                                    src="{{ $produk->partner->getFirstMediaUrl('avatar') }}" width="40" height="40" alt="no logo"
                                     style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
                             @else
                                 <img class="img-responsive align-self-center mr-2"
