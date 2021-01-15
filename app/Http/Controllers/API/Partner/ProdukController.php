@@ -55,6 +55,24 @@ class ProdukController extends Controller
 
         $fiturFinal = array();
 
+        if (!empty($request->harga_timbal_balik_hitam_putih)) {
+            $request->harga_timbal_balik_hitam_putih = (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih);
+        } else {
+            $request->harga_timbal_balik_hitam_putih = $request->harga_timbal_balik_hitam_putih;
+        }
+
+        if (!empty($request->harga_berwarna)) {
+            $request->harga_berwarna = (int) str_replace('.', '', $request->harga_berwarna);
+        } else {
+            $request->harga_berwarna = $request->harga_berwarna;
+        }
+
+        if (!empty($request->harga_timbal_balik_berwarna)) {
+            $request->harga_timbal_balik_berwarna = (int) str_replace('.', '', $request->harga_timbal_balik_berwarna);
+        } else {
+            $request->harga_timbal_balik_berwarna = $request->harga_timbal_balik_berwarna;
+        }
+
         if (!empty($request->fitur)) {
             foreach ($request->fitur as $key => $value) {
                 if ($key == 'tambahan') {
@@ -91,9 +109,9 @@ class ProdukController extends Controller
             'id_pengelola' => request()->user()->id_pengelola,
             'nama' => $request->nama,
             'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
-            'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
-            'harga_berwarna' => (int) str_replace('.', '', $request->harga_berwarna),
-            'harga_timbal_balik_berwarna' => (int) str_replace('.', '', $request->harga_timbal_balik_berwarna),
+            'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
+            'harga_berwarna' => $request->harga_berwarna,
+            'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
             'berwarna' => $request->berwarna,
             'hitam_putih' => $request->hitam_putih,
             'deskripsi' => $request->deskripsi,
