@@ -30,8 +30,7 @@ class PartnerController extends Controller
         }
 
         $data = [
-            "user" => $partner,
-            "foto_percetakan" => $partner->getFirstMediaUrl('foto_percetakan'),
+            "user" => request()->user(),
             "totalPelanggan" => count($arrTotalPelanggan),
             "totalTransaksi" => count($arrJumlahDokumen),
         ];
