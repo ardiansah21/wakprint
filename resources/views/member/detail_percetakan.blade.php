@@ -267,7 +267,7 @@
                                         </div>
                                         <div class="col-md-4 text-right">
                                             <label class="mb-2">
-                                                Rp. {{ $a->harga }}
+                                                {{ rupiah($a->harga) }}
                                             </label>
                                         </div>
                                     </div>
