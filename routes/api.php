@@ -20,7 +20,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
 
-        Route::get('/user', 'MemberController@index');
+        Route::get('/', 'MemberController@index');
         // Route::get('/profil', 'MemberController@showProfil');
     });
 });
