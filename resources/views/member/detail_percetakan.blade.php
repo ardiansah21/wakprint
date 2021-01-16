@@ -184,8 +184,8 @@
                             {{ __('Pemilik Percetakan') }}
                         </label>
                         <label class="text-truncate mb-4" style="width: 100%; font-size: 18px;">
-                            @if (!empty($partner->getFirstMediaUrl()))
-                                <img class="img-responsive align-self-center mr-2" src="{{ $partner->getFirstMediaUrl() }}"
+                            @if (!empty($partner->getFirstMediaUrl('avatar')))
+                                <img class="img-responsive align-self-center mr-2" src="{{ $partner->getFirstMediaUrl('avatar') }}"
                                     width="40" height="40" alt="no logo"
                                     style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
                             @else
@@ -267,7 +267,7 @@
                                         </div>
                                         <div class="col-md-4 text-right">
                                             <label class="mb-2">
-                                                Rp. {{ $a->harga }}
+                                                {{ rupiah($a->harga) }}
                                             </label>
                                         </div>
                                     </div>

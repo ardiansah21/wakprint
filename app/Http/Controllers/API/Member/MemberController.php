@@ -14,4 +14,9 @@ class MemberController extends Controller
         return responseSuccess("data user yang login", request()->user());
     }
 
+    // public function showProfil()
+    // {
+    //     return responseSuccess("data user yang login", request()->user());
+    // }
+
 }

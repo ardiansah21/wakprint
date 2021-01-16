@@ -9,6 +9,7 @@ use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class PartnerController extends Controller
 {
@@ -82,7 +83,7 @@ class PartnerController extends Controller
 
         if (count($partner->getMedia('foto_percetakan')) > 0) {
             foreach ($partner->getMedia('foto_percetakan') as $media) {
-                if (!in_array($media->file_name, $request->input('document', []))) {
+                if (!in_array($media->file_name, $request->images->pluck('original_name')->toArray())) {
                     $media->delete();
                 }
             }
@@ -90,10 +91,10 @@ class PartnerController extends Controller
 
         $media = $partner->getMedia('foto_percetakan')->pluck('file_name')->toArray();
 
-        if ($request->input('document', []) != null) {
-            foreach ($request->input('document', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $partner->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_percetakan');
+        if (!empty($request->images)) {
+            foreach ($request->images as $file) {
+                if (count($media) === 0 || !in_array($file->original_name, $media)) {
+                    $partner->addMedia(storage_path('tmp/uploads/' . $file->original_name))->toMediaCollection('foto_percetakan');
                 }
             }
         }
@@ -103,6 +104,37 @@ class PartnerController extends Controller
         }
 
         return responseError("Profil gagal diubah, silahkan coba kembali");
+    }
+
+    public function storeMedia(Request $request)
+    {
+        $path = storage_path('tmp/uploads');
+        $arrResponse = [];
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        foreach ($request->file('images', []) as $image) {
+            $response = new stdClass();
+            $response->name = uniqid() . '_' . trim($image->getClientOriginalName());
+            $response->original_name = $image->getClientOriginalName();
+            $image->move($path, $response->name);
+            array_push($arrResponse, $response);
+        }
+
+        return responseSuccess("Berhasil simpan foto", $arrResponse);
+
+        // $file = $request->file('file');
+
+        // $name = uniqid() . '_' . trim($file->getClientOriginalName());
+
+        // $file->move($path, $name);
+
+        // return response()->json([
+        //     'name' => $name,
+        //     'original_name' => $file->getClientOriginalName(),
+        // ]);
     }
 
     public function saldoIndex()

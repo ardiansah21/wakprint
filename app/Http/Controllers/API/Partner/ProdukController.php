@@ -18,6 +18,10 @@ class ProdukController extends Controller
     {
         if (!empty(request()->user()->products)) {
             if (empty(request()->status_promo)) {
+                $produk = request()->user()->products;
+                foreach ($produk as $p) {
+                    $p->fitur = json_decode($p->fitur, true);
+                }
                 return responseSuccess('data seluruh produk', request()->user()->products);
             } else {
                 if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
@@ -51,52 +55,71 @@ class ProdukController extends Controller
 
         $fiturFinal = array();
 
-        if (!empty($request->fitur)) {
-            foreach ($request->fitur as $key => $value) {
-                if ($key == 'tambahan') {
-                    foreach ($value as $value2) {
-                        if (isset($value2['foto_fitur'])) {
-                            $path = public_path('storage/_fitur');
+        if (!empty($request->harga_timbal_balik_hitam_putih)) {
+            $request->harga_timbal_balik_hitam_putih = (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih);
+        } else {
+            $request->harga_timbal_balik_hitam_putih = $request->harga_timbal_balik_hitam_putih;
+        }
 
-                            if (!file_exists($path)) {
-                                mkdir($path, 0777, true);
-                            }
-                            $file = $value2['foto_fitur'];
-                            $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
+        if (!empty($request->harga_berwarna)) {
+            $request->harga_berwarna = (int) str_replace('.', '', $request->harga_berwarna);
+        } else {
+            $request->harga_berwarna = $request->harga_berwarna;
+        }
 
-                            $file->move($path, $name);
-                            $foto_fitur = url('/storage/_fitur') . '/' . $name;
-                        } else {
-                            $foto_fitur = null;
-                        }
+        if (!empty($request->harga_timbal_balik_berwarna)) {
+            $request->harga_timbal_balik_berwarna = (int) str_replace('.', '', $request->harga_timbal_balik_berwarna);
+        } else {
+            $request->harga_timbal_balik_berwarna = $request->harga_timbal_balik_berwarna;
+        }
 
-                        array_push($fiturFinal, $this->setFitur(
-                            $value2['nama'],
-                            (int) str_replace('.', '', $value2['harga']),
-                            $value2['deskripsi'],
-                            $foto_fitur
-                        ));
-                    }
-                } else {
-                    array_push($fiturFinal, $this->getFiturTemplate($key, $value));
-                }
-            }
+        if (empty($request->fitur)) {
+            $request->fitur = [];
+            // foreach ($request->fitur as $key => $value) {
+            //     if ($key == 'tambahan') {
+            //         foreach ($value as $value2) {
+            //             if (isset($value2['foto_fitur'])) {
+            //                 $path = public_path('storage/_fitur');
+
+            //                 if (!file_exists($path)) {
+            //                     mkdir($path, 0777, true);
+            //                 }
+            //                 $file = $value2['foto_fitur'];
+            //                 $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
+
+            //                 $file->move($path, $name);
+            //                 $foto_fitur = url('/storage/_fitur') . '/' . $name;
+            //             } else {
+            //                 $foto_fitur = null;
+            //             }
+
+            //             array_push($fiturFinal, $this->setFitur(
+            //                 $value2['nama'],
+            //                 (int) str_replace('.', '', $value2['harga']),
+            //                 $value2['deskripsi'],
+            //                 $foto_fitur
+            //             ));
+            //         }
+            //     } else {
+            //         array_push($fiturFinal, $this->getFiturTemplate($key, $value));
+            //     }
+            // }
         }
 
         $produk = Produk::create([
             'id_pengelola' => request()->user()->id_pengelola,
             'nama' => $request->nama,
             'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
-            'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
-            'harga_berwarna' => (int) str_replace('.', '', $request->harga_berwarna),
-            'harga_timbal_balik_berwarna' => (int) str_replace('.', '', $request->harga_timbal_balik_berwarna),
-            'berwarna' => $request->berwarna == 'True' ? '1' : '0',
-            'hitam_putih' => $request->hitam_putih == 'True' ? '1' : '0',
+            'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
+            'harga_berwarna' => $request->harga_berwarna,
+            'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
+            'berwarna' => $request->berwarna,
+            'hitam_putih' => $request->hitam_putih,
             'deskripsi' => $request->deskripsi,
             'jenis_kertas' => $request->jenis_kertas,
             'jenis_printer' => $request->jenis_printer,
             'status' => $request->status,
-            'fitur' => json_encode($fiturFinal),
+            'fitur' => json_encode(json_decode($request->fitur)),
         ]);
 
         if ($request->input('document') != null) {
@@ -104,7 +127,9 @@ class ProdukController extends Controller
                 $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
             }
         }
+
         $produk->save();
+        $produk->push();
 
         return responseSuccess('Anda berhasil menambahkan produk baru Anda', $produk, 201);
     }

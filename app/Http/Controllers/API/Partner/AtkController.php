@@ -62,9 +62,8 @@ class AtkController extends Controller
      */
     public function show(Atk $atk)
     {
+        $atk->url_image = $atk->getFirstMediaUrl();
         return responseSuccess('show atk id = ' . $atk->id_atk, $atk);
-        // return responseSuccess('show atk id = ' . $atk->id_atk, collect($atk)->except(['media', 'id_pengelola']));
-
     }
 
     /**
@@ -81,6 +80,7 @@ class AtkController extends Controller
             'harga' => ['required', 'numeric'],
             'jumlah' => ['required', 'numeric'],
         ]);
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
@@ -90,9 +90,9 @@ class AtkController extends Controller
             'harga' => (int) str_replace('.', '', $request->harga),
             'jumlah' => $request->jumlah,
         ]);
-        // $atk->clearMediaCollection();
-        if ($request->hasFile('foto_atk')) {
-            $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
+
+        if (!empty($request->foto_atk)) {
+            $atk->addMedia($request->foto_atk)->toMediaCollection();
         }
 
         return responseSuccess('Item Atk Anda berhasil diubah', $atk);
@@ -100,12 +100,14 @@ class AtkController extends Controller
 
     public function uploadFotoAtk(Request $request, Atk $atk)
     {
-        // $atk->clearMediaCollection();
-        if ($request->hasFile('foto_atk')) {
-            $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
-        }
+        //return $request->all();
 
-        return responseSuccess('Foto Atk Anda berhasil diubah');
+        // $atk->clearMediaCollection();
+        if (!empty($request->foto_atk)) {
+            $f = $atk->addMedia($request->foto_atk)->toMediaCollection();
+            return responseSuccess('Foto Atk Anda berhasil diubah', $f);
+        }
+        return responseError('Foto Atk Anda kosong atau gagal');
     }
 
     /**

@@ -21,6 +21,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/logout', 'AuthController@logout');
 
         Route::get('/', 'MemberController@index');
+        // Route::get('/profil', 'MemberController@showProfil');
     });
 });
 
@@ -39,13 +40,14 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::post('/saldo/tarik/store', 'PartnerController@storeTarikSaldo');
         Route::post('/ubah-status', 'PartnerController@statusToko');
         Route::patch('/profil/update/{id}', 'PartnerController@profileUpdate');
+        Route::post('/profil/store-media', 'PartnerController@storeMedia');
         Route::get('/pesanan/filter', 'PesananController@filterPesanan');
         Route::get('/pesanan/terima/{pesanan}', 'PesananController@terimaPesanan');
         Route::get('/pesanan/tolak/{pesanan}', 'PesananController@tolakPesanan');
         Route::get('/pesanan/selesai-cetak/{pesanan}', 'PesananController@selesaiCetakPesanan');
         Route::get('/pesanan/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanan', 'PesananController');
-        Route::patch('/atk/upload-foto/{atk}', 'AtkController@uploadFotoAtk');
+        Route::post('/atk/update/{atk}', 'AtkController@update');
         Route::apiResource('/atk', 'AtkController');
         Route::get('/produk/duplicate/{produkA}', 'ProdukController@duplicate');
         Route::apiResource('/produk', 'ProdukController');

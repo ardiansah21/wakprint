@@ -28,7 +28,7 @@ class Atk extends Model implements HasMedia
      */
     public function getUrlImageAttribute($value)
     {
-        return $this->getFirstMediaUrl('foto_atk');
+        return $this->getFirstMediaUrl('default');
     }
 
     public function registerMediaCollections(): void

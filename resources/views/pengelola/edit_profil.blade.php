@@ -172,8 +172,8 @@
 
 <div class="row justify-content-between mb-0">
     <div class="form-group bg-light col-md-3" style="width:250px;height:250px; border-radius:10px;">
-        @if (!empty($partner->getFirstMediaUrl()))
-        <img id="gambarPartner" src="{{ $partner->getFirstMediaUrl() }}" class="img-responsive" style="width:100%; height:250px; border-radius:10px; object-fit:contain;" alt="Foto Kosong">
+        @if (!empty($partner->getFirstMediaUrl('avatar')))
+        <img id="gambarPartner" src="{{ $partner->getFirstMediaUrl('avatar') }}" class="img-responsive" style="width:100%; height:250px; border-radius:10px; object-fit:contain;" alt="Foto Kosong">
         <button id="editPhotoButton" type="button" onclick="document.getElementById('imgupload').click();"
             class="btn btn-primary-yellow text-black font-weight-bold pl-4 pr-4 mb-0" style="position: relative;
                         font-size:16px;
