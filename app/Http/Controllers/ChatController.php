@@ -121,18 +121,18 @@ class ChatController extends Controller
             }
             $chat->fresh();
 
-            // $message = array();
-            // foreach ($chat as $c) {
-            //     $temp = new stdClass();
-            //     $temp->id_pesanan = $c->id_pesanan;
-            //     $temp->id_pengelola = $c->id_pengelola;
-            //     $temp->from_user = $c->from_user;
-            //     $temp->pesan = $c->pesan;
-            //     $temp->read_at = $c->read_at;
-            //     $temp->created_at = $c->created_at;
-            //     $temp->count = $c->count;
-            //     array_push($message, $temp);
-            // }
+            $message = array();
+            foreach ($chat as $c) {
+                $temp = new stdClass();
+                $temp->id_pesanan = $c->id_pesanan;
+                $temp->id_pengelola = $c->id_pengelola;
+                $temp->from_user = $c->from_user;
+                $temp->pesan = $c->pesan;
+                $temp->read_at = $c->read_at;
+                $temp->created_at = $c->created_at;
+                $temp->count = $c->count;
+                array_push($message, $temp);
+            }
 
             if (request()->is('api/*')) {
                 return responseSuccess("seluruh chat di pesanan " . $id, $chat);
