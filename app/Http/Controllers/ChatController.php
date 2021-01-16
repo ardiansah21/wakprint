@@ -138,8 +138,12 @@ class ChatController extends Controller
                 return responseSuccess("seluruh chat di pesanan " . $id, $chat);
             }
             return $chat;
+        };
+        if (request()->is('api/*')) {
+            return responseSuccess("Belum ada pesan", $chat);
         }
-        return responseSuccess("Belum ada pesan", null);
+        return $chat;
+
     }
 
     protected function send(Request $request)
