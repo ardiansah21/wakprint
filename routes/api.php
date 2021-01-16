@@ -21,7 +21,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/logout', 'AuthController@logout');
 
         Route::get('/', 'MemberController@index');
-        Route::get('/profil', 'MemberController@showProfil');
+        // Route::get('/profil', 'MemberController@showProfil');
     });
 });
 
