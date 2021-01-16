@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Chat;
 use App\Events\ChatEvent;
 use App\Http\Controllers\Controller;
+use App\Member;
 use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,19 +55,8 @@ class ChatController extends Controller
 
             if ($pesanan->isPaid() && $pesanan->status !== null) {
                 $data = new stdClass();
-                if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
-                    $data->id = $pesanan->id_pesanan;
-                    $data->nama_member = $pesanan->member->nama_lengkap;
-                    $data->penerimaan = $pesanan->metode_penerimaan;
-                    $data->status = $pesanan->status;
-
-                    $data->id_pesanan = $pesanan->id_pesanan;
-                    $data->id_member = $pesanan->id_member;
-                    $data->id_pengelola = $pesanan->id_pengelola;
-                    $data->avatar = ($pesanan->member)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->member->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->member)->getFirstMediaUrl('avatar');
-                    $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "member")->whereNull('read_at')->count();
-                } else {
-
+                // if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
+                if (auth(activeGuard())->user() instanceof Member) {
                     $data->id = $pesanan->id_pesanan;
                     $data->nama_toko = $pesanan->partner->nama_toko;
                     $data->penerimaan = $pesanan->metode_penerimaan;
@@ -78,6 +68,17 @@ class ChatController extends Controller
                     $data->nama_pengelola = $pesanan->partner->nama_lengkap;
                     $data->avatar = ($pesanan->partner)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->partner->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->partner)->getFirstMediaUrl('avatar');
                     $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "partner")->whereNull('read_at')->count();
+                } else {
+                    $data->id = $pesanan->id_pesanan;
+                    $data->nama_member = $pesanan->member->nama_lengkap;
+                    $data->penerimaan = $pesanan->metode_penerimaan;
+                    $data->status = $pesanan->status;
+
+                    $data->id_pesanan = $pesanan->id_pesanan;
+                    $data->id_member = $pesanan->id_member;
+                    $data->id_pengelola = $pesanan->id_pengelola;
+                    $data->avatar = ($pesanan->member)->getFirstMediaUrl('avatar') == null ? 'https://ui-avatars.com/api/?name=' . $pesanan->member->nama_lengkap . '&background=BC41BE&color=F2FF58' : ($pesanan->member)->getFirstMediaUrl('avatar');
+                    $data->count = Chat::where('id_pesanan', $pesanan->id_pesanan)->where('from_user', "member")->whereNull('read_at')->count();
                 }
                 array_push($itemListPesanan, $data);
             }
