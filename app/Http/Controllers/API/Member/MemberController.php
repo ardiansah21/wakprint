@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
-use App\Member;
 use App\Pengelola_Percetakan;
 use App\Produk;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -35,6 +36,59 @@ class MemberController extends Controller
     public function user()
     {
         return responseSuccess("data user", request()->user());
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $member = $request->user();
+
+        if (!empty($request->foto)) {
+            $member->clearMediaCollection();
+            $member->addMedia($request->foto)->toMediaCollection('avatar');
+        }
+
+        if (empty($request->password_lama) && empty($request->password_baru) && empty($request->konfirmasi_password_baru)) {
+            $member->update([
+                'nama_lengkap' => $request->nama,
+                'jenis_kelamin' => $request->jk,
+                'tanggal_lahir' => $request->tanggal_lahir,
+            ]);
+
+            $member->save();
+            $member->push();
+
+            return responseSuccess('Profil Anda telah berhasil diubah', $member);
+        } else {
+            if ($member) {
+                $current_password = $member->password;
+                if (Hash::check($request->password_lama, $current_password)) {
+                    $member->update([
+                        'nama_lengkap' => $request->nama,
+                        'jenis_kelamin' => $request->jk,
+                        'tanggal_lahir' => $request->tanggal_lahir,
+                        'password' => Hash::make($request->password_baru),
+                    ]);
+
+                    $member->save();
+                    $member->push();
+
+                    return responseSuccess('Profil Anda telah berhasil diubah', $member);
+                } else {
+                    return responseSuccess('Maaf Silahkan Masukkan Password Lama dengan Benar !');
+                }
+            } else {
+                $member->update([
+                    'nama_lengkap' => $request->nama,
+                    'jenis_kelamin' => $request->jk,
+                    'tanggal_lahir' => $request->tanggal_lahir,
+                ]);
+
+                $member->save();
+                $member->push();
+
+                return responseSuccess('Profil Anda telah berhasil diubah', $member);
+            }
+        }
     }
 
 }

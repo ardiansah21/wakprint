@@ -22,6 +22,8 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
 
         Route::get('/', 'MemberController@index');
         Route::get('/user', 'MemberController@user');
+        Route::post('/profil/update', 'MemberController@updateProfile');
+
     });
 });
 
