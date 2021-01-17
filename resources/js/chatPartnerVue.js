@@ -92,7 +92,7 @@ Vue.component("chat-partner-component", {
     mounted() {
         console.log("tadaaaa");
         this.fetchPesanan();
-        // this.fetchPusher();
+        this.fetchPusher();
     },
     watch: {
         messages: _.debounce(function() {
