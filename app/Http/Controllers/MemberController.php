@@ -70,12 +70,14 @@ class MemberController extends Controller
         // $member = Auth::user();
         $produk = Produk::where('rating', '>=', 4)
         // ->where('jarak', '<=', 1000)
+            ->where('status', 'Tersedia')
             ->where('harga_hitam_putih', '<=', 2000)
             ->where('harga_berwarna', '<=', 2000)
             ->get();
 
         $partner = Pengelola_Percetakan::where('rating_toko', '>=', 4)
         // ->where('jarak', '<=', 1000)
+            ->where('email_verified_at', '!=', null)
             ->get();
         // $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
 
