@@ -47,7 +47,7 @@ class MemberController extends Controller
             $member->addMedia($request->foto)->toMediaCollection('avatar');
         }
 
-        if (empty($request->password_lama) && empty($request->password_baru) && empty($request->konfirmasi_password_baru)) {
+        if (empty($request->password_baru)) {
             $member->update([
                 'nama_lengkap' => $request->nama,
                 'jenis_kelamin' => $request->jk,
