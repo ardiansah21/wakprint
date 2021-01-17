@@ -61,7 +61,7 @@ class MemberController extends Controller
         } else {
             if ($member) {
                 $current_password = $member->password;
-                if (Hash::check($request->password_baru, $current_password)) {
+                if (Hash::check(Hash::make($request->password_baru), $current_password)) {
                     $member->update([
                         'nama_lengkap' => $request->nama,
                         'jenis_kelamin' => $request->jk,
