@@ -59,7 +59,7 @@ class MemberController extends Controller
 
             return responseSuccess('Profil Anda telah berhasil diubah', $member);
         } else {
-            if ($member) {
+            if ($member->check()) {
                 $current_password = $member->password;
                 if (Hash::check(Hash::make($request->password_baru), $current_password)) {
                     $member->update([
