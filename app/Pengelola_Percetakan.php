@@ -41,6 +41,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
         'jarak',
         'avatar',
         'foto_percetakan',
+        'atk'
     ];
 
     /**
@@ -67,6 +68,11 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
             return $this->getFirstMediaUrl('foto_percetakan');
         }
         return 'https://ui-avatars.com/api/?name=' . $this->nama_toko . '&background=BC41BE&color=F2FF58';
+    }
+
+    public function getAtkAttribute()
+    {
+        return $this->atk()
     }
 
     /**
