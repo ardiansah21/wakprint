@@ -12,7 +12,6 @@ class MemberController extends Controller
 
     public function index()
     {
-        // $member = Auth::user();
         $produk = Produk::where('rating', '>=', 4)
         // ->where('jarak', '<=', 1000)
             ->where('status', 'Tersedia')
@@ -31,16 +30,11 @@ class MemberController extends Controller
         ];
 
         return responseSuccess("data home", $data);
-
-        // $ratingPartner = $produk->where('id_pengelola',$produk->partner->id_pengelola)->avg('rating');
-
-        // $atk = Atk::all();
-        // return responseSuccess("data user yang login", request()->user());
     }
 
-    // public function showProfil()
-    // {
-    //     return responseSuccess("data user yang login", request()->user());
-    // }
+    public function user()
+    {
+        return responseSuccess("data user", request()->user());
+    }
 
 }
