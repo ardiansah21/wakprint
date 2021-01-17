@@ -41,7 +41,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
         'jarak',
         'avatar',
         'foto_percetakan',
-        'atk'
+        'atk',
     ];
 
     /**
@@ -72,7 +72,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
 
     public function getAtkAttribute()
     {
-        return $this->atk()
+        return $this->atk();
     }
 
     /**
