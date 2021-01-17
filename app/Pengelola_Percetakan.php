@@ -72,7 +72,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
 
     public function getAtksAttribute()
     {
-        return $this->atk();
+        return $this->atk;
     }
 
     /**
