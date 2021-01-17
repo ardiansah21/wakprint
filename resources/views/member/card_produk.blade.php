@@ -37,7 +37,7 @@ $member = Auth::user();
             @if (count($p->getMedia('foto_produk')) > 0)
                 src="{{ $p->getFirstMediaUrl('foto_produk') }}"
             @else
-                src="https://ui-avatars.com/api/?name=' {{$p->nama}}'&background=BC41BE&color=F2FF58"
+                src="https://ui-avatars.com/api/?name={{$p->nama}}&background=BC41BE&color=F2FF58"
             @endif
             @if (request()->fromKonfigurasi == true)
                 onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'id_konfigurasi' => request()->id_konfigurasi,'fromKonfigurasi' => 'true']) }}'"

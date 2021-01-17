@@ -12,7 +12,7 @@
         <img class="card-img-top" @if (count($p->getMedia('foto_percetakan')) > 0)
         src="{{ $p->getFirstMediaUrl('foto_percetakan') }}"
     @else
-        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+        src="https://ui-avatars.com/api/?name={{$p->nama_toko}}&background=BC41BE&color=F2FF58"
         @endif
         style="height: 180px; object-fit:cover; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>
         <div class="card-body">
