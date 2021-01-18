@@ -91,4 +91,35 @@ class MemberController extends Controller
         }
     }
 
+    public function saldo()
+    {
+        return responseSuccess("data riwayat saldo user", request()->user()->transaksiSaldo);
+    }
+
+    public function filterSaldo(Request $request)
+    {
+        if ($request->filter_saldo === 'Terbaru') {
+            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
+                ->where('status', '!=', null)
+                ->orderBy('updated_at', 'desc');
+        } else if ($request->filter_saldo === 'Harga Tertinggi') {
+            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
+                ->where('status', '!=', null)
+                ->orderBy('jumlah_saldo', 'desc');
+        } else if ($request->filter_saldo === 'Harga Terendah') {
+            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
+                ->where('status', '!=', null)
+                ->orderBy('jumlah_saldo', 'asc');
+        } else {
+            $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
+                ->where('status', '!=', null);
+        }
+
+        if (!empty($transaksiSaldo)) {
+            return responseSuccess("Data Saldo Anda : " . $request->filter_saldo, $transaksiSaldo);
+        }
+
+        return responseError("Data Saldo Anda : " . $request->jenis_dana . " Tidak Ditemukan");
+    }
+
 }
