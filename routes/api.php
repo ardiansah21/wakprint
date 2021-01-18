@@ -26,6 +26,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/saldo', 'MemberController@saldo');
         Route::get('/saldo/filter', 'MemberController@filterSaldo');
         Route::get('/saldo/{transaksi_saldo}', 'MemberController@showSaldo');
+        Route::get('/saldo/batalkan/{transaksi_saldo}', 'MemberController@batalTopUpSaldo');
 
     });
 });

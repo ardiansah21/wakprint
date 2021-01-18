@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
@@ -139,6 +140,16 @@ class MemberController extends Controller
             return responseSuccess("detail riwayat saldo member", $transaksi_saldo);
         }
         return responseError("detail riwayat saldo member kosong");
+    }
+
+    public function batalTopUpSaldo(Transaksi_saldo $transaksi_saldo)
+    {
+        $transaksi_saldo->status = 'Gagal';
+        $transaksi_saldo->keterangan = 'Top Up Telah Dibatalkan';
+        $transaksi_saldo->save();
+        $transaksi_saldo->push();
+        request()->user()->notify(new TopUpNotification('gagal', $transaksi_saldo));
+        return responseSuccess('Top Up Anda Telah Berhasil Dibatalkan', $transaksi_saldo);
     }
 
 }
