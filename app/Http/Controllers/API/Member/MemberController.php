@@ -130,4 +130,12 @@ class MemberController extends Controller
         return responseError("Data Saldo Anda : " . $request->jenis_dana . " Tidak Ditemukan");
     }
 
+    public function showSaldo(Transaksi_saldo $transaksi_saldo)
+    {
+        if (!empty($transaksi_saldo)) {
+            return responseSuccess("detail riwayat saldo member", $transaksi_saldo);
+        }
+        return responseError("detail riwayat saldo member kosong");
+    }
+
 }
