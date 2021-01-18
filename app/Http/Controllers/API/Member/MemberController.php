@@ -38,6 +38,7 @@ class MemberController extends Controller
 
     public function user()
     {
+        request()->user()->produk_favorit = json_decode(request()->user()->produk_favorit);
         return responseSuccess("data user", request()->user());
     }
 
