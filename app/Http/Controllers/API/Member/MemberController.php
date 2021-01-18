@@ -99,22 +99,26 @@ class MemberController extends Controller
     public function filterSaldo(Request $request)
     {
         if ($request->filter_saldo === 'Terbaru') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('jenis_transaksi', '!=', 'Tarik')
+            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                ->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
                 ->orderBy('updated_at', 'desc')
                 ->get();
         } else if ($request->filter_saldo === 'Harga Tertinggi') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('jenis_transaksi', '!=', 'Tarik')
+            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                ->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
                 ->orderBy('jumlah_saldo', 'desc')
                 ->get();
         } else if ($request->filter_saldo === 'Harga Terendah') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('jenis_transaksi', '!=', 'Tarik')
+            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                ->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
                 ->orderBy('jumlah_saldo', 'asc')
                 ->get();
         } else {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('jenis_transaksi', '!=', 'Tarik')
+            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                ->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
                 ->get();
         }
