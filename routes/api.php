@@ -23,8 +23,8 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/', 'MemberController@index');
         Route::get('/user', 'MemberController@user');
         Route::post('/profil/update', 'MemberController@updateProfile');
-        Route::get('/saldo', 'PartnerController@saldo');
-        Route::get('/saldo/filter', 'PartnerController@filterSaldo');
+        Route::get('/saldo', 'MemberController@saldo');
+        Route::get('/saldo/filter', 'MemberController@filterSaldo');
 
     });
 });
