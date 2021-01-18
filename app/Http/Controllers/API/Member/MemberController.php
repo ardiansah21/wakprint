@@ -101,18 +101,22 @@ class MemberController extends Controller
         if ($request->filter_saldo === 'Terbaru') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
-                ->orderBy('updated_at', 'desc');
+                ->orderBy('updated_at', 'desc')
+                ->get();
         } else if ($request->filter_saldo === 'Harga Tertinggi') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
-                ->orderBy('jumlah_saldo', 'desc');
+                ->orderBy('jumlah_saldo', 'desc')
+                ->get();
         } else if ($request->filter_saldo === 'Harga Terendah') {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
                 ->where('status', '!=', null)
-                ->orderBy('jumlah_saldo', 'asc');
+                ->orderBy('jumlah_saldo', 'asc')
+                ->get();
         } else {
             $transaksiSaldo = request()->user()->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik')
-                ->where('status', '!=', null);
+                ->where('status', '!=', null)
+                ->get();
         }
 
         if (!empty($transaksiSaldo)) {
