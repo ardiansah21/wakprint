@@ -181,4 +181,23 @@ class MemberController extends Controller
         return responseSuccess('Top Up Anda Telah Berhasil Dibatalkan', $transaksi_saldo);
     }
 
+    public function favorit()
+    {
+        $member = request()->user();
+        $produk = Produk::all();
+        $produkFavorit = json_decode($member->produk_favorit);
+        $arrFavorit = [];
+
+        if (!empty($produkFavorit)) {
+            foreach ($produk as $p) {
+                for ($i = 0; $i < count($produkFavorit); $i++) {
+                    if ($produkFavorit[$i] == $p->id_produk) {
+                        array_push($arrFavorit, Produk::find($produkFavorit[$i]));
+                    }
+                }
+            }
+            return responseSuccess('Produk Favorit Anda : ', $arrFavorit);
+        }
+    }
+
 }
