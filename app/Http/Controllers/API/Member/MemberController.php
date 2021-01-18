@@ -158,7 +158,7 @@ class MemberController extends Controller
         ]);
 
         $member->notify(new TopUpNotification('pending', $transaksi));
-        return responseSuccess('Top Up Anda Sedang Diproses Silahkan Periksa Riwayat Halaman Pembayaran !');
+        return responseSuccess('Top Up Anda Sedang Diproses Silahkan Periksa Riwayat Halaman Pembayaran !', $transaksi);
     }
 
     public function batalTopUpSaldo(Transaksi_saldo $transaksi_saldo)
