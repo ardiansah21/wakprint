@@ -7,6 +7,7 @@ use App\Pengelola_Percetakan;
 use App\Produk;
 use App\Transaksi_saldo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
@@ -134,6 +135,7 @@ class MemberController extends Controller
     public function showSaldo(Transaksi_saldo $transaksi_saldo)
     {
         if (!empty($transaksi_saldo)) {
+            $transaksi_saldo->batas_waktu = Carbon::parse($transaksi_saldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i') . ' WIB';
             return responseSuccess("detail riwayat saldo member", $transaksi_saldo);
         }
         return responseError("detail riwayat saldo member kosong");
