@@ -119,6 +119,16 @@ class MemberController extends Controller
                 ->where('status', '!=', null)
                 ->orderBy('jumlah_saldo', 'asc')
                 ->get();
+        } else if ($request->filter_saldo === 'Saldo Keluar') {
+            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                ->where('jenis_transaksi', 'Pembayaran')
+                ->where('status', '!=', null)
+                ->get();
+        } else if ($request->filter_saldo === 'Saldo Masuk') {
+            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                ->where('jenis_transaksi', 'TopUp')
+                ->where('status', '!=', null)
+                ->get();
         } else {
             $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
                 ->where('jenis_transaksi', '!=', 'Tarik')
