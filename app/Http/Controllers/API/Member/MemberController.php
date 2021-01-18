@@ -142,6 +142,25 @@ class MemberController extends Controller
         return responseError("detail riwayat saldo member kosong");
     }
 
+    public function topUpSaldo(Request $request)
+    {
+        $member = $request->user();
+        $jumlahSaldo = (int) str_replace('.', '', $request->jumlah_saldo);
+        $kodePembayaran = $jumlahSaldo + rand(1, 999);
+
+        $transaksi = Transaksi_saldo::create([
+            'id_member' => $member->id_member,
+            'jenis_transaksi' => 'TopUp',
+            'jumlah_saldo' => (int) str_replace('.', '', $request->jumlah_saldo),
+            'kode_pembayaran' => $kodePembayaran,
+            'status' => 'Pending',
+            'keterangan' => 'Top Up Sedang Diproses',
+        ]);
+
+        $member->notify(new TopUpNotification('pending', $transaksi));
+        return responseSuccess('Top Up Anda Sedang Diproses Silahkan Periksa Riwayat Halaman Pembayaran !');
+    }
+
     public function batalTopUpSaldo(Transaksi_saldo $transaksi_saldo)
     {
         $transaksi_saldo->status = 'Gagal';
