@@ -8,6 +8,7 @@ use App\Pengelola_Percetakan;
 use App\Pesanan;
 use App\Produk;
 use App\Transaksi_saldo;
+use App\Ulasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -292,6 +293,32 @@ class MemberController extends Controller
         $temp->foto_produk = $produk->foto_produk;
 
         return responseSuccess("Data Detail Ulas Produk", $temp);
+    }
+
+    public function showSudahDiulas(Ulasan $ulasan, Produk $produk)
+    {
+        $ulasan->nama_produk = $produk->nama;
+        $ulasan->nama_toko = $produk->partner->nama_toko;
+        $ulasan->foto_produk = $produk->foto_produk;
+
+        return responseSuccess("Data Detail Ulasan Saya", $ulasan);
+    }
+
+    public function storeUlasan(Request $request, Produk $produk)
+    {
+        $member = $request->user();
+        $ulasan = Ulasan::create([
+            'id_produk' => $produk->id_produk,
+            'id_member' => $member->id_member,
+            'rating' => $request->rating,
+            'pesan' => $request->pesan,
+        ]);
+
+        if (!empty($request->foto)) {
+            $ulasan->addMedia($request->foto)->toMediaCollection('foto_ulasan');
+        }
+
+        return responseSuccess("Produk telah berhasil diulas", $ulasan);
     }
 
 }
