@@ -218,7 +218,7 @@ class MemberController extends Controller
                     $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
                     $ulasan->nama_produk = $k->product->nama;
                     $ulasan->nama_toko = $k->product->partner->nama_toko;
-                    $temp->foto_produk = $k->product->foto_produk;
+                    $ulasan->foto_produk = $k->product->foto_produk;
                     array_push($arraySudahDiulas, $ulasan);
                 } else {
                     $temp = new stdClass();
@@ -234,10 +234,9 @@ class MemberController extends Controller
             }
         }
 
-        $data = [
-            "arrayBelumDiulas" => $arrayBelumDiulas,
-            "arraySudahDiulas" => $arraySudahDiulas,
-        ];
+        $data = [];
+        array_push($data, $arrayBelumDiulas);
+        array_push($data, $arraySudahDiulas);
 
         return responseSuccess("Data ulasan member", $data);
     }
