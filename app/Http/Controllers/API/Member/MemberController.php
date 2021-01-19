@@ -241,11 +241,11 @@ class MemberController extends Controller
         }
 
         $data = [
-            "arrayBelumDiulas" => $arrayBelumDiulas,
-            "arraySudahDiulas" => $arraySudahDiulas,
+            $arrayBelumDiulas,
+            $arraySudahDiulas,
         ];
 
-        return responseSuccess("Data ulasan member", json_encode($data));
+        return responseSuccess("Data ulasan member", $data);
     }
 
 }
