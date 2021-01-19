@@ -245,7 +245,7 @@ class MemberController extends Controller
             "arraySudahDiulas" => $arraySudahDiulas,
         ];
 
-        return responseSuccess("Data ulasan member", json_decode($data, true));
+        return responseSuccess("Data ulasan member", json_encode($data));
     }
 
 }
