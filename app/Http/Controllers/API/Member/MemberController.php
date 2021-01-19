@@ -235,8 +235,8 @@ class MemberController extends Controller
         }
 
         $data = [
-            "arrayBelumDiulas" => $arrayBelumDiulas,
-            "arraySudahDiulas" => $arraySudahDiulas,
+            $arrayBelumDiulas,
+            $arraySudahDiulas,
         ];
 
         return responseSuccess("Data ulasan member", $data);
