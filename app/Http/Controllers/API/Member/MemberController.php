@@ -243,7 +243,7 @@ class MemberController extends Controller
         return responseSuccess("Data ulasan member", $arrayBelumDiulas);
     }
 
-    public function filterUlasan(Request $request)
+    public function sudahDiulas()
     {
         $member = request()->user();
         $pesanan = $member->pesanans->where('status', 'Selesai');
@@ -275,11 +275,7 @@ class MemberController extends Controller
             }
         }
 
-        if ($request->filter_ulasan != "Sudah Diulas") {
-            return responseSuccess("Data yang belum diulas : ", $arrayBelumDiulas);
-        } else {
-            return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
-        }
+        return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
     }
 
 }

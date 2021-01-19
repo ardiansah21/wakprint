@@ -30,7 +30,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::post('/saldo/topup', 'MemberController@topUpSaldo');
         Route::get('/favorit', 'MemberController@favorit');
         Route::get('/ulasan', 'MemberController@ulasan');
-        Route::get('/ulasan/filter', 'MemberController@filterUlasan');
+        Route::get('/ulasan/sudah-diulas', 'MemberController@sudahDiulas');
 
     });
 });
