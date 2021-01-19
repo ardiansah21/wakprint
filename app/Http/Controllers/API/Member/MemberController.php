@@ -282,6 +282,7 @@ class MemberController extends Controller
 
     public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
     {
+        $produk = Produk::find($produk);
         $temp = new stdClass();
         $temp->id_pesanan = $pesanan->id_pesanan;
         $temp->id_member = $pesanan->id_member;
