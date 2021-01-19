@@ -191,11 +191,6 @@ class MemberController extends Controller
     {
         $member = request()->user();
         $produk = Produk::all();
-
-        foreach ($produk as $p) {
-            $p->fitur = json_decode($p->fitur, true);
-        }
-
         $produkFavorit = json_decode($member->produk_favorit);
         $arrFavorit = [];
 
@@ -203,7 +198,9 @@ class MemberController extends Controller
             foreach ($produk as $p) {
                 for ($i = 0; $i < count($produkFavorit); $i++) {
                     if ($produkFavorit[$i] == $p->id_produk) {
-                        array_push($arrFavorit, Produk::find($produkFavorit[$i]));
+                        $favorit = Produk::find($produkFavorit[$i]);
+                        $favorit->fitur = json_decode($p->fitur, true);
+                        array_push($arrFavorit, $favorit);
                     }
                 }
             }
