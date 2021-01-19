@@ -216,11 +216,19 @@ class MemberController extends Controller
                 $k->product->fitur = json_decode($k->product->fitur, true);
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
                     $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
+                    $ulasan->nama_produk = $k->product->nama;
+                    $ulasan->alamat_toko = $k->product->partner->alamat_toko;
                     array_push($arraySudahDiulas, $ulasan);
                 } else {
                     $temp = new stdClass();
-                    $temp->pesanan = $p;
-                    $temp->product = $k->product;
+                    // $temp->pesanan = $p;
+                    $temp->id_pesanan = $p->id_pesanan;
+                    $temp->id_member = $p->id_member;
+                    $temp->id_pengelola = $p->id_pengelola;
+                    $temp->updated_at = $p->updated_at;
+                    // $temp->product = $k->product;
+                    $temp->nama_produk = $k->product->nama;
+                    $temp->alamat_toko = $k->product->partner->alamat_toko;
                     array_push($arrayBelumDiulas, $temp);
                 }
             }
