@@ -159,11 +159,8 @@
                                     style="width:300px; height:200px; object-fit:cover;">
                             </a>
                         @else
-                            <a data-fancybox="gallery" id="linkFotoPercetakan"
-                                href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg">
-                                <img class="img-responsive"
-                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt=""
-                                    style="width:300px; height:200px; object-fit:cover;">
+                            <a data-fancybox="gallery" id="linkFotoPercetakan" href="{{$produk->partner->foto_percetakan}}">
+                                <img class="img-responsive" src="{{$produk->partner->foto_percetakan}}" alt="" style="width:300px; height:200px; object-fit:cover;">
                             </a>
                         @endif
                     </div>
@@ -197,16 +194,7 @@
                             {{ __('Pemilik Percetakan') }}
                         </label>
                         <label class="text-truncate mb-4" style="width: 100%; font-size: 18px;">
-                            @if (!empty($produk->partner->getFirstMediaUrl('avatar')))
-                                <img class="img-responsive align-self-center mr-2"
-                                    src="{{ $produk->partner->getFirstMediaUrl('avatar') }}" width="40" height="40" alt="no logo"
-                                    style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
-                            @else
-                                <img class="img-responsive align-self-center mr-2"
-                                    src="https://ptetutorials.com/images/user-profile.png" width="40" height="40"
-                                    alt="no logo"
-                                    style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
-                            @endif
+                            <img class="img-responsive align-self-center mr-2" src="{{$produk->partner->avatar}}" width="40" height="40" alt="no logo" style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
                             {{ $produk->partner->nama_lengkap }}
                         </label>
                         <label class="SemiBold mb-2" style="font-size: 18px;">
@@ -370,11 +358,8 @@
                                             style="width:285px; height:200px; object-fit:cover;">
                                     </a>
                                 @else
-                                    <a data-fancybox="gallery" id="linkFotoProduk"
-                                        href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg">
-                                        <img class="img-responsive"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                            alt="" style="width:285px; height:200px; object-fit:scale-down;">
+                                    <a data-fancybox="gallery" id="linkFotoProduk" href="{{$produk->foto_produk}}">
+                                        <img class="img-responsive" src="{{$produk->foto_produk}}" alt="" style="width:285px; height:200px; object-fit:scale-down;">
                                     </a>
                                 @endif
                             </div>
