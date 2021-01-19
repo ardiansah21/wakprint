@@ -217,7 +217,7 @@ class MemberController extends Controller
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
                     $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
                     $ulasan->nama_produk = $k->product->nama;
-                    $ulasan->alamat_toko = $k->product->partner->alamat_toko;
+                    $ulasan->nama_toko = $k->product->partner->nama_toko;
                     array_push($arraySudahDiulas, $ulasan);
                 } else {
                     $temp = new stdClass();
@@ -228,7 +228,7 @@ class MemberController extends Controller
                     $temp->updated_at = $p->updated_at;
                     // $temp->product = $k->product;
                     $temp->nama_produk = $k->product->nama;
-                    $temp->alamat_toko = $k->product->partner->alamat_toko;
+                    $temp->nama_toko = $k->product->partner->nama_toko;
                     array_push($arrayBelumDiulas, $temp);
                 }
             }
