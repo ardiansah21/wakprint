@@ -184,7 +184,7 @@
                             {{ __('Pemilik Percetakan') }}
                         </label>
                         <label class="text-truncate mb-4" style="width: 100%; font-size: 18px;">
-                            <img class="img-responsive align-self-center mr-2" src="{{$produk->partner->avatar}}" width="40" height="40" alt="no logo" style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
+                            <img class="img-responsive align-self-center mr-2" src="{{$partner->avatar}}" width="40" height="40" alt="no logo" style="border-radius: 30px; border:solid 2px #BC41BE; object-fit:cover;">
                             {{ $partner->nama_lengkap }}
                         </label>
                         <label class="SemiBold mb-2" style="font-size: 18px;">
