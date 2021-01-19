@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Member;
 use App\Http\Controllers\Controller;
 use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
+use App\Pesanan;
 use App\Produk;
 use App\Transaksi_saldo;
 use Illuminate\Http\Request;
@@ -276,6 +277,20 @@ class MemberController extends Controller
         }
 
         return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
+    }
+
+    public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
+    {
+        $temp = new stdClass();
+        $temp->id_pesanan = $pesanan->id_pesanan;
+        $temp->id_member = $pesanan->id_member;
+        $temp->id_pengelola = $pesanan->id_pengelola;
+        $temp->updated_at = $pesanan->updated_at;
+        $temp->nama_produk = $produk->nama;
+        $temp->nama_toko = $produk->partner->nama_toko;
+        $temp->foto_produk = $produk->foto_produk;
+
+        return responseSuccess("Data Detail Ulas Produk", $temp);
     }
 
 }
