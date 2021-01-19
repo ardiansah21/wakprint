@@ -46,12 +46,7 @@
                                     @endif
                                 @endauth
                             </form>
-                            <img class="card-img-top cursor-pointer"
-                            @if (!empty($produk->getFirstMediaUrl('foto_produk')))
-                                src="{{$produk->getFirstMediaUrl('foto_produk')}}"
-                            @else
-                                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                            @endif onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px; object-fit:cover;" alt="no picture"/>
+                            <img class="card-img-top cursor-pointer" src="{{$produk->foto_produk}}" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px; object-fit:cover;" alt="no picture"/>
                             <div class="card-body cursor-pointer" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'">
                                 <div class="row justify-content-between">
                                     <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$produk->partner->nama_toko ?? '-'}}</label>
@@ -110,6 +105,7 @@
                                                 {{__('Tidak Tersedia')}}
                                             </label>
                                         @elseif(!empty($produk->harga_berwarna))
+                                            <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
                                                 {{rupiah($produk->harga_hitam_putih) ?? '-'}}
                                             </label>
