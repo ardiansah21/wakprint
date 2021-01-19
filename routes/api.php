@@ -29,6 +29,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/saldo/batalkan/{transaksi_saldo}', 'MemberController@batalTopUpSaldo');
         Route::post('/saldo/topup', 'MemberController@topUpSaldo');
         Route::get('/favorit', 'MemberController@favorit');
+        Route::get('/ulasan', 'MemberController@ulasan');
 
     });
 });

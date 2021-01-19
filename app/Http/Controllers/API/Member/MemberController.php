@@ -201,4 +201,34 @@ class MemberController extends Controller
         }
     }
 
+    public function ulasan()
+    {
+        $member = request()->user();
+        $pesanan = $member->pesanans->where('status', 'Selesai');
+
+        $arrayBelumDiulas = [];
+        $arraySudahDiulas = [];
+
+        foreach ($pesanan as $p) {
+            foreach ($p->konfigurasiFile as $k) {
+                if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
+                    $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
+                    array_push($arraySudahDiulas, $ulasan);
+                } else {
+                    $temp = new stdClass();
+                    $temp->pesanan = $p;
+                    $temp->product = $k->product;
+                    array_push($arrayBelumDiulas, $temp);
+                }
+            }
+        }
+
+        $data = [
+            "arrayBelumDiulas" => $arrayBelumDiulas,
+            "arraySudahDiulas" => $arraySudahDiulas,
+        ];
+
+        return responseSuccess("Data ulasan member", $data);
+    }
+
 }
