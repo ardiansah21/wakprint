@@ -297,6 +297,7 @@ class MemberController extends Controller
 
     public function showSudahDiulas(Ulasan $ulasan, Produk $produk)
     {
+        $ulasan->foto = $ulasan->getFirstMediaUrl('foto_ulasan');
         $ulasan->nama_produk = $produk->nama;
         $ulasan->nama_toko = $produk->partner->nama_toko;
         $ulasan->foto_produk = $produk->foto_produk;
