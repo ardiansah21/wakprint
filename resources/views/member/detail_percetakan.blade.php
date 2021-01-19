@@ -142,7 +142,7 @@
                             </a>
                         @else
                             <a data-fancybox="gallery" id="linkFotoPercetakan"
-                                href="{{$produk->partner->foto_percetakan}}">
+                                href="{{$partner->foto_percetakan}}">
                                 <img id="fotoPercetakanUtama" class="img-responsive"
                                     src="{{$produk->partner->foto_percetakan}}" alt=""
                                     style="width:300px; height:200px; object-fit:cover;">
