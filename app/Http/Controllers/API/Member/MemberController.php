@@ -234,9 +234,10 @@ class MemberController extends Controller
             }
         }
 
-        $data = [];
-        array_push($data, $arrayBelumDiulas);
-        array_push($data, $arraySudahDiulas);
+        $data = [
+            "arrayBelumDiulas" => $arrayBelumDiulas,
+            "arraySudahDiulas" => $arraySudahDiulas,
+        ];
 
         return responseSuccess("Data ulasan member", $data);
     }
