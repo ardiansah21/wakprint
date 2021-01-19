@@ -245,7 +245,7 @@ class MemberController extends Controller
             "itemSudahDiulas" => $arraySudahDiulas,
         ];
 
-        return responseSuccess("Data ulasan member", $data);
+        return responseSuccess("Data ulasan member", $arrayBelumDiulas);
     }
 
 }
