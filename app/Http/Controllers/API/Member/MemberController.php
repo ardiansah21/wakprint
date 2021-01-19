@@ -263,7 +263,7 @@ class MemberController extends Controller
                         $u->nama_toko = $k->product->partner->nama_toko;
                         $u->foto_produk = $k->product->foto_produk;
                     }
-                    array_push($arraySudahDiulas,$ulasan)
+                    array_push($arraySudahDiulas, $ulasan);
                 }
             }
         }
