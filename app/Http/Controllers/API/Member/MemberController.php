@@ -258,7 +258,7 @@ class MemberController extends Controller
                 $k->product->fitur = json_decode($k->product->fitur, true);
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
                     $temp = new stdClass();
-                    $temp->ulasan = $member->ulasans->find($k->product->id_produk);
+                    $temp->ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
                     $temp->ulasan->nama_produk = $k->product->nama;
                     $temp->ulasan->nama_toko = $k->product->partner->nama_toko;
                     $temp->ulasan->foto_produk = $k->product->foto_produk;
