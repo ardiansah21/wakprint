@@ -232,6 +232,7 @@ class MemberController extends Controller
                     $temp->id_pesanan = $p->id_pesanan;
                     $temp->id_member = $p->id_member;
                     $temp->id_pengelola = $p->id_pengelola;
+                    $temp->id_produk = $p->id_produk;
                     $temp->updated_at = $p->updated_at;
                     $temp->nama_produk = $k->product->nama;
                     $temp->nama_toko = $k->product->partner->nama_toko;
