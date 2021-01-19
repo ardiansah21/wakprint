@@ -263,11 +263,12 @@ class MemberController extends Controller
                         $u->nama_toko = $k->product->partner->nama_toko;
                         $u->foto_produk = $k->product->foto_produk;
                     }
+                    array_push($arraySudahDiulas,$ulasan)
                 }
             }
         }
 
-        return responseSuccess("Data yang sudah diulas : ", $ulasan);
+        return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
     }
 
     public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
