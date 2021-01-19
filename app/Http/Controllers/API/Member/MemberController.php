@@ -257,17 +257,17 @@ class MemberController extends Controller
             foreach ($p->konfigurasiFile as $k) {
                 $k->product->fitur = json_decode($k->product->fitur, true);
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
-                    $temp = new stdClass();
-                    $temp->ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
-                    $temp->ulasan->nama_produk = $k->product->nama;
-                    $temp->ulasan->nama_toko = $k->product->partner->nama_toko;
-                    $temp->ulasan->foto_produk = $k->product->foto_produk;
-                    array_push($arraySudahDiulas, $temp);
+                    $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
+                    foreach ($ulasan as $u) {
+                        $u->nama_produk = $k->product->nama;
+                        $u->nama_toko = $k->product->partner->nama_toko;
+                        $u->foto_produk = $k->product->foto_produk;
+                    }
                 }
             }
         }
 
-        return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
+        return responseSuccess("Data yang sudah diulas : ", $ulasan);
     }
 
     public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
