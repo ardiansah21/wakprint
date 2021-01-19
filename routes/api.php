@@ -31,6 +31,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/favorit', 'MemberController@favorit');
         Route::get('/ulasan', 'MemberController@ulasan');
         Route::get('/ulasan/sudah-diulas', 'MemberController@sudahDiulas');
+        Route::get('/ulasan/ulas-produk/{pesanan}/{produk}', 'MemberController@showBelumDiulas');
 
     });
 });
