@@ -24,6 +24,10 @@ class MemberController extends Controller
             ->where('harga_berwarna', '<=', 2000)
             ->get();
 
+        foreach ($produk as $p) {
+            $p->fitur = json_decode($p->fitur, true);
+        }
+
         $partner = Pengelola_Percetakan::where('rating_toko', '>=', 4)
         // ->where('jarak', '<=', 1000)
             ->where('email_verified_at', '!=', null)
