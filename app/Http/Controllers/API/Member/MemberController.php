@@ -278,7 +278,7 @@ class MemberController extends Controller
             }
         }
 
-        return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
+        return responseSuccess("Data yang sudah diulas : ", $ulasan);
     }
 
     public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
