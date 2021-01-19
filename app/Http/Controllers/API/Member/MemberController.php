@@ -10,6 +10,7 @@ use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use stdClass;
 
 class MemberController extends Controller
 {
