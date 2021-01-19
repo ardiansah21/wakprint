@@ -250,8 +250,6 @@ class MemberController extends Controller
     {
         $member = request()->user();
         $pesanan = $member->pesanans->where('status', 'Selesai');
-
-        $arrayBelumDiulas = [];
         $arraySudahDiulas = [];
 
         foreach ($pesanan as $p) {
@@ -259,26 +257,17 @@ class MemberController extends Controller
             foreach ($p->konfigurasiFile as $k) {
                 $k->product->fitur = json_decode($k->product->fitur, true);
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
-                    $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
-                    $ulasan->nama_produk = $k->product->nama;
-                    $ulasan->nama_toko = $k->product->partner->nama_toko;
-                    $ulasan->foto_produk = $k->product->foto_produk;
-                    array_push($arraySudahDiulas, $ulasan);
-                } else {
                     $temp = new stdClass();
-                    $temp->id_pesanan = $p->id_pesanan;
-                    $temp->id_member = $p->id_member;
-                    $temp->id_pengelola = $p->id_pengelola;
-                    $temp->updated_at = $p->updated_at;
-                    $temp->nama_produk = $k->product->nama;
-                    $temp->nama_toko = $k->product->partner->nama_toko;
-                    $temp->foto_produk = $k->product->foto_produk;
-                    array_push($arrayBelumDiulas, $temp);
+                    $temp->ulasan = $member->ulasans->find($k->product->id_produk);
+                    $temp->ulasan->nama_produk = $k->product->nama;
+                    $temp->ulasan->nama_toko = $k->product->partner->nama_toko;
+                    $temp->ulasan->foto_produk = $k->product->foto_produk;
+                    array_push($arraySudahDiulas, $temp);
                 }
             }
         }
 
-        return responseSuccess("Data yang sudah diulas : ", $ulasan);
+        return responseSuccess("Data yang sudah diulas : ", $arraySudahDiulas);
     }
 
     public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
@@ -318,6 +307,10 @@ class MemberController extends Controller
         if (!empty($request->foto)) {
             $ulasan->addMedia($request->foto)->toMediaCollection('foto_ulasan');
         }
+
+        $ulasan->nama_produk = $produk->nama;
+        $ulasan->nama_toko = $produk->partner->nama_toko;
+        $ulasan->foto_produk = $produk->foto_produk;
 
         return responseSuccess("Produk telah berhasil diulas", $ulasan);
     }
