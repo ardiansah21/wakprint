@@ -211,6 +211,7 @@ class MemberController extends Controller
         $arraySudahDiulas = [];
 
         foreach ($pesanan as $p) {
+            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
             foreach ($p->konfigurasiFile as $k) {
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
                     $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
