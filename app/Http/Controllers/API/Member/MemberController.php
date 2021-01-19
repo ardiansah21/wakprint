@@ -232,7 +232,7 @@ class MemberController extends Controller
                     $temp->id_pesanan = $p->id_pesanan;
                     $temp->id_member = $p->id_member;
                     $temp->id_pengelola = $p->id_pengelola;
-                    $temp->id_produk = $p->id_produk;
+                    $temp->id_produk = $k->product->id_produk;
                     $temp->updated_at = $p->updated_at;
                     $temp->nama_produk = $k->product->nama;
                     $temp->nama_toko = $k->product->partner->nama_toko;
@@ -282,15 +282,14 @@ class MemberController extends Controller
 
     public function showBelumDiulas(Pesanan $pesanan, Produk $produk)
     {
-        $p = Produk::find($produk);
         $temp = new stdClass();
         $temp->id_pesanan = $pesanan->id_pesanan;
         $temp->id_member = $pesanan->id_member;
         $temp->id_pengelola = $pesanan->id_pengelola;
         $temp->updated_at = $pesanan->updated_at;
-        $temp->nama_produk = $p->nama;
-        $temp->nama_toko = $p->partner->nama_toko;
-        $temp->foto_produk = $p->foto_produk;
+        $temp->nama_produk = $produk->nama;
+        $temp->nama_toko = $produk->partner->nama_toko;
+        $temp->foto_produk = $produk->foto_produk;
 
         return responseSuccess("Data Detail Ulas Produk", $temp);
     }
