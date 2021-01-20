@@ -150,6 +150,41 @@ class MemberController extends Controller
         return responseError('Anda gagal menambahkan alamat baru');
     }
 
+    public function hapusAlamat($idAlamat, Request $request)
+    {
+        $member = $request->user();
+        $alamat = $member->alamat;
+        $new_array[] = array();
+        $i = 0;
+
+        foreach ($alamat['alamat'] as $key => $value) {
+            if ($value['id'] != $idAlamat) {
+                $new_array[$i] = $value;
+                $new_array[$i]['id'] = $i;
+                $i++;
+            }
+        }
+
+        if (json_encode($new_array) === '[[]]') {
+            // $alamat = array();
+            $alamat = array(
+                'IdAlamatUtama' => 0,
+                'alamat' => array(),
+            );
+        } else {
+            $alamat['alamat'] = $new_array;
+            if ($alamat['IdAlamatUtama'] === $idAlamat) {
+                $alamat['IdAlamatUtama'] = $alamat['alamat'][$i - 1]['id'];
+            }
+        }
+
+        $member->alamat = $alamat;
+        $member->save();
+        $member->push();
+
+        return responseSuccess('Anda telah berhasil menghapus alamat Anda', $member->alamat);
+    }
+
     public function saldo()
     {
         return responseSuccess("data riwayat saldo user", request()->user()->transaksiSaldo);
