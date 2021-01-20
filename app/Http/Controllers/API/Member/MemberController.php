@@ -185,6 +185,25 @@ class MemberController extends Controller
         return responseSuccess('Anda telah berhasil menghapus alamat Anda', $member->alamat);
     }
 
+    public function pilihAlamat($idAlamat, Request $request)
+    {
+        $member = $request->user();
+        $alamat = $member->alamat;
+
+        $alamat['IdAlamatUtama'] = $alamat['alamat'][$idAlamat]['id'];
+
+        $member->alamat = $alamat;
+        $member->save();
+        $member->push();
+
+        return responseSuccess("Alamat Utama telah berhasil diubah", $alamat);
+        // if ($request->fromOrder == true) {
+        //     return redirect()->route('konfigurasi.pesanan')->with('success', 'Anda telah mengubah alamat utama Anda');
+        // } else {
+        //     return redirect()->route('alamat')->with('success', 'Anda telah mengubah alamat utama Anda');
+        // }
+    }
+
     public function saldo()
     {
         return responseSuccess("data riwayat saldo user", request()->user()->transaksiSaldo);
