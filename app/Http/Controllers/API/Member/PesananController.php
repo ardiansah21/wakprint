@@ -303,7 +303,7 @@ class PesananController extends Controller
                 }
             }
 
-            return responseSuccess("Hasil filter data pesanan member", $data);
+            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
         }
 
     }
