@@ -37,6 +37,8 @@ class PesananController extends Controller
             return responseSuccess("data pesanan member yang selesai", request()->user()->pesanans->where('status', 'Selesai'));
         } else if ($request->status_pesanan == "Batal") {
             return responseSuccess("data pesanan member yang batal", request()->user()->pesanans->where('status', 'Batal'));
+        } else if ($request->status_pesanan == "Draft") {
+            return responseSuccess("data pesanan member yang disimpan", request()->user()->pesanans->where('status', null));
         } else {
             return responseSuccess("data semua pesanan member", request()->user()->pesanans);
         }
