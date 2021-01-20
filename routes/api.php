@@ -25,6 +25,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::post('/profil/update', 'MemberController@updateProfile');
         Route::post('/profil/alamat/tambah/{idMember}', 'MemberController@tambahAlamat');
         Route::get('/profil/alamat/hapus/{idAlamat}', 'MemberController@hapusAlamat');
+        Route::get('/profil/alamat/pilih/{idAlamat}', 'MemberController@pilihAlamat');
         Route::get('/saldo', 'MemberController@saldo');
         Route::get('/saldo/filter', 'MemberController@filterSaldo');
         Route::get('/saldo/{transaksi_saldo}', 'MemberController@showSaldo');

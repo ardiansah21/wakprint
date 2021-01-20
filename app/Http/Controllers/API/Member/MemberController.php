@@ -197,11 +197,6 @@ class MemberController extends Controller
         $member->push();
 
         return responseSuccess("Alamat Utama telah berhasil diubah", $alamat);
-        // if ($request->fromOrder == true) {
-        //     return redirect()->route('konfigurasi.pesanan')->with('success', 'Anda telah mengubah alamat utama Anda');
-        // } else {
-        //     return redirect()->route('alamat')->with('success', 'Anda telah mengubah alamat utama Anda');
-        // }
     }
 
     public function saldo()
