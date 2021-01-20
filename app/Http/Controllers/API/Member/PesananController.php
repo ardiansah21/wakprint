@@ -245,7 +245,7 @@ class PesananController extends Controller
         $arrFiturTerpilih = [];
 
         if ($request->status_pesanan === 'Draft') {
-            $data = $data->where('id_member', $member->id_pengelola)
+            $data = $data->first()->where('id_member', $member->id_pengelola)
                 ->where('status', null)
                 ->where('id_pesanan', $request->keyword_filter);
             // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
