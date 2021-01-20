@@ -129,7 +129,12 @@ class MemberController extends Controller
             'Alamat Jalan' => $request->alamat_jalan,
         );
 
-        $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
+        if (!empty($request->idAlamatUtama)) {
+            $AlamatFinal['IdAlamatUtama'] = $request->idAlamatUtama;
+        } else {
+            $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
+        }
+
         $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
 
         $member->alamat = $AlamatFinal;
