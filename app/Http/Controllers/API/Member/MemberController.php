@@ -102,6 +102,48 @@ class MemberController extends Controller
         }
     }
 
+    public function tambahAlamat(Request $request)
+    {
+        $member = $request->user();
+        $alamatLama = $member->alamat;
+
+        if (empty($alamatLama)) {
+            $alamatLama = array(
+                'IdAlamatUtama' => 0,
+                'alamat' => array(),
+            );
+            $id = 0;
+        } else {
+            $id = count($alamatLama['alamat']);
+        }
+
+        $alamatBaru[] = array(
+            'id' => $id,
+            'Nama Penerima' => $request->nama_penerima,
+            'Nomor HP' => $request->nomor_hp,
+            'Provinsi' => $request->provinsi,
+            'Kabupaten Kota' => $request->kabupaten_kota,
+            'Kecamatan' => $request->kecamatan,
+            'Kelurahan' => $request->kelurahan,
+            'Kode Pos' => $request->kode_pos,
+            'Alamat Jalan' => $request->alamat_jalan,
+        );
+
+        $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
+        $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
+
+        $member->alamat = $AlamatFinal;
+
+        if ($member->save()) {
+            $member->save();
+            $member->push();
+
+            return responseSuccess('Anda telah berhasil menambahkan alamat baru', $member);
+        }
+
+        return responseError('Anda gagal menambahkan alamat baru');
+    }
+
     public function saldo()
     {
         return responseSuccess("data riwayat saldo user", request()->user()->transaksiSaldo);
