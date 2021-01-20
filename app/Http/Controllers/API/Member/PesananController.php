@@ -251,7 +251,7 @@ class PesananController extends Controller
             // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                 ->get();
 
-            return responseSuccess("Hasil filter data pesanan member", $data);
+            return responseSuccess("Hasil filter data draft pesanan member", $data);
 
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
