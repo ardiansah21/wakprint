@@ -59,6 +59,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Opps.. password anda salah'], 422);
         }
 
+        $user->produk_favorit = json_decode($user->produk_favorit, true);
         //$abilities = $user->role == 'admin' ? ['user:index', 'user:create'] : ['user:index'];
 
         $data = [
