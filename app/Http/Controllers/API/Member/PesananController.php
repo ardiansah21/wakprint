@@ -253,7 +253,7 @@ class PesananController extends Controller
             //     ->where('status', null)
             //     ->where('id_pesanan', $request->keyword_filter)
             //     ->get();
-            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->where('status', null)->get());
+            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->first()->where('status', null)->get());
 
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
