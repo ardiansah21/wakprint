@@ -251,8 +251,8 @@ class PesananController extends Controller
             //     ->where('id_pesanan', $request->keyword_filter);
             $data = $data->where('id_member', $member->id_member)
                 ->where('status', null)
-                ->where('id_pesanan', $request->keyword_filter);
-            // ->get();
+                ->where('id_pesanan', $request->keyword_filter)
+                ->get();
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
 
         } else {
