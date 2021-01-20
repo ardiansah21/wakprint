@@ -244,7 +244,7 @@ class PesananController extends Controller
         $data = $member->pesanans;
         $arrFiturTerpilih = [];
 
-        return responseSuccess("Data Pesanan member", $data);
+        return responseSuccess("Data Pesanan member", $data->where('status', 'Selesai'));
 
         if ($request->status_pesanan === 'Draft') {
             $data = $data->first()->where('id_member', $member->id_pengelola)
