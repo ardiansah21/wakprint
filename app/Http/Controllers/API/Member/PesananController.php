@@ -243,16 +243,21 @@ class PesananController extends Controller
         $member = request()->user();
         $data = $member->pesanans;
         $arrFiturTerpilih = [];
-        // $arrDraft = [];
 
         if ($request->status_pesanan === 'Draft') {
-            // array_push($arrDraft, $data->where('status', null)->where('id_pesanan', $request->keyword_filter));
-            // $data = $data->where('status', null)
-            //     ->where('id_pesanan', $request->keyword_filter);
-            // $data = $data->first()->where('id_member', $member->id_member)
-            //     ->where('status', null)
-            //     ->where('id_pesanan', $request->keyword_filter)
-            //     ->get();
+            foreach ($data as $p) {
+                $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+                $p->jumlah_file = count($p->konfigurasiFile);
+                $p->nama_toko = $p->first()->partner->nama_toko;
+                $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+                foreach ($p->konfigurasiFile as $k) {
+                    $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+                    foreach ($k->fitur_terpilih as $ft) {
+                        array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+                    }
+                    $k->fitur_terpilih = $arrFiturTerpilih;
+                }
+            }
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->first()->where('status', null)->get());
 
         } else {
@@ -291,22 +296,21 @@ class PesananController extends Controller
                         ->get();
                 }
             }
-        }
-
-        foreach ($data as $p) {
-            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-            $p->jumlah_file = count($p->konfigurasiFile);
-            $p->nama_toko = $p->first()->partner->nama_toko;
-            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-            foreach ($p->konfigurasiFile as $k) {
-                $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-                foreach ($k->fitur_terpilih as $ft) {
-                    array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            foreach ($data as $p) {
+                $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+                $p->jumlah_file = count($p->konfigurasiFile);
+                $p->nama_toko = $p->first()->partner->nama_toko;
+                $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+                foreach ($p->konfigurasiFile as $k) {
+                    $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+                    foreach ($k->fitur_terpilih as $ft) {
+                        array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+                    }
+                    $k->fitur_terpilih = $arrFiturTerpilih;
                 }
-                $k->fitur_terpilih = $arrFiturTerpilih;
             }
+            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
         }
 
-        return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
     }
 }
