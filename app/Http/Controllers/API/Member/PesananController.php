@@ -286,18 +286,19 @@ class PesananController extends Controller
                         ->get();
                 }
             }
-            foreach ($data as $p) {
-                $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-                $p->jumlah_file = count($p->konfigurasiFile);
-                $p->nama_toko = $p->first()->partner->nama_toko;
-                $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-                foreach ($p->konfigurasiFile as $k) {
-                    $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-                    foreach ($k->fitur_terpilih as $ft) {
-                        array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-                    }
-                    $k->fitur_terpilih = $arrFiturTerpilih;
+        }
+
+        foreach ($data as $p) {
+            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+            $p->jumlah_file = count($p->konfigurasiFile);
+            $p->nama_toko = $p->first()->partner->nama_toko;
+            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+            foreach ($p->konfigurasiFile as $k) {
+                $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+                foreach ($k->fitur_terpilih as $ft) {
+                    array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
                 }
+                $k->fitur_terpilih = $arrFiturTerpilih;
             }
         }
 
