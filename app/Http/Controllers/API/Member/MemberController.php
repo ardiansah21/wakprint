@@ -102,9 +102,9 @@ class MemberController extends Controller
         }
     }
 
-    public function tambahAlamat(Request $request)
+    public function tambahAlamat($idMember, Request $request)
     {
-        $member = $request->user();
+        $member = Member::find($idMember);
         $alamatLama = $member->alamat;
 
         if (empty($alamatLama)) {
