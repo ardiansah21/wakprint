@@ -35,6 +35,8 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/ulasan/ulas-produk/{pesanan}/{produk}', 'MemberController@showBelumDiulas');
         Route::post('/ulasan/store/{produk}', 'MemberController@storeUlasan');
         Route::get('/ulasan/ulasan-saya/{ulasan}/{produk}', 'MemberController@showSudahDiulas');
+        Route::get('/pesanan/filter', 'PesananController@filterPesanan');
+        Route::apiResource('/pesanan', 'PesananController');
 
     });
 });
