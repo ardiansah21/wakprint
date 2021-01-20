@@ -245,14 +245,14 @@ class PesananController extends Controller
         $arrFiturTerpilih = [];
 
         if ($request->status_pesanan === 'Draft') {
-            $data = $data->where('id_member', $member->id_member)
+            $data = $data->first()->where('id_member', $member->id_member)
                 ->where('status', null)
                 ->where('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                 ->get();
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
-                $data = $data->where('id_member', $member->id_member)
+                $data = $data->first()->where('id_member', $member->id_member)
                     ->where('status', $request->status_pesanan)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->orWhere('id_pesanan', $request->keyword_filter)
@@ -261,7 +261,7 @@ class PesananController extends Controller
                     ->get();
 
             } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
-                $data = $data->where('id_member', $member->id_member)
+                $data = $data->first()->where('id_member', $member->id_member)
                     ->where('status', $request->status_pesanan)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->orWhere('id_pesanan', $request->keyword_filter)
@@ -269,7 +269,7 @@ class PesananController extends Controller
                     ->orderBy('biaya', 'desc')
                     ->get();
             } else if ($request->urutkan_pesanan === 'Harga Terendah') {
-                $data = $data->where('id_member', $member->id_member)
+                $data = $data->first()->where('id_member', $member->id_member)
                     ->where('status', $request->status_pesanan)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->orWhere('id_pesanan', $request->keyword_filter)
@@ -278,7 +278,7 @@ class PesananController extends Controller
                     ->get();
             } else {
                 if ($data->first()->isPaid()) {
-                    $data = $data->where('id_member', $member->id_member)
+                    $data = $data->first()->where('id_member', $member->id_member)
                         ->where('status', $request->status_pesanan)
                         ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                         ->orWhere('id_pesanan', $request->keyword_filter)
