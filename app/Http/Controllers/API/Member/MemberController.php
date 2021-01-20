@@ -131,7 +131,7 @@ class MemberController extends Controller
         );
 
         if (!empty($request->idAlamatUtama)) {
-            $AlamatFinal['IdAlamatUtama'] = $request->idAlamatUtama;
+            $AlamatFinal['IdAlamatUtama'] = (int) $request->idAlamatUtama;
         } else {
             $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
         }
