@@ -144,7 +144,7 @@ class MemberController extends Controller
             $member->save();
             $member->push();
 
-            return responseSuccess('Anda telah berhasil menambahkan alamat baru', $member);
+            return responseSuccess('Anda telah berhasil menambahkan alamat baru', $member->alamat);
         }
 
         return responseError('Anda gagal menambahkan alamat baru');
