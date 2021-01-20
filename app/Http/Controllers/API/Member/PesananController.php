@@ -245,6 +245,7 @@ class PesananController extends Controller
         $arrFiturTerpilih = [];
 
         if ($request->status_pesanan === 'Draft') {
+            $data = $data->first()->where('status', null)->get();
             foreach ($data as $p) {
                 $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
                 $p->jumlah_file = count($p->konfigurasiFile);
@@ -258,7 +259,8 @@ class PesananController extends Controller
                     $k->fitur_terpilih = $arrFiturTerpilih;
                 }
             }
-            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->first()->where('status', null)->get());
+            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
+            // return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->first()->where('status', null)->get());
 
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
