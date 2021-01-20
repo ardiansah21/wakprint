@@ -34,92 +34,157 @@ class ProdukController extends Controller
         return responseError('Data Tidak Ada');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'nama' => ['required', 'string', 'max:150'],
+    //         'harga_hitam_putih' => ['required', 'numeric'],
+    //         'jenis_kertas' => ['required', 'string'],
+    //         'jenis_printer' => ['required', 'string'],
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => $validator->errors()], 422);
+    //     }
+
+    //     $fiturFinal = array();
+
+    //     if (!empty($request->harga_timbal_balik_hitam_putih)) {
+    //         $request->harga_timbal_balik_hitam_putih = (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih);
+    //     } else {
+    //         $request->harga_timbal_balik_hitam_putih = $request->harga_timbal_balik_hitam_putih;
+    //     }
+
+    //     if (!empty($request->harga_berwarna)) {
+    //         $request->harga_berwarna = (int) str_replace('.', '', $request->harga_berwarna);
+    //     } else {
+    //         $request->harga_berwarna = $request->harga_berwarna;
+    //     }
+
+    //     if (!empty($request->harga_timbal_balik_berwarna)) {
+    //         $request->harga_timbal_balik_berwarna = (int) str_replace('.', '', $request->harga_timbal_balik_berwarna);
+    //     } else {
+    //         $request->harga_timbal_balik_berwarna = $request->harga_timbal_balik_berwarna;
+    //     }
+
+    //     if (empty($request->fitur)) {
+    //         $request->fitur = [];
+    //         // foreach ($request->fitur as $key => $value) {
+    //         //     if ($key == 'tambahan') {
+    //         //         foreach ($value as $value2) {
+    //         //             if (isset($value2['foto_fitur'])) {
+    //         //                 $path = public_path('storage/_fitur');
+
+    //         //                 if (!file_exists($path)) {
+    //         //                     mkdir($path, 0777, true);
+    //         //                 }
+    //         //                 $file = $value2['foto_fitur'];
+    //         //                 $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
+
+    //         //                 $file->move($path, $name);
+    //         //                 $foto_fitur = url('/storage/_fitur') . '/' . $name;
+    //         //             } else {
+    //         //                 $foto_fitur = null;
+    //         //             }
+
+    //         //             array_push($fiturFinal, $this->setFitur(
+    //         //                 $value2['nama'],
+    //         //                 (int) str_replace('.', '', $value2['harga']),
+    //         //                 $value2['deskripsi'],
+    //         //                 $foto_fitur
+    //         //             ));
+    //         //         }
+    //         //     } else {
+    //         //         array_push($fiturFinal, $this->getFiturTemplate($key, $value));
+    //         //     }
+    //         // }
+    //     }
+
+    //     $produk = Produk::create([
+    //         'id_pengelola' => request()->user()->id_pengelola,
+    //         'nama' => $request->nama,
+    //         'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
+    //         'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
+    //         'harga_berwarna' => $request->harga_berwarna,
+    //         'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
+    //         'berwarna' => $request->berwarna,
+    //         'hitam_putih' => $request->hitam_putih,
+    //         'deskripsi' => $request->deskripsi,
+    //         'jenis_kertas' => $request->jenis_kertas,
+    //         'jenis_printer' => $request->jenis_printer,
+    //         'status' => $request->status,
+    //         'fitur' => json_encode(json_decode($request->fitur)),
+    //     ]);
+
+    //     if ($request->input('document') != null) {
+    //         foreach ($request->input('document', []) as $file) {
+    //             $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
+    //         }
+    //     }
+
+    //     $produk->save();
+    //     $produk->push();
+
+    //     return responseSuccess('Anda berhasil menambahkan produk baru Anda', $produk, 201);
+    // }
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama' => ['required', 'string', 'max:150'],
-            'harga_hitam_putih' => ['required', 'numeric'],
-            'jenis_kertas' => ['required', 'string'],
-            'jenis_printer' => ['required', 'string'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
 
         $fiturFinal = array();
 
-        if (!empty($request->harga_timbal_balik_hitam_putih)) {
-            $request->harga_timbal_balik_hitam_putih = (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih);
-        } else {
-            $request->harga_timbal_balik_hitam_putih = $request->harga_timbal_balik_hitam_putih;
-        }
+        if (!empty($request->fitur)) {
+            foreach ($request->fitur as $key => $value) {
+                if ($key == 'tambahan') {
+                    foreach ($value as $value2) {
+                        if (isset($value2['foto_fitur'])) {
+                            $path = public_path('storage/_fitur');
 
-        if (!empty($request->harga_berwarna)) {
-            $request->harga_berwarna = (int) str_replace('.', '', $request->harga_berwarna);
-        } else {
-            $request->harga_berwarna = $request->harga_berwarna;
-        }
+                            if (!file_exists($path)) {
+                                mkdir($path, 0777, true);
+                            }
+                            $file = $value2['foto_fitur'];
+                            $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
 
-        if (!empty($request->harga_timbal_balik_berwarna)) {
-            $request->harga_timbal_balik_berwarna = (int) str_replace('.', '', $request->harga_timbal_balik_berwarna);
-        } else {
-            $request->harga_timbal_balik_berwarna = $request->harga_timbal_balik_berwarna;
-        }
+                            $file->move($path, $name);
+                            $foto_fitur = url('/storage/_fitur') . '/' . $name;
+                        } else {
+                            $foto_fitur = null;
+                        }
 
-        if (empty($request->fitur)) {
-            $request->fitur = [];
-            // foreach ($request->fitur as $key => $value) {
-            //     if ($key == 'tambahan') {
-            //         foreach ($value as $value2) {
-            //             if (isset($value2['foto_fitur'])) {
-            //                 $path = public_path('storage/_fitur');
-
-            //                 if (!file_exists($path)) {
-            //                     mkdir($path, 0777, true);
-            //                 }
-            //                 $file = $value2['foto_fitur'];
-            //                 $name = uniqid() . '-' . str_replace(' ', '_', $file->getClientOriginalName());
-
-            //                 $file->move($path, $name);
-            //                 $foto_fitur = url('/storage/_fitur') . '/' . $name;
-            //             } else {
-            //                 $foto_fitur = null;
-            //             }
-
-            //             array_push($fiturFinal, $this->setFitur(
-            //                 $value2['nama'],
-            //                 (int) str_replace('.', '', $value2['harga']),
-            //                 $value2['deskripsi'],
-            //                 $foto_fitur
-            //             ));
-            //         }
-            //     } else {
-            //         array_push($fiturFinal, $this->getFiturTemplate($key, $value));
-            //     }
-            // }
+                        array_push($fiturFinal, $this->setFitur(
+                            $value2['nama'],
+                            (int) str_replace('.', '', $value2['harga']),
+                            $value2['deskripsi'],
+                            $foto_fitur
+                        ));
+                    }
+                } else {
+                    array_push($fiturFinal, $this->getFiturTemplate($key, $value));
+                }
+            }
         }
 
         $produk = Produk::create([
-            'id_pengelola' => request()->user()->id_pengelola,
+            'id_pengelola' => Auth::id(),
             'nama' => $request->nama,
             'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
-            'harga_timbal_balik_hitam_putih' => $request->harga_timbal_balik_hitam_putih,
-            'harga_berwarna' => $request->harga_berwarna,
-            'harga_timbal_balik_berwarna' => $request->harga_timbal_balik_berwarna,
-            'berwarna' => $request->berwarna,
-            'hitam_putih' => $request->hitam_putih,
+            'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
+            'harga_berwarna' => (int) str_replace('.', '', $request->harga_berwarna),
+            'harga_timbal_balik_berwarna' => (int) str_replace('.', '', $request->harga_timbal_balik_berwarna),
+            'berwarna' => $request->berwarna == 'True' ? '1' : '0',
+            'hitam_putih' => $request->hitam_putih == 'True' ? '1' : '0',
             'deskripsi' => $request->deskripsi,
             'jenis_kertas' => $request->jenis_kertas,
             'jenis_printer' => $request->jenis_printer,
             'status' => $request->status,
-            'fitur' => json_encode(json_decode($request->fitur)),
+            'fitur' => json_encode($fiturFinal),
         ]);
 
         if ($request->input('document') != null) {
@@ -127,11 +192,9 @@ class ProdukController extends Controller
                 $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
             }
         }
-
         $produk->save();
-        $produk->push();
 
-        return responseSuccess('Anda berhasil menambahkan produk baru Anda', $produk, 201);
+        return responseSuccess('Anda berhasil menambahkan produk baru Anda', $produk);
     }
 
     /**
