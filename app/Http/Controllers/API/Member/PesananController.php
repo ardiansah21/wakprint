@@ -246,14 +246,14 @@ class PesananController extends Controller
         $arrDraft = [];
 
         if ($request->status_pesanan === 'Draft') {
-            array_push($arrDraft, $data->where('status', null)->where('id_pesanan', $request->keyword_filter));
+            // array_push($arrDraft, $data->where('status', null)->where('id_pesanan', $request->keyword_filter));
             // $data = $data->where('status', null)
             //     ->where('id_pesanan', $request->keyword_filter);
             // $data = $data->where('id_member', $member->id_member)
             //     ->where('status', null)
             //     ->where('id_pesanan', $request->keyword_filter)
             //     ->get();
-            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $arrDraft);
+            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->where('status', null)->where('id_pesanan', $request->keyword_filter));
 
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
