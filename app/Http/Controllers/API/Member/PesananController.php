@@ -247,9 +247,9 @@ class PesananController extends Controller
         if ($request->status_pesanan === 'Draft') {
             $data = $data->where('id_member', $member->id_pengelola)
                 ->where('status', null)
-                ->where('id_pesanan', $request->keyword_filter)
+                ->where('id_pesanan', $request->keyword_filter);
             // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
-                ->get();
+            // ->get();
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
                 $data = $data->first()->where('id_member', $member->id_pengelola)
