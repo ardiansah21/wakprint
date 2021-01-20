@@ -250,6 +250,9 @@ class PesananController extends Controller
                 ->where('id_pesanan', $request->keyword_filter)
             // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                 ->get();
+
+            return responseSuccess("Hasil filter data pesanan member", $data);
+
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
                 $data = $data->first()->where('id_member', $member->id_pengelola)
@@ -286,22 +289,22 @@ class PesananController extends Controller
                         ->get();
                 }
             }
-        }
-
-        foreach ($data as $p) {
-            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-            $p->jumlah_file = count($p->konfigurasiFile);
-            $p->nama_toko = $p->first()->partner->nama_toko;
-            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-            foreach ($p->konfigurasiFile as $k) {
-                $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-                foreach ($k->fitur_terpilih as $ft) {
-                    array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            foreach ($data as $p) {
+                $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+                $p->jumlah_file = count($p->konfigurasiFile);
+                $p->nama_toko = $p->first()->partner->nama_toko;
+                $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+                foreach ($p->konfigurasiFile as $k) {
+                    $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+                    foreach ($k->fitur_terpilih as $ft) {
+                        array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+                    }
+                    $k->fitur_terpilih = $arrFiturTerpilih;
                 }
-                $k->fitur_terpilih = $arrFiturTerpilih;
             }
+
+            return responseSuccess("Hasil filter data pesanan member", $data);
         }
 
-        return responseSuccess("Hasil filter data pesanan member", $data);
     }
 }
