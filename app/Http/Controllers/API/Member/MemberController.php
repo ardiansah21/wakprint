@@ -106,6 +106,7 @@ class MemberController extends Controller
     public function tambahAlamat($idMember, Request $request)
     {
         $member = Member::find($idMember);
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
         $alamatLama = $member->alamat;
 
         if (empty($alamatLama)) {
