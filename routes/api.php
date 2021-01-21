@@ -16,13 +16,15 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::namespace ('API\Member')->prefix('v1')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
-    Route::get('/produk', 'MemberController@produk');
-    Route::get('/partner', 'MemberController@partner');
+    // Route::get('/produk', 'MemberController@produk');
+    // Route::get('/partner', 'MemberController@partner');
 
     Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
         Route::get('/', 'MemberController@index');
         Route::get('/user', 'MemberController@user');
+        Route::get('/produk', 'MemberController@produk');
+        Route::get('/partner', 'MemberController@partner');
         Route::post('/profil/update', 'MemberController@updateProfile');
         Route::post('/profil/update-photo', 'MemberController@uploadPhotoProfile');
         Route::post('/profil/alamat/tambah/{idMember}', 'MemberController@tambahAlamat');
