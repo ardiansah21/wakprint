@@ -505,23 +505,20 @@ class MemberController extends Controller
 
         if (count($partner->getMedia('foto_percetakan')) > 0) {
             foreach ($partner->getMedia('foto_percetakan') as $p) {
-                array_push($arrFotoPercetakan, $p->getUrl());
+                array_push($arrFotoPercetakan, "https://wakprint.com" . $p->getUrl());
             }
         }
 
+        $partner->avatar = "https://wakprint.com" . $partner->avatar;
         $partner->foto_percetakans = $arrFotoPercetakan;
         $produk = $partner->products;
         $ratingPartner = $produk->where('id_pengelola', $idPartner)->avg('rating');
 
         if (empty($ratingPartner)) {
             $ratingPartner = $partner->rating_toko;
-        } else {
-            $partner->rating_toko = $ratingPartner;
         }
 
-        // $data = new stdClass();
-        // $data = $partner;
-        // $data->foto_percetakans = $arrFotoPercetakan;
+        $partner->rating_toko = $ratingPartner;
 
         return responseSuccess('Data Detail Partner', $partner);
     }
