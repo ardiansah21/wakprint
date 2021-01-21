@@ -510,7 +510,7 @@ class MemberController extends Controller
         }
 
         // $partner->foto_percetakan = $arrFotoPercetakan;
-        $partner->atks = $partner->atk;
+        // $partner->atks = $partner->atk;
         $produk = $partner->products;
         // $ulasan = Ulasan::all();
         $ratingPartner = $produk->where('id_pengelola', $idPartner)->avg('rating');
