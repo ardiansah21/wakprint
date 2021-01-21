@@ -167,10 +167,12 @@ class MemberController extends Controller
             'Alamat Jalan' => $request->alamat_jalan,
         ];
 
-        if (!empty($request->idAlamatUtama)) {
+        if ($request->idAlamatUtama != null) {
             $alamat['IdAlamatUtama'] = $request->idAlamatUtama;
-        } else {
+        } else if ($alamat['IdAlamatUtama'] != null) {
             $alamat['IdAlamatUtama'] = $member->alamat['IdAlamatUtama'];
+        } else {
+            $alamat['IdAlamatUtama'] = 0;
         }
 
         // $AlamatFinal['alamat'] = $alamat['alamat'][$idAlamat];
