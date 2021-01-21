@@ -106,7 +106,6 @@ class MemberController extends Controller
     public function tambahAlamat($idMember, Request $request)
     {
         $member = Member::find($idMember);
-        // $member->produk_favorit = json_decode($member->produk_favorit, true);
         $alamatLama = $member->alamat;
 
         if (empty($alamatLama)) {
@@ -140,6 +139,7 @@ class MemberController extends Controller
         $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
 
         $member->alamat = $AlamatFinal;
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
 
         if ($member->save()) {
             $member->save();
