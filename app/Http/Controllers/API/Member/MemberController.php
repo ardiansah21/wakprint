@@ -175,10 +175,8 @@ class MemberController extends Controller
             $alamat['IdAlamatUtama'] = 0;
         }
 
-        // $AlamatFinal['alamat'] = $alamat['alamat'][$idAlamat];
         $member->alamat = $alamat;
         $member->save();
-        // $member->push();
 
         return responseSuccess('Anda telah berhasil mengubah alamat Anda', $member->alamat);
     }
