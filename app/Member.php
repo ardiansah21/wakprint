@@ -19,6 +19,14 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     // protected $guard = 'member';
     protected $primaryKey = 'id_member';
 
+    protected $attributes = [
+        'jumlah_saldo' => 0,
+        'alamat' => array(
+            'IdAlamatUtama' => 0,
+            'alamat' => array(),
+        ),
+    ];
+
     protected $guarded = [];
     // protected $guarded = ['id_member', 'created_at', 'updated_at'];
 

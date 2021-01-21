@@ -55,11 +55,6 @@ class MemberController extends Controller
         $member = $request->user();
         $member->produk_favorit = json_decode($member->produk_favorit, true);
 
-        if (!empty($request->foto)) {
-            $member->clearMediaCollection();
-            $member->addMedia($request->foto)->toMediaCollection('avatar');
-        }
-
         if (empty($request->password_baru)) {
             $member->update([
                 'nama_lengkap' => $request->nama,
@@ -477,6 +472,14 @@ class MemberController extends Controller
             return responseSuccess('Tidak ada poto ulasan Anda');
         }
 
+    }
+
+    public function tambahFavorit(Request $request)
+    {
+        $member = $request->user();
+        $member->produk_favorit = $request->favorit;
+
+        return responseSuccess("Berhasil merubah item favorit", $member);
     }
 
 }
