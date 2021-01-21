@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Produk;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -172,7 +173,7 @@ class ProdukController extends Controller
         }
 
         $produk = Produk::create([
-            'id_pengelola' => Auth::id(),
+            'id_pengelola' => auth()->id(),
             'nama' => $request->nama,
             'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
             'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
@@ -194,7 +195,10 @@ class ProdukController extends Controller
         }
         $produk->save();
 
-        return responseSuccess('Anda berhasil menambahkan produk baru Anda', $produk);
+        $data = $produk;
+        $data->fitur = json_decode($produk->fitur);
+
+        return responseSuccess('Anda berhasil menambahkan produk baru Anda', $data);
     }
 
     /**
