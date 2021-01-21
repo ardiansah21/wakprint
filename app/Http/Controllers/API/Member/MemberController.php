@@ -173,8 +173,8 @@ class MemberController extends Controller
             $alamat['IdAlamatUtama'] = $alamat['IdAlamatUtama'];
         }
 
-        // array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
-        $member->alamat['alamat'][$idAlamat] = $alamat['alamat'][$idAlamat];
+        array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
+        $member->alamat = $alamat;
         $member->save();
         $member->push();
 
