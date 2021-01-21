@@ -25,6 +25,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/user', 'MemberController@user');
         Route::get('/produk', 'MemberController@produk');
         Route::get('/partner', 'MemberController@partner');
+        Route::get('/partner/detail/{idPartner}', 'MemberController@detailPartner');
         Route::post('/profil/update', 'MemberController@updateProfile');
         Route::post('/profil/update-photo', 'MemberController@uploadPhotoProfile');
         Route::post('/profil/alamat/tambah/{idMember}', 'MemberController@tambahAlamat');

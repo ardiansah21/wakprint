@@ -498,4 +498,34 @@ class MemberController extends Controller
         return responseSuccess("Berhasil merubah item favorit", $member);
     }
 
+    public function detailPartner($idPartner)
+    {
+        $partner = Pengelola_Percetakan::find($idPartner);
+        $arrFotoPercetakan = [];
+
+        if (count($partner->getMedia('foto_percetakan')) > 0) {
+            foreach ($partner->getMedia('foto_percetakan') as $p) {
+                array_push($arrFotoPercetakan, $p->getUrl());
+            }
+        }
+
+        $partner->foto_percetakan = $arrFotoPercetakan;
+        $partner->atks = $partner->atk;
+        $produk = $partner->products;
+        // $ulasan = Ulasan::all();
+        $ratingPartner = $produk->where('id_pengelola', $idPartner)->avg('rating');
+        // $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
+
+        if (empty($ratingPartner)) {
+            $ratingPartner = $partner->rating_toko;
+        } else {
+            $partner->rating_toko = $ratingPartner;
+        }
+
+        $partner->save();
+        $partner->push();
+
+        return responseSuccess('Data Detail Partner', $partner);
+    }
+
 }
