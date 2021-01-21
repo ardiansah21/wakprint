@@ -113,7 +113,7 @@ class MemberController extends Controller
             $member->clearMediaCollection();
             $member->addMedia($request->foto)->toMediaCollection('avatar');
 
-            return responseSuccess('Poto Profil Anda telah berhasil diubah', $member);
+            return responseSuccess('Poto Profil Anda telah berhasil diubah');
         } else {
             return responseSuccess('Poto Profil Anda tidak berubah');
         }
