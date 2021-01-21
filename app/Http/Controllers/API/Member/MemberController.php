@@ -53,6 +53,7 @@ class MemberController extends Controller
     public function updateProfile(Request $request)
     {
         $member = $request->user();
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
 
         if (!empty($request->foto)) {
             $member->clearMediaCollection();
@@ -106,6 +107,7 @@ class MemberController extends Controller
     public function uploadPhotoProfile(Request $request)
     {
         $member = $request->user();
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
 
         if (!empty($request->foto)) {
             $member->clearMediaCollection();
