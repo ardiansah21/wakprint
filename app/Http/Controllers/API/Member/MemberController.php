@@ -150,6 +150,37 @@ class MemberController extends Controller
         return responseError('Anda gagal menambahkan alamat baru');
     }
 
+    public function editAlamat($idAlamat, Request $request)
+    {
+        $member = $request->user();
+        $alamat = $member->alamat;
+
+        $alamat['alamat'][$idAlamat] = [
+            'id' => $idAlamat,
+            'Nama Penerima' => $request->nama_penerima,
+            'Nomor HP' => $request->nomor_hp,
+            'Provinsi' => $request->provinsi,
+            'Kabupaten Kota' => $request->kabupaten_kota,
+            'Kecamatan' => $request->kecamatan,
+            'Kelurahan' => $request->kelurahan,
+            'Kode Pos' => $request->kode_pos,
+            'Alamat Jalan' => $request->alamat_jalan,
+        ];
+
+        if (!empty($request->idAlamatUtama)) {
+            $alamat['IdAlamatUtama'] = $request->idAlamatUtama;
+        } else {
+            $alamat['IdAlamatUtama'] = $alamat['IdAlamatUtama'];
+        }
+
+        // array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
+        $member->alamat = $alamat;
+        $member->save();
+        $member->push();
+
+        return responseSuccess('Anda telah berhasil mengubah alamat Anda', $alamat);
+    }
+
     public function hapusAlamat($idAlamat, Request $request)
     {
         $member = $request->user();
