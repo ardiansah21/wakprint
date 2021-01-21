@@ -176,6 +176,7 @@ class MemberController extends Controller
         }
 
         $member->alamat = $alamat;
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
         $member->save();
 
         return responseSuccess('Anda telah berhasil mengubah alamat Anda', $member);
