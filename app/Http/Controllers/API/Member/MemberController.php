@@ -510,11 +510,8 @@ class MemberController extends Controller
         }
 
         $partner->foto_percetakans = $arrFotoPercetakan;
-        // $partner->atks = $partner->atk;
         $produk = $partner->products;
-        // $ulasan = Ulasan::all();
         $ratingPartner = $produk->where('id_pengelola', $idPartner)->avg('rating');
-        // $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
 
         if (empty($ratingPartner)) {
             $ratingPartner = $partner->rating_toko;
@@ -522,8 +519,9 @@ class MemberController extends Controller
             $partner->rating_toko = $ratingPartner;
         }
 
-        $partner->save();
-        $partner->push();
+        // $data = new stdClass();
+        // $data = $partner;
+        // $data->foto_percetakans = $arrFotoPercetakan;
 
         return responseSuccess('Data Detail Partner', $partner);
     }
