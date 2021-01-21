@@ -178,7 +178,7 @@ class MemberController extends Controller
         $member->alamat = $alamat;
         $member->save();
 
-        return responseSuccess('Anda telah berhasil mengubah alamat Anda');
+        return responseSuccess('Anda telah berhasil mengubah alamat Anda', $member);
     }
 
     public function hapusAlamat($idAlamat, Request $request)
