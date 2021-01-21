@@ -139,12 +139,13 @@ class MemberController extends Controller
         $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
 
         $member->alamat = $AlamatFinal;
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
 
         if ($member->save()) {
             $member->save();
             $member->push();
 
-            return responseSuccess('Anda telah berhasil menambahkan alamat baru', $AlamatFinal);
+            return responseSuccess('Anda telah berhasil menambahkan alamat baru', $member);
         }
 
         return responseError('Anda gagal menambahkan alamat baru');
@@ -198,7 +199,6 @@ class MemberController extends Controller
         }
 
         if (json_encode($new_array) === '[[]]') {
-            // $alamat = array();
             $alamat = array(
                 'IdAlamatUtama' => 0,
                 'alamat' => array(),
@@ -211,10 +211,11 @@ class MemberController extends Controller
         }
 
         $member->alamat = $alamat;
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
         $member->save();
         $member->push();
 
-        return responseSuccess('Anda telah berhasil menghapus alamat Anda', $member->alamat);
+        return responseSuccess('Anda telah berhasil menghapus alamat Anda', $member);
     }
 
     public function pilihAlamat($idAlamat, Request $request)
@@ -225,10 +226,11 @@ class MemberController extends Controller
         $alamat['IdAlamatUtama'] = $alamat['alamat'][$idAlamat]['id'];
 
         $member->alamat = $alamat;
+        $member->produk_favorit = json_decode($member->produk_favorit, true);
         $member->save();
         $member->push();
 
-        return responseSuccess("Alamat Utama telah berhasil diubah", $alamat);
+        return responseSuccess("Alamat Utama telah berhasil diubah", $member);
     }
 
     public function saldo()
