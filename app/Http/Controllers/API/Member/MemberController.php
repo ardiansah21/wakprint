@@ -150,14 +150,6 @@ class MemberController extends Controller
         return responseError('Anda gagal menambahkan alamat baru');
     }
 
-    public function showAlamat($idAlamat, Request $request)
-    {
-        $member = $request->user();
-        $alamat = $member->alamat;
-
-        return responseSuccess('Data Alamat Anda', $alamat['alamat'][$idAlamat]);
-    }
-
     public function editAlamat($idAlamat, Request $request)
     {
         $member = $request->user();
@@ -182,7 +174,7 @@ class MemberController extends Controller
         }
 
         // array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
-        $member->alamat = $alamat;
+        $member->alamat['alamat'][$idAlamat] = $alamat['alamat'][$idAlamat];
         $member->save();
         $member->push();
 
