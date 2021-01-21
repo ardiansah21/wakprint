@@ -50,6 +50,22 @@ class MemberController extends Controller
         return responseSuccess("data user", request()->user());
     }
 
+    public function produk()
+    {
+        $produk = Produk::all();
+        foreach ($produk as $p) {
+            $p->fitur = json_decode($p->fitur, true);
+        }
+
+        return responseSuccess("data semua produk", $produk);
+    }
+
+    public function partner()
+    {
+        $partner = Pengelola_Percetakan::all();
+        return responseSuccess("data semua partner", $partner);
+    }
+
     public function updateProfile(Request $request)
     {
         $member = $request->user();
