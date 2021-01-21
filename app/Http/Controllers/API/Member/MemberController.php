@@ -155,7 +155,7 @@ class MemberController extends Controller
         $member = $request->user();
         $alamat = $member->alamat;
 
-        $member->alamat['alamat'][$idAlamat] = [
+        $member->alamat['alamat'][$idAlamat]->update([
             'id' => $idAlamat,
             'Nama Penerima' => $request->nama_penerima,
             'Nomor HP' => $request->nomor_hp,
@@ -165,7 +165,19 @@ class MemberController extends Controller
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kode_pos,
             'Alamat Jalan' => $request->alamat_jalan,
-        ];
+        ]);
+
+        // $member->alamat['alamat'][$idAlamat] = [
+        //     'id' => $idAlamat,
+        //     'Nama Penerima' => $request->nama_penerima,
+        //     'Nomor HP' => $request->nomor_hp,
+        //     'Provinsi' => $request->provinsi,
+        //     'Kabupaten Kota' => $request->kabupaten_kota,
+        //     'Kecamatan' => $request->kecamatan,
+        //     'Kelurahan' => $request->kelurahan,
+        //     'Kode Pos' => $request->kode_pos,
+        //     'Alamat Jalan' => $request->alamat_jalan,
+        // ];
 
         if (!empty($request->idAlamatUtama)) {
             $member->alamat['IdAlamatUtama'] = $request->idAlamatUtama;
