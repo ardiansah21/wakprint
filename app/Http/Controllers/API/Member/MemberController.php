@@ -103,6 +103,21 @@ class MemberController extends Controller
         }
     }
 
+    public function uploadPhotoProfile(Request $request)
+    {
+        $member = $request->user();
+
+        if (!empty($request->foto)) {
+            $member->clearMediaCollection();
+            $member->addMedia($request->foto)->toMediaCollection('avatar');
+
+            return responseSuccess('Poto Profil Anda telah berhasil diubah');
+        } else {
+            return responseSuccess('Poto Profil Anda tidak berubah');
+        }
+
+    }
+
     public function tambahAlamat($idMember, Request $request)
     {
         $member = Member::find($idMember);
@@ -445,6 +460,21 @@ class MemberController extends Controller
         $ulasan->foto_produk = $produk->foto_produk;
 
         return responseSuccess("Produk telah berhasil diulas", $ulasan);
+    }
+
+    public function uploadPhotoUlasan(Request $request)
+    {
+        $member = $request->user();
+        $jumlahUlasan = count($member->ulasans);
+        $ulasan = Ulasan::find($jumlahUlasan);
+
+        if (!empty($request->foto)) {
+            $ulasan->addMedia($request->foto)->toMediaCollection('foto_ulasan');
+            return responseSuccess('Poto Ulasan Anda telah berhasil dikirim');
+        } else {
+            return responseSuccess('Tidak ada poto ulasan Anda');
+        }
+
     }
 
 }

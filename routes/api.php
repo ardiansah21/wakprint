@@ -23,6 +23,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/', 'MemberController@index');
         Route::get('/user', 'MemberController@user');
         Route::post('/profil/update', 'MemberController@updateProfile');
+        Route::post('/profil/update-photo', 'MemberController@uploadPhotoProfile');
         Route::post('/profil/alamat/tambah/{idMember}', 'MemberController@tambahAlamat');
         Route::get('/profil/alamat/hapus/{idAlamat}', 'MemberController@hapusAlamat');
         Route::get('/profil/alamat/pilih/{idAlamat}', 'MemberController@pilihAlamat');
@@ -37,6 +38,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/ulasan/sudah-diulas', 'MemberController@sudahDiulas');
         Route::get('/ulasan/ulas-produk/{pesanan}/{produk}', 'MemberController@showBelumDiulas');
         Route::post('/ulasan/store/{produk}', 'MemberController@storeUlasan');
+        Route::post('/ulasan/upload-photo', 'MemberController@uploadPhotoUlasan');
         Route::get('/ulasan/ulasan-saya/{ulasan}/{produk}', 'MemberController@showSudahDiulas');
         Route::get('/pesanans/filter', 'PesananController@filterPesanan');
         Route::apiResource('/pesanans', 'PesananController');
