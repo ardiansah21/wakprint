@@ -52,9 +52,9 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function getAvatarAttribute()
     {
         if (!empty($this->getFirstMediaUrl('avatar'))) {
-            return $this->getFirstMediaUrl('avatar');
+            return 'https://wakprint.com' . $this->getFirstMediaUrl('avatar');
         }
-        return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
+        return 'https://ui-avatars.com/api/?name=' . trim($this->nama_lengkap, " ") . '&background=BC41BE&color=F2FF58';
     }
 
     public function registerMediaCollections(): void
