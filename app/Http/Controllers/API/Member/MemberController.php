@@ -155,7 +155,7 @@ class MemberController extends Controller
         $member = $request->user();
         $alamat = $member->alamat;
 
-        $member->alamat['alamat'][$idAlamat]->update([
+        $alamat['alamat'][$idAlamat] = [
             'id' => $idAlamat,
             'Nama Penerima' => $request->nama_penerima,
             'Nomor HP' => $request->nomor_hp,
@@ -165,30 +165,18 @@ class MemberController extends Controller
             'Kelurahan' => $request->kelurahan,
             'Kode Pos' => $request->kode_pos,
             'Alamat Jalan' => $request->alamat_jalan,
-        ]);
-
-        // $member->alamat['alamat'][$idAlamat] = [
-        //     'id' => $idAlamat,
-        //     'Nama Penerima' => $request->nama_penerima,
-        //     'Nomor HP' => $request->nomor_hp,
-        //     'Provinsi' => $request->provinsi,
-        //     'Kabupaten Kota' => $request->kabupaten_kota,
-        //     'Kecamatan' => $request->kecamatan,
-        //     'Kelurahan' => $request->kelurahan,
-        //     'Kode Pos' => $request->kode_pos,
-        //     'Alamat Jalan' => $request->alamat_jalan,
-        // ];
+        ];
 
         if (!empty($request->idAlamatUtama)) {
-            $member->alamat['IdAlamatUtama'] = $request->idAlamatUtama;
+            $alamat['IdAlamatUtama'] = $request->idAlamatUtama;
         } else {
-            $member->alamat['IdAlamatUtama'] = $member->alamat['IdAlamatUtama'];
+            $alamat['IdAlamatUtama'] = $member->alamat['IdAlamatUtama'];
         }
 
         // $AlamatFinal['alamat'] = $alamat['alamat'][$idAlamat];
-        // $member->alamat = $alamat;
+        $member->alamat = $alamat;
         $member->save();
-        $member->push();
+        // $member->push();
 
         return responseSuccess('Anda telah berhasil mengubah alamat Anda', $member->alamat);
     }
