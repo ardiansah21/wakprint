@@ -155,7 +155,7 @@ class MemberController extends Controller
         $member = $request->user();
         $alamat = $member->alamat;
 
-        $alamat['alamat'][$idAlamat] = [
+        $member->alamat['alamat'][$idAlamat] = [
             'id' => $idAlamat,
             'Nama Penerima' => $request->nama_penerima,
             'Nomor HP' => $request->nomor_hp,
@@ -168,17 +168,17 @@ class MemberController extends Controller
         ];
 
         if (!empty($request->idAlamatUtama)) {
-            $alamat['IdAlamatUtama'] = $request->idAlamatUtama;
+            $member->alamat['IdAlamatUtama'] = $request->idAlamatUtama;
         } else {
-            $alamat['IdAlamatUtama'] = $alamat['IdAlamatUtama'];
+            $member->alamat['IdAlamatUtama'] = $member->alamat['IdAlamatUtama'];
         }
 
-        array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
-        $member->alamat = $alamat;
+        // $AlamatFinal['alamat'] = $alamat['alamat'][$idAlamat];
+        // $member->alamat = $alamat;
         $member->save();
         $member->push();
 
-        return responseSuccess('Anda telah berhasil mengubah alamat Anda', $alamat);
+        return responseSuccess('Anda telah berhasil mengubah alamat Anda', $member->alamat);
     }
 
     public function hapusAlamat($idAlamat, Request $request)
