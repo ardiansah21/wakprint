@@ -494,6 +494,8 @@ class MemberController extends Controller
     {
         $member = $request->user();
         $member->produk_favorit = $request->favorit;
+        $member->save();
+        $member->push();
 
         return responseSuccess("Berhasil merubah item favorit", $member);
     }
