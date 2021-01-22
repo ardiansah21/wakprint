@@ -83,7 +83,7 @@ class PartnerController extends Controller
 
         if (count($partner->getMedia('foto_percetakan')) > 0) {
             foreach ($partner->getMedia('foto_percetakan') as $media) {
-                if (!in_array($media->file_name, $request->images->pluck('original_name')->toArray())) {
+                if (!in_array($media->file_name, $request->foto_percetakan->pluck('original_name')->toArray())) {
                     $media->delete();
                 }
             }
@@ -91,10 +91,12 @@ class PartnerController extends Controller
 
         $media = $partner->getMedia('foto_percetakan')->pluck('file_name')->toArray();
 
-        if (!empty($request->images)) {
-            foreach ($request->images as $file) {
+        if (!empty($request->foto_percetakan)) {
+            foreach ($request->foto_percetakan as $file) {
                 if (count($media) === 0 || !in_array($file->original_name, $media)) {
-                    $partner->addMedia(storage_path('tmp/uploads/' . $file->original_name))->toMediaCollection('foto_percetakan');
+                    // $partner->addMedia(storage_path('tmp/uploads/' . $file->original_name))->toMediaCollection('foto_percetakan');
+                    $partner->addMedia($file)->toMediaCollection('foto_percetakan');
+
                 }
             }
         }
