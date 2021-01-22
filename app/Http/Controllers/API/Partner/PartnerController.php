@@ -57,6 +57,7 @@ class PartnerController extends Controller
         }
 
         $partner = request()->user();
+        // $partner->clearMediaCollection('foto_percetakan');
 
         if ($request->ntkwh > 100) {
             return responseError('Maaf nilai persentase toleransi minimum halaman berwarna tidak boleh lebih dari 100% yah');
@@ -81,28 +82,64 @@ class PartnerController extends Controller
             $partner->addMedia($request->file('avatar'))->toMediaCollection('avatar');
         }
 
-        if (count($partner->getMedia('foto_percetakan')) > 0) {
+        // $images = json_decode($request->images,true);
+        // $im = [];
+        // foreach($images as $mag){
+        //     array_push($im,$mag);
+        // }
+        // return responseSuccess("rrrrrrrrrrrrrrrrr",$request->images);
+
+        // return $request->images;
+
+        // return responseSuccess("rrrrrrrrrrrrrrrrr", json_encode( $partner->addMedia($request->file('foto_percetakan')))->toMediaCollection('foto_percetakan'));
+        //  $request->file('foto_percetakan', []);
+
+        // return json_encode($request->file('foto_percetakan', [])[0]);
+        // return $request->all();
+
+        // return $partner->getMedia('foto_percetakan');
+
+        // return $arrOriNamesResponse = collect($request->foto_percetakan)->map(function($i){
+        //             return $i->getClientOriginalName();
+        //     });
+
+        // return $partner->getMedia('foto_percetakan');
+
+        if (count($partner->getMedia('foto_percetakan', [])) > 0) {
+
+            // $partner->clearMediaCollection('foto_percetakan');
+            // return "OK";
+
+            $arrOriNamesResponse = collect($request->foto_percetakan)->map(function ($i) {
+                return $i->getClientOriginalName();
+            });
+            // return $arrOriNamesResponse;
+
             foreach ($partner->getMedia('foto_percetakan') as $media) {
-                if (!in_array($media->file_name, $request->foto_percetakan->pluck('original_name')->toArray())) {
+                if (!in_array($media->file_name, $arrOriNamesResponse->toArray())) {
                     $media->delete();
+
                 }
             }
         }
+
+        // return $partner->getMedia('foto_percetakan')->pluck('file_name');
 
         $media = $partner->getMedia('foto_percetakan')->pluck('file_name')->toArray();
 
-        if (!empty($request->foto_percetakan)) {
+        if (count($request->file('foto_percetakan', [])) > 0) {
             foreach ($request->foto_percetakan as $file) {
-                if (count($media) === 0 || !in_array($file->original_name, $media)) {
+                if (count($media) === 0 || !in_array($file->getClientOriginalName(), $media)) {
                     // $partner->addMedia(storage_path('tmp/uploads/' . $file->original_name))->toMediaCollection('foto_percetakan');
                     $partner->addMedia($file)->toMediaCollection('foto_percetakan');
-
                 }
             }
         }
 
-        if ($partner->save()) {
-            $partner->push();
+        if ($partner->push() && $partner->save()) {
+
+            // return $partner->getMedia('foto_percetakan')->pluck('file_name');
+
             return responseSuccess("Profil berhasil diubah", $partner);
         }
 

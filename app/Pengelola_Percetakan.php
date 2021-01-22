@@ -65,9 +65,14 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function getFotoPercetakanAttribute()
     {
         if (!empty($this->getFirstMediaUrl('foto_percetakan'))) {
-            return 'https://wakprint.com' . $this->getFirstMediaUrl('foto_percetakan');
+
+            return $this->getMedia('foto_percetakan')->map(function ($media) {
+                return $media->getFullUrl();
+            });
+            // return 'https://wakprint.com' . $this->getFirstMediaUrl('foto_percetakan');
         }
-        return 'https://ui-avatars.com/api/?name=' . trim($this->nama_toko, " ") . '&background=BC41BE&color=F2FF58';
+
+        return ['https://ui-avatars.com/api/?name=' . trim($this->nama_toko, " ") . '&background=BC41BE&color=F2FF58'];
     }
 
     public function getAtksAttribute()
