@@ -102,6 +102,7 @@ class PartnerController extends Controller
         }
 
         if ($partner->save()) {
+            $partner->push();
             return responseSuccess("Profil berhasil diubah", $partner);
         }
 
