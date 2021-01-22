@@ -503,6 +503,7 @@ class MemberController extends Controller
     public function detailPartner($idPartner)
     {
         $partner = Pengelola_Percetakan::find($idPartner);
+        $produk = $partner->products;
         $arrFotoPercetakan = [];
 
         if (count($partner->getMedia('foto_percetakan')) > 0) {
@@ -513,7 +514,7 @@ class MemberController extends Controller
 
         $partner->avatar = "https://wakprint.com" . $partner->avatar;
         $partner->foto_percetakans = $arrFotoPercetakan;
-        $produk = $partner->products;
+        $partner->produk = $produk;
         $ratingPartner = $produk->where('id_pengelola', $idPartner)->avg('rating');
 
         if (empty($ratingPartner)) {
