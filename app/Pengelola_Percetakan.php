@@ -52,7 +52,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function getAvatarAttribute()
     {
         if (!empty($this->getFirstMediaUrl('avatar'))) {
-            return $this->getFullUrl('avatar');
+            return 'https://wakprint.com' . $this->getFirstMediaUrl('avatar');
         }
         return 'https://ui-avatars.com/api/?name=' . trim($this->nama_lengkap, " ") . '&background=BC41BE&color=F2FF58';
     }
@@ -65,7 +65,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     public function getFotoPercetakanAttribute()
     {
         if (!empty($this->getFirstMediaUrl('foto_percetakan'))) {
-            return $this->getFullUrl('foto_percetakan');
+            return 'https://wakprint.com' . $this->getFirstMediaUrl('foto_percetakan');
         }
         return 'https://ui-avatars.com/api/?name=' . trim($this->nama_toko, " ") . '&background=BC41BE&color=F2FF58';
     }
