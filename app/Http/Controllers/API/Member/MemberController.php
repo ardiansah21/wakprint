@@ -504,6 +504,9 @@ class MemberController extends Controller
     {
         $partner = Pengelola_Percetakan::find($idPartner);
         $produk = $partner->products;
+        foreach ($produk as $p) {
+            $p->fitur = json_decode($p->fitur, true);
+        }
         $arrFotoPercetakan = [];
 
         if (count($partner->getMedia('foto_percetakan')) > 0) {
