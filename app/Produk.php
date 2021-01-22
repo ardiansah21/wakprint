@@ -63,7 +63,7 @@ class Produk extends Model implements HasMedia
     public function getFotoProdukAttribute()
     {
         if (!empty($this->getFirstMediaUrl('foto_produk'))) {
-            return $this->getFullUrl('foto_produk');
+            return 'https://wakprint.com' . $this->getFirstMediaUrl('foto_produk');
         }
         return 'https://ui-avatars.com/api/?name=' . trim($this->nama, " ") . '&background=BC41BE&color=F2FF58';
     }
