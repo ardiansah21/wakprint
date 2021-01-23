@@ -566,6 +566,7 @@ class MemberController extends Controller
         $ratingProduk = round($ulasan->avg('rating'), 1);
 
         foreach ($ulasan as $u) {
+            $u->foto = $u->getMedia('foto_ulasan')->getFullUrl();
             $u->pelanggan = Member::find($u->id_member);
             $u->pelanggan->produk_favorit = json_decode($u->pelanggan->produk_favorit, true);
         }
