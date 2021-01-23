@@ -142,9 +142,9 @@
                             </a>
                         @else
                             <a data-fancybox="gallery" id="linkFotoPercetakan"
-                                href="{{$partner->foto_percetakan}}">
+                                href="{{$partner->foto_percetakan[0]}}">
                                 <img id="fotoPercetakanUtama" class="img-responsive"
-                                    src="{{$partner->foto_percetakan}}" alt=""
+                                    src="{{$partner->foto_percetakan[0]}}" alt=""
                                     style="width:300px; height:200px; object-fit:cover;">
                             </a>
                         @endif
