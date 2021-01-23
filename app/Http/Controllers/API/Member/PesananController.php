@@ -58,7 +58,7 @@ class PesananController extends Controller
         $data->nama_lengkap = $pesanan->member->nama_lengkap;
         $data->metode_penerimaan = $pesanan->metode_penerimaan;
         $data->alamat_penerima = $pesanan->alamat_penerima;
-        $data->alamat_toko = request()->user()->alamat_toko;
+        $data->alamat_toko = $pesanan->partner->alamat_toko;
         $data->status = $pesanan->status;
         $data->biaya = $pesanan->biaya;
         $data->jumlah_file = count($pesanan->konfigurasiFile);
