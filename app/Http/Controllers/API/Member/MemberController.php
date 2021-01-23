@@ -567,12 +567,14 @@ class MemberController extends Controller
 
         foreach ($ulasan as $u) {
             $u->pelanggan = Member::find($u->id_member);
+            $u->pelanggan->produk_favorit = json_decode($u->pelanggan->produk_favorit, true);
         }
 
         $data = new stdClass();
         $data->ulasan = $ulasan;
         $data->produk = $produk;
         $data->produk->rating = $ratingProduk;
+        $data->produk->fitur = json_decode($data->produk->fitur);
 
         return responseSuccess("Data Ulasan Produk : " . $produk->nama, $data);
     }
