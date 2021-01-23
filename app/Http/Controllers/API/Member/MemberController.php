@@ -557,4 +557,15 @@ class MemberController extends Controller
 
         return responseSuccess("Laporan telah berhasil dikirimkan ! ", $laporProduk);
     }
+
+    public function ulasanProduk($idProduk)
+    {
+        $produk = Produk::find($idProduk);
+        $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
+        $ratingProduk = round($ulasan->avg('rating'), 1);
+
+        $produk->rating = $ratingProduk;
+
+        return responseSuccess("Data Ulasan Produk : " . $produk->nama, $ulasan);
+    }
 }
