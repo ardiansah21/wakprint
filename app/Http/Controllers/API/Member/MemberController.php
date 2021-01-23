@@ -541,4 +541,19 @@ class MemberController extends Controller
         // $data->rating = $ratingProduk;
         return responseSuccess("Detail produk : ", $produk);
     }
+
+    public function storeLaporProduk($idProduk, Request $request)
+    {
+        $member = $request->user();
+        $produk = Produk::find($idProduk);
+
+        $laporProduk = Lapor_produk::create([
+            'id_produk' => $produk->id_produk,
+            'id_member' => $member->id_member,
+            'pesan' => $request->pesan,
+            'status' => 'Pending',
+        ]);
+
+        return responseSuccess("Laporan telah berhasil dikirimkan ! ", $laporProduk);
+    }
 }
