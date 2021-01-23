@@ -566,7 +566,8 @@ class MemberController extends Controller
 
         foreach ($ulasan as $u) {
             $member = Member::find($u->id_member);
-            $u->pelanggan = array_push($arrMember, $member);
+            array_push($arrMember, $member);
+            $u->pelanggan = $arrMember;
         }
 
         $ratingProduk = round($ulasan->avg('rating'), 1);
