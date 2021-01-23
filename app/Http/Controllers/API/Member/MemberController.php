@@ -562,17 +562,18 @@ class MemberController extends Controller
     {
         $produk = Produk::find($idProduk);
         $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
-        $arrMember = [];
-
-        foreach ($ulasan as $u) {
-            $member = Member::find($u->id_member);
-            array_push($arrMember, $member);
-            $u->pelanggan = $arrMember;
-        }
 
         $ratingProduk = round($ulasan->avg('rating'), 1);
-        $produk->rating = $ratingProduk;
 
-        return responseSuccess("Data Ulasan Produk : " . $produk->nama, $ulasan);
+        foreach ($ulasan as $u) {
+            $u->pelanggan = Member::find($u->id_member);
+        }
+
+        $data = new stdClass();
+        $data->ulasan = $ulasan;
+        $data->produk = $produk;
+        $data->produk->rating = $ratingProduk;
+
+        return responseSuccess("Data Ulasan Produk : " . $produk->nama, $data);
     }
 }
