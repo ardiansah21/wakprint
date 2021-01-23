@@ -529,4 +529,28 @@ class MemberController extends Controller
         return responseSuccess('Data Detail Partner', $partner);
     }
 
+    public function detailProduk($idProduk)
+    {
+        $produk = Produk::find($idProduk);
+
+        if (count($produk->getMedia('foto_produk')) > 0) {
+            foreach ($produk->getMedia('foto_produk') as $p) {
+                array_push($arrFotoProduk, "https://wakprint.com" . $p->getUrl());
+            }
+        }
+
+        // $produk->foto_produk = $arrFotoProduk;
+        // $data = new stdClass();
+        // $data = $produk;
+        $produk->fitur = json_decode($produk->fitur, true);
+        // $produk->foto_produk = $arrFotoProduk;
+        // $data->atk = $produk->atks();
+        // $ulasan = Ulasan::all();
+
+        // $ratingPartner = $produk->where('id_pengelola', $produk->partner->id_pengelola)->avg('rating');
+        // $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
+
+        // $data->rating = $ratingProduk;
+        return responseSuccess("Detail produk : ", $produk);
+    }
 }
