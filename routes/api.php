@@ -49,6 +49,8 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/ulasan/ulasan-saya/{ulasan}/{produk}', 'MemberController@showSudahDiulas');
         Route::get('/ulasan/produk/{idProduk}', 'MemberController@ulasanProduk');
         Route::get('/pesanans/filter', 'PesananController@filterPesanan');
+        Route::get('/pesanans/batalkan/{pesanan}', 'PesananController@batalkanPesanan');
+        Route::get('/pesanans/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanans', 'PesananController');
 
     });
