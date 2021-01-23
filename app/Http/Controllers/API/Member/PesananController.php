@@ -44,47 +44,48 @@ class PesananController extends Controller
         }
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  \App\Pesanan  $pesanan
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show(Pesanan $pesanan)
-    // {
-    //     $data = new stdClass();
-    //     $data->id_pesanan = $pesanan->id_pesanan;
-    //     $data->nama_lengkap = $pesanan->member->nama_lengkap;
-    //     $data->metode_penerimaan = $pesanan->metode_penerimaan;
-    //     $data->alamat_penerima = $pesanan->alamat_penerima;
-    //     $data->alamat_toko = request()->user()->alamat_toko;
-    //     $data->status = $pesanan->status;
-    //     $data->biaya = $pesanan->biaya;
-    //     $data->jumlah_file = count($pesanan->konfigurasiFile);
-    //     $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
-    //     $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $data->updated_at = $pesanan->updated_at;
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Pesanan  $pesanan
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Pesanan $pesanan)
+    {
+        $data = new stdClass();
+        $data->id_pesanan = $pesanan->id_pesanan;
+        $data->nama_lengkap = $pesanan->member->nama_lengkap;
+        $data->metode_penerimaan = $pesanan->metode_penerimaan;
+        $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->alamat_toko = request()->user()->alamat_toko;
+        $data->status = $pesanan->status;
+        $data->biaya = $pesanan->biaya;
+        $data->jumlah_file = count($pesanan->konfigurasiFile);
+        $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+        $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->updated_at = $pesanan->updated_at;
 
-    //     $arrFiturTerpilih = [];
-    //     foreach ($pesanan->konfigurasiFile as $k) {
-    //         $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
-    //         $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+        $arrFiturTerpilih = [];
+        foreach ($pesanan->konfigurasiFile as $k) {
+            $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
+            $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
-    //         foreach ($k->fitur_terpilih as $ft) {
-    //             array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-    //         }
+            foreach ($k->fitur_terpilih as $ft) {
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            }
 
-    //         $k->fitur_terpilih = $arrFiturTerpilih;
-    //         $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
-    //         $k->alamat_toko = request()->user()->alamat_toko;
-    //         $k->product->fitur = json_decode($k->product->fitur, true);
-    //         $k->produk = $k->product;
-    //     }
+            $k->fitur_terpilih = $arrFiturTerpilih;
+            $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
+            $k->alamat_toko = request()->user()->alamat_toko;
+            $k->product->fitur = json_decode($k->product->fitur, true);
+            $k->produk = $k->product;
+        }
 
-    //     $data->konfigurasi_file = $pesanan->konfigurasiFile;
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
+        $data->transaksi_saldo = $pesanan->transaksiSaldo;
 
-    //     return responseSuccess("detail pesanan partner yang login", $data);
-    // }
+        return responseSuccess("detail pesanan partner yang login", $data);
+    }
 
     // /**
     //  * Update the specified resource in storage.
