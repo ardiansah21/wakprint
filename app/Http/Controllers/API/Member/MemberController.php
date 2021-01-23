@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
+use App\Lapor_produk;
 use App\Member;
 use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
