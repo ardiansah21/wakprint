@@ -558,10 +558,21 @@ class MemberController extends Controller
         return responseSuccess("Laporan telah berhasil dikirimkan ! ", $laporProduk);
     }
 
-    public function ulasanProduk($idProduk)
+    public function ulasanProduk($idProduk, Request $request)
     {
         $produk = Produk::find($idProduk);
-        $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
+
+        if ($request->filter_ulasan === "Rating Tertinggi ke Terendah") {
+            $ulasan = Ulasan::where('id_produk', $produk->id_produk)
+                ->orderBy('rating', 'desc')
+                ->get();
+        } else if ($request->filter_ulasan === "Rating Terendah ke Tertinggi") {
+            $ulasan = Ulasan::where('id_produk', $produk->id_produk)
+                ->orderBy('rating', 'asc')
+                ->get();
+        } else {
+            $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
+        }
 
         $ratingProduk = round($ulasan->avg('rating'), 1);
 
