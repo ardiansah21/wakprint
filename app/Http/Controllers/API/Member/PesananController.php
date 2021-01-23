@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
+use App\Pesanan;
 use Illuminate\Http\Request;
 use stdClass;
 
