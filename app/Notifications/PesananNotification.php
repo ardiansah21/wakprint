@@ -27,7 +27,7 @@ class PesananNotification extends Notification implements ShouldQueue
         'pesananDiTolak',
         'pesananDiBatalkan',
     ];
-    private $title, $description;
+    private $title, $description, $url;
 
     /**
      * Create a new notification instance.
@@ -161,7 +161,7 @@ class PesananNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return BroadcastMessage
      */
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable)PesananNotification
     {
         return new BroadcastMessage([
             'title' => $this->title,

@@ -38,7 +38,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
      * @var array
      */
     protected $appends = [
-        'jarak',
+        // 'jarak',
         'avatar',
         'foto_percetakan',
         'atks',
@@ -110,10 +110,10 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
     }
 
     //simulasi jarak
-    public function getJarakAttribute()
-    {
-        return $this->id_pengelola * 100;
-    }
+    // public function getJarakAttribute()
+    // {
+    //     return $this->id_pengelola * 100;
+    // }
 
     //TODO diganti dengan yang ada s nya di cek lagi mana aja yang tidak menggunakan s
     public function pesanan()

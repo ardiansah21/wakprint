@@ -116,12 +116,6 @@ class MemberController extends Controller
         }
     }
 
-    public function konfigurasiFile(Request $request)
-    {
-        $member = Member::find(Auth::id());
-        return view('member.konfigurasi_file_lanjutan', compact('member'));
-    }
-
     public function cari(Request $request)
     {
         if ($request->ajax()) {
@@ -531,7 +525,7 @@ class MemberController extends Controller
         ]);
     }
 
-    public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
+    public function cekWarna(\Illuminate\Http\UploadedFile$file, $path)
     {
         //TODO merapikan struktur code dan storage
 
@@ -819,23 +813,23 @@ class MemberController extends Controller
             );
             $id = 0;
         } else {
-            $id = count($alamatLama['alamat']);
+            $id = count($alamatLama->alamat);
         }
 
         $alamatBaru[] = array(
             'id' => $id,
-            'Nama Penerima' => $request->namapenerima,
-            'Nomor HP' => $request->nomorhp,
+            'NamaPenerima' => $request->namapenerima,
+            'NomorHP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kota,
+            'KabupatenKota' => $request->kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan,
+            'KodePos' => $request->kodepos,
+            'AlamatJalan' => $request->alamatjalan,
         );
 
-        $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
-        $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
+        $AlamatFinal['IdAlamatUtama'] = $alamatLama->IdAlamatUtama;
+        $AlamatFinal['alamat'] = array_merge($alamatLama->alamat, $alamatBaru);
 
         $member->alamat = $AlamatFinal;
         $member->save();
@@ -848,7 +842,7 @@ class MemberController extends Controller
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
 
-        $alamat['alamat'][$request->id] = [
+        $alamat->alamat[$request->id] = [
             'id' => $request->id,
             'Nama Penerima' => $request->namapenerima,
             'Nomor HP' => $request->nomorhp,
@@ -860,11 +854,11 @@ class MemberController extends Controller
             'Alamat Jalan' => $request->alamatjalan,
         ];
 
-        if ($alamat['IdAlamatUtama'] === $request->id) {
-            $alamat['IdAlamatUtama'] = $request->id;
+        if ($alamat->IdAlamatUtama === $request->id) {
+            $alamat->IdAlamatUtama = $request->id;
         }
 
-        // array_merge($alamat['alamat'], $alamat['alamat'][$request->id]);
+        // array_merge($alamat->alamat, $alamat->alamat[$request->id]);
         $member->alamat = $alamat;
         $member->save();
 
@@ -876,7 +870,7 @@ class MemberController extends Controller
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;
 
-        $alamat['IdAlamatUtama'] = $alamat['alamat'][$id]['id'];
+        $alamat->IdAlamatUtama = $alamat->alamat[$id]->id;
 
         $member->alamat = $alamat;
         $member->save();
@@ -895,20 +889,23 @@ class MemberController extends Controller
         $new_array[] = array();
         $i = 0;
 
-        foreach ($alamat['alamat'] as $key => $value) {
-            if ($value['id'] != $id) {
+        foreach ($alamat->alamat as $key => $value) {
+            if ($value->id != $id) {
                 $new_array[$i] = $value;
-                $new_array[$i]['id'] = $i;
+                $new_array[$i]->id = $i;
                 $i++;
             }
         }
 
         if (json_encode($new_array) === '[[]]') {
-            $alamat = array();
+            $alamat = array(
+                'IdAlamatUtama' => 0,
+                'alamat' => array(),
+            );
         } else {
-            $alamat['alamat'] = $new_array;
-            if ($alamat['IdAlamatUtama'] === $request->id) {
-                $alamat['IdAlamatUtama'] = $alamat['alamat'][$i - 1]['id'];
+            $alamat->alamat = $new_array;
+            if ($alamat->IdAlamatUtama === $request->id) {
+                $alamat->IdAlamatUtama = $alamat->alamat[$i - 1]->id;
             }
         }
 

@@ -1,5 +1,6 @@
 @php
 $member = Auth::user();
+// dd(collect($p));
 @endphp
 <div class="card shadow cursor-pointer mb-2" style="border-radius: 10px;">
     {{-- <a class="text-decoration-none"
@@ -33,30 +34,24 @@ $member = Auth::user();
             @endauth
         </form>
         <input id="fotoProduk" type="text" value="{{ $p->getFirstMediaUrl('foto_produk') }}" hidden>
-        <img class="card-img-top cursor-pointer"
-            @if (count($p->getMedia('foto_produk')) > 0)
-                src="{{ $p->getFirstMediaUrl('foto_produk') }}"
-            @else
-                src="https://ui-avatars.com/api/?name={{$p->nama}}&background=BC41BE&color=F2FF58"
-            @endif
-            @if (request()->fromKonfigurasi == true)
-                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'id_konfigurasi' => request()->id_konfigurasi,'fromKonfigurasi' => 'true']) }}'"
-            @else
-                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
-            @endif
-            style="height: 180px; object-fit:cover; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan Foto"/>
-        <div class="card-body cursor-pointer"
-            @if (request()->fromKonfigurasi == true)
-                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'id_konfigurasi' => request()->id_konfigurasi,'fromKonfigurasi' => 'true']) }}'"
-            @else
-                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
-            @endif>
+        <img class="card-img-top cursor-pointer" @if (count($p->getMedia('foto_produk')) > 0) src="{{ $p->getFirstMediaUrl('foto_produk') }}"
+@else
+                src="https://ui-avatars.com/api/?name={{ $p->nama }}&background=BC41BE&color=F2FF58" @endif @if (request()->fromKonfigurasi == true)
+        onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'id_konfigurasi' => request()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
+    @else
+        onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
+        @endif
+        style="height: 180px; object-fit:cover; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan
+        Foto"/>
+        <div class="card-body cursor-pointer" @if (request()->fromKonfigurasi == true) onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'id_konfigurasi' => request()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
+@else
+                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'" @endif>
             <div class="row justify-content-between">
                 <label class="col-md-7 text-truncate ml-0"
                     style="font-size: 14px;">{{ $p->partner->nama_toko ?? '-' }}</label>
                 <label class="col-md-auto card-text text-right mr-0" style="font-size: 14px;">
                     <i class="material-icons md-18 align-middle mr-0">location_on</i>
-                        {{ __(($p->partner->jarak/1000).' km') }}
+                    {{ __($p->partner->jarak / 1000 . ' km') }}
                 </label>
             </div>
             <label class="card-title text-truncate-multiline font-weight-bold"
@@ -70,27 +65,24 @@ $member = Auth::user();
                         class="material-icons md-18 align-middle mr-1">print</i>{{ $p->jenis_printer ?? '' }}</label>
             </div>
         </div>
-        <div class="card-footer card-footer-primary cursor-pointer"
-            @if (request()->fromKonfigurasi == true)
-                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk,'fromKonfigurasi=true']) }}'"
-            @else
-                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
-            @endif
+        <div class="card-footer card-footer-primary cursor-pointer" @if (request()->fromKonfigurasi == true) onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'fromKonfigurasi=true']) }}'"
+@else
+                onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'" @endif
             style="border-radius: 0px 0px 10px 10px;">
             <div class="row justify-content-between ml-0 mr-0">
                 <div>
                     @php
-                        $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
-                        $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+                    $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                    $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
 
-                        if($jumlahDiskonGray > $p->maksimal_diskon){
-                            $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
-                            $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
-                        }
-                        else{
-                            $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
-                            $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
-                        }
+                    if($jumlahDiskonGray > $p->maksimal_diskon){
+                    $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                    $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                    }
+                    else{
+                    $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                    $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                    }
                     @endphp
                     @if (!empty($p->harga_hitam_putih) && !empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
