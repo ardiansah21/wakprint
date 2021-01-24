@@ -21,10 +21,7 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
 
     protected $attributes = [
         'jumlah_saldo' => 0,
-        'alamat' => array(
-            'IdAlamatUtama' => 0,
-            'alamat' => array(),
-        ),
+        'alamat' => '{"IdAlamatUtama" : 0, "alamat" : []}',
     ];
 
     protected $guarded = [];
@@ -34,7 +31,7 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'alamat' => 'array',
+        'alamat' => 'object',
     ];
 
     public function registerMediaCollections(): void
