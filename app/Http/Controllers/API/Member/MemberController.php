@@ -657,7 +657,7 @@ class MemberController extends Controller
                     ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
                     ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
                     ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
-                    ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                // ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
                     ->orderBy('updated_at', 'desc')
                     ->get();
             } else {
@@ -681,6 +681,7 @@ class MemberController extends Controller
                 foreach ($p->fitur as $ft) {
                     array_push($arrFilterFitur, $ft['nama']);
                 }
+                $arrFitur = $p->fitur->where('nama', 'like', '%' . $arrFilterFitur . '%');
             }
         }
 
@@ -694,7 +695,7 @@ class MemberController extends Controller
 
         $data = new stdClass();
         $data->produks = $produks;
-        $data->fiturProduks = $arrFilterFitur;
+        $data->fiturProduks = $arrFitur;
         $data->partners = $partners;
 
         // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
