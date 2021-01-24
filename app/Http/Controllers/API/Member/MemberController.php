@@ -590,4 +590,122 @@ class MemberController extends Controller
 
         return responseSuccess("Data Ulasan Produk : " . $produk->nama, $data);
     }
+
+    public function cari(Request $request)
+    {
+        if ($request->filterPencarian === 'Harga Tertinggi') {
+            if ($request->fiturTambahan != null) {
+                $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('rating', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                    ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                    ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
+                    ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                    ->orderBy('harga_hitam_putih', 'desc')
+                    ->orderBy('harga_berwarna', 'desc')
+                    ->get();
+            } else {
+                $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('rating', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                    ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                    ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
+                    ->orderBy('harga_hitam_putih', 'desc')
+                    ->orderBy('harga_berwarna', 'desc')
+                    ->get();
+            }
+        } else if ($request->filterPencarian === 'Harga Terendah') {
+            if ($request->fiturTambahan != null) {
+                $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('rating', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                    ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                    ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
+                    ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                    ->orderBy('harga_hitam_putih', 'asc')
+                    ->orderBy('harga_berwarna', 'asc')
+                    ->get();
+            } else {
+                $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('rating', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                    ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                    ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
+                    ->orderBy('harga_hitam_putih', 'asc')
+                    ->orderBy('harga_berwarna', 'asc')
+                    ->get();
+            }
+        } else {
+            if ($request->fiturTambahan != null) {
+                $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('rating', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                    ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                    ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
+                    ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+            } else {
+                $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('rating', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_hitam_putih', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('harga_berwarna', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_kertas', 'like', '%' . $request->jenisKertas . '%')
+                    ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
+                    ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
+                    ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+            }
+        }
+
+        $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
+            ->orWhere('alamat_toko', 'like', '%' . $request->keyword . '%')
+            ->orWhere('rating_toko', 'like', '%' . $request->keyword . '%')
+            ->where('ambil_di_tempat', 'like', '%' . $request->ambilDiTempat . '%')
+            ->where('antar_ke_tempat', 'like', '%' . $request->antarKeTempat . '%')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        $data = new stdClass();
+        $data->produks = $produks;
+        $data->partners = $partners;
+
+        // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
+        //     ->orderBy('id_atk', 'asc')
+        //     ->get();
+
+        // $idProdukPartnerDariProduk = array();
+        // $namaPartnerDariProduk = array();
+        // $alamatPartnerDariProduk = array();
+        // foreach ($produks as $p) {
+        //     array_push($idProdukPartnerDariProduk, $p->partner->id_pengelola);
+        //     array_push($namaPartnerDariProduk, $p->partner->nama_toko);
+        //     array_push($alamatPartnerDariProduk, $p->partner->alamat_toko);
+        // }
+
+        // $atkIdPartner = array();
+        // $atkStatusPartner = array();
+        // foreach ($atks as $a) {
+        //     array_push($atkIdPartner, $a->partner->id_pengelola);
+        //     array_push($atkStatusPartner, $a->partner->status);
+        // }
+
+        return responseSuccess("Hasil Pencarian : ", $data);
+    }
 }
