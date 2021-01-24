@@ -674,8 +674,12 @@ class MemberController extends Controller
             }
         }
 
+        $arrFilterFitur = [];
         foreach ($produks as $p) {
             $p->fitur = json_decode($p->fitur, true);
+            foreach ($p->fitur as $ft) {
+                array_push($arrFilterFitur, $ft->nama);
+            }
         }
 
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
@@ -688,6 +692,7 @@ class MemberController extends Controller
 
         $data = new stdClass();
         $data->produks = $produks;
+        $data->fiturProduks = $arrFilterFitur;
         $data->partners = $partners;
 
         // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
