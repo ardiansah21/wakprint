@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\PesananNotification;
+use App\Notifications\PesananPartnerNotification;
+use App\Pesanan;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -44,199 +47,119 @@ class PesananController extends Controller
         }
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  \App\Pesanan  $pesanan
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show(Pesanan $pesanan)
-    // {
-    //     $data = new stdClass();
-    //     $data->id_pesanan = $pesanan->id_pesanan;
-    //     $data->nama_lengkap = $pesanan->member->nama_lengkap;
-    //     $data->metode_penerimaan = $pesanan->metode_penerimaan;
-    //     $data->alamat_penerima = $pesanan->alamat_penerima;
-    //     $data->alamat_toko = request()->user()->alamat_toko;
-    //     $data->status = $pesanan->status;
-    //     $data->biaya = $pesanan->biaya;
-    //     $data->jumlah_file = count($pesanan->konfigurasiFile);
-    //     $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
-    //     $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $data->updated_at = $pesanan->updated_at;
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Pesanan  $pesanan
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Pesanan $pesanan)
+    {
+        $data = new stdClass();
+        $data->id_pesanan = $pesanan->id_pesanan;
+        $data->nama_lengkap = $pesanan->member->nama_lengkap;
+        $data->metode_penerimaan = $pesanan->metode_penerimaan;
+        $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->alamat_toko = $pesanan->partner->alamat_toko;
+        $data->status = $pesanan->status;
+        $data->biaya = $pesanan->biaya;
+        $data->jumlah_file = count($pesanan->konfigurasiFile);
+        $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+        $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->updated_at = $pesanan->updated_at;
 
-    //     $arrFiturTerpilih = [];
-    //     foreach ($pesanan->konfigurasiFile as $k) {
-    //         $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
-    //         $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+        $arrFiturTerpilih = [];
+        foreach ($pesanan->konfigurasiFile as $k) {
+            $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
+            $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
-    //         foreach ($k->fitur_terpilih as $ft) {
-    //             array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-    //         }
+            foreach ($k->fitur_terpilih as $ft) {
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            }
 
-    //         $k->fitur_terpilih = $arrFiturTerpilih;
-    //         $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
-    //         $k->alamat_toko = request()->user()->alamat_toko;
-    //         $k->product->fitur = json_decode($k->product->fitur, true);
-    //         $k->produk = $k->product;
-    //     }
+            $k->fitur_terpilih = $arrFiturTerpilih;
+            $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
+            $k->alamat_toko = $pesanan->partner->alamat_toko;
+            $k->product->fitur = json_decode($k->product->fitur, true);
+            $k->produk = $k->product;
+        }
 
-    //     $data->konfigurasi_file = $pesanan->konfigurasiFile;
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
+        $data->transaksi_saldo = $pesanan->transaksiSaldo;
 
-    //     return responseSuccess("detail pesanan partner yang login", $data);
-    // }
+        return responseSuccess("detail pesanan partner yang login", $data);
+    }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Pesanan  $pesanan
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function terimaPesanan(Pesanan $pesanan)
-    // {
-    //     $pesanan->update(['status' => 'Diproses']);
-    //     $pesanan->save();
-    //     $pesanan->push();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Pesanan  $pesanan
+     * @return \Illuminate\Http\Response
+     */
+    public function batalkanPesanan(Pesanan $pesanan)
+    {
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->status = "Batal";
+        $pesanan->transaksiSaldo->status = "Gagal";
+        $pesanan->transaksiSaldo->keterangan = "Pesanan telah dibatalkan oleh pelanggan";
+        $pesanan->member->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
+        $pesanan->member->save();
+        $pesanan->member->push();
+        $pesanan->transaksiSaldo->save();
+        $pesanan->transaksiSaldo->push();
+        $pesanan->save();
+        $pesanan->push();
 
-    //     $data = new stdClass();
-    //     $data->id_pesanan = $pesanan->id_pesanan;
-    //     $data->nama_lengkap = $pesanan->member->nama_lengkap;
-    //     $data->metode_penerimaan = $pesanan->metode_penerimaan;
-    //     $data->alamat_penerima = $pesanan->alamat_penerima;
-    //     $data->alamat_toko = request()->user()->alamat_toko;
-    //     $data->status = $pesanan->status;
-    //     $data->biaya = $pesanan->biaya;
-    //     $data->jumlah_file = count($pesanan->konfigurasiFile);
-    //     $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
-    //     $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $data->updated_at = $pesanan->updated_at;
-    //     $data->konfigurasi_file = $pesanan->konfigurasiFile;
+        $data = new stdClass();
+        $data->id_pesanan = $pesanan->id_pesanan;
+        $data->nama_lengkap = $pesanan->member->nama_lengkap;
+        $data->metode_penerimaan = $pesanan->metode_penerimaan;
+        $data->alamat_penerima = $pesanan->alamat_penerima;
+        $data->alamat_toko = request()->user()->alamat_toko;
+        $data->status = $pesanan->status;
+        $data->biaya = $pesanan->biaya;
+        $data->jumlah_file = count($pesanan->konfigurasiFile);
+        $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+        $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->updated_at = $pesanan->updated_at;
+        $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
-    //     $arrFiturTerpilih = [];
-    //     foreach ($pesanan->konfigurasiFile as $k) {
-    //         $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
-    //         $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+        $arrFiturTerpilih = [];
+        foreach ($pesanan->konfigurasiFile as $k) {
+            $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
+            $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
-    //         foreach ($k->fitur_terpilih as $ft) {
-    //             array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-    //         }
+            foreach ($k->fitur_terpilih as $ft) {
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            }
 
-    //         $k->fitur_terpilih = $arrFiturTerpilih;
-    //         $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
-    //         $k->alamat_toko = request()->user()->alamat_toko;
-    //         $k->produk = $k->product;
-    //     }
+            $k->fitur_terpilih = $arrFiturTerpilih;
+            $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
+            $k->alamat_toko = $pesanan->partner->alamat_toko;
+            $k->produk = $k->product;
+        }
 
-    //     $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
-    //     return responseSuccess("Yeyy pesanan telah diterima !, Silahkan lanjutkan proses pencetakan dokumen pelanggan", $data);
-    // }
+        $pesanan->member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananDiBatalkan', $pesanan));
+        return responseSuccess("Yahh, Pesanan telah dibatalkan", $data);
+    }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Pesanan  $pesanan
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function tolakPesanan(Pesanan $pesanan)
-    // {
-    //     $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $pesanan->status = "Batal";
-    //     $pesanan->transaksiSaldo->status = "Gagal";
-    //     $pesanan->transaksiSaldo->keterangan = "Pesanan telah ditolak oleh pihak percetakan";
-    //     $pesanan->member->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
-    //     $pesanan->member->save();
-    //     $pesanan->member->push();
-    //     $pesanan->transaksiSaldo->save();
-    //     $pesanan->transaksiSaldo->push();
-    //     $pesanan->save();
-    //     $pesanan->push();
-
-    //     $data = new stdClass();
-    //     $data->id_pesanan = $pesanan->id_pesanan;
-    //     $data->nama_lengkap = $pesanan->member->nama_lengkap;
-    //     $data->metode_penerimaan = $pesanan->metode_penerimaan;
-    //     $data->alamat_penerima = $pesanan->alamat_penerima;
-    //     $data->alamat_toko = request()->user()->alamat_toko;
-    //     $data->status = $pesanan->status;
-    //     $data->biaya = $pesanan->biaya;
-    //     $data->jumlah_file = count($pesanan->konfigurasiFile);
-    //     $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
-    //     $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $data->updated_at = $pesanan->updated_at;
-    //     $data->konfigurasi_file = $pesanan->konfigurasiFile;
-
-    //     $arrFiturTerpilih = [];
-    //     foreach ($pesanan->konfigurasiFile as $k) {
-    //         $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
-    //         $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-
-    //         foreach ($k->fitur_terpilih as $ft) {
-    //             array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-    //         }
-
-    //         $k->fitur_terpilih = $arrFiturTerpilih;
-    //         $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
-    //         $k->alamat_toko = request()->user()->alamat_toko;
-    //         $k->produk = $k->product;
-    //     }
-
-    //     $pesanan->member->notify(new PesananNotification('pesananDiTolak', $pesanan));
-    //     $pesanan->partner->notify(new PesananPartnerNotification('pesananDiTolak', $pesanan));
-    //     return responseSuccess("Yahh, Pesanan telah ditolak", $data);
-    // }
-
-    // public function selesaiCetakPesanan(Pesanan $pesanan)
-    // {
-    //     $data = new stdClass();
-    //     $data->id_pesanan = $pesanan->id_pesanan;
-    //     $data->nama_lengkap = $pesanan->member->nama_lengkap;
-    //     $data->metode_penerimaan = $pesanan->metode_penerimaan;
-    //     $data->alamat_penerima = $pesanan->alamat_penerima;
-    //     $data->alamat_toko = request()->user()->alamat_toko;
-    //     $data->status = $pesanan->status;
-    //     $data->biaya = $pesanan->biaya;
-    //     $data->jumlah_file = count($pesanan->konfigurasiFile);
-    //     $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
-    //     $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $data->updated_at = $pesanan->updated_at;
-    //     $data->konfigurasi_file = $pesanan->konfigurasiFile;
-
-    //     $arrFiturTerpilih = [];
-    //     foreach ($pesanan->konfigurasiFile as $k) {
-    //         $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
-    //         $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-
-    //         foreach ($k->fitur_terpilih as $ft) {
-    //             array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-    //         }
-
-    //         $k->fitur_terpilih = $arrFiturTerpilih;
-    //         $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
-    //         $k->alamat_toko = request()->user()->alamat_toko;
-    //         $k->produk = $k->product;
-    //     }
-
-    //     $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
-    //     $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
-    //     return responseSuccess("Pesanan Selesai Dicetak, Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan", $data);
-    // }
-
-    // public function selesaikanPesanan(Pesanan $pesanan)
-    // {
-    //     $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
-    //     $pesanan->status = "Selesai";
-    //     $pesanan->save();
-    //     $pesanan->push();
-    //     $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
-    //     $pesanan->transaksiSaldo->push();
-    //     $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
-    //     $pesanan->partner->push();
-    //     $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
-    //     $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
-    //     return responseSuccess("Pesanan Telah Selesai, terima kasih telah melakukan transaksi dengan wakprint yah :)", $pesanan);
-    // }
+    public function selesaikanPesanan(Pesanan $pesanan)
+    {
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->status = "Selesai";
+        $pesanan->save();
+        $pesanan->push();
+        $pesanan->transaksiSaldo->status = "Berhasil";
+        $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
+        $pesanan->transaksiSaldo->push();
+        $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
+        $pesanan->partner->push();
+        $pesanan->member->notify(new PesananNotification('pesananSelesai', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
+        return responseSuccess("Pesanan Telah Selesai, terima kasih telah melakukan transaksi dengan wakprint yah :)", $pesanan);
+    }
 
     public function filterPesanan(Request $request)
     {

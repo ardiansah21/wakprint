@@ -24,7 +24,7 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
         'pesananDiTolak',
         'pesananDiBatalkan',
     ];
-    private $title, $description, $url, $pageAndroid = "detailPesanan";
+    private $title, $description, $url;
 
     /**
      * Create a new notification instance.
@@ -98,8 +98,6 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
-            'pesanan' => $this->pesanan,
-            'pageAndroid' => $this->pageAndroid,
             'created_at' => date("d M Y H:i:s"),
         ];
     }
@@ -150,8 +148,6 @@ class PesananPartnerNotification extends Notification implements ShouldQueue
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
-            'pesanan' => $this->pesanan,
-            'pageAndroid' => $this->pageAndroid,
             'created_at' => date("d M Y H:i:s"),
         ]);
     }

@@ -16,6 +16,7 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::namespace ('API\Member')->prefix('v1')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
+    Route::get('/cari', 'MemberController@cari');
     // Route::get('/produk', 'MemberController@produk');
     // Route::get('/partner', 'MemberController@partner');
 
@@ -26,6 +27,8 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/produk', 'MemberController@produk');
         Route::get('/pengelola', 'MemberController@partner');
         Route::get('/partner/detail/{idPartner}', 'MemberController@detailPartner');
+        Route::get('/produk/detail/{idProduk}', 'MemberController@detailProduk');
+        Route::post('/produk/lapor/store/{idProduk}', 'MemberController@storeLaporProduk');
         Route::post('/profil/update', 'MemberController@updateProfile');
         Route::post('/profil/update-photo', 'MemberController@uploadPhotoProfile');
         Route::post('/profil/alamat/tambah/{idMember}', 'MemberController@tambahAlamat');
@@ -45,7 +48,10 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::post('/ulasan/store/{produk}', 'MemberController@storeUlasan');
         Route::post('/ulasan/upload-photo', 'MemberController@uploadPhotoUlasan');
         Route::get('/ulasan/ulasan-saya/{ulasan}/{produk}', 'MemberController@showSudahDiulas');
+        Route::get('/ulasan/produk/{idProduk}', 'MemberController@ulasanProduk');
         Route::get('/pesanans/filter', 'PesananController@filterPesanan');
+        Route::get('/pesanans/batalkan/{pesanan}', 'PesananController@batalkanPesanan');
+        Route::get('/pesanans/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanans', 'PesananController');
 
     });

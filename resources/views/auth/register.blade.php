@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label for="nomor_hp" class="mb-2">{{__('Nomor HP')}}</label>
-                <input id="nomor_hp" type="nomor_hp"
+                <input id="nomor_hp" type="numeric"
                         class="form-control form-control-lg
                         @error('nomor_hp') is-invalid
                         @enderror"

@@ -159,8 +159,8 @@
                                     style="width:300px; height:200px; object-fit:cover;">
                             </a>
                         @else
-                            <a data-fancybox="gallery" id="linkFotoPercetakan" href="{{$produk->partner->foto_percetakan}}">
-                                <img class="img-responsive" src="{{$produk->partner->foto_percetakan}}" alt="" style="width:300px; height:200px; object-fit:cover;">
+                            <a data-fancybox="gallery" id="linkFotoPercetakan" href="{{$produk->partner->foto_percetakan[0]}}">
+                                <img class="img-responsive" src="{{$produk->partner->foto_percetakan[0]}}" alt="" style="width:300px; height:200px; object-fit:cover;">
                             </a>
                         @endif
                     </div>
@@ -358,8 +358,8 @@
                                             style="width:285px; height:200px; object-fit:cover;">
                                     </a>
                                 @else
-                                    <a data-fancybox="gallery" id="linkFotoProduk" href="{{$produk->foto_produk}}">
-                                        <img class="img-responsive" src="{{$produk->foto_produk}}" alt="" style="width:285px; height:200px; object-fit:scale-down;">
+                                    <a data-fancybox="gallery" id="linkFotoProduk" href="{{$produk->foto_produk[0]}}">
+                                        <img class="img-responsive" src="{{$produk->foto_produk[0]}}" alt="" style="width:285px; height:200px; object-fit:scale-down;">
                                     </a>
                                 @endif
                             </div>
