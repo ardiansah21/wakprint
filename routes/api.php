@@ -16,6 +16,7 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::namespace ('API\Member')->prefix('v1')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
+    Route::get('/cari', 'MemberController@cari');
     // Route::get('/produk', 'MemberController@produk');
     // Route::get('/partner', 'MemberController@partner');
 
