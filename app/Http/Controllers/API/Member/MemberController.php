@@ -674,6 +674,10 @@ class MemberController extends Controller
             }
         }
 
+        foreach ($produks as $p) {
+            $p->fitur = json_decode($p->fitur, true);
+        }
+
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
             ->orWhere('alamat_toko', 'like', '%' . $request->keyword . '%')
             ->orWhere('rating_toko', 'like', '%' . $request->keyword . '%')
