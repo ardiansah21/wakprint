@@ -17,6 +17,12 @@ use stdClass;
 
 class KonfigurasiController extends Controller
 {
+    public function konfigurasiFile(Request $request)
+    {
+        $member = Member::find(Auth::id());
+        return view('member.konfigurasi_file_lanjutan', compact('member'));
+    }
+
     public function uploadFile(Request $request)
     {
         $file = $request->file('fileUpload');
@@ -39,7 +45,8 @@ class KonfigurasiController extends Controller
     public function selectedProduk(Request $request, $produkId)
     {
         $p = Produk::find($produkId);
-        $request->session()->put('produkKonfigurasiFile', $p);
+        $request->session()->put('produkKonfigurasiFile', collect($p));
+        // dd($request->session()->get('produkKonfigurasiFile'));
 
         if ($request->fromKonfigurasi == true) {
             return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi]);
@@ -74,13 +81,15 @@ class KonfigurasiController extends Controller
             'status_halaman' => $request->statusHalaman,
             'halaman_terpilih' => json_encode($request->halamanTerpilih),
             'jumlah_salinan' => $request->jumlahSalinan,
-            'paksa_hitamputih' => $request->paksaHitamPutih,
             'timbal_balik' => $request->timbalBalik,
-            'biaya' => $request->biaya,
+            'paksa_hitamputih' => $request->paksaHitamPutih,
             'catatan_tambahan' => $request->catatanTambahan,
+            'biaya' => $request->biaya,
             'nama_produk' => $request->namaProduk,
             'fitur_terpilih' => $request->fiturTerpilih,
         ]);
+
+        // dd($konfigurasi);
 
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
 

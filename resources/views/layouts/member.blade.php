@@ -124,20 +124,25 @@
                                 </a>
                                 <span v-show="notif>0" v-text="notif" class="badge badge-danger"
                                     style="background-color: red;font-size: 16px;color: white;text-align: center;width: 24px;height: 24px;border-radius: 35%;position: absolute;top: 3px;right: 0;"></span>
-                                <ul class="table-scrollbar dropdown-menu" style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
+                                <ul class="table-scrollbar dropdown-menu"
+                                    style="top: 60px; right: 0px; left: unset; width: 500px; box-shadow: 0px 5px 7px -1px #c1c1c1; padding-bottom: 0px; padding: 0px;">
                                     <li style="background-color: #EBD1EC; color: #BC41BE;">
-                                        <label class="SemiBold mt-2 mb-2 ml-3 mr-3" style="font-size: 18px;">Notifikasi</label>
+                                        <label class="SemiBold mt-2 mb-2 ml-3 mr-3"
+                                            style="font-size: 18px;">Notifikasi</label>
                                     </li>
-                                    <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)" class="list-group-item list-group-item-action pointer" >
+                                    <li v-for="(notif, i) in notification" v-bind:key="i" @click="readchat(notif)"
+                                        class="list-group-item list-group-item-action pointer">
                                         <div class="">
                                             <label class="SemiBold" style="font-size: 16px;">@{{ notif . title }}</label>
                                             <label class="mb-0" style="font-size: 14px;">@{{ notif . description }}</label>
-                                            <label class="text-light-gray" style="font-size: 12px;">@{{ notif . created_at }}</label>
+                                            <label class="text-light-gray"
+                                                style="font-size: 12px;">@{{ notif . created_at }}</label>
                                         </div>
                                     </li>
                                     <li class="text-right">
                                         <label v-if="notif>0" @click="readAll" class="pointer mr-3"
-                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'" style="font-size: 12px;">
+                                            onMouseOver="this.style.color='#BC41BE'" onMouseOut="this.style.color='#000'"
+                                            style="font-size: 12px;">
                                             Tandai sudah dibaca semua
                                         </label>
                                         <label v-else class="m-4">Anda tidak memiliki notifikasi saat ini</h5>
@@ -149,9 +154,8 @@
                                     style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
                                     <span class="text-primary-purple text-truncate text-right mr-2"
                                         style="width:80%;">{{ Auth::user()->nama_lengkap }}</span>
-                                        <img class="align-middle border border-gray ml-2"
-                                        src="{{ Auth::user()->avatar }}" width="45" height="45" alt="-"
-                                        style="border-radius: 30px; object-fit:cover;">
+                                    <img class="align-middle border border-gray ml-2" src="{{ Auth::user()->avatar }}"
+                                        width="45" height="45" alt="-" style="border-radius: 30px; object-fit:cover;">
                                 </a>
                             </li>
                         @endguest
@@ -221,8 +225,8 @@
                                 <div class="bg-light-purple text-center"
                                     style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
                                     @if (!empty($member->getFirstMediaUrl('avatar')))
-                                        <img src="{{ $member->getFirstMediaUrl('avatar') }}" class="img-responsive" alt="" width="300px"
-                                            height="300px" style="border-radius:8px; object-fit:cover;">
+                                        <img src="{{ $member->getFirstMediaUrl('avatar') }}" class="img-responsive" alt=""
+                                            width="300px" height="300px" style="border-radius:8px; object-fit:cover;">
                                     @else
                                         <img src="https://unsplash.it/600/400" class="img-responsive" alt="" width="300px"
                                             height="300px" style="border-radius:8px; object-fit:cover;">
@@ -243,15 +247,15 @@
                                             <i class="material-icons align-middle md-32 mr-2">
                                                 location_on
                                             </i>
-                                            @if (!empty($member->alamat['alamat']))
-                                                @for ($i = 0; $i < count($member->alamat['alamat']); $i++)
-                                                    @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
-                                                        {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
-                                                        {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
-                                                        {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                                                        {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
-                                                        {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                                                        {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
+                                            @if (!empty($member->alamat->alamat))
+                                                @for ($i = 0; $i < count($member->alamat->alamat); $i++)
+                                                    @if ($member->alamat->alamat[$i]->id === $member->alamat->IdAlamatUtama)
+                                                        {{ $member->alamat->alamat[$i]->AlamatJalan }},
+                                                        {{ $member->alamat->alamat[$i]->Kelurahan }},
+                                                        {{ $member->alamat->alamat[$i]->Kecamatan }},
+                                                        {{ $member->alamat->alamat[$i]->KabupatenKota }},
+                                                        {{ $member->alamat->alamat[$i]->Provinsi }},
+                                                        {{ $member->alamat->alamat[$i]->KodePos }}
                                                     @endif
                                                 @endfor
                                             @else
@@ -408,7 +412,8 @@
     </div>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/appMember.js') }}"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js">
+    </script> --}}
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
     <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/jquery.jscroll.min.js') }}"></script>
@@ -420,27 +425,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
     <script>
         /* Fungsi formatRupiah */
-        function formatRupiah(angka, prefix){
-                if(angka === '0'){
-                    angka = '1';
-                }
+        function formatRupiah(angka, prefix) {
+            if (angka === '0') {
+                angka = '1';
+            }
 
-                var number_string = angka.replace(/[^\d]/g, '').toString(),
+            var number_string = angka.replace(/[^\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
                 rupiah = split[0].substr(0, sisa),
                 ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-                // tambahkan titik jika yang di input sudah menjadi angka ribuan
-                if(ribuan){
-                    separator = sisa ? '.' : '';
-                    rupiah += separator + ribuan.join('.');
-                }
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
 
-                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-                return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
         }
         moment.locale('id');
+
     </script>
     @include('sweetalert::alert')
     @yield('script')
