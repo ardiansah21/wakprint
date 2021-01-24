@@ -678,7 +678,7 @@ class MemberController extends Controller
         foreach ($produks as $p) {
             $p->fitur = json_decode($p->fitur, true);
             foreach ($p->fitur as $ft) {
-                array_push($arrFilterFitur, $ft->nama);
+                array_push($arrFilterFitur, $ft['nama']);
             }
         }
 
