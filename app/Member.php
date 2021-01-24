@@ -35,6 +35,7 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'alamat' => 'array',
+        'produk_favorit' => 'array',
     ];
 
     public function registerMediaCollections(): void

@@ -23,7 +23,7 @@ class CreateMembersTable extends Migration
             $table->rememberToken();
             // $table->string('email',320);
             // $table->string('password',100);
-            $table->json('alamat')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('alamat')->default(new Expression('(JSON_OBJECT())'));
             $table->integer('jumlah_saldo')->nullable();
             $table->string('nomor_hp', 16);
             $table->date('tanggal_lahir')->nullable();
