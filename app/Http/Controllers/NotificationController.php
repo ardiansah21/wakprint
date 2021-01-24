@@ -20,8 +20,6 @@ class NotificationController extends Controller
             $notif->title = $n->data['title'];
             $notif->description = $n->data['description'];
             $notif->url = $n->data['url'];
-            $notif->data = $n->data['pesanan'];
-            $notif->pageAndroid = $n->data['pageAndroid'];
             $notif->created_at = $n->data['created_at'];
             array_push($data, $notif);
         }
