@@ -14,6 +14,7 @@ use App\Ulasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\ToArray;
 use stdClass;
 
 class MemberController extends Controller
@@ -674,16 +675,16 @@ class MemberController extends Controller
             }
         }
 
-        $arrFilterFitur = [];
-        foreach ($produks as $p) {
-            $p->fitur = json_decode($p->fitur, true);
-            if (!empty($p->fitur)) {
-                foreach ($p->fitur as $ft) {
-                    array_push($arrFilterFitur, $ft['nama']);
-                }
-                $arrFitur = $p->fitur->where('nama', 'like', '%' . $arrFilterFitur . '%');
+        $produkFinal = collect($produks)->map(function ($p) use ($request) {
+            $flag = false;
+            $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
+
+            foreach ($request->fiturTambahan as $ft) {
+                $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
             }
-        }
+
+            return $flag;
+        });
 
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
             ->orWhere('alamat_toko', 'like', '%' . $request->keyword . '%')
@@ -695,7 +696,7 @@ class MemberController extends Controller
 
         $data = new stdClass();
         $data->produks = $produks;
-        $data->fiturProduks = $arrFitur;
+        $data->fiturProduks = $produkFinal;
         $data->partners = $partners;
 
         // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
