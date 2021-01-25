@@ -2,30 +2,6 @@
 @extends('layouts.member')
 
 @section('content')
-    @php
-        if(!empty(session()->get('produkKonfigurasiFile'))){
-            $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
-            $produk = app(App\Produk::class, $arr);
-            $produk->id_produk = $arr['id_produk'];
-            $produk->fill(
-            [
-            'id_pengelola' => $arr['id_pengelola'],
-            'nama' => $arr['nama'],
-            'harga_hitam_putih' => $arr['harga_hitam_putih'],
-            'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
-            'harga_berwarna' => $arr['harga_berwarna'],
-            'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
-            'berwarna' => $arr['berwarna'],
-            'hitam_putih' => $arr['hitam_putih'],
-            'deskripsi' => $arr['deskripsi'],
-            'jenis_kertas' => $arr['jenis_kertas'],
-            'jenis_printer' => $arr['jenis_printer'],
-            'status' => $arr['status'],
-            'fitur' => $arr['fitur'],
-            ]
-            );
-        }
-    @endphp
 <div class="container">
     <div class="mt-5 mb-5">
         <label class="font-weight-bold" style="font-size:48px;">{{__('Konfigurasi File') }}</label>
