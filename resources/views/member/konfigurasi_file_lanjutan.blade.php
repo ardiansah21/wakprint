@@ -491,7 +491,7 @@
                                 pdf.paksaHitamPutih = 0;
                                 pdf.timbalBalik = 0;
                                 pdf.namaProduk =
-                                    "{{ session()->get('produkKonfigurasiFile')->nama }}";
+                                    "{{ $arr['nama'] }}";
                                 pdf.fiturTerpilih = [];
 
                                 var halamanAwal = parseInt($('#halamanAwal').val());
@@ -501,9 +501,9 @@
                                 var hargaHitamPutih = '{{ $hargaHitamPutih }}';
                                 var hargaBerwarna = '{{ $hargaBerwarna }}';
                                 var hargaHitamPutihTimbalBalik =
-                                    "{{ session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih }}";
+                                    "{{ $arr['harga_timbal_balik_hitam_putih']}}";
                                 var hargaBerwarnaTimbalBalik =
-                                    "{{ session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna }}";
+                                    "{{ $arr['harga_timbal_balik_berwarna'] }}";
                                 var nilaiPaksaHitamPutih = parseInt(pdf['jumlahHalBerwarna'] +
                                     pdf['jumlahHalHitamPutih']);
                                 var nilaiPaksaBerwarna = 0;
@@ -1109,8 +1109,7 @@
                                         });
                                         $.ajax({
                                             type: 'GET',
-                                            url: '{{ route('
-                                            halaman.kustom ') }}',
+                                            url: "{{ route('halaman.kustom') }}",
                                             data: {
                                                 nilaiKustomHal: nilaiKustomHal,
                                             },
@@ -1854,8 +1853,7 @@
                                             });
                                             $.ajax({
                                                 type: 'GET',
-                                                url: '{{ route('
-                                                halaman.kustom ') }}',
+                                                url: "{{ route('halaman.kustom') }}",
                                                 data: {
                                                     nilaiKustomHal: nilaiKustomHal,
                                                 },
@@ -2560,8 +2558,7 @@
                                             });
                                             $.ajax({
                                                 type: 'GET',
-                                                url: '{{ route('
-                                                halaman.kustom ') }}',
+                                                url: "{{ route('halaman.kustom') }}",
                                                 data: {
                                                     nilaiKustomHal: nilaiKustomHal,
                                                 },
@@ -3264,8 +3261,7 @@
                                             });
                                             $.ajax({
                                                 type: 'GET',
-                                                url: '{{ route('
-                                                halaman.kustom ') }}',
+                                                url: "{{ route('halaman.kustom') }}",
                                                 data: {
                                                     nilaiKustomHal: nilaiKustomHal,
                                                 },
@@ -4037,8 +4033,7 @@
                                         });
                                         $.ajax({
                                             type: 'GET',
-                                            url: '{{ route('
-                                            halaman.kustom ') }}',
+                                            url: "{{ route('halaman.kustom') }}",
                                             data: {
                                                 nilaiKustomHal: nilaiKustomHal,
                                             },
@@ -4944,9 +4939,7 @@
                                                     });
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: '{{ route('
-                                                        halaman
-                                                        .kustom ') }}',
+                                                        url: "{{ route('halaman.kustom') }}",
                                                         data: {
                                                             nilaiKustomHal: nilaiKustomHal,
                                                         },
@@ -5896,9 +5889,7 @@
                                                     });
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: '{{ route('
-                                                        halaman
-                                                        .kustom ') }}',
+                                                        url: "{{ route('halaman.kustom') }}",
                                                         data: {
                                                             nilaiKustomHal: nilaiKustomHal,
                                                         },
@@ -7294,9 +7285,7 @@
                                                 });
                                                 $.ajax({
                                                     type: 'GET',
-                                                    url: '{{ route('
-                                                    halaman
-                                                    .kustom ') }}',
+                                                    url: "{{ route('halaman.kustom') }}",
                                                     data: {
                                                         nilaiKustomHal: nilaiKustomHal,
                                                     },
