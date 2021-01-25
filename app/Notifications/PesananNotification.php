@@ -161,7 +161,7 @@ class PesananNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return BroadcastMessage
      */
-    public function toBroadcast($notifiable)PesananNotification
+    public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
             'title' => $this->title,
