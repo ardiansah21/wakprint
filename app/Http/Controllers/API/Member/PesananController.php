@@ -142,7 +142,7 @@ class PesananController extends Controller
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = $pesanan->partner->alamat_toko;
             $k->produk = $k->product;
-            $k->produk->fitur = json_decode($k->produk->fitur,true);
+            $k->produk->fitur = json_decode($k->produk->fitur, true);
         }
 
         $pesanan->member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
@@ -176,7 +176,7 @@ class PesananController extends Controller
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = $pesanan->partner->alamat_toko;
             $k->produk = $k->product;
-            $k->produk->fitur = json_decode($k->produk->fitur,true)
+            $k->produk->fitur = json_decode($k->produk->fitur, true);
         }
 
         $pesanan->member->notify(new PesananNotification('pesananSelesai', $pesanan));
