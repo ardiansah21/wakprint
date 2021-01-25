@@ -39,7 +39,7 @@ class Produk extends Model implements HasMedia
      * @var array
      */
     protected $appends = [
-        // 'jarak',
+        'jarak',
         'foto_produk',
     ];
 
@@ -118,8 +118,8 @@ class Produk extends Model implements HasMedia
     }
 
     //simulasi jarak
-    // public function getJarakAttribute()
-    // {
-    //     return ($this->partner)->id_pengelola * 100;
-    // }
+    public function getJarakAttribute()
+    {
+        return ($this->partner)->id_pengelola * 100;
+    }
 }
