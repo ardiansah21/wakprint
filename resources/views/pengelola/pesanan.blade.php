@@ -50,7 +50,7 @@
                 </tr>
             </thead>
             <tbody id="tbodyPesanan" class="tbodyPesanan" style="font-size: 12px;">
-                @foreach ($partner->pesanan as $p => $value)
+                @foreach ($partner->pesanans as $p => $value)
                     @if (!empty($value))
                         @if (($value->status != "Pending" && !empty($value->status)) && $value->transaksiSaldo->status != "Pending")
                             <tr class="cursor-pointer" onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">

@@ -8,7 +8,7 @@
     <div class="row justify-content-between mb-5 ml-0 mr-0">
         <div class="col-md-3 bg-light-purple p-4 text-center" style="border-radius:10px;">
             <label class="font-weight-bold text-break text-truncate" style="font-size: 48px; width:100%;">
-                {{count($partner->pesanan)}}
+                {{count($partner->pesanans)}}
             </label>
             <br>
             <label class="font-weight-bold" style="font-size: 18px;width:100%;">
@@ -52,7 +52,7 @@
                 </tr>
             </thead>
             <tbody style="font-size:12px;">
-                @foreach ($partner->pesanan as $p => $value)
+                @foreach ($partner->pesanans as $p => $value)
                     @if ($value->status === "Pending" && $value->transaksiSaldo->status === "Berhasil")
                         <tr onclick="window.location.href='{{ route('partner.detail.pesanan',$value->id_pesanan) }}'">
                             <td scope="row">{{$value->id_pesanan}}</td>
