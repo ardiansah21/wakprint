@@ -270,42 +270,41 @@ class MemberController extends Controller
 
     public function filterSaldo(Request $request)
     {
-        if ($request->filter_saldo === 'Terbaru') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
-                ->where('jenis_transaksi', '!=', 'Tarik')
-                ->where('status', '!=', null)
-                ->orderBy('updated_at', 'desc')
-                ->get();
-        } else if ($request->filter_saldo === 'Harga Tertinggi') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
-                ->where('jenis_transaksi', '!=', 'Tarik')
-                ->where('status', '!=', null)
-                ->orderBy('jumlah_saldo', 'desc')
-                ->get();
-        } else if ($request->filter_saldo === 'Harga Terendah') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
-                ->where('jenis_transaksi', '!=', 'Tarik')
-                ->where('status', '!=', null)
-                ->orderBy('jumlah_saldo', 'asc')
-                ->get();
-        } else if ($request->filter_saldo === 'Saldo Keluar') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
-                ->where('jenis_transaksi', 'Pembayaran')
-                ->where('status', '!=', null)
-                ->get();
-        } else if ($request->filter_saldo === 'Saldo Masuk') {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
-                ->where('jenis_transaksi', 'TopUp')
-                ->where('status', '!=', null)
-                ->get();
-        } else {
-            $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
-                ->where('jenis_transaksi', '!=', 'Tarik')
-                ->where('status', '!=', null)
-                ->get();
-        }
-
         if (!empty($transaksiSaldo)) {
+            if ($request->filter_saldo === 'Terbaru') {
+                $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                    ->where('jenis_transaksi', '!=', 'Tarik')
+                    ->where('status', '!=', null)
+                    ->orderBy('updated_at', 'desc')
+                    ->get();
+            } else if ($request->filter_saldo === 'Harga Tertinggi') {
+                $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                    ->where('jenis_transaksi', '!=', 'Tarik')
+                    ->where('status', '!=', null)
+                    ->orderBy('jumlah_saldo', 'desc')
+                    ->get();
+            } else if ($request->filter_saldo === 'Harga Terendah') {
+                $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                    ->where('jenis_transaksi', '!=', 'Tarik')
+                    ->where('status', '!=', null)
+                    ->orderBy('jumlah_saldo', 'asc')
+                    ->get();
+            } else if ($request->filter_saldo === 'Saldo Keluar') {
+                $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                    ->where('jenis_transaksi', 'Pembayaran')
+                    ->where('status', '!=', null)
+                    ->get();
+            } else if ($request->filter_saldo === 'Saldo Masuk') {
+                $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                    ->where('jenis_transaksi', 'TopUp')
+                    ->where('status', '!=', null)
+                    ->get();
+            } else {
+                $transaksiSaldo = request()->user()->transaksiSaldo->first()->where('id_member', request()->user()->id_member)
+                    ->where('jenis_transaksi', '!=', 'Tarik')
+                    ->where('status', '!=', null)
+                    ->get();
+            }
             return responseSuccess("Data Saldo Anda : " . $request->filter_saldo, $transaksiSaldo);
         }
 
