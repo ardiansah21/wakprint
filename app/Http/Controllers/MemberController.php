@@ -525,7 +525,7 @@ class MemberController extends Controller
         ]);
     }
 
-    public function cekWarna(\Illuminate\Http\UploadedFile$file, $path)
+    public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
     {
         //TODO merapikan struktur code dan storage
 
@@ -930,8 +930,7 @@ class MemberController extends Controller
     {
         $member = Auth::user();
         $transaksi_saldo = $member->transaksiSaldo;
-        // dd($member->transaksiSaldo->where('jenis_transaksi', '!=', 'Tarik'));
-        if ($transaksi_saldo->first()->pesanan != null) {
+        if (!empty($transaksi_saldo->first()->pesanan)) {
             $idPesanan = $transaksi_saldo->first()->pesanan->id_pesanan;
             return view('member.riwayat', [
                 'member' => $member,
