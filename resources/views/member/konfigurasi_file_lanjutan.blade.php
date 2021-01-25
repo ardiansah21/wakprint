@@ -5,7 +5,7 @@
     @php
     // use App\Produk;
     // dd((App\Produk)$p->id_produk);
-    if(!empty((session()->get('produkKonfigurasiFile'))->toArray())){
+    if(!empty(session()->get('produkKonfigurasiFile'))){
         $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
         $p = app(App\Produk::class, $arr);
         $p->id_produk = $arr['id_produk'];
