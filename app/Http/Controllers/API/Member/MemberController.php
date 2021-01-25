@@ -145,7 +145,7 @@ class MemberController extends Controller
             );
             $id = 0;
         } else {
-            $id = count($alamatLama['alamat']);
+            $id = count($alamatLama->alamat);
         }
 
         $alamatBaru[] = array(
@@ -163,10 +163,10 @@ class MemberController extends Controller
         if (!empty($request->idAlamatUtama)) {
             $AlamatFinal['IdAlamatUtama'] = (int) $request->idAlamatUtama;
         } else {
-            $AlamatFinal['IdAlamatUtama'] = $alamatLama['IdAlamatUtama'];
+            $AlamatFinal['IdAlamatUtama'] = $alamatLama->IdAlamatUtama;
         }
 
-        $AlamatFinal['alamat'] = array_merge($alamatLama['alamat'], $alamatBaru);
+        $AlamatFinal['alamat'] = array_merge($alamatLama->alamat, $alamatBaru);
 
         $member->alamat = $AlamatFinal;
         $member->produk_favorit = json_decode($member->produk_favorit, true);
