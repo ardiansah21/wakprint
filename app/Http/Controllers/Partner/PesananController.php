@@ -32,7 +32,7 @@ class PesananController extends Controller
         $pesanan->status = "Diproses";
         $pesanan->save();
 
-        $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan->id_pesanan));
+        $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
         alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
         return redirect()->back();
     }
