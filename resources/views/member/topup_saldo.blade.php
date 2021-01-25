@@ -44,7 +44,7 @@
                     <tr @if ($ts->jenis_transaksi === 'TopUp')
                         onclick="window.location.href='/saldo/pembayaran/{{ $ts->id_transaksi }}'"
                         @else
-                        onclick="window.location.href='{{ route('pesanan.detail') }}'"
+                        onclick="window.location.href='/konfirmasi-pembayaran/{{ $ts->id_pesanan }}'"
                         @endif>
                         <td class="align-middle" scope="row">{{$ts->id_transaksi ?? '-'}}</td>
                         <td class="align-middle">{{$ts->jenis_transaksi ?? '-'}}</td>
