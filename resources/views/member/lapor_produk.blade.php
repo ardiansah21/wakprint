@@ -40,7 +40,7 @@
                                     {{-- <button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button> --}}
                             </form>
                         <input id="fotoProduk" type="text" value="{{$produk->getFirstMediaUrl('foto_produk')}}" hidden>
-                        <img class="card-img-top cursor-pointer" src="{{$produk->foto_produk}}" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan Foto"/>
+                        <img class="card-img-top cursor-pointer" src="{{$produk->getFirstMediaUrl('foto_produk')}}" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan Foto"/>
                         <div class="card-body cursor-pointer" onclick="window.location.href='{{ route('detail.produk',$produk->id_produk) }}'">
                             <div class="row justify-content-between">
                                 <label class="col-md-7 text-truncate ml-0" style="font-size: 14px;">{{$produk->partner->nama_toko ?? '-'}}</label>
@@ -117,9 +117,9 @@
                                             </label>
                                             <br>
                                             <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
-                                            {{-- <label class="card-text SemiBold badge-sm bg-primary-yellow text-dark px-1 mr-2" style="font-size: 12px; border-radius:5px;">
-                                                {{__('Berwarna')}}
-                                            </label> --}}
+                                            <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
+                                                {{__('Tidak Tersedia')}}
+                                            </label>
                                     <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                                         {{__('Tidak Tersedia')}}
                                     </label>
