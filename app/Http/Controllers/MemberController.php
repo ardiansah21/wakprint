@@ -71,8 +71,8 @@ class MemberController extends Controller
         $produk = Produk::where('rating', '>=', 4)
         // ->where('jarak', '<=', 1000)
             ->where('status', 'Tersedia')
-            ->where('harga_hitam_putih', '<=', 2000)
-            ->where('harga_berwarna', '<=', 2000)
+            ->where('harga_hitam_putih', '<=', 5000)
+            ->where('harga_berwarna', '<=', 5000)
             ->get();
 
         $partner = Pengelola_Percetakan::where('rating_toko', '>=', 4)
