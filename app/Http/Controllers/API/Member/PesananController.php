@@ -160,6 +160,23 @@ class PesananController extends Controller
         $pesanan->transaksiSaldo->push();
         $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
         $pesanan->partner->push();
+        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
+
+        $arrFiturTerpilih = [];
+        foreach ($pesanan->konfigurasiFile as $k) {
+            $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
+            $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+
+            foreach ($k->fitur_terpilih as $ft) {
+                array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            }
+
+            $k->fitur_terpilih = $arrFiturTerpilih;
+            $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
+            $k->alamat_toko = $pesanan->partner->alamat_toko;
+            $k->produk = $k->product;
+        }
+
         $pesanan->member->notify(new PesananNotification('pesananSelesai', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
         return responseSuccess("Pesanan Telah Selesai, terima kasih telah melakukan transaksi dengan wakprint yah :)", $pesanan);
