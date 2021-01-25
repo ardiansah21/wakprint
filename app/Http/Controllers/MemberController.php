@@ -72,7 +72,7 @@ class MemberController extends Controller
         // ->where('jarak', '<=', 1000)
             ->where('status', 'Tersedia')
             ->where('harga_hitam_putih', '<=', 5000)
-            ->where('harga_berwarna', '<=', 5000)
+            ->orWhere('harga_berwarna', '<=', 5000)
             ->get();
 
         $partner = Pengelola_Percetakan::where('rating_toko', '>=', 4)
