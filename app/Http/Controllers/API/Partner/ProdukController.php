@@ -209,6 +209,7 @@ class ProdukController extends Controller
      */
     public function show(Produk $produk)
     {
+        $produk->fitur = json_decode($produk->fitur, true);
         return responseSuccess('data detail produk ' . $produk->id_produk, $produk);
         // return responseSuccess('show atk id = ' . $atk->id_atk, collect($atk)->except(['media', 'id_pengelola']));
     }
