@@ -37,8 +37,7 @@
                     class="row justify-content-between bg-light-purple pl-4 pr-4 pt-4 pb-4 mt-5 mb-5 mr-0 ml-0"
                     style="border-radius:5px; height:310px;">
                     <div class="col-md-3 border-primary-purple d-flex h-100"
-                        style="width:265px;
-                                                                                                                                                            height:265px;">
+                        style="width:265px; height:265px;">
                         <label class="SemiBold text-center text-primary-purple align-self-center" style="font-size: 24px;">
                             {{ __('Letak Dokumen Disini') }}
                         </label>
@@ -49,8 +48,7 @@
                         </label>
                         <div class="text-center ml-2">
                             <button class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold"
-                                style="border-radius:30px
-                                                                                                                                                                        font-size: 18px"
+                                style="border-radius:30px; font-size: 18px;"
                                 onclick="openDialogUpload()">
                                 <i class="material-icons align-middle mr-2">cloud_upload</i>
                                 {{ __('Unggah') }}
@@ -237,11 +235,13 @@
                         <div class="text-center"
                             style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                             <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
-                                style="border-radius:30px; font-size:24px;" @if (count($member->konfigurasi) > 1) onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $konfigurasi->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
+                                style="border-radius:30px; font-size:24px;"
+                                @if (count($member->konfigurasi) > 1)
+                                onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
                             @else
-                                                                                                                                                                        onclick="window.location='{{ route('pencarian') }}'" @endif>
-                                <i
-                                    class="material-icons md-36 align-middle mr-2">print</i>{{ __('Pilih Produk Percetakan') }}
+                                onclick="window.location='{{ route('pencarian') }}'" @endif>
+                                <i class="material-icons md-36 align-middle mr-2">print</i>
+                                {{ __('Pilih Produk Percetakan') }}
                             </button>
                         </div>
                     @else
@@ -254,9 +254,9 @@
                                 <div class="ml-2">
                                     <div class="text-right">
                                         <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
-                                            style="border-radius:35px;font-size: 16px;" @if (!empty($member->konfigurasi) > 1 && $member->konfigurasi != undefined) onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $konfigurasi->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
+                                            style="border-radius:35px;font-size: 16px;" @if (!empty($member->konfigurasi) > 1 && $member->konfigurasi != undefined) onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
                                         @else
-                                                                                                                                                                                    onclick="window.location='{{ route('pencarian') }}'" @endif>
+                                            onclick="window.location='{{ route('pencarian') }}'" @endif>
                                             {{ __('Ubah Produk') }}
                                         </button>
                                     </div>
