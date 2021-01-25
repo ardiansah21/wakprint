@@ -86,6 +86,7 @@ class PesananController extends Controller
 
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
         $data->transaksi_saldo = $pesanan->transaksiSaldo;
+        $data->transaksi_saldo->batas_waktu = Carbon::parse($data->transaksi_saldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i') . ' WIB';
 
         return responseSuccess("detail pesanan partner yang login", $data);
     }
