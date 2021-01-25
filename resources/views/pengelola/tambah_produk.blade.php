@@ -108,7 +108,7 @@
                 <div class="custom-control custom-checkbox col-md-3 mb-2">
                     <input name="berwarna" type="checkbox" class="custom-control-input" id="checkboxBerwarna"
                         onchange="document.getElementById('harga_berwarna').disabled=!this.checked; document.getElementById('harga_timbal_balik_berwarna').disabled=!this.checked;"
-                        value="False">
+                        value="True">
                     <label class="custom-control-label" for="checkboxBerwarna">
                         {{ __('Berwarna') }}
                     </label>
