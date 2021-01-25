@@ -21,13 +21,13 @@ class PartnerController extends Controller
         $arrTotalPelanggan = array();
         $arrJumlahDokumen = array();
 
-        foreach ($partner->pesanan as $value) {
+        foreach ($partner->pesanans as $value) {
             if (!in_array($value->id_member, $arrTotalPelanggan, true)) {
                 array_push($arrTotalPelanggan, $value->id_member);
             }
         }
 
-        foreach ($partner->pesanan as $p => $value) {
+        foreach ($partner->pesanans as $p => $value) {
             array_push($arrJumlahDokumen, $value->nama_file);
         }
 
