@@ -14,20 +14,23 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 //member
 Route::namespace ('API\Member')->prefix('v1')->group(function () {
+    Route::get('/', 'MemberController@index');
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
     Route::get('/cari', 'MemberController@cari');
-    // Route::get('/produk', 'MemberController@produk');
-    // Route::get('/partner', 'MemberController@partner');
+    Route::get('/produk', 'MemberController@produk');
+    Route::get('/pengelola', 'MemberController@partner');
+    Route::get('/partner/detail/{idPartner}', 'MemberController@detailPartner');
+    Route::get('/produk/detail/{idProduk}', 'MemberController@detailProduk');
 
     Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
-        Route::get('/', 'MemberController@index');
+        // Route::get('/', 'MemberController@index');
         Route::get('/user', 'MemberController@user');
-        Route::get('/produk', 'MemberController@produk');
-        Route::get('/pengelola', 'MemberController@partner');
-        Route::get('/partner/detail/{idPartner}', 'MemberController@detailPartner');
-        Route::get('/produk/detail/{idProduk}', 'MemberController@detailProduk');
+        // Route::get('/produk', 'MemberController@produk');
+        // Route::get('/pengelola', 'MemberController@partner');
+        // Route::get('/partner/detail/{idPartner}', 'MemberController@detailPartner');
+        // Route::get('/produk/detail/{idProduk}', 'MemberController@detailProduk');
         Route::post('/produk/lapor/store/{idProduk}', 'MemberController@storeLaporProduk');
         Route::post('/profil/update', 'MemberController@updateProfile');
         Route::post('/profil/update-photo', 'MemberController@uploadPhotoProfile');
