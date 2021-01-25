@@ -118,7 +118,7 @@ class PesananController extends Controller
         $data->nama_lengkap = $pesanan->member->nama_lengkap;
         $data->metode_penerimaan = $pesanan->metode_penerimaan;
         $data->alamat_penerima = $pesanan->alamat_penerima;
-        $data->alamat_toko = request()->user()->alamat_toko;
+        $data->alamat_toko = $pesanan->partner->alamat_toko;
         $data->status = $pesanan->status;
         $data->biaya = $pesanan->biaya;
         $data->jumlah_file = count($pesanan->konfigurasiFile);
@@ -165,6 +165,8 @@ class PesananController extends Controller
         $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
         $pesanan->partner->push();
         $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
+        $pesanan->nama_lengkap = $pesanan->member->nama_lengkap;
+        $pesanan->alamat_toko = $pesanan->partner->alamat_toko;
 
         $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasi_file as $k) {
