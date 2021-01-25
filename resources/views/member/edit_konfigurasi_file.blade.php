@@ -12,7 +12,7 @@
                         @if (session()->has('fileUpload'))
                             src="{{url('tmp/upload/',(session()->get('fileUpload'))->name)."#pagemode=thumbs&statusbar=0&messages=0&navpanes=0&toolbar=0"}}"
                         @else
-                            src="{{$konfigurasi->getFirstMediaUrl('file_konfigurasi')}}"
+                            src="{{$konfigurasi->getFirstMedia('file_konfigurasi')->getFullUrl()}}"
                         @endif
                         type="application/pdf" height="567px" width="515px" frameborder="0" onload="" />
                 </div>
@@ -30,7 +30,7 @@
                                 @if (session()->has('fileUpload'))
                                     {{url('tmp/upload',(session()->get('fileUpload'))->name)}}
                                 @else
-                                    {{$konfigurasi->getFirstMediaUrl('file_konfigurasi')}}
+                                    {{$konfigurasi->getFirstMedia('file_konfigurasi')->getFullUrl()}}
                                 @endif" target="_blank" style="font-size: 18px;">
                                 @if (session()->has('fileUpload'))
                                     {{(session()->get('fileUpload'))->name}}
