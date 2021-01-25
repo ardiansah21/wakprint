@@ -145,6 +145,9 @@ class PesananController extends Controller
             $k->produk->fitur = json_decode($k->produk->fitur, true);
         }
 
+        $data->transaksi_saldo = $pesanan->transaksiSaldo;
+        $data->transaksi_saldo->batas_waktu = Carbon::parse($data->transaksi_saldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i') . ' WIB';
+
         $pesanan->member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananDiBatalkan', $pesanan));
         return responseSuccess("Yahh, Pesanan telah dibatalkan", $data);
