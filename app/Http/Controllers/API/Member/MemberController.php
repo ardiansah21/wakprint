@@ -186,7 +186,7 @@ class MemberController extends Controller
         $member = $request->user();
         $alamat = $member->alamat;
 
-        $alamat['alamat'][$idAlamat] = [
+        $alamat->alamat[$idAlamat] = [
             'id' => $idAlamat,
             'Nama Penerima' => $request->nama_penerima,
             'Nomor HP' => $request->nomor_hp,
@@ -199,11 +199,11 @@ class MemberController extends Controller
         ];
 
         if ($request->idAlamatUtama != null) {
-            $alamat['IdAlamatUtama'] = $request->idAlamatUtama;
-        } else if ($alamat['IdAlamatUtama'] != null) {
-            $alamat['IdAlamatUtama'] = $member->alamat['IdAlamatUtama'];
+            $alamat->IdAlamatUtama = $request->idAlamatUtama;
+        } else if ($alamat->IdAlamatUtama != null) {
+            $alamat->IdAlamatUtama = $member->alamat->IdAlamatUtama;
         } else {
-            $alamat['IdAlamatUtama'] = 0;
+            $alamat->IdAlamatUtama = 0;
         }
 
         $member->alamat = $alamat;
@@ -220,10 +220,10 @@ class MemberController extends Controller
         $new_array[] = array();
         $i = 0;
 
-        foreach ($alamat['alamat'] as $key => $value) {
-            if ($value['id'] != $idAlamat) {
+        foreach ($alamat->alamat as $key => $value) {
+            if ($value->id != $idAlamat) {
                 $new_array[$i] = $value;
-                $new_array[$i]['id'] = $i;
+                $new_array[$i]->id = $i;
                 $i++;
             }
         }
@@ -234,9 +234,9 @@ class MemberController extends Controller
                 'alamat' => array(),
             );
         } else {
-            $alamat['alamat'] = $new_array;
-            if ($alamat['IdAlamatUtama'] === $idAlamat) {
-                $alamat['IdAlamatUtama'] = $alamat['alamat'][$i - 1]['id'];
+            $alamat->alamat = $new_array;
+            if ($alamat->IdAlamatUtama === $idAlamat) {
+                $alamat->IdAlamatUtama = $alamat->alamat[$i - 1]->id;
             }
         }
 
@@ -253,7 +253,7 @@ class MemberController extends Controller
         $member = $request->user();
         $alamat = $member->alamat;
 
-        $alamat['IdAlamatUtama'] = $alamat['alamat'][$idAlamat]['id'];
+        $alamat->IdAlamatUtama = $alamat->alamat[$idAlamat]->id;
 
         $member->alamat = $alamat;
         $member->produk_favorit = json_decode($member->produk_favorit, true);
