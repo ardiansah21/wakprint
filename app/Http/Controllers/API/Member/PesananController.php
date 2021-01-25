@@ -130,7 +130,7 @@ class PesananController extends Controller
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
         $arrFiturTerpilih = [];
-        foreach ($pesanan->konfigurasiFile as $k) {
+        foreach ($data->konfigurasi_file as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
@@ -160,9 +160,10 @@ class PesananController extends Controller
         $pesanan->transaksiSaldo->push();
         $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
         $pesanan->partner->push();
+        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
 
         $arrFiturTerpilih = [];
-        foreach ($pesanan->konfigurasiFile as $k) {
+        foreach ($pesanan->konfigurasi_file as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
@@ -175,8 +176,6 @@ class PesananController extends Controller
             $k->alamat_toko = $pesanan->partner->alamat_toko;
             $k->produk = $k->product;
         }
-
-        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
 
         $pesanan->member->notify(new PesananNotification('pesananSelesai', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
