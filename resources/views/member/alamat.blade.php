@@ -59,18 +59,6 @@
                                                     data-alamat-jalan="{{ $member->alamat->alamat[$i]->AlamatJalan ?? '-' }}">
                                                     edit
                                                 </a>
-
-                                                <input id="editIdAlamat" type="text" value="{{$member->alamat->alamat[$i]->id}}" hidden/>
-                                                <input id="editNamaPenerima" type="text" value="{{$member->alamat->alamat[$i]->NamaPenerima}}" hidden/>
-                                                <input id="editNomorHP" type="text" value="{{$member->alamat->alamat[$i]->NomorHP}}" hidden/>
-                                                <input id="editProvinsi" type="text" value="{{$member->alamat->alamat[$i]->Provinsi}}" hidden/>
-                                                <input id="editKabupatenKota" type="text" value="{{$member->alamat->alamat[$i]->KabupatenKota}}" hidden/>
-                                                <input id="editKecamatan" type="text" value="{{$member->alamat->alamat[$i]->Kecamatan}}" hidden/>
-                                                <input id="editKelurahan" type="text" value="{{$member->alamat->alamat[$i]->Kelurahan}}" hidden/>
-                                                <input id="editKodePos" type="text" value="{{$member->alamat->alamat[$i]->KodePos}}" hidden/>
-                                                <input id="editAlamatJalan" type="text" value="{{$member->alamat->alamat[$i]->AlamatJalan}}" hidden/>
-
-
                                                 <a href="alamat/hapus/{{ $member->alamat->alamat[$i]->id ?? '' }}"
                                                     text-decoration="none" class="material-icons text-decoration-none mr-2"
                                                     style="color: #FF4949;">
