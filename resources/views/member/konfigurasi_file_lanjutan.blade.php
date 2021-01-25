@@ -5,27 +5,28 @@
     @php
     // use App\Produk;
     // dd((App\Produk)$p->id_produk);
-    $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
-    //dd($arr);
-    $p = app(App\Produk::class, $arr);
-    $p->id_produk = $arr['id_produk'];
-    $p->fill(
-    [
-    'id_pengelola' => $arr['id_pengelola'],
-    'nama' => $arr['nama'],
-    'harga_hitam_putih' => $arr['harga_hitam_putih'],
-    'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
-    'harga_berwarna' => $arr['harga_berwarna'],
-    'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
-    'berwarna' => $arr['berwarna'],
-    'hitam_putih' => $arr['hitam_putih'],
-    'deskripsi' => $arr['deskripsi'],
-    'jenis_kertas' => $arr['jenis_kertas'],
-    'jenis_printer' => $arr['jenis_printer'],
-    'status' => $arr['status'],
-    'fitur' => $arr['fitur'],
-    ]
-    );
+    if(!empty((session()->get('produkKonfigurasiFile'))->toArray())){
+        $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
+        $p = app(App\Produk::class, $arr);
+        $p->id_produk = $arr['id_produk'];
+        $p->fill(
+        [
+        'id_pengelola' => $arr['id_pengelola'],
+        'nama' => $arr['nama'],
+        'harga_hitam_putih' => $arr['harga_hitam_putih'],
+        'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
+        'harga_berwarna' => $arr['harga_berwarna'],
+        'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
+        'berwarna' => $arr['berwarna'],
+        'hitam_putih' => $arr['hitam_putih'],
+        'deskripsi' => $arr['deskripsi'],
+        'jenis_kertas' => $arr['jenis_kertas'],
+        'jenis_printer' => $arr['jenis_printer'],
+        'status' => $arr['status'],
+        'fitur' => $arr['fitur'],
+        ]
+        );
+    }
 
     @endphp
     <div class="container">
