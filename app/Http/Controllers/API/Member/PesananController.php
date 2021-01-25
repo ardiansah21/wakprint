@@ -160,7 +160,6 @@ class PesananController extends Controller
         $pesanan->transaksiSaldo->push();
         $pesanan->partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
         $pesanan->partner->push();
-        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
 
         $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasiFile as $k) {
@@ -176,6 +175,8 @@ class PesananController extends Controller
             $k->alamat_toko = $pesanan->partner->alamat_toko;
             $k->produk = $k->product;
         }
+
+        $pesanan->konfigurasi_file = $pesanan->konfigurasiFile;
 
         $pesanan->member->notify(new PesananNotification('pesananSelesai', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
