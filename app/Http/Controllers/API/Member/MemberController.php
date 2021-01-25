@@ -675,6 +675,8 @@ class MemberController extends Controller
             }
         }
 
+        $produks->fitur = json_decode($produks->fitur, true);
+
         $produkFinal = collect($produks)->map(function ($p) use ($request) {
             $flag = false;
             $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
