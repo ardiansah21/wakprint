@@ -88,6 +88,7 @@ class ProdukController extends Controller
             }
         }
         $produk->save();
+        $produk->push();
 
         return redirect()->route('partner.produk.index')->with('success', 'Anda berhasil menambahkan produk baru Anda');
     }
