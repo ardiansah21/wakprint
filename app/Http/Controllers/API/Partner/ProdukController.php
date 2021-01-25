@@ -18,17 +18,17 @@ class ProdukController extends Controller
     public function index()
     {
         if (!empty(request()->user()->products)) {
+            $produk = request()->user()->products;
+            foreach ($produk as $p) {
+                $p->fitur = json_decode($p->fitur, true);
+            }
             if (empty(request()->status_promo)) {
-                $produk = request()->user()->products;
-                foreach ($produk as $p) {
-                    $p->fitur = json_decode($p->fitur, true);
-                }
-                return responseSuccess('data seluruh produk', request()->user()->products);
+                return responseSuccess('data seluruh produk', $produk);
             } else {
-                if (count(request()->user()->products->where('status_diskon', 'TidakTersedia')) > 1) {
-                    return responseSuccess('data seluruh produk', request()->user()->products->where('status_diskon', 'TidakTersedia'));
+                if (count($produk->where('status_diskon', 'TidakTersedia')) > 1) {
+                    return responseSuccess('data seluruh produk', $produk->where('status_diskon', 'TidakTersedia'));
                 } else {
-                    return responseSuccess('data seluruh produk', array(request()->user()->products->where('status_diskon', 'TidakTersedia')->first()));
+                    return responseSuccess('data seluruh produk', array($produk->where('status_diskon', 'TidakTersedia')->first()));
                 }
             }
         }
