@@ -683,7 +683,7 @@ class MemberController extends Controller
                 $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
             }
 
-            return $flag;
+            return $p;
         });
 
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
