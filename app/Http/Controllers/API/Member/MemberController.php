@@ -150,14 +150,14 @@ class MemberController extends Controller
 
         $alamatBaru[] = array(
             'id' => $id,
-            'Nama Penerima' => $request->nama_penerima,
-            'Nomor HP' => $request->nomor_hp,
+            'NamaPenerima' => $request->nama_penerima,
+            'NomorHP' => $request->nomor_hp,
             'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kabupaten_kota,
+            'KabupatenKota' => $request->kabupaten_kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kode_pos,
-            'Alamat Jalan' => $request->alamat_jalan,
+            'KodePos' => $request->kode_pos,
+            'AlamatJalan' => $request->alamat_jalan,
         );
 
         if (!empty($request->idAlamatUtama)) {
@@ -188,14 +188,14 @@ class MemberController extends Controller
 
         $alamat->alamat[$idAlamat] = [
             'id' => $idAlamat,
-            'Nama Penerima' => $request->nama_penerima,
-            'Nomor HP' => $request->nomor_hp,
+            'NamaPenerima' => $request->nama_penerima,
+            'NomorHP' => $request->nomor_hp,
             'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kabupaten_kota,
+            'KabupatenKota' => $request->kabupaten_kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kode_pos,
-            'Alamat Jalan' => $request->alamat_jalan,
+            'KodePos' => $request->kode_pos,
+            'AlamatJalan' => $request->alamat_jalan,
         ];
 
         if ($request->idAlamatUtama != null) {
