@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Notifications\PesananNotification;
 use App\Notifications\PesananPartnerNotification;
+use App\Pengelola_Percetakan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
