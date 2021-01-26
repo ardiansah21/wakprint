@@ -691,7 +691,7 @@ class MemberController extends Controller
         });
 
         foreach ($produkFinal as $pf) {
-            if ($pf != null || $pf != "null" || !empty($pf)) {
+            if ($pf != null && $pf != "null" && !empty($pf)) {
                 array_push($arrProdukFinal, $pf);
             }
         }
