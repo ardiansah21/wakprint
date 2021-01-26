@@ -610,6 +610,28 @@ class MemberController extends Controller
                     ->orderBy('harga_hitam_putih', 'desc')
                     ->orderBy('harga_berwarna', 'desc')
                     ->get();
+
+                $produkFinal = collect($produks)->map(function ($p) use ($request) {
+                    $flag = false;
+                    $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
+
+                    // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
+                    foreach ($request->fiturTambahan as $ft) {
+                        $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
+                    }
+
+                    if ($flag === true) {
+                        return $p;
+                    }
+                });
+
+                foreach ($produkFinal as $pf) {
+                    if ($pf != null && $pf != "null" && !empty($pf)) {
+                        array_push($arrProdukFinal, $pf);
+                    }
+                }
+
+                $produks = $arrProdukFinal;
             } else {
                 $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
                     ->orWhere('rating', 'like', '%' . $request->keyword . '%')
@@ -622,6 +644,10 @@ class MemberController extends Controller
                     ->orderBy('harga_hitam_putih', 'desc')
                     ->orderBy('harga_berwarna', 'desc')
                     ->get();
+
+                foreach ($produks as $p) {
+                    $p->fitur = json_decode($p->fitur, true);
+                }
             }
         } else if ($request->filterPencarian === 'Harga Terendah') {
             if ($request->fiturTambahan != null) {
@@ -637,6 +663,28 @@ class MemberController extends Controller
                     ->orderBy('harga_hitam_putih', 'asc')
                     ->orderBy('harga_berwarna', 'asc')
                     ->get();
+
+                $produkFinal = collect($produks)->map(function ($p) use ($request) {
+                    $flag = false;
+                    $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
+
+                    // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
+                    foreach ($request->fiturTambahan as $ft) {
+                        $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
+                    }
+
+                    if ($flag === true) {
+                        return $p;
+                    }
+                });
+
+                foreach ($produkFinal as $pf) {
+                    if ($pf != null && $pf != "null" && !empty($pf)) {
+                        array_push($arrProdukFinal, $pf);
+                    }
+                }
+
+                $produks = $arrProdukFinal;
             } else {
                 $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
                     ->orWhere('rating', 'like', '%' . $request->keyword . '%')
@@ -649,6 +697,10 @@ class MemberController extends Controller
                     ->orderBy('harga_hitam_putih', 'asc')
                     ->orderBy('harga_berwarna', 'asc')
                     ->get();
+
+                foreach ($produks as $p) {
+                    $p->fitur = json_decode($p->fitur, true);
+                }
             }
         } else {
             if ($request->fiturTambahan != null) {
@@ -663,6 +715,28 @@ class MemberController extends Controller
                 // ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
                     ->orderBy('updated_at', 'desc')
                     ->get();
+
+                $produkFinal = collect($produks)->map(function ($p) use ($request) {
+                    $flag = false;
+                    $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
+
+                    // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
+                    foreach ($request->fiturTambahan as $ft) {
+                        $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
+                    }
+
+                    if ($flag === true) {
+                        return $p;
+                    }
+                });
+
+                foreach ($produkFinal as $pf) {
+                    if ($pf != null && $pf != "null" && !empty($pf)) {
+                        array_push($arrProdukFinal, $pf);
+                    }
+                }
+
+                $produks = $arrProdukFinal;
             } else {
                 $produks = Produk::where('nama', 'like', '%' . $request->keyword . '%')
                     ->orWhere('rating', 'like', '%' . $request->keyword . '%')
@@ -674,44 +748,24 @@ class MemberController extends Controller
                     ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
                     ->orderBy('updated_at', 'desc')
                     ->get();
+
+                foreach ($produks as $p) {
+                    $p->fitur = json_decode($p->fitur, true);
+                }
             }
-        }
-
-        $produkFinal = collect($produks)->map(function ($p) use ($request) {
-            $flag = false;
-            $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
-
-            // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
-            foreach ($request->fiturTambahan as $ft) {
-                $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
-            }
-
-            if ($flag === true) {
-                return $p;
-            }
-        });
-
-        foreach ($produkFinal as $pf) {
-            if ($pf != null && $pf != "null" && !empty($pf)) {
-                array_push($arrProdukFinal, $pf);
-            }
-        }
-
-        foreach ($produks as $p) {
-            $p->fitur = json_decode($p->fitur, true);
         }
 
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
             ->orWhere('alamat_toko', 'like', '%' . $request->keyword . '%')
             ->orWhere('rating_toko', 'like', '%' . $request->keyword . '%')
-            ->where('ambil_di_tempat', 'like', '%' . $request->ambilDiTempat . '%')
-            ->where('antar_ke_tempat', 'like', '%' . $request->antarKeTempat . '%')
+            ->where('ambil_di_tempat', $request->ambilDiTempat)
+            ->where('antar_ke_tempat', $request->antarKeTempat)
             ->orderBy('updated_at', 'desc')
             ->get();
 
         $data = new stdClass();
         $data->produks = $produks;
-        $data->fiturProduks = $arrProdukFinal;
+        // $data->fiturProduks = $arrProdukFinal;
         $data->partners = $partners;
 
         // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
