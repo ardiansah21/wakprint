@@ -687,7 +687,7 @@ class MemberController extends Controller
 
             if ($flag === true) {
                 foreach ($p as $pf) {
-                    if ($pf != 'null') {
+                    if (!empty($pf)) {
                         array_push($arrProdukFinal, $pf);
                     }
                 }
