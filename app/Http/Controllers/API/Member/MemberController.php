@@ -615,7 +615,6 @@ class MemberController extends Controller
                     $flag = false;
                     $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
 
-                    // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
                     foreach ($request->fiturTambahan as $ft) {
                         $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
                     }
@@ -664,7 +663,6 @@ class MemberController extends Controller
                     $flag = false;
                     $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
 
-                    // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
                     foreach ($request->fiturTambahan as $ft) {
                         $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
                     }
@@ -704,7 +702,6 @@ class MemberController extends Controller
                     ->orWhere('jenis_kertas', 'like', '%' . $request->keyword . '%')
                     ->where('jenis_printer', 'like', '%' . $request->jenisPrinter . '%')
                     ->orWhere('jenis_printer', 'like', '%' . $request->keyword . '%')
-                // ->where('fitur->nama', 'like', '%' . join(",", $request->fiturTambahan) . '%')
                     ->orderBy('updated_at', 'desc')
                     ->get();
 
@@ -712,7 +709,6 @@ class MemberController extends Controller
                     $flag = false;
                     $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
 
-                    // $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
                     foreach ($request->fiturTambahan as $ft) {
                         $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
                     }
@@ -758,28 +754,7 @@ class MemberController extends Controller
 
         $data = new stdClass();
         $data->produks = $produks;
-        // $data->fiturProduks = $arrProdukFinal;
         $data->partners = $partners;
-
-        // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
-        //     ->orderBy('id_atk', 'asc')
-        //     ->get();
-
-        // $idProdukPartnerDariProduk = array();
-        // $namaPartnerDariProduk = array();
-        // $alamatPartnerDariProduk = array();
-        // foreach ($produks as $p) {
-        //     array_push($idProdukPartnerDariProduk, $p->partner->id_pengelola);
-        //     array_push($namaPartnerDariProduk, $p->partner->nama_toko);
-        //     array_push($alamatPartnerDariProduk, $p->partner->alamat_toko);
-        // }
-
-        // $atkIdPartner = array();
-        // $atkStatusPartner = array();
-        // foreach ($atks as $a) {
-        //     array_push($atkIdPartner, $a->partner->id_pengelola);
-        //     array_push($atkStatusPartner, $a->partner->status);
-        // }
 
         return responseSuccess("Hasil Pencarian : ", $data);
     }

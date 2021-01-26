@@ -7,6 +7,7 @@ use App\Produk;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class ProdukController extends Controller
 {
