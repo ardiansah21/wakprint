@@ -644,10 +644,6 @@ class MemberController extends Controller
                     ->orderBy('harga_hitam_putih', 'desc')
                     ->orderBy('harga_berwarna', 'desc')
                     ->get();
-
-                foreach ($produks as $p) {
-                    $p->fitur = json_decode($p->fitur, true);
-                }
             }
         } else if ($request->filterPencarian === 'Harga Terendah') {
             if ($request->fiturTambahan != null) {
@@ -697,10 +693,6 @@ class MemberController extends Controller
                     ->orderBy('harga_hitam_putih', 'asc')
                     ->orderBy('harga_berwarna', 'asc')
                     ->get();
-
-                foreach ($produks as $p) {
-                    $p->fitur = json_decode($p->fitur, true);
-                }
             }
         } else {
             if ($request->fiturTambahan != null) {
@@ -749,10 +741,11 @@ class MemberController extends Controller
                     ->orderBy('updated_at', 'desc')
                     ->get();
 
-                foreach ($produks as $p) {
-                    $p->fitur = json_decode($p->fitur, true);
-                }
             }
+        }
+
+        foreach ($produks as $p) {
+            $p->fitur = json_decode($p->fitur, true);
         }
 
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
