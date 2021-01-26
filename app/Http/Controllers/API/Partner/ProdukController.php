@@ -189,12 +189,13 @@ class ProdukController extends Controller
             'fitur' => json_encode($fiturFinal),
         ]);
 
-        if ($request->input('document') != null) {
-            foreach ($request->input('document', []) as $file) {
-                $produk->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('foto_produk');
+        if ($request->foto_produk != null) {
+            foreach ($request->foto_produk as $file) {
+                $produk->addMedia($file)->toMediaCollection('foto_produk');
             }
         }
         $produk->save();
+        $produk->push();
 
         $data = $produk;
         $data->fitur = json_decode($produk->fitur);
