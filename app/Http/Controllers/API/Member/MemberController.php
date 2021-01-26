@@ -681,6 +681,7 @@ class MemberController extends Controller
             $flag = false;
             $fiturKeyword = collect(json_decode($p->fitur))->pluck('nama');
 
+            $flag = $flag || $p->nama = $request->keyword || $p->rating = $request->keyword || $p->harga_hitam_putih = $request->keyword || $p->harga_berwarna = $request->keyword && $p->jenis_kertas = $request->jenisKertas || $p->jenis_kertas = $request->keyword && $p->jenis_printer = $request->jenisPrinter || $p->jenis_printer = $request->keyword;
             foreach ($request->fiturTambahan as $ft) {
                 $flag = $flag || in_array($ft, $fiturKeyword->toArray(), false);
             }
