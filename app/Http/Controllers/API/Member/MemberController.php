@@ -676,6 +676,7 @@ class MemberController extends Controller
         }
 
         $produks->fitur = json_decode($produks->fitur, true);
+        $arrProdukFinal = [];
 
         $produkFinal = collect($produks)->map(function ($p) use ($request) {
             $flag = false;
@@ -686,7 +687,12 @@ class MemberController extends Controller
             }
 
             if ($flag === true) {
-                return $p;
+                foreach ($p as $pf) {
+                    if ($pf != null) {
+                        array_push($arrProdukFinal, $pf);
+                    }
+                }
+                return $arrProdukFinal;
             }
         });
 
@@ -700,7 +706,7 @@ class MemberController extends Controller
 
         $data = new stdClass();
         $data->produks = $produks;
-        $data->fiturProduks = $produkFinal;
+        $data->fiturProduks = $arrProdukFinal;
         $data->partners = $partners;
 
         // $atks = Atk::where('nama', 'like', '%' . $request->keyword . '%')
