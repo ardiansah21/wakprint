@@ -756,6 +756,6 @@ class MemberController extends Controller
         $data->produks = $produks;
         $data->partners = $partners;
 
-        return responseSuccess("Hasil Pencarian : ", $data);
+        return responseSuccess("Hasil Pencarian : " . $request->filterPencarian, $data);
     }
 }
