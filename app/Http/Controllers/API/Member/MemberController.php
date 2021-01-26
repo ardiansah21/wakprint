@@ -675,7 +675,6 @@ class MemberController extends Controller
             }
         }
 
-        $produks->fitur = json_decode($produks->fitur, true);
         $arrProdukFinal = [];
 
         $produkFinal = collect($produks)->map(function ($p) use ($request) {
@@ -695,6 +694,10 @@ class MemberController extends Controller
                 return $arrProdukFinal;
             }
         });
+
+        foreach ($produks as $p) {
+            $p->fitur = json_decode($p->fitur, true);
+        }
 
         $partners = Pengelola_Percetakan::where('nama_toko', 'like', '%' . $request->keyword . '%')
             ->orWhere('alamat_toko', 'like', '%' . $request->keyword . '%')
