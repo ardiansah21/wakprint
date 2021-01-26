@@ -686,14 +686,15 @@ class MemberController extends Controller
             }
 
             if ($flag === true) {
-                foreach ($p as $pf) {
-                    if ($pf != "null") {
-                        array_push($arrProdukFinal, $pf);
-                    }
-                }
-                return $arrProdukFinal;
+                return $p;
             }
         });
+
+        foreach ($produkFinal as $pf) {
+            if ($pf != null || $pf != "null" || !empty($pf)) {
+                array_push($arrProdukFinal, $pf);
+            }
+        }
 
         foreach ($produks as $p) {
             $p->fitur = json_decode($p->fitur, true);
