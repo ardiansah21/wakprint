@@ -18,6 +18,7 @@
                     <th class="align-middle" scope="col-md-auto">{{__('Maksimal Diskon')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Tanggal Mulai')}}</th>
                     <th class="align-middle" scope="col-md-auto">{{__('Tanggal Berakhir')}}</th>
+                    <th class="align-middle" scope="col-md-auto">{{__('Status')}}</th>
                     <th class="align-middle" scope="col-md-auto"></th>
                 </tr>
             </thead>
@@ -31,6 +32,11 @@
                             <td>{{rupiah($p->maksimal_diskon)}}</td>
                             <td>{{Carbon::parse($p->mulai_waktu_diskon)->translatedFormat('d F Y')}}</td>
                             <td>{{Carbon::parse($p->selesai_waktu_diskon)->translatedFormat('d F Y')}}</td>
+                            @if($p->status_diskon != "TidakTersedia")
+                                <td>Sedang Berlangsung</td>
+                            @else
+                                <td>Telah Berakhir / Belum Dimulai</td>
+                            @endif
                             <td>
                                 <a href="{{ route('partner.promo.edit',$p->id_produk) }}" style="margin-left: -50px;">
                                     <i class="material-icons md-18">
