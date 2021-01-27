@@ -29,12 +29,7 @@
                     <div class="card shadow-sm mb-3 pl-4 pr-2" style="border-radius: 10px;">
                         <div class="row">
                             <div class="container text-center align-self-center col-md-2">
-                                <img
-                                    @if (!empty($value->product->getFirstMediaUrl('foto_produk')))
-                                        src="{{$value->product->getFirstMediaUrl('foto_produk')}}"
-                                    @else
-                                        src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                    @endif width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">
+                                <img src="{{$value->product->foto_produk[0]}}" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">
                             </div>
                             <div class="col-md-10">
                                 <div class="card-body">
@@ -54,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="text" id="fotoProdukBelumDiulas" name="fotoProdukBelumDiulas" value="{{$value->product->getFirstMediaUrl('foto_produk')}}" hidden>
+                    <input type="text" id="fotoProdukBelumDiulas" name="fotoProdukBelumDiulas" value="{{$value->product->foto_produk[0]}}" hidden>
                 @endforeach
         </div>
     </div>
