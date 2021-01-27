@@ -61,7 +61,7 @@
             <label id="alamatMember" name="alamatmember" class="col-md-6 mb-0">
                 @if (!empty($member->alamat->alamat))
                     @for($i=0 ; $i < count($member->alamat->alamat);$i++)
-                        @if ($member->alamat->alamat[$i]->id === $member->alamat['IdAlamatUtama'])
+                        @if ($member->alamat->alamat[$i]->id === $member->alamat->IdAlamatUtama)
                             {{ $member->alamat->alamat[$i]->AlamatJalan }},
                             {{ $member->alamat->alamat[$i]->Kelurahan }},
                             {{ $member->alamat->alamat[$i]->Kecamatan }},
