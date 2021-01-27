@@ -84,7 +84,7 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
         Route::apiResource('/pesanan', 'PesananController');
         Route::post('/atk/update/{atk}', 'AtkController@update');
         Route::apiResource('/atk', 'AtkController');
-        Route::post('/produk/update/{produk}', 'ProdukController@update');
+        Route::post('/produk/update/{produk}', 'ProdukController@updateProduk');
         Route::get('/produk/duplicate/{produkA}', 'ProdukController@duplicate');
         Route::apiResource('/produk', 'ProdukController');
         Route::patch('/promo/store/{id}', 'PromoController@store');
