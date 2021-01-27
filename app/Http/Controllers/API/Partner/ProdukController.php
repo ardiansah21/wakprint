@@ -312,7 +312,11 @@ class ProdukController extends Controller
                 }
             }
         }
+
+        $produk->fitur = json_decode($produk->fitur, true);
         $produk->save();
+        $produk->push();
+
         return responseSuccess('Anda berhasil mengubah produk Anda', $produk);
     }
 
