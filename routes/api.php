@@ -25,12 +25,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
 
     Route::middleware('auth:api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
-        // Route::get('/', 'MemberController@index');
         Route::get('/user', 'MemberController@user');
-        // Route::get('/produk', 'MemberController@produk');
-        // Route::get('/pengelola', 'MemberController@partner');
-        // Route::get('/partner/detail/{idPartner}', 'MemberController@detailPartner');
-        // Route::get('/produk/detail/{idProduk}', 'MemberController@detailProduk');
         Route::post('/produk/lapor/store/{idProduk}', 'MemberController@storeLaporProduk');
         Route::post('/profil/update', 'MemberController@updateProfile');
         Route::post('/profil/update-photo', 'MemberController@uploadPhotoProfile');

@@ -106,7 +106,6 @@ class PromoController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $jumlahDiskon = $request->jumlah_diskon;
         $tanggalMulaiPromo = $request->mulai_waktu_diskon;
@@ -122,7 +121,7 @@ class PromoController extends Controller
             return responseError('Maaf waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
         }
 
-        $produk->status_diskon = $statusDiskon;
+        $produk->status_diskon = 'Tersedia';
         $produk->maksimal_diskon = (int) str_replace('.', '', $maksimalDiskon);
         $produk->jumlah_diskon = $jumlahDiskon;
         $produk->mulai_waktu_diskon = $tanggalMulaiPromo;
