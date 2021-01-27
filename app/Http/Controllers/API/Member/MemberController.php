@@ -382,25 +382,26 @@ class MemberController extends Controller
         foreach ($pesanan as $p) {
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
             foreach ($p->konfigurasiFile as $k) {
-                // $k->product->fitur = json_decode($k->product->fitur, true);
-                if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
-                    $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
-                    $ulasan->produk->fitur = json_decode($ulasan->produk->fitur, true);
-                    $ulasan->nama_produk = $k->product->nama;
-                    $ulasan->nama_toko = $k->product->partner->nama_toko;
-                    $ulasan->foto_produk = $k->product->foto_produk;
-                    array_push($arraySudahDiulas, $ulasan);
-                } else {
-                    $temp = new stdClass();
-                    $temp->id_pesanan = $p->id_pesanan;
-                    $temp->id_member = $p->id_member;
-                    $temp->id_pengelola = $p->id_pengelola;
-                    $temp->id_produk = $k->product->id_produk;
-                    $temp->updated_at = $p->updated_at;
-                    $temp->nama_produk = $k->product->nama;
-                    $temp->nama_toko = $k->product->partner->nama_toko;
-                    $temp->foto_produk = $k->product->foto_produk;
-                    array_push($arrayBelumDiulas, $temp);
+                if ($k->product != null) {
+                    $k->product->fitur = json_decode($k->product->fitur, true);
+                    if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
+                        $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
+                        $ulasan->nama_produk = $k->product->nama;
+                        $ulasan->nama_toko = $k->product->partner->nama_toko;
+                        $ulasan->foto_produk = $k->product->foto_produk;
+                        array_push($arraySudahDiulas, $ulasan);
+                    } else {
+                        $temp = new stdClass();
+                        $temp->id_pesanan = $p->id_pesanan;
+                        $temp->id_member = $p->id_member;
+                        $temp->id_pengelola = $p->id_pengelola;
+                        $temp->id_produk = $k->product->id_produk;
+                        $temp->updated_at = $p->updated_at;
+                        $temp->nama_produk = $k->product->nama;
+                        $temp->nama_toko = $k->product->partner->nama_toko;
+                        $temp->foto_produk = $k->product->foto_produk;
+                        array_push($arrayBelumDiulas, $temp);
+                    }
                 }
             }
         }
@@ -417,16 +418,16 @@ class MemberController extends Controller
         foreach ($pesanan as $p) {
             $p->atk_terpilih = json_decode($p->atk_terpilih, true);
             foreach ($p->konfigurasiFile as $k) {
-                // $k->product->fitur = json_decode($k->product->fitur, true);
-                if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
-                    $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
-
-                    foreach ($ulasan as $u) {
-                        $u->produk->fitur = json_decode($u->produk->fitur, true);
-                        $u->nama_produk = $k->product->nama;
-                        $u->nama_toko = $k->product->partner->nama_toko;
-                        $u->foto_produk = $k->product->foto_produk;
-                        array_push($arraySudahDiulas, $u);
+                if ($k->product != null) {
+                    $k->product->fitur = json_decode($k->product->fitur, true);
+                    if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
+                        $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
+                        foreach ($ulasan as $u) {
+                            $u->nama_produk = $k->product->nama;
+                            $u->nama_toko = $k->product->partner->nama_toko;
+                            $u->foto_produk = $k->product->foto_produk;
+                            array_push($arraySudahDiulas, $u);
+                        }
                     }
                 }
             }
