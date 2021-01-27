@@ -385,9 +385,7 @@ class MemberController extends Controller
                 // $k->product->fitur = json_decode($k->product->fitur, true);
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
                     $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
-                    foreach ($ulasan->produk as $p) {
-                        $p->fitur = json_decode($p->fitur, true);
-                    }
+                    $ulasan->produk->fitur = json_decode($ulasan->produk->fitur, true);
                     $ulasan->nama_produk = $k->product->nama;
                     $ulasan->nama_toko = $k->product->partner->nama_toko;
                     $ulasan->foto_produk = $k->product->foto_produk;
@@ -423,11 +421,8 @@ class MemberController extends Controller
                 if ($member->ulasans->where('id_produk', $k->product->id_produk) != '[]') {
                     $ulasan = $member->ulasans->where('id_produk', $k->product->id_produk);
 
-                    foreach ($ulasan->produk as $p) {
-                        $p->fitur = json_decode($p->fitur, true);
-                    }
-
                     foreach ($ulasan as $u) {
+                        $u->produk->fitur = json_decode($u->produk->fitur, true);
                         $u->nama_produk = $k->product->nama;
                         $u->nama_toko = $k->product->partner->nama_toko;
                         $u->foto_produk = $k->product->foto_produk;
