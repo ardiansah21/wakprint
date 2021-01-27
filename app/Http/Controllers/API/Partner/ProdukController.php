@@ -223,7 +223,7 @@ class ProdukController extends Controller
      * @param  \App\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produk $produk)
+    public function updateProduk(Produk $produk, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama' => ['required', 'string', 'max:150'],
