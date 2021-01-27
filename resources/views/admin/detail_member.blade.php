@@ -59,30 +59,20 @@
                 {{__('Alamat')}}
             </label>
             <label id="alamatMember" name="alamatmember" class="col-md-6 mb-0">
-                @if (!empty($member->alamat['alamat']))
-                    @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
-                        @if ($member->alamat['alamat'][$i]['id'] === $member->alamat['IdAlamatUtama'])
-                            {{ $member->alamat['alamat'][$i]['Alamat Jalan'] }},
-                            {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
-                            {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                            {{ $member->alamat['alamat'][$i]['Kabupaten Kota'] }},
-                            {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                            {{ $member->alamat['alamat'][$i]['Kode Pos'] }}
+                @if (!empty($member->alamat->alamat))
+                    @for($i=0 ; $i < count($member->alamat->alamat);$i++)
+                        @if ($member->alamat->alamat[$i]->id === $member->alamat['IdAlamatUtama'])
+                            {{ $member->alamat->alamat[$i]->AlamatJalan }},
+                            {{ $member->alamat->alamat[$i]->Kelurahan }},
+                            {{ $member->alamat->alamat[$i]->Kecamatan }},
+                            {{ $member->alamat->alamat[$i]->KabupatenKota }},
+                            {{ $member->alamat->alamat[$i]->Provinsi }},
+                            {{ $member->alamat->alamat[$i]->KodePos }}
                         @endif
                     @endfor
                 @else
                     <label>-</label>
                 @endif
-
-                {{-- {{ $member->alamat }} --}}
-                {{-- @for($i=0 ; $i < count($member->alamat['alamat']);$i++)
-                {{ $member->alamat['alamat'][$i]['AlamatJalan'] }},
-                {{ $member->alamat['alamat'][$i]['Kelurahan'] }},
-                {{ $member->alamat['alamat'][$i]['Kecamatan'] }},
-                {{ $member->alamat['alamat'][$i]['KabupatenKota'] }},
-                {{ $member->alamat['alamat'][$i]['Provinsi'] }},
-                {{ $member->alamat['alamat'][$i]['KodePos'] }}
-                @endfor --}}
             </label>
         </div>
         <form action="{{route('admin.member.hapus',$member->id_member)}}" method="POST">
