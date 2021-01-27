@@ -100,7 +100,7 @@ class ChatController extends Controller
     //all
     public function message($id)
     {
-        $chat = Chat::where('id_pesanan', $id)->orderByDesc("created_at")->get();
+        $chat = Chat::where('id_pesanan', $id)->orderBy("created_at", "desc")->get();
         if (!$chat->isEmpty()) {
             if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
                 // $count = Chat::where('id_pesanan', $id)
