@@ -234,7 +234,9 @@ function cekWarnaMobile($filePDF)
         $im->destroy();
 
         $pdf->halaman[$i]['jenis_warna'] = $jenisWarna[$i];
-        $pdf->halaman[$i]['persetase_halaman_berwarna'] = round($persentasePageColor[$i], 2);
+        $pdf->halaman[$i]['piksel_hitam_putih'] = $totalPixelGray[$i];
+        $pdf->halaman[$i]['piksel_berwarna'] = $totalPixelColor[$i];
+        $pdf->halaman[$i]['total_piksel'] = $totalPixel[$i];
 
     }
     $pdf->jumlahHalaman = $jumlahHal;
