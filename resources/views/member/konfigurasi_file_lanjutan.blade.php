@@ -75,6 +75,8 @@
                     </div>
                 </div>
             @else
+                <br>
+                <label class="mb-0 mt-4" style="font-size:24px;">{{ __('Tampilan Preview File Anda') }}</label>
                 <div id="konfigurasi" class="row justify-content-between mb-5">
                     <div class="col-md-auto mt-5 mr-0">
                         <div class="border-primary-purple"
@@ -180,7 +182,7 @@
                                         {{ __('Kustom') }}
                                     </label>
                                     <br>
-                                    <input id="halamanKustom" type="text mr-4" class="form-input kustom" for="rbKustomHal"
+                                    <input id="halamanKustom" type="text mr-4" class="form-input kustom" for="rbKustomHal" placeholder="Contoh: 1,3,4-7"
                                         value="" disabled
                                         oninput="this.value = this.value.replace(/[^0-9,-]/g, '').replace(/(\,.*)\./g, '$1');">
                                 </div>

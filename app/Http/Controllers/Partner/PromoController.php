@@ -31,7 +31,7 @@ class PromoController extends Controller
 
     public function storeCreate(Request $request)
     {
-        if (empty($request->tahun_mulai_promo) || empty($request->bulan_mulai_promo) || empty($request->tanggal_mulai_promo) || empty($request->tahun_selesai_promo) || empty($request->bulan_selesai_promo) || empty($request->tanggal_selesai_promo)) {
+        if (empty($request->tanggal_awal_promo) || empty($request->tanggal_selesai_promo)) {
             alert()->error('Maaf', 'Waktu promo tidak boleh ada yang kosong. Silahkan periksa kembali yah');
             return redirect()->back();
         }
@@ -43,18 +43,11 @@ class PromoController extends Controller
             array_push($arrIdProduk, $id);
         }
 
-        $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
-        $tanggalMulai = $request->tanggal_mulai_promo;
-        $bulanMulai = $months[$request->bulan_mulai_promo];
-        $tahunMulai = $request->tahun_mulai_promo;
         $jumlahDiskon = $request->jumlah_diskon / 100;
-        $tanggalSelesai = $request->tanggal_selesai_promo;
-        $bulanSelesai = $months[$request->bulan_selesai_promo];
-        $tahunSelesai = $request->tahun_selesai_promo;
-        $tanggalMulaiPromo = "$tahunMulai-$bulanMulai-$tanggalMulai";
-        $tanggalSelesaiPromo = "$tahunSelesai-$bulanSelesai-$tanggalSelesai";
+        $tanggalMulaiPromo = $request->tanggal_awal_promo;
+        $tanggalSelesaiPromo = $request->tanggal_selesai_promo;
 
         if ($tanggalMulaiPromo < Carbon::now()->format('Y-m-d')) {
             alert()->error('Maaf', 'Waktu mulai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
@@ -95,25 +88,27 @@ class PromoController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (empty($request->tahun_mulai_promo) || empty($request->bulan_mulai_promo) || empty($request->tanggal_mulai_promo) || empty($request->tahun_selesai_promo) || empty($request->bulan_selesai_promo) || empty($request->tanggal_selesai_promo)) {
+        if (empty($request->tanggal_awal_promo) || empty($request->tanggal_selesai_promo)) {
             alert()->error('Maaf', 'Waktu promo tidak boleh ada yang kosong. Silahkan periksa kembali yah');
             return redirect()->back();
         }
 
         $partner = Auth::user();
-        $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
+        // $months = ['Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4, 'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8, 'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12];
 
         $statusDiskon = 'Tersedia';
         $maksimalDiskon = $request->maksimal_diskon;
         $tanggalMulai = $request->tanggal_mulai_promo;
-        $bulanMulai = $months[$request->bulan_mulai_promo];
+        // $bulanMulai = $months[$request->bulan_mulai_promo];
         $tahunMulai = $request->tahun_mulai_promo;
         $jumlahDiskon = $request->jumlah_diskon / 100;
         $tanggalSelesai = $request->tanggal_selesai_promo;
-        $bulanSelesai = $months[$request->bulan_selesai_promo];
+        // $bulanSelesai = $months[$request->bulan_selesai_promo];
         $tahunSelesai = $request->tahun_selesai_promo;
-        $tanggalMulaiPromo = "$tahunMulai-$bulanMulai-$tanggalMulai";
-        $tanggalSelesaiPromo = "$tahunSelesai-$bulanSelesai-$tanggalSelesai";
+        $tanggalMulaiPromo = $request->tanggal_awal_promo;
+        $tanggalSelesaiPromo = $request->tanggal_selesai_promo;
+        // $tanggalMulaiPromo = "$tahunMulai-$bulanMulai-$tanggalMulai";
+        // $tanggalSelesaiPromo = "$tahunSelesai-$bulanSelesai-$tanggalSelesai";
 
         if ($tanggalMulaiPromo < Carbon::now()->format('Y-m-d')) {
             alert()->error('Maaf', 'Waktu mulai promo tidak boleh menggunakan waktu lampau, silahkan periksa kembali yah');
@@ -123,7 +118,7 @@ class PromoController extends Controller
             return redirect()->back();
         }
 
-        if ($tanggalMulaiPromo > $tanggalSelesaiPromo || $tanggalSelesaiPromo < $tanggalMulaiPromo || $bulanMulai > $bulanSelesai || $bulanSelesai < $bulanMulai || $tanggalMulai > $tanggalSelesai || $tanggalSelesai < $tanggalMulai) {
+        if ($tanggalMulaiPromo > $tanggalSelesaiPromo || $tanggalSelesaiPromo < $tanggalMulaiPromo) {
             alert()->error('Maaf', 'Waktu mulai promo tidak boleh melewati masa waktu selesai promo, silahkan periksa kembali yah');
             return redirect()->back();
         }

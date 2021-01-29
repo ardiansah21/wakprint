@@ -5,6 +5,7 @@
 <div class="container">
     <div class="mt-5 mb-5">
         <label class="font-weight-bold" style="font-size:48px;">{{__('Konfigurasi File') }}</label>
+        <label class="mb-0 mt-4" style="font-size:24px;">{{ __('Tampilan Preview File Anda') }}</label>
         <div id="konfigurasi" class="row justify-content-between mb-5">
             <div class="col-md-auto mt-5 mr-0">
                 <div class="border-primary-purple" style="width:515px; height:560px; position:relative; float: none; display: table-cell; vertical-align: bottom;">
@@ -109,7 +110,7 @@
                                     {{__('Kustom') }}
                                 </label>
                                 <br>
-                                <input id="halamanKustom" type="text mr-4" class="form-input kustom" for="rbKustomHal" value="" disabled oninput="this.value = this.value.replace(/[^0-9,-]/g, '').replace(/(\,.*)\./g, '$1');">
+                                <input id="halamanKustom" type="text mr-4" class="form-input kustom" for="rbKustomHal" placeholder="Contoh: 1,3,4-7" value="" disabled oninput="this.value = this.value.replace(/[^0-9,-]/g, '').replace(/(\,.*)\./g, '$1');">
                             </div>
                         </div>
                         <div class="col-md-5">

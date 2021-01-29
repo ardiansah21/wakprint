@@ -43,6 +43,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <link href="{{asset('air-datepicker/dist/css/datepicker.css')}}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('air-datepicker/dist/js/datepicker.js')}}"></script>
+    <script src="{{ asset('air-datepicker/dist/js/i18n/datepicker.en.js') }}"></script>
+
     <style>
         .btn:focus,
         .btn:active {
@@ -54,16 +58,6 @@
 </head>
 
 <body>
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.js') }}"></script>
-    <script src="{{ asset('OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <script src="{{ asset('js/scriptPengelola.js') }}"></script>
-    <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> --}}
-
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -279,6 +273,7 @@
     </div>
     @include('sweetalert::alert')
 </body>
+
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/appPartner.js') }}"></script>
 <script src="{{ asset('js/scriptPengelola.js') }}"></script>

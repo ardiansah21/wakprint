@@ -123,7 +123,8 @@
                         <label class="mb-2">
                             {{__('Tanggal Promo Mulai') }}
                         </label>
-                        <div class="row justify-content-left mb-3">
+                        <input id="tanggalAwalPromo" name="tanggal_awal_promo" type='text' class="col-md-12 tanggalAwalPromo datepicker-here form-control form-control-lg" value="{{Carbon::parse($produk->mulai_waktu_diskon)->translatedFormat('Y-m-d')}}" data-language="en"/>
+                        {{-- <div class="row justify-content-left mb-3">
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
                                     <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" value="{{intval(substr($produk->mulai_waktu_diskon, 8, 2))}}" Class="form-control" hidden>
@@ -169,7 +170,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col-md-6">
                         <label class="mb-2">
@@ -202,7 +203,8 @@
                         <label class="mb-2">
                             {{__('Tanggal Promo Selesai') }}
                         </label>
-                        <div class="row justify-content-left mb-3">
+                        <input id="tanggalSelesaiPromo" name="tanggal_selesai_promo" type='text' class="col-md-12 datepicker-here form-control form-control-lg" data-language="en" value="{{Carbon::parse($produk->selesai_waktu_diskon)->translatedFormat('Y-m-d')}}"/>
+                        {{-- <div class="row justify-content-left mb-3">
                             <div class="form-group col-md-4">
                                 <div class="dropdown" aria-required="true">
                                     <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" value="{{intval(substr($produk->selesai_waktu_diskon, 8, 2))}}" Class="form-control" hidden>
@@ -248,7 +250,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row justify-content-end mr-0">
@@ -269,6 +271,17 @@
 
 @section('script')
     <script>
+
+        // $('#tanggalAwalPromo').datepicker({
+        //     language:'en',
+        //     minDate: new Date()
+        // });
+
+        // $('#tanggalSelesaiPromo').datepicker({
+        //     language:'en',
+        //     minDate: new Date()
+        // });
+
         $('#tanggalMulaiPromoList span').on('click', function () {
             $('#tanggalMulaiPromoButton').text($(this).text());
             $('#tanggal_mulai_promo').val($(this).text());

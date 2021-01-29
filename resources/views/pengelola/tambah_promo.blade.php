@@ -99,8 +99,9 @@
                         <label class="mb-2">
                             {{__('Tanggal Promo Mulai') }}
                         </label>
-                        <div class="row justify-content-left mb-3">
-                            <div class="form-group col-md-4" required>
+                        <input id="tanggalAwalPromo" name="tanggal_awal_promo" type='text' class="col-md-12 tanggalAwalPromo datepicker-here form-control form-control-lg" oninput="this.value = this.text" data-language="en"/>
+                        {{-- <div class="row justify-content-left mb-3"> --}}
+                            {{-- <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" Class="form-control" value="" hidden>
                                     <button id="tanggalMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -144,8 +145,8 @@
                                         @endfor
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> --}}
+                        {{-- </div> --}}
                     </div>
                     <div class="col-md-6">
                         <label class="mb-2">
@@ -178,8 +179,10 @@
                         <label class="mb-2">
                             {{__('Tanggal Promo Selesai') }}
                         </label>
-                        <div class="row justify-content-left mb-3">
-                            <div class="form-group col-md-4" required>
+                        <input id="tanggalSelesaiPromo" name="tanggal_selesai_promo" type='text' class="col-md-12 datepicker-here form-control form-control-lg" data-language="en" oninput="this.value = this.text"/>
+                        {{-- <div class="row justify-content-left mb-3"> --}}
+
+                            {{-- <div class="form-group col-md-4" required>
                                 <div class="dropdown" aria-required="true">
                                     <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" Class="form-control" value="" hidden>
                                     <button id="tanggalSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
@@ -223,8 +226,8 @@
                                         @endfor
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> --}}
+                        {{-- </div> --}}
                     </div>
                 </div>
                 <div class="row justify-content-end mr-0">
@@ -285,6 +288,16 @@
                 }
                 $('#idProduk').val(JSON.stringify(arrIdProduk));
             });
+        });
+
+        $('#tanggalAwalPromo').datepicker({
+            language:'en',
+            minDate: new Date()
+        });
+
+        $('#tanggalSelesaiPromo').datepicker({
+            language:'en',
+            minDate: new Date()
         });
 
         $('#tanggalMulaiPromoList span').on('click', function () {
