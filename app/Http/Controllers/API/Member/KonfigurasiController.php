@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use imagick;
+use stdClass;
 
 class KonfigurasiController extends Controller
 {
