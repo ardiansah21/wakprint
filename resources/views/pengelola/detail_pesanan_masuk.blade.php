@@ -259,11 +259,11 @@
                         <label class="col-md-6 font-weight-bold mb-3 my-auto" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
-                        <input type="text" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-language="en" required>
+                        <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-language="en" required>
                     </div>
                 @else
                     <div>
-                        <label class="font-weight-bold  mb-2" style="font-size: 16px;">
+                        <label class="font-weight-bold mb-2" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
                         <br>
@@ -346,6 +346,53 @@
                     $('#selesaikanBtn').prop('disabled', true);
                 }
             });
+        })
+
+        // Create start date
+        var start = new Date(),
+            prevDay,
+            startHours = 9;
+
+        // 09:00 AM
+        start.setHours(9);
+        start.setMinutes(0);
+
+        // If today is Saturday or Sunday set 10:00 AM
+        // if ([6, 0].indexOf(start.getDay()) != -1) {
+        //     start.setHours(10);
+        //     startHours = 10
+        // }
+
+        $('#waktuEstimasi').datepicker({
+            timepicker: true,
+            language: 'en',
+            startDate: start,
+            minHours: 0,
+            maxHours: 23,
+            onSelect: function (fd, d, picker) {
+                // Do nothing if selection was cleared
+                if (!d) return;
+
+                var day = d.getDay();
+
+                // Trigger only if date is changed
+                if (prevDay != undefined && prevDay == day) return;
+                prevDay = day;
+
+                // If chosen day is Saturday or Sunday when set
+                // hour value for weekends, else restore defaults
+                if (day == 6 || day == 0) {
+                    picker.update({
+                        minHours: 10,
+                        maxHours: 16
+                    })
+                } else {
+                    picker.update({
+                        minHours: 9,
+                        maxHours: 18
+                    })
+                }
+            }
         })
     </script>
 @endsection
