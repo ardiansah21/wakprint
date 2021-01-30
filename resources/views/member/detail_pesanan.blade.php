@@ -391,6 +391,21 @@
                             </div>
                         @endif
                     </div>
+
+                    @if(!empty($pesanan->waktu_estimasi))
+                        <div class="row justify-content-between text-right mt-1 mb-2">
+                            <div class="col-md-6 text-left ml-0">
+                                <label class="font-weight-bold">
+                                    {{__('Waktu Estimasi Penyelesaian Pesanan') }}
+                                </label>
+                            </div>
+                            <div class="col-md-6 mr-0">
+                                <label>
+                                    {{Carbon::parse($pesanan->waktu_estimasi)->translatedFormat('d F Y'). ', '. Carbon::parse($pesanan->waktu_estimasi)->translatedFormat('H:i'). ' WIB'}}
+                                </label>
+                            </div>
+                        </div>
+                    @endif
                 </div>
         </div>
         @if ($transaksiSaldo->status === "Berhasil" && $pesanan->status != "Batal")
@@ -398,8 +413,6 @@
                 <div class="row justify-content-left no-gutters">
                     <div class="align-self-center col-md-auto mr-4">
                         {{QrCode::size(200)->generate($pesanan->id_pesanan)}}
-                        {{-- {{QrCode::size(200)->generate(route('konfirmasi.pesanan.selesai',$pesanan->id_pesanan))}} --}}
-                        {{-- <img src="{{url('img/Qr-Code.png')}}" width="200" height="200" alt="no logo"> --}}
                     </div>
                     <div class="col-md-8 align-self-center">
                         <label class="SemiBold mb-1"

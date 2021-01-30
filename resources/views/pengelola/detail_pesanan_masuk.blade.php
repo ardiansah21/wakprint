@@ -268,7 +268,9 @@
                         </label>
                         <br>
                         <label class="mb-3" style="font-size: 14px;">
-                            {{ $pesanan->waktu_estimasi }}
+                            @if(!empty($pesanan->waktu_estimasi))
+                                {{Carbon::parse($pesanan->waktu_estimasi)->translatedFormat('d F Y'). ', '. Carbon::parse($pesanan->waktu_estimasi)->translatedFormat('H:i'). ' WIB'}}
+                            @endif
                         </label>
                     </div>
                 @endif
