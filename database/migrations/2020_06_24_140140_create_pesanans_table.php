@@ -25,6 +25,7 @@ class CreatePesanansTable extends Migration
             $table->integer('ongkos_kirim')->nullable();
             $table->integer('biaya');
             $table->enum('status', ['Batal', 'Pending', 'Diproses', 'Selesai'])->nullable();
+            $table->timestamp('waktu_estimasi')->nullable();
             $table->timestamps();
         });
     }

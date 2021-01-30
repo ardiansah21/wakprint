@@ -19,6 +19,7 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
 
     //set nilai kolom db default
     protected $attributes = [
+        'ongkir_toko' => 10000,
         'rating_toko' => 5.0,
         'status_toko' => 'Buka',
         'ntkwh' => 0,

@@ -70,7 +70,7 @@
                             style="border-radius: 0px 5px 5px 0px;">
                             <i id="togglePassword"
                             toggle="#password-field"
-                            class="fa fa-fw fa-eye field_icon toggle-password">
+                            class="fa fa-fw fa-eye field_icon toggle-password1">
                             </i>
                         </span>
                     </div>
@@ -91,7 +91,7 @@
                         autocomplete="new-password">
                     <div class="input-group-append">
                         <span class="input-group-text bg-white" style="border-radius: 0px 5px 5px 0px;">
-                            <i id="togglePassword" toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password">
+                            <i id="togglePassword" toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password2">
                             </i>
                         </span>
                     </div>
@@ -115,7 +115,7 @@
             </div>
         </form>
         <div class="mb-2">
-            <label class="row justify-content-center mb-0" style="font-size: 18px; text-align:center">
+            {{-- <label class="row justify-content-center mb-0" style="font-size: 18px; text-align:center">
                 {{__('Atau')}}
             </label>
             <br>
@@ -126,7 +126,7 @@
             <button class="btn btn-outline-primary btn-lg btn-block font-weight-bold mb-4"
                 style="border-radius:30px;font-size: 24px;">
                 {{__('Daftar dengan Facebook')}}
-            </button>
+            </button> --}}
             <label class="row justify-content-center mb-4" style="font-size: 18px;">
                 {{__('Sudah punya akun ?')}}
                 <a class="text-primary-purple ml-2" href="{{ route('login') }}">
@@ -136,6 +136,29 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $("body").on('click', '.toggle-password1', function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var inputPassword = $("#password");
+        if (inputPassword.attr("type") === "password") {
+            inputPassword.attr("type", "text");
+        } else {
+            inputPassword.attr("type", "password");
+        }
+    });
+    $("body").on('click', '.toggle-password2', function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var inputKonfirmasiPassword = $("#password-confirm");
+        if (inputKonfirmasiPassword.attr("type") === "password") {
+            inputKonfirmasiPassword.attr("type", "text");
+        } else {
+            inputKonfirmasiPassword.attr("type", "password");
+        }
+    });
+</script>
 @endsection
 
 {{-- @extends('layouts.member')

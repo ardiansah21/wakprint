@@ -34,14 +34,14 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->string('alamat_toko');
             $table->string('url_google_maps')->nullable();
             $table->enum('status_toko', ['Buka', 'Tutup']);
+            $table->integer('ongkir_toko')->nullable();
             $table->decimal('rating_toko', 2, 1);
             $table->timestamp('jam_op_buka')->nullable();
             $table->timestamp('jam_op_tutup')->nullable();
             $table->text('syaratkententuan')->nullable();
-            // $table->string('foto_toko')->nullable();
             $table->boolean('ambil_di_tempat')->nullable();
             $table->boolean('antar_ke_tempat')->nullable();
-            $table->smallInteger('ntkwh')->nullable();
+            $table->decimal('ntkwh', 5, 2)->nullable();
             $table->timestamps();
         });
     }

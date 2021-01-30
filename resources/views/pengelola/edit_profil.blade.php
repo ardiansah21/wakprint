@@ -71,35 +71,54 @@
                 placeholder="Masukkan URL Titik Lokasi Anda" aria-label="Masukkan URL Titik Lokasi Anda"
                 aria-describedby="inputGroup-sizing-sm" style="font-size: 16px;">
         </div>
-        <label class="mb-2">
-            {{__('Jam Operasional') }}
-        </label>
-        <br>
-        <label class="mb-4">
-            {{__('Buka') }}
-            <input type="datetime-local" maxlength="2"
-                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
-                value="{{ date_create("$partner->jam_op_buka")->format('H')}}"
-                class="form-input mr-2 ml-2" name="jambuka" style="width:48px;
-                    font-size: 16px;">
-            :
-            <input type="datetime-local" name="menitbuka" maxlength="2"
-                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
-                value="{{ date_create("$partner->jam_op_buka")->format('i')}}"
-                class="form-input mr-2 ml-2" style="width:48px;
-                    font-size: 16px;">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {{__('Tutup') }}
-            <input type="datetime-local" maxlength="2" name="jamtutup" class="form-input mr-2 ml-2"
-                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
-                value="{{ date_create("$partner->jam_op_tutup")->format('H')}}" style="width:48px;
-                    font-size: 16px;"> :
-            <input type="datetime-local" maxlength="2" name="menittutup" class="form-input mr-2 ml-2"
-                oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
-                value="{{ date_create("$partner->jam_op_tutup")->format('i')}}" style="width:48px;
-                    font-size: 16px;">
-        </label>
-        <br>
+        <div class="row justify-content-between mb-2">
+            <div class="col-md-6">
+                <label class="mb-2">
+                    {{__('Jam Operasional') }}
+                </label>
+                <br>
+                <label>
+                    {{__('Buka') }}
+                    <input type="datetime-local" maxlength="2"
+                        oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
+                        value="{{ date_create("$partner->jam_op_buka")->format('H')}}"
+                        class="form-input mr-2 ml-2" name="jambuka" style="width:48px;
+                            font-size: 16px;">
+                    :
+                    <input type="datetime-local" name="menitbuka" maxlength="2"
+                        oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
+                        value="{{ date_create("$partner->jam_op_buka")->format('i')}}"
+                        class="form-input mr-2 ml-2" style="width:48px;
+                            font-size: 16px;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{__('Tutup') }}
+                    <input type="datetime-local" maxlength="2" name="jamtutup" class="form-input mr-2 ml-2"
+                        oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
+                        value="{{ date_create("$partner->jam_op_tutup")->format('H')}}" style="width:48px;
+                            font-size: 16px;"> :
+                    <input type="datetime-local" maxlength="2" name="menittutup" class="form-input mr-2 ml-2"
+                        oninput="this.value=this.value.replace(/[^0-9\d]/g, '').toString()"
+                        value="{{ date_create("$partner->jam_op_tutup")->format('i')}}" style="width:48px;
+                            font-size: 16px;">
+                </label>
+                <br>
+            </div>
+            <div class="col-md-6">
+                <label class="mb-2">
+                    {{__('Biaya Pengiriman') }}
+                </label>
+                <br>
+                <input type="number" id="ongkir_toko" name="ongkir_toko" class="form-control pt-2 pb-2" value="{{number_format($partner->ongkir_toko??10000,0,".",".")}}"
+                    placeholder="Contoh : Rp10.000" oninput="this.value=formatRupiah(this.value,'')" style="font-size: 16px;"
+                    @if($partner->antar_ke_tempat == 0)
+                        disabled
+                    @else
+                        required
+                    @endif
+                >
+                <br>
+            </div>
+        </div>
         <label class="mb-2">
             {{__('Syarat & Ketentuan') }}
         </label>
@@ -129,10 +148,10 @@
                     <div class="form-group custom-control custom-checkbox mt-2 ml-4" style="font-size: 16px;">
                         @if ($partner->antar_ke_tempat === 0)
                         <input type="checkbox" name="antartempat" class="custom-control-input" value="Diantar ke Tempat"
-                            id="checkboxDiantar">
+                            id="checkboxDiantar" onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=this.value;">
                         @else
                         <input type="checkbox" name="antartempat" class="custom-control-input" value="Diantar ke Tempat"
-                            id="checkboxDiantar" checked>
+                            id="checkboxDiantar" checked onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=this.value;">
                         @endif
                         <label class="custom-control-label" for="checkboxDiantar">
                             {{__('Diantar ke Tempat') }}
@@ -145,9 +164,9 @@
                     {{__('Nilai Toleransi Kandungan Warna Halaman') }}
                 </label>
                 <div class="row justify-content-between form-group mr-0 ml-0">
-                    <input type="number" min="0" max="100" id="ntkwh" name="ntkwh"
-                        class="form-control col-md-11 pt-2 pb-2" value="{{ $partner->ntkwh ?? '0' }}"
-                        placeholder="Contoh : 10" style="font-size: 16px;">
+                    <input type="number" step="any" min="0" max="100" minlength="1" maxlength="3" id="ntkwh" name="ntkwh" oninput=""
+                        class="form-control col-md-11 pt-2 pb-2" value="{{ number_format($partner->ntkwh ?? '0.00',2) }}"
+                        placeholder="Contoh : 2.50" style="font-size: 16px;">
                     <label class="col-md-1 align-self-center mb-2" style="font-size:14px;">
                         {{__('%') }}
                     </label>
@@ -160,8 +179,7 @@
         </div>
 </div>
 <div class="form-group text-right mb-5">
-    <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0" type="submit" style="border-radius:30px;
-                    font-size: 18px;">
+    <button class="btn btn-primary-yellow font-weight-bold pl-5 pr-5 mb-0" type="submit" style="border-radius:30px;font-size: 18px;">
         {{__('Simpan Perubahan') }}
     </button>
 </div>
