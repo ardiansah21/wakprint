@@ -259,7 +259,7 @@
                         <label class="col-md-6 font-weight-bold mb-3 my-auto" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
-                        <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-time-format="hh:ii aa" data-language="en" data-position="top" oninput="this.value = this.text" required>
+                        <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-time-format="hh:ii aa" data-language="en" data-position="top left" oninput="this.value = this.text" required>
                     </div>
                 @else
                     <div>
