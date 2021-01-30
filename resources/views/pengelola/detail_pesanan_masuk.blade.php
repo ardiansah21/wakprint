@@ -325,7 +325,7 @@
     </div>
 @endsection
 @section('script')
-    <script>
+    {{-- <script>
         // Create start date
         var start = new Date(),
             prevDay,
@@ -372,7 +372,7 @@
                 }
             }
         })
-    </script>
+    </script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script>
         var arrCheckCetakBtn = [];
