@@ -26,7 +26,7 @@ class PesananController extends Controller
         return view('pengelola.detail_pesanan_masuk', compact('pesanan', 'partner', 'atks'));
     }
 
-    public function terimaPesanan($idPesanan, Request $request)
+    public function terimaPesanan(Request $request, $idPesanan)
     {
         $partner = Auth::user();
         $pesanan = $partner->pesanans->find($idPesanan);
