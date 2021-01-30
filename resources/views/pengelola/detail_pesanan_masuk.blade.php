@@ -214,7 +214,7 @@
                         @endif
                     @endforeach
                 </div>
-                <div class="row justify-content-left mb-4" style="border-bottom: 1px solid #EBD1EC">
+                <div class="row justify-content-left pb-2 mb-4" style="border-bottom: 1px solid #EBD1EC">
                     <div class="col-md-4">
                         <label class="font-weight-bold mb-1" style="font-size: 16px;">
                             {{ __('Jumlah Dokumen') }}
@@ -255,14 +255,14 @@
                     </div>
                 </div>
                 @if ($pesanan->status === "Pending" && $pesanan->transaksiSaldo->status === "Berhasil")
-                    <div class="row justify-content-between pt-2 pb-2">
+                    <div class="row justify-content-between">
                         <label class="col-md-6 font-weight-bold mb-3 my-auto" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
                         <input type="text" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-language="en" required>
                     </div>
                 @else
-                    <div class="pt-2 pb-2">
+                    <div>
                         <label class="font-weight-bold  mb-2" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
