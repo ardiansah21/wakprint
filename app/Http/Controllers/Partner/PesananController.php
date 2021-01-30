@@ -33,10 +33,9 @@ class PesananController extends Controller
         $pesanan = $partner->pesanans->find($idPesanan);
         $pesanan->status = "Diproses";
         $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
-        dd($pesanan);
-        // $pesanan->save();
+        $pesanan->save();
 
-        // $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
+        $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
         alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
         return redirect()->back();
     }
