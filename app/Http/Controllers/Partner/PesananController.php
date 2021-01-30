@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\PesananNotification;
 use App\Notifications\PesananPartnerNotification;
 use App\Pengelola_Percetakan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,7 +32,7 @@ class PesananController extends Controller
         $partner = Auth::user();
         $pesanan = $partner->pesanans->find($idPesanan);
         $pesanan->status = "Diproses";
-        $pesanan->waktu_estimasi = $request->waktu_estimasi;
+        $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
         dd($pesanan);
         // $pesanan->save();
 
