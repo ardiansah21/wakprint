@@ -26,14 +26,16 @@ class PesananController extends Controller
         return view('pengelola.detail_pesanan_masuk', compact('pesanan', 'partner', 'atks'));
     }
 
-    public function terimaPesanan($idPesanan)
+    public function terimaPesanan($idPesanan, Request $request)
     {
         $partner = Auth::user();
         $pesanan = $partner->pesanans->find($idPesanan);
         $pesanan->status = "Diproses";
-        $pesanan->save();
+        $pesanan->waktu_estimasi = $request->waktu_estimasi;
+        dd($pesanan);
+        // $pesanan->save();
 
-        $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
+        // $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
         alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
         return redirect()->back();
     }
