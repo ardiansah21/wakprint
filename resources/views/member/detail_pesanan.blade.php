@@ -1,6 +1,9 @@
 @extends('layouts.member')
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="container mt-5 mb-5">
         <div class="mb-5">
             <label class="font-weight-bold mb-5" style="font-size: 48px;">
