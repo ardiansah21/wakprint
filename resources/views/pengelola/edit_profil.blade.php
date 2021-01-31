@@ -108,7 +108,7 @@
                     {{__('Biaya Pengiriman / km') }}
                 </label>
                 <br>
-                <input type="number" id="ongkir_toko" name="ongkir_toko" class="form-control pt-2 pb-2" min="0" step="1000" value="{{number_format($partner->ongkir_toko??10000,0,".",".")}}"
+                <input type="text" id="ongkir_toko" name="ongkir_toko" class="form-control optional-step-1000 pt-2 pb-2" min="0" value="{{number_format($partner->ongkir_toko??10000,0,".",".")}}"
                     placeholder="Contoh : 10.000" oninput="this.value=formatRupiah(this.value,'')" style="font-size: 16px;"
                     @if(request()->old('antartempat') === true)
                         disabled
