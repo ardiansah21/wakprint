@@ -36,7 +36,7 @@ class PesananController extends Controller
 
         if (!empty($pesanan->waktu_estimasi)) {
             // $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
-            if ($pesanan->waktu_estimasi < Carbon::now()) {
+            if ($pesanan->waktu_estimasi <= Carbon::now()) {
                 alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
                 return redirect()->back();
             } else {
