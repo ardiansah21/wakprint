@@ -56,17 +56,17 @@
                                 style="font-size: 12px"
                             >
                                 {{
-                                    member.alamat.length !== null ? "Ubah" : ""
+                                    member.alamat.alamat.length !== null ? "Ubah" : ""
                                 }}
                             </a>
                         </div>
                         <label class="text-truncate SemiBold mb-2 ml-0">
                             <!-- TODO: buat pengecekan jika belum ada alamat -->
                             {{
-                                member.alamat.length !== 0
+                                member.alamat.alamat.length !== 0
                                     ? member.alamat.alamat[
                                         member.alamat.IdAlamatUtama
-                                    ]["Nama Penerima"]
+                                    ]["NamaPenerima"]
                                     : member.nama_lengkap
                             }}
                         </label>
@@ -77,7 +77,7 @@
                             {{
                                 member.alamat.alamat[
                                     member.alamat.IdAlamatUtama
-                                ]["Alamat Jalan"]
+                                ]["AlamatJalan"]
                             }},
                             {{
                                 member.alamat.alamat[
@@ -92,7 +92,7 @@
                             {{
                                 member.alamat.alamat[
                                     member.alamat.IdAlamatUtama
-                                ]["Kabupaten Kota"]
+                                ]["KabupatenKota"]
                             }},
                             {{
                                 member.alamat.alamat[
@@ -102,7 +102,7 @@
                             {{
                                 member.alamat.alamat[
                                     member.alamat.IdAlamatUtama
-                                ]["Kode Pos"]
+                                ]["KodePos"]
                             }},
                         </label>
                         <label
