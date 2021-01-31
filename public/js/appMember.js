@@ -53377,8 +53377,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.antar_ke_tempat !== 1,
-                      expression: "antar_ke_tempat !== 1"
+                      value: _vm.antar_ke_tempat == 1,
+                      expression: "antar_ke_tempat == 1"
                     }
                   ],
                   staticClass:
