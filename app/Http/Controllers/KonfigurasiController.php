@@ -231,12 +231,6 @@ class KonfigurasiController extends Controller
         $atks = array_chunk(explode(',', $request->atks), 4);
         $penerimaan = $request->penerimaan;
         $subTotalFile = $request->subTotalFile;
-
-        // if ($konFileTerpilih->first()->pesanan->metode_penerimaan != "Ditempat") {
-        //     $ongkir = $request->ongkir;
-        // } else {
-        //     $ongkir = 0;
-        // }
         $ongkir = $request->ongkir;
         $totalBiaya = $request->totalBiaya;
 
@@ -292,7 +286,6 @@ class KonfigurasiController extends Controller
         ]);
 
         $pesanan->save();
-        // dd(json_decode($pesanan->atk_terpilih));
         return redirect()->route('konfirmasi.pembayaran', $idPesanan);
     }
 
@@ -300,15 +293,12 @@ class KonfigurasiController extends Controller
     {
         $member = Member::find(Auth::id());
         $pesanan = $member->pesanans->find($idPesanan);
-        // $konfigurasiPesanan = $pesanan->konfgurasiFile
-
         $pesanan->konfigurasiFile->first()->delete();
         $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
         $member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananDibatalkan', $pesanan));
-        // dd(json_decode($pesanan->atk_terpilih));
         return redirect()->route('pesanan');
     }
 
@@ -323,15 +313,6 @@ class KonfigurasiController extends Controller
         $subTotalFile = count($pesanan->konfigurasiFile);
         $batasWaktuTransaksi = Carbon::parse($transaksiSaldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i');
         $waktuTransaksiExpired = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('l, d F Y H:i');
-
-        // if ($penerimaan != "Ditempat") {
-        //     $ongkir = $pesanan->ongkos_kirim;
-        //     $totalBiaya = $pesanan->biaya + $ongkir;
-        // } else {
-        //     $ongkir = 0;
-        //     $totalBiaya = $pesanan->biaya;
-        // }
-
         $ongkir = $pesanan->ongkos_kirim;
         $totalBiaya = $pesanan->biaya;
 

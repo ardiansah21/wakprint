@@ -267,7 +267,11 @@
                 <div class="row justify-content-between mb-2">
                     <div class="col-md-6 text-left">
                         <label>
-                            {{ $penerimaan }}
+                            @if($penerimaan != "Ditempat")
+                                {{ __('Antar ke Tempat') }}
+                            @else
+                                {{ __('Ambil di Tempat') }}
+                            @endif
                         </label>
                     </div>
                     <div class="col-md-6 SemiBold text-right">
