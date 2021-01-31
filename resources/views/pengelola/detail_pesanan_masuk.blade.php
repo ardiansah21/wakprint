@@ -260,6 +260,37 @@
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
                         <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-language="en" data-time-format='hh:ii' data-position="top left" oninput="this.value = this.text" required>
+                        <script>
+                            $('#timepicker-actions-exmpl').datepicker({
+                                timepicker: true,
+                                language: 'en',
+                                minHours: 0,
+                                maxHours: 23,
+                                onSelect: function (fd, d, picker) {
+                                    // Do nothing if selection was cleared
+                                    if (!d) return;
+
+                                    var day = d.getDay();
+
+                                    // Trigger only if date is changed
+                                    if (prevDay != undefined && prevDay == day) return;
+                                    prevDay = day;
+
+                                    // If chosen day is Saturday or Sunday when set
+                                    // hour value for weekends, else restore defaults
+                                    // if (day == 6 || day == 0) {
+                                    //     picker.update({
+                                    //         minHours: 10,
+                                    //         maxHours: 16
+                                    //     })
+                                    // } else {
+                                    //     picker.update({
+                                    //         minHours: 9,
+                                    //         maxHours: 18
+                                    //     })
+                                    // }
+                                }
+                        </script>
                     </div>
                 @else
                     <div>

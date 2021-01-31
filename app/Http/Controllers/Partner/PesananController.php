@@ -33,7 +33,7 @@ class PesananController extends Controller
         $pesanan = $partner->pesanans->find($idPesanan);
         $pesanan->status = "Diproses";
         $pesanan->waktu_estimasi = Carbon::parse(strtotime($request->waktu_estimasi));
-        dd($pesanan->waktu_estimasi);
+        dd($request->waktu_estimasi);
 
         // if ($pesanan->waktu_estimasi < Carbon::now()) {
         //     alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
