@@ -53378,6 +53378,14 @@ var render = function() {
               _c(
                 "div",
                 {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.antar_ke_tempat == 1,
+                      expression: "antar_ke_tempat == 1"
+                    }
+                  ],
                   staticClass:
                     "form-group custom-control custom-radio mr-0 mb-4"
                 },
