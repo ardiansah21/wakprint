@@ -35,7 +35,7 @@
                     </div>
                     <div
                         class="form-group custom-control custom-radio mr-0 mb-4"
-                        v-show="antar_ke_tempat == 1">
+                        >
                         <div class="row justify-content-between ml-0">
                             <input
                                 id="rbAntarTempat"
