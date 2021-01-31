@@ -301,6 +301,13 @@
                     </div>
                 </div>
             @elseif($pesanan->status === "Diproses" && $pesanan->transaksiSaldo->status === "Berhasil")
+                <div class="text-right mr-0">
+                    <div class="container mb-3">
+                        <button class="btn btn-outline-danger-primary text-primary-danger font-weight-bold pl-5 pr-5 mb-0" onclick="window.location.href='{{route('partner.detail.pesanan.tolak',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
+                            {{ __('Batalkan') }}
+                        </button>
+                    </div>
+                </div>
                 <div class="text-right">
                     <div class="container mb-3">
                         <button id="selesaikanBtn" class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" disabled onclick="window.location.href='{{route('partner.detail.pesanan.selesai',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
