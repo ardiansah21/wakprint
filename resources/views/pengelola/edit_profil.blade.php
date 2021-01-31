@@ -148,10 +148,10 @@
                     <div class="form-group custom-control custom-checkbox mt-2 ml-4" style="font-size: 16px;">
                         @if ($partner->antar_ke_tempat === 0)
                         <input type="checkbox" name="antartempat" class="custom-control-input" value="Diantar ke Tempat"
-                            id="checkboxDiantar" onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=this.value;">
+                            id="checkboxDiantar" onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=null;">
                         @else
                         <input type="checkbox" name="antartempat" class="custom-control-input" value="Diantar ke Tempat"
-                            id="checkboxDiantar" checked onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=this.value;">
+                            id="checkboxDiantar" checked onchange="document.getElementById('ongkir_toko').disabled=!this.checked;">
                         @endif
                         <label class="custom-control-label" for="checkboxDiantar">
                             {{__('Diantar ke Tempat') }}
