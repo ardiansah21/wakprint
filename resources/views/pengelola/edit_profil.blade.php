@@ -110,7 +110,7 @@
                 <br>
                 <input type="number" id="ongkir_toko" name="ongkir_toko" class="form-control pt-2 pb-2" value="{{number_format($partner->ongkir_toko??10000,0,".",".")}}"
                     placeholder="Contoh : Rp10.000" oninput="this.value=formatRupiah(this.value,'')" style="font-size: 16px;"
-                    @if($partner->antar_ke_tempat == 0 || request()->old('antartempat') === true)
+                    @if(request()->old('antartempat') === true)
                         disabled
                     @else
                         required
