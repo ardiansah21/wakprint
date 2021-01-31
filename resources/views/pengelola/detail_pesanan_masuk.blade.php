@@ -261,7 +261,6 @@
                         </label>
                         <form method="GET" action="{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}">
                             <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-language="en" data-time-format="hh:ii" data-position="top left" oninput="this.value = this.text" required>
-                        </form>
                         {{-- <script>
                             // Create start date
                             var start = new Date(),
@@ -334,6 +333,7 @@
                         <button class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" onclick="window.location.href='{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
                             {{ __('Terima') }}
                         </button>
+                    </form>
                     </div>
                 </div>
             @elseif ($pesanan->status === "Batal" && $pesanan->transaksiSaldo->status === "Gagal")
