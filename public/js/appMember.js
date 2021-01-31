@@ -5050,7 +5050,7 @@ __webpack_require__.r(__webpack_exports__);
     this.atks.forEach(function (v) {
       _this5.jumlahPerAtk[v.id_atk] = 1;
     });
-    this.ongkir = this.ongkir_toko * this.jarak;
+    this.ongkir = this.ongkir_toko * this.jarak / 1000;
   },
   mounted: function mounted() {},
   components: {
