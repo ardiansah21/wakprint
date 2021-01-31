@@ -261,6 +261,20 @@
                         </label>
                         <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-language="en" data-time-format="hh:ii" data-position="top left" oninput="this.value = this.text" required>
                         <script>
+                            // Create start date
+                            var start = new Date(),
+                                prevDay,
+                                startHours = 9;
+
+                            // 09:00 AM
+                            start.setHours(9);
+                            start.setMinutes(0);
+
+                            // If today is Saturday or Sunday set 10:00 AM
+                            if ([6, 0].indexOf(start.getDay()) != -1) {
+                                start.setHours(10);
+                                startHours = 10
+                            }
                             $('#waktuEstimasi').datepicker({
                                 onSelect: function (fd, d, picker) {
                                     // Do nothing if selection was cleared
