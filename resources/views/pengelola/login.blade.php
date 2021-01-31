@@ -55,7 +55,7 @@
                 </label>
                 <br>
                 <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold mb-4" onclick="window.location.href='{{route('home')}}'"
-                    style="border-radius:30px;font-size: 24px;">
+                    style="border-radius:30px;font-size: 18px;">
                     {{__('Masuk sebagai Member')}}
                 </button>
                 <label class="row justify-content-center mb-4" style="font-size: 16px;">
