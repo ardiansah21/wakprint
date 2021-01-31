@@ -44,6 +44,7 @@
                                 type="radio"
                                 v-model="penerimaan"
                                 value="Diantar"
+                                v-if="antar_ke_tempat !== 1" ? disabled
                             />
                             <label
                                 class="custom-control-label"
@@ -386,7 +387,7 @@
 import VueNumericInput from "vue-numeric-input";
 
 export default {
-    props: ["member", "konFiles", "atks"],
+    props: ["member", "konFiles", "atks","ongkir_toko","jarak","antar_ke_tempat"],
     data() {
         return {
             isCheckAll: true,
@@ -394,7 +395,7 @@ export default {
             atkTerpilih: [], //id
             jumlahPerAtk: [],
             penerimaan: "Ditempat",
-            ongkir: 10000,
+            ongkir: 0,
         };
     },
     methods: {
@@ -521,6 +522,7 @@ export default {
         this.atks.forEach((v) => {
             this.jumlahPerAtk[v.id_atk] = 1;
         });
+        this.ongkir = this.ongkir_toko * this.jarak;
     },
     mounted() {},
     components: {
