@@ -259,7 +259,7 @@
                         <label class="col-md-6 font-weight-bold mb-3 my-auto" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
-                        <form method="GET" action="{{route('partner.detail.pesanan.terima')}}">
+                        <form method="GET" action="{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}">
                             <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-language="en" data-time-format="hh:ii" data-position="top left" oninput="this.value = this.text" required>
                         </form>
                         {{-- <script>
