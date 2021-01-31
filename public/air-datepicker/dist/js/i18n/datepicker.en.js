@@ -9,7 +9,7 @@
         today: 'Today',
         clear: 'Clear',
         dateFormat: 'yyyy-mm-dd',
-        timeFormat: 'hh:ii AA',
+        timeFormat: 'HH:ii AA',
         firstDay: 0,
         autoClose: true,
         minHours: 0,
