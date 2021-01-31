@@ -76,32 +76,32 @@
                         >
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.alamat.IdAlamatUtama
+                                    member.alamat.IdAlamatUtama
                                 ]["AlamatJalan"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.alamat.IdAlamatUtama
+                                    member.alamat.IdAlamatUtama
                                 ]["Kelurahan"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.alamat.IdAlamatUtama
+                                    member.alamat.IdAlamatUtama
                                 ]["Kecamatan"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.alamat.IdAlamatUtama
+                                    member.alamat.IdAlamatUtama
                                 ]["KabupatenKota"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.alamat.IdAlamatUtama
+                                    member.alamat.IdAlamatUtama
                                 ]["Provinsi"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.alamat.IdAlamatUtama
+                                    member.alamat.IdAlamatUtama
                                 ]["KodePos"]
                             }},
                         </label>

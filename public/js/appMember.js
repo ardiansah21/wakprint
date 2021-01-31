@@ -53469,37 +53469,37 @@ var render = function() {
                             "\n                        " +
                               _vm._s(
                                 _vm.member.alamat.alamat[
-                                  _vm.member.alamat.alamat.IdAlamatUtama
+                                  _vm.member.alamat.IdAlamatUtama
                                 ]["AlamatJalan"]
                               ) +
                               ",\n                        " +
                               _vm._s(
                                 _vm.member.alamat.alamat[
-                                  _vm.member.alamat.alamat.IdAlamatUtama
+                                  _vm.member.alamat.IdAlamatUtama
                                 ]["Kelurahan"]
                               ) +
                               ",\n                        " +
                               _vm._s(
                                 _vm.member.alamat.alamat[
-                                  _vm.member.alamat.alamat.IdAlamatUtama
+                                  _vm.member.alamat.IdAlamatUtama
                                 ]["Kecamatan"]
                               ) +
                               ",\n                        " +
                               _vm._s(
                                 _vm.member.alamat.alamat[
-                                  _vm.member.alamat.alamat.IdAlamatUtama
+                                  _vm.member.alamat.IdAlamatUtama
                                 ]["KabupatenKota"]
                               ) +
                               ",\n                        " +
                               _vm._s(
                                 _vm.member.alamat.alamat[
-                                  _vm.member.alamat.alamat.IdAlamatUtama
+                                  _vm.member.alamat.IdAlamatUtama
                                 ]["Provinsi"]
                               ) +
                               ",\n                        " +
                               _vm._s(
                                 _vm.member.alamat.alamat[
-                                  _vm.member.alamat.alamat.IdAlamatUtama
+                                  _vm.member.alamat.IdAlamatUtama
                                 ]["KodePos"]
                               ) +
                               ",\n                    "
