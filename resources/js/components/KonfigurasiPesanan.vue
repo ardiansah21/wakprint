@@ -60,7 +60,7 @@
                                 }}
                             </a>
                         </div>
-                        <label class="text-truncate SemiBold mb-2 ml-0">
+                        <label v-if="member.alamat.alamat.length !== 0" class="text-truncate SemiBold mb-2 ml-0">
                             <!-- TODO: buat pengecekan jika belum ada alamat -->
                             {{
                                 member.alamat.alamat.length !== 0
@@ -71,37 +71,37 @@
                             }}
                         </label>
                         <label
-                            v-if="member.alamat.length !== 0"
+                            v-if="member.alamat.alamat.length !== 0"
                             class="text-truncate-multiline mb-2 ml-0 mb-5"
                         >
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
+                                    member.alamat.alamat.IdAlamatUtama
                                 ]["AlamatJalan"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
+                                    member.alamat.alamat.IdAlamatUtama
                                 ]["Kelurahan"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
+                                    member.alamat.alamat.IdAlamatUtama
                                 ]["Kecamatan"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
+                                    member.alamat.alamat.IdAlamatUtama
                                 ]["KabupatenKota"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
+                                    member.alamat.alamat.IdAlamatUtama
                                 ]["Provinsi"]
                             }},
                             {{
                                 member.alamat.alamat[
-                                    member.alamat.IdAlamatUtama
+                                    member.alamat.alamat.IdAlamatUtama
                                 ]["KodePos"]
                             }},
                         </label>
