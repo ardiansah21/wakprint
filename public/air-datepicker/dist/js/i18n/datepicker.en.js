@@ -10,6 +10,8 @@
         clear: 'Clear',
         dateFormat: 'yyyy-mm-dd',
         timeFormat: 'hh:ii aa',
-        firstDay: 0
+        firstDay: 0,
+        minHours: 0,
+        maxHours: 23
     };
 })(jQuery);
