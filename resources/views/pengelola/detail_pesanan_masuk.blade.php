@@ -255,54 +255,12 @@
                     </div>
                 </div>
                 @if ($pesanan->status === "Pending" && $pesanan->transaksiSaldo->status === "Berhasil")
+                <form method="GET" action="{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}">
                     <div class="row justify-content-between">
                         <label class="col-md-6 font-weight-bold mb-3 my-auto" style="font-size: 16px;">
                             {{ __('Waktu Estimasi Penyelesaian Pesanan') }}
                         </label>
-                        <form method="GET" action="{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}">
                             <input type="text" id="waktuEstimasi" name="waktu_estimasi" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Contoh: 17 Februari 2021 20:30 WIB" style="font-size: 16px;" data-timepicker="true" data-language="en" data-time-format="hh:ii" data-position="top left" oninput="this.value = this.text" required>
-                        {{-- <script>
-                            // Create start date
-                            var start = new Date(),
-                                prevDay,
-                                startHours = 9;
-
-                            // 09:00 AM
-                            start.setHours(9);
-                            start.setMinutes(0);
-
-                            // If today is Saturday or Sunday set 10:00 AM
-                            if ([6, 0].indexOf(start.getDay()) != -1) {
-                                start.setHours(10);
-                                startHours = 10
-                            }
-                            $('#waktuEstimasi').datepicker({
-                                onSelect: function (fd, d, picker) {
-                                    // Do nothing if selection was cleared
-                                    if (!d) return;
-
-                                    var day = d.getDay();
-
-                                    // Trigger only if date is changed
-                                    if (prevDay != undefined && prevDay == day) return;
-                                    prevDay = day;
-
-                                    // If chosen day is Saturday or Sunday when set
-                                    // hour value for weekends, else restore defaults
-                                    // if (day == 6 || day == 0) {
-                                    //     picker.update({
-                                    //         minHours: 10,
-                                    //         maxHours: 16
-                                    //     })
-                                    // } else {
-                                    //     picker.update({
-                                    //         minHours: 9,
-                                    //         maxHours: 18
-                                    //     })
-                                    // }
-                                }
-                            })
-                        </script> --}}
                     </div>
                 @else
                     <div>

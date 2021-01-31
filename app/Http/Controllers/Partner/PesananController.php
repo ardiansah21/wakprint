@@ -43,11 +43,6 @@ class PesananController extends Controller
             alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
             return redirect()->back();
         }
-
-        // $pesanan->save();
-        // $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
-        // alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
-        // return redirect()->back();
     }
 
     public function tolakPesanan($idPesanan)
