@@ -32,9 +32,10 @@ class PesananController extends Controller
         $partner = Auth::user();
         $pesanan = $partner->pesanans->find($idPesanan);
         $pesanan->status = "Diproses";
+        $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
 
-        if (!empty($request->waktu_estimasi)) {
-            $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
+        if (!empty($pesanan->waktu_estimasi)) {
+            // $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
             if ($pesanan->waktu_estimasi < Carbon::now()) {
                 alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
                 return redirect()->back();
