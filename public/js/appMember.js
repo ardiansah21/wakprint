@@ -4914,7 +4914,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["member", "konFiles", "atks", "ongkir_toko", "jarak", "antar_ke_tempat"],
@@ -53371,19 +53370,19 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "form-group custom-control custom-radio mr-0 mb-4"
-                },
-                [
-                  _c(
+              _vm.antar_ke_tempat !== 1
+                ? _c(
                     "div",
-                    { staticClass: "row justify-content-between ml-0" },
+                    {
+                      staticClass:
+                        "form-group custom-control custom-radio mr-0 mb-4"
+                    },
                     [
-                      _vm.antar_ke_tempat !== 1
-                        ? _c("input", {
+                      _c(
+                        "div",
+                        { staticClass: "row justify-content-between ml-0" },
+                        [
+                          _c("input", {
                             directives: [
                               {
                                 name: "model",
@@ -53397,9 +53396,7 @@ var render = function() {
                               id: "rbAntarTempat",
                               name: "radio",
                               type: "radio",
-                              value: "Diantar",
-                              "?": "",
-                              disabled: ""
+                              value: "Diantar"
                             },
                             domProps: {
                               checked: _vm._q(_vm.penerimaan, "Diantar")
@@ -53409,121 +53406,123 @@ var render = function() {
                                 _vm.penerimaan = "Diantar"
                               }
                             }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        {
-                          staticClass: "custom-control-label",
-                          attrs: { for: "rbAntarTempat" }
-                        },
-                        [_vm._v("Pengantaran")]
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-control-label",
+                              attrs: { for: "rbAntarTempat" }
+                            },
+                            [_vm._v("Pengantaran")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "col-md-auto text-right mb-2",
+                              staticStyle: { "font-size": "12px" },
+                              attrs: { href: "/profil/alamat?fromOrder=true" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat.length !== null
+                                      ? "Tambah Alamat"
+                                      : "Ubah"
+                                  ) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "col-md-auto text-right mb-2",
-                          staticStyle: { "font-size": "12px" },
-                          attrs: { href: "/profil/alamat?fromOrder=true" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(
-                                _vm.member.alamat.alamat.length !== null
-                                  ? "Tambah Alamat"
-                                  : "Ubah"
-                              ) +
-                              "\n                        "
+                      _vm.member.alamat.alamat.length !== 0
+                        ? _c(
+                            "label",
+                            { staticClass: "text-truncate SemiBold mb-2 ml-0" },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat.length !== 0
+                                      ? _vm.member.alamat.alamat[
+                                          _vm.member.alamat.IdAlamatUtama
+                                        ]["NamaPenerima"]
+                                      : _vm.member.nama_lengkap
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.member.alamat.alamat.length !== 0
-                    ? _c(
-                        "label",
-                        { staticClass: "text-truncate SemiBold mb-2 ml-0" },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat.length !== 0
-                                  ? _vm.member.alamat.alamat[
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.member.alamat.alamat.length !== 0
+                        ? _c(
+                            "label",
+                            {
+                              staticClass:
+                                "text-truncate-multiline mb-2 ml-0 mb-5"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat[
                                       _vm.member.alamat.IdAlamatUtama
-                                    ]["NamaPenerima"]
-                                  : _vm.member.nama_lengkap
-                              ) +
-                              "\n                    "
+                                    ]["AlamatJalan"]
+                                  ) +
+                                  ",\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat[
+                                      _vm.member.alamat.IdAlamatUtama
+                                    ]["Kelurahan"]
+                                  ) +
+                                  ",\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat[
+                                      _vm.member.alamat.IdAlamatUtama
+                                    ]["Kecamatan"]
+                                  ) +
+                                  ",\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat[
+                                      _vm.member.alamat.IdAlamatUtama
+                                    ]["KabupatenKota"]
+                                  ) +
+                                  ",\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat[
+                                      _vm.member.alamat.IdAlamatUtama
+                                    ]["Provinsi"]
+                                  ) +
+                                  ",\n                        " +
+                                  _vm._s(
+                                    _vm.member.alamat.alamat[
+                                      _vm.member.alamat.IdAlamatUtama
+                                    ]["KodePos"]
+                                  ) +
+                                  ",\n                    "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.member.alamat.alamat.length !== 0
-                    ? _c(
-                        "label",
-                        {
-                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
-                        },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat[
-                                  _vm.member.alamat.IdAlamatUtama
-                                ]["AlamatJalan"]
-                              ) +
-                              ",\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat[
-                                  _vm.member.alamat.IdAlamatUtama
-                                ]["Kelurahan"]
-                              ) +
-                              ",\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat[
-                                  _vm.member.alamat.IdAlamatUtama
-                                ]["Kecamatan"]
-                              ) +
-                              ",\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat[
-                                  _vm.member.alamat.IdAlamatUtama
-                                ]["KabupatenKota"]
-                              ) +
-                              ",\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat[
-                                  _vm.member.alamat.IdAlamatUtama
-                                ]["Provinsi"]
-                              ) +
-                              ",\n                        " +
-                              _vm._s(
-                                _vm.member.alamat.alamat[
-                                  _vm.member.alamat.IdAlamatUtama
-                                ]["KodePos"]
-                              ) +
-                              ",\n                    "
+                        : _c(
+                            "label",
+                            {
+                              staticClass:
+                                "text-truncate-multiline mb-2 ml-0 mb-5"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        -\n                    "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    : _c(
-                        "label",
-                        {
-                          staticClass: "text-truncate-multiline mb-2 ml-0 mb-5"
-                        },
-                        [
-                          _vm._v(
-                            "\n                        -\n                    "
-                          )
-                        ]
-                      )
-                ]
-              ),
+                    ]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "div",
