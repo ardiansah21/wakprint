@@ -9,7 +9,7 @@
         today: 'Today',
         clear: 'Clear',
         dateFormat: 'yyyy-mm-dd',
-        timeFormat: 'hh:ii',
-        firstDay: 0,
+        timeFormat: 'hh:ii aa',
+        firstDay: 0
     };
 })(jQuery);
