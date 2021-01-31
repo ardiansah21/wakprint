@@ -53427,8 +53427,8 @@ var render = function() {
                             "\n                            " +
                               _vm._s(
                                 _vm.member.alamat.alamat.length !== null
-                                  ? "Ubah"
-                                  : "Tambah Alamat"
+                                  ? "Tambah Alamat"
+                                  : "Ubah"
                               ) +
                               "\n                        "
                           )

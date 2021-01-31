@@ -56,7 +56,7 @@
                                 style="font-size: 12px"
                             >
                                 {{
-                                    member.alamat.alamat.length !== null ? "Ubah" : "Tambah Alamat"
+                                    member.alamat.alamat.length !== null ? "Tambah Alamat" : "Ubah"
                                 }}
                             </a>
                         </div>
