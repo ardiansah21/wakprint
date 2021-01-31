@@ -54,7 +54,7 @@
                     {{__('Atau')}}
                 </label>
                 <br>
-                <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold mb-4" onclick="window.location.href='partner/login'"
+                <button class="btn btn-outline-purple btn-lg btn-block font-weight-bold mb-4" onclick="window.location.href='{{route('home')}}'"
                     style="border-radius:30px;font-size: 24px;">
                     {{__('Masuk sebagai Member')}}
                 </button>
