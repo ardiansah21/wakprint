@@ -74,7 +74,7 @@
         <div class="row justify-content-between mb-2">
             <div class="col-md-6">
                 <label class="mb-2">
-                    {{__('Jam Operasional') }}
+                    {{__('Jam Operasional (WIB)') }}
                 </label>
                 <br>
                 <label>
@@ -105,11 +105,11 @@
             </div>
             <div class="col-md-6">
                 <label class="mb-2">
-                    {{__('Biaya Pengiriman') }}
+                    {{__('Biaya Pengiriman / km') }}
                 </label>
                 <br>
-                <input type="number" id="ongkir_toko" name="ongkir_toko" class="form-control pt-2 pb-2" value="{{number_format($partner->ongkir_toko??10000,0,".",".")}}"
-                    placeholder="Contoh : Rp10.000" oninput="this.value=formatRupiah(this.value,'')" style="font-size: 16px;"
+                <input type="number" id="ongkir_toko" name="ongkir_toko" class="form-control pt-2 pb-2" step="1000" value="{{number_format($partner->ongkir_toko??10000,0,".",".")}}"
+                    placeholder="Contoh : 10.000" oninput="this.value=formatRupiah(this.value,'')" style="font-size: 16px;"
                     @if(request()->old('antartempat') === true)
                         disabled
                     @else
@@ -164,7 +164,7 @@
                     {{__('Nilai Toleransi Kandungan Warna Halaman') }}
                 </label>
                 <div class="row justify-content-between form-group mr-0 ml-0">
-                    <input type="number" step="any" min="0" max="100" minlength="1" maxlength="3" id="ntkwh" name="ntkwh" oninput=""
+                    <input type="number" step="0.01" min="0" max="100" minlength="1" maxlength="3" id="ntkwh" name="ntkwh" oninput=""
                         class="form-control col-md-11 pt-2 pb-2" value="{{ number_format($partner->ntkwh ?? '0.00',2) }}"
                         placeholder="Contoh : 2.50" style="font-size: 16px;">
                     <label class="col-md-1 align-self-center mb-2" style="font-size:14px;">

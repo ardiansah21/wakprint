@@ -32,15 +32,20 @@ class PesananController extends Controller
         $partner = Auth::user();
         $pesanan = $partner->pesanans->find($idPesanan);
         $pesanan->status = "Diproses";
-        $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
 
-        if ($pesanan->waktu_estimasi < Carbon::now()) {
-            alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
-            return redirect()->back();
+        if (!empty($request->waktu_estimasi)) {
+            $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
+            if ($pesanan->waktu_estimasi < Carbon::now()) {
+                alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
+                return redirect()->back();
+            } else {
+                $pesanan->save();
+                $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
+                alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
+                return redirect()->back();
+            }
         } else {
-            $pesanan->save();
-            $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
-            alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
+            alert()->error('Maaf', 'Waktu estimasi tidak boleh kosong');
             return redirect()->back();
         }
     }
