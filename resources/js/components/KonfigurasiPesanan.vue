@@ -56,12 +56,11 @@
                                 style="font-size: 12px"
                             >
                                 {{
-                                    member.alamat.alamat.length !== null ? "Ubah" : ""
+                                    member.alamat.alamat.length !== null ? "Ubah" : "Tambah Alamat"
                                 }}
                             </a>
                         </div>
                         <label v-if="member.alamat.alamat.length !== 0" class="text-truncate SemiBold mb-2 ml-0">
-                            <!-- TODO: buat pengecekan jika belum ada alamat -->
                             {{
                                 member.alamat.alamat.length !== 0
                                     ? member.alamat.alamat[

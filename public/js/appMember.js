@@ -4914,7 +4914,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["member", "konFiles", "atks"],
@@ -53429,7 +53428,7 @@ var render = function() {
                               _vm._s(
                                 _vm.member.alamat.alamat.length !== null
                                   ? "Ubah"
-                                  : ""
+                                  : "Tambah Alamat"
                               ) +
                               "\n                        "
                           )
