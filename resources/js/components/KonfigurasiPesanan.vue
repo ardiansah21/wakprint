@@ -521,7 +521,11 @@ export default {
         this.atks.forEach((v) => {
             this.jumlahPerAtk[v.id_atk] = 1;
         });
-        this.ongkir = this.ongkir_toko * this.jarak / 1000;
+        if(this.jarak <= 1000){
+            this.ongkir = this.ongkir_toko;
+        } else{
+            this.ongkir = this.ongkir_toko * this.jarak / 1000;
+        }
     },
     mounted() {},
     components: {
