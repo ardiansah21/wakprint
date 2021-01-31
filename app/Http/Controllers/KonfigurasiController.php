@@ -232,13 +232,13 @@ class KonfigurasiController extends Controller
         $penerimaan = $request->penerimaan;
         $subTotalFile = $request->subTotalFile;
 
-        if ($konFileTerpilih->first()->pesanan->metode_penerimaan != "Ditempat") {
-            $ongkir = $request->ongkir;
-            $totalBiaya = $request->totalBiaya + $ongkir;
-        } else {
-            $ongkir = 0;
-            $totalBiaya = $request->totalBiaya;
-        }
+        // if ($konFileTerpilih->first()->pesanan->metode_penerimaan != "Ditempat") {
+        //     $ongkir = $request->ongkir;
+        // } else {
+        //     $ongkir = 0;
+        // }
+        $ongkir = $request->ongkir;
+        $totalBiaya = $request->totalBiaya;
 
         return view('member.konfirmasi_pesanan', compact('idPesanan', 'member', 'konFileTerpilih', 'atks', 'penerimaan', 'subTotalFile', 'ongkir', 'totalBiaya'));
     }

@@ -273,11 +273,6 @@
                     <div class="col-md-6 SemiBold text-right">
                         <label>
                             {{ rupiah($ongkir) }}
-                            {{-- @if ($penerimaan != 'Diantar')
-                                {{ rupiah($ongkir) }}
-                                @else
-                                {{ rupiah($ongkir) }}
-                            @endif --}}
                         </label>
                     </div>
                 </div>
