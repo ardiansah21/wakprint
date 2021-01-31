@@ -35,6 +35,7 @@ class PesananController extends Controller
         $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
 
         if (!empty($pesanan->waktu_estimasi)) {
+            dd($pesanan->waktu_estimasi);
             // $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
             if ($pesanan->waktu_estimasi <= Carbon::now()) {
                 alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
