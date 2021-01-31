@@ -4914,9 +4914,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["member", "konFiles", "atks"],
+  props: ["member", "konFiles", "atks", "ongkir_toko", "jarak", "antar_ke_tempat"],
   data: function data() {
     return {
       isCheckAll: true,
@@ -4926,7 +4927,7 @@ __webpack_require__.r(__webpack_exports__);
       //id
       jumlahPerAtk: [],
       penerimaan: "Ditempat",
-      ongkir: 10000
+      ongkir: 0
     };
   },
   methods: {
@@ -5050,6 +5051,7 @@ __webpack_require__.r(__webpack_exports__);
     this.atks.forEach(function (v) {
       _this5.jumlahPerAtk[v.id_atk] = 1;
     });
+    this.ongkir = this.ongkir_toko * this.jarak;
   },
   mounted: function mounted() {},
   components: {
@@ -53380,31 +53382,35 @@ var render = function() {
                     "div",
                     { staticClass: "row justify-content-between ml-0" },
                     [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.penerimaan,
-                            expression: "penerimaan"
-                          }
-                        ],
-                        staticClass: "custom-control-input",
-                        attrs: {
-                          id: "rbAntarTempat",
-                          name: "radio",
-                          type: "radio",
-                          value: "Diantar"
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.penerimaan, "Diantar")
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.penerimaan = "Diantar"
-                          }
-                        }
-                      }),
+                      _vm.antar_ke_tempat !== 1
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.penerimaan,
+                                expression: "penerimaan"
+                              }
+                            ],
+                            staticClass: "custom-control-input",
+                            attrs: {
+                              id: "rbAntarTempat",
+                              name: "radio",
+                              type: "radio",
+                              value: "Diantar",
+                              "?": "",
+                              disabled: ""
+                            },
+                            domProps: {
+                              checked: _vm._q(_vm.penerimaan, "Diantar")
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.penerimaan = "Diantar"
+                              }
+                            }
+                          })
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "label",
