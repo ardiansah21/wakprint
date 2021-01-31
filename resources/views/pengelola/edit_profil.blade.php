@@ -151,7 +151,7 @@
                             id="checkboxDiantar" onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=null;">
                         @else
                         <input type="checkbox" name="antartempat" class="custom-control-input" value="Diantar ke Tempat"
-                            id="checkboxDiantar" checked onchange="document.getElementById('ongkir_toko').disabled=!this.checked;">
+                            id="checkboxDiantar" checked onchange="document.getElementById('ongkir_toko').disabled=!this.checked; document.getElementById('ongkir_toko').value=null;">
                         @endif
                         <label class="custom-control-label" for="checkboxDiantar">
                             {{__('Diantar ke Tempat') }}
