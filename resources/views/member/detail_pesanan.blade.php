@@ -271,11 +271,7 @@
                         </div>
                         <div class="col-md-6 SemiBold text-right">
                             <label>
-                                @if ($penerimaan != 'Diantar')
-                                    {{ rupiah(0) }}
-                                @else
-                                    {{ rupiah(10000) }}
-                                @endif
+                                {{ rupiah($ongkir) }}
                             </label>
                         </div>
                     </div>

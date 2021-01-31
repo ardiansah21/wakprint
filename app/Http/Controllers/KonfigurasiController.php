@@ -324,13 +324,17 @@ class KonfigurasiController extends Controller
         $batasWaktuTransaksi = Carbon::parse($transaksiSaldo->updated_at)->addDays(1)->translatedFormat('l, d F Y H:i');
         $waktuTransaksiExpired = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('l, d F Y H:i');
 
-        if ($penerimaan != "Ditempat") {
-            $ongkir = $pesanan->ongkos_kirim;
-            $totalBiaya = $pesanan->biaya + $ongkir;
-        } else {
-            $ongkir = 0;
-            $totalBiaya = $pesanan->biaya;
-        }
+        // if ($penerimaan != "Ditempat") {
+        //     $ongkir = $pesanan->ongkos_kirim;
+        //     $totalBiaya = $pesanan->biaya + $ongkir;
+        // } else {
+        //     $ongkir = 0;
+        //     $totalBiaya = $pesanan->biaya;
+        // }
+
+        $ongkir = $pesanan->ongkos_kirim;
+        $totalBiaya = $pesanan->biaya;
+
         return view('member.detail_pesanan', compact('member', 'pesanan', 'konFileTerpilih', 'atks', 'penerimaan', 'subTotalFile', 'ongkir', 'totalBiaya', 'transaksiSaldo', 'batasWaktuTransaksi', 'waktuTransaksiExpired'));
     }
 
