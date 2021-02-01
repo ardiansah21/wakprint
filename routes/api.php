@@ -10,6 +10,9 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+
+use App\Http\Controllers\API\Member\KonfigurasiController;
+
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 //member
@@ -51,8 +54,10 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/pesanans/batalkan/{pesanan}', 'PesananController@batalkanPesanan');
         Route::get('/pesanans/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanans', 'PesananController');
-        Route::post('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna');
 
+        Route::post('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna');
+        Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan');
+        Route::apiResource('/konfigurasi-file', 'KonfigurasiController');
     });
 });
 
