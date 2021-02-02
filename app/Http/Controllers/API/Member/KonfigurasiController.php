@@ -137,7 +137,7 @@ class KonfigurasiController extends Controller
             }
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
-                $pesanan->konfigurasiFile[$key]->file_url = $konfigurasi->getMedia('file_konfigurasi')->getFullUrl();
+                $pesanan->konfigurasiFile[$key]->file_url = $konfigurasi->getMedia('file_konfigurasi')[0]->getFullUrl();
                 $pesanan->konfigurasiFile[$key]->produk = $konfigurasi->product;
                 $pesanan->konfigurasiFile[$key]->produk->fitur = json_decode($pesanan->konfigurasiFile[$key]->produk->fitur, true);
             }
@@ -154,7 +154,7 @@ class KonfigurasiController extends Controller
             $konfigurasi->pesanan()->associate($pesanan)->save();
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
-                $pesanan->konfigurasiFile[$key]->file_url = $konfigurasi->getMedia('file_konfigurasi')->getFullUrl();
+                $pesanan->konfigurasiFile[$key]->file_url = $konfigurasi->getMedia('file_konfigurasi')[0]->getFullUrl();
                 $pesanan->konfigurasiFile[$key]->produk = $konfigurasi->product;
                 $pesanan->konfigurasiFile[$key]->produk->fitur = json_decode($pesanan->konfigurasiFile[$key]->produk->fitur, true);
             }
