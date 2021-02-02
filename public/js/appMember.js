@@ -54193,7 +54193,7 @@ var render = function() {
               "border-radius": "10px 10px 0px 0px"
             },
             attrs: {
-              src: _vm.produk.foto_produk,
+              src: _vm.produk.foto_produk[0],
               alt: "Terdapat Kesalahan Penampilan Foto"
             }
           }),

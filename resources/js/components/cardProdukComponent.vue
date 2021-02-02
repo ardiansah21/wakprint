@@ -44,7 +44,7 @@
             ></button>
             <img
                 class="card-img-top pointer"
-                v-bind:src="produk.foto_produk"
+                v-bind:src="produk.foto_produk[0]"
                 style="height: 180px; border-radius: 10px 10px 0px 0px"
                 alt="Terdapat Kesalahan Penampilan Foto"
             />
