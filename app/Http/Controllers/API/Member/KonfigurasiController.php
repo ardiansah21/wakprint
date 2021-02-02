@@ -104,6 +104,7 @@ class KonfigurasiController extends Controller
             if ($konfigurasi) {
                 $konfigurasi->pesanan()->associate($pesanan)->save();
             }
+            $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
             return responseSuccess("Data Pesanan", $pesanan);
         }
         if ($konfigurasi) {
@@ -114,6 +115,7 @@ class KonfigurasiController extends Controller
                 'biaya' => $konfigurasi->biaya,
             ]);
             $konfigurasi->pesanan()->associate($pesanan)->save();
+            $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
             return responseSuccess("Data Pesanan", $pesanan);
         }
 
