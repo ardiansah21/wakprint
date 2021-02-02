@@ -109,6 +109,7 @@ class KonfigurasiController extends Controller
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
                 $pesanan->konfigurasiFile[$key]->produk = $konfigurasi->product;
+                $pesanan->konfigurasiFile[$key]->produk->fitur = json_decode($pesanan->konfigurasiFile[$key]->produk->fitur, true);
             }
             $pesanan->listAtk = $pesanan->partner->atk;
             return responseSuccess("Data Pesanan", $pesanan);
@@ -125,6 +126,7 @@ class KonfigurasiController extends Controller
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
                 $pesanan->konfigurasiFile[$key]->produk = $konfigurasi->product;
+                $pesanan->konfigurasiFile[$key]->produk->fitur = json_decode($pesanan->konfigurasiFile[$key]->produk->fitur, true);
             }
             $pesanan->listAtk = $pesanan->partner->atk;
             return responseSuccess("Data Pesanan", $pesanan);
