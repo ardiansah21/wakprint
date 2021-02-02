@@ -64,6 +64,7 @@ class PesananController extends Controller
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
         $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->waktu_estimasi = $pesanan->waktu_estimasi;
         $data->updated_at = $pesanan->updated_at;
 
         $arrFiturTerpilih = [];
@@ -94,9 +95,13 @@ class PesananController extends Controller
      * @param  \App\Pesanan  $pesanan
      * @return \Illuminate\Http\Response
      */
-    public function terimaPesanan(Pesanan $pesanan)
+    public function terimaPesanan(Pesanan $pesanan, Request $request)
     {
-        $pesanan->update(['status' => 'Diproses']);
+        $pesanan->update([
+            'status' => 'Diproses',
+            'waktu_estimasi' => $request->waktu_estimasi,
+        ]);
+
         $pesanan->save();
         $pesanan->push();
 
@@ -111,6 +116,7 @@ class PesananController extends Controller
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
         $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->waktu_estimasi = $pesanan->waktu_estimasi;
         $data->updated_at = $pesanan->updated_at;
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
@@ -166,6 +172,7 @@ class PesananController extends Controller
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
         $data->atk_terpilih = $pesanan->atk_terpilih;
+        $data->waktu_estimasi = $pesanan->waktu_estimasi;
         $data->updated_at = $pesanan->updated_at;
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
@@ -203,6 +210,7 @@ class PesananController extends Controller
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
         $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $data->waktu_estimasi = $pesanan->waktu_estimasi;
         $data->updated_at = $pesanan->updated_at;
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 

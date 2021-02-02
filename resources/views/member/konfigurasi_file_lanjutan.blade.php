@@ -267,27 +267,27 @@
                                     <br>
                                     @php
                                     if($p->status_diskon != "Tersedia"){
-                                    $hargaHitamPutih = $p->harga_hitam_putih;
-                                    $hargaBerwarna = $p->harga_berwarna;
+                                        $hargaHitamPutih = $p->harga_hitam_putih;
+                                        $hargaBerwarna = $p->harga_berwarna;
                                     }
                                     else{
-                                    $jumlahDiskonGray = $p->harga_hitam_putih *
-                                    $p->jumlah_diskon;
-                                    $jumlahDiskonWarna = $p->harga_berwarna *
-                                    $p->jumlah_diskon;
+                                        $jumlahDiskonGray = $p->harga_hitam_putih *
+                                        $p->jumlah_diskon;
+                                        $jumlahDiskonWarna = $p->harga_berwarna *
+                                        $p->jumlah_diskon;
 
-                                    if($jumlahDiskonGray > $p->maksimal_diskon){
-                                    $hargaHitamPutih = $p->harga_hitam_putih -
-                                    $p->maksimal_diskon;
-                                    $hargaBerwarna = $p->harga_berwarna -
-                                    $p->maksimal_diskon;
-                                    }
-                                    else{
-                                    $hargaHitamPutih = $p->harga_hitam_putih -
-                                    $jumlahDiskonGray;
-                                    $hargaBerwarna = $p->harga_berwarna -
-                                    $jumlahDiskonWarna;
-                                    }
+                                        if($jumlahDiskonGray > $p->maksimal_diskon){
+                                            $hargaHitamPutih = $p->harga_hitam_putih -
+                                            $p->maksimal_diskon;
+                                            $hargaBerwarna = $p->harga_berwarna -
+                                            $p->maksimal_diskon;
+                                        }
+                                        else{
+                                            $hargaHitamPutih = $p->harga_hitam_putih -
+                                            $jumlahDiskonGray;
+                                            $hargaBerwarna = $p->harga_berwarna -
+                                            $jumlahDiskonWarna;
+                                        }
                                     }
                                     @endphp
                                     <div class="row justify-content-between ml-0 mr-0">
