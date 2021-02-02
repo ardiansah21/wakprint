@@ -45,5 +45,5 @@
     <input type="text" name="fotoUlasan" id="fotoUlasan" value="{{$value->getFirstMediaUrl('foto_ulasan')}}" hidden>
     <input type="text" name="fotoMember" id="fotoMember" value="{{$value->member->avatar}}" hidden>
     <input type="text" name="namaMember" id="namaMember" value="{{$value->member->nama_lengkap}}" hidden>
-    <input type="text" name="tanggalUlasan" id="tanggalUlasan" value="{{Carbon::parse($value->waktu)->translatedFormat('d F Y'))}}" hidden>
+    <input type="text" name="tanggalUlasan" id="tanggalUlasan" value="{{Carbon::parse($value->waktu)->translatedFormat('d F Y')}}" hidden>
 </div>
