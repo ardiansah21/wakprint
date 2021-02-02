@@ -69,10 +69,13 @@ class KonfigurasiController extends Controller
      * @param  \App\Konfigurasi_File  $konfigurasi_File
      * @return \Illuminate\Http\Response
      */
-    public function show(Konfigurasi_File $konfigurasi_File)
+    public function show($id)
     {
-        $konfigurasi_File->file_url = $konfigurasi_File->getMedia('file_konfigurasi')->getFullUrl();
-        responseSuccess("data Konfigurasi file id =" . $konfigurasi_File->id_konfigurasi, $konfigurasi_File);
+        $konfigurasi_File = Konfigurasi_File::find($id);
+
+        $konfigurasi_File->file_url = $konfigurasi_File->getMedia('file_konfigurasi')[0]->getFullUrl();
+        $konfigurasi_File->fitur_terpilih = json_decode($konfigurasi_File->fitur_terpilih, true);
+        return responseSuccess("data Konfigurasi file id =" . $konfigurasi_File->id_konfigurasi, $konfigurasi_File);
     }
 
     /**
@@ -82,10 +85,11 @@ class KonfigurasiController extends Controller
      * @param  \App\Konfigurasi_File  $konfigurasi_File
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Konfigurasi_File $konfigurasi_File)
+    public function updateProduk(Request $request, $id)
     {
         $member = request()->user();
 
+        $konfigurasi_File = Konfigurasi_File::find($id);
         $konfigurasi_File->update([
             'id_member' => $member->id_member,
             'id_produk' => $request->idProduk,
@@ -93,7 +97,7 @@ class KonfigurasiController extends Controller
             'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
             'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
             'status_halaman' => $request->statusHalaman,
-            'halaman_terpilih' => $request->halamanTerpilih,
+            'halaman_terpilih' => json_encode($request->halamanTerpilih),
             'jumlah_salinan' => $request->jumlahSalinan,
             'timbal_balik' => $request->timbalBalik,
             'paksa_hitamputih' => $request->paksaHitamPutih,
@@ -118,8 +122,9 @@ class KonfigurasiController extends Controller
      * @param  \App\Konfigurasi_File  $konfigurasi_File
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Konfigurasi_File $konfigurasi_File)
+    public function destroy($id)
     {
+        $konfigurasi_File = Konfigurasi_File::find($id);
         if ($konfigurasi_File->delete()) {
             $konfigurasi_File->clearMediaCollection();
             return responseSuccess('Konfigurasi file berhasil di hapus');
