@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <div class="card shadow-sm mb-3 pl-4 pr-4 pt-3 pb-3">
     <div class="row justify-content-left ml-0 mr-0 mb-4">
         <div class="col-md-auto my-auto ml-0 mr-0">

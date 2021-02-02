@@ -2,9 +2,6 @@
 @extends('layouts.member')
 
 @section('content')
-@php
-    use Carbon\Carbon;
-@endphp
 <div class="container pt-5 pb-5">
     <h1 class="font-weight-bold mb-5" style="font-size: 48px;">{{__('Ulasan') }}</h1>
     <div class="row justify-content-left ml-1">
