@@ -44,7 +44,7 @@
             ></button>
             <img
                 class="card-img-top pointer"
-                src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                src="{{produk.foto_produk}}"
                 style="height: 180px; border-radius: 10px 10px 0px 0px"
                 alt="Terdapat Kesalahan Penampilan Foto"
             />
