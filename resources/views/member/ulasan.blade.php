@@ -98,8 +98,8 @@
                                 itemUlasan += '<div class="card shadow-sm mb-3 pl-4 pr-2" style="border-radius: 10px;">';
                                     itemUlasan += '<div class="row">';
                                         itemUlasan += '<div class="container text-center align-self-center col-md-2">';
-                                            if (ulasan['arrayFotoProdukUlasan'][i] != "") {
-                                                itemUlasan += '<img src="'+ ulasan['arrayFotoProdukUlasan'][i] +'" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">';
+                                            if (ulasan['arrayFotoProdukUlasan'] != null) {
+                                                itemUlasan += '<img src="'+ ulasan['arrayFotoProdukUlasan'][0] +'" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">';
                                             } else {
                                                 itemUlasan += '<img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">';
                                             }
@@ -130,8 +130,8 @@
                                 itemUlasan += '<div class="card shadow-sm mb-3 pl-4 pr-2" style="border-radius: 10px;">';
                                     itemUlasan += '<div class="row">';
                                         itemUlasan += '<div class="container text-center align-self-center col-md-2">';
-                                            if (ulasan['arrayFotoProdukUlasan'][i] != "") {
-                                                itemUlasan += '<img src="'+ ulasan['arrayFotoProdukUlasan'][i] +'" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">';
+                                            if (ulasan['arrayFotoProdukUlasan'] != null) {
+                                                itemUlasan += '<img src="'+ ulasan['arrayFotoProdukUlasan'][0] +'" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">';
                                             } else {
                                                 itemUlasan += '<img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" width="100" height="100" alt="no logo" style="object-fit:cover; border-radius:8px;">';
                                             }
@@ -166,8 +166,6 @@
                             buttons:"OK",
                             dangerMode: true,
                         })
-                        // alert(xhr.responseText);
-                        // alert(thrownError);
                     }
                 });
         }
