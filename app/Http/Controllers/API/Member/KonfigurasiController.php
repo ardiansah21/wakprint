@@ -44,7 +44,7 @@ class KonfigurasiController extends Controller
             'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
             'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
             'status_halaman' => $request->statusHalaman,
-            'halaman_terpilih' => json_encode($request->halamanTerpilih),
+            'halaman_terpilih' => $request->halamanTerpilih,
             'jumlah_salinan' => $request->jumlahSalinan,
             'timbal_balik' => $request->timbalBalik,
             'paksa_hitamputih' => $request->paksaHitamPutih,
@@ -109,6 +109,7 @@ class KonfigurasiController extends Controller
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
             }
+            $pesanan->listAtk = $pesanan->partner->atk;
             return responseSuccess("Data Pesanan", $pesanan);
         }
         if ($konfigurasi) {
@@ -123,6 +124,7 @@ class KonfigurasiController extends Controller
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
             }
+            $pesanan->listAtk = $pesanan->partner->atk;
             return responseSuccess("Data Pesanan", $pesanan);
         }
 
