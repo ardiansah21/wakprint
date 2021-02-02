@@ -69,6 +69,7 @@ class PartnerController extends Controller
         $partner->url_google_maps = $request->url_google_maps;
         $partner->jam_op_buka = $request->jam_op_buka;
         $partner->jam_op_tutup = $request->jam_op_tutup;
+        $partner->ongkir_toko = $request->ongkir_toko;
         $partner->syaratkententuan = $request->syaratkententuan;
         $partner->nama_lengkap = $request->nama_lengkap;
         $partner->nama_bank = $request->nama_bank;
