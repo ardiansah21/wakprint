@@ -1,12 +1,10 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <div class="card shadow-sm mb-3 pl-4 pr-4 pt-3 pb-3">
     <div class="row justify-content-left ml-0 mr-0 mb-4">
         <div class="col-md-auto my-auto ml-0 mr-0">
-            <img
-                @if (!empty($value->member->getFirstMediaUrl()))
-                    src="{{$value->member->getFirstMediaUrl()}}"
-                @else
-                    src="https://ptetutorials.com/images/user-profile.png"
-                @endif width="56" height="56" alt="no logo" style="object-fit: cover; border-radius: 30px; border:solid 2px #BC41BE;">
+            <img src="{{$value->member->avatar}}" width="56" height="56" alt="no logo" style="object-fit: cover; border-radius: 30px; border:solid 2px #BC41BE;">
         </div>
         <div class="col-md-6">
             <label class="text-truncate font-weight-bold mb-0" style="font-size: 18px;">
@@ -14,7 +12,7 @@
             </label>
             <br>
             <label style="font-size: 12px;">
-                {{date('d M Y', strtotime($value->waktu))}}
+                {{Carbon::parse($value->waktu)->translatedFormat('d F Y')}}
             </label>
         </div>
         <div class="col-md-5 row justify-content-end">
@@ -48,7 +46,7 @@
     @endif
 
     <input type="text" name="fotoUlasan" id="fotoUlasan" value="{{$value->getFirstMediaUrl('foto_ulasan')}}" hidden>
-    <input type="text" name="fotoMember" id="fotoMember" value="{{$value->member->getFirstMediaUrl()}}" hidden>
+    <input type="text" name="fotoMember" id="fotoMember" value="{{$value->member->avatar}}" hidden>
     <input type="text" name="namaMember" id="namaMember" value="{{$value->member->nama_lengkap}}" hidden>
-    {{-- <input type="text" name="tanggalUlasan" id="tanggalUlasan" value="{{date('d M Y', strtotime($value->waktu))}}" hidden> --}}
+    <input type="text" name="tanggalUlasan" id="tanggalUlasan" value="{{Carbon::parse($value->waktu)->translatedFormat('d F Y')}}" hidden>
 </div>

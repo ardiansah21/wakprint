@@ -24,6 +24,8 @@ class Konfigurasi_file extends Model implements HasMedia
     //     'halaman_terpilih' => 'array',
     // ];
 
+    //
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('file_konfigurasi');

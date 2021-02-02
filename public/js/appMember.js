@@ -54193,8 +54193,7 @@ var render = function() {
               "border-radius": "10px 10px 0px 0px"
             },
             attrs: {
-              src:
-                "https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg",
+              src: _vm.produk.foto_produk[0],
               alt: "Terdapat Kesalahan Penampilan Foto"
             }
           }),

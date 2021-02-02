@@ -1161,6 +1161,7 @@ class MemberController extends Controller
                             $temp->product = $k->product;
                             array_push($arrayBelumDiulas, $temp);
                         }
+                        $arrayFotoProdukUlasan = $k->product->foto_produk;
                     }
                 }
             }
@@ -1168,7 +1169,8 @@ class MemberController extends Controller
             if ($request->keywordFilter === 'Sudah Diulas') {
                 foreach ($ulasan as $up => $value) {
                     array_push($arrayProdukUlasan, $value->produk);
-                    array_push($arrayFotoProdukUlasan, $value->produk->foto_produk);
+                    $arrayFotoProdukUlasan = $value->produk->foto_produk;
+                    // array_push($arrayFotoProdukUlasan, $value->produk->foto_produk);
                     array_push($arrayPartnerProduk, $value->produk->partner);
                 }
 
@@ -1176,7 +1178,8 @@ class MemberController extends Controller
             } else {
                 foreach ($arrayBelumDiulas as $abd => $value) {
                     array_push($arrayProdukUlasan, $value->product);
-                    array_push($arrayFotoProdukUlasan, $value->product->foto_produk);
+                    $arrayFotoProdukUlasan = $value->product->foto_produk;
+                    // array_push($arrayFotoProdukUlasan, $value->product->foto_produk);
                     array_push($arrayPartnerProduk, $value->product->partner);
                     array_push($arrayPesananUlasan, $value->pesanan);
                 }
