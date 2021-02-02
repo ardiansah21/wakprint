@@ -94,9 +94,13 @@ class PesananController extends Controller
      * @param  \App\Pesanan  $pesanan
      * @return \Illuminate\Http\Response
      */
-    public function terimaPesanan(Pesanan $pesanan)
+    public function terimaPesanan(Pesanan $pesanan, Request $request)
     {
-        $pesanan->update(['status' => 'Diproses']);
+        $pesanan->update([
+            'status' => 'Diproses',
+            'waktu_estimasi' => $request->waktu_estimasi,
+        ]);
+
         $pesanan->save();
         $pesanan->push();
 
