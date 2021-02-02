@@ -71,7 +71,8 @@ class KonfigurasiController extends Controller
      */
     public function show(Konfigurasi_File $konfigurasi_File)
     {
-        //
+        $konfigurasi_File->file_url = $konfigurasi_File->getMedia('file_konfigurasi')->getFullUrl();
+        responseSuccess("data Konfigurasi file id =" . $konfigurasi_File->id_konfigurasi, $konfigurasi_File);
     }
 
     /**
@@ -83,7 +84,32 @@ class KonfigurasiController extends Controller
      */
     public function update(Request $request, Konfigurasi_File $konfigurasi_File)
     {
-        //
+        $member = request()->user();
+
+        $konfigurasi_File->update([
+            'id_member' => $member->id_member,
+            'id_produk' => $request->idProduk,
+            'nama_file' => $request->namaFile,
+            'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
+            'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
+            'status_halaman' => $request->statusHalaman,
+            'halaman_terpilih' => $request->halamanTerpilih,
+            'jumlah_salinan' => $request->jumlahSalinan,
+            'timbal_balik' => $request->timbalBalik,
+            'paksa_hitamputih' => $request->paksaHitamPutih,
+            'catatan_tambahan' => $request->catatanTambahan,
+            'biaya' => $request->biaya,
+            'nama_produk' => $request->namaProduk,
+            'fitur_terpilih' => $request->fiturTerpilih,
+        ]);
+
+        $konfigurasi_File->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
+
+        if ($konfigurasi_File) {
+            $konfigurasi_File->fitur_terpilih = json_decode($konfigurasi_File->fitur_terpilih, true);
+            return responseSuccess("Konfigurasi Berhasil Di Perbarui", $konfigurasi_File);
+        }
+        return responseError("Konfigurasi Gagal Di Perbarui");
     }
 
     /**
@@ -94,7 +120,11 @@ class KonfigurasiController extends Controller
      */
     public function destroy(Konfigurasi_File $konfigurasi_File)
     {
-        //
+        if ($konfigurasi_File->delete()) {
+            $konfigurasi_File->clearMediaCollection();
+            return responseSuccess('Konfigurasi file berhasil di hapus');
+        }
+        return responseError('Gagal menghapus konfigurasi file, silahkan coba kembali');
     }
 
     public function konfigurasiPesanan(Request $request)
@@ -105,9 +135,9 @@ class KonfigurasiController extends Controller
             if ($konfigurasi) {
                 $konfigurasi->pesanan()->associate($pesanan)->save();
             }
-            // $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
+                $pesanan->konfigurasiFile[$key]->file_url = $konfigurasi->getMedia('file_konfigurasi')->getFullUrl();
                 $pesanan->konfigurasiFile[$key]->produk = $konfigurasi->product;
                 $pesanan->konfigurasiFile[$key]->produk->fitur = json_decode($pesanan->konfigurasiFile[$key]->produk->fitur, true);
             }
@@ -122,9 +152,9 @@ class KonfigurasiController extends Controller
                 'biaya' => $konfigurasi->biaya,
             ]);
             $konfigurasi->pesanan()->associate($pesanan)->save();
-            // $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
             foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
                 $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
+                $pesanan->konfigurasiFile[$key]->file_url = $konfigurasi->getMedia('file_konfigurasi')->getFullUrl();
                 $pesanan->konfigurasiFile[$key]->produk = $konfigurasi->product;
                 $pesanan->konfigurasiFile[$key]->produk->fitur = json_decode($pesanan->konfigurasiFile[$key]->produk->fitur, true);
             }

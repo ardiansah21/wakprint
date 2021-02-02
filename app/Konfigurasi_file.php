@@ -28,8 +28,7 @@ class Konfigurasi_file extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('file_konfigurasi');
-        // ->singleFile();
+        $this->addMediaCollection('file_konfigurasi')->singleFile();
     }
 
     public function media()

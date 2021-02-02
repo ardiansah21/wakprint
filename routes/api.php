@@ -56,6 +56,7 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::apiResource('/pesanans', 'PesananController');
 
         Route::post('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna');
+        Route::post('/konfigurasi-file/update/{konfigurasi_File}', 'KonfigurasiController@update');
         Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan');
         Route::apiResource('/konfigurasi-file', 'KonfigurasiController');
     });
