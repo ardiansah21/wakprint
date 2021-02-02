@@ -416,7 +416,7 @@
                                                 //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
                                                 // }
                                                 if($('#fotoProduk').val() != null){
-                                                    produkItem +='<img class="card-img-top cursor-pointer" src="'+ $('#fotoProduk').val() +'" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
+                                                    produkItem +='<img class="card-img-top cursor-pointer" src="'+ produks['produks'][i].foto_produk[0] +'" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
                                                 }
                                                 else{
                                                     produkItem +='<img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
@@ -500,7 +500,7 @@
                                                 else{
                                                     percetakanItem +='<label class="badge badge-pill badge-info bg-promo font-weight-bold align-bottom p-2 mb-1 mt-3" style="position: absolute;top: 0%; left: 80%; font-size: 12px;">ATK</label>';
                                                 }
-                                                percetakanItem +='<img class="card-img-top cursor-pointer" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
+                                                percetakanItem +='<img class="card-img-top cursor-pointer" src="'+produks['partners'][i].foto_percetakan[0]+'" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
                                                 percetakanItem +='<div class="card-body cursor-pointer" onclick="window.location.href=">';
                                                     percetakanItem +='<label class="card-title text-truncate-multiline font-weight-bold" style="font-size: 24px; min-height:75px;">'+produks['partners'][i].nama_toko+'</label>';
                                                     percetakanItem +='<label class="card-text text-truncate-multiline" style="font-size: 16px; min-height:55px;">'+produks['partners'][i].alamat_toko+'</label>';
