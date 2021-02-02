@@ -57,6 +57,7 @@ class KonfigurasiController extends Controller
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
 
         if ($konfigurasi) {
+            $konfigurasi->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
             return responseSuccess("Konfigurasi berhasil di simpan", $konfigurasi);
         }
         return responseError("Konfigurasi gagal Disimpan");
@@ -104,7 +105,10 @@ class KonfigurasiController extends Controller
             if ($konfigurasi) {
                 $konfigurasi->pesanan()->associate($pesanan)->save();
             }
-            $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
+            // $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
+            foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
+                $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
+            }
             return responseSuccess("Data Pesanan", $pesanan);
         }
         if ($konfigurasi) {
@@ -115,7 +119,10 @@ class KonfigurasiController extends Controller
                 'biaya' => $konfigurasi->biaya,
             ]);
             $konfigurasi->pesanan()->associate($pesanan)->save();
-            $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
+            // $pesanan->fitur_terpilih = json_decode($pesanan->fitur_terpilih, true);
+            foreach ($pesanan->konfigurasiFile as $key => $konfigurasi) {
+                $pesanan->konfigurasiFile[$key]->fitur_terpilih = json_decode($konfigurasi->fitur_terpilih, true);
+            }
             return responseSuccess("Data Pesanan", $pesanan);
         }
 
