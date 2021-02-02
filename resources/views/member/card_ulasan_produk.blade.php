@@ -48,7 +48,7 @@
     @endif
 
     <input type="text" name="fotoUlasan" id="fotoUlasan" value="{{$value->getFirstMediaUrl('foto_ulasan')}}" hidden>
-    <input type="text" name="fotoMember" id="fotoMember" value="{{$value->member->getFirstMediaUrl()}}" hidden>
+    <input type="text" name="fotoMember" id="fotoMember" value="{{$value->member->avatar}}" hidden>
     <input type="text" name="namaMember" id="namaMember" value="{{$value->member->nama_lengkap}}" hidden>
     {{-- <input type="text" name="tanggalUlasan" id="tanggalUlasan" value="{{date('d M Y', strtotime($value->waktu))}}" hidden> --}}
 </div>

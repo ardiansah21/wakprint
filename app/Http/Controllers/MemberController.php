@@ -1161,11 +1161,8 @@ class MemberController extends Controller
                             $temp->product = $k->product;
                             array_push($arrayBelumDiulas, $temp);
                         }
-                        foreach ($k->product as $produk) {
-                            $arrayFotoProdukUlasan = $produk->foto_produk;
-                        }
+                        $arrayFotoProdukUlasan = $k->product->foto_produk;
                     }
-
                 }
             }
 
