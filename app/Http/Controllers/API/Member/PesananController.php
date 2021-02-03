@@ -250,6 +250,10 @@ class PesananController extends Controller
             // }
 
             $data = request()->user()->pesanans->where('status', null)->first();
+            $data->nama_file = $data->konfigurasiFile->pluck('nama_file')->all();
+            $data->jumlah_file = count($data->konfigurasiFile);
+            $data->nama_toko = $data->first()->partner->nama_toko;
+            $data->atk_terpilih = json_decode($data->atk_terpilih, true);
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
             // return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->first()->where('status', null)->get());
 
