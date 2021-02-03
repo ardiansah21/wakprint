@@ -256,10 +256,10 @@ class PesananController extends Controller
                 $p->atk_terpilih = json_decode($p->atk_terpilih, true);
                 foreach ($p->konfigurasiFile as $k) {
                     $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-                    foreach ($k->fitur_terpilih as $ft) {
-                        array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-                    }
-                    $k->fitur_terpilih = $arrFiturTerpilih;
+                    // foreach ($k->fitur_terpilih as $ft) {
+                    //     array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+                    // }
+                    // $k->fitur_terpilih = $arrFiturTerpilih;
                 }
             }
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
