@@ -257,6 +257,7 @@ class PesananController extends Controller
                 foreach ($p->konfigurasiFile as $k) {
                     $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
                     foreach ($k->fitur_terpilih as $ft) {
+
                         $ft = [
                             'namaFitur' => $ft['namaFitur'],
                             'hargaFitur' => $ft['hargaFitur'],
@@ -265,7 +266,9 @@ class PesananController extends Controller
                         // $ft->hargaFitur = $ft['hargaFitur'];
                         // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
                     }
-                    $k->fitur_terpilih = $arrFiturTerpilih;
+                    // $k->fitur_terpilih = $arrFiturTerpilih;
+                    $k->fitur_terpilih = $ft;
+
                 }
             }
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
