@@ -21,9 +21,6 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            // $table->string('email',320);
-            // $table->string('password',100);
-
             $table->integer('jumlah_saldo')->nullable();
             $table->string('nomor_hp', 16);
             $table->string('nama_bank', 100);

@@ -21,14 +21,11 @@ class CreateMembersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            // $table->string('email',320);
-            // $table->string('password',100);
             $table->json('alamat')->default(new Expression('(JSON_OBJECT())'));
             $table->integer('jumlah_saldo')->nullable();
             $table->string('nomor_hp', 16);
             $table->date('tanggal_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
-            // $table->string('foto_profil')->nullable();
             $table->json('produk_favorit')->default(new Expression('(JSON_ARRAY())'));
             $table->timestamps();
         });
