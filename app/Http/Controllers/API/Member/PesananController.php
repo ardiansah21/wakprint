@@ -250,6 +250,10 @@ class PesananController extends Controller
             // }
 
             $data = request()->user()->pesanans->where('status', null)->first();
+            foreach ($data->konfigurasiFile as $key => $kf) {
+                $kf->fitur_terpilih = json_decode($kf->fitur_terpilih, true);
+                $data->konfigurasiFile[$key] = $kf;
+            }
             $data->nama_file = $data->konfigurasiFile->pluck('nama_file')->all();
             $data->jumlah_file = count($data->konfigurasiFile);
             $data->nama_toko = $data->first()->partner->nama_toko;
