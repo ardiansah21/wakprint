@@ -97,8 +97,15 @@ Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
     });
 });
 
-//Notif
-Route::prefix('v1/notif')->middleware('auth:' . activeGuard())->group(function () {
+//Notif member
+Route::prefix('v1/notif')->middleware('auth:api')->group(function () {
+    Route::get('/', 'NotificationController@index');
+    Route::post('read', 'NotificationController@read');
+    Route::get('read-all', 'NotificationController@readAll');
+});
+
+//Notif partner
+Route::prefix('v1/partner/notif')->middleware('auth:partner-api')->group(function () {
     Route::get('/', 'NotificationController@index');
     Route::post('read', 'NotificationController@read');
     Route::get('read-all', 'NotificationController@readAll');
