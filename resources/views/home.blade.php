@@ -16,14 +16,32 @@
         <h1 class="display-4 font-weight-bold mb-0" style="font-size: 64px">{{__('Kamu mau print apa ?') }}</h1>
         <label class="SemiBold mb-4 ml-1" style="font-size: 24px">{{__('Letak dokumen kamu disamping atau pilih unggah ?') }}</label>
         <br>
-        <button id="a" type="button" class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center" style="border-radius:30px; font-size: 24px;" onclick="openDialog()">
+        <button id="a" type="button" class="btn btn-primary-yellow btn-rounded shadow ml-1 pt-1 pb-1 pl-5 pr-5 font-weight-bold text-center" style="border-radius:30px; font-size: 24px;"  onclick="openDialogUpload()">
             <i class="material-icons md-32 align-middle mb-1 mr-1">cloud_upload</i>
             {{__('Unggah') }}
         </button>
-        <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data" style="display: none;">
+        <script>
+            function openDialogUpload() {
+                document.getElementById('fileidUpload').click();
+            }
+
+            function submitFormUpload() {
+                document.getElementById('change-form').submit();
+            }
+
+        </script>
+
+        <form id="change-form" action="{{ route('konfigurasi.upload') }}" method="POST"
+            enctype="multipart/form-data" style="display: none;">
+            @csrf
+            <input type='file' name="fileUpload" id="fileidUpload" onchange="submitFormUpload()"
+                accept="application/pdf" hidden />
+        </form>
+
+        {{-- <form id="upload-form" action="{{ route('upload.file.home') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
             <input type='file' name="file" id="fileid" onchange="submitForm()" accept="application/pdf" hidden />
-        </form>
+        </form> --}}
         </div>
     </div>
 </div>
