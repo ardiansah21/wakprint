@@ -239,7 +239,7 @@
                             style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                             <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
                                 style="border-radius:30px; font-size:24px;"
-                                @if (count($member->pesanans->where('status', null)->first()) > 0)
+                                @if ($member->pesanans->where('status', null)->first())
                                 onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
                             @else
                                 onclick="window.location='{{ route('pencarian') }}'" @endif>
