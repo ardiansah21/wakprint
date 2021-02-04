@@ -173,7 +173,7 @@
         myDropzone.on("success", function(file, xhr, formData){
                 // document.body.innerHTML += '<form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"> @csrf <input type="text" name="namaFile" value="'+xhr.pdf.namaFile+'"> <input type="text" name="jumlahHalaman" value="'+xhr.pdf.jumlahHalaman+'"> <input type="text" name="jumlahHalBerwarna" value="'+xhr.pdf.jumlahHalBerwarna+'"> <input type="text" name="jumlahHalHitamPutih" value="'+xhr.pdf.jumlahHalHitamPutih+'"> <input type="text" name="path" value="'+xhr.pdf.path+'"></form>';
                 // document.getElementById("Form").submit();
-                document.window.location.href="/konfigurasi-file";
+                window.location.href="/konfigurasi-file";
         });
     //     myDropzone.on("sending", function(file, xhr, formData) {
     //         formData.append("filesize", file.size);
