@@ -478,21 +478,20 @@ class MemberController extends Controller
 
     public function upload(Request $request)
     {
-                // $this->validate($request, [
-                //     'file' => 'required',
-                // ]);
-                // $file = $request->file('file');
-                // // $k = Konfigurasi_file::insertGetId([
-                // //     'nama_file' => $file->getClientOriginalName(),
-                // //     'waktu' => now(),
-                // // ]);
-                // // $idProdukd = $k;
-                // $path = $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload'), $file->getClientOriginalName());
-                // $pdf = $this->cekWarna($file, $path);
+        // $this->validate($request, [
+        //     'file' => 'required',
+        // ]);
+        // $file = $request->file('file');
+        // // $k = Konfigurasi_file::insertGetId([
+        // //     'nama_file' => $file->getClientOriginalName(),
+        // //     'waktu' => now(),
+        // // ]);
+        // // $idProdukd = $k;
+        // $path = $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload'), $file->getClientOriginalName());
+        // $pdf = $this->cekWarna($file, $path);
 
-                // $produk = Produk::all();
-                // $partner = Pengelola_Percetakan::all();
-
+        // $produk = Produk::all();
+        // $partner = Pengelola_Percetakan::all();
 
         // return response()->json([
         //     'original_name' => $file->getClientOriginalName(),
@@ -520,7 +519,7 @@ class MemberController extends Controller
         //     return Response::json('error', 400);
         // }
 
-        $file = $request->file('fileUpload');
+        $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
         $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR), $fileName);
         $path = public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR) . $fileName;
