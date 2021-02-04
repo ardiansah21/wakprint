@@ -533,7 +533,9 @@ class MemberController extends Controller
 
         $request->session()->put('fileUpload', $fileUpload);
 
-        return view('member.konfigurasi_file_lanjutan');
+        return view('member.konfigurasi_file_lanjutan', [
+            'member' => Auth::user(),
+        ]);
     }
 
     public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
