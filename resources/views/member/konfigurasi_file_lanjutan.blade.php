@@ -233,12 +233,13 @@
                 <label id="lblproduk" class="font-weight-bold" style="font-size:36px;">{{ __('Produk') }}</label>
                 <div id="produk" class="bg-light-purple p-4 mb-4"
                     style="border-radius:5px; min-height:300px; position: relative;">
+                    //TODO
                     @if (!session()->has('produkKonfigurasiFile'))
                         <div class="text-center"
                             style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                             <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
                                 style="border-radius:30px; font-size:24px;"
-                                @if (count($member->konfigurasi) > 1)
+                                @if (count($member->pesanans->where('status', null)->first()) > 0)
                                 onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
                             @else
                                 onclick="window.location='{{ route('pencarian') }}'" @endif>
