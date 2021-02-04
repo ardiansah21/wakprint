@@ -26,7 +26,10 @@
         'fitur' => $arr['fitur'],
         ]
         );
+
     }
+
+    $member = auth()->user();
 
     @endphp
     <div class="container">

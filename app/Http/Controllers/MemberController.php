@@ -47,6 +47,7 @@ class MemberController extends Controller
         $path = $file->move(public_path('tmp/upload'), $fileName);
         $pdf = $this->cekWarna($file, $path);
         $pdf->path = public_path('tmp/upload') . "/" . $fileName;
+
         return response()->json(['pdf' => $pdf]);
     }
 
@@ -532,6 +533,9 @@ class MemberController extends Controller
         $fileUpload->countPage = $countPage;
 
         $request->session()->put('fileUpload', $fileUpload);
+        if ($request->ajax()) {
+            return response()->json(['status' => "OK"]);
+        }
 
         return view('member.konfigurasi_file_lanjutan', [
             'member' => Auth::user(),
