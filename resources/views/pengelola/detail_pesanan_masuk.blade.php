@@ -292,7 +292,7 @@
                 </div>
                 <div class="text-right">
                     <div class="container mb-3">
-                        <button class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" onclick="window.location.href='{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
+                        <button id="terimaBtn" class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" onclick="window.location.href='{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
                             {{ __('Terima') }}
                         </button>
                     </form>
@@ -360,5 +360,13 @@
                 }
             });
         })
+
+        $('#waktuEstimasi').on('change', function(){
+            if($(this).value != null){
+                $('#terimaBtn').prop('disabled', false);
+            } else {
+                $('#terimaBtn').prop('disabled', true);
+            }
+        });
     </script>
 @endsection
