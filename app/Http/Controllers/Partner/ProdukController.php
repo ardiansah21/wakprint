@@ -8,6 +8,7 @@ use App\Produk;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\Models\Media;
 use stdClass;
 
 class ProdukController extends Controller
