@@ -494,7 +494,7 @@
                                     </i>
                                     <label class="col-md-5 text-break text-right font-weight-bold mb-2"
                                         style="font-size: 14px;">
-                                        + {{ rupiah(str_replace(' ','',$value['harga'])) }}
+                                        + {{ rupiah((int) str_replace('.','',$value['harga'])) }}
                                     </label>
                                 @endforeach
                             </div>
