@@ -74,7 +74,7 @@ class AdminController extends Controller
                 return $jumlahTopUp;
             })
             ->editColumn('updated_at', function ($transaksiSaldo) {
-                $waktu = Carbon::parse($transaksiSaldo->uppdated_at)->translatedFormat('d F Y');
+                $waktu = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('d F Y');
                 return $waktu;
             })->make(true);
     }
@@ -84,7 +84,7 @@ class AdminController extends Controller
         $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik');
 
         return datatables($transaksiSaldo)
-            ->editColumn('created_at', function ($transaksiSaldo) {
+            ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
                 $saldoPartner = $transaksiSaldo->partner->nama_lengkap;
                 return $saldoPartner;
             })
@@ -93,7 +93,7 @@ class AdminController extends Controller
                 return $jumlahPenarikan;
             })
             ->editColumn('updated_at', function ($transaksiSaldo) {
-                $waktu = Carbon::parse($transaksiSaldo->uppdated_at)->translatedFormat('d F Y');
+                $waktu = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('d F Y');
                 return $waktu;
             })->make(true);
     }
