@@ -361,7 +361,7 @@
             });
         })
 
-        $('#waktuEstimasi').on('change', function(){
+        $('#waktuEstimasi').on('input', function(){
             if($(this).value != null){
                 $('#terimaBtn').prop('disabled', false);
             } else {
