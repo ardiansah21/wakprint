@@ -236,7 +236,6 @@
                 <label id="lblproduk" class="font-weight-bold" style="font-size:36px;">{{ __('Produk') }}</label>
                 <div id="produk" class="bg-light-purple p-4 mb-4"
                     style="border-radius:5px; min-height:300px; position: relative;">
-                    //TODO
                     @if (!session()->has('produkKonfigurasiFile'))
                         <div class="text-center"
                             style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
