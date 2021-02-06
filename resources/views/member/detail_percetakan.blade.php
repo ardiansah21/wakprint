@@ -14,14 +14,14 @@
             </div>
         </div>
         <div class="row justify-content-start mb-4">
-            <i class="col-md-auto material-icons md-32">
-                location_on
-            </i>
             <label class="col-md-10 text-break"
                 @if(!empty($partner->url_google_maps))
                     onclick="window.location.href='{{$partner->url_google_maps}}'"
                 @endif
                 style="font-size:24px;">
+                <i class="col-md-auto material-icons md-32">
+                    location_on
+                </i>
                 {{ $partner->alamat_toko }}
             </label>
         </div>
@@ -132,9 +132,12 @@
                         <label class="SemiBold mb-2" style="font-size: 18px;">
                             {{ __('Nilai Persentase Minimum Toleransi Halaman Berwarna') }}
                         </label>
-                        <label class="mb-4" style="font-size: 18px;">
+                        <label class="mb-4 mr-2" style="font-size: 18px;">
                             {{ $partner->ntkwh ?? 0 }} %
                         </label>
+                        <i id="helpNtkwh" class="material-icons md-18 cursor-pointer mt-1" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div><p>Nilai Toleransi Kandungan Halaman Berwarna merupakan nilai toleransi minimum yang ditetapkan oleh tempat percetakan dalam mendeteksi warna per halaman pada dokumen yang diunggah</p></div>" onmouseover="showPopUpHelpNtkwh()" onmouseout="hidePopUpHelpNtkwh()" style="color:#C4C4C4">
+                            help
+                        </i>
                     </div>
                     <div class="mx-auto mb-4" style="position:relative;">
                         @if (count($partner->getMedia('foto_percetakan')) > 0)
@@ -278,135 +281,6 @@
             <div id="pencarianDetailPartnerVue" class="col-md-8 mt-5">
                 <pencarian-produk-parner-component :produks="{{ $produk }}">
                 </pencarian-produk-parner-component>
-                {{-- <div class="search-input mr-0 ml-3 mb-4">
-                    <div class="main-search-input-item mr-0">
-                        <input id="keyword" type="text" role="search" class="form-control" placeholder="Cari produk disini"
-                            aria-label="Cari produk disini" aria-describedby="basic-addon2"
-                            style="border:0px solid white; border-radius:30px; font-size:18px;">
-                        <i id="cari" class="material-icons cursor-pointer ml-1 pt-1 pb-1 pl-3 pr-3"
-                            style="position: absolute; top: 50%; left: 95%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);">
-                            search
-                        </i>
-                    </div>
-                </div> --}}
-                {{-- <div class="row justify-content-between mb-4 ml-0">
-                    <div class="col-md-3">
-                        <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
-                            <label id="semua" class="btn btn-yellow-wakprint btn-outline-black mr-1 pt-1 pb-1 pl-4 pr-4"
-                                style="border-radius:30px; font-size:18px;">
-                                <input id="checkboxSemua" type="checkbox" checked autocomplete="off">
-                                {{ __('Semua') }}
-                            </label>
-                        </div>
-                        <div class="dropdown">
-                            <input name="filter_produk" type="text" id="filterProduk" Class="form-control" hidden>
-                            <button id="filterProdukButton"
-                                class="is-flex btn btn-default btn-lg shadow-sm dropdown-toggle border border-gray"
-                                id="dropdownFilterProduk" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                style="font-size: 16px; text-align:left;">
-                                {{ __('Urutkan') }}
-                            </button>
-                            @php
-                            $filterProduk= array('Terbaru', 'Harga Tertinggi', 'Harga Terendah');
-                            @endphp
-                            <div id="filterProdukList" class="dropdown-menu" aria-labelledby="dropdownKertas"
-                                style="font-size: 16px; width:100%;">
-                                @foreach ($filterProduk as $fp)
-                                    <span class="dropdown-item cursor-pointer ">
-                                        {{ $fp }}
-                                    </span>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    @php
-                    $ukuranKertas= array('A4HVS70gr', 'A4HVS80gr', 'A3HVS70gr', 'A3HVS80gr', 'F4HVS70gr', 'F4HVS80gr',
-                    'LegalHVS70gr', 'LegalHVS80gr', 'LetterHVS70gr', 'LetterHVS80gr');
-                    @endphp
-                    <div class="col-md-9">
-                        <div class="scrolling-wrapper mb-2 ml-0 mr-0">
-                            <div class="btn-group btn-group-toggle pb-2" data-toggle="buttons">
-                                @foreach ($ukuranKertas as $key => $kertas)
-                                    <label class="btn btn-yellow-wakprint btn-outline-black ml-1 mr-1 pt-1 pb-1 pl-4 pr-4"
-                                        style="border-radius:30px; font-size:18px;">
-                                        <input id="jenisKertas{{ $key }}" type="checkbox" checked autocomplete="off"
-                                            value="{{ $kertas }}">
-                                        {{ $kertas }}
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-                        @php
-                        $jenisPrinter= array('Ink Jet', 'Laser Jet');
-                        @endphp
-                        <div class="scrolling-wrapper">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                @foreach ($jenisPrinter as $key => $printer)
-                                    <label class="btn btn-yellow-wakprint btn-outline-black ml-1 mr-1 pt-1 pb-1 pl-4 pr-4"
-                                        style="border-radius:30px; font-size:18px;">
-                                        <input id="jenisPrinter{{ $key }}" type="checkbox" checked autocomplete="off"
-                                            value="{{ $printer }}">
-                                        {{ $printer }}
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container bg-light-purple pt-3 pb-3 pl-4 pr-4 mb-4 ml-3" style="border-radius:5px;">
-                    <label class="SemiBold mb-3 ml-0" style="font-size: 18px;">
-                        {{ __('Fitur') }}
-                    </label>
-                    <br>
-                    @php
-                    $paket = array('Lem','Baut','Kawat','Spiral');
-                    @endphp
-                    <div class="container" style="font-size: 14px;">
-                        <label class="SemiBold mb-2 ml-0">
-                            {{ __('Jilid') }}
-                        </label>
-                        <div class="row justify-content-left ml-0">
-                            @foreach ($paket as $p)
-                                <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                    <input type="checkbox" name="checkbox_paket{{ $p }}" class="custom-control-input"
-                                        id="checkboxPaket{{ $p }}" value="{{ $p }}">
-                                    <label class="custom-control-label" for="checkboxPaket{{ $p }}">
-                                        {{ $p }}
-                                        <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">help</i>
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    @php
-                    $nonPaket = array('Hekter','Kliping','Penjepit Kertas','Plastik Transparan','Kertas Jeruk');
-                    @endphp
-                    <label class="SemiBold mt-3 mb-2 ml-0">
-                        {{ __('Lainnya') }}
-                    </label>
-                    <div class="row justify-content-left ml-0" style="font-size: 14px;">
-                        @foreach ($nonPaket as $np)
-                            <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                <input type="checkbox" class="custom-control-input" id="checkboxNonPaket{{ $np }}"
-                                    value="{{ $np }}">
-                                <label class="custom-control-label" for="checkboxNonPaket{{ $np }}">
-                                    {{ $np }}
-                                    <i class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">help</i>
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="mr-0 ml-2">
-                    <div class="produk row justify-content-between mb-4 ml-0 mr-0">
-                        <input id="idPartner" type="number" value="{{ $partner->id_pengelola }}" hidden>
-                        @foreach ($produk as $p)
-                            <div class="col-md-6 mb-4">
-                                @include('member.card_produk')
-                            </div>
-                        @endforeach
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
@@ -443,6 +317,14 @@
         function changeFotoPercetakan(src) {
             document.getElementById('fotoPercetakanUtama').src = src;
             document.getElementById('linkFotoPercetakan').href = src;
+        }
+
+        function showPopUpHelpNtkwh() {
+            $('#helpNtkwh').popover('show');
+        }
+
+        function hidePopUpHelpTbNtkwh() {
+            $('#helpNtkwh').popover('hide');
         }
 
     </script>

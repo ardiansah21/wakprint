@@ -41,7 +41,10 @@
                 @endif
             </div>
         </div>
-        <label class="text-break mb-4" style="font-size:24px;">
+        <label class="text-break mb-4"
+            @if(!empty($partner->url_google_maps))
+                onclick="window.location.href='{{$partner->url_google_maps}}'"
+            @endif style="font-size:24px;">
             <i class="material-icons md-32 align-middle mr-2">
                 location_on
             </i>
@@ -146,9 +149,12 @@
                         <label class="SemiBold mb-2" style="font-size: 18px;">
                             {{ __('Nilai Persentase Minimum Toleransi Halaman Berwarna') }}
                         </label>
-                        <label class="mb-4" style="font-size: 18px;">
+                        <label class="mb-4 mr-2" style="font-size: 18px;">
                             {{ $produk->partner->ntkwh ?? 0 }} %
                         </label>
+                        <i id="helpNtkwh" class="material-icons md-18 cursor-pointer mt-1" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true" data-content="<div><p>Nilai Toleransi Kandungan Halaman Berwarna merupakan nilai toleransi minimum yang ditetapkan oleh tempat percetakan dalam mendeteksi warna per halaman pada dokumen yang diunggah</p></div>" onmouseover="showPopUpHelpNtkwh()" onmouseout="hidePopUpHelpNtkwh()" style="color:#C4C4C4">
+                            help
+                        </i>
                     </div>
                     <div class="mx-auto mb-4" style="position:relative;">
                         @if (count($produk->partner->getMedia('foto_percetakan')) > 0)
@@ -257,11 +263,6 @@
                                                 {{ $a->nama }}
                                             </label>
                                         </div>
-                                        {{-- <div class="col-md-2">
-                                            <i class="material-icons md-18 align-middle ml-2 mr-4" style="color:#C4C4C4">
-                                                help
-                                            </i>
-                                        </div> --}}
                                         <div class="col-md-3 text-left">
                                             <label class="mb-2">
                                                 x {{ $a->jumlah }}
@@ -591,6 +592,14 @@
         function changeFotoPercetakan(src) {
             document.getElementById('fotoPercetakanUtama').src = src;
             document.getElementById('linkFotoPercetakan').href = src;
+        }
+
+        function showPopUpHelpNtkwh() {
+            $('#helpNtkwh').popover('show');
+        }
+
+        function hidePopUpHelpTbNtkwh() {
+            $('#helpNtkwh').popover('hide');
         }
 
         function showPopUpHelpTbHitamPutih() {
