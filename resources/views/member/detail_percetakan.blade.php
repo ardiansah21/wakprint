@@ -18,12 +18,11 @@
                 onclick="window.location.href='{{$partner->url_google_maps}}'"
             @endif
                 style="font-size:24px;">
-            <i class="col-md-auto material-icons md-32">
+            <i class="material-icons md-32">
                 location_on
             </i>
             {{ $partner->alamat_toko }}
         </label>
-
         <div class="row justify-content-left ml-0 mb-0">
             <label class="SemiBold mr-4" style="font-size: 24px;">
                 <i class="material-icons md-32 align-middle mr-2" style="color:#FCFF82;">
