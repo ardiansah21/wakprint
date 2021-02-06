@@ -114,8 +114,8 @@ function cekWarna($path, $percenMinimum = 0)
 
 function cekWarnaNew($path, $percenMinimum)
 {
-    /* Membuat waktu maksimal eksekusi menjadi tidak terbatas */
-    ini_set('max_execution_time', 0);
+    /* Membuat waktu maksimal eksekusi menjadi 300000 milisecound */
+    ini_set('max_execution_time', 300000);
 
     /* Memualai menghitung waktu eksekusi */
     $start = microtime(true);
