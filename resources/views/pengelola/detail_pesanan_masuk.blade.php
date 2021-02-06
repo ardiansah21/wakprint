@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-3 my-auto">
                     <label class="font-weight-bold mb-0" style="font-size: 16px;">
-                        {{ __('Metode Penerimaan') }}
+                        {{ __('Metode Pengantaran') }}
                     </label>
                     <br>
                     <label>
