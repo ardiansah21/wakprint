@@ -32,10 +32,12 @@
                             <td>{{rupiah($p->maksimal_diskon)}}</td>
                             <td>{{Carbon::parse($p->mulai_waktu_diskon)->translatedFormat('d F Y')}}</td>
                             <td>{{Carbon::parse($p->selesai_waktu_diskon)->translatedFormat('d F Y')}}</td>
-                            @if($p->status_diskon != "TidakTersedia")
-                                <td>Sedang Berlangsung</td>
+                            @if($p->mulai_waktu_diskon > Carbon::now())
+                                <td>Belum Dimulai</td>
+                            @elseif($p->selesai_waktu_diskon < Carbon::now())
+                                <td>Telah Berakhir</td>
                             @else
-                                <td>Telah Berakhir / Belum Dimulai</td>
+                                <td>Sedang Berlangsung</td>
                             @endif
                             <td>
                                 <a href="{{ route('partner.promo.edit',$p->id_produk) }}" style="margin-left: -50px;">
@@ -55,7 +57,6 @@
                         </tr>
                         @endif
                     @endforeach
-
             </tbody>
         </table>
     </div>
