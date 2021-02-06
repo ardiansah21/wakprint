@@ -300,7 +300,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             $key = array_search($p, array_column($fitur, 'nama'));
             if (false !== $key){
                 $f[$p] = $fitur[$key];
-                $fHargaFiturRupiah = number_format($f[$p]->harga,0,".",".");
+                $fHargaFiturRupiah = $f[$p]->harga;
             }
         @endphp
         <div class="form-group row justify-content-between mb-3 ml-2 mr-0">
