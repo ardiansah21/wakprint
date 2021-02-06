@@ -251,11 +251,6 @@
                                                 {{ $a->nama }}
                                             </label>
                                         </div>
-                                        {{-- <div class="col-md-2">
-                                            <i class="material-icons md-18 align-middle ml-2 mr-4" style="color:#C4C4C4">
-                                                help
-                                            </i>
-                                        </div> --}}
                                         <div class="col-md-3 text-left">
                                             <label class="mb-2">
                                                 x {{ $a->jumlah }}
