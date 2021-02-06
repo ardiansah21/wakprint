@@ -14,24 +14,18 @@
             </div>
         </div>
         <div class="row justify-content-start mb-4">
-            @if(!empty($partner->url_google_maps))
-                <a href="{{$partner->url_google_maps}}" style="text-color:#000000; text-decoration:none;">
-                    <i class="col-md-auto material-icons md-32">
-                        location_on
-                    </i>
-                    <label class="col-md-10 text-break" style="font-size:24px;">
-                        {{ $partner->alamat_toko }}
-                    </label>
-                </a>
-            @else
-                <i class="col-md-auto material-icons md-32">
-                    location_on
-                </i>
-                <label class="col-md-10 text-break" style="font-size:24px;">
-                    {{ $partner->alamat_toko }}
-                </label>
-            @endif
+            <i class="col-md-auto material-icons md-32">
+                location_on
+            </i>
+            <label class="col-md-10 text-break"
+                @if(!empty($partner->url_google_maps))
+                    onclick="window.location.href='{{$partner->url_google_maps}}'"
+                @endif
+                style="font-size:24px;">
+                {{ $partner->alamat_toko }}
+            </label>
         </div>
+
         <div class="row justify-content-left ml-0 mb-0">
             <label class="SemiBold mr-4" style="font-size: 24px;">
                 <i class="material-icons md-32 align-middle mr-2" style="color:#FCFF82;">
