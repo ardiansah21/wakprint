@@ -110,7 +110,11 @@
                                 </label>
                                 <br>
                                 <label class="mb-2" style="font-size: 14px;">
-                                    {{json_decode($value->halaman_terpilih)}}
+                                    @if($value->status_halaman != "Semua")
+                                        {{json_decode($value->halaman_terpilih)}}
+                                    @else
+                                        {{ __('Semua Halaman') }}
+                                    @endif
                                 </label>
                                 <br>
                                 <label class="font-weight-bold mb-1" style="font-size: 14px;">
