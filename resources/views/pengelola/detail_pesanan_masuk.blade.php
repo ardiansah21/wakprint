@@ -331,8 +331,6 @@
         {{-- pop up detail biaya --}}
         @include('pengelola.popup_detail_biaya')
 
-        {{-- pop up tolak --}}
-        {{-- @include('pengelola.popup_tolak_pesanan') --}}
     </div>
 @endsection
 @section('script')
