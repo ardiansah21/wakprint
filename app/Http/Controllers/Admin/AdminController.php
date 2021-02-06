@@ -62,7 +62,7 @@ class AdminController extends Controller
 
     public function saldoMemberJson()
     {
-        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'TopUp')->orWhere('jenis_transaksi', '=', 'Pembayaran');
+        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'TopUp')->orWhere('jenis_transaksi', '=', 'Pembayaran')->get();
 
         return datatables($transaksiSaldo)
             ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
@@ -81,7 +81,7 @@ class AdminController extends Controller
 
     public function saldoPartnerJson()
     {
-        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik');
+        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')->get();
 
         return datatables($transaksiSaldo)
             ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
