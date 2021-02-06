@@ -176,14 +176,28 @@ class ProdukController extends Controller
             }
         }
 
+        $hargaTimbalBalikHitamPutih = (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih);
+        $hargaBerwarna = (int) str_replace('.', '', $request->harga_berwarna);
+        $hargaTimbalBalikBerwarna = (int) str_replace('.', '', $request->harga_timbal_balik_berwarna);
+
+        if ($hargaTimbalBalikHitamPutih != 0 || $hargaBerwarna != 0 || $hargaTimbalBalikBerwarna != 0) {
+            $hargaTimbalBalikHitamPutih = (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih);
+            $hargaBerwarna = (int) str_replace('.', '', $request->harga_berwarna);
+            $hargaTimbalBalikBerwarna = (int) str_replace('.', '', $request->harga_timbal_balik_berwarna);
+        } else {
+            $hargaTimbalBalikHitamPutih = $request->harga_timbal_balik_hitam_putih;
+            $hargaBerwarna = $request->harga_berwarna;
+            $hargaTimbalBalikBerwarna = $request->harga_timbal_balik_berwarna;
+        }
+
         $produk->update(
             [
                 'id_pengelola' => Auth::id(),
                 'nama' => $request->nama,
                 'harga_hitam_putih' => (int) str_replace('.', '', $request->harga_hitam_putih),
-                'harga_timbal_balik_hitam_putih' => (int) str_replace('.', '', $request->harga_timbal_balik_hitam_putih),
-                'harga_berwarna' => (int) str_replace('.', '', $request->harga_berwarna),
-                'harga_timbal_balik_berwarna' => (int) str_replace('.', '', $request->harga_timbal_balik_berwarna),
+                'harga_timbal_balik_hitam_putih' => $hargaTimbalBalikHitamPutih,
+                'harga_berwarna' => $hargaBerwarna,
+                'harga_timbal_balik_berwarna' => $hargaTimbalBalikBerwarna,
                 'berwarna' => $request->berwarna == 'True' ? '1' : '0',
                 'hitam_putih' => $request->hitam_putih == 'True' ? '1' : '0',
                 'deskripsi' => $request->deskripsi,
