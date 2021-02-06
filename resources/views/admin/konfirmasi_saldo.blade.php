@@ -48,6 +48,7 @@
                         <tr>
                             <th class="align-middle">ID</th>
                             <th class="align-middle">Nama</th>
+                            <th class="align-middle">Jenis Transaksi</th>
                             <th class="align-middle">Jumlah Penarikan</th>
                             <th class="align-middle">Tanggal</th>
                             <th class="align-middle">Status</th>
@@ -133,6 +134,10 @@
             columns: [{
                     data: 'id_transaksi',
                     name: 'id_transaksi'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
                 },
                 {
                     data: 'jenis_transaksi',

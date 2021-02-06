@@ -84,7 +84,7 @@ class AdminController extends Controller
         $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik');
 
         return datatables($transaksiSaldo)
-            ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
+            ->editColumn('created_at', function ($transaksiSaldo) {
                 $saldoPartner = $transaksiSaldo->partner->nama_lengkap;
                 return $saldoPartner;
             })
