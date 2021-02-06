@@ -33,7 +33,7 @@
                             <th class="align-middle">Nama</th>
                             <th class="align-middle">Kode Pembayaran</th>
                             <th class="align-middle">Jumlah Top Up</th>
-                            <th class="align-middle">Waktu</th>
+                            <th class="align-middle">Tanggal</th>
                             <th class="align-middle">Status</th>
                             <th></th>
                         </tr>
@@ -49,7 +49,7 @@
                             <th class="align-middle">ID</th>
                             <th class="align-middle">Nama</th>
                             <th class="align-middle">Jumlah Penarikan</th>
-                            <th class="align-middle">Waktu</th>
+                            <th class="align-middle">Tanggal</th>
                             <th class="align-middle">Status</th>
                             <th></th>
                         </tr>
