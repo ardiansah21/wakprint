@@ -367,7 +367,8 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             $nkey = array_search($np, array_column($fitur, 'nama'));
             if (false !== $nkey){
                 $nf[$np] = $fitur[$nkey];
-                $fHargaNonFiturRupiah = number_format($nf[$np]->harga,0,".",".");
+                // $fHargaNonFiturRupiah = number_format($nf[$np]->harga,0,".",".");
+                $fHargaNonFiturRupiah = $nf[$np]->harga;
             }
         @endphp
         <div class="row justify-content-between mb-3 ml-0 mr-0">
