@@ -363,9 +363,9 @@
 
         $('#waktuEstimasi').on('input', function(){
             if($(this).value != null){
-                $('#terimaBtn').prop('disabled', false);
-            } else {
                 $('#terimaBtn').prop('disabled', true);
+            } else {
+                $('#terimaBtn').prop('disabled', false);
             }
         });
     </script>
