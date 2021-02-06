@@ -72,6 +72,10 @@ class AdminController extends Controller
             ->editColumn('jumlah_saldo', function ($transaksiSaldo) {
                 $jumlahTopUp = rupiah($transaksiSaldo->jumlah_saldo);
                 return $jumlahTopUp;
+            })
+            ->editColumn('updated_at', function ($transaksiSaldo) {
+                $waktu = Carbon::parse($transaksiSaldo->uppdated_at)->translatedFormat('d F Y');
+                return $waktu;
             })->make(true);
     }
 
@@ -87,6 +91,10 @@ class AdminController extends Controller
             ->editColumn('jumlah_saldo', function ($transaksiSaldo) {
                 $jumlahPenarikan = rupiah($transaksiSaldo->jumlah_saldo);
                 return $jumlahPenarikan;
+            })
+            ->editColumn('updated_at', function ($transaksiSaldo) {
+                $waktu = Carbon::parse($transaksiSaldo->uppdated_at)->translatedFormat('d F Y');
+                return $waktu;
             })->make(true);
     }
 
