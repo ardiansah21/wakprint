@@ -127,7 +127,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         {{__('Rp') }}
                     </label>
                     <input id="harga_timbal_balik_hitam_putih" name="harga_timbal_balik_hitam_putih" type="text"
-                        value="{{number_format($produk->harga_timbal_balik_hitam_putih,0,".",".")}}" min="0"
+                        value="{{$produk->harga_timbal_balik_hitam_putih ?? ''}}" min="0"
                         oninput="this.value=formatRupiah(this.value,'')"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
@@ -160,7 +160,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         {{__('Rp') }}
                     </label>
                     <input id="harga_berwarna" name="harga_berwarna" type="text" min="0"
-                        value="{{number_format($produk->harga_berwarna,0,".",".")}}"
+                        value="{{$produk->harga_berwarna ?? ''}}"
                         oninput="this.value=formatRupiah(this.value,'')"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk"
@@ -183,7 +183,7 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                         {{__('Rp') }}
                     </label>
                     <input id="harga_timbal_balik_berwarna" name="harga_timbal_balik_berwarna" type="text" min="0"
-                        value="{{number_format($produk->harga_timbal_balik_berwarna,0,".",".")}}"
+                        value="{{$produk->harga_timbal_balik_berwarna ?? ''}}"
                         oninput="this.value=formatRupiah(this.value,'')"
                         class="col-md-9 form-control pt-2 pb-2 optional-step-100 mr-0"
                         placeholder="Masukkan Harga Produk" aria-label="Masukkan Harga Produk" @if(!$produk->harga_berwarna)
@@ -352,7 +352,9 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                 </label>
                 <input id="{{ $p }}" name="fitur[{{ $p }}]" min="0" type="text"
                     oninput="this.value=formatRupiah(this.value,'')"
-                    value="{{$fHargaFiturRupiah ?? ''}}"
+                    @if(in_array($p,$namaFiturArr))
+                        value="{{$fHargaFiturRupiah ?? ''}}"
+                    @endif
                     class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
                     aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
                     style="font-size: 16px; width:90%" required @if(!in_array($p,$namaFiturArr))disabled @endif>
@@ -367,7 +369,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             $nkey = array_search($np, array_column($fitur, 'nama'));
             if (false !== $nkey){
                 $nf[$np] = $fitur[$nkey];
-                // $fHargaNonFiturRupiah = number_format($nf[$np]->harga,0,".",".");
                 $fHargaNonFiturRupiah = $nf[$np]->harga;
             }
         @endphp
@@ -422,7 +423,9 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                     {{__('Rp') }}
                 </label>
                 <input id="{{ $np }}" name="fitur[{{ $np }}]" type="text" min="0"
-                    value="{{$fHargaNonFiturRupiah ?? ''}}"
+                    @if(in_array($np,$namaFiturArr))
+                        value="{{$fHargaNonFiturRupiah ?? ''}}"
+                    @endif
                     oninput="this.value=formatRupiah(this.value,'')"
                     class="form-control pt-2 pb-2 optional-step-100" placeholder="Masukkan Harga Produk"
                     aria-label="Masukkan Harga Produk" aria-describedby="inputGroup-sizing-sm"
