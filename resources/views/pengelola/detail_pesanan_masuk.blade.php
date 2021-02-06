@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-3 my-auto">
                     <label class="font-weight-bold mb-0" style="font-size: 16px;">
-                        {{ __('Metode Penerimaan') }}
+                        {{ __('Metode Pengantaran') }}
                     </label>
                     <br>
                     <label>
@@ -110,7 +110,11 @@
                                 </label>
                                 <br>
                                 <label class="mb-2" style="font-size: 14px;">
-                                    {{json_decode($value->halaman_terpilih)}}
+                                    @if($value->status_halaman != "Semua")
+                                        {{json_decode($value->halaman_terpilih)}}
+                                    @else
+                                        {{ __('Semua Halaman') }}
+                                    @endif
                                 </label>
                                 <br>
                                 <label class="font-weight-bold mb-1" style="font-size: 14px;">
@@ -288,7 +292,7 @@
                 </div>
                 <div class="text-right">
                     <div class="container mb-3">
-                        <button class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" onclick="window.location.href='{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
+                        <button id="terimaBtn" class="btn btn-primary-wakprint font-weight-bold pl-5 pr-5 mb-0" onclick="window.location.href='{{route('partner.detail.pesanan.terima',$pesanan->id_pesanan)}}'" style="border-radius:30px; font-size:18px;">
                             {{ __('Terima') }}
                         </button>
                     </form>
@@ -331,8 +335,6 @@
         {{-- pop up detail biaya --}}
         @include('pengelola.popup_detail_biaya')
 
-        {{-- pop up tolak --}}
-        {{-- @include('pengelola.popup_tolak_pesanan') --}}
     </div>
 @endsection
 @section('script')
@@ -358,5 +360,13 @@
                 }
             });
         })
+
+        $('#waktuEstimasi').on('input', function(){
+            if($(this).value != null){
+                $('#terimaBtn').prop('disabled', true);
+            } else {
+                $('#terimaBtn').prop('disabled', false);
+            }
+        });
     </script>
 @endsection

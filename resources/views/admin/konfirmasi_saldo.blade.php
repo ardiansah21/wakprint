@@ -33,9 +33,9 @@
                             <th class="align-middle">Nama</th>
                             <th class="align-middle">Kode Pembayaran</th>
                             <th class="align-middle">Jumlah Top Up</th>
+                            <th class="align-middle">Tanggal</th>
                             <th class="align-middle">Status</th>
                             <th></th>
-
                         </tr>
                     </thead>
                     <tbody style="font-size: 12px;"></tbody>
@@ -49,6 +49,7 @@
                             <th class="align-middle">ID</th>
                             <th class="align-middle">Nama</th>
                             <th class="align-middle">Jumlah Penarikan</th>
+                            <th class="align-middle">Tanggal</th>
                             <th class="align-middle">Status</th>
                             <th></th>
                         </tr>
@@ -94,6 +95,10 @@
                     name: 'jumlah_saldo'
                 },
                 {
+                    data: 'updated_at',
+                    name: 'updated_at'
+                },
+                {
                     data: 'status',
                     name: 'status'
                 },
@@ -136,6 +141,10 @@
                 {
                     data: 'jumlah_saldo',
                     name: 'jumlah_saldo'
+                },
+                {
+                    data: 'updated_at',
+                    name: 'updated_at'
                 },
                 {
                     data: 'status',

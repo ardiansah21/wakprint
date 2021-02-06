@@ -166,7 +166,11 @@
                         </div>
                         <div class="col-md-6 text-right">
                             <label>
-                                {{rupiah($pesanan->ongkos_kirim)}}
+                                @if ($pesanan->metode_penerimaan != "Ditempat")
+                                    {{rupiah($pesanan->ongkos_kirim)}}
+                                @else
+                                    {{rupiah(0)}}
+                                @endif
                             </label>
                         </div>
                     </div>

@@ -62,7 +62,7 @@ class AdminController extends Controller
 
     public function saldoMemberJson()
     {
-        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'TopUp')->orWhere('jenis_transaksi', '=', 'Pembayaran');
+        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'TopUp')->orWhere('jenis_transaksi', '=', 'Pembayaran')->get();
 
         return datatables($transaksiSaldo)
             ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
@@ -72,12 +72,16 @@ class AdminController extends Controller
             ->editColumn('jumlah_saldo', function ($transaksiSaldo) {
                 $jumlahTopUp = rupiah($transaksiSaldo->jumlah_saldo);
                 return $jumlahTopUp;
+            })
+            ->editColumn('updated_at', function ($transaksiSaldo) {
+                $waktu = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('d F Y');
+                return $waktu;
             })->make(true);
     }
 
     public function saldoPartnerJson()
     {
-        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik');
+        $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')->get();
 
         return datatables($transaksiSaldo)
             ->editColumn('jenis_transaksi', function ($transaksiSaldo) {
@@ -87,6 +91,10 @@ class AdminController extends Controller
             ->editColumn('jumlah_saldo', function ($transaksiSaldo) {
                 $jumlahPenarikan = rupiah($transaksiSaldo->jumlah_saldo);
                 return $jumlahPenarikan;
+            })
+            ->editColumn('updated_at', function ($transaksiSaldo) {
+                $waktu = Carbon::parse($transaksiSaldo->updated_at)->translatedFormat('d F Y');
+                return $waktu;
             })->make(true);
     }
 
