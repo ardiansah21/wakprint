@@ -340,6 +340,12 @@
                 </div>
             </div>
         </div>
+        <script>
+            $('#editBtn').on("click", function () {
+                $(".modal-body #namaPenerima").val($(this).data('nama-penerima'));
+                $('#editAlamatModal').modal('show');
+            });
+        </script>
     </div>
 
     <script>
