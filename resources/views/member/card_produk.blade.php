@@ -1,6 +1,5 @@
 @php
-$member = Auth::user();
-// dd(collect($p));
+    $member = Auth::user();
 @endphp
 <div class="card shadow cursor-pointer mb-2" style="border-radius: 10px;">
     {{-- <a class="text-decoration-none"

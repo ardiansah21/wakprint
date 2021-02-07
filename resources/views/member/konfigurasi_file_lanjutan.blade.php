@@ -243,7 +243,7 @@
                     @else
                         <div class="row justify-content-between">
                             <div class="col-md-4">
-                                @include('member.card_produk',["p"=>$p])
+                                @include('member.card_produk',["p" => $p])
                             </div>
                             <div class="col-md-8">
                                 <div class="ml-2">
@@ -664,148 +664,73 @@
                                         if ($('#checkboxTimbalBalik').is(':checked')) {
                                             pdf.timbalBalik = 1;
 
-                                            if ($('#checkboxPaksaHitamPutih').is(
-                                                    ':checked')) {
+                                            if ($('#checkboxPaksaHitamPutih').is(':checked')) {
 
-                                                $('#jumlahHitamPutih').html(
-                                                    nilaiPaksaHitamPutih +
-                                                    ' Halaman Hitam Putih'
-                                                );
+                                                $('#jumlahHitamPutih').html(nilaiPaksaHitamPutih + ' Halaman Hitam Putih');
 
-                                                $('#jumlahBerwarna').html(
-                                                    nilaiPaksaBerwarna +
-                                                    ' Halaman Berwarna'
-                                                );
+                                                $('#jumlahBerwarna').html(nilaiPaksaBerwarna + ' Halaman Berwarna');
 
-                                                hargaHitamPutihFinal =
-                                                    hargaHitamPutihTimbalBalik *
-                                                    nilaiPaksaHitamPutih *
-                                                    jumlahSalinan;
-                                                $('#hargaHitamPutih').html(
-                                                    'Rp. ' + hargaHitamPutihFinal
-                                                );
+                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                hargaBerwarnaFinal =
-                                                    hargaBerwarnaTimbalBalik *
-                                                    nilaiPaksaBerwarna * jumlahSalinan;
-                                                $('#hargaBerwarna').html(
-                                                    'Rp. ' + hargaBerwarnaFinal
-                                                );
+                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                hargaTotalKonfigurasi =
-                                                    hargaHitamPutihFinal +
-                                                    hargaBerwarnaFinal +
-                                                    hargaTotalFiturTerpilih;
+                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
 
-                                                $('#totalHargaKonfigurasi').html(
-                                                    'Rp. ' + hargaTotalKonfigurasi);
+                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                             } else {
-                                                $('#jumlahHitamPutih').html(
-                                                    pdf['jumlahHalHitamPutih'] +
-                                                    ' Halaman Hitam Putih'
-                                                );
+                                                $('#jumlahHitamPutih').html(pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih');
 
-                                                $('#jumlahBerwarna').html(
-                                                    pdf['jumlahHalBerwarna'] +
-                                                    ' Halaman Berwarna'
-                                                );
+                                                $('#jumlahBerwarna').html(pdf['jumlahHalBerwarna'] + ' Halaman Berwarna');
 
-                                                hargaHitamPutihFinal =
-                                                    hargaHitamPutihTimbalBalik * pdf[
-                                                        'jumlahHalHitamPutih'] *
-                                                    jumlahSalinan;
-                                                $('#hargaHitamPutih').html(
-                                                    'Rp. ' + hargaHitamPutihFinal
-                                                );
+                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * pdf['jumlahHalHitamPutih'] * jumlahSalinan;
+                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                hargaBerwarnaFinal =
-                                                    hargaBerwarnaTimbalBalik * pdf[
-                                                        'jumlahHalBerwarna'] *
-                                                    jumlahSalinan;
-                                                $('#hargaBerwarna').html(
-                                                    'Rp. ' + hargaBerwarnaFinal
-                                                );
+                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * pdf['jumlahHalBerwarna'] * jumlahSalinan;
+                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                hargaTotalKonfigurasi =
-                                                    hargaHitamPutihFinal +
-                                                    hargaBerwarnaFinal +
-                                                    hargaTotalFiturTerpilih;
+                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
 
-                                                $('#totalHargaKonfigurasi').html(
-                                                    'Rp. ' + hargaTotalKonfigurasi);
+                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                             }
-                                        } else if ($('#checkboxPaksaHitamPutih').is(
-                                                ':checked')) {
+                                        } else if ($('#checkboxPaksaHitamPutih').is(':checked')) {
 
-                                            $('#jumlahHitamPutih').html(
-                                                nilaiPaksaHitamPutih +
-                                                ' Halaman Hitam Putih'
-                                            );
+                                            $('#jumlahHitamPutih').html(nilaiPaksaHitamPutih + ' Halaman Hitam Putih');
 
-                                            $('#jumlahBerwarna').html(
-                                                nilaiPaksaBerwarna +
-                                                ' Halaman Berwarna'
-                                            );
+                                            $('#jumlahBerwarna').html(nilaiPaksaBerwarna + ' Halaman Berwarna');
 
-                                            if ($('#checkboxTimbalBalik').is(
-                                                    ':checked')) {
+                                            if ($('#checkboxTimbalBalik').is(':checked')) {
                                                 pdf.timbalBalik = 1;
-                                                hargaHitamPutihFinal =
-                                                    hargaHitamPutihTimbalBalik *
-                                                    nilaiPaksaHitamPutih *
-                                                    jumlahSalinan;
-                                                $('#hargaHitamPutih').html('Rp. ' +
-                                                    hargaHitamPutihFinal);
+                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                hargaBerwarnaFinal =
-                                                    hargaBerwarnaTimbalBalik *
-                                                    nilaiPaksaBerwarna * jumlahSalinan;
-                                                $('#hargaBerwarna').html(
-                                                    'Rp. ' + hargaBerwarnaFinal
-                                                );
+                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                hargaTotalKonfigurasi =
-                                                    hargaHitamPutihFinal +
-                                                    hargaBerwarnaFinal +
-                                                    hargaTotalFiturTerpilih;
+                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
 
-                                                $('#totalHargaKonfigurasi').html(
-                                                    'Rp. ' + hargaTotalKonfigurasi);
+                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                             } else {
                                                 pdf.timbalBalik = 0;
-                                                hargaHitamPutihFinal = hargaHitamPutih *
-                                                    nilaiPaksaHitamPutih *
-                                                    jumlahSalinan;
-                                                $('#hargaHitamPutih').html(
-                                                    'Rp. ' + hargaHitamPutihFinal
-                                                );
+                                                hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                $('#hargaHitamPutih').html( 'Rp. ' + hargaHitamPutihFinal);
 
-                                                hargaBerwarnaFinal = hargaBerwarna *
-                                                    nilaiPaksaBerwarna * jumlahSalinan;
+                                                hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
                                                 $('#hargaBerwarna').html(
                                                     'Rp. ' + hargaBerwarnaFinal
                                                 );
 
-                                                hargaTotalKonfigurasi =
-                                                    hargaHitamPutihFinal +
-                                                    hargaBerwarnaFinal +
-                                                    hargaTotalFiturTerpilih;
+                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
 
-                                                $('#totalHargaKonfigurasi').html(
-                                                    'Rp. ' + hargaTotalKonfigurasi);
+                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                             }
                                         } else {
                                             pdf.timbalBalik = 0;
 
-                                            $('#jumlahHitamPutih').html(
-                                                pdf['jumlahHalHitamPutih'] +
-                                                ' Halaman Hitam Putih'
-                                            );
+                                            $('#jumlahHitamPutih').html(pdf['jumlahHalHitamPutih'] + ' Halaman Hitam Putih');
 
-                                            $('#jumlahBerwarna').html(
-                                                pdf['jumlahHalBerwarna'] +
-                                                ' Halaman Berwarna'
-                                            );
+                                            $('#jumlahBerwarna').html(pdf['jumlahHalBerwarna'] + ' Halaman Berwarna');
 
                                             hargaHitamPutihFinal = hargaHitamPutih *
                                                 pdf['jumlahHalHitamPutih'] *
@@ -850,41 +775,21 @@
                                                 }
                                             }
 
-                                            if ($('#checkboxPaksaHitamPutih').is(
-                                                    ':checked')) {
+                                            if ($('#checkboxPaksaHitamPutih').is(':checked')) {
 
-                                                nilaiPaksaHitamPutih =
-                                                    jumlahHitamPutihFinal +
-                                                    jumlahBerwarnaFinal;
-                                                pdf.jumlahHalamanHitamPutih =
-                                                    nilaiPaksaHitamPutih;
-                                                pdf.jumlahHalamanBerwarna =
-                                                    nilaiPaksaBerwarna;
+                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
-                                                $('#jumlahHitamPutih').html(
-                                                    nilaiPaksaHitamPutih +
-                                                    ' Halaman Hitam Putih'
-                                                );
+                                                $('#jumlahHitamPutih').html(nilaiPaksaHitamPutih + ' Halaman Hitam Putih');
 
-                                                $('#jumlahBerwarna').html(
-                                                    nilaiPaksaBerwarna +
-                                                    ' Halaman Berwarna'
-                                                );
+                                                $('#jumlahBerwarna').html(nilaiPaksaBerwarna +' Halaman Berwarna');
 
-                                                hargaHitamPutihFinal =
-                                                    hargaHitamPutihTimbalBalik *
-                                                    nilaiPaksaHitamPutih *
-                                                    jumlahSalinan;
-                                                $('#hargaHitamPutih').html(
-                                                    'Rp. ' + hargaHitamPutihFinal
-                                                );
+                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                hargaBerwarnaFinal =
-                                                    hargaBerwarnaTimbalBalik *
-                                                    nilaiPaksaBerwarna * jumlahSalinan;
-                                                $('#hargaBerwarna').html(
-                                                    'Rp. ' + hargaBerwarnaFinal
-                                                );
+                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
                                                 hargaTotalKonfigurasi =
                                                     hargaHitamPutihFinal +
@@ -7293,312 +7198,98 @@
                                                                 '</label>'
                                                             );
 
-                                                        for (i =
-                                                            parseInt(
-                                                                hasil[
-                                                                    0
-                                                                ]
-                                                            ); i <=
-                                                            jumlahKustomHal; i++
-                                                        ) {
-                                                            if (pdf[
-                                                                    'halaman'
-                                                                ]
-                                                                [i][
-                                                                    'jenis_warna'
-                                                                ] ===
-                                                                'Berwarna'
-                                                            ) {
-                                                                jumlahBerwarnaFinal
-                                                                    +=
-                                                                    1;
+                                                        for (i = parseInt(hasil[0]); i <= jumlahKustomHal; i++) {
+                                                            if (pdf['halaman'][i]['jenis_warna'] === 'Berwarna') {
+                                                                jumlahBerwarnaFinal += 1;
                                                             } else {
-                                                                jumlahHitamPutihFinal
-                                                                    +=
-                                                                    1;
+                                                                jumlahHitamPutihFinal += 1;
                                                             }
                                                         }
 
-                                                        if ($(
-                                                                '#checkboxTimbalBalik'
-                                                            )
-                                                            .is(
-                                                                ':checked'
-                                                            )
-                                                        ) {
-                                                            pdf.timbalBalik =
-                                                                1;
-                                                            if ($(
-                                                                    '#checkboxPaksaHitamPutih'
-                                                                )
-                                                                .is(
-                                                                    ':checked'
-                                                                )
-                                                            ) {
+                                                        if ($('#checkboxTimbalBalik').is(':checked')) {
+                                                            pdf.timbalBalik = 1;
+                                                            if ($('#checkboxPaksaHitamPutih').is(':checked')) {
+                                                                nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                                pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
-                                                                nilaiPaksaHitamPutih
-                                                                    =
-                                                                    jumlahHitamPutihFinal +
-                                                                    jumlahBerwarnaFinal;
-                                                                pdf.jumlahHalamanHitamPutih =
-                                                                    nilaiPaksaHitamPutih;
-                                                                pdf.jumlahHalamanBerwarna =
-                                                                    nilaiPaksaBerwarna;
+                                                                $('#jumlahHitamPutih').html(nilaiPaksaHitamPutih + ' Halaman Hitam Putih');
 
-                                                                $('#jumlahHitamPutih')
-                                                                    .html(
-                                                                        nilaiPaksaHitamPutih +
-                                                                        ' Halaman Hitam Putih'
-                                                                    );
+                                                                $('#jumlahBerwarna').html(nilaiPaksaBerwarna + ' Halaman Berwarna');
 
-                                                                $('#jumlahBerwarna')
-                                                                    .html(
-                                                                        nilaiPaksaBerwarna +
-                                                                        ' Halaman Berwarna'
-                                                                    );
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                                hargaHitamPutihFinal
-                                                                    =
-                                                                    hargaHitamPutihTimbalBalik *
-                                                                    nilaiPaksaHitamPutih *
-                                                                    jumlahSalinan;
-                                                                $('#hargaHitamPutih')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaHitamPutihFinal
-                                                                    );
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                                hargaBerwarnaFinal
-                                                                    =
-                                                                    hargaBerwarnaTimbalBalik *
-                                                                    nilaiPaksaBerwarna *
-                                                                    jumlahSalinan;
-                                                                $('#hargaBerwarna')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaBerwarnaFinal
-                                                                    );
-
-                                                                hargaTotalKonfigurasi
-                                                                    =
-                                                                    hargaHitamPutihFinal +
-                                                                    hargaBerwarnaFinal +
-                                                                    hargaTotalFiturTerpilih;
-                                                                $('#totalHargaKonfigurasi')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaTotalKonfigurasi
-                                                                    );
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             } else {
-                                                                pdf.jumlahHalamanHitamPutih =
-                                                                    jumlahHitamPutihFinal;
-                                                                pdf.jumlahHalamanBerwarna =
-                                                                    jumlahBerwarnaFinal;
+                                                                pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                                pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
-                                                                $('#jumlahHitamPutih')
-                                                                    .html(
-                                                                        jumlahHitamPutihFinal +
-                                                                        ' Halaman Hitam Putih'
-                                                                    );
+                                                                $('#jumlahHitamPutih').html(jumlahHitamPutihFinal + ' Halaman Hitam Putih');
 
-                                                                $('#jumlahBerwarna')
-                                                                    .html(
-                                                                        jumlahBerwarnaFinal +
-                                                                        ' Halaman Berwarna'
-                                                                    );
+                                                                $('#jumlahBerwarna').html(jumlahBerwarnaFinal + ' Halaman Berwarna');
 
-                                                                hargaHitamPutihFinal
-                                                                    =
-                                                                    hargaHitamPutihTimbalBalik *
-                                                                    jumlahHitamPutihFinal *
-                                                                    jumlahSalinan;
-                                                                $('#hargaHitamPutih')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaHitamPutihFinal
-                                                                    );
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * jumlahHitamPutihFinal * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                                hargaBerwarnaFinal
-                                                                    =
-                                                                    hargaBerwarnaTimbalBalik *
-                                                                    jumlahBerwarnaFinal *
-                                                                    jumlahSalinan;
-                                                                $('#hargaBerwarna')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaBerwarnaFinal
-                                                                    );
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * jumlahBerwarnaFinal * jumlahSalinan;
+                                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                                hargaTotalKonfigurasi
-                                                                    =
-                                                                    hargaHitamPutihFinal +
-                                                                    hargaBerwarnaFinal +
-                                                                    hargaTotalFiturTerpilih;
-                                                                $('#totalHargaKonfigurasi')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaTotalKonfigurasi
-                                                                    );
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
-                                                        } else if (
-                                                            $(
-                                                                '#checkboxPaksaHitamPutih'
-                                                            )
-                                                            .is(
-                                                                ':checked'
-                                                            )
-                                                        ) {
+                                                        } else if ($('#checkboxPaksaHitamPutih').is(':checked')) {
 
-                                                            nilaiPaksaHitamPutih
-                                                                =
-                                                                jumlahHitamPutihFinal +
-                                                                jumlahBerwarnaFinal;
-                                                            pdf.jumlahHalamanHitamPutih =
-                                                                nilaiPaksaHitamPutih;
-                                                            pdf.jumlahHalamanBerwarna =
-                                                                nilaiPaksaBerwarna;
+                                                            nilaiPaksaHitamPutih = jumlahHitamPutihFinal + jumlahBerwarnaFinal;
+                                                            pdf.jumlahHalamanHitamPutih = nilaiPaksaHitamPutih;
+                                                            pdf.jumlahHalamanBerwarna = nilaiPaksaBerwarna;
 
-                                                            $('#jumlahHitamPutih')
-                                                                .html(
-                                                                    nilaiPaksaHitamPutih +
-                                                                    ' Halaman Hitam Putih'
-                                                                );
+                                                            $('#jumlahHitamPutih').html(nilaiPaksaHitamPutih +' Halaman Hitam Putih');
 
-                                                            $('#jumlahBerwarna')
-                                                                .html(
-                                                                    nilaiPaksaBerwarna +
-                                                                    ' Halaman Berwarna'
-                                                                );
+                                                            $('#jumlahBerwarna').html(nilaiPaksaBerwarna + ' Halaman Berwarna');
 
-                                                            if ($(
-                                                                    '#checkboxTimbalBalik'
-                                                                )
-                                                                .is(
-                                                                    ':checked'
-                                                                )
-                                                            ) {
-                                                                pdf.timbalBalik =
-                                                                    1;
-                                                                hargaHitamPutihFinal
-                                                                    =
-                                                                    hargaHitamPutihTimbalBalik *
-                                                                    nilaiPaksaHitamPutih *
-                                                                    jumlahSalinan;
-                                                                $('#hargaHitamPutih')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaHitamPutihFinal
-                                                                    );
+                                                            if ($('#checkboxTimbalBalik').is(':checked')) {
+                                                                pdf.timbalBalik = 1;
+                                                                hargaHitamPutihFinal = hargaHitamPutihTimbalBalik * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                                hargaBerwarnaFinal
-                                                                    =
-                                                                    hargaBerwarnaTimbalBalik *
-                                                                    nilaiPaksaBerwarna *
-                                                                    jumlahSalinan;
-                                                                $('#hargaBerwarna')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaBerwarnaFinal
-                                                                    );
+                                                                hargaBerwarnaFinal = hargaBerwarnaTimbalBalik * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                                hargaTotalKonfigurasi
-                                                                    =
-                                                                    hargaHitamPutihFinal +
-                                                                    hargaBerwarnaFinal +
-                                                                    hargaTotalFiturTerpilih;
-                                                                $('#totalHargaKonfigurasi')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaTotalKonfigurasi
-                                                                    );
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             } else {
-                                                                pdf.timbalBalik =
-                                                                    0;
-                                                                hargaHitamPutihFinal
-                                                                    =
-                                                                    hargaHitamPutih *
-                                                                    nilaiPaksaHitamPutih *
-                                                                    jumlahSalinan;
-                                                                $('#hargaHitamPutih')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaHitamPutihFinal
-                                                                    );
+                                                                pdf.timbalBalik = 0;
+                                                                hargaHitamPutihFinal = hargaHitamPutih * nilaiPaksaHitamPutih * jumlahSalinan;
+                                                                $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                                hargaBerwarnaFinal
-                                                                    =
-                                                                    hargaBerwarna *
-                                                                    nilaiPaksaBerwarna *
-                                                                    jumlahSalinan;
-                                                                $('#hargaBerwarna')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaBerwarnaFinal
-                                                                    );
+                                                                hargaBerwarnaFinal = hargaBerwarna * nilaiPaksaBerwarna * jumlahSalinan;
+                                                                $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                                hargaTotalKonfigurasi
-                                                                    =
-                                                                    hargaHitamPutihFinal +
-                                                                    hargaBerwarnaFinal +
-                                                                    hargaTotalFiturTerpilih;
-                                                                $('#totalHargaKonfigurasi')
-                                                                    .html(
-                                                                        'Rp. ' +
-                                                                        hargaTotalKonfigurasi
-                                                                    );
+                                                                hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                                $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                             }
                                                         } else {
-                                                            pdf.timbalBalik =
-                                                                0;
-                                                            pdf.jumlahHalamanHitamPutih =
-                                                                jumlahHitamPutihFinal;
-                                                            pdf.jumlahHalamanBerwarna =
-                                                                jumlahBerwarnaFinal;
+                                                            pdf.timbalBalik = 0;
+                                                            pdf.jumlahHalamanHitamPutih = jumlahHitamPutihFinal;
+                                                            pdf.jumlahHalamanBerwarna = jumlahBerwarnaFinal;
 
-                                                            $('#jumlahHitamPutih')
-                                                                .html(
-                                                                    jumlahHitamPutihFinal +
-                                                                    ' Halaman Hitam Putih'
-                                                                );
+                                                            $('#jumlahHitamPutih').html(jumlahHitamPutihFinal + ' Halaman Hitam Putih');
 
-                                                            $('#jumlahBerwarna')
-                                                                .html(
-                                                                    jumlahBerwarnaFinal +
-                                                                    ' Halaman Berwarna'
-                                                                );
+                                                            $('#jumlahBerwarna').html(jumlahBerwarnaFinal + ' Halaman Berwarna');
 
-                                                            hargaHitamPutihFinal
-                                                                =
-                                                                hargaHitamPutih *
-                                                                jumlahHitamPutihFinal *
-                                                                jumlahSalinan;
-                                                            $('#hargaHitamPutih')
-                                                                .html(
-                                                                    'Rp. ' +
-                                                                    hargaHitamPutihFinal
-                                                                );
+                                                            hargaHitamPutihFinal = hargaHitamPutih * jumlahHitamPutihFinal * jumlahSalinan;
+                                                            $('#hargaHitamPutih').html('Rp. ' + hargaHitamPutihFinal);
 
-                                                            hargaBerwarnaFinal
-                                                                =
-                                                                hargaBerwarna *
-                                                                jumlahBerwarnaFinal *
-                                                                jumlahSalinan;
-                                                            $('#hargaBerwarna')
-                                                                .html(
-                                                                    'Rp. ' +
-                                                                    hargaBerwarnaFinal
-                                                                );
+                                                            hargaBerwarnaFinal = hargaBerwarna * jumlahBerwarnaFinal * jumlahSalinan;
+                                                            $('#hargaBerwarna').html('Rp. ' + hargaBerwarnaFinal);
 
-                                                            hargaTotalKonfigurasi
-                                                                =
-                                                                hargaHitamPutihFinal +
-                                                                hargaBerwarnaFinal +
-                                                                hargaTotalFiturTerpilih;
-                                                            $('#totalHargaKonfigurasi')
-                                                                .html(
-                                                                    'Rp. ' +
-                                                                    hargaTotalKonfigurasi
-                                                                );
+                                                            hargaTotalKonfigurasi = hargaHitamPutihFinal + hargaBerwarnaFinal + hargaTotalFiturTerpilih;
+                                                            $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                         }
                                                     },
                                                 });
@@ -7608,9 +7299,7 @@
                                     $('input[type=radio]').not(':checked').each(
                                         function() {
                                             var other_class = $(this).val();
-                                            $('.' + other_class).prop(
-                                                'disabled', true);
-                                            // alert(other_class);
+                                            $('.' + other_class).prop('disabled', true);
                                         });
 
                                     pdf.biaya = hargaTotalKonfigurasi;
@@ -7622,10 +7311,13 @@
                                 }));
 
                                 $('#simpanDanLanjutkan').on('click', (function() {
-                                    $('#jumlahHalamanHitamPutih').val(pdf
-                                        .jumlahHalamanHitamPutih);
-                                    $('#jumlahHalamanBerwarna').val(pdf
-                                        .jumlahHalamanBerwarna);
+                                    if(pdf.paksaHitamPutih != 0){
+                                        pdf.jumlahHalamanHitamPutih += pdf.jumlahHalamanBerwarna;
+                                        pdf.jumlahHalamanBerwarna = 0;
+                                    }
+
+                                    $('#jumlahHalamanHitamPutih').val(pdf.jumlahHalamanHitamPutih);
+                                    $('#jumlahHalamanBerwarna').val(pdf.jumlahHalamanBerwarna);
                                     if ($('#rbSemuaHal').is(':checked')) {
                                         pdf.statusHalaman = $('#rbSemuaHal').val();
                                         $('#statusHalaman').val(pdf.statusHalaman);
@@ -7643,8 +7335,7 @@
                                     $('#timbalBalik').val(pdf.timbalBalik);
                                     $('#biaya').val(pdf.biaya);
                                     $('#catatanTambahan').val(pdf.catatanTambahan);
-                                    $('#fiturTerpilih').val(JSON.stringify(pdf
-                                        .fiturTerpilih));
+                                    $('#fiturTerpilih').val(JSON.stringify(pdf.fiturTerpilih));
 
                                     $('#konfigurasiForm').submit();
                                 }));
@@ -7656,8 +7347,6 @@
                                     }
                                     return pdf.halamanTerpilih;
                                 }
-
-
                             }
                         });
                     });
