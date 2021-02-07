@@ -345,6 +345,8 @@
             $('#editAlamatModal').on('show.bs.modal', function(e) {
                 var button = $(e.relatedTarget);
                 $('.modal-title').text(button.data('title'));
+
+                alert(button.data('nama-penerima'));
                 $(e.currentTarget).find('#id').val(button.data('id'));
                 $(e.currentTarget).find('#namaPenerima').val(button.data('nama-penerima'));
                 $(e.currentTarget).find('#nomorHP').val(button.data('nomor-hp'));
