@@ -1226,8 +1226,8 @@ class MemberController extends Controller
             }
         }
 
-        // $member->produk_favorit = json_decode(json_encode($produkFavorit), false);
-        $member->produk_favorit = $produkFavorit;
+        $member->produk_favorit = json_decode(json_encode($produkFavorit), true);
+        // $member->produk_favorit = $produkFavorit;
         $member->save();
         $member->push();
 
