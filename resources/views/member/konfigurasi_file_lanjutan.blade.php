@@ -4,26 +4,27 @@
 @section('content')
     @php
     if(!empty(session()->get('produkKonfigurasiFile'))){
-        $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
-        $p = app(App\Produk::class, $arr);
-        $p->id_produk = $arr['id_produk'];
-        $p->fill(
-            [
-                'id_pengelola' => $arr['id_pengelola'],
-                'nama' => $arr['nama'],
-                'harga_hitam_putih' => $arr['harga_hitam_putih'],
-                'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
-                'harga_berwarna' => $arr['harga_berwarna'],
-                'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
-                'berwarna' => $arr['berwarna'],
-                'hitam_putih' => $arr['hitam_putih'],
-                'deskripsi' => $arr['deskripsi'],
-                'jenis_kertas' => $arr['jenis_kertas'],
-                'jenis_printer' => $arr['jenis_printer'],
-                'status' => $arr['status'],
-                'fitur' => $arr['fitur'],
-            ]
-        );
+        $p = session()->get('produkKonfigurasiFile');
+        // $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
+        // $p = app(App\Produk::class, $arr);
+        // $p->id_produk = $arr['id_produk'];
+        // $p->fill(
+        //     [
+        //         'id_pengelola' => $arr['id_pengelola'],
+        //         'nama' => $arr['nama'],
+        //         'harga_hitam_putih' => $arr['harga_hitam_putih'],
+        //         'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
+        //         'harga_berwarna' => $arr['harga_berwarna'],
+        //         'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
+        //         'berwarna' => $arr['berwarna'],
+        //         'hitam_putih' => $arr['hitam_putih'],
+        //         'deskripsi' => $arr['deskripsi'],
+        //         'jenis_kertas' => $arr['jenis_kertas'],
+        //         'jenis_printer' => $arr['jenis_printer'],
+        //         'status' => $arr['status'],
+        //         'fitur' => $arr['fitur'],
+        //     ]
+        // );
     }
 
     $member = auth()->user();
@@ -237,7 +238,7 @@
                     @else
                         <div class="row justify-content-between">
                             <div class="col-md-4">
-                                @include('member.card_produk',["p" => session()->get('produkKonfigurasiFile')])
+                                @include('member.card_produk',["p" => $p])
                             </div>
                             <div class="col-md-8">
                                 <div class="ml-2">
