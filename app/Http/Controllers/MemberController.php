@@ -983,14 +983,14 @@ class MemberController extends Controller
 
         $alamat->alamat[$request->id] = [
             'id' => $request->id,
-            'Nama Penerima' => $request->namapenerima,
-            'Nomor HP' => $request->nomorhp,
+            'NamaPenerima' => $request->namapenerima,
+            'NomorHP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
-            'Kabupaten Kota' => $request->kota,
+            'KabupatenKota' => $request->kota,
             'Kecamatan' => $request->kecamatan,
             'Kelurahan' => $request->kelurahan,
-            'Kode Pos' => $request->kodepos,
-            'Alamat Jalan' => $request->alamatjalan,
+            'KodePos' => $request->kodepos,
+            'AlamatJalan' => $request->alamatjalan,
         ];
 
         if ($alamat->IdAlamatUtama === $request->id) {

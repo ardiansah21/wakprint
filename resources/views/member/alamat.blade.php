@@ -342,11 +342,25 @@
         </div>
         <script>
             $(document).ready(function(){
+                //tambah
+                $('#tambahAlamatModal').on('show.bs.modal', function(event) {
+                    var button = $(event.relatedTarget)
+                    $(this).find('.modal-title').text(button.data('title'))
+                    $(this).find('#id').val(button.data('id'))
+                    $(this).find('#namaPenerima').val(button.data('nama-penerima'))
+                    $(this).find('#nomorHP').val(button.data('nomor-hp'))
+                    $(this).find('#provinsi').val(button.data('provinsi'))
+                    $(this).find('#kabupatenKota').val(button.data('kabupaten-kota'))
+                    $(this).find('#kecamatan').val(button.data('kecamatan'))
+                    $(this).find('#kelurahan').val(button.data('kelurahan'))
+                    $(this).find('#kodePos').val(button.data('kode-pos'))
+                    $(this).find('#alamatJalan').val(button.data('alamat-jalan'))
+                });
+
+                //ubah
                 $('#editAlamatModal').on('show.bs.modal', function(e) {
                     var button = $(e.relatedTarget);
                     $('.modal-title').text(button.data('title'));
-
-                    alert(button.data('nama-penerima'));
                     $(e.currentTarget).find('#id').val(button.data('id'));
                     $(e.currentTarget).find('#namaPenerima').val(button.data('nama-penerima'));
                     $(e.currentTarget).find('#nomorHP').val(button.data('nomor-hp'));
@@ -360,25 +374,4 @@
             });
         </script>
     </div>
-
-    <script>
-        //tambah
-        $('#tambahAlamatModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            $(this).find('.modal-title').text(button.data('title'))
-            $(this).find('#id').val(button.data('id'))
-            $(this).find('#namaPenerima').val(button.data('nama-penerima'))
-            $(this).find('#nomorHP').val(button.data('nomor-hp'))
-            $(this).find('#provinsi').val(button.data('provinsi'))
-            $(this).find('#kabupatenKota').val(button.data('kabupaten-kota'))
-            $(this).find('#kecamatan').val(button.data('kecamatan'))
-            $(this).find('#kelurahan').val(button.data('kelurahan'))
-            $(this).find('#kodePos').val(button.data('kode-pos'))
-            $(this).find('#alamatJalan').val(button.data('alamat-jalan'))
-
-        });
-
-    </script>
-
-
 @endsection
