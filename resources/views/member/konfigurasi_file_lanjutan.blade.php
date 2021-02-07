@@ -3,32 +3,47 @@
 
 @section('content')
     @php
-    if(!empty(session()->get('produkKonfigurasiFile'))){
-        $p = session()->get('produkKonfigurasiFile');
-        // $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
-        // $p = app(App\Produk::class, $arr);
-        // $p->id_produk = $arr['id_produk'];
-        // $p->fill(
-        //     [
-        //         'id_pengelola' => $arr['id_pengelola'],
-        //         'nama' => $arr['nama'],
-        //         'harga_hitam_putih' => $arr['harga_hitam_putih'],
-        //         'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
-        //         'harga_berwarna' => $arr['harga_berwarna'],
-        //         'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
-        //         'berwarna' => $arr['berwarna'],
-        //         'hitam_putih' => $arr['hitam_putih'],
-        //         'deskripsi' => $arr['deskripsi'],
-        //         'jenis_kertas' => $arr['jenis_kertas'],
-        //         'jenis_printer' => $arr['jenis_printer'],
-        //         'status' => $arr['status'],
-        //         'fitur' => $arr['fitur'],
-        //     ]
-        // );
-    }
+        if(!empty(session()->get('produkKonfigurasiFile'))){
+            $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
+            $p = app(App\Produk::class, $arr);
+            $p->id_produk = $arr['id_produk'];
+            $p->fill(
+                [
+                    'id_pengelola' => $arr['id_pengelola'],
+                    'nama' => $arr['nama'],
+                    'harga_hitam_putih' => $arr['harga_hitam_putih'],
+                    'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
+                    'harga_berwarna' => $arr['harga_berwarna'],
+                    'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
+                    'berwarna' => $arr['berwarna'],
+                    'hitam_putih' => $arr['hitam_putih'],
+                    'deskripsi' => $arr['deskripsi'],
+                    'jenis_kertas' => $arr['jenis_kertas'],
+                    'jenis_printer' => $arr['jenis_printer'],
+                    'status' => $arr['status'],
+                    'fitur' => $arr['fitur'],
+                ]
+            );
+            if($p->status_diskon != "Tersedia"){
+                $hargaHitamPutih = $p->harga_hitam_putih;
+                $hargaBerwarna = $p->harga_berwarna;
+            }
+            else{
+                $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
 
-    $member = auth()->user();
+                if($jumlahDiskonGray > $p->maksimal_diskon){
+                    $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                    $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                }
+                else{
+                    $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                    $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                }
+            }
+        }
 
+        $member = auth()->user();
     @endphp
     <div class="container">
         <div class="mt-5 mb-5">
@@ -254,7 +269,7 @@
                                         <label class="font-weight-bold mb-2" style="font-size:18px;">{{ __('Detail') }}
                                     </label>
                                     <br>
-                                    @php
+                                    {{-- @php
                                         if($p->status_diskon != "Tersedia"){
                                             $hargaHitamPutih = $p->harga_hitam_putih;
                                             $hargaBerwarna = $p->harga_berwarna;
@@ -272,7 +287,7 @@
                                                 $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
                                             }
                                         }
-                                    @endphp
+                                    @endphp --}}
                                     <div class="row justify-content-between ml-0 mr-0">
                                         <label class="" style="font-size:16px;">{{ __('Berwarna') }}</label>
                                         <label class="" style="font-size:16px;">
