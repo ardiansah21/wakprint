@@ -341,27 +341,27 @@
             </div>
         </div>
         <script>
-            //ubah
-            $('#editAlamatModal').on('show.bs.modal', function(e) {
-                var button = $(e.relatedTarget);
-                $('.modal-title').text(button.data('title'));
+            $(document).ready(function(){
+                $('#editAlamatModal').on('show.bs.modal', function(e) {
+                    var button = $(e.relatedTarget);
+                    $('.modal-title').text(button.data('title'));
 
-                alert(button.data('nama-penerima'));
-                $(e.currentTarget).find('#id').val(button.data('id'));
-                $(e.currentTarget).find('#namaPenerima').val(button.data('nama-penerima'));
-                $(e.currentTarget).find('#nomorHP').val(button.data('nomor-hp'));
-                $(e.currentTarget).find('#provinsi').val(button.data('provinsi'));
-                $(e.currentTarget).find('#kabupatenKota').val(button.data('kabupaten-kota'));
-                $(e.currentTarget).find('#kecamatan').val(button.data('kecamatan'));
-                $(e.currentTarget).find('#kelurahan').val(button.data('kelurahan'));
-                $(e.currentTarget).find('#kodePos').val(button.data('kode-pos'));
-                $(e.currentTarget).find('#alamatJalan').val(button.data('alamat-jalan'));
+                    alert(button.data('nama-penerima'));
+                    $(e.currentTarget).find('#id').val(button.data('id'));
+                    $(e.currentTarget).find('#namaPenerima').val(button.data('nama-penerima'));
+                    $(e.currentTarget).find('#nomorHP').val(button.data('nomor-hp'));
+                    $(e.currentTarget).find('#provinsi').val(button.data('provinsi'));
+                    $(e.currentTarget).find('#kabupatenKota').val(button.data('kabupaten-kota'));
+                    $(e.currentTarget).find('#kecamatan').val(button.data('kecamatan'));
+                    $(e.currentTarget).find('#kelurahan').val(button.data('kelurahan'));
+                    $(e.currentTarget).find('#kodePos').val(button.data('kode-pos'));
+                    $(e.currentTarget).find('#alamatJalan').val(button.data('alamat-jalan'));
+                });
             });
         </script>
     </div>
 
     <script>
-
         //tambah
         $('#tambahAlamatModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
