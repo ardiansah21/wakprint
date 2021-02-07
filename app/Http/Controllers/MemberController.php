@@ -976,7 +976,7 @@ class MemberController extends Controller
         return redirect()->route('alamat')->with('success', 'Anda telah berhasil menambahkan alamat baru');
     }
 
-    public function editAlamat($idMember, Request $request)
+    public function editAlamat(Request $request)
     {
         $member = Member::find(Auth::id());
         $alamat = $member->alamat;

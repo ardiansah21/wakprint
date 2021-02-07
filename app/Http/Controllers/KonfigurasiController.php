@@ -89,8 +89,6 @@ class KonfigurasiController extends Controller
             'fitur_terpilih' => $request->fiturTerpilih,
         ]);
 
-        // dd($konfigurasi);
-
         $konfigurasi->addMedia($request->file_konfigurasi)->toMediaCollection('file_konfigurasi');
 
         $request->session()->forget('fileUpload');

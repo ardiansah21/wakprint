@@ -10,23 +10,22 @@
         $p = app(App\Produk::class, $arr);
         $p->id_produk = $arr['id_produk'];
         $p->fill(
-        [
-        'id_pengelola' => $arr['id_pengelola'],
-        'nama' => $arr['nama'],
-        'harga_hitam_putih' => $arr['harga_hitam_putih'],
-        'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
-        'harga_berwarna' => $arr['harga_berwarna'],
-        'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
-        'berwarna' => $arr['berwarna'],
-        'hitam_putih' => $arr['hitam_putih'],
-        'deskripsi' => $arr['deskripsi'],
-        'jenis_kertas' => $arr['jenis_kertas'],
-        'jenis_printer' => $arr['jenis_printer'],
-        'status' => $arr['status'],
-        'fitur' => $arr['fitur'],
-        ]
+            [
+                'id_pengelola' => $arr['id_pengelola'],
+                'nama' => $arr['nama'],
+                'harga_hitam_putih' => $arr['harga_hitam_putih'],
+                'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
+                'harga_berwarna' => $arr['harga_berwarna'],
+                'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
+                'berwarna' => $arr['berwarna'],
+                'hitam_putih' => $arr['hitam_putih'],
+                'deskripsi' => $arr['deskripsi'],
+                'jenis_kertas' => $arr['jenis_kertas'],
+                'jenis_printer' => $arr['jenis_printer'],
+                'status' => $arr['status'],
+                'fitur' => $arr['fitur'],
+            ]
         );
-
     }
 
     $member = auth()->user();
@@ -64,16 +63,13 @@
                                 function submitFormUpload() {
                                     document.getElementById('change-form').submit();
                                 }
-
                             </script>
-
                             <form id="change-form" action="{{ route('konfigurasi.upload') }}" method="POST"
                                 enctype="multipart/form-data" style="display: none;">
                                 @csrf
                                 <input type='file' name="fileUpload" id="fileidUpload" onchange="submitFormUpload()"
                                     accept="application/pdf" hidden />
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -160,20 +156,15 @@
                                             max="{{ session()->get('fileUpload')->countPage }}" value="1" class="sampai"
                                             disabled class="form-input mr-2" for="rbSampaiHal"
                                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-                                                                                                                                                                                if(document.getElementById('halamanAkhir').value < this.value){
-                                                                                                                                                                                    document.getElementById('halamanAkhir').value = this.value
-                                                                                                                                                                                }
-                                                                                                                                                                                "
+                                            if(document.getElementById('halamanAkhir').value < this.value){
+                                                document.getElementById('halamanAkhir').value = this.value
+                                            }"
                                             style="width:48px;">
                                         {{ __('Sampai') }}
                                         <input id="halamanAkhir" type="number"
                                             value="{{ session()->get('fileUpload')->countPage }}"
                                             class="form-input ml-2 sampai" disabled for="rbSampaiHal"
-                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-                                                                                                                                                                                if(document.getElementById('halamanAwal').value > this.value){
-                                                                                                                                                                                    document.getElementById('halamanAwal').value = this.value
-                                                                                                                                                                                }
-                                                                                                                                                                                "
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                             style="width:48px;" min="1" max="{{ session()->get('fileUpload')->countPage }}">
                                     </label>
                                 </div>
@@ -265,72 +256,60 @@
                                         </button>
                                     </div>
                                     <br>
-                                    <label class="font-weight-bold mb-2" style="font-size:18px;">{{ __('Detail') }}
+                                        <label class="font-weight-bold mb-2" style="font-size:18px;">{{ __('Detail') }}
                                     </label>
                                     <br>
                                     @php
-                                    if($p->status_diskon != "Tersedia"){
-                                        $hargaHitamPutih = $p->harga_hitam_putih;
-                                        $hargaBerwarna = $p->harga_berwarna;
-                                    }
-                                    else{
-                                        $jumlahDiskonGray = $p->harga_hitam_putih *
-                                        $p->jumlah_diskon;
-                                        $jumlahDiskonWarna = $p->harga_berwarna *
-                                        $p->jumlah_diskon;
-
-                                        if($jumlahDiskonGray > $p->maksimal_diskon){
-                                            $hargaHitamPutih = $p->harga_hitam_putih -
-                                            $p->maksimal_diskon;
-                                            $hargaBerwarna = $p->harga_berwarna -
-                                            $p->maksimal_diskon;
+                                        if($p->status_diskon != "Tersedia"){
+                                            $hargaHitamPutih = $p->harga_hitam_putih;
+                                            $hargaBerwarna = $p->harga_berwarna;
                                         }
                                         else{
-                                            $hargaHitamPutih = $p->harga_hitam_putih -
-                                            $jumlahDiskonGray;
-                                            $hargaBerwarna = $p->harga_berwarna -
-                                            $jumlahDiskonWarna;
+                                            $jumlahDiskonGray = $p->harga_hitam_putih * $p->jumlah_diskon;
+                                            $jumlahDiskonWarna = $p->harga_berwarna * $p->jumlah_diskon;
+
+                                            if($jumlahDiskonGray > $p->maksimal_diskon){
+                                                $hargaHitamPutih = $p->harga_hitam_putih - $p->maksimal_diskon;
+                                                $hargaBerwarna = $p->harga_berwarna - $p->maksimal_diskon;
+                                            }
+                                            else{
+                                                $hargaHitamPutih = $p->harga_hitam_putih - $jumlahDiskonGray;
+                                                $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
+                                            }
                                         }
-                                    }
                                     @endphp
                                     <div class="row justify-content-between ml-0 mr-0">
                                         <label class="" style="font-size:16px;">{{ __('Berwarna') }}</label>
                                         <label class="" style="font-size:16px;">
-                                            @if ($p->status_diskon != 'Tersedia')
-                                                {{ rupiah($p->harga_berwarna) ?? rupiah(0) }}
-                                                / Halaman
-                                            @else
-                                                {{ rupiah($hargaBerwarna) ?? rupiah(0) }} / Halaman
-                                            @endif
+                                            {{ rupiah($hargaBerwarna) ?? rupiah(0) }} / Halaman
                                         </label>
                                     </div>
                                     <div class="row justify-content-between ml-0 mr-0 mb-4">
                                         <label class="" style="font-size:16px;">{{ __('Hitam Putih') }}</label>
                                         <label class="" style="font-size:16px;">
-                                            @if ($p->status_diskon != 'Tersedia')
-                                                {{ rupiah($p->harga_hitam_putih) ?? rupiah(0) }}
-                                                / Halaman
-                                            @else
-                                                {{ rupiah($hargaHitamPutih) ?? rupiah(0) }} / Halaman
-                                            @endif
+                                            {{ rupiah($hargaHitamPutih) ?? rupiah(0) }} / Halaman
                                         </label>
                                     </div>
                                     <div class="row justify-content-between ml-0 mr-0">
-                                        <label class="" style="font-size:16px;">{{ __('Berwarna (Timbal Balik)') }}</label>
-                                        <label class=""
-                                            style="font-size:16px;">{{ rupiah($p->harga_timbal_balik_berwarna) ?? 0 }}
-                                            / Halaman</label>
+                                        <label class="" style="font-size:16px;">
+                                            {{ __('Berwarna (Timbal Balik)') }}
+                                        </label>
+                                        <label class="" style="font-size:16px;">
+                                            {{ rupiah($p->harga_timbal_balik_berwarna) ?? 0 }} / Halaman
+                                        </label>
                                     </div>
                                     <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                        <label class=""
-                                            style="font-size:16px;">{{ __('Hitam Putih (Timbal Balik)') }}</label>
-                                        <label class=""
-                                            style="font-size:16px;">{{ rupiah($p->harga_timbal_balik_hitam_putih) ?? 0 }}
-                                            / Halaman</label>
+                                        <label class="" style="font-size:16px;">
+                                            {{ __('Hitam Putih (Timbal Balik)') }}
+                                        </label>
+                                        <label class="" style="font-size:16px;">
+                                            {{ rupiah($p->harga_timbal_balik_hitam_putih) ?? 0 }} / Halaman
+                                        </label>
                                     </div>
                                     <div class="row justify-content-between ml-0 mr-0 mb-5">
-                                        <label class=""
-                                            style="font-size:16px;">{{ __('Nilai Toleransi Kandungan Warna') }}</label>
+                                        <label class="" style="font-size:16px;">
+                                            {{ __('Nilai Toleransi Kandungan Warna') }}
+                                        </label>
                                         <label class="" style="font-size:16px;">
                                             @if (empty($p->partner->ntkwh))
                                                 {{ __('0%') }}
@@ -341,7 +320,7 @@
                                     </div>
                                     <label class="font-weight-bold mb-2" style="font-size:18px;">{{ __('Fitur') }}</label>
                                     @php
-                                    $fitur = json_decode($p->fitur,true);
+                                        $fitur = json_decode($p->fitur,true);
                                     @endphp
                                     @if (!empty($fitur))
                                         @foreach ($fitur as $f => $value)
@@ -355,63 +334,56 @@
                                                         <i id="helpFitur{{ str_replace(' ', '', $value['nama']) }}"
                                                             class="material-icons help md-18 align-middle cursor-pointer"
                                                             data-toggle="popover" data-trigger="hover" title="Deskripsi"
-                                                            data-html="true" data-content="<div class='media'>
-
-
-
-
-
-                                                            @if (!empty($value['foto_fitur']))
-                                                            <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3'
-                                                                width='100%' height='156' alt=''>
-                                        @endif
+                                                            data-html="true" data-content="
+                                                            <div class='media'>
+                                                                @if (!empty($value['foto_fitur']))
+                                                                    <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
+                                                                @endif
+                                                            </div>
+                                                            <div class='media-body'>
+                                                                <h5 class='media-heading'>
+                                                                    {{ $value['nama'] }}
+                                                                </h5>
+                                                                <p>{{ $value['nama'] }} adalah {{ $value['deskripsi'] }}</p>
+                                                            </div>"
+                                                            onmouseover="showPopUpHelpFitur('{{ str_replace(' ', '', $value['nama']) }}')"
+                                                            onmouseout="hidePopUpHelpFitur('{{ str_replace(' ', '', $value['nama']) }}')"
+                                                            style="color:#C4C4C4">
+                                                                help
+                                                            </i>
+                                                    </label>
+                                                </div>
+                                                <input type="text" name="harga_fitur" id="hargaFitur{{ $f }}" value="{{ $value['harga'] }}" hidden>
+                                                <label class="" style="font-size:16px;">{{ rupiah((int) str_replace('.','',$value['harga'])) }}</label>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <br>
+                                        <label>-</label>
+                                    @endif
                                 </div>
-                                <div class='media-body'>
-                                    <h5 class='media-heading'>
-                                        {{ $value['nama'] }}
-                                    </h5>
-                                    <p>{{ $value['nama'] }} adalah {{ $value['deskripsi'] }}</p>
-                                </div>"
-                                onmouseover="showPopUpHelpFitur('{{ str_replace(' ', '', $value['nama']) }}')"
-                                onmouseout="hidePopUpHelpFitur('{{ str_replace(' ', '', $value['nama']) }}')"
-                                style="color:#C4C4C4">
-                                help
-                                </i>
-                                </label>
                             </div>
-                            <input type="text" name="harga_fitur" id="hargaFitur{{ $f }}" value="{{ $value['harga'] }}"
-                                hidden>
-                            <label class="" style="font-size:16px;">{{ rupiah($value['harga']) }}</label>
                         </div>
-                    @endforeach
-                @else
-                    <br>
-                    <label>-</label>
+                    <form id="cekwarna-form" action="{{ route('konfigurasi.cekwarna') }}" method="POST" hidden>
+                        @csrf
+                        @if (empty($p->partner->ntkwh))
+                            <input type="text" name="percenMin" value="0" hidden>
+                        @else
+                            <input type="text" name="percenMin" value="{{ $p->partner->ntkwh }}" hidden>
+                        @endif
+                        <input type="text" name="path" hidden>
+                    </form>
+                    @endif
+                </div>
+            @if (!session()->has('produkKonfigurasiFile'))
+                <div class="bg-primary-yellow mt-4 mb-4 p-2" style="border-radius: 5px; width:100%">
+                    <label class="my-auto" style="font-size: 16px;">
+                        <i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4;">warning</i>
+                        {{ __('Silahkan unggah file dokumen anda untuk melanjutkan proses konfigurasi file') }}
+                    </label>
+                </div>
             @endif
-        </div>
-    </div>
-    </div>
-    <form id="cekwarna-form" action="{{ route('konfigurasi.cekwarna') }}" method="POST" hidden>
-        @csrf
-        @if (empty($p->partner->ntkwh))
-            <input type="text" name="percenMin" value="0" hidden>
-        @else
-            <input type="text" name="percenMin" value="{{ $p->partner->ntkwh }}" hidden>
         @endif
-        <input type="text" name="path" hidden>
-    </form>
-    @endif
-    </div>
-    @if (!session()->has('produkKonfigurasiFile'))
-        <div class="bg-primary-yellow mt-4 mb-4 p-2" style="border-radius: 5px; width:100%">
-            <label class="my-auto" style="font-size: 16px;">
-                <i class="material-icons md-18 align-middle mr-2" style="color:#C4C4C4;">warning</i>
-                {{ __('Silahkan unggah file dokumen anda untuk melanjutkan proses konfigurasi file') }}
-            </label>
-        </div>
-    @else
-    @endif
-    @endif
     <div id="loading">
         <img src="{{ asset('img/loading.gif') }}" alt="loading..." class="mx-auto d-block">
         <div id="progressText" class="mx-auto d-block"></div>
@@ -420,13 +392,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             $('#loading').hide();
         });
-
     </script>
     @if (session()->has('fileUpload') && session()->has('produkKonfigurasiFile'))
         <form id="konfigurasiForm" action="{{ route('konfigurasi.tambah') }}" method="POST">
             @csrf
-            <input type='text' name="file_konfigurasi" id="fileKonfigurasi" value="{{ session()->get('fileUpload')->path }}"
-                accept="application/pdf" hidden />
+            <input type='text' name="file_konfigurasi" id="fileKonfigurasi" value="{{ session()->get('fileUpload')->path }}" accept="application/pdf" hidden />
             <input type='text' name="idProduk" id="idProduk" value="{{ $p->id_produk }}" hidden />
             <input type='text' name="namaFile" id="namaFile" value="{{ session()->get('fileUpload')->name }}" hidden />
             <input type='number' name="jumlahHalamanHitamPutih" id="jumlahHalamanHitamPutih" value="" hidden />
@@ -495,8 +465,7 @@
                                 pdf.jumlahSalinan = parseInt($('#jumlahSalin').val());
                                 pdf.paksaHitamPutih = 0;
                                 pdf.timbalBalik = 0;
-                                pdf.namaProduk =
-                                    "{{ $arr['nama'] }}";
+                                pdf.namaProduk = "{{ $arr['nama'] }}";
                                 pdf.fiturTerpilih = [];
 
                                 var halamanAwal = parseInt($('#halamanAwal').val());
@@ -505,12 +474,9 @@
                                 var nilaiSemuaHalaman = $('#semuaHal').val();
                                 var hargaHitamPutih = '{{ $hargaHitamPutih }}';
                                 var hargaBerwarna = '{{ $hargaBerwarna }}';
-                                var hargaHitamPutihTimbalBalik =
-                                    "{{ $arr['harga_timbal_balik_hitam_putih']}}";
-                                var hargaBerwarnaTimbalBalik =
-                                    "{{ $arr['harga_timbal_balik_berwarna'] }}";
-                                var nilaiPaksaHitamPutih = parseInt(pdf['jumlahHalBerwarna'] +
-                                    pdf['jumlahHalHitamPutih']);
+                                var hargaHitamPutihTimbalBalik = "{{ $arr['harga_timbal_balik_hitam_putih']}}";
+                                var hargaBerwarnaTimbalBalik = "{{ $arr['harga_timbal_balik_berwarna'] }}";
+                                var nilaiPaksaHitamPutih = parseInt(pdf['jumlahHalBerwarna'] + pdf['jumlahHalHitamPutih']);
                                 var nilaiPaksaBerwarna = 0;
                                 var fiturTerpilih = [];
                                 var nilaiKustomHal = $('#kustomHal').val();
@@ -521,9 +487,7 @@
                                 var hargaFiturTerpilih = [];
                                 var hargaTotalFiturTerpilih = 0;
                                 var hargaTotalKonfigurasi = 0;
-                                var totalHarga = (hargaHitamPutih * pdf['jumlahHalHitamPutih'] *
-                                    jumlahSalinan) + (hargaBerwarna * pdf[
-                                    'jumlahHalBerwarna'] * jumlahSalinan);
+                                var totalHarga = (hargaHitamPutih * pdf['jumlahHalHitamPutih'] * jumlahSalinan) + (hargaBerwarna * pdf['jumlahHalBerwarna'] * jumlahSalinan);
                                 var catatanTambahan = "";
 
                                 pdf.biaya = totalHarga;
