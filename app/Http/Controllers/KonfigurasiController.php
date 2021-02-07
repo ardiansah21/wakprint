@@ -46,7 +46,7 @@ class KonfigurasiController extends Controller
     {
         $p = Produk::find($produkId);
         $pesanan = Pesanan::where('status', null)->get();
-        $konfigurasi = $pesanan->konfigurasiFile->find($request->id_konfigurasi);
+        $konfigurasi = $pesanan->konfigurasiFile->first()->find($request->id_konfigurasi);
         $request->session()->put('produkKonfigurasiFile', collect($p));
 
         if ($request->fromKonfigurasi == true && $request->id_konfigurasi == $konfigurasi->id_konfigurasi) {
