@@ -5,6 +5,7 @@
 <div class="container">
     <div class="mt-5 mb-5">
         <label class="font-weight-bold" style="font-size:48px;">{{__('Konfigurasi File') }}</label>
+        <br>
         <label class="mb-0 mt-4" style="font-size:24px;">{{ __('Tampilan Preview File Anda') }}</label>
         <div id="konfigurasi" class="row justify-content-between mb-5">
             <div class="col-md-auto mt-5 mr-0">
