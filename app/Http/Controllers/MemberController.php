@@ -1200,19 +1200,19 @@ class MemberController extends Controller
         $status = false;
         $produkFavorit = json_decode($member->produk_favorit);
 
-        $valueFavorit = array_search($request->id_produk, $produkFavorit);
-
         if (empty($produkFavorit)) {
             array_push($produkFavorit, $request->id_produk);
             $status = true;
         } else {
             if (in_array($request->id_produk, $produkFavorit)) {
+                $valueFavorit = array_search($request->id_produk, $produkFavorit);
                 Arr::pull($produkFavorit, $valueFavorit);
                 $status = false;
             } else {
                 array_push($produkFavorit, $request->id_produk);
                 $status = true;
             }
+            Arr::sort($produkFavorit);
         }
 
         $member->produk_favorit = json_decode(json_encode($produkFavorit), true);
