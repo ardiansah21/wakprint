@@ -417,7 +417,7 @@
                                                             </i>
                                                         </label>
                                                         <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                                        <label class="" style="font-size:16px;">{{rupiah($value['harga']) }}</label>
+                                                        <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$value['harga'])) }}</label>
                                                     @else
                                                         <input type="checkbox" name="checkbox_fitur" class="custom-control-input" checked id="checkboxFitur{{$f}}" value="{{$valueFt['namaFitur']}}">
                                                         <label class="custom-control-label" for="checkboxFitur{{$f}}">
@@ -440,7 +440,7 @@
                                                             </i>
                                                         </label>
                                                         <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$valueFt['hargaFitur']}}" hidden>
-                                                        <label class="" style="font-size:16px;">{{rupiah($valueFt['hargaFitur']) }}</label>
+                                                        <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$valueFt['hargaFitur'])) }}</label>
                                                     @endif
                                                 </div>
                                             </div>
@@ -470,7 +470,7 @@
                                                 </label>
                                             </div>
                                             <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                            <label class="" style="font-size:16px;">{{ rupiah($value['harga']) }}</label>
+                                            <label class="" style="font-size:16px;">{{ rupiah((int) str_replace('.','',$value['harga'])) }}</label>
                                         </div>
                                     @endif
                                 @endforeach
