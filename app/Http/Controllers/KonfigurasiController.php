@@ -45,10 +45,11 @@ class KonfigurasiController extends Controller
     public function selectedProduk(Request $request, $produkId)
     {
         $p = Produk::find($produkId);
+        $pesanan = Pesanan::where('status', null)->get();
+        $konfigurasi = $pesanan->konfigurasiFile->find($request->id_konfigurasi);
         $request->session()->put('produkKonfigurasiFile', collect($p));
-        // dd($request->session()->get('produkKonfigurasiFile'));
 
-        if ($request->fromKonfigurasi == true && $request->id_konfigurasi) {
+        if ($request->fromKonfigurasi == true && $request->id_konfigurasi == $konfigurasi->id_konfigurasi) {
             return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi]);
         } else {
             return redirect()->route('konfigurasi.file');
