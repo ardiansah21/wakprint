@@ -45,7 +45,7 @@
                                         </td>
                                         <td class="align-middle">
                                             <span>
-                                                <a href="" class="material-icons text-decoration-none mr-2"
+                                                <a href="#editAlamatModal" id="editBtn" class="material-icons text-decoration-none mr-2"
                                                     data-toggle="modal" data-target="#editAlamatModal"
                                                     data-title="Ubah Alamat Pengiriman"
                                                     data-id="{{ $member->alamat->alamat[$i]->id ?? '-' }}"
@@ -224,8 +224,7 @@
         </div>
 
         {{-- popup modal edit alamat --}}
-        <div class="modal fade" id="editAlamatModal" tabindex="-1" role="dialog" aria-labelledby="editAlamatModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="editAlamatModal" tabindex="-1" role="dialog" aria-labelledby="editAlamatModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -246,8 +245,8 @@
                                             style="font-size: 18px;">{{ __('Nama Penerima') }}</label>
                                         <div class="input-group">
                                             <input id="namaPenerima" type="text" name="namapenerima"
-                                                placeholder="Masukkan Nama Penerima" value="as"
-                                                class="form-control pt-2 pb-2 r" style="font-size: 18px;">
+                                                placeholder="Masukkan Nama Penerima" class="form-control pt-2 pb-2 r"
+                                                style="font-size: 18px;">
                                         </div>
                                     </div>
                                     <div class="form-group mb-3">
