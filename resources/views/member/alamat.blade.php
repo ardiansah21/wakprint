@@ -341,6 +341,7 @@
             </div>
         </div>
         <script>
+            alert('tes');
             $('#editBtn').on("click", function () {
                 $(".modal-body #namaPenerima").val($(this).data('nama-penerima'));
                 $('#editAlamatModal').modal('show');
