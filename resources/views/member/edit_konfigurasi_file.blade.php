@@ -584,7 +584,7 @@
                                             </label>
                                         </div>
                                         <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                        <label class="" style="font-size:16px;">{{rupiah($value['harga']) }}</label>
+                                        <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$value['harga'])) }}</label>
                                     </div>
                                 @endforeach
                             @else
