@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use File;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use imagick;
@@ -1201,26 +1202,12 @@ class MemberController extends Controller
 
         $valueFavorit = array_search($request->id_produk, $produkFavorit);
 
-        // if (empty($produkFavorit)) {
-        //     array_push($produkFavorit, $request->id_produk);
-        //     $status = true;
-        // } else {
-        //     if ($keyFavorit != false) {
-        //         unset($produkFavorit[$keyFavorit]);
-        //         // dd($produkFavorit);
-        //         $status = false;
-        //     } else {
-        //         array_push($produkFavorit, $request->id_produk);
-        //         $status = true;
-        //     }
-        // }
-
         if (empty($produkFavorit)) {
             array_push($produkFavorit, $request->id_produk);
             $status = true;
         } else {
             if (in_array($request->id_produk, $produkFavorit)) {
-                unset($produkFavorit[$valueFavorit]);
+                Arr::forget($produkFavorit, $valueFavorit);
                 // foreach ($produkFavorit as $key => $pf) {
                 //     array_splice($produkFavorit, $key);
                 //     $status = false;
@@ -1242,8 +1229,8 @@ class MemberController extends Controller
         // $member->produk_favorit = json_decode(json_encode($produkFavorit), false);
         $member->produk_favorit = $produkFavorit;
         $member->save();
+        $member->push();
 
-        // dd($member->produk_favorit);
         if ($request->fromAxios) {
             return response()->json($member->produk_favorit, 200);
         }
