@@ -211,8 +211,6 @@ Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/keluhan', 'AdminController@keluhan')->name('keluhan');
         Route::get('keluhan/detail/{id}', 'AdminController@detailKeluhan')->name('detail.keluhan');
         Route::post('keluhan/tanggapi', 'AdminController@tanggapiKeluhan')->name('keluhan.tanggapi');
-        //Route::post('member/{group_id}/datatables', ['as' => 'member.datatables','uses'=>'Admin\AdminController@memberByGroupDatatables']);
-        //Route::post('user/{group_id}/datatables', ['as' => 'user.datatables','uses'=>'UserController@usersByGroupDatatables']);
 
         Route::get('member/json', 'AdminController@memberJson')->name('member.json');
         Route::get('partner/json', 'AdminController@partnerJson')->name('partner.json');
@@ -246,14 +244,6 @@ Route::get('/testjson/update/{id}', 'ProductController@updateShow');
 Route::post('/testjson/update/{id}', 'ProductController@update');
 
 Route::get('foto', 'ProductController@foto');
-
-// Route::get('/index', 'SiteController@index');
-// Route::get('/index/create', 'SiteController@create');
-// Route::get('/index/edit/{id}', 'SiteController@edit')->name('edit');
-// Route::get('/index/show', 'SiteController@show')->name('show');
-// Route::post('/index/store', 'SiteController@store')->name('store');
-// Route::post('/index/update/{id}', 'SiteController@update')->name('update');
-// Route::post('/index/destroy/{id}', 'SiteController@destroy')->name('destroy');
 
 //TEMP
 Route::resource('pdf', 'PdfController');
