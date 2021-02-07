@@ -3,8 +3,6 @@
 
 @section('content')
     @php
-    // use App\Produk;
-    // dd((App\Produk)$p->id_produk);
     if(!empty(session()->get('produkKonfigurasiFile'))){
         $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
         $p = app(App\Produk::class, $arr);
@@ -96,14 +94,10 @@
                                 <div class="col-md-8 text-truncate align-self-center">
                                     <a class="" href="{{ url('tmp/upload', session()->get('fileUpload')->name) }}"
                                         target="_blank" style="font-size: 18px;">
-                                        {{-- {{ $pdf->namaFile ?? '' }}
-                                        --}}
                                         {{ session()->get('fileUpload')->name }}
                                     </a>
                                     <br>
                                     <label class="text-muted" style="font-size: 12px;">
-                                        {{-- {{ $pdf->jumlahHalaman ?? '' }}
-                                        {{ __('Halaman') }} --}}
                                         {{ session()->get('fileUpload')->countPage }} {{ __('Halaman') }}
                                     </label>
                                 </div>
@@ -243,7 +237,7 @@
                     @else
                         <div class="row justify-content-between">
                             <div class="col-md-4">
-                                @include('member.card_produk',["p" => $p])
+                                @include('member.card_produk',["p" => session()->get('produkKonfigurasiFile')])
                             </div>
                             <div class="col-md-8">
                                 <div class="ml-2">
@@ -7306,8 +7300,7 @@
                                 }));
 
                                 $('#catatanTambahanArea').on('change input', (function() {
-                                    pdf.catatanTambahan = $('#catatanTambahanArea')
-                                        .val();
+                                    pdf.catatanTambahan = $('#catatanTambahanArea').val();
                                 }));
 
                                 $('#simpanDanLanjutkan').on('click', (function() {
