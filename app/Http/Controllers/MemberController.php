@@ -1200,25 +1200,14 @@ class MemberController extends Controller
         $status = false;
         $produkFavorit = json_decode($member->produk_favorit);
 
-        $valueFavorit = array_search($request->id_produk, $produkFavorit);
+        // $valueFavorit = array_search($request->id_produk, $produkFavorit);
 
         if (empty($produkFavorit)) {
             array_push($produkFavorit, $request->id_produk);
             $status = true;
         } else {
             if (in_array($request->id_produk, $produkFavorit)) {
-                Arr::forget($produkFavorit, $valueFavorit);
-                // foreach ($produkFavorit as $key => $pf) {
-                //     array_splice($produkFavorit, $key);
-                //     $status = false;
-                //     if ($pf == $request->id_produk) {
-                //         array_splice($produkFavorit, $key);
-                //         $status = false;
-                //     } else {
-                //         array_push($produkFavorit, $request->id_produk);
-                //         $status = true;
-                //     }
-                // }
+                Arr::forget($produkFavorit, $request->id_produk);
                 $status = false;
             } else {
                 array_push($produkFavorit, $request->id_produk);
