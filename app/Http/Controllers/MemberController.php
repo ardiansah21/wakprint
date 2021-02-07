@@ -1207,7 +1207,7 @@ class MemberController extends Controller
             $status = true;
         } else {
             if (in_array($request->id_produk, $produkFavorit)) {
-                Arr::forget($produkFavorit, $request->id_produk);
+                Arr::pull($produkFavorit, $request->id_produk);
                 $status = false;
             } else {
                 array_push($produkFavorit, $request->id_produk);
