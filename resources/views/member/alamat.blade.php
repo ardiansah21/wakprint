@@ -344,19 +344,25 @@
 
     <script>
         //ubah
-        $('#editAlamatModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
+        // $('#editAlamatModal').on('show.bs.modal', function(event) {
+        //     var button = $(event.relatedTarget);
 
-            $('.modal-title').text(button.data('title'));
-            $(this).find('#id').val(button.data('id'));
-            $(this).find('#namaPenerima').val(button.data('nama-penerima'));
-            $(this).find('#nomorHP').val(button.data('nomor-hp'));
-            $(this).find('#provinsi').val(button.data('provinsi'));
-            $(this).find('#kabupatenKota').val(button.data('kabupaten-kota'));
-            $(this).find('#kecamatan').val(button.data('kecamatan'));
-            $(this).find('#kelurahan').val(button.data('kelurahan'));
-            $(this).find('#kodePos').val(button.data('kode-pos'));
-            $(this).find('#alamatJalan').val(button.data('alamat-jalan'));
+        //     $('.modal-title').text(button.data('title'));
+        //     $(this).find('#id').val(button.data('id'));
+        //     $(this).find('#namaPenerima').val(button.data('nama-penerima'));
+        //     $(this).find('#nomorHP').val(button.data('nomor-hp'));
+        //     $(this).find('#provinsi').val(button.data('provinsi'));
+        //     $(this).find('#kabupatenKota').val(button.data('kabupaten-kota'));
+        //     $(this).find('#kecamatan').val(button.data('kecamatan'));
+        //     $(this).find('#kelurahan').val(button.data('kelurahan'));
+        //     $(this).find('#kodePos').val(button.data('kode-pos'));
+        //     $(this).find('#alamatJalan').val(button.data('alamat-jalan'));
+        // });
+        $('#editBtn').on("click", function () {
+            $(".modal-body #namaPenerima").val($(this).data('nama-penerima'));
+            // As pointed out in comments,
+            // it is unnecessary to have to manually call the modal.
+            // $('#addBookDialog').modal('show');
         });
 
         //tambah
