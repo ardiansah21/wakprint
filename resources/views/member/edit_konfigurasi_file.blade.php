@@ -303,288 +303,118 @@
                 }
             }
         @endphp
-        {{-- @if (session()->has('produkKonfigurasiFile'))
-            <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
-                <div class="row justify-content-between">
-                    <div class="col-md-4">
-                        @include('member.card_produk',["p"=>session()->get('produkKonfigurasiFile'),"fromKonfigurasi" => "true"])
-                    </div>
-                    <div class="col-md-8">
-                        <div class="ml-2">
-                            <div class="text-right">
-                                <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
-                                    style="border-radius:35px;font-size: 16px;"
-                                    @if(count($member->konfigurasi) > 1)
-                                        onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false'])}}'"
-                                    @else
-                                        onclick="window.location='{{route('pencarian')}}'"
-                                    @endif>
-                                    {{__('Ubah Produk') }}
-                                </button>
-                            </div>
-                            <br>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Detail') }}
+        <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
+            <div class="row justify-content-between">
+                <div class="col-md-4">
+                    @include('member.card_produk',["p"=>$produk,"fromKonfigurasi" => "true", "fromTambahKonfigurasi" => "false"])
+                </div>
+                <div class="col-md-8">
+                    <div class="ml-2">
+                        <div class="text-right">
+                            <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
+                                style="border-radius:35px;font-size: 16px;"
+                                onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false'])}}'">
+                                {{__('Ubah Produk') }}
+                            </button>
+                        </div>
+                        <br>
+                        <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Detail') }}
+                        </label>
+                        <br>
+                        <div class="row justify-content-between ml-0 mr-0">
+                            <label class="" style="font-size:16px;">{{__('Berwarna') }}</label>
+                            <label class="" style="font-size:16px;">
+                                @if($produk->status_diskon != 'Tersedia')
+                                    {{rupiah($produk->harga_berwarna) ?? rupiah(0) }} / Halaman
+                                @else
+                                    {{rupiah($hargaBerwarna) ?? rupiah(0) }} / Halaman
+                                @endif
                             </label>
-                            <br>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="" style="font-size:16px;">{{__('Berwarna') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if(session()->get('produkKonfigurasiFile')->status_diskon != 'Tersedia')
-                                        {{rupiah(session()->get('produkKonfigurasiFile')->harga_berwarna) ?? rupiah(0) }} / Halaman
-                                    @else
-                                        {{rupiah($hargaBerwarna) ?? rupiah(0) }} / Halaman
-                                    @endif
-                                </label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                <label class="" style="font-size:16px;">{{__('Hitam Putih') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if(session()->get('produkKonfigurasiFile')->status_diskon != 'Tersedia')
-                                        {{rupiah(session()->get('produkKonfigurasiFile')->harga_hitam_putih) ?? rupiah(0) }} / Halaman
-                                    @else
-                                        {{rupiah($hargaHitamPutih) ?? rupiah(0) }} / Halaman
-                                    @endif
-                                </label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">{{rupiah(session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna) ?? rupiah(0) }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">{{rupiah(session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih) ?? rupiah(0) }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-5">
-                                <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if (empty(session()->get('produkKonfigurasiFile')->partner->ntkwh))
-                                        {{__('0%')}}
-                                    @else
-                                        {{session()->get('produkKonfigurasiFile')->partner->ntkwh . "%" }}
-                                    @endif
-                                </label>
-                            </div>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur') }}</label>
-                            @php
-                                $fitur = json_decode(session()->get('produkKonfigurasiFile')->fitur,true);
-                                $fiturTerpilih = json_decode($konfigurasi->fitur_terpilih,true);
-                            @endphp
-                            @if (count($fitur) != 0)
-                                @foreach ($fitur as $f => $value)
-                                    @if(count($fiturTerpilih) != 0)
-                                        @foreach($fiturTerpilih as $ft => $valueFt)
-                                            <div class="row justify-content-between ml-0 mr-0">
-                                                <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                                    @if($value['nama'] != $valueFt['namaFitur'])
-                                                        <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
-                                                        <label class="custom-control-label" for="checkboxFitur{{$f}}">
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0 mb-4">
+                            <label class="" style="font-size:16px;">{{__('Hitam Putih') }}</label>
+                            <label class="" style="font-size:16px;">
+                                @if($produk->status_diskon != 'Tersedia')
+                                    {{rupiah($produk->harga_hitam_putih) ?? rupiah(0) }} / Halaman
+                                @else
+                                    {{rupiah($hargaHitamPutih) ?? rupiah(0) }} / Halaman
+                                @endif
+                            </label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0">
+                            <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}</label>
+                            <label class="" style="font-size:16px;">{{rupiah($produk->harga_timbal_balik_berwarna) ?? rupiah(0) }} / Halaman</label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0 mb-4">
+                            <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}</label>
+                            <label class="" style="font-size:16px;">{{rupiah($produk->harga_timbal_balik_hitam_putih) ?? rupiah(0) }} / Halaman</label>
+                        </div>
+                        <div class="row justify-content-between ml-0 mr-0 mb-5">
+                            <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}</label>
+                            <label class="" style="font-size:16px;">
+                                @if (empty($produk->partner->ntkwh))
+                                    {{__('0 %')}}
+                                @else
+                                    {{$produk->partner->ntkwh . "%" }}
+                                @endif
+                            </label>
+                        </div>
+                        <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur') }}</label>
+                        @php
+                            $fitur = json_decode($produk->fitur,true);
+                            $fiturTerpilih = json_decode($konfigurasi->fitur_terpilih,true);
+                        @endphp
+                        @if (!empty($fitur))
+                            @foreach ($fitur as $f => $value)
+                                <div class="row justify-content-between ml-0 mr-0">
+                                    <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
+                                        <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}"
+                                            @foreach($fiturTerpilih as $ft => $valueFt)
+                                                @if($valueFt['namaFitur'] === $value['nama'])
+                                                    checked
+                                                @endif
+                                            @endforeach>
+                                        <label class="custom-control-label" for="checkboxFitur{{$f}}">
+                                            {{$value['nama']}}
+                                            <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
+                                                data-content=
+                                                    "<div class='media'>
+                                                        @if(!empty($value['foto_fitur']))
+                                                            <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
+                                                        @endif
+                                                    </div>
+                                                    <div class='media-body'>
+                                                        <h5 class='media-heading'>
                                                             {{$value['nama']}}
-                                                            <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
-                                                                data-content=
-                                                                    "<div class='media'>
-                                                                        @if(!empty($value['foto_fitur']))
-                                                                            <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
-                                                                        @endif
-                                                                    </div>
-                                                                    <div class='media-body'>
-                                                                        <h5 class='media-heading'>
-                                                                            {{$value['nama']}}
-                                                                        </h5>
-                                                                        <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
-                                                                    </div>"
-                                                                onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
-                                                                help
-                                                            </i>
-                                                        </label>
-                                                        <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                                        <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$value['harga'])) }}</label>
-                                                    @else
-                                                        <input type="checkbox" name="checkbox_fitur" class="custom-control-input" checked id="checkboxFitur{{$f}}" value="{{$valueFt['namaFitur']}}">
-                                                        <label class="custom-control-label" for="checkboxFitur{{$f}}">
-                                                            {{$valueFt['namaFitur']}}
-                                                            <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
-                                                                data-content=
-                                                                    "<div class='media'>
-                                                                        @if(!empty($value['foto_fitur']))
-                                                                            <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
-                                                                        @endif
-                                                                    </div>
-                                                                    <div class='media-body'>
-                                                                        <h5 class='media-heading'>
-                                                                            {{$value['nama']}}
-                                                                        </h5>
-                                                                        <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
-                                                                    </div>"
-                                                                onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
-                                                                help
-                                                            </i>
-                                                        </label>
-                                                        <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$valueFt['hargaFitur']}}" hidden>
-                                                        <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$valueFt['hargaFitur'])) }}</label>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <div class="row justify-content-between ml-0 mr-0">
-                                            <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                                <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}">
-                                                <label class="custom-control-label" for="checkboxFitur{{$f}}">
-                                                    {{$value['nama']}}
-                                                    <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
-                                                        data-content=
-                                                            "<div class='media'>
-                                                                @if(!empty($value['foto_fitur']))
-                                                                    <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
-                                                                @endif
-                                                            </div>
-                                                            <div class='media-body'>
-                                                                <h5 class='media-heading'>
-                                                                    {{$value['nama']}}
-                                                                </h5>
-                                                                <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
-                                                            </div>"
-                                                        onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
-                                                        help
-                                                    </i>
-                                                </label>
-                                            </div>
-                                            <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                            <label class="" style="font-size:16px;">{{ rupiah((int) str_replace('.','',$value['harga'])) }}</label>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            @else
-                                <br>
-                                <label>-</label>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <form id="cekwarna-form" action="{{route("konfigurasi.cekwarna")}}" method="POST" hidden>
-                    @csrf
-                    @if (empty(session()->get('produkKonfigurasiFile')->partner->ntkwh))
-                        <input type="text" name="percenMin" value="0" hidden>
-                    @else
-                        <input type="text" name="percenMin" value="{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}" hidden>
-                    @endif
-                    <input type="text" name="path" hidden>
-                </form>
-            </div>
-        @else --}}
-            <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
-                <div class="row justify-content-between">
-                    <div class="col-md-4">
-                        @include('member.card_produk',["p"=>$produk,"fromKonfigurasi" => "true", "fromTambahKonfigurasi" => "false"])
-                    </div>
-                    <div class="col-md-8">
-                        <div class="ml-2">
-                            <div class="text-right">
-                                <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
-                                    style="border-radius:35px;font-size: 16px;"
-                                    onclick="window.location='{{route('pencarian',['id_konfigurasi' => $konfigurasi->id_konfigurasi,'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false'])}}'">
-                                    {{__('Ubah Produk') }}
-                                </button>
-                            </div>
-                            <br>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Detail') }}
-                            </label>
-                            <br>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="" style="font-size:16px;">{{__('Berwarna') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if($produk->status_diskon != 'Tersedia')
-                                        {{rupiah($produk->harga_berwarna) ?? rupiah(0) }} / Halaman
-                                    @else
-                                        {{rupiah($hargaBerwarna) ?? rupiah(0) }} / Halaman
-                                    @endif
-                                </label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                <label class="" style="font-size:16px;">{{__('Hitam Putih') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if($produk->status_diskon != 'Tersedia')
-                                        {{rupiah($produk->harga_hitam_putih) ?? rupiah(0) }} / Halaman
-                                    @else
-                                        {{rupiah($hargaHitamPutih) ?? rupiah(0) }} / Halaman
-                                    @endif
-                                </label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0">
-                                <label class="" style="font-size:16px;">{{__('Berwarna (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">{{rupiah($produk->harga_timbal_balik_berwarna) ?? rupiah(0) }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-4">
-                                <label class="" style="font-size:16px;">{{__('Hitam Putih (Timbal Balik)') }}</label>
-                                <label class="" style="font-size:16px;">{{rupiah($produk->harga_timbal_balik_hitam_putih) ?? rupiah(0) }} / Halaman</label>
-                            </div>
-                            <div class="row justify-content-between ml-0 mr-0 mb-5">
-                                <label class="" style="font-size:16px;">{{__('Nilai Toleransi Kandungan Warna') }}</label>
-                                <label class="" style="font-size:16px;">
-                                    @if (empty($produk->partner->ntkwh))
-                                        {{__('0 %')}}
-                                    @else
-                                        {{$produk->partner->ntkwh . "%" }}
-                                    @endif
-                                </label>
-                            </div>
-                            <label class="font-weight-bold mb-2" style="font-size:18px;">{{__('Fitur') }}</label>
-                            @php
-                                $fitur = json_decode($produk->fitur,true);
-                                $fiturTerpilih = json_decode($konfigurasi->fitur_terpilih,true);
-                            @endphp
-                            @if (!empty($fitur))
-                                @foreach ($fitur as $f => $value)
-                                    <div class="row justify-content-between ml-0 mr-0">
-                                        <div class="custom-control custom-checkbox mt-2 ml-1 mr-4">
-                                            <input type="checkbox" name="checkbox_fitur" class="custom-control-input" id="checkboxFitur{{$f}}" value="{{$value['nama']}}"
-                                                @foreach($fiturTerpilih as $ft => $valueFt)
-                                                    @if($valueFt['namaFitur'] === $value['nama'])
-                                                        checked
-                                                    @endif
-                                                @endforeach>
-                                            <label class="custom-control-label" for="checkboxFitur{{$f}}">
-                                                {{$value['nama']}}
-                                                <i id="helpFitur{{str_replace(' ','',$value['nama'])}}" class="material-icons help md-18 align-middle cursor-pointer" data-toggle="popover" data-trigger="hover" title="Deskripsi" data-html="true"
-                                                    data-content=
-                                                        "<div class='media'>
-                                                            @if(!empty($value['foto_fitur']))
-                                                                <img src='{{ $value['foto_fitur'] }}' class='mr-3 mb-3' width='100%' height='156' alt=''>
-                                                            @endif
-                                                        </div>
-                                                        <div class='media-body'>
-                                                            <h5 class='media-heading'>
-                                                                {{$value['nama']}}
-                                                            </h5>
-                                                            <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
-                                                        </div>"
-                                                    onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
-                                                    help
-                                                </i>
-                                            </label>
-                                        </div>
-                                        <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
-                                        <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$value['harga'])) }}</label>
+                                                        </h5>
+                                                        <p>{{$value['nama']}} adalah {{$value['deskripsi']}}</p>
+                                                    </div>"
+                                                onmouseover="showPopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" onmouseout="hidePopUpHelpFitur('{{str_replace(' ','',$value['nama'])}}')" style="color:#C4C4C4">
+                                                help
+                                            </i>
+                                        </label>
                                     </div>
-                                @endforeach
-                            @else
-                                <br>
-                                <label>-</label>
-                            @endif
-                        </div>
+                                    <input type="text" name="harga_fitur" id="hargaFitur{{$f}}" value="{{$value['harga']}}" hidden>
+                                    <label class="" style="font-size:16px;">{{rupiah((int) str_replace('.','',$value['harga'])) }}</label>
+                                </div>
+                            @endforeach
+                        @else
+                            <br>
+                            <label>-</label>
+                        @endif
                     </div>
                 </div>
-                <form id="cekwarna-form" action="{{route("konfigurasi.cekwarna")}}" method="POST" hidden>
-                    @csrf
-                    @if (empty($produk->partner->ntkwh))
-                        <input type="text" name="percenMin" value="0" hidden>
-                    @else
-                        <input type="text" name="percenMin" value="{{$produk->partner->ntkwh}}" hidden>
-                    @endif
-                    <input type="text" name="path" hidden>
-                </form>
             </div>
-        {{-- @endif --}}
+            <form id="cekwarna-form" action="{{route("konfigurasi.cekwarna")}}" method="POST" hidden>
+                @csrf
+                @if (empty($produk->partner->ntkwh))
+                    <input type="text" name="percenMin" value="0" hidden>
+                @else
+                    <input type="text" name="percenMin" value="{{$produk->partner->ntkwh}}" hidden>
+                @endif
+                <input type="text" name="path" hidden>
+            </form>
+        </div>
         <div id="loading">
             <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
             <div id="progressText" class="mx-auto d-block"></div>
