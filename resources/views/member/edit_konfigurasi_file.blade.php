@@ -285,6 +285,7 @@
         </div>
         <label id="lblproduk" class="font-weight-bold" style="font-size:36px;">{{__('Produk') }}</label>
         @php
+            dd($produk);
             if($produk->status_diskon != "Tersedia"){
                 $hargaHitamPutih = $produk->harga_hitam_putih;
                 $hargaBerwarna = $produk->harga_berwarna;

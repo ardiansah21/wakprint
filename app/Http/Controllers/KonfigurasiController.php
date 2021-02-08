@@ -178,7 +178,6 @@ class KonfigurasiController extends Controller
 
         if ($request->ubahProduk == 'true' && session()->has('produkKonfigurasiFile')) {
             $produk = $request->session()->get('produkKonfigurasiFile');
-            dd($produk);
         } else {
             $produk = Produk::find($konfigurasi->id_produk);
         }
