@@ -45,13 +45,11 @@ class KonfigurasiController extends Controller
     public function selectedProduk(Request $request, $produkId)
     {
         $produk = Produk::find($produkId);
+        $request->session()->put('produkKonfigurasiFile', collect($produk));
 
         if ($request->fromKonfigurasi == 'true' && $request->fromTambahKonfigurasi == 'false') {
-            $request->session()->forget('produkKonfigurasiFile');
-            $request->session()->put('produkKonfigurasiFile', collect($produk));
             return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi, 'ubahProduk' => 'true']);
         } else {
-            $request->session()->put('produkKonfigurasiFile', collect($produk));
             return redirect()->route('konfigurasi.file');
         }
     }
@@ -179,7 +177,7 @@ class KonfigurasiController extends Controller
         $countPage = countPages($pdf);
 
         if ($request->ubahProduk == 'true' && session()->has('produkKonfigurasiFile')) {
-            $produk = session()->get('produkKonfigurasiFile');
+            $produk = session()->get('produkKonfigurasiFile', Produk::find($konfigurasi->id_produk));
         } else {
             $produk = Produk::find($konfigurasi->id_produk);
         }
