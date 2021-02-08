@@ -633,10 +633,10 @@
         @if (session()->has('fileUpload') || session()->has('produkKonfigurasiFile'))
             <form id="konfigurasiForm" action="{{route('konfigurasi.edit.store',$konfigurasi->id_konfigurasi)}}" method="POST">
                 @csrf
-                {{-- @if(session()->has('fileUpload') && session()->has('produkKonfigurasiFile'))
+                @if(session()->has('fileUpload') && session()->has('produkKonfigurasiFile'))
                     <input type='text' name="fileKonfigurasi" id="fileKonfigurasi" value="{{session()->get('fileUpload')->path}}" accept="application/pdf" hidden/>
-                    <input type='number' name="percenMin" id="percenMin" value="{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}" accept="application/pdf" hidden/>
-                    <input type='text' name="idProduk" id="idProduk" value="{{session()->get('produkKonfigurasiFile')->id_produk}}" hidden />
+                    <input type='number' name="percenMin" id="percenMin" value="{{$produk->partner->ntkwh}}" accept="application/pdf" hidden/>
+                    <input type='text' name="idProduk" id="idProduk" value="{{$produk->id_produk}}" hidden />
                     <input type='text' name="namaFile" id="namaFile" value="{{(session()->get('fileUpload'))->name}}" hidden />
                     <input type='number' name="jumlahHalamanHitamPutih" id="jumlahHalamanHitamPutih" value="" hidden />
                     <input type='number' name="jumlahHalamanBerwarna" id="jumlahHalamanBerwarna" value="" hidden />
@@ -649,7 +649,7 @@
                     <input type='text' name="catatanTambahan" id="catatanTambahan" value="" hidden />
                     <input type='text' name="namaProduk" id="namaProduk" value="{{session()->get('produkKonfigurasiFile')->nama}}" hidden />
                     <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="" hidden />
-                @elseif(session()->has('fileUpload')) --}}
+                @elseif(session()->has('fileUpload'))
                     <input type='text' name="fileKonfigurasi" id="fileKonfigurasi" value="{{session()->get('fileUpload')->path}}" accept="application/pdf" hidden/>
                     <input type='number' name="percenMin" id="percenMin" value="{{$produk->partner->ntkwh}}" accept="application/pdf" hidden/>
                     <input type='text' name="idProduk" id="idProduk" value="{{$produk->id_produk}}" hidden />
@@ -665,10 +665,10 @@
                     <input type='text' name="catatanTambahan" id="catatanTambahan" value="{{$konfigurasi->catatan_tambahan}}" hidden />
                     <input type='text' name="namaProduk" id="namaProduk" value="{{$produk->nama}}" hidden />
                     <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="{{$konfigurasi->fitur_terpilih}}" hidden />
-                {{-- @elseif(session()->has('produkKonfigurasiFile'))
+                @elseif(session()->has('produkKonfigurasiFile'))
                     <input type='text' name="fileKonfigurasi" id="fileKonfigurasi" value="{{$konfigurasi->getFirstMediaPath('file_konfigurasi')}}" accept="application/pdf" hidden/>
-                    <input type='number' name="percenMin" id="percenMin" value="{{session()->get('produkKonfigurasiFile')->partner->ntkwh}}" accept="application/pdf" hidden/>
-                    <input type='text' name="idProduk" id="idProduk" value="{{session()->get('produkKonfigurasiFile')->id_produk}}" hidden />
+                    <input type='number' name="percenMin" id="percenMin" value="{{$produk->partner->ntkwh}}" accept="application/pdf" hidden/>
+                    <input type='text' name="idProduk" id="idProduk" value="{{$produk->id_produk}}" hidden />
                     <input type='text' name="namaFile" id="namaFile" value="{{$konfigurasi->getMedia('file_konfigurasi')->first()->file_name}}" hidden />
                     <input type='number' name="jumlahHalamanHitamPutih" id="jumlahHalamanHitamPutih" value="{{$konfigurasi->jumlah_halaman_hitamputih}}" hidden />
                     <input type='number' name="jumlahHalamanBerwarna" id="jumlahHalamanBerwarna" value="{{$konfigurasi->jumlah_halaman_berwarna}}" hidden />
@@ -679,13 +679,13 @@
                     <input type='number' name="timbalBalik" id="timbalBalik" value="{{$konfigurasi->timbal_balik}}" hidden />
                     <input type='number' name="biaya" id="biaya" value="0" hidden />
                     <input type='text' name="catatanTambahan" id="catatanTambahan" value="{{$konfigurasi->catatan_tambahan}}" hidden />
-                    <input type='text' name="namaProduk" id="namaProduk" value="{{session()->get('produkKonfigurasiFile')->nama}}" hidden />
-                    <input type='number' name="hargaHitamPutih" id="hargaHitamPutih" value="{{session()->get('produkKonfigurasiFile')->harga_hitam_putih}}" hidden />
-                    <input type='number' name="hargaBerwarna" id="hargaBerwarna" value="{{session()->get('produkKonfigurasiFile')->harga_berwarna}}" hidden />
-                    <input type='number' name="hargaHitamPutihTimbalBalik" id="hargaHitamPutihTimbalBalik" value="{{session()->get('produkKonfigurasiFile')->harga_timbal_balik_hitam_putih}}" hidden />
-                    <input type='number' name="hargaBerwarnaTimbalBalik" id="hargaBerwarnaTimbalBalik" value="{{session()->get('produkKonfigurasiFile')->harga_timbal_balik_berwarna}}" hidden />
+                    <input type='text' name="namaProduk" id="namaProduk" value="{{$produk->nama}}" hidden />
+                    <input type='number' name="hargaHitamPutih" id="hargaHitamPutih" value="{{$produk->harga_hitam_putih}}" hidden />
+                    <input type='number' name="hargaBerwarna" id="hargaBerwarna" value="{{$produk->harga_berwarna}}" hidden />
+                    <input type='number' name="hargaHitamPutihTimbalBalik" id="hargaHitamPutihTimbalBalik" value="{{$produk->harga_timbal_balik_hitam_putih}}" hidden />
+                    <input type='number' name="hargaBerwarnaTimbalBalik" id="hargaBerwarnaTimbalBalik" value="{{$produk->harga_timbal_balik_berwarna}}" hidden />
                     <input type='text' name="fiturTerpilih" id="fiturTerpilih" value="" hidden />
-                @endif --}}
+                @endif
                 <script>
                     $(function () {
                         function rupiah(val) {
