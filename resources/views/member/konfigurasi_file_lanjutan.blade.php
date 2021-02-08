@@ -225,7 +225,7 @@
                             style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                             <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
                                 style="border-radius:30px; font-size:24px;"
-                                @if ($member->pesanans->where('status', null)->first() && !empty($member->konfigurasi))
+                                @if ($member->pesanans->where('status', null)->first() && count($member->konfigurasi) > 1)
                                     onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
                                 @else
                                     onclick="window.location='{{ route('pencarian') }}'"
@@ -243,9 +243,12 @@
                                 <div class="ml-2">
                                     <div class="text-right">
                                         <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
-                                            style="border-radius:35px;font-size: 16px;" @if (!empty($member->konfigurasi) > 1 && $member->konfigurasi != undefined) onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
-                                        @else
-                                            onclick="window.location='{{ route('pencarian') }}'" @endif>
+                                            style="border-radius:35px;font-size: 16px;"
+                                            @if (!empty($member->konfigurasi) && count($member->konfigurasi) > 1 && $member->konfigurasi != undefined)
+                                                onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
+                                            @else
+                                                onclick="window.location='{{ route('pencarian') }}'"
+                                            @endif>
                                             {{ __('Ubah Produk') }}
                                         </button>
                                     </div>
