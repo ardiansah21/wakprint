@@ -48,7 +48,7 @@ class KonfigurasiController extends Controller
         $request->session()->put('produkKonfigurasiFile', collect($produk));
 
         if ($request->fromKonfigurasi == 'true' && $request->fromTambahKonfigurasi == 'false') {
-            return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi]);
+            return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi, 'ubahProduk' => 'true']);
         } else {
             return redirect()->route('konfigurasi.file');
         }
@@ -177,7 +177,11 @@ class KonfigurasiController extends Controller
         $countPage = countPages($pdf);
         // $pdf = new Pdf(public_path('storage/' . $konfigurasi->id_konfigurasi . '/' . $konfigurasi->getMedia('file_konfigurasi')->first()->file_name));
         // $countPage = $pdf->getNumberOfPages();
-        $produk = Produk::find($konfigurasi->id_produk);
+        if ($request->ubahProduk == 'true') {
+            $produk = session()->get('produkKonfigurasiFile');
+        } else {
+            $produk = Produk::find($konfigurasi->id_produk);
+        }
 
         return view('member.edit_konfigurasi_file', compact('member', 'konfigurasi', 'produk', 'countPage'));
     }
