@@ -34,13 +34,13 @@
         </form>
         <input id="fotoProduk" type="text" value="{{ $p->foto_produk[0] }}" hidden>
         <img class="card-img-top cursor-pointer" src="{{ $p->foto_produk[0] }}"
-            @if (request()->fromKonfigurasi == true && request()->fromTambahKonfigurasi == false)
+            @if (request()->fromKonfigurasi == 'true' && request()->fromTambahKonfigurasi == 'false')
                 onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'id_konfigurasi' => request()->id_konfigurasi, 'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false']) }}'"
             @else
                 onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
             @endif style="height: 180px; object-fit:cover; border-radius: 10px 10px 0px 0px;" alt="Terdapat Kesalahan Penampilan Foto"/>
         <div class="card-body cursor-pointer"
-            @if (request()->fromKonfigurasi == true && request()->fromTambahKonfigurasi == false)
+            @if (request()->fromKonfigurasi == 'true' && request()->fromTambahKonfigurasi == 'false')
                 onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'id_konfigurasi' => request()->id_konfigurasi, 'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false']) }}'"
             @else
                 onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
