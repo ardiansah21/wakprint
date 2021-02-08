@@ -496,7 +496,7 @@
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
-                        @include('member.card_produk',["p"=>$produk,"fromKonfigurasi" => "true"])
+                        @include('member.card_produk',["p"=>$produk,"fromKonfigurasi" => "true", 'fromTambahKonfigurasi' => 'false'])
                     </div>
                     <div class="col-md-8">
                         <div class="ml-2">
