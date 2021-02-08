@@ -48,7 +48,7 @@ class KonfigurasiController extends Controller
         $request->session()->put('produkKonfigurasiFile', collect($produk));
 
         if ($request->fromKonfigurasi == 'true' && $request->fromTambahKonfigurasi == 'false') {
-            return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi, $produk]);
+            return redirect()->route('konfigurasi.edit', [$request->id_konfigurasi]);
         } else {
             return redirect()->route('konfigurasi.file');
         }
