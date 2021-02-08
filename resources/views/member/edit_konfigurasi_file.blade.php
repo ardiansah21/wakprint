@@ -293,15 +293,15 @@
             //     $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
             //     $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
 
-                if($jumlahDiskonGray > $produk->maksimal_diskon){
-                    $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
-                    $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
-                }
-                else{
-                    $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
-                    $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
-                }
-            }
+            //     if($jumlahDiskonGray > $produk->maksimal_diskon){
+            //         $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
+            //         $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
+            //     }
+            //     else{
+            //         $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
+            //         $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
+            //     }
+            // }
             if(session()->has('produkKonfigurasiFile')){
                 if(session()->get('produkKonfigurasiFile')->status_diskon != "Tersedia"){
                     $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih;
