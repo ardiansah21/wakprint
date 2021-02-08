@@ -245,7 +245,7 @@
                                         <button class="btn btn-primary-yellow btn-rounded font-weight-bold py-1 px-4 mb-4"
                                             style="border-radius:35px;font-size: 16px;"
                                             @if (!empty($member->konfigurasi) > 1 && $member->konfigurasi != undefined)
-                                                onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true'], 'fromEditKonfigurasi' => 'true') }}'"
+                                                onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true', 'fromEditKonfigurasi' => 'true']) }}'"
                                             @else
                                                 onclick="window.location='{{ route('pencarian') }}'"
                                             @endif>
