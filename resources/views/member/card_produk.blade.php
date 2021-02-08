@@ -65,8 +65,8 @@
             </div>
         </div>
         <div class="card-footer card-footer-primary cursor-pointer"
-            @if (request()->fromKonfigurasi == true && request()->fromTambahKonfigurasi == false)
-                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'fromKonfigurasi=true', 'fromTambahKonfigurasi' => 'false']) }}'"
+            @if (request()->fromKonfigurasi == 'true' && request()->fromTambahKonfigurasi == 'false')
+                onclick="window.location.href='{{ route('detail.produk', [$p->id_produk, 'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false']) }}'"
             @else
                 onclick="window.location.href='{{ route('detail.produk', $p->id_produk) }}'"
             @endif

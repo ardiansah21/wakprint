@@ -232,7 +232,7 @@
                                             <div class="col-md-6 mb-4">
                                                 <div class="">
                                                     @if(request()->fromKonfigurasi == true && request()->fromTambahKonfigurasi == false)
-                                                        @include('member.card_produk',["fromKonfigurasi" => "true", 'fromTambahKonfigurasi' => 'false'])
+                                                        @include('member.card_produk',["fromKonfigurasi" => "true", "fromTambahKonfigurasi" => "false"])
                                                     @else
                                                         @include('member.card_produk')
                                                     @endif
