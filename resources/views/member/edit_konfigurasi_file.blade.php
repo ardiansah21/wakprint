@@ -284,26 +284,64 @@
             </div>
         </div>
         <label id="lblproduk" class="font-weight-bold" style="font-size:36px;">{{__('Produk') }}</label>
-        @if (session()->has('produkKonfigurasiFile'))
-            @php
-                if(session()->get('produkKonfigurasiFile')->status_diskon != "Tersedia"){
-                    $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih;
-                    $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna;
+        @php
+            if($produk->status_diskon != "Tersedia"){
+                    $hargaHitamPutih = $produk->harga_hitam_putih;
+                    $hargaBerwarna = $produk->harga_berwarna;
                 }
                 else{
-                    $jumlahDiskonGray = session()->get('produkKonfigurasiFile')->harga_hitam_putih * session()->get('produkKonfigurasiFile')->jumlah_diskon;
-                    $jumlahDiskonWarna = session()->get('produkKonfigurasiFile')->harga_berwarna * session()->get('produkKonfigurasiFile')->jumlah_diskon;
+                    $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
+                    $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
 
-                    if($jumlahDiskonGray > session()->get('produkKonfigurasiFile')->maksimal_diskon){
-                        $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - session()->get('produkKonfigurasiFile')->maksimal_diskon;
-                        $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+                    if($jumlahDiskonGray > $produk->maksimal_diskon){
+                        $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
+                        $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
                     }
                     else{
-                        $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - $jumlahDiskonGray;
-                        $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - $jumlahDiskonWarna;
+                        $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
+                        $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                     }
                 }
-            @endphp
+            // if(session()->has('produkKonfigurasiFile')){
+            //     if(session()->get('produkKonfigurasiFile')->status_diskon != "Tersedia"){
+            //         $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih;
+            //         $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna;
+            //     }
+            //     else{
+            //         $jumlahDiskonGray = session()->get('produkKonfigurasiFile')->harga_hitam_putih * session()->get('produkKonfigurasiFile')->jumlah_diskon;
+            //         $jumlahDiskonWarna = session()->get('produkKonfigurasiFile')->harga_berwarna * session()->get('produkKonfigurasiFile')->jumlah_diskon;
+
+            //         if($jumlahDiskonGray > session()->get('produkKonfigurasiFile')->maksimal_diskon){
+            //             $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+            //             $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - session()->get('produkKonfigurasiFile')->maksimal_diskon;
+            //         }
+            //         else{
+            //             $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih - $jumlahDiskonGray;
+            //             $hargaBerwarna = session()->get('produkKonfigurasiFile')->harga_berwarna - $jumlahDiskonWarna;
+            //         }
+            //     }
+            // }
+            // else{
+            //     if($produk->status_diskon != "Tersedia"){
+            //         $hargaHitamPutih = $produk->harga_hitam_putih;
+            //         $hargaBerwarna = $produk->harga_berwarna;
+            //     }
+            //     else{
+            //         $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
+            //         $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
+
+            //         if($jumlahDiskonGray > $produk->maksimal_diskon){
+            //             $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
+            //             $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
+            //         }
+            //         else{
+            //             $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
+            //             $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
+            //         }
+            //     }
+            // }
+        @endphp
+        @if (session()->has('produkKonfigurasiFile'))
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
@@ -472,25 +510,6 @@
                 </form>
             </div>
         @else
-            @php
-                if($produk->status_diskon != "Tersedia"){
-                    $hargaHitamPutih = $produk->harga_hitam_putih;
-                    $hargaBerwarna = $produk->harga_berwarna;
-                }
-                else{
-                    $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
-                    $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
-
-                    if($jumlahDiskonGray > $produk->maksimal_diskon){
-                        $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
-                        $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
-                    }
-                    else{
-                        $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
-                        $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
-                    }
-                }
-            @endphp
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">

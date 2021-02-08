@@ -178,12 +178,10 @@ class KonfigurasiController extends Controller
         // $pdf = new Pdf(public_path('storage/' . $konfigurasi->id_konfigurasi . '/' . $konfigurasi->getMedia('file_konfigurasi')->first()->file_name));
         // $countPage = $pdf->getNumberOfPages();
         if ($request->ubahProduk != 'true') {
+            $produk = session()->get('produkKonfigurasiFile');
+        } else {
             $produk = Produk::find($konfigurasi->id_produk);
-            // $produk = session()->get('produkKonfigurasiFile');
         }
-        // else {
-
-        // }
 
         return view('member.edit_konfigurasi_file', compact('member', 'konfigurasi', 'produk', 'countPage'));
     }
