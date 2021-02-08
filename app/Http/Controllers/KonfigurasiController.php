@@ -45,8 +45,9 @@ class KonfigurasiController extends Controller
     public function selectedProduk(Request $request, $produkId)
     {
         $p = Produk::find($produkId);
-        $pesanan = Pesanan::where('status', null)->get();
-        $konfigurasi = $pesanan->first()->konfigurasiFile->find($request->id_konfigurasi);
+        $member = Auth::user();
+        $pesanan = $member->pesanans->where('status', null)->first();
+        $konfigurasi = $pesanan->konfigurasiFile->find($request->id_konfigurasi);
         $request->session()->put('produkKonfigurasiFile', collect($p));
 
         if ($request->fromKonfigurasi == true && $request->id_konfigurasi == $konfigurasi->id_konfigurasi) {

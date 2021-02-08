@@ -225,10 +225,11 @@
                             style="position: absolute; top: 50%; left:33%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                             <button class="btn btn-primary-wakprint font-weight-bold pl-4 pr-4"
                                 style="border-radius:30px; font-size:24px;"
-                                @if ($member->pesanans->where('status', null)->first())
-                                onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
-                            @else
-                                onclick="window.location='{{ route('pencarian') }}'" @endif>
+                                @if ($member->pesanans->where('status', null)->first() && !empty($member->konfigurasi))
+                                    onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true']) }}'"
+                                @else
+                                    onclick="window.location='{{ route('pencarian') }}'"
+                                @endif>
                                 <i class="material-icons md-36 align-middle mr-2">print</i>
                                 {{ __('Pilih Produk Percetakan') }}
                             </button>
