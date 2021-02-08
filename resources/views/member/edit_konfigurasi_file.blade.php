@@ -286,22 +286,22 @@
         <label id="lblproduk" class="font-weight-bold" style="font-size:36px;">{{__('Produk') }}</label>
         @php
             if($produk->status_diskon != "Tersedia"){
-                    $hargaHitamPutih = $produk->harga_hitam_putih;
-                    $hargaBerwarna = $produk->harga_berwarna;
+                $hargaHitamPutih = $produk->harga_hitam_putih;
+                $hargaBerwarna = $produk->harga_berwarna;
+            }
+            else{
+                $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
+                $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
+
+                if($jumlahDiskonGray > $produk->maksimal_diskon){
+                    $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
+                    $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
                 }
                 else{
-                    $jumlahDiskonGray = $produk->harga_hitam_putih * $produk->jumlah_diskon;
-                    $jumlahDiskonWarna = $produk->harga_berwarna * $produk->jumlah_diskon;
-
-                    if($jumlahDiskonGray > $produk->maksimal_diskon){
-                        $hargaHitamPutih = $produk->harga_hitam_putih - $produk->maksimal_diskon;
-                        $hargaBerwarna = $produk->harga_berwarna - $produk->maksimal_diskon;
-                    }
-                    else{
-                        $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
-                        $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
-                    }
+                    $hargaHitamPutih = $produk->harga_hitam_putih - $jumlahDiskonGray;
+                    $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                 }
+            }
             // if(session()->has('produkKonfigurasiFile')){
             //     if(session()->get('produkKonfigurasiFile')->status_diskon != "Tersedia"){
             //         $hargaHitamPutih = session()->get('produkKonfigurasiFile')->harga_hitam_putih;
@@ -341,7 +341,7 @@
             //     }
             // }
         @endphp
-        @if (session()->has('produkKonfigurasiFile'))
+        {{-- @if (session()->has('produkKonfigurasiFile'))
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
@@ -509,7 +509,7 @@
                     <input type="text" name="path" hidden>
                 </form>
             </div>
-        @else
+        @else --}}
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
@@ -622,7 +622,7 @@
                     <input type="text" name="path" hidden>
                 </form>
             </div>
-        @endif
+        {{-- @endif --}}
         <div id="loading">
             <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
             <div id="progressText" class="mx-auto d-block"></div>
@@ -719,9 +719,7 @@
                                     },
                                     dataType: 'json',
                                     error: function (xhr, ajaxOptions, thrownError) {
-                                        //TODO : Ubah pesan error menajadi tampilan
                                         alert('Maaf terjadi error '+thrownError+' Silahkan coba kembali');
-
                                     },
                                     beforeSend: function () {
                                         $('#loading').show();
