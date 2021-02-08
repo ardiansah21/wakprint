@@ -177,7 +177,7 @@ class KonfigurasiController extends Controller
         $countPage = countPages($pdf);
 
         if ($request->ubahProduk == 'true' && session()->has('produkKonfigurasiFile')) {
-            $produk = session()->get('produkKonfigurasiFile', Produk::find($konfigurasi->id_produk));
+            $produk = $request->session()->get('produkKonfigurasiFile', Produk::find($konfigurasi->id_produk));
         } else {
             $produk = Produk::find($konfigurasi->id_produk);
         }
