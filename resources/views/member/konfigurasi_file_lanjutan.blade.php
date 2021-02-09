@@ -27,7 +27,8 @@
                     'jumlah_diskon' => $arr['jumlah_diskon'],
                     'maksimal_diskon' => $arr['maksimal_diskon'],
                     'mulai_waktu_diskon' => $arr['mulai_waktu_diskon'],
-                    'selesai_waktu_diskon' => $arr['selesai_waktu_diskon']
+                    'selesai_waktu_diskon' => $arr['selesai_waktu_diskon'],
+                    'foto_produk' => $arr['foto_produk']
                 ]
             );
         }

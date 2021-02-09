@@ -86,7 +86,7 @@
                             $hargaBerwarna = $p->harga_berwarna - $jumlahDiskonWarna;
                         }
                     @endphp
-                    @if (!empty($p->harga_hitam_putih) && !empty($p->harga_berwarna) && !empty($p->jumlah_diskon))
+                    @if (!empty($p->harga_hitam_putih) && !empty($p->harga_berwarna) && $p->status_diskon === 'Tersedia' && !empty($p->jumlah_diskon))
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
                             <del>{{ rupiah($p->harga_hitam_putih) ?? '-' }}</del>
@@ -102,7 +102,7 @@
                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                             {{ rupiah($hargaBerwarna) ?? '-' }}
                         </label>
-                    @elseif(!empty($p->harga_hitam_putih) && !empty($p->jumlah_diskon))
+                    @elseif(!empty($p->harga_hitam_putih) && $p->status_diskon === 'Tersedia' && !empty($p->jumlah_diskon))
                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
                             <del>{{ rupiah($p->harga_hitam_putih) ?? '-' }}</del>
