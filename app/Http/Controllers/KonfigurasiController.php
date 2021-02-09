@@ -179,7 +179,7 @@ class KonfigurasiController extends Controller
         if ($request->ubahProduk == 'true' && session()->has('produkKonfigurasiFile')) {
             if (!empty(session()->get('produkKonfigurasiFile'))) {
                 $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
-                $produk = app(App\Produk::class, $arr);
+                $produk = app(Produk::class, $arr);
                 $produk->id_produk = $arr['id_produk'];
                 $produk->fill(
                     [
@@ -194,12 +194,17 @@ class KonfigurasiController extends Controller
                         'deskripsi' => $arr['deskripsi'],
                         'jenis_kertas' => $arr['jenis_kertas'],
                         'jenis_printer' => $arr['jenis_printer'],
+                        'rating' => $arr['rating'],
                         'status' => $arr['status'],
                         'fitur' => $arr['fitur'],
+                        'status_diskon' => $arr['status_diskon'],
+                        'jumlah_diskon' => $arr['jumlah_diskon'],
+                        'maksimal_diskon' => $arr['maksimal_diskon'],
+                        'mulai_waktu_diskon' => $arr['mulai_waktu_diskon'],
+                        'selesai_waktu_diskon' => $arr['selesai_waktu_diskon'],
                     ]
                 );
             }
-            // $produk = $request->session()->get('produkKonfigurasiFile');
         } else {
             $produk = Produk::find($konfigurasi->id_produk);
         }
