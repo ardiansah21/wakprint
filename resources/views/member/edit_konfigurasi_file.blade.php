@@ -341,7 +341,7 @@
             //     }
             // }
         @endphp
-        @if (session()->has('produkKonfigurasiFile'))
+        {{-- @if (session()->has('produkKonfigurasiFile'))
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
@@ -509,7 +509,7 @@
                     <input type="text" name="path" hidden>
                 </form>
             </div>
-        @else
+        @else --}}
             <div id="produk" class="bg-light-purple p-4 mb-4" style="border-radius:5px; min-height:300px; position: relative;">
                 <div class="row justify-content-between">
                     <div class="col-md-4">
@@ -622,7 +622,7 @@
                     <input type="text" name="path" hidden>
                 </form>
             </div>
-        @endif
+        {{-- @endif --}}
         <div id="loading">
             <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
             <div id="progressText" class="mx-auto d-block"></div>
