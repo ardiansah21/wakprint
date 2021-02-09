@@ -177,7 +177,29 @@ class KonfigurasiController extends Controller
         $countPage = countPages($pdf);
 
         if ($request->ubahProduk == 'true' && session()->has('produkKonfigurasiFile')) {
-            $produk = $request->session()->get('produkKonfigurasiFile');
+            if (!empty(session()->get('produkKonfigurasiFile'))) {
+                $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
+                $produk = app(App\Produk::class, $arr);
+                $produk->id_produk = $arr['id_produk'];
+                $produk->fill(
+                    [
+                        'id_pengelola' => $arr['id_pengelola'],
+                        'nama' => $arr['nama'],
+                        'harga_hitam_putih' => $arr['harga_hitam_putih'],
+                        'harga_timbal_balik_hitam_putih' => $arr['harga_timbal_balik_hitam_putih'],
+                        'harga_berwarna' => $arr['harga_berwarna'],
+                        'harga_timbal_balik_berwarna' => $arr['harga_timbal_balik_berwarna'],
+                        'berwarna' => $arr['berwarna'],
+                        'hitam_putih' => $arr['hitam_putih'],
+                        'deskripsi' => $arr['deskripsi'],
+                        'jenis_kertas' => $arr['jenis_kertas'],
+                        'jenis_printer' => $arr['jenis_printer'],
+                        'status' => $arr['status'],
+                        'fitur' => $arr['fitur'],
+                    ]
+                );
+            }
+            // $produk = $request->session()->get('produkKonfigurasiFile');
         } else {
             $produk = Produk::find($konfigurasi->id_produk);
         }
