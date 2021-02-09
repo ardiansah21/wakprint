@@ -179,7 +179,7 @@ class KonfigurasiController extends Controller
         if ($request->ubahProduk == 'true' && session()->has('produkKonfigurasiFile')) {
             if (!empty(session()->get('produkKonfigurasiFile'))) {
                 $arr = ((session()->get('produkKonfigurasiFile'))->toArray());
-                $produk = app(App\Produk::class, $arr);
+                $produk = app(Produk::class, $arr);
                 $produk->id_produk = $arr['id_produk'];
                 $produk->fill(
                     [
