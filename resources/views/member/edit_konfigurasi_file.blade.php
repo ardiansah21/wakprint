@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                @if (session()->has('fileUpload'))
+                {{-- @if (session()->has('fileUpload'))
                     <div class="row justify-content-between mx-0">
                         <div class="col-md-7">
                             <label class="SemiBold mb-3 mt-2" style="font-size: 24px;">
@@ -159,7 +159,7 @@
                             </label>
                         </div>
                     </div>
-                @else
+                @else --}}
                     <div class="row justify-content-between mx-0">
                         <div class="col-md-7">
                             <label class="SemiBold mb-3 mt-2" style="font-size: 24px;">
@@ -280,7 +280,7 @@
                             </label>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
             </div>
         </div>
         <label id="lblproduk" class="font-weight-bold" style="font-size:36px;">{{__('Produk') }}</label>
