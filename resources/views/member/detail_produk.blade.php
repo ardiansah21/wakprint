@@ -414,7 +414,7 @@
                                 {{ __('Harga Produk') }}
                             </label>
                             <br>
-                            @if (!empty($produk->jumlah_diskon))
+                            @if ($produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                                 <label class="text-break font-weight-bold mb-2" style="font-size: 20px;">
                                     <del style="font-size: 16px;">{{ rupiah($produk->harga_hitam_putih) ?? '-' }}</del> {{ rupiah($hargaHitamPutih) ?? '-' }} / Hal (Hitam-Putih)
                                 </label>

@@ -8,7 +8,7 @@
                 <div class="col-md-4 mr-0 ml-0">
                     <div class="card shadow mb-2" style="border-radius: 10px;">
                         {{-- <a class="text-decoration-none" href="{{ route('detail.produk',$produk->id_produk) }}" style="color: black;"> --}}
-                        @if (!empty($produk->jumlah_diskon))
+                        @if ($produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                         <div class="text-center" style="position: relative;">
                             <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
                                         width:75px;
@@ -71,29 +71,29 @@
                                                 $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                                             }
                                     @endphp
-                                        @if (!empty($produk->harga_hitam_putih) && !empty($produk->harga_berwarna) && !empty($produk->jumlah_diskon))
+                                        @if (!empty($produk->harga_hitam_putih) && !empty($produk->harga_berwarna) && $produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                                             <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del>
+                                                <del>{{rupiah($produk->harga_hitam_putih) ?? '-'}}</del>
                                             </label>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                {{$hargaHitamPutih ?? '-'}}
+                                                {{rupiah($hargaHitamPutih) ?? '-'}}
                                             </label>
                                             <br>
                                             <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                                Rp. <del>{{$produk->harga_berwarna ?? '-'}}</del>
+                                                <del>{{rupiah($produk->harga_berwarna) ?? '-'}}</del>
                                             </label>
                                             <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                                {{$hargaBerwarna ?? '-'}}
+                                                {{rupiah($hargaBerwarna) ?? '-'}}
                                             </label>
-                                        @elseif(!empty($produk->harga_hitam_putih) && !empty($produk->jumlah_diskon))
+                                        @elseif(!empty($produk->harga_hitam_putih) && $produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                                             <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                Rp. <del>{{$produk->harga_hitam_putih ?? '-'}}</del>
+                                                <del>{{rupiah($produk->harga_hitam_putih) ?? '-'}}</del>
                                             </label>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                {{$hargaHitamPutih ?? '-'}}
+                                                {{rupiah($hargaHitamPutih) ?? '-'}}
                                             </label>
                                             <br>
                                             <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
@@ -103,17 +103,17 @@
                                         @elseif(!empty($produk->harga_berwarna))
                                             <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                Rp. {{$produk->harga_hitam_putih ?? '-'}}
+                                                {{rupiah($produk->harga_hitam_putih) ?? '-'}}
                                             </label>
                                             <br>
                                             <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
-                                                Rp. {{$produk->harga_berwarna ?? '-'}}
+                                                {{rupiah($produk->harga_berwarna) ?? '-'}}
                                             </label>
                                         @else
                                             <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                             <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 16px;">
-                                                Rp. {{$produk->harga_hitam_putih ?? '-'}}
+                                                {{rupiah($produk->harga_hitam_putih) ?? '-'}}
                                             </label>
                                             <br>
                                             <i class="material-icons md-24 align-middle text-primary-yellow mr-2">color_lens</i>

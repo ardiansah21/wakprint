@@ -205,12 +205,11 @@
                 </label>
 
                 @foreach ($atks as $a)
-                    @if (!empty($a[0]) && !empty($a[1]) && !empty($a[2]) && !empty($a[3]))
+                    @if (!empty($a[0]) && !empty($a[2]) && !empty($a[3]))
                         <div class="row justify-content-between">
                             <div class="col-md-6 text-left">
                                 <label>
                                     {{ $a[0] }} &nbsp;
-                                    {{ rupiah($a[1]) }} &nbsp;
                                     (x{{ $a[2] }})
                                 </label>
                             </div>
@@ -245,7 +244,7 @@
                     </div>
                     <div class="col-md-6 SemiBold text-right">
                         <label>
-                            @if (!empty($a[0]) && !empty($a[1]) && !empty($a[2]) && !empty($a[3]))
+                            @if (!empty($a[0]) && !empty($a[2]) && !empty($a[3]))
                                 @php
                                 $t= 0;
                                 foreach ($atks as $a)

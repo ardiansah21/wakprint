@@ -12,7 +12,7 @@
             <div class="col-md-4">
                 <div class="card shadow mb-2" style="border-radius: 10px;">
                     {{-- <a class="text-decoration-none" href="{{ route('detail.produk',$produk->id_produk) }}" style="color: black;"> --}}
-                        @if (!empty($produk->jumlah_diskon))
+                        @if ($produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                             <div class="text-center" style="position: relative;">
                                 <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
                                     width:75px;
@@ -73,7 +73,7 @@
                                             $hargaBerwarna = $produk->harga_berwarna - $jumlahDiskonWarna;
                                         }
                                     @endphp
-                                    @if (!empty($produk->harga_hitam_putih) && !empty($produk->harga_berwarna) && !empty($produk->jumlah_diskon))
+                                    @if (!empty($produk->harga_hitam_putih) && !empty($produk->harga_berwarna) && $produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
                                             <del>{{rupiah($produk->harga_hitam_putih) ?? '-'}}</del>
@@ -89,7 +89,7 @@
                                         <label class="card-text SemiBold text-primary-yellow my-auto mr-2" style="font-size: 16px;">
                                             {{rupiah($hargaBerwarna) ?? '-'}}
                                         </label>
-                                    @elseif(!empty($produk->harga_hitam_putih) && !empty($produk->jumlah_diskon))
+                                    @elseif(!empty($produk->harga_hitam_putih) && $produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                                         <i class="material-icons md-24 align-middle text-white mr-2">color_lens</i>
                                         <label class="card-text SemiBold text-white my-auto mr-2" style="font-size: 12px;">
                                             <del>{{rupiah($produk->harga_hitam_putih) ?? '-'}}</del>
@@ -133,7 +133,6 @@
                         </div>
                     {{-- </a> --}}
                 </div>
-                {{-- @include('member.card_produk') --}}
             </div>
             <div class="col-md-8">
                 <div class="row mb-5">
