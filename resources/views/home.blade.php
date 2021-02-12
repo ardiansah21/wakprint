@@ -215,6 +215,8 @@
         });
     });
 
+    alert('tes');
+
     $('#cariBtn').click(function(){
         var urlCari = "{{route('pencarian')}}" + "?keyword=" + $('#keywordPencarian').val();
         window.location.href=urlCari;
