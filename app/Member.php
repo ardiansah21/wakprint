@@ -94,7 +94,7 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     public function getAvatarAttribute()
     {
         if (!empty($this->getFirstMediaUrl('avatar'))) {
-            return 'https://wakprint.com' . $this->getFirstMediaUrl('avatar');
+            return 'https://wakprint.online' . $this->getFirstMediaUrl('avatar');
         }
         return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
     }

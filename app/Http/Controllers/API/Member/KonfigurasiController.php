@@ -4,7 +4,11 @@ namespace App\Http\Controllers\API\Member;
 
 use App\Http\Controllers\Controller;
 use App\Konfigurasi_file;
+use App\Member;
+use App\Notifications\PesananNotification;
+use App\Notifications\PesananPartnerNotification;
 use App\Pesanan;
+use App\Transaksi_saldo;
 use Illuminate\Http\Request;
 
 class KonfigurasiController extends Controller
@@ -127,6 +131,12 @@ class KonfigurasiController extends Controller
         $konfigurasi_File = Konfigurasi_File::find($id);
         if ($konfigurasi_File->delete()) {
             $konfigurasi_File->clearMediaCollection();
+
+            $pesanan = request()->user()->pesanans->where('status', null)->first();
+            if (count($pesanan->konfigurasiFile) <= 0) {
+                $pesanan->delete();
+            }
+
             return responseSuccess('Konfigurasi file berhasil di hapus');
         }
         return responseError('Gagal menghapus konfigurasi file, silahkan coba kembali');
@@ -168,5 +178,69 @@ class KonfigurasiController extends Controller
         }
 
         return responseError('anda belum membuat pesanan');
+    }
+
+    public function updateKonfirmasiPesanan($idPesanan, Request $request)
+    {
+        $member = $request->user();
+        $pesanan = $member->pesanans->find($idPesanan);
+
+        if ($member->jumlah_saldo < $request->totalBiaya) {
+            $transaksiSaldo = Transaksi_saldo::create([
+                'id_pesanan' => $idPesanan,
+                'id_pengelola' => $pesanan->partner->id_pengelola,
+                'id_member' => $member->id_member,
+                'jenis_transaksi' => 'Pembayaran',
+                'jumlah_saldo' => $request->totalBiaya,
+                'kode_pembayaran' => $request->totalBiaya + rand(1, 999),
+                'status' => 'Pending',
+                'keterangan' => 'Pembayaran sedang diproses',
+            ]);
+            $transaksiSaldo->save();
+            $member->notify(new PesananNotification('pembayaranPending', $pesanan));
+        } else {
+            $transaksiSaldo = Transaksi_saldo::create([
+                'id_pesanan' => $idPesanan,
+                'id_pengelola' => $pesanan->partner->id_pengelola,
+                'id_member' => $member->id_member,
+                'jenis_transaksi' => 'Pembayaran',
+                'jumlah_saldo' => $request->totalBiaya,
+                'kode_pembayaran' => $request->totalBiaya + rand(1, 999),
+                'status' => 'Berhasil',
+                'keterangan' => 'Pembayaran telah berhasil dilakukan',
+            ]);
+            $sisaSaldo = $member->jumlah_saldo - $request->totalBiaya;
+            $member->jumlah_saldo = $sisaSaldo;
+
+            $member->save();
+            $transaksiSaldo->save();
+            $member->notify(new PesananNotification('pembayaranBerhasil', $pesanan));
+            $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
+        }
+
+        $pesanan->update([
+            'alamat_penerima' => $request->alamatPenerima,
+            'metode_penerimaan' => $request->metodePenerimaan,
+            'ongkos_kirim' => $request->ongkir,
+            'atk_terpilih' => $request->atkTerpilih,
+            'biaya' => $request->totalBiaya,
+            'status' => 'Pending',
+        ]);
+
+        $pesanan->save();
+        return responseSuccess("Pesanan berhasil dikonfirmasi", $pesanan);
+    }
+
+    public function deleteKonfirmasiPesanan($idPesanan, Request $request)
+    {
+        $member = $request->user();
+        $pesanan = $member->pesanans->find($idPesanan);
+        $pesanan->konfigurasiFile->first()->delete();
+        $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
+        $pesanan->delete();
+
+        $member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
+        $pesanan->partner->notify(new PesananPartnerNotification('pesananDibatalkan', $pesanan));
+        return responseSuccess("Pesanan berhasil dihapus dan dibatalkan");
     }
 }

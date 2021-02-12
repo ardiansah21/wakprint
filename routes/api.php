@@ -58,6 +58,8 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::post('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna');
         Route::post('/konfigurasi-file/update/{id}', 'KonfigurasiController@updateProduk');
         Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan');
+        Route::post('/konfirmasi-pesanan/update/{idPesanan}', 'KonfigurasiController@updateKonfirmasiPesanan');
+        Route::get('/konfirmasi-pesanan/delete/{idPesanan}', 'KonfigurasiController@deleteKonfirmasiPesanan');
         Route::apiResource('/konfigurasi-file', 'KonfigurasiController');
     });
 });

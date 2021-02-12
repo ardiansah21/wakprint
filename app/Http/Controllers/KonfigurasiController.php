@@ -304,7 +304,6 @@ class KonfigurasiController extends Controller
         }
 
         $pesanan->update([
-            'atk_terpilih' => $request->atkTerpilih,
             'alamat_penerima' => $request->alamatPenerima,
             'metode_penerimaan' => $request->metodePenerimaan,
             'ongkos_kirim' => $request->ongkir,
