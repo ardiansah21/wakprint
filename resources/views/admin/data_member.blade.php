@@ -48,17 +48,9 @@
         });
 
         var table = $('#memberTable').DataTable();
-        // $('#memberTable tbody tr').addClass('cursor-pointer');
         $('#memberTable tbody').on( 'click', 'tr', function () {
             var id = table.row(this).data();
             document.location.href='member/detail/' + id.id_member;
-            // if ($(this).hasClass('selected')) {
-            //     $(this).removeClass('selected');
-            // }
-            // else {
-            //     table.$('tr.selected').removeClass('selected');
-            //     $(this).addClass('selected');
-            // }
         } );
     });
 </script>

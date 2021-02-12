@@ -48,13 +48,6 @@ $pengelola = DB::table('pengelola_percetakan')->get();
         $('#partnerTable tbody').on( 'click', 'tr', function () {
             var id = table.row(this).data();
             document.location.href='partner/detail/' + id.id_pengelola;
-            // if ($(this).hasClass('selected')) {
-            //     $(this).removeClass('selected');
-            // }
-            // else {
-            //     table.$('tr.selected').removeClass('selected');
-            //     $(this).addClass('selected');
-            // }
         } );
     });
 </script>
