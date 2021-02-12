@@ -254,7 +254,7 @@
                                             @if (!empty($member->konfigurasi) > 1 && $member->konfigurasi != undefined)
                                                 onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'false']) }}'"
                                             @else
-                                                onclick="window.location='{{ route('pencarian', ['id_konfigurasi' => $member->konfigurasi->first()->id_konfigurasi, 'fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'true']) }}'"
+                                                onclick="window.location='{{ route('pencarian', ['fromKonfigurasi' => 'true', 'fromTambahKonfigurasi' => 'true']) }}'"
                                             @endif>
                                             {{ __('Ubah Produk') }}
                                         </button>
