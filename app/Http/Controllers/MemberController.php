@@ -982,7 +982,7 @@ class MemberController extends Controller
         $alamat = $member->alamat;
 
         $alamat->alamat[$request->id] = [
-            'id' => $request->id,
+            // 'id' => $request->id,
             'NamaPenerima' => $request->namapenerima,
             'NomorHP' => $request->nomorhp,
             'Provinsi' => $request->provinsi,
