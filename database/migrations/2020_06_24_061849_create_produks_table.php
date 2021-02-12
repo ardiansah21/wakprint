@@ -29,7 +29,6 @@ class CreateProduksTable extends Migration
             $table->enum('jenis_printer', ['Ink Jet', 'Laser Jet']);
             $table->decimal('rating', 2, 1);
             $table->enum('status', ['Tersedia', 'TidakTersedia'])->default('Tersedia');
-            // $table->json('foto_produk')->default(new Expression('(JSON_ARRAY())'))->nullable();
             $table->json('fitur')->default(new Expression('(JSON_ARRAY())'))->nullable();
             $table->enum('status_diskon', ['Tersedia', 'TidakTersedia'])->default('TidakTersedia');
             $table->float('jumlah_diskon')->nullable();

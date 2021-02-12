@@ -25,7 +25,6 @@ class CreatePengelolaPercetakansTable extends Migration
             $table->string('nomor_hp', 16);
             $table->string('nama_bank', 100);
             $table->string('nomor_rekening', 20);
-            $table->string('foto_profil')->nullable();
             $table->string('nama_toko', 150);
             $table->text('deskripsi_toko')->nullable();
             $table->string('alamat_toko');

@@ -19,7 +19,6 @@ class CreateUlasansTable extends Migration
             $table->integer('id_member')->unsigned()->nullable(); $table->foreign('id_member')->references('id_member')->on('member');
             $table->decimal('rating', 2, 1);
             $table->string('pesan', 255)->nullable();
-            // $table->string('foto', 255)->nullable();
             $table->timestamps();
         });
     }

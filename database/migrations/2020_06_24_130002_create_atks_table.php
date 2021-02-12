@@ -19,7 +19,6 @@ class CreateAtksTable extends Migration
             $table->string('nama', 150)->nullable();
             $table->integer('harga');
             $table->smallInteger('jumlah')->unsigned();
-            // $table->string('foto', 255)->nullable();
             $table->enum('status', ['Tersedia', 'TidakTersedia'])->default('TidakTersedia');
             $table->timestamps();
         });

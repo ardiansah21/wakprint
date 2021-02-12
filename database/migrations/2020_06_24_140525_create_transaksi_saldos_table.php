@@ -23,7 +23,6 @@ class CreateTransaksiSaldosTable extends Migration
             $table->string('kode_pembayaran', 20)->nullable();
             $table->enum('status', ['Gagal', 'Pending', 'Berhasil'])->nullable();
             $table->text('keterangan')->nullable();
-            // $table->timestamp('waktu');
             $table->timestamps();
         });
     }
