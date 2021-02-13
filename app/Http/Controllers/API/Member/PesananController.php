@@ -319,9 +319,9 @@ class PesananController extends Controller
                         // $ft->namaFitur = $ft['namaFitur'];
                         // $ft->hargaFitur = $ft['hargaFitur'];
                         // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+                        $k->fitur_terpilih = [$ft];
                     }
                     // $k->fitur_terpilih = $arrFiturTerpilih;
-                    $k->fitur_terpilih = [$ft];
                 }
             }
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
