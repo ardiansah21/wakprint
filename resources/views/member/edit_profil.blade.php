@@ -14,8 +14,7 @@
         <form action="{{ route('profile.edit') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-4" style="border-radius:10px;">
-                @if (!empty($member->getFirstMediaUrl('avatar')))
-                    <img id="gambarMember" src="{{ $member->getFirstMediaUrl('avatar') }}"
+                <img id="gambarMember" src="{{ $member->avatar }}"
                         class="img-responsive" style="width:120px; height:120px; border-radius:10px;" alt="">
                     <a id="editPhotoButton" class="bg-light-purple material-icons text-decorations-none pointer" onclick="document.getElementById('imgupload').click();"
                         style="border-radius:3px;
@@ -27,20 +26,6 @@
                         edit
                     </a>
                     <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg" onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
-                @else
-                    <img id="gambarMember" src="https://unsplash.it/600/400"
-                        class="img-responsive" style="width:120px;height:120px; border-radius:10px;" alt="Foto Kosong">
-                    <a href="" id="editPhotoButton" class="bg-light-purple material-icons text-decorations-none" onclick="document.getElementById('imgupload').click();"
-                        style="border-radius:3px;
-                        position: relative;
-                        top: 15%; right:5%;
-                        transform: translate(-20%, 200%);
-                        opacity:90%;
-                        color: #BC41BE;">
-                        edit
-                    </a>
-                    <input id="imgupload" type="file" name="foto_member" hidden accept="image/png, image/jpeg" onchange="document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);" hidden>
-                @endif
             </div>
             <label class="SemiBold mb-1" style="font-size: 24px;">
                 {{ __('Biodata Diri') }}
