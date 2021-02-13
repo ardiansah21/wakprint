@@ -261,7 +261,11 @@ class PesananController extends Controller
                 $data->atk_terpilih = json_decode($data->atk_terpilih, true);
                 return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
             } else {
-                return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
+                if ($data != null) {
+                    return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
+                } else {
+                    return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", []);
+                }
             }
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
