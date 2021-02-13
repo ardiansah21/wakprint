@@ -69,7 +69,6 @@ class PesananController extends Controller
         $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         $data->updated_at = $pesanan->updated_at;
 
-        $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasiFile as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);

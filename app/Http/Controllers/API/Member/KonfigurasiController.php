@@ -218,11 +218,17 @@ class KonfigurasiController extends Controller
             // $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
         }
 
+        if ($request->atkTerpilih != null) {
+            $request->atkTerpilih = json_decode(json_encode($request->atkTerpilih), true);
+        } else {
+            $request->atkTerpilih = [];
+        }
+
         $pesanan->update([
             'alamat_penerima' => $request->alamatPenerima,
             'metode_penerimaan' => $request->metodePenerimaan,
             'ongkos_kirim' => $request->ongkir,
-            'atk_terpilih' => json_decode(json_encode($request->atkTerpilih), true),
+            'atk_terpilih' => $request->atkTerpilih,
             'biaya' => $request->totalBiaya,
             'status' => 'Pending',
         ]);
