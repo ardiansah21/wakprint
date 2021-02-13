@@ -242,7 +242,10 @@ class KonfigurasiController extends Controller
         $member = $request->user();
         $pesanan = $member->pesanans->find($idPesanan);
 
-        $pesanan->konfigurasiFile->where('id_pesanan', $idPesanan)->delete();
+        $konfigurasi = $pesanan->konfigurasiFile->where('id_pesanan', $idPesanan)->get();
+        for ($i = 0; $i < count($konfigurasi); $i++) {
+            $pesanan->konfigurasiFile->first()->delete();
+        }
         $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
