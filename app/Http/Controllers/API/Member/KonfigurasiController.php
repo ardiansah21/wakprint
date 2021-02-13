@@ -197,7 +197,7 @@ class KonfigurasiController extends Controller
                 'keterangan' => 'Pembayaran sedang diproses',
             ]);
             $transaksiSaldo->save();
-            $member->notify(new PesananNotification('pembayaranPending', $pesanan));
+            // $member->notify(new PesananNotification('pembayaranPending', $pesanan));
         } else {
             $transaksiSaldo = Transaksi_saldo::create([
                 'id_pesanan' => $idPesanan,
@@ -214,8 +214,8 @@ class KonfigurasiController extends Controller
 
             $member->save();
             $transaksiSaldo->save();
-            $member->notify(new PesananNotification('pembayaranBerhasil', $pesanan));
-            $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
+            // $member->notify(new PesananNotification('pembayaranBerhasil', $pesanan));
+            // $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
         }
 
         $pesanan->update([
