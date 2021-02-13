@@ -219,7 +219,7 @@ class KonfigurasiController extends Controller
         }
 
         if ($request->atkTerpilih != null) {
-            $request->atkTerpilih = json_decode($request->atkTerpilih, true);
+            $request->atkTerpilih = $request->atkTerpilih;
         } else {
             $request->atkTerpilih = [];
         }
@@ -234,6 +234,8 @@ class KonfigurasiController extends Controller
         ]);
 
         $pesanan->save();
+
+        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         return responseSuccess("Pesanan berhasil dikonfirmasi", $pesanan);
     }
 
