@@ -224,13 +224,8 @@
                             <div class="col-md-4">
                                 <div class="bg-light-purple text-center"
                                     style="height:300px; border-radius:0px 25px 25px 0px; position: relative;">
-                                    @if (!empty($member->getFirstMediaUrl('avatar')))
-                                        <img src="{{ $member->getFirstMediaUrl('avatar') }}" class="img-responsive" alt=""
-                                            width="300px" height="300px" style="border-radius:8px; object-fit:cover;">
-                                    @else
-                                        <img src="https://unsplash.it/600/400" class="img-responsive" alt="" width="300px"
-                                            height="300px" style="border-radius:8px; object-fit:cover;">
-                                    @endif
+                                    <img src="{{ $member->avatar }}" class="img-responsive" alt=""
+                                        width="300px" height="300px" style="border-radius:8px; object-fit:cover;">
                                     <div class="bg-dark pl-2 pr-2"
                                         style="position: relative; top: -17%; left: 50%; transform: translate(-50%, 0%); opacity:80%; color: white; width:300px; border-radius:0px 0px 8px 8px;">
                                         <label class="font-weight-bold text-truncate my-auto mx-auto"
