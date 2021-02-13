@@ -117,7 +117,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/konfirmasi-pembayaran/{idPesanan}', 'KonfigurasiController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
     Route::post('/konfirmasi-pembayaran/update/{idPesanan}', 'KonfigurasiController@updateKonfirmasiPesanan')->name('konfirmasi.pesanan.update');
-    Route::delete('/konfirmasi-pembayaran/delete/{idPesanan}', 'KonfigurasiController@deleteKonfirmasiPesanan')->name('konfirmasi.pesanan.delete');
+    Route::get('/konfirmasi-pembayaran/delete/{idPesanan}', 'KonfigurasiController@deleteKonfirmasiPesanan')->name('konfirmasi.pesanan.delete');
     Route::get('/konfirmasi-pembayaran/cancel/{idPesanan}', 'KonfigurasiController@cancelPesanan')->name('konfirmasi.pesanan.cancel');
     Route::get('/konfirmasi-pembayaran/selesai/{idPesanan}', 'KonfigurasiController@selesaikanPesanan')->name('konfirmasi.pesanan.selesai');
 
