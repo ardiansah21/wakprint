@@ -90,6 +90,14 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        {{-- <label class="SemiBold mb-3" style="font-size:24px;">
+                            {{ __('Catatan Tambahan') }}
+                        </label>
+                        <div class="card pt-2 pb-2 pl-4 pr-4 mb-5" style="width:370px; min-height:120px; font-size:18px;">
+                            <p class="mb-2">
+                                {{ $k->catatan_tambahan }}
+                            </p>
+                        </div> --}}
                         <label class="SemiBold mb-1" style="font-size:24px;">
                             {{ __('Halaman Hitam-Putih') }}
                         </label>
@@ -303,16 +311,9 @@
             }
             @endphp
             <div class="row justify-content-end mb-5 mr-0">
-                <form id="deleteKonfirmasiPesananForm"
-                    action="{{ route('konfirmasi.pesanan.delete', $idPesanan) }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <button id="batalkanBtn"
-                        class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4"
-                        style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
-                        {{ __('Batalkan Pemesanan') }}
-                    </button>
-                </form>
+                <button id="batalkanBtn" class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4" style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
+                    {{ __('Batalkan Pemesanan') }}
+                </button>
                 <form action="{{ route('konfirmasi.pesanan.update', $idPesanan) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -330,7 +331,7 @@
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                $('#batalkanBtn').click(function() {
+                    $('#batalkanBtn').click(function() {
                         swal({
                             title: "Apakah Anda yakin ingin membatalkan pemesanan ?",
                             text: "Pesanan Anda akan dihapus secara permanen dan diharuskan untuk membuat ulang pesanan Anda dari awal",
@@ -348,25 +349,17 @@
                                 swal("Pesanan telah berhasil dihapus !", {
                                     icon: "success",
                                 }).then(function() {
-                                        window.location.href = '{{ route(
-                                        '
-                                        konfirmasi.pesanan.delete ',
-                                        '
-                                        ',
-                                    )
-                                }
+                                    window.location.href = "{{ route('konfirmasi.pesanan.delete','') }}" + "/" + $('#idPesanan').val();
+                                });
                             }
-                            ' + ' / ' + $('
-                            #idPesanan ').val();
+                            else {
+                                swal({
+                                    text: "Anda telah membatalkan untuk menghapus pesanan ini",
+                                    button: "Lanjutkan Pemesanan",
+                                });
+                            }
                         });
-                    } else {
-                        swal({
-                            text: "Anda telah membatalkan untuk menghapus pesanan ini",
-                            button: "Lanjutkan Pemesanan",
-                        });
-                    }
-                });
-                });
+                    });
                 });
 
             </script>
