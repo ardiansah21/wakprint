@@ -245,9 +245,12 @@ class KonfigurasiController extends Controller
         $konfigurasi = $pesanan->konfigurasiFile->where('id_pesanan', $idPesanan);
         for ($i = 0; $i < count($konfigurasi); $i++) {
             $pesanan->konfigurasiFile->first()->delete();
+            if ($i == count($konfigurasi) - 1) {
+                $pesanan->delete();
+            }
         }
+
         $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
-        $pesanan->delete();
 
         $member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananDibatalkan', $pesanan));
