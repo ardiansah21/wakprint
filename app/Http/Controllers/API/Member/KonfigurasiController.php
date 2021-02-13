@@ -48,7 +48,7 @@ class KonfigurasiController extends Controller
             'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
             'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
             'status_halaman' => $request->statusHalaman,
-            'halaman_terpilih' => $request->halamanTerpilih,
+            'halaman_terpilih' => json_encode($request->halamanTerpilih),
             'jumlah_salinan' => $request->jumlahSalinan,
             'timbal_balik' => $request->timbalBalik,
             'paksa_hitamputih' => $request->paksaHitamPutih,
@@ -197,7 +197,7 @@ class KonfigurasiController extends Controller
                 'keterangan' => 'Pembayaran sedang diproses',
             ]);
             $transaksiSaldo->save();
-            // $member->notify(new PesananNotification('pembayaranPending', $pesanan));
+            $member->notify(new PesananNotification('pembayaranPending', $pesanan));
         } else {
             $transaksiSaldo = Transaksi_saldo::create([
                 'id_pesanan' => $idPesanan,
@@ -214,8 +214,8 @@ class KonfigurasiController extends Controller
 
             $member->save();
             $transaksiSaldo->save();
-            // $member->notify(new PesananNotification('pembayaranBerhasil', $pesanan));
-            // $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
+            $member->notify(new PesananNotification('pembayaranBerhasil', $pesanan));
+            $pesanan->partner->notify(new PesananPartnerNotification('pesananMasuk', $pesanan));
         }
 
         if ($request->atkTerpilih != null) {
