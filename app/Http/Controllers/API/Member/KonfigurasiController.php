@@ -222,7 +222,7 @@ class KonfigurasiController extends Controller
             'alamat_penerima' => $request->alamatPenerima,
             'metode_penerimaan' => $request->metodePenerimaan,
             'ongkos_kirim' => $request->ongkir,
-            'atk_terpilih' => $request->atkTerpilih,
+            'atk_terpilih' => json_decode(json_encode($request->atkTerpilih), true),
             'biaya' => $request->totalBiaya,
             'status' => 'Pending',
         ]);
