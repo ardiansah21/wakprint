@@ -320,8 +320,7 @@ class KonfigurasiController extends Controller
     {
         $member = Member::find(Auth::id());
         $pesanan = $member->pesanans->find($idPesanan);
-        $pesanan->konfigurasiFile->first()->delete();
-        $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
+        // $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
         return redirect()->route('pesanan');
     }

@@ -243,7 +243,7 @@ class KonfigurasiController extends Controller
         $pesanan = $member->pesanans->find($idPesanan);
 
         // $konfigurasi = $pesanan->konfigurasiFile->where('id_pesanan', $idPesanan);
-        $pesanan->konfigurasiFile->first()->delete();
+        // $pesanan->konfigurasiFile->first()->delete();
 
         // for ($i = 0; $i < count($konfigurasi); $i++) {
         //     $pesanan->konfigurasiFile->first()->delete();
@@ -252,7 +252,7 @@ class KonfigurasiController extends Controller
         //     }
         // }
 
-        $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
+        // $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
         return responseSuccess("Pesanan berhasil dihapus dan dibatalkan");

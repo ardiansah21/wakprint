@@ -39,4 +39,15 @@ class Pesanan extends Model
         return auth(activeGuard())->user()->pesanans->first()->transaksiSaldo->where('jenis_transaksi', 'Pembayaran')
             ->where('status', 'Berhasil')->exists() ? true : false;
     }
+
+    public static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($pesanan) {
+            $pesanan->konfigurasiFile()->each(function ($konfigurasiFile) {
+                $konfigurasiFile->delete();
+            });
+        });
+
+    }
 }
