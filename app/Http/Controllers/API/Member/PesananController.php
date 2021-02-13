@@ -74,24 +74,15 @@ class PesananController extends Controller
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
 
-            // foreach ($k->fitur_terpilih as $ft) {
-            //     array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-            // }
-
-            // $k->fitur_terpilih = $arrFiturTerpilih;
-
             foreach ($k->fitur_terpilih as $ft) {
 
                 $ft = [
                     'namaFitur' => $ft['namaFitur'],
                     'hargaFitur' => $ft['hargaFitur'],
                 ];
-                // $ft->namaFitur = $ft['namaFitur'];
-                // $ft->hargaFitur = $ft['hargaFitur'];
-                // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+
+                $k->fitur_terpilih = [$ft];
             }
-            // $k->fitur_terpilih = $arrFiturTerpilih;
-            $k->fitur_terpilih = [$ft];
 
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = $pesanan->partner->alamat_toko;
@@ -154,12 +145,9 @@ class PesananController extends Controller
                     'namaFitur' => $ft['namaFitur'],
                     'hargaFitur' => $ft['hargaFitur'],
                 ];
-                // $ft->namaFitur = $ft['namaFitur'];
-                // $ft->hargaFitur = $ft['hargaFitur'];
-                // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+
+                $k->fitur_terpilih = [$ft];
             }
-            // $k->fitur_terpilih = $arrFiturTerpilih;
-            $k->fitur_terpilih = [$ft];
 
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = $pesanan->partner->alamat_toko;
@@ -201,12 +189,9 @@ class PesananController extends Controller
                     'namaFitur' => $ft['namaFitur'],
                     'hargaFitur' => $ft['hargaFitur'],
                 ];
-                // $ft->namaFitur = $ft['namaFitur'];
-                // $ft->hargaFitur = $ft['hargaFitur'];
-                // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+
+                $k->fitur_terpilih = [$ft];
             }
-            // $k->fitur_terpilih = $arrFiturTerpilih;
-            $k->fitur_terpilih = [$ft];
 
             $k->file_url = $k->getFirstMediaUrl('file_konfigurasi');
             $k->alamat_toko = $pesanan->partner->alamat_toko;
@@ -223,31 +208,8 @@ class PesananController extends Controller
     {
         $member = request()->user();
         $data = $member->pesanans;
-        $arrFiturTerpilih = [];
 
         if ($request->status_pesanan === 'Draft') {
-            // $data = $data->first()->where('status', null)->get();
-            // foreach ($data as $p) {
-            //     $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-            //     $p->jumlah_file = count($p->konfigurasiFile);
-            //     $p->nama_toko = $p->first()->partner->nama_toko;
-            //     $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-            //     foreach ($p->konfigurasiFile as $k) {
-            //         $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-            //         foreach ($k->fitur_terpilih as $ft) {
-
-            //             $ft = [
-            //                 'namaFitur' => $ft['namaFitur'],
-            //                 'hargaFitur' => $ft['hargaFitur'],
-            //             ];
-            //             // $ft->namaFitur = $ft['namaFitur'];
-            //             // $ft->hargaFitur = $ft['hargaFitur'];
-            //             // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
-            //         }
-            //         // $k->fitur_terpilih = $arrFiturTerpilih;
-            //         $k->fitur_terpilih = [$ft];
-            //     }
-            // }
 
             $data = request()->user()->pesanans->where('status', null)->first();
             if (!empty($data)) {
@@ -316,12 +278,8 @@ class PesananController extends Controller
                             'namaFitur' => $ft['namaFitur'],
                             'hargaFitur' => $ft['hargaFitur'],
                         ];
-                        // $ft->namaFitur = $ft['namaFitur'];
-                        // $ft->hargaFitur = $ft['hargaFitur'];
-                        // array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
                         $k->fitur_terpilih = [$ft];
                     }
-                    // $k->fitur_terpilih = $arrFiturTerpilih;
                 }
             }
             return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data);
