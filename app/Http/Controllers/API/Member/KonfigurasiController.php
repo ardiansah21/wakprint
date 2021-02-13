@@ -48,7 +48,7 @@ class KonfigurasiController extends Controller
             'jumlah_halaman_berwarna' => $request->jumlahHalamanBerwarna,
             'jumlah_halaman_hitamputih' => $request->jumlahHalamanHitamPutih,
             'status_halaman' => $request->statusHalaman,
-            'halaman_terpilih' => (string) $request->halamanTerpilih,
+            'halaman_terpilih' => $request->halamanTerpilih,
             'jumlah_salinan' => $request->jumlahSalinan,
             'timbal_balik' => $request->timbalBalik,
             'paksa_hitamputih' => $request->paksaHitamPutih,
