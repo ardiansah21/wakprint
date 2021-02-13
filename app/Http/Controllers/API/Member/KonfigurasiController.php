@@ -255,8 +255,6 @@ class KonfigurasiController extends Controller
         $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
-        $member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
-        $pesanan->partner->notify(new PesananPartnerNotification('pesananDibatalkan', $pesanan));
         return responseSuccess("Pesanan berhasil dihapus dan dibatalkan");
     }
 }
