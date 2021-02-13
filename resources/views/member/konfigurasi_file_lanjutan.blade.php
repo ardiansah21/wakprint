@@ -424,7 +424,7 @@
                         });
                         $.ajax({
                             type: 'GET',
-                            url: "https://wakprint.online/konfigurasi-file/cekwarna",
+                            url: "{{ route('konfigurasi.cekwarna') }}",
                             data: {
                                 path: "{{ str_replace('\\', '/', session()->get('fileUpload')->path) }}",
                                 percenMin: "{{ $p->partner->ntkwh }}",
