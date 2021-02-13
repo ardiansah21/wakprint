@@ -240,10 +240,10 @@ class KonfigurasiController extends Controller
     public function deleteKonfirmasiPesanan($idPesanan, Request $request)
     {
         $member = $request->user();
-        // $pesanan = Pesanan::find($idPesanan);
         $pesanan = $member->pesanans->find($idPesanan);
-        $pesanan->konfigurasiFile->delete();
-        $pesanan->konfigurasiFile->clearMediaCollection('file_konfigurasi');
+
+        $pesanan->konfigurasiFile->where('id_pesanan', $idPesanan)->delete();
+        $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
         $member->notify(new PesananNotification('pesananDiBatalkan', $pesanan));
