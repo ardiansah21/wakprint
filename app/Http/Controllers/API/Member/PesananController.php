@@ -250,17 +250,19 @@ class PesananController extends Controller
             // }
 
             $data = request()->user()->pesanans->where('status', null)->first();
-            foreach ($data->konfigurasiFile as $key => $kf) {
-                $kf->fitur_terpilih = json_decode($kf->fitur_terpilih, true);
-                $data->konfigurasiFile[$key] = $kf;
+            if (!empty($data)) {
+                foreach ($data->konfigurasiFile as $key => $kf) {
+                    $kf->fitur_terpilih = json_decode($kf->fitur_terpilih, true);
+                    $data->konfigurasiFile[$key] = $kf;
+                }
+                $data->nama_file = $data->konfigurasiFile->pluck('nama_file')->all();
+                $data->jumlah_file = count($data->konfigurasiFile);
+                $data->nama_toko = $data->first()->partner->nama_toko;
+                $data->atk_terpilih = json_decode($data->atk_terpilih, true);
+                return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
+            } else {
+                return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
             }
-            $data->nama_file = $data->konfigurasiFile->pluck('nama_file')->all();
-            $data->jumlah_file = count($data->konfigurasiFile);
-            $data->nama_toko = $data->first()->partner->nama_toko;
-            $data->atk_terpilih = json_decode($data->atk_terpilih, true);
-            return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", [$data]);
-            // return responseSuccess("Hasil filter data pesanan " . $request->status_pesanan . " member", $data->first()->where('status', null)->get());
-
         } else {
             if ($request->urutkan_pesanan === 'Terbaru') {
                 $data = $data->first()->where('id_member', $member->id_member)
