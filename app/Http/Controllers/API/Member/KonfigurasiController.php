@@ -219,7 +219,7 @@ class KonfigurasiController extends Controller
         }
 
         if ($request->atkTerpilih != null) {
-            $request->atkTerpilih = json_encode($request->atkTerpilih);
+            $request->atkTerpilih = ($request->atkTerpilih);
         } else {
             $request->atkTerpilih = [];
         }
