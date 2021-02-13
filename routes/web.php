@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
     Route::get('/konfigurasi-file/edit/{id}', 'KonfigurasiController@editKonfigurasi')->name('konfigurasi.edit');
     Route::post('/konfigurasi-file/edit/store/{id}', 'KonfigurasiController@storeEditKonfigurasi')->name('konfigurasi.edit.store');
-    Route::get('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
+    Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
     Route::get('/konfigurasi-pesanan/konfirmasi', 'KonfigurasiController@konfirmasiPesanan')->name('konfirmasi.pesanan');
@@ -117,7 +117,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/konfirmasi-pembayaran/{idPesanan}', 'KonfigurasiController@konfirmasiPembayaran')->name('konfirmasi.pembayaran');
     Route::post('/konfirmasi-pembayaran/update/{idPesanan}', 'KonfigurasiController@updateKonfirmasiPesanan')->name('konfirmasi.pesanan.update');
-    Route::delete('/konfirmasi-pembayaran/delete/{idPesanan}', 'KonfigurasiController@deleteKonfirmasiPesanan')->name('konfirmasi.pesanan.delete');
+    Route::get('/konfirmasi-pembayaran/delete/{idPesanan}', 'KonfigurasiController@deleteKonfirmasiPesanan')->name('konfirmasi.pesanan.delete');
     Route::get('/konfirmasi-pembayaran/cancel/{idPesanan}', 'KonfigurasiController@cancelPesanan')->name('konfirmasi.pesanan.cancel');
     Route::get('/konfirmasi-pembayaran/selesai/{idPesanan}', 'KonfigurasiController@selesaikanPesanan')->name('konfirmasi.pesanan.selesai');
 
