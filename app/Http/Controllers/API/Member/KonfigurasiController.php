@@ -235,7 +235,7 @@ class KonfigurasiController extends Controller
 
         $pesanan->save();
 
-        $pesanan->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
+        $pesanan->atk_terpilih = json_decode(json_encode($pesanan->atk_terpilih), true);
         return responseSuccess("Pesanan berhasil dikonfirmasi", $pesanan);
     }
 
