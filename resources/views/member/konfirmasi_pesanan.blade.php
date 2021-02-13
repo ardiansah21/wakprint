@@ -310,11 +310,11 @@
             }
         @endphp
             <div class="row justify-content-end mb-5 mr-0">
-                <form id="deleteKonfirmasiPesananForm" action="{{ route('konfirmasi.pesanan.delete', $idPesanan) }}" method="DELETE" enctype="multipart/form-data">
+                {{-- <form id="deleteKonfirmasiPesananForm" action="{{ route('konfirmasi.pesanan.delete', $idPesanan) }}" method="DELETE" enctype="multipart/form-data"> --}}
                     <button id="batalkanBtn" class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4" style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
                         {{ __('Batalkan Pemesanan') }}
                     </button>
-                </form>
+                {{-- </form> --}}
                 <form action="{{ route('konfirmasi.pesanan.update', $idPesanan) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -349,8 +349,8 @@
                                 swal("Pesanan telah berhasil dihapus !", {
                                     icon: "success",
                                 }).then(function() {
-                                    $("#deleteKonfirmasiPesananForm").submit();
-                                    // window.location.href = "{{ route('konfirmasi.pesanan.delete','') }}" + "/" + $('#idPesanan').val();
+                                    // $("#deleteKonfirmasiPesananForm").submit();
+                                    window.location.href = "{{ route('konfirmasi.pesanan.delete','') }}" + "/" + $('#idPesanan').val();
                                 });
                             }
                             else {

@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/konfigurasi-file/simpan', 'KonfigurasiController@simpanKonfigurasi')->name('konfigurasi.simpan');
     Route::get('/konfigurasi-file/edit/{id}', 'KonfigurasiController@editKonfigurasi')->name('konfigurasi.edit');
     Route::post('/konfigurasi-file/edit/store/{id}', 'KonfigurasiController@storeEditKonfigurasi')->name('konfigurasi.edit.store');
-    Route::delete('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
+    Route::get('/konfigurasi-file/delete/{id}', 'KonfigurasiController@hapusKonfigurasi')->name('konfigurasi.hapus');
     Route::get('/konfigurasi-file/halaman-kustom', 'KonfigurasiController@kustomHal')->name('halaman.kustom');
     Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan')->name('konfigurasi.pesanan');
     Route::get('/konfigurasi-pesanan/konfirmasi', 'KonfigurasiController@konfirmasiPesanan')->name('konfirmasi.pesanan');
