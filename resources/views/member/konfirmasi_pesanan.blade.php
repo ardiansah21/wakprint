@@ -300,20 +300,21 @@
             </div>
         </div>
         @php
-        $atkFinal = json_encode($atks);
-        if (!empty($member->alamat->alamat)){
-        for ($i = 0; $i < count($member->alamat->alamat); $i++){
-            if ($member->alamat->alamat[$i]->id === $member->alamat->IdAlamatUtama){
-            $alamatPenerima =
-            $member->alamat->alamat[$i]->AlamatJalan.",".$member->alamat->alamat[$i]->Kelurahan.",".$member->alamat->alamat[$i]->Kecamatan.",".$member->alamat->alamat[$i]->KabupatenKota.",".$member->alamat->alamat[$i]->Provinsi.",".$member->alamat->alamat[$i]->KodePos;
+            $atkFinal = json_encode($atks);
+            if (!empty($member->alamat->alamat)){
+                for ($i = 0; $i < count($member->alamat->alamat); $i++){
+                    if ($member->alamat->alamat[$i]->id === $member->alamat->IdAlamatUtama){
+                        $alamatPenerima = $member->alamat->alamat[$i]->AlamatJalan.",".$member->alamat->alamat[$i]->Kelurahan.",".$member->alamat->alamat[$i]->Kecamatan.",".$member->alamat->alamat[$i]->KabupatenKota.",".$member->alamat->alamat[$i]->Provinsi.",".$member->alamat->alamat[$i]->KodePos;
+                    }
+                }
             }
-            }
-            }
-            @endphp
+        @endphp
             <div class="row justify-content-end mb-5 mr-0">
-                <button id="batalkanBtn" class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4" style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
-                    {{ __('Batalkan Pemesanan') }}
-                </button>
+                <form id="deleteKonfirmasiPesananForm" action="{{ route('konfirmasi.pesanan.delete', $idPesanan) }}" method="DELETE" enctype="multipart/form-data">
+                    <button id="batalkanBtn" class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4" style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
+                        {{ __('Batalkan Pemesanan') }}
+                    </button>
+                </form>
                 <form action="{{ route('konfirmasi.pesanan.update', $idPesanan) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -345,11 +346,11 @@
                             dangerMode: true,
                         }).then((willDelete) => {
                             if (willDelete) {
-                                // $("#deleteKonfirmasiPesananForm").submit();
                                 swal("Pesanan telah berhasil dihapus !", {
                                     icon: "success",
                                 }).then(function() {
-                                    window.location.href = "{{ route('konfirmasi.pesanan.delete','') }}" + "/" + $('#idPesanan').val();
+                                    $("#deleteKonfirmasiPesananForm").submit();
+                                    // window.location.href = "{{ route('konfirmasi.pesanan.delete','') }}" + "/" + $('#idPesanan').val();
                                 });
                             }
                             else {
