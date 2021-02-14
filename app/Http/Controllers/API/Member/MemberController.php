@@ -40,7 +40,7 @@ class MemberController extends Controller
             "partner" => $partner,
         ];
 
-        return responseSuccess("data home", $data);
+        return responseSuccess("data home", "bdfvdfdfv");
     }
 
     public function user()
