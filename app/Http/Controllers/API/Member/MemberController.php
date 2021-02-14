@@ -36,11 +36,11 @@ class MemberController extends Controller
         }
 
         $data = [
-            "produk" => $produk,
-            "partner" => $partner,
+            "produk" => json_decode($produk, true),
+            "partner" => json_decode($partner, true),
         ];
 
-        return responseSuccess("data home", "bdfvdfdfv");
+        return responseSuccess("data home", $data);
     }
 
     public function user()
