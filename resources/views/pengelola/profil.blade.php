@@ -15,7 +15,7 @@
                     </a>
                 </div>
             @else
-                <img src="https://unsplash.it/600/400" alt="Belum Ada Foto Profil"
+                <img src="{{'https://ui-avatars.com/api/?name=' . trim($partner->nama_toko, " ") . '&background=BC41BE&color=F2FF58'}}" alt="Belum Ada Foto Profil"
                     style="height:210px; border-radius:5px; object-fit:contain;">
                 <div class="">
                     <a href="{{ route('partner.profile.edit') }}"
