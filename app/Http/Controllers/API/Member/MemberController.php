@@ -27,19 +27,24 @@ class MemberController extends Controller
 
         $partner = Pengelola_Percetakan::where('email_verified_at', '!=', null)->get();
 
-        // if (!empty($partner)) {
-        //     $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko');
-        // }
+        if (!empty($partner)) {
+            $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko')->take(5);
+        }
 
         $produkFinal = [];
-        foreach ($produk as $key => $p) {
+        foreach ($produk as $p) {
             $p->fitur = json_decode($p->fitur, true);
             array_push($produkFinal, $p);
         }
 
+        $partnerFinal = [];
+        foreach ($partner as $p) {
+            array_push($partnerFinal, $p);
+        }
+
         $data = [
             "produk" => $produkFinal,
-            "partner" => $partner,
+            "partner" => $partnerFinal,
         ];
 
         return responseSuccess("data home", $data);
