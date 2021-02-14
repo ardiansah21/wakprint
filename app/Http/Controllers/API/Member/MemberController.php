@@ -31,9 +31,9 @@ class MemberController extends Controller
         //     $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko');
         // }
 
-        foreach ($produk as $p) {
-            $p->fitur = json_decode($p->fitur, true);
-        }
+        // foreach ($produk as $p) {
+        //     $p->fitur = json_decode($p->fitur, true);
+        // }
 
         $data = [
             "produk" => $produk,
