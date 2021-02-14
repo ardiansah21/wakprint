@@ -256,56 +256,60 @@ class PesananController extends Controller
         $data = $partner->pesanans;
         $arrFiturTerpilih = [];
 
-        if ($request->urutkan_pesanan === 'Terbaru') {
-            $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', $request->status_pesanan)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('id_pesanan', $request->keyword_filter)
-            // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('updated_at', 'desc')
-                ->get();
-
-        } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
-            $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', $request->status_pesanan)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('id_pesanan', $request->keyword_filter)
-            // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('biaya', 'desc')
-                ->get();
-        } else if ($request->urutkan_pesanan === 'Harga Terendah') {
-            $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
-                ->where('status', $request->status_pesanan)
-                ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
-                ->orWhere('id_pesanan', $request->keyword_filter)
-            // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
-                ->orderBy('biaya', 'asc')
-                ->get();
-        } else {
-            if ($data->first()->isPaid()) {
+        if (!empty($data)) {
+            if ($request->urutkan_pesanan === 'Terbaru') {
                 $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
                     ->where('status', $request->status_pesanan)
                     ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                     ->orWhere('id_pesanan', $request->keyword_filter)
                 // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
+                    ->orderBy('updated_at', 'desc')
                     ->get();
-            }
-        }
 
-        foreach ($data as $p) {
-            $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
-            $p->jumlah_file = count($p->konfigurasiFile);
-            $p->nama_lengkap = $p->first()->member->nama_lengkap;
-            $p->atk_terpilih = json_decode($p->atk_terpilih, true);
-            foreach ($p->konfigurasiFile as $k) {
-                $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
-                foreach ($k->fitur_terpilih as $ft) {
-                    array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+            } else if ($request->urutkan_pesanan === 'Harga Tertinggi') {
+                $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->where('status', $request->status_pesanan)
+                    ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                    ->orWhere('id_pesanan', $request->keyword_filter)
+                // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
+                    ->orderBy('biaya', 'desc')
+                    ->get();
+            } else if ($request->urutkan_pesanan === 'Harga Terendah') {
+                $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
+                    ->where('status', $request->status_pesanan)
+                    ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                    ->orWhere('id_pesanan', $request->keyword_filter)
+                // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
+                    ->orderBy('biaya', 'asc')
+                    ->get();
+            } else {
+                if ($data->first()->isPaid()) {
+                    $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
+                        ->where('status', $request->status_pesanan)
+                        ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
+                        ->orWhere('id_pesanan', $request->keyword_filter)
+                    // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
+                        ->get();
                 }
-                $k->fitur_terpilih = $arrFiturTerpilih;
             }
-        }
 
-        return responseSuccess("Hasil filter data pesanan", $data);
+            foreach ($data as $p) {
+                $p->nama_file = $p->konfigurasiFile->pluck('nama_file')->all();
+                $p->jumlah_file = count($p->konfigurasiFile);
+                $p->nama_lengkap = $p->first()->member->nama_lengkap;
+                $p->atk_terpilih = json_decode($p->atk_terpilih, true);
+                foreach ($p->konfigurasiFile as $k) {
+                    $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
+                    foreach ($k->fitur_terpilih as $ft) {
+                        array_push($arrFiturTerpilih, [$ft['namaFitur'], $ft['hargaFitur']]);
+                    }
+                    $k->fitur_terpilih = $arrFiturTerpilih;
+                }
+            }
+
+            return responseSuccess("Hasil filter data pesanan", $data);
+        } else {
+            return responseSuccess("Hasil filter data pesanan kosong");
+        }
     }
 }
