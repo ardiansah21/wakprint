@@ -69,7 +69,6 @@ class MemberController extends Controller
 
     public function index(Request $request)
     {
-        // $member = Auth::user();
         $produk = Produk::where('status', 'Tersedia')->get();
         $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->take(5);
 

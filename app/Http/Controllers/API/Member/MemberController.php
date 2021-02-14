@@ -22,21 +22,18 @@ class MemberController extends Controller
 
     public function index()
     {
-        $produk = Produk::where('rating', '>=', 4)
-        // ->where('jarak', '<=', 1000)
-            ->where('status', 'Tersedia')
-            ->where('harga_hitam_putih', '<=', 5000)
-            ->orWhere('harga_berwarna', '<=', 5000)
-            ->get();
+        $produk = Produk::where('status', 'Tersedia')->get();
+        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->take(5);
+
+        $partner = Pengelola_Percetakan::where('email_verified_at', '!=', null)->get();
+
+        if (!empty($partner)) {
+            $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko')->take(5);
+        }
 
         foreach ($produk as $p) {
             $p->fitur = json_decode($p->fitur, true);
         }
-
-        $partner = Pengelola_Percetakan::where('rating_toko', '>=', 4)
-        // ->where('jarak', '<=', 1000)
-            ->where('email_verified_at', '!=', null)
-            ->get();
 
         $data = [
             "produk" => $produk,
