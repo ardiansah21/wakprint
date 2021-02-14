@@ -36,8 +36,8 @@ class MemberController extends Controller
         }
 
         $data = [
-            "produk" => $produk->toArray(),
-            "partner" => $partner->toArray(),
+            "produk" => collect($produk)->toArray(),
+            "partner" => collect($partner)->toArray(),
         ];
 
         return responseSuccess("data home", $data);
