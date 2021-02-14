@@ -23,12 +23,12 @@ class MemberController extends Controller
     public function index()
     {
         $produk = Produk::where('status', 'Tersedia')->get();
-        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->take(5);
+        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna');
 
         $partner = Pengelola_Percetakan::where('email_verified_at', '!=', null)->get();
 
         if (!empty($partner)) {
-            $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko')->take(5);
+            $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko');
         }
 
         foreach ($produk as $p) {
