@@ -23,7 +23,7 @@ class MemberController extends Controller
     public function index()
     {
         $produk = Produk::where('status', 'Tersedia')->get();
-        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->toArray();
+        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->take(5);
 
         $partner = Pengelola_Percetakan::where('email_verified_at', '!=', null)->get();
 
@@ -31,12 +31,12 @@ class MemberController extends Controller
         //     $partner = $partner->sortBy('jarak')->sortByDesc('rating_toko');
         // }
 
-        // foreach ($produk as $p) {
-        //     $p->fitur = json_decode($p->fitur, true);
-        // }
+        foreach ($produk as $p) {
+            $p->fitur = json_decode($p->fitur, true);
+        }
 
         $data = [
-            "produk" => $produk,
+            "produk" => json_decode(json_encode($produk), true),
             "partner" => $partner,
         ];
 
