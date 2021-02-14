@@ -12,7 +12,7 @@
             </i>
         </a>
         <div class="my-auto">
-            <button class="btn btn-sm btn-danger bg-primary-danger font-weight-bold pl-4 pr-4" onclick="window.location.href='mailto:wakprint.dev@gmail.com'" style="border-radius:30px; font-size:16px;">
+            <button class="btn btn-sm btn-danger bg-primary-danger font-weight-bold pl-4 pr-4" onclick="window.location.href='mailto:wakprint.dev@gmail.com?subject=Laporan'" style="border-radius:30px; font-size:16px;">
                 {{__('Laporkan')}}
             </button>
         </div>
