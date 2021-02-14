@@ -34,7 +34,7 @@ class MemberController extends Controller
         $produkFinal = [];
         foreach ($produk as $key => $p) {
             $p->fitur = json_decode($p->fitur, true);
-            $produkFinal[(int) $key] = array_push($produkFinal, $p);
+            array_push($produkFinal, $p);
         }
 
         $data = [
