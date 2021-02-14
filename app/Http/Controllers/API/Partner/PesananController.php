@@ -283,7 +283,7 @@ class PesananController extends Controller
                     ->orderBy('biaya', 'asc')
                     ->get();
             } else {
-                if ($data->first()->isPaid()) {
+                if ($data->first()->isPaid() != null && $data->first()->isPaid()) {
                     $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
                         ->where('status', $request->status_pesanan)
                         ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
