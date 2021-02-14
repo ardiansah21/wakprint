@@ -208,7 +208,7 @@ class PesananController extends Controller
         $member = request()->user();
         $data = $member->pesanans;
 
-        if (!empty($data)) {
+        if ($data != null) {
             if ($request->status_pesanan === 'Draft') {
 
                 $data = request()->user()->pesanans->where('status', null)->first();

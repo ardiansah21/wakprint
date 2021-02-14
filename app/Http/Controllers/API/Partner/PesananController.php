@@ -256,7 +256,7 @@ class PesananController extends Controller
         $data = $partner->pesanans;
         $arrFiturTerpilih = [];
 
-        if (!empty($data)) {
+        if ($data != null) {
             if ($request->urutkan_pesanan === 'Terbaru') {
                 $data = $data->first()->where('id_pengelola', $partner->id_pengelola)
                     ->where('status', $request->status_pesanan)
