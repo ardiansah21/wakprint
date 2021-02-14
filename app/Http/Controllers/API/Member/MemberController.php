@@ -23,7 +23,7 @@ class MemberController extends Controller
     public function index()
     {
         $produk = Produk::where('status', 'Tersedia')->get();
-        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->take(5)->toArray();
+        $produk = $produk->sortBy('jarak')->sortByDesc('rating')->sortBy('harga_hitam_putih')->sortBy('harga_berwarna')->toArray();
 
         $partner = Pengelola_Percetakan::where('email_verified_at', '!=', null)->get();
 
