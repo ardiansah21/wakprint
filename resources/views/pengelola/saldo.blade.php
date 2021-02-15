@@ -59,9 +59,7 @@
                     {{ __('Rentang Tanggal') }}
                 </label>
                 <div class="col-md-4">
-                    <input data-timepicker="true" data-language="en" data-time-format="hh:ii" data-position="top left" oninput="this.value = this.text" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal">
-
-                    {{-- <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus> --}}
+                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus>
                 </div>
                 <div class="col-md-4">
                     <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus>
@@ -134,11 +132,11 @@
             filter();
         });
 
-        // $('#tanggalAwal').datepicker({
-        //     uiLibrary: 'bootstrap4',
-        //     format: 'yyyy-mm-dd',
-        //     clearBtn: true
-        // });
+        $('#tanggalAwal').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'yyyy-mm-dd',
+            clearBtn: true
+        });
 
         $('#tanggalAwal').change(function() {
             tanggalAwal = $(this).val();
