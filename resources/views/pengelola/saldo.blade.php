@@ -117,198 +117,104 @@
         </div>
         {{--
     </form> --}}
-    <script>
-        var tanggalAwal = null;
-        var tanggalAkhir = null;
-
-        $('#jenisDanaList span').on('click', function() {
-            $('#jenisDanaButton').text($(this).text());
-            $('#keyword_jenis_transaksi').val($(this).text());
-            $('#jenisDana').val($(this).text());
-            filter();
-        });
-
-        $('#tanggalAwal').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'yyyy-mm-dd',
-            clearBtn: true
-        });
-
-        $('#tanggalAwal').change(function() {
-            tanggalAwal = $(this).val();
-            filter();
-        });
-
-        $('#tanggalAkhir').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'yyyy-mm-dd',
-            clearBtn: true
-        });
-
-        $('#tanggalAkhir').change(function() {
-            tanggalAkhir = $(this).val();
-            filter();
-        });
-
-        function rupiah(val) {
-            return ("Rp. " + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1."));
-        }
-
-        function filter() {
-            var data = {
-                jenisDana: $('#jenisDana').val(),
-                idPartner: $('#idPartner').val(),
-                waktuTransaksi: $('#waktuTransaksi').val(),
-                tanggalTransaksi: $('#tanggalTransaksi').val(),
-                tanggalAwal: tanggalAwal,
-                tanggalAkhir: tanggalAkhir
-            };
-
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url:"{{ route('partner.saldo.filter') }}",
-                method:'GET',
-                data:data,
-                dataType:'json',
-
-                beforeSend:function(){
-                    $('.tbodySaldo').html('<div><img class="mx-auto" id="imgLoading" style="position:relative; left:400%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
-                },
-                uploadProgress: function () {
-                    $('#imgLoading').show();
-                },
-                success:function(transaksiSaldo)
-                {
-                    var rowListSaldo = '';
-                    for(i = 0; i < transaksiSaldo['transaksiSaldo'].length;i++){
-                        rowListSaldo += '<tr>';
-                            rowListSaldo += '<td scope="row">' + transaksiSaldo['transaksiSaldo'][i].id_transaksi + '</td>';
-                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('H:mm') + ' WIB</td>';
-                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('D MMMM Y') + '</td>';
-                            if(transaksiSaldo['transaksiSaldo'][i].jenis_transaksi === 'Tarik'){
-                                rowListSaldo += '<td> Dana Keluar </td>';
-                            }
-                            else{
-                                rowListSaldo += '<td> Dana Masuk </td>';
-                            }
-                            rowListSaldo += '<td>' + rupiah(transaksiSaldo['transaksiSaldo'][i].jumlah_saldo) + '</td>';
-                            rowListSaldo += '<td><a class="text-primary-purple" href="riwayat/'+ transaksiSaldo['transaksiSaldo'][i].id_transaksi +'">Lihat</a></td>';
-                        rowListSaldo += '<tr/>';
-                    }
-
-                    $('#imgLoading').hide();
-                    $('.tbodySaldo').html(rowListSaldo);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.responseText);
-                    alert(thrownError);
-                }
-            })
-        };
-
-    </script>
 
 @endsection
 
 @section('script')
-    {{-- <script>
-        var tanggalAwal = null;
-        var tanggalAkhir = null;
+    <script>
+        $(document).ready(function(){
+            var tanggalAwal = null;
+            var tanggalAkhir = null;
 
-        $('#jenisDanaList span').on('click', function() {
-            $('#jenisDanaButton').text($(this).text());
-            $('#keyword_jenis_transaksi').val($(this).text());
-            $('#jenisDana').val($(this).text());
-            filter();
-        });
-
-        $('#tanggalAwal').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'yyyy-mm-dd',
-            clearBtn: true
-        });
-
-        $('#tanggalAwal').change(function() {
-            tanggalAwal = $(this).val();
-            filter();
-        });
-
-        $('#tanggalAkhir').datepicker({
-            uiLibrary: 'bootstrap4',
-            format: 'yyyy-mm-dd',
-            clearBtn: true
-        });
-
-        $('#tanggalAkhir').change(function() {
-            tanggalAkhir = $(this).val();
-            filter();
-        });
-
-        function rupiah(val) {
-            return ("Rp. " + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1."));
-        }
-
-        function filter() {
-            var data = {
-                jenisDana: $('#jenisDana').val(),
-                idPartner: $('#idPartner').val(),
-                waktuTransaksi: $('#waktuTransaksi').val(),
-                tanggalTransaksi: $('#tanggalTransaksi').val(),
-                tanggalAwal: tanggalAwal,
-                tanggalAkhir: tanggalAkhir
-            };
-
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                }
+            $('#jenisDanaList span').on('click', function() {
+                $('#jenisDanaButton').text($(this).text());
+                $('#keyword_jenis_transaksi').val($(this).text());
+                $('#jenisDana').val($(this).text());
+                filter();
             });
 
-            $.ajax({
-                url:"{{ route('partner.saldo.filter') }}",
-                method:'GET',
-                data:data,
-                dataType:'json',
+            $('#tanggalAwal').datepicker({
+                uiLibrary: 'bootstrap4',
+                format: 'yyyy-mm-dd',
+                clearBtn: true
+            });
 
-                beforeSend:function(){
-                    $('.tbodySaldo').html('<div><img class="mx-auto" id="imgLoading" style="position:relative; left:400%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
-                },
-                uploadProgress: function () {
-                    $('#imgLoading').show();
-                },
-                success:function(transaksiSaldo)
-                {
-                    var rowListSaldo = '';
-                    for(i = 0; i < transaksiSaldo['transaksiSaldo'].length;i++){
-                        rowListSaldo += '<tr>';
-                            rowListSaldo += '<td scope="row">' + transaksiSaldo['transaksiSaldo'][i].id_transaksi + '</td>';
-                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('H:mm') + ' WIB</td>';
-                            rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('D MMMM Y') + '</td>';
-                            if(transaksiSaldo['transaksiSaldo'][i].jenis_transaksi === 'Tarik'){
-                                rowListSaldo += '<td> Dana Keluar </td>';
-                            }
-                            else{
-                                rowListSaldo += '<td> Dana Masuk </td>';
-                            }
-                            rowListSaldo += '<td>' + rupiah(transaksiSaldo['transaksiSaldo'][i].jumlah_saldo) + '</td>';
-                            rowListSaldo += '<td><a class="text-primary-purple" href="riwayat/'+ transaksiSaldo['transaksiSaldo'][i].id_transaksi +'">Lihat</a></td>';
-                        rowListSaldo += '<tr/>';
+            $('#tanggalAwal').change(function() {
+                tanggalAwal = $(this).val();
+                filter();
+            });
+
+            $('#tanggalAkhir').datepicker({
+                uiLibrary: 'bootstrap4',
+                format: 'yyyy-mm-dd',
+                clearBtn: true
+            });
+
+            $('#tanggalAkhir').change(function() {
+                tanggalAkhir = $(this).val();
+                filter();
+            });
+
+            function rupiah(val) {
+                return ("Rp. " + val.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1."));
+            }
+
+            function filter() {
+                var data = {
+                    jenisDana: $('#jenisDana').val(),
+                    idPartner: $('#idPartner').val(),
+                    waktuTransaksi: $('#waktuTransaksi').val(),
+                    tanggalTransaksi: $('#tanggalTransaksi').val(),
+                    tanggalAwal: tanggalAwal,
+                    tanggalAkhir: tanggalAkhir
+                };
+
+                $.ajaxSetup({
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
+                });
 
-                    $('#imgLoading').hide();
-                    $('.tbodySaldo').html(rowListSaldo);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.responseText);
-                    alert(thrownError);
-                }
-            })
-        };
+                $.ajax({
+                    url:"{{ route('partner.saldo.filter') }}",
+                    method:'GET',
+                    data:data,
+                    dataType:'json',
 
-    </script> --}}
+                    beforeSend:function(){
+                        $('.tbodySaldo').html('<div><img class="mx-auto" id="imgLoading" style="position:relative; left:400%; width:64px; height:64px;" src="/img/loading.gif" /></div>');
+                    },
+                    uploadProgress: function () {
+                        $('#imgLoading').show();
+                    },
+                    success:function(transaksiSaldo)
+                    {
+                        var rowListSaldo = '';
+                        for(i = 0; i < transaksiSaldo['transaksiSaldo'].length;i++){
+                            rowListSaldo += '<tr>';
+                                rowListSaldo += '<td scope="row">' + transaksiSaldo['transaksiSaldo'][i].id_transaksi + '</td>';
+                                rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('H:mm') + ' WIB</td>';
+                                rowListSaldo += '<td>' + moment(transaksiSaldo['transaksiSaldo'][i].updated_at).format('D MMMM Y') + '</td>';
+                                if(transaksiSaldo['transaksiSaldo'][i].jenis_transaksi === 'Tarik'){
+                                    rowListSaldo += '<td> Dana Keluar </td>';
+                                }
+                                else{
+                                    rowListSaldo += '<td> Dana Masuk </td>';
+                                }
+                                rowListSaldo += '<td>' + rupiah(transaksiSaldo['transaksiSaldo'][i].jumlah_saldo) + '</td>';
+                                rowListSaldo += '<td><a class="text-primary-purple" href="riwayat/'+ transaksiSaldo['transaksiSaldo'][i].id_transaksi +'">Lihat</a></td>';
+                            rowListSaldo += '<tr/>';
+                        }
+
+                        $('#imgLoading').hide();
+                        $('.tbodySaldo').html(rowListSaldo);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                        alert(thrownError);
+                    }
+                })
+            };
+        });
+    </script>
 @endsection
