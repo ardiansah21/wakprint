@@ -129,7 +129,7 @@ class PartnerController extends Controller
     {
         $partner = Auth::user();
         $id = Pengelola_Percetakan::find(Auth::id());
-        $transaksi_saldo = Transaksi_saldo::all();
+        $transaksi_saldo = $partner->transaksiSaldo;
         // $id = Auth::user($transaksi_saldo->id_pengelola);
         return view('pengelola.saldo', [
             'partner' => $partner,
@@ -191,7 +191,7 @@ class PartnerController extends Controller
             if ($request->jenisDana === 'Dana Masuk') {
                 if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
                     if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
-                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', 'Tarik')
                             ->orWhere('jenis_transaksi', 'Pembayaran')
                             ->where('status', '!=', null)
@@ -199,7 +199,7 @@ class PartnerController extends Controller
                             ->orWhere('updated_at', $request->tanggalAkhir)
                             ->get();
                     } else {
-                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', null)
                             ->orWhere('jenis_transaksi', null)
                             ->where('status', '!=', null)
@@ -208,15 +208,15 @@ class PartnerController extends Controller
                             ->get();
                     }
                 } else {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', Auth::user()->id_pengelola)
-                        ->where('jenis_transaksi', '=', 'Pembayaran')
+                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Pembayaran')
+                        ->where('id_pengelola', '=', $request->idPartner)
                         ->where('status', '!=', null)
                         ->get();
                 }
             } else if ($request->jenisDana === 'Dana Keluar') {
                 if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
                     if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
-                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', 'Tarik')
                             ->orWhere('jenis_transaksi', 'Pembayaran')
                             ->where('status', '!=', null)
@@ -224,7 +224,7 @@ class PartnerController extends Controller
                             ->orWhere('updated_at', $request->tanggalAkhir)
                             ->get();
                     } else {
-                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', null)
                             ->orWhere('jenis_transaksi', null)
                             ->where('status', '!=', null)
@@ -233,15 +233,15 @@ class PartnerController extends Controller
                             ->get();
                     }
                 } else {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', Auth::user()->id_pengelola)
-                        ->where('jenis_transaksi', '=', 'Tarik')
+                    $transaksiSaldo = Transaksi_saldo::where('jenis_transaksi', '=', 'Tarik')
+                        ->where('id_pengelola', '=', $request->idPartner)
                         ->where('status', '!=', null)
                         ->get();
                 }
             } else {
                 if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
                     if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
-                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', 'Tarik')
                             ->orWhere('jenis_transaksi', 'Pembayaran')
                             ->where('status', '!=', null)
@@ -249,7 +249,7 @@ class PartnerController extends Controller
                             ->orWhere('updated_at', $request->tanggalAkhir)
                             ->get();
                     } else {
-                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                        $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', null)
                             ->orWhere('jenis_transaksi', null)
                             ->where('status', '!=', null)
@@ -258,12 +258,10 @@ class PartnerController extends Controller
                             ->get();
                     }
                 } else {
-                    $transaksiSaldo = Auth::user()->transaksiSaldo->where('jenis_transaksi', '!=', 'TopUp')
-                        ->where('status', '!=', null);
-                    // $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
-                    //     ->where('jenis_transaksi', '!=', 'TopUp')
-                    //     ->where('status', '!=', null)
-                    //     ->get();
+                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', '=', $request->idPartner)
+                        ->where('jenis_transaksi', '!=', 'TopUp')
+                        ->where('status', '!=', null)
+                        ->get();
                 }
             }
             return response()->json([
