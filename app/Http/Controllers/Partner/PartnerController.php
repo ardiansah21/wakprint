@@ -188,14 +188,14 @@ class PartnerController extends Controller
     {
         if ($request->ajax()) {
             if ($request->jenisDana === 'Dana Masuk') {
-                if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                    if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
+                if (!empty($request->keyword_tanggal_awal) || !empty($request->keyword_tanggal_akhir)) {
+                    if ($request->keyword_tanggal_awal <= $request->keyword_tanggal_akhir || $request->keyword_tanggal_akhir >= $request->keyword_tanggal_awal) {
                         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', 'Tarik')
                             ->orWhere('jenis_transaksi', 'Pembayaran')
                             ->where('status', '!=', 'Pending')
-                            ->where('updated_at', $request->tanggalAwal)
-                            ->orWhere('updated_at', $request->tanggalAkhir)
+                            ->where('updated_at', $request->keyword_tanggal_awal)
+                            ->orWhere('updated_at', $request->keyword_tanggal_akhir)
                             ->get();
                     } else {
                         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
@@ -213,14 +213,14 @@ class PartnerController extends Controller
                         ->get();
                 }
             } else if ($request->jenisDana === 'Dana Keluar') {
-                if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                    if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
+                if (!empty($request->keyword_tanggal_awal) || !empty($request->keyword_tanggal_akhir)) {
+                    if ($request->keyword_tanggal_awal <= $request->keyword_tanggal_akhir || $request->keyword_tanggal_akhir >= $request->keyword_tanggal_awal) {
                         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', 'Tarik')
                             ->orWhere('jenis_transaksi', 'Pembayaran')
                             ->where('status', '!=', 'Pending')
-                            ->where('updated_at', $request->tanggalAwal)
-                            ->orWhere('updated_at', $request->tanggalAkhir)
+                            ->where('updated_at', $request->keyword_tanggal_awal)
+                            ->orWhere('updated_at', $request->keyword_tanggal_akhir)
                             ->get();
                     } else {
                         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
@@ -238,14 +238,14 @@ class PartnerController extends Controller
                         ->get();
                 }
             } else {
-                if (!empty($request->tanggalAwal) || !empty($request->tanggalAkhir)) {
-                    if ($request->tanggalAwal <= $request->tanggalAkhir || $request->tanggalAkhir >= $request->tanggalAwal) {
+                if (!empty($request->keyword_tanggal_awal) || !empty($request->keyword_tanggal_akhir)) {
+                    if ($request->keyword_tanggal_awal <= $request->keyword_tanggal_akhir || $request->keyword_tanggal_akhir >= $request->keyword_tanggal_awal) {
                         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)
                             ->where('jenis_transaksi', 'Tarik')
                             ->orWhere('jenis_transaksi', 'Pembayaran')
                             ->where('status', '!=', 'Pending')
-                            ->where('updated_at', $request->tanggalAwal)
-                            ->orWhere('updated_at', $request->tanggalAkhir)
+                            ->where('updated_at', $request->keyword_tanggal_awal)
+                            ->orWhere('updated_at', $request->keyword_tanggal_akhir)
                             ->get();
                     } else {
                         $transaksiSaldo = Transaksi_saldo::where('id_pengelola', $request->idPartner)

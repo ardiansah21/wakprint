@@ -59,12 +59,14 @@
                     {{ __('Rentang Tanggal') }}
                 </label>
                 <div class="col-md-4">
-                    <input type="text" id="tanggalAwal" name="keyword_tanggal_awal" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-timepicker="true" data-language="en" data-time-format="hh:ii" data-position="top left" oninput="this.value = this.text">
+                    <input type="text" id="tanggalAwal" name="keyword_tanggal_awal" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-timepicker="true" data-language="en" data-position="top left" oninput="this.value = this.text">
 
                     {{-- <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus> --}}
                 </div>
                 <div class="col-md-4">
-                    <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus>
+                    <input type="text" id="tanggalAkhir" name="keyword_tanggal_akhir" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-timepicker="true" data-language="en" data-position="top left" oninput="this.value = this.text">
+
+                    {{-- <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus> --}}
                 </div>
             </div>
             @if (!empty($transaksi_saldo))
