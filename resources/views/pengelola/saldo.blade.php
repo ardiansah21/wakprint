@@ -59,12 +59,12 @@
                     {{ __('Rentang Tanggal') }}
                 </label>
                 <div class="col-md-4">
-                    <input type="text" id="tanggalAwal" name="keyword_tanggal_awal" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-timepicker="true" data-language="en" data-position="top left" oninput="this.value = this.text">
+                    <input type="text" id="tanggalAwal" name="keyword_tanggal_awal" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-language="en" data-position="top left" oninput="this.value = this.text">
 
                     {{-- <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAwal" name="keyword_tanggal_awal" autofocus> --}}
                 </div>
                 <div class="col-md-4">
-                    <input type="text" id="tanggalAkhir" name="keyword_tanggal_akhir" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-timepicker="true" data-language="en" data-position="top left" oninput="this.value = this.text">
+                    <input type="text" id="tanggalAkhir" name="keyword_tanggal_akhir" class="form-control form-control-lg col-md-6 datepicker-here pt-2 pb-2" placeholder="Masukkan Waktu Estimasi Anda" style="font-size: 16px;" data-language="en" data-position="top left" oninput="this.value = this.text">
 
                     {{-- <input data-provide="datepicker" data-date-format="yyyy-mm-dd H:i:s" class="btn btn-lg shadow-sm border border-gray" id="tanggalAkhir" autofocus> --}}
                 </div>
@@ -137,22 +137,22 @@
                 filter();
             });
 
-            // $('#tanggalAwal').datepicker({
-            //     uiLibrary: 'bootstrap4',
-            //     format: 'yyyy-mm-dd',
-            //     clearBtn: true
-            // });
+            $('#tanggalAwal').datepicker({
+                uiLibrary: 'bootstrap4',
+                format: 'yyyy-mm-dd',
+                clearBtn: true
+            });
 
             $('#tanggalAwal').change(function() {
                 tanggalAwal = $(this).val();
                 filter();
             });
 
-            // $('#tanggalAkhir').datepicker({
-            //     uiLibrary: 'bootstrap4',
-            //     format: 'yyyy-mm-dd',
-            //     clearBtn: true
-            // });
+            $('#tanggalAkhir').datepicker({
+                uiLibrary: 'bootstrap4',
+                format: 'yyyy-mm-dd',
+                clearBtn: true
+            });
 
             $('#tanggalAkhir').change(function() {
                 tanggalAkhir = $(this).val();
