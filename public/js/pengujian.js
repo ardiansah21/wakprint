@@ -94,6 +94,7 @@ $(function() {
             complete: function(xhr) {
                 var data = xhr.responseText;
                 var pdf = JSON.parse(data);
+                var persen = 0;
 
                 $('#placeTable').ready(function() {
 
@@ -111,6 +112,7 @@ $(function() {
                     // document.getElementById('a').setAttribute('src', 'temp_pdf_pengujian/' + pdf["namaFile"])
                     var k = '<tbody>'
                     for (i = 0; i < pdf['halaman'].length; i++) {
+                        persen = (pdf['halaman'][i].piksel_berwarna / pdf['halaman'][i].total_piksel) * 100
                         if (pdf['halaman'][i].jenis_warna == "Berwarna")
                             k += '<tr class= "bg-success">';
                         else
@@ -119,7 +121,7 @@ $(function() {
                         k += '<td>' + pdf['halaman'][i].total_piksel + '</td>';
                         k += '<td>' + pdf['halaman'][i].piksel_berwarna + '</td>';
                         k += '<td>' + pdf['halaman'][i].piksel_hitam_putih + '</td>';
-                        k += '<td>' + pdf['halaman'][i].piksel_berwarna / pdf['halaman'][i].total_piksel * 100 + '%</td>';
+                        k += '<td>' + persen + '%</td>';
                         k += '<td>' + pdf['halaman'][i].jenis_warna + '</td>';
                         k += '</tr>';
                     }
