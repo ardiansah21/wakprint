@@ -80,7 +80,7 @@
                         </thead>
                         <tbody id="tbodySaldo" class="tbodySaldo" style="font-size:12px;">
                             @foreach ($transaksi_saldo as $ts)
-                                {{-- @if (($ts->jenis_transaksi === 'Tarik' || ($ts->jenis_transaksi === 'Pembayaran' && ($ts->status === 'Berhasil' || $ts->status === 'Gagal'))) && $ts->id_pengelola === $partner->id_pengelola) --}}
+                                @if ($ts->status === 'Berhasil' || $ts->status === 'Gagal')
                                     <tr>
                                         <input id="idPartner" type="number" value="{{$ts->id_pengelola}}" hidden>
                                         <input id="waktuTransaksi" type="text" value="{{ date('H:i', strtotime($ts->waktu ?? '')) }}" hidden>
@@ -100,7 +100,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                {{-- @endif --}}
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
