@@ -119,7 +119,7 @@ $(function() {
                         k += '<td>' + pdf['halaman'][i].total_piksel + '</td>';
                         k += '<td>' + pdf['halaman'][i].piksel_berwarna + '</td>';
                         k += '<td>' + pdf['halaman'][i].piksel_hitam_putih + '</td>';
-                        k += '<td>' + (pdf['halaman'][i].piksel_berwarna / pdf['halaman'][i].total_piksel) * 100 + '%</td>';
+                        k += '<td>' + pdf['halaman'][i].piksel_berwarna / pdf['halaman'][i].total_piksel * 100 + '%</td>';
                         k += '<td>' + pdf['halaman'][i].jenis_warna + '</td>';
                         k += '</tr>';
                     }
