@@ -174,6 +174,7 @@
                                             <th>Total Piksel</th>
                                             <th>Total Piksel Berwarna</th>
                                             <th>Total Piksel Hitam Putih</th>
+                                            <th>Persentase Piksel Berwarna</th>
                                             <th>Jenis Warna</th>
                                         </tr>
                                     </thead>

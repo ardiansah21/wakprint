@@ -1,28 +1,27 @@
-
-$(function () {
+$(function() {
     $('.table').hide();
     $('#hasil').hide();
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#loading').hide();
         var bar = $('.bar');
         var percent = $('.percent');
 
         $('#frmUpload').ajaxForm({
-            beforeSend: function () {
+            beforeSend: function() {
                 var percentVal = '0%';
                 bar.width(percentVal)
                 percent.html(percentVal);
                 $('.table').hide();
             },
-            uploadProgress: function (event, position, total, percentComplete) {
+            uploadProgress: function(event, position, total, percentComplete) {
                 var percentVal = percentComplete + '%';
                 bar.width(percentVal)
                 percent.html(percentVal);
 
             },
-            complete: function (xhr) {
+            complete: function(xhr) {
                 // alert('File Uploaded Successfully');
 
                 bar.width('0%')
@@ -85,18 +84,18 @@ $(function () {
 
 
         $('#frmProses').ajaxForm({
-            beforeSend: function () {
+            beforeSend: function() {
                 $('.table').hide();
                 $('#hasil').show();
                 $('#loading').show();
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 
             },
-            complete: function (xhr) {
+            complete: function(xhr) {
                 var data = xhr.responseText;
                 var pdf = JSON.parse(data);
 
-                $('#placeTable').ready(function () {
+                $('#placeTable').ready(function() {
 
                     $('.table').show();
                     $('#loading').hide();
@@ -120,6 +119,7 @@ $(function () {
                         k += '<td>' + pdf['halaman'][i].total_piksel + '</td>';
                         k += '<td>' + pdf['halaman'][i].piksel_berwarna + '</td>';
                         k += '<td>' + pdf['halaman'][i].piksel_hitam_putih + '</td>';
+                        k += '<td>' + (pdf['halaman'][i].piksel_berwarna / pdf['halaman'][i].total_piksel) * 100 + '%</td>';
                         k += '<td>' + pdf['halaman'][i].jenis_warna + '</td>';
                         k += '</tr>';
                     }
