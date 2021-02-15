@@ -258,10 +258,13 @@ class PartnerController extends Controller
                             ->get();
                     }
                 } else {
-                    $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
-                        ->where('jenis_transaksi', '!=', 'TopUp')
+                    $transaksiSaldo = Auth::user()->transaksiSaldo->where('jenis_transaksi', '!=', 'TopUp')
                         ->where('status', '!=', null)
                         ->get();
+                    // $transaksiSaldo = Transaksi_saldo::where('id_pengelola', Auth::user()->id_pengelola)
+                    //     ->where('jenis_transaksi', '!=', 'TopUp')
+                    //     ->where('status', '!=', null)
+                    //     ->get();
                 }
             }
             return response()->json([
