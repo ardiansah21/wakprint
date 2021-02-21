@@ -16,7 +16,6 @@
                 {{__('Detail Transaksi')}}
             </label>
         </span>
-
         <div class="row justify-content-between mb-5">
             <div class="col-md-auto">
                 <label class="font-weight-bold mb-0"
@@ -59,7 +58,6 @@
                     {{$transaksi_saldo->status}}
                 </label>
             </div>
-
             <div class="container col-md-auto">
                 <label class="font-weight-bold mb-0"
                     style="font-size: 16px;">
@@ -98,7 +96,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 

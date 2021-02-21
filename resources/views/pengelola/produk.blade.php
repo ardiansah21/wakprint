@@ -133,8 +133,3 @@
         </div>
     </div>
 @endsection
-@section('script')
-    <script>
-
-    </script>
-@endsection

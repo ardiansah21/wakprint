@@ -100,53 +100,6 @@
                             {{__('Tanggal Promo Mulai') }}
                         </label>
                         <input id="tanggalAwalPromo" name="tanggal_awal_promo" type='text' class="col-md-12 tanggalAwalPromo datepicker-here form-control form-control-lg" oninput="this.value = this.text" data-language="en"/>
-                        {{-- <div class="row justify-content-left mb-3"> --}}
-                            {{-- <div class="form-group col-md-4" required>
-                                <div class="dropdown" aria-required="true">
-                                    <input name="tanggal_mulai_promo" type="text" id="tanggal_mulai_promo" Class="form-control" value="" hidden>
-                                    <button id="tanggalMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{__('Tanggal')}}
-                                    </button>
-                                    <div id="tanggalMulaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTanggalMulaiPromo" style="font-size: 16px; width:100%;">
-                                        @for($i=1;$i<32;$i++)
-                                            <span class="dropdown-item cursor-pointer ">
-                                                {{$i}}
-                                            </span>
-                                        @endfor
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4" required>
-                                <div class="dropdown" aria-required="true">
-                                    <input name="bulan_mulai_promo" type="text" id="bulan_mulai_promo" Class="form-control" value="" hidden>
-                                    <button id="bulanMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{__('Bulan')}}
-                                    </button>
-                                    <div id="bulanMulaiPromoList" class="dropdown-menu" aria-labelledby="dropdownBulanMulaiPromo" style="font-size: 16px; width:100%;">
-                                        @foreach ($month as $m)
-                                            <span class="dropdown-item cursor-pointer ">
-                                                {{$m}}
-                                            </span>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4" required>
-                                <div class="dropdown" aria-required="true">
-                                    <input name="tahun_mulai_promo" type="text" id="tahun_mulai_promo" Class="form-control" value="" hidden>
-                                    <button id="tahunMulaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunMulaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{__('Tahun')}}
-                                    </button>
-                                    <div id="tahunMulaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTahunMulaiPromo" style="font-size: 16px; width:100%;">
-                                        @for($i=2020;$i<2030;$i++)
-                                            <span class="dropdown-item cursor-pointer ">
-                                                {{$i}}
-                                            </span>
-                                        @endfor
-                                    </div>
-                                </div>
-                            </div> --}}
-                        {{-- </div> --}}
                     </div>
                     <div class="col-md-6">
                         <label class="mb-2">
@@ -180,54 +133,6 @@
                             {{__('Tanggal Promo Selesai') }}
                         </label>
                         <input id="tanggalSelesaiPromo" name="tanggal_selesai_promo" type='text' class="col-md-12 datepicker-here form-control form-control-lg" data-language="en" oninput="this.value = this.text"/>
-                        {{-- <div class="row justify-content-left mb-3"> --}}
-
-                            {{-- <div class="form-group col-md-4" required>
-                                <div class="dropdown" aria-required="true">
-                                    <input name="tanggal_selesai_promo" type="text" id="tanggal_selesai_promo" Class="form-control" value="" hidden>
-                                    <button id="tanggalSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTanggalSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{__('Tanggal')}}
-                                    </button>
-                                    <div id="tanggalSelesaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTanggalSelesaiPromo" style="font-size: 16px; width:100%;">
-                                        @for($i=1;$i<32;$i++)
-                                            <span class="dropdown-item cursor-pointer ">
-                                                {{$i}}
-                                            </span>
-                                        @endfor
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4" required>
-                                <div class="dropdown" aria-required="true">
-                                    <input name="bulan_selesai_promo" type="text" id="bulan_selesai_promo" Class="form-control" value="" hidden>
-                                    <button id="bulanSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownBulanSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{__('Bulan')}}
-                                    </button>
-                                    <div id="bulanSelesaiPromoList" class="dropdown-menu" aria-labelledby="dropdownBulanSelesaiPromo" style="font-size: 16px; width:100%;">
-                                        @foreach ($month as $m)
-                                            <span class="dropdown-item cursor-pointer ">
-                                                {{$m}}
-                                            </span>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class="dropdown" aria-required="true">
-                                    <input name="tahun_selesai_promo" type="text" id="tahun_selesai_promo" class="form-control" value="" hidden>
-                                    <button id="tahunSelesaiPromoButton" class="is-flex btn btn-default btn-lg btn-block shadow-sm dropdown-toggle border border-gray" id="dropdownTahunSelesaiPromo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 16px; text-align:left;">
-                                        {{__('Tahun')}}
-                                    </button>
-                                    <div id="tahunSelesaiPromoList" class="dropdown-menu" aria-labelledby="dropdownTahunSelesaiPromo" style="font-size: 16px; width:100%;">
-                                        @for($i=2020;$i<2030;$i++)
-                                            <span class="dropdown-item cursor-pointer ">
-                                                {{$i}}
-                                            </span>
-                                        @endfor
-                                    </div>
-                                </div>
-                            </div> --}}
-                        {{-- </div> --}}
                     </div>
                 </div>
                 <div class="row justify-content-end mr-0">
@@ -439,6 +344,5 @@
             })
         };
     </script>
-
 @endsection
 

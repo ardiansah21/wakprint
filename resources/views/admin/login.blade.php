@@ -11,7 +11,6 @@
             <form method="POST"
                 action="{{ route('admin.login') }}"
                 style="font-size: 18px;">
-                {{-- @csrf --}}
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="email"

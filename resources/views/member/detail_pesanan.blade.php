@@ -327,7 +327,6 @@
                         style="font-size: 36px;">
                         {{__('Info Pesanan') }}
                     </label>
-                    {{-- @foreach ($collection as $item) --}}
                     <div class="row justify-content-between text-right mt-4">
                         <div class="col-md-6 text-left ml-0">
                             <label>

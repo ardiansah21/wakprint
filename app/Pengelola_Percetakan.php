@@ -24,7 +24,6 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
         'status_toko' => 'Buka',
         'ntkwh' => 0,
     ];
-    //  protected $guard = 'partner';
     protected $guarded = [];
 
     protected $hidden = ['password', 'remember_token'];
@@ -70,7 +69,6 @@ class Pengelola_Percetakan extends Authenticable implements HasMedia
             return $this->getMedia('foto_percetakan')->map(function ($media) {
                 return $media->getFullUrl();
             });
-            // return 'https://wakprint.online' . $this->getFirstMediaUrl('foto_percetakan');
         }
 
         return ['https://ui-avatars.com/api/?name=' . trim($this->nama_toko, " ") . '&background=BC41BE&color=F2FF58'];

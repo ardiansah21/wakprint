@@ -56,15 +56,11 @@
         }
     </style>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-
-
 </head>
 
 <body>
     <div class="container">
         <h2 class="my-4">Sistem Deteksi Warna Halaman</h2>
-
-        {{-- <div class="card"> --}}
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="card">
@@ -77,9 +73,7 @@
                                 <input id="my-file-selector" name="file" type="file" accept="application/pdf"
                                     style="display:none" onchange="
                                         $('#upload-file-info').html(this.files[0].name);
-                                        $('#frmUpload').submit();
-                                        // document.getElementById('a').setAttribute('src', 'temp_pdf_pengujian/' +this.files[0].name )
-                                        ">
+                                        $('#frmUpload').submit();">
                                 Upload PDF
                             </label><span class='label label-info ml-2' id="upload-file-info"></span>
 
@@ -87,7 +81,6 @@
                                 <div class="bar"></div>
                                 <div class="percent">0%</div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -96,7 +89,6 @@
                     <div class="card-body">
                         <form id="frmProses" action="{{route('pengujian.proses')}}" method="POST">
                             @csrf
-
                             <input id="path" name="path" type="text" hidden>
                             <div class="row mt-2">
                                 <label for="percenMin" class="mr-3 ml-3">Persentase Minimum Piksel Berwarna:</label>
@@ -104,7 +96,6 @@
                                     placeholder="masukkan persentase minimum piksel berwarna" value="0">
                                 <label for="percenMin" class="ml-1">%</label>
                             </div>
-
                             <button type="submit" class="btn btn-danger mt-4">Proses</button>
                         </form>
                     </div>
@@ -114,21 +105,16 @@
                 <div class="card">
                     <div class="card-header">Preview</div>
                     <div class="card-body p-0">
-                        {{-- <h5 class="card-title">Preview</h5> --}}
-                        <embed id="a" style="width: 100%; height: 317px"
-                            {{-- src="{{url('/temp_pdf_pengujian/Gambar.pdf#zoom=30')}}" --}} type="application/pdf"
+                        <embed id="a" style="width: 100%; height: 317px" type="application/pdf"
                             background-color="#00ff00" frameborder="0" />
-
                     </div>
                 </div>
             </div>
         </div>
-        {{-- </div> --}}
 
         <div class="card mb-5" id="hasil">
             <div class="card-header">Hasil</div>
             <div class="card-body">
-                {{-- <h4 class="card-title">Title</h4> --}}
                 <div id="loading">
                     <img src="{{asset('img/loading.gif')}}" alt="loading..." class="mx-auto d-block">
                     <div id="progressText" class="mx-auto d-block"></div>
@@ -136,10 +122,6 @@
                 <div class="row justify-content-between">
                     <div class="col-md-4">
                         <table class="table borderless w-auto">
-                            {{-- <tr>
-                                <td>Nama file</td>
-                                <td id="namaFile"></td>
-                            </tr> --}}
                             <tr>
                                 <td>Total Persentase Minimum Piksel Berwarna</td>
                                 <td class="align-middle" id="pixelPercenMin"></td>
@@ -184,116 +166,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
     <script src="{{asset('js/pengujian.js')}}"></script>
 </body>
-
 </html>
-
-
-
-{{-- <style>
-    .loading {
-        z-index: 20;
-        position: absolute;
-        top: 0;
-        left: -5px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    .loading-content {
-        position: absolute;
-        border: 16px solid #f3f3f3;
-        /* Light grey */
-        border-top: 16px solid #3498db;
-        /* Blue */
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        top: 50%;
-        left: 50%%;
-        animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
-
-<div class="container">
-    <section id="loading">
-        <div id="loading-content"></div>
-    </section>
-    <form id="form" action={{route('pdf.store')}} method="post" enctype="multipart/form-data">
-@csrf
-<input oninput="submit()" type="file" name="file" id="file" accept="application/pdf">
-</form>
-<div onload="hideLoading()">
-    @if (session()->has('pdf'))
-    @inject('tt', 'App\Http\Controllers\PdfController')
-    {{$tt::cekWarna(session('pdf'))->namaFile}}
-    @endif
-</div>
-</div> --}}
-
-
-
-
-
-
-
-
-
-
-{{-- <!DOCTYPE html>
-<html>
-
-<head>
-    <script data-require="jquery@*" data-semver="3.2.1"
-        src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <script src="http://joaopereirawd.github.io/fakeLoader.js/js/fakeLoader.js"></script>
-    <link rel="stylesheet" href="http://joaopereirawd.github.io/fakeLoader.js/demo/css/fakeLoader.css" />
-
-    <script>
-        window.onload = () => {
-      document.body.addEventListener('keydown', function (e) {
-       if (e.keyCode == 13) {
-       $("#fakeLoader").fadeIn();
-         $("#fakeLoader").fakeLoader({
-           timeToHide:1200, //Time in milliseconds for fakeLoader disappear
-           spinner:"spinner1",//Options: 'spinner1', 'spinner2', 'spinner3','spinner4', 'spinner5', 'spinner6', 'spinner7'
-          });
-        }
-     });
-    }
-    </script>
-</head>
-
-<body>
-    <h1>Hello Plunker!</h1>
-    <div id="fakeLoader"></div>
-
-    <script type="text/javascript">
-        $("#fakeLoader").fakeLoader({
-timeToHide:1200, //Time in milliseconds for fakeLoader disappear
-spinner:"spinner1",//Options: 'spinner1', 'spinner2', 'spinner3','spinner4', 'spinner5', 'spinner6', 'spinner7'
-});
-    </script>
-</body>
-
-</html> --}}

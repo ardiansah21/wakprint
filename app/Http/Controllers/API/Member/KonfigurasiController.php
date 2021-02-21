@@ -76,7 +76,6 @@ class KonfigurasiController extends Controller
     public function show($id)
     {
         $konfigurasi_File = Konfigurasi_File::find($id);
-
         $konfigurasi_File->file_url = $konfigurasi_File->getMedia('file_konfigurasi')[0]->getFullUrl();
         $konfigurasi_File->fitur_terpilih = json_decode($konfigurasi_File->fitur_terpilih, true);
         return responseSuccess("data Konfigurasi file id =" . $konfigurasi_File->id_konfigurasi, $konfigurasi_File);
@@ -243,18 +242,6 @@ class KonfigurasiController extends Controller
     {
         $member = $request->user();
         $pesanan = $member->pesanans->find($idPesanan);
-
-        // $konfigurasi = $pesanan->konfigurasiFile->where('id_pesanan', $idPesanan);
-        // $pesanan->konfigurasiFile->first()->delete();
-
-        // for ($i = 0; $i < count($konfigurasi); $i++) {
-        //     $pesanan->konfigurasiFile->first()->delete();
-        //     if ($i == count($konfigurasi) - 1) {
-        //         $pesanan->delete();
-        //     }
-        // }
-
-        // $pesanan->konfigurasiFile->first()->clearMediaCollection('file_konfigurasi');
         $pesanan->delete();
 
         return responseSuccess("Pesanan berhasil dihapus dan dibatalkan");

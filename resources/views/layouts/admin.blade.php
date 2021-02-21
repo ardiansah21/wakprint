@@ -11,27 +11,8 @@
 
     <title>@yield('title','Wakprint') </title>
 
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script>
-    --}}
     <script src="{{ asset('js/bootsrap.js') }}"></script>
-
-
-    <!-- Data Tables Import Local -->
-
-    {{-- <script src="{{ asset('DataTables/datatables.js') }}"></script>
-    <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('DataTables/DataTables-1.10.21/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('DataTables/DataTables-1.10.21/js/dataTables.bootstrap4.min.js') }}"></script>
-    <link href="{{ asset('DataTables/datatables.css') }}" rel="stylesheet">
-    <link href="{{ asset('DataTables/datatables.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('DataTables/DataTables-1.10.21/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('DataTables/DataTables-1.10.21/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-    --}}
-
-
     <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -59,19 +40,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav ml-auto">
                         @auth
                             <li class="nav-item mr-0">
                                 <a class="nav-link" href="{{ route('profile') }}"
                                     style="display: flex; align-items:center; font-weight:bold; font-size: 18px;">
-                                    {{-- <span
-                                        class="text-primary-purple mr-2">{{ Auth::user()->nama_lengkap }}</span>
-                                    --}}
                                     <span class="text-primary-purple mr-2">
                                         {{ auth()->user()->nama }}
                                     </span>
@@ -80,7 +54,6 @@
                                 </a>
                             </li>
                         @endauth
-                        {{-- @endguest --}}
                     </ul>
                 </div>
             </div>

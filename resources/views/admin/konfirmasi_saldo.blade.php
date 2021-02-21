@@ -62,7 +62,6 @@
 @endsection
 @section('script')
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <!-- Data Tables Import Online -->
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
@@ -172,7 +171,6 @@
             switch (currentTab) {
                 case 'Member':
                     $('#memberSaldoTable tbody tr').on('click', 'tr', function() {
-                        // var id = table.row(this).data();
                         document.location.href = 'saldo/tolak';
                     });
                     saldoMemberTable.columns.adjust().draw();
@@ -180,18 +178,12 @@
                     $('#pills-saldo-pengelola-tab').removeClass('active');
                     break;
                 case 'Pengelola Percetakan':
-                    // $('#container').css( 'display', 'block' );
                     saldoPartnerTable.columns.adjust().draw();
                     $('.li a[href="pills-saldo-pengelola' + tab + '"]').tab('show');
                     $('#pills-saldo-member-tab').removeClass('active');
                     $('#pills-saldo-pengelola-tab').addClass('active');
                     break;
                 default:
-                    // $('ul li a').on('click', function () {
-                    //     $(this).closest('nav ul').find('a.active').removeClass('active');
-                    //     $(this).addClass('active');
-                    // });
-
                     saldoMemberTable.columns.adjust().draw();
                     $('li a[href="pills-saldo-member"]').tab('show');
             }

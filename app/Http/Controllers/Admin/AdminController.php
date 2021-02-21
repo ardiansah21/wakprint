@@ -25,7 +25,6 @@ class AdminController extends Controller
     {
         $member = Member::all();
         $partner = Pengelola_Percetakan::all();
-        $pesanan = Pesanan::all();
         $transaksiSaldo = Transaksi_saldo::all();
 
         $jumlahMember = count($member);

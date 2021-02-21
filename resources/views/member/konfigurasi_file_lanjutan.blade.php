@@ -1,4 +1,3 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
@@ -210,7 +209,7 @@
                                     <input type="checkbox" class="custom-control-input" id="checkboxPaksaHitamPutih"
                                         value="Hitam Putih">
                                     <label class="custom-control-label" for="checkboxPaksaHitamPutih">
-                                        {{ __('Paksa Hitam Putih') }}
+                                        {{ __('Seluruh Halaman Hitam Putih') }}
                                     </label>
                                 </div>
                             </div>
@@ -4235,8 +4234,6 @@
                                                         '#hargaFitur' + index)
                                                     .val());
 
-                                                // pdf.fiturTerpilih.push('namaFitur : ' + $(this).val() + ' hargaFitur : ' + $('#hargaFitur' + index).val());
-
                                                 pdf.fiturTerpilih.push({
                                                     "namaFitur": $(this)
                                                         .val(),
@@ -5219,8 +5216,6 @@
                                                                 '                </div>' +
                                                                 '            </div>';
                                                         }
-
-                                                        // $('#totalHargaKonfigurasi').html('Rp. ' + hargaTotalKonfigurasi);
                                                     }
                                                 }
 

@@ -1,19 +1,15 @@
 @php
-// echo json_encode(($produk->getMedia('foto_produk'))[0]->getUrl());
-// dd(
-// // ($produk->getMedia('foto_produk'))[0]->getUrl()
-// // ($produk->getMedia('foto_produk'))
+    $fitur = json_decode($produk->fitur);
+    $namaFiturArr = ((collect($fitur))->pluck('nama'))->toArray();
 
-// );
-$fitur = json_decode($produk->fitur);
-// dd($fitur);
-$namaFiturArr = ((collect($fitur))->pluck('nama'))->toArray();
-
-function getCF($produk, string $nama){
-$fitur = json_decode($produk->fitur);
-try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasil;
-} catch (\Throwable $th) {return collect();}
-}
+    function getCF($produk, string $nama){
+        $fitur = json_decode($produk->fitur);
+        try {
+            $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasil;
+        } catch (\Throwable $th) {
+            return collect();
+        }
+    }
 @endphp
 
 @extends('layouts.pengelola')
@@ -33,7 +29,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             <label class="font-weight-bold mb-4" style="font-size:36px;">
                 {{__('Edit Produk') }}
             </label>
-            <!-- Rounded switch -->
             <label class="switch mb-5">
                 <input type="checkbox" name="status" value="Tersedia" checked>
                 <span class="slider round"></span>
@@ -48,7 +43,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                 <span>{{__('Klik atau Tarik Foto Produk Anda Disini') }}</span>
             </div>
         </div>
-        {{-- <div class="scrolling-wrapper mb-0"> --}}
         <div class="row justify-content-left" style="height:200px;" hidden>
             <div class="col-md-auto" style="position: relative">
                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
@@ -69,8 +63,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                 </button>
             </div>
         </div>
-        {{-- </div> --}}
-
         <label class="mb-2 h4 font-weight-bold">
             {{__('Nama Produk') }}
         </label>
@@ -79,7 +71,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
                 value="{{$produk->nama}}" aria-label="Masukkan Nama Produk" aria-describedby="inputGroup-sizing-sm"
                 style="font-size:16px;" required>
         </div>
-
         <label class="mb-2 h4 font-weight-bold">
             {{__('Harga Produk') }}
         </label>
@@ -451,14 +442,12 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             $i++;
             $tkey = array_search($value, array_column($fitur, 'nama'));
             if (false !== $tkey) {$f[$i] = $fitur[$tkey];}
-            // echo $f[$i]->foto_fitur . " " .$i;
             @endphp
             <li class="ml-0 mr-0">
                 <div class="row justify-content-between mb-2 ml-0" style="list-style-position: inside">
                     <div class="col-md-2">
                         <img id="blah{{$i}}"
                             src="{{$f[$i]->foto_fitur ?? 'https://via.placeholder.com/163/BC41BE/fff.png?text=Fitur'}}"
-                            {{-- onerror="this.onerror=null; this.src='https:\/\/via.placeholder.com\/163/BC41BE\/fff.png?text=Fitur'" --}}
                             class="img-responsive bg-light" style="width:163px;height:163px;border-radius:10px; object-fit:contain;"
                             alt="foto produk">
                         <a id="editGambarProduk" class="pointer"
@@ -507,7 +496,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
             </li>
             @endif
             @endforeach
-
         </ul>
         <button id="tambahPaket" type="button" class="btn btn-primary-yellow btn-block center SemiBold mt-2 mb-5">
             Tambah Fitur
@@ -676,8 +664,6 @@ try { $hasil = collect((collect($fitur)->where('nama', $nama))[0]); return $hasi
         $('#areaTambah').on("input","#harga",function(){
             this.value=formatRupiah(this.value,"");
         });
-
     });
-
 </script>
 @endsection

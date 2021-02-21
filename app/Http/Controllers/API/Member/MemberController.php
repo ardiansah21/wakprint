@@ -256,9 +256,7 @@ class MemberController extends Controller
     {
         $member = $request->user();
         $alamat = $member->alamat;
-
         $alamat->IdAlamatUtama = $alamat->alamat[$idAlamat]->id;
-
         $member->alamat = $alamat;
         $member->produk_favorit = json_decode($member->produk_favorit, true);
         $member->save();
@@ -544,12 +542,6 @@ class MemberController extends Controller
     {
         $produk = Produk::find($idProduk);
         $produk->fitur = json_decode($produk->fitur, true);
-        // $ulasan = Ulasan::all();
-
-        // $ratingPartner = $produk->where('id_pengelola', $produk->partner->id_pengelola)->avg('rating');
-        // $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
-
-        // $data->rating = $ratingProduk;
         return responseSuccess("Detail produk : ", $produk);
     }
 

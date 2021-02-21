@@ -15,8 +15,6 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     use Notifiable, HasMediaTrait, HasApiTokens;
 
     protected $table = "member";
-
-    // protected $guard = 'member';
     protected $primaryKey = 'id_member';
 
     protected $attributes = [
@@ -25,7 +23,6 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     ];
 
     protected $guarded = [];
-    // protected $guarded = ['id_member', 'created_at', 'updated_at'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -51,11 +48,6 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
         return in_array($idProduk, json_decode($produkFavorit));
     }
 
-    // public function pesanans()
-    // {
-    //     return $this->hasMany(Pesanan::class, 'id_member');
-    // }
-
     public function messages()
     {
         return $this->hasMany('App\Message', 'id_member');
@@ -76,7 +68,6 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
         return $this->hasMany('App\Ulasan', 'id_member');
     }
 
-    ////
     /**
      * The accessors to append to the model's array form.
      *
@@ -108,24 +99,12 @@ class Member extends Authenticable implements HasMedia, MustVerifyEmail
     {
         return $this->hasOne(Message::class, 'from_id')->latest();
     }
-    //endTemp
-
-    // /**
-    //  * The accessors to append to the model's array form.
-    //  *
-    //  * @var array
-    //  */
-    // protected $appends = ['avatar'];
-
-    // public function getAvatarAttribute()
-    // {
-    //     return 'https://ui-avatars.com/api/?name=' . $this->nama_lengkap . '&background=BC41BE&color=F2FF58';
-    // }
 
     public function chatTo()
     {
         return $this->hasOne('App\Chat', 'to_id')->lates();
     }
+
     public function chatFrom()
     {
         return $this->hasOne('App\Chat', 'from_id')->lates();

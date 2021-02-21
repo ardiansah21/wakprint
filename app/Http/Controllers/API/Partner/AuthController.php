@@ -26,7 +26,6 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
-            // return responseError("Data yang anda masukkan tidak valid");
         }
 
         $new_user = new Pengelola_Percetakan();
@@ -65,11 +64,10 @@ class AuthController extends Controller
         }
 
         $user = Pengelola_Percetakan::where('email', $request->email)->first();
+
         if (!Hash::check($request->password, $user->password)) {
             return responseError('Opps..  password anda salah', null, 422);
         }
-
-        //$abilities = $user->role == 'admin' ? ['user:index', 'user:create'] : ['user:index'];
 
         $data = [
             'token' => $user->createToken($request->device_name)->plainTextToken,

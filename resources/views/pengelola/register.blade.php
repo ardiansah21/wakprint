@@ -76,7 +76,6 @@
                         </label>
                         <select id="nama_bank" class="btn btn-default dropdown dropdown-toggle custom-select select border border-gray {{ $errors->has('nama_bank') ? ' is-invalid' : '' }}"
                             name="nama_bank" style="font-size: 18px;">
-                            {{-- @for($date = 1; $date < 32; $date++)  --}}
                                 <option value="BRI">
                                     {{__('BRI')}}
                                 </option>
@@ -89,7 +88,6 @@
                                 <option value="BCA">
                                     {{__('BCA')}}
                                 </option>
-                            {{-- @endfor --}}
                         </select>
                         @if ($errors->has('nama_bank'))
                             <span class="invalid-feedback" role="alert">

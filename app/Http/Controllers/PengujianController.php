@@ -37,5 +37,4 @@ class PengujianController extends Controller
         return response()->json($pdf, 200);
 
     }
-
 }

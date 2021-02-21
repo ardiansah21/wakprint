@@ -56,7 +56,6 @@
                     {{__('Dibatalkan') }}
                 </label>
             @endif
-
         </div>
     </div>
 @endsection

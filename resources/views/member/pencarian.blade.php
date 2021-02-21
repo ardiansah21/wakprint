@@ -263,7 +263,6 @@
             </div>
         </div>
 </div>
-
 @endsection
 
 @section('script')
@@ -412,13 +411,6 @@
                                                     produkItem +='</div>';
                                                 }
                                                 produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
-
-                                                // if(produks['members'].cekProdukFavorit(produks['members'].id_member,produks['produks'][i].id_produk)){
-                                                //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer text-danger" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
-                                                // }
-                                                // else{
-                                                //     produkItem +='<button type="submit" class="btn fa fa-heart fa-2x fa-responsive cursor-pointer" style="position: absolute;top: 5%; left: 87%; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); background:transparent;"></button>';
-                                                // }
                                                 if(produks['produks'][i].foto_produk[0] != null){
                                                     produkItem +='<img class="card-img-top cursor-pointer" src="'+ produks['produks'][i].foto_produk[0] +'" onclick="window.location.href=" style="height: 180px; border-radius: 10px 10px 0px 0px;" alt="Card image cap"/>';
                                                 }
@@ -540,7 +532,6 @@
                     percetakanItem +='</div>';
 
                     $('#imgLoading').hide();
-
                     $('.produk').html(produkItem);
                     $('.percetakan').html(percetakanItem);
                 },

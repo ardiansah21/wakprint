@@ -2,8 +2,6 @@
     $member = Auth::user();
 @endphp
 <div class="card shadow cursor-pointer mb-2" style="border-radius: 10px;">
-    {{-- <a class="text-decoration-none"
-        href="{{ route('detail.produk', $p->id_produk) }}" style="color: black;"> --}}
         @if ($p->status_diskon === 'Tersedia' && !empty($p->jumlah_diskon))
             <div class="text-center" style="position: relative;">
                 <div class="bg-promo"

@@ -81,7 +81,6 @@
                 $('#imgupload').trigger('click');
                 return false;
             });
-
             $("#gambarAtk").on("change", "#imgupload", function() {
                 document.getElementById('gambarAtk').src = window.URL.createObjectURL(this.files[0]);
             });

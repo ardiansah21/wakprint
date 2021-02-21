@@ -24,8 +24,6 @@
                                     <div class="d-flex w-10 justify-content-between">
                                         <label class="SemiBold mb-4" style="font-size: 18px;">ID Pesanan :
                                             @{{ pesanan . id }}</label>
-                                        {{-- <small>3 days ago</small>
-                                        --}}
                                         <span v-if="pesanan.count" class="badge badge-danger">@{{ pesanan . count }}</span>
                                     </div>
                                     <div class="row justify-content-left ml-0 mr-0">
@@ -43,9 +41,6 @@
                                         style="background-color: #7BD6AF; border-radius:8px; color: white; font-size: 12px;">@{{ pesanan . status }}</label>
                                     <label v-else class="badge badge-sm SemiBold py-2 px-2 mb-1"
                                         style="background-color: #FF4949; border-radius:8px; color: white; font-size: 12px;">@{{ pesanan . status }}</label>
-
-                                    {{-- <small>Donec id elit .</small>
-                                    --}}
                                 </a>
                             </div>
                         </div>
@@ -61,23 +56,9 @@
                                     <div class="align-self-center ml-3">
                                         <label class="text-truncate align-middle SemiBold mb-0"
                                             style="font-size:18px; max-width:420px;">
-                                            {{-- @{{ users[this . isActive] . name }}
-                                            --}}
                                             @{{ pengelola . nama }}
-                                            {{-- <i
-                                                class="material-icons md-18 text-primary-success ml-2">
-                                                fiber_manual_record
-                                            </i> --}}
                                         </label>
                                     </div>
-                                    {{-- <div
-                                        class="col-md-auto text-right align-self-center">
-                                        <div class="row justify-content-between">
-                                            <i class="material-icons md-32 mr-4" style="color:#575757;">search</i>
-                                            <i class="material-icons md-32 mr-4" style="color:#575757;">attach_file</i>
-                                            <i class="material-icons md-32 mr-4" style="color:#575757;">more_vert</i>
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
                             <div class="row justify-content-end py-3 px-2 ml-0 mr-0 mb-0"
@@ -116,17 +97,6 @@
                                                 @{{ new Date(message . created_at) . toLocaleString() }}
                                             </p>
                                         </div>
-
-                                        {{-- <div
-                                            class="row justify-content-between mb-4 mt-4 ml-4 mr-4">
-                                            <div class="col-md-5 row row-bordered"></div>
-                                            <p class="col-md-auto my-auto" style="color: #C4C4C4; font-size:12px;">
-                                                {{ __('Hari ini') }}
-                                            </p>
-                                            <div class="col-md-5 row row-bordered"></div>
-                                        </div> --}}
-
-
                                     </div>
                                 </div>
                             </div>

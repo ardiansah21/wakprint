@@ -27,8 +27,6 @@
         </div>
 
         <div class="mb-4 ml-0">
-            <!-- <div class="col-md-3"> -->
-            <!-- btn-group-toggle -->
             <div
                 class="btn-group btn-group-toggle mb-4 ml-2"
                 style="display: inline-table; !importaint"
@@ -67,14 +65,6 @@
             </div>
             <div class="row justify-content-between px-2">
                 <div class="col-ml-auto ml-3">
-                    <!-- <select v-model="urutkan">
-                        <option disabled value>Ururtkan</option>
-                        <option>Terbaru</option>
-                        <option>Harga Berwarna Tertinggi</option>
-                        <option>Harga Berwarna Terendah</option>
-                        <option>Harga Hitam-Putih Tertinggi</option>
-                        <option>Harga Hitam-Putih Terendah</option>
-                    </select>-->
                     <div class="dropdown">
                         <button
                             id="dropdownFilterProduk"
@@ -169,17 +159,6 @@
                             />
                             <label class="custom-control-label" :for="f.uniqid">
                                 {{ f.nama }}
-                                <!-- <i v-tooltip ="{
-                                    content: f.deskripsi,
-                                    placement: 'right-center',
-                                    classes: ['info'],
-                                    targetClasses: ['it-has-a-tooltip'],
-                                    offset: 16,
-                                    delay: {
-                                    show: 500,
-                                    hide: 300,
-                                    },}"
-                                class="material-icons md-18 align-middle ml-2" style="color:#C4C4C4">help</i> -->
                             </label>
                             <v-popover
                                 trigger="hover"
@@ -212,12 +191,6 @@
                 <h1 class="center" v-show="filteredListProduct.length == 0">
                     Maaf produk tidak ditemukan
                 </h1>
-                <!-- <img
-                    v-show="this.$root.loading"
-                    src="https://flevix.com/wp-content/uploads/2019/07/Curve-Loading.gif"
-                    style="position: absolute;"
-                /> -->
-                <!-- {{filteredListProduct}} -->
                 <div
                     v-for="(p, i) in filteredListProduct"
                     :key="i"
@@ -281,10 +254,6 @@ export default {
 
     computed: {
         filteredListProduct() {
-            // return this.produks.filter((p) => {
-            //     return p.nama.toLowerCase().includes(this.search.toLowerCase());
-            // });
-
             var sort = this.urutkan;
             var up = "asc";
             function col() {
@@ -371,8 +340,6 @@ export default {
         [...new Set(arrayColumn(this.produks, "fitur"))].forEach((f) => {
             this.fitur = JSON.parse(f);
         });
-
-        // this.fiturTerpilih = this.fitur;
 
         if (Object.keys(this.$root.user_login).length !== 0) {
             this.produk_favorit_member = this.$root.user_login.produk_favorit;

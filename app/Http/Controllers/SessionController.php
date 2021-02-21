@@ -19,22 +19,12 @@ class SessionController extends Controller
         } else {
             return "tidak ada session";
         }
-
-        // if (session('file')) {
-        //     return session('file');
-        // } else {
-        //     return "tidak ada session";
-        // }
-
     }
 
     public function put(Request $request)
     {
         $request->session()->put('file', 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
         return "Data file sudah ditambah pada session";
-
-        // session(["file" => "DDDDDDDDDDDDDDDDD"]);
-
     }
 
     public function push(Request $request)
@@ -55,11 +45,8 @@ class SessionController extends Controller
 
     public function tes(Request $request)
     {
-        // return "ssss";
-
         $a = $request->session()->get('file.k');
         return $a[0];
-
     }
 
 }

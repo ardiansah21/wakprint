@@ -8,7 +8,6 @@
                 <label class="font-weight-bold mb-4" style="font-size:36px;">
                     {{ __('Tambah Produk') }}
                 </label>
-                <!-- Rounded switch -->
                 <label class="switch mb-5">
                     <input type="checkbox" name="status" value="Tersedia" checked>
                     <span class="slider round"></span>
@@ -53,7 +52,6 @@
             <label class="mb-2 h4 font-weight-bold">
                 {{ __('Harga Produk') }}
             </label>
-
             <div class="py-2 px-3 mb-4" style="border:1px solid #EBD1EC; border-radius:10px; background-color:white;">
                 <div class="custom-control custom-checkbox col-md-3 mb-2">
                     <input name="hitam_putih" type="checkbox" class="custom-control-input" id="checkboxHitamPutih"
@@ -520,6 +518,5 @@
                 this.value=formatRupiah(this.value,"");
             });
         });
-
     </script>
 @endsection

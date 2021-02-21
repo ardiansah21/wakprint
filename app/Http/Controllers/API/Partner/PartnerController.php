@@ -57,7 +57,6 @@ class PartnerController extends Controller
         }
 
         $partner = request()->user();
-        // $partner->clearMediaCollection('foto_percetakan');
 
         if ($request->ntkwh > 100) {
             return responseError('Maaf nilai persentase toleransi minimum halaman berwarna tidak boleh lebih dari 100% yah');
@@ -83,38 +82,10 @@ class PartnerController extends Controller
             $partner->addMedia($request->file('avatar'))->toMediaCollection('avatar');
         }
 
-        // $images = json_decode($request->images,true);
-        // $im = [];
-        // foreach($images as $mag){
-        //     array_push($im,$mag);
-        // }
-        // return responseSuccess("rrrrrrrrrrrrrrrrr",$request->images);
-
-        // return $request->images;
-
-        // return responseSuccess("rrrrrrrrrrrrrrrrr", json_encode( $partner->addMedia($request->file('foto_percetakan')))->toMediaCollection('foto_percetakan'));
-        //  $request->file('foto_percetakan', []);
-
-        // return json_encode($request->file('foto_percetakan', [])[0]);
-        // return $request->all();
-
-        // return $partner->getMedia('foto_percetakan');
-
-        // return $arrOriNamesResponse = collect($request->foto_percetakan)->map(function($i){
-        //             return $i->getClientOriginalName();
-        //     });
-
-        // return $partner->getMedia('foto_percetakan');
-
         if (count($partner->getMedia('foto_percetakan', [])) > 0) {
-
-            // $partner->clearMediaCollection('foto_percetakan');
-            // return "OK";
-
             $arrOriNamesResponse = collect($request->foto_percetakan)->map(function ($i) {
                 return $i->getClientOriginalName();
             });
-            // return $arrOriNamesResponse;
 
             foreach ($partner->getMedia('foto_percetakan') as $media) {
                 if (!in_array($media->file_name, $arrOriNamesResponse->toArray())) {
@@ -124,23 +95,17 @@ class PartnerController extends Controller
             }
         }
 
-        // return $partner->getMedia('foto_percetakan')->pluck('file_name');
-
         $media = $partner->getMedia('foto_percetakan')->pluck('file_name')->toArray();
 
         if (count($request->file('foto_percetakan', [])) > 0) {
             foreach ($request->foto_percetakan as $file) {
                 if (count($media) === 0 || !in_array($file->getClientOriginalName(), $media)) {
-                    // $partner->addMedia(storage_path('tmp/uploads/' . $file->original_name))->toMediaCollection('foto_percetakan');
                     $partner->addMedia($file)->toMediaCollection('foto_percetakan');
                 }
             }
         }
 
         if ($partner->push() && $partner->save()) {
-
-            // return $partner->getMedia('foto_percetakan')->pluck('file_name');
-
             return responseSuccess("Profil berhasil diubah", $partner);
         }
 
@@ -165,17 +130,6 @@ class PartnerController extends Controller
         }
 
         return responseSuccess("Berhasil simpan foto", $arrResponse);
-
-        // $file = $request->file('file');
-
-        // $name = uniqid() . '_' . trim($file->getClientOriginalName());
-
-        // $file->move($path, $name);
-
-        // return response()->json([
-        //     'name' => $name,
-        //     'original_name' => $file->getClientOriginalName(),
-        // ]);
     }
 
     public function saldoIndex()
@@ -249,10 +203,6 @@ class PartnerController extends Controller
 
         if (!empty($transaksiSaldo)) {
             return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
-            // if (count($transaksiSaldo) > 1) {
-            //     return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, $transaksiSaldo);
-            // }
-            // return responseSuccess("Data Saldo Anda : " . $request->jenis_dana, [$transaksiSaldo->first()]);
         }
 
         return responseError("Data Saldo Anda : " . $request->jenis_dana . " Tidak Ditemukan");

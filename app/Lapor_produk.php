@@ -13,6 +13,5 @@ class Lapor_produk extends Model
     public function member()
     {
         return $this->belongsTo('App\Member', 'id_member');
-        // return $this->belongsTo(Pengelola_Percetakan::all());
     }
 }

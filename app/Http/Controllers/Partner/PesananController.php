@@ -39,17 +39,6 @@ class PesananController extends Controller
             $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
             alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
             return redirect()->back();
-            // dd($pesanan->waktu_estimasi);
-            // $pesanan->waktu_estimasi = Carbon::parse($request->waktu_estimasi);
-            // if ($pesanan->waktu_estimasi <= Carbon::now()) {
-            //     alert()->error('Maaf', 'Waktu estimasi tidak boleh menggunakan waktu lampau');
-            //     return redirect()->back();
-            // } else {
-            //     $pesanan->save();
-            //     $pesanan->member->notify(new PesananNotification('pesananDiterimaPercetakan', $pesanan));
-            //     alert()->success('Yeyy pesanan telah diterima !', 'Silahkan lanjutkan proses pencetakan dokumen pelanggan');
-            //     return redirect()->back();
-            // }
         } else {
             alert()->error('Maaf', 'Waktu estimasi tidak boleh kosong');
             return redirect()->back();
@@ -78,14 +67,6 @@ class PesananController extends Controller
     {
         $partner = Pengelola_Percetakan::find(Auth::id());
         $pesanan = $partner->pesanans->find($idPesanan);
-        // $pesanan->status = "Selesai";
-        // $pesanan->transaksiSaldo->status = "Berhasil";
-        // $pesanan->transaksiSaldo->keterangan = "Pesanan telah selesai";
-        // $partner->jumlah_saldo += $pesanan->transaksiSaldo->jumlah_saldo;
-        // $partner->save();
-        // $pesanan->transaksiSaldo->save();
-        // $pesanan->save();
-
         $pesanan->member->notify(new PesananNotification('pesananSelesaiDiCetak', $pesanan));
         $pesanan->partner->notify(new PesananPartnerNotification('pesananSelesai', $pesanan));
         alert()->success('Pesanan Selesai Dicetak', 'Pesanan Anda telah dikonfirmasi selesai mencetak, silahkan konfirmasikan kembali ke pelanggan untuk memastikan penyelesaian proses pencetakan');

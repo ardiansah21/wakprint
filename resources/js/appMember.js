@@ -33,7 +33,6 @@ import pencarianProdukParnerComponent from "./components/pencarianProdukParnerCo
 import cardProdukComponent from "./components/cardProdukComponent.vue";
 import "./chatVue.js";
 import Axios from "axios";
-// import NotificationsDropdown from "./components/NotificationsDropdown";
 
 const appMember = new Vue({
     el: "#app",

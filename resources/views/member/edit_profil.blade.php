@@ -196,10 +196,6 @@
                     style="border-radius:30px; font-size: 24px;">
             </div>
         </form>
-        <script>
-
-        </script>
-
     </div>
 @endsection
 
@@ -209,7 +205,6 @@
             $("#editPhotoButton").on("click",function(){
                 $('#imgupload').trigger('click'); return false;
             });
-
             $("#gambarMember").on("change","#imgupload",function(){
                 document.getElementById('gambarMember').src=window.URL.createObjectURL(this.files[0]);
             });
@@ -225,7 +220,6 @@
                 $('#yearButton').text($(this).text());
                 $('#year').val($(this).text());
             });
-
             $("body").on('click', '.toggle-password1', function() {
                 $(this).toggleClass("fa-eye fa-eye-slash");
                 var inputCurrentPass = $("#current-password");
@@ -235,7 +229,6 @@
                     inputCurrentPass.attr("type", "password");
                 }
             });
-
             $("body").on('click', '.toggle-password2', function() {
                 $(this).toggleClass("fa-eye fa-eye-slash");
                 var inputNewPass = $("#new-password");
@@ -245,7 +238,6 @@
                     inputNewPass.attr("type", "password");
                 }
             });
-
             $("body").on('click', '.toggle-password3', function() {
                 $(this).toggleClass("fa-eye fa-eye-slash");
                 var inputConfirmPass = $("#confirm-password");
@@ -256,6 +248,5 @@
                 }
             });
         });
-
     </script>
 @endsection

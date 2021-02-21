@@ -17,10 +17,6 @@
 
     <script src="{{ asset('js/bootstrap.js') }}"></script>
 
-
-    {{-- <script src="{{ asset('dropzone/dist/min/dropzone.min.js') }}"
-        type="text/javascript"></script> --}}
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -74,14 +70,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::currentRouteName() == 'partner.login')
                                 <li class="nav-i, i8tem">
@@ -98,7 +88,6 @@
                                     </a>
                                 </li>
                             @endif
-
                         @else
                             <li class="nav-item mr-1" style="display: flex; align-items:center;">
                                 <a class="nav-link SemiBold" href="{{ route('partner.chat') }}"
@@ -296,7 +285,6 @@
             rupiah = split[0].substr(0, sisa),
             ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-            // tambahkan titik jika yang di input sudah menjadi angka ribuan
             if(ribuan){
                 separator = sisa ? '.' : '';
                 rupiah += separator + ribuan.join('.');

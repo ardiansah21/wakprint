@@ -12,7 +12,6 @@
                     <label class="font-weight-bold mb-3" style="font-size: 24px"
                         >Penerimaan</label
                     >
-                    <!-- {{ penerimaan }} -->
                     <div
                         class="form-group custom-control custom-radio mb-4"
                         style="font-size: 14px"
@@ -24,14 +23,9 @@
                             type="radio"
                             value="Ditempat"
                             v-model="penerimaan"
-                            checked
-                        />
+                            checked/>
                         <label class="custom-control-label" for="rbAmbilTempat"
-                            >Ambil di Tempat Percetakan</label
-                        >
-                        <label class="text-truncate-multiline mb-2">
-                            <!-- {{ $konfigurasi->product->partner->alamat_toko ?? '-' }} -->
-                        </label>
+                            >Ambil di Tempat Percetakan</label>
                     </div>
                     <div
                         class="form-group custom-control custom-radio mr-0 mb-4"
@@ -123,11 +117,6 @@
                             >{{ rupiah(ongkir) }}</label
                         >
                     </div>
-                    <!-- <button
-                        @click="() => this.$root.gotosite('/profil/alamat')"
-                    >
-                        test
-                    </button>-->
                 </div>
                 <div
                     class="bg-light-purple pl-4 pr-4 pt-4 pb-4"
@@ -245,10 +234,6 @@
                             <th scope="col-md-auto"></th>
                         </tr>
                     </thead>
-                    <!-- <div
-                class="table-scrollbar pl-0 pr-2 mb-5"
-                style="max-height: 270px"
-                    >-->
                     <tbody style="font-size: 14px">
                         <tr v-for="(f, idx) in konFiles" :key="idx">
                             <td scope="row">
@@ -292,7 +277,6 @@
                             </td>
                         </tr>
                     </tbody>
-                    <!-- </div> -->
                 </table>
                 <label class="SemiBold mb-2 ml-0 mr-2">ATK</label>
                 <div
@@ -303,13 +287,6 @@
                     <div
                         class="col-md-4 form-group custom-control custom-checkbox"
                     >
-                        <!-- <input
-                            :id="atk.id_atk + '_atk'"
-                            type="checkbox"
-                            class="custom-control-input"
-                            style="width: 100%"
-                            v-model="jumlahPerAtk[atk.id_atk].terpilih"
-                        />-->
                         <input
                             type="checkbox"
                             :id="atk.id_atk + '_atk'"
@@ -318,39 +295,14 @@
                             v-model="atkTerpilih"
                             :value="atk.id_atk"
                         />
-
-                        <!--
-                            :value="{
-                                id: atk.id_atk,
-                                jumlah: jumlahPerAtk[atk.id_atk],
-                        }"-->
                         <label
                             class="custom-control-label text-break align-middle"
                             :for="atk.id_atk + '_atk'"
-                            style="width: 100%"
-                        >
+                            style="width: 100%">
                             {{ atk.nama }}
-                            <!-- <i
-                                class="material-icons align-middle ml-2"
-                                style="color: #c4c4c4"
-                                >help</i
-                            > -->
                         </label>
                     </div>
                     <div class="col-md-auto form-group">
-                        <!-- <vue-numeric-input
-                            size="100px"
-                            align="center"
-                            :v-model="jumlahPerAtk[atk.id_atk]"
-                            :value="1"
-                            :min="1"
-                            :max="atk.jumlah"
-                            :step="1"
-                            :disabled="isDisabled(atk.id_atk)"
-                            @change="(val) => tt(val)"
-                            @blur="tt(value)"
-                        ></vue-numeric-input>-->
-
                         <vue-numeric-input
                             size="100px"
                             align="center"
@@ -375,8 +327,7 @@
         <button
             class="btn btn-primary-wakprint btn-lg btn-block font-weight-bold mb-5"
             style="border-radius: 30px; font-size: 24px"
-            @click="buatPesanan()"
-        >
+            @click="buatPesanan()">
             Buat Pesanan
         </button>
     </div>
@@ -390,8 +341,8 @@ export default {
     data() {
         return {
             isCheckAll: true,
-            konFileTerpilih: [], //id
-            atkTerpilih: [], //id
+            konFileTerpilih: [],
+            atkTerpilih: [],
             jumlahPerAtk: [],
             penerimaan: "Ditempat",
             ongkir: 0,
@@ -402,7 +353,6 @@ export default {
             this.isCheckAll = !this.isCheckAll;
             this.konFileTerpilih = [];
             if (this.isCheckAll) {
-                // Check all
                 for (var key in this.konFiles) {
                     this.konFileTerpilih.push(
                         this.konFiles[key].id_konfigurasi
@@ -419,7 +369,6 @@ export default {
         },
         isDisabled: function (id) {
             return !this.atkTerpilih.includes(id);
-            // return this.atkTerpilih.find((o) => o.id === id) == undefined;
         },
         onSubtotalFile: function () {
             var totalBiayaFile = 0;
@@ -515,9 +464,6 @@ export default {
         this.konFiles.forEach((v) => {
             this.konFileTerpilih.push(v.id_konfigurasi);
         });
-        // this.atks.forEach((v) => {
-        //     this.jumlahPerAtk[v.id_atk] = { terpilih: Boolean, jumlah: 1 };
-        // });
         this.atks.forEach((v) => {
             this.jumlahPerAtk[v.id_atk] = 1;
         });

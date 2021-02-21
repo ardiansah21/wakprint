@@ -54,7 +54,6 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
         Route::get('/pesanans/batalkan/{pesanan}', 'PesananController@batalkanPesanan');
         Route::get('/pesanans/selesaikan/{pesanan}', 'PesananController@selesaikanPesanan');
         Route::apiResource('/pesanans', 'PesananController');
-
         Route::post('/konfigurasi-file/cekwarna', 'KonfigurasiController@prosesCekWarna');
         Route::post('/konfigurasi-file/update/{id}', 'KonfigurasiController@updateProduk');
         Route::get('/konfigurasi-pesanan', 'KonfigurasiController@konfigurasiPesanan');
@@ -68,7 +67,6 @@ Route::namespace ('API\Member')->prefix('v1')->group(function () {
 Route::namespace ('API\Partner')->prefix('v1/partner')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
-
     Route::middleware('auth:partner-api')->group(function () {
         Route::get('/logout', 'AuthController@logout');
         Route::get('/', 'PartnerController@index');

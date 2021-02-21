@@ -32,7 +32,6 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-
         $fiturFinal = array();
 
         if (!empty($request->fitur)) {
@@ -108,14 +107,8 @@ class ProdukController extends Controller
         return redirect()->route('partner.produk.index')->with('success', 'Anda berhasil menambahkan produk baru Anda');
     }
 
-    public function show($id)
-    {
-        //
-    }
-
     public function edit($id)
     {
-
         $produk = Produk::find($id);
         $fitur = json_decode($produk->fitur);
         return view('pengelola.edit_produk', compact('produk'));
@@ -130,7 +123,6 @@ class ProdukController extends Controller
         } catch (\Throwable $th) {
             return collect();
         }
-
     }
 
     public function update(Request $request, Produk $produk)
@@ -247,9 +239,7 @@ class ProdukController extends Controller
         }
 
         $file = $request->file('file');
-
         $name = uniqid() . '_' . trim($file->getClientOriginalName());
-
         $file->move($path, $name);
 
         return response()->json([
@@ -260,15 +250,13 @@ class ProdukController extends Controller
 
     public function duplicate($id)
     {
-
         $produkA = Produk::find($id);
         $produkB = $produkA->replicate();
         $produkB->status = "TidakTersedia";
         $produkB->nama = $produkA->nama . " [ SALINAN ]";
-
         $fiturDefault = array('Kliping', 'Lem', 'Baut', 'Kawat', 'Spiral', 'Hekter', 'Tulang Kliping', 'Penjepit Kertas', 'Plastik Transparan', 'Kertas Jeruk');
-
         $fitur = json_decode($produkB->fitur);
+
         foreach ($fitur as $value) {
             if (isset($value->foto_fitur) && !in_array($value->foto_fitur, $fiturDefault)) {
                 $name = basename($value->foto_fitur);
@@ -277,6 +265,7 @@ class ProdukController extends Controller
                 $value->foto_fitur = url('/storage/_fitur') . '/copy-' . $name;
             }
         }
+
         $produkB->fitur = json_encode($fitur);
         $produkB->push();
 
@@ -293,15 +282,17 @@ class ProdukController extends Controller
         return redirect()->back()->with('success', 'Anda berhasil menduplikat produk Anda');
     }
 
-//Helper
+    //Helper
     public function setFitur($nama, $harga, $deskripsi = null, $foto_fitur = null)
     {
         $fitur = new stdClass();
         $fitur->nama = $nama;
         $fitur->harga = $harga;
+
         if ($deskripsi != null) {
             $fitur->deskripsi = $deskripsi;
         }
+
         $fitur->foto_fitur = $foto_fitur;
         $fitur->uniqid = uniqid() . $nama;
 
@@ -323,7 +314,6 @@ class ProdukController extends Controller
             $this->setFitur('Kertas Jeruk', 'https://cdn.siplah.pesonaedu.id/uploads/6f84a30ff9f80054908cb570c0a86c6743e9f6683f18602a0d89901bf781fc64/51826/image.png', 'Hasil cetakan Anda akan sekaligus diberikan kertas jeruk untuk halaman belakang pada dokumen Anda.'),
         );
 
-        // $key = array_search($keyword, array_column($fiturTemplate, 'name'));
         $key = array_search($keyword, array_column($fiturTemplate, 'nama'));
         $fiturTemplate[$key]['harga'] = $harga;
         return $fiturTemplate[$key];

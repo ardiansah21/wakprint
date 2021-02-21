@@ -22,7 +22,6 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
-            // return responseError("Data yang anda masukkan tidak valid");
         }
 
         $new_user = new Member;
@@ -60,7 +59,6 @@ class AuthController extends Controller
         }
 
         $user->produk_favorit = json_decode($user->produk_favorit, true);
-        //$abilities = $user->role == 'admin' ? ['user:index', 'user:create'] : ['user:index'];
 
         $data = [
             'token' => $user->createToken($request->device_name)->plainTextToken,

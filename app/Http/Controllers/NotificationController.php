@@ -37,7 +37,6 @@ class NotificationController extends Controller
         if (request()->is('api/*')) {
             return responseSuccess("notifikasi id: " . $request->id . " telah dibaca ");
         }
-        // return auth(activeGuard())->user()->unreadNotifications;
     }
 
     public function readAll()

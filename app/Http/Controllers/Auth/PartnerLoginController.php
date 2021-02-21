@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Pengelola_Percetakan;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Pengelola_Percetakan;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
 
 class PartnerLoginController extends Controller
 {
@@ -37,23 +36,18 @@ class PartnerLoginController extends Controller
 
     public function register(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:100',
-        //     'email' => 'required|string|email|max:255|unique:Pengelola_Percetakan',
-        //     'password' => 'required|string|min:6|confirmed'
-        // ]);
         Pengelola_Percetakan::create([
             'nama_lengkap' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('partner.login')->with('success','Registration Success');
+        return redirect()->route('partner.login')->with('success', 'Registration Success');
     }
 
     public function login(Request $request)
     {
-        if (auth()->guard('partner')->attempt(['email' => $request->email, 'password' => $request->password ])) {
+        if (auth()->guard('partner')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('partner.home');
         }
 

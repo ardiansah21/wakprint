@@ -21,9 +21,7 @@
         {{__('Wakprint - Web Versi 1.0')}}
     </label>
     <p class="mb-4 ml-0" style="font-size: 16px;">
-        {{__('Wakprint adalah platform yang menghubungkan semua printer di seluruh Indonesia secara online untuk menjawab kebutuhan pencetakan dokumen Anda. Ribuan printer yang telah menjadi rekanan Wakprint, dapat diakses oleh Anda dengan mudah. Kirimkan dokumen dan ambil serta bayar dokumen anda langsung ke rekanan kami. Sekarang, mencetak dokumen dapat dilakukan di mana pun dengan
-                                mudah pada jaringan printer di Wakprint.com
-                                Untuk informasi lebih lanjut dapat Anda lihat selengkapnya di sosial media kami dibawah dan support terus karya anak bangsa untuk Indonesia lebih maju dan sejahtera.')}}
+        {{__('Wakprint adalah platform yang menghubungkan semua printer di seluruh Indonesia secara online untuk menjawab kebutuhan pencetakan dokumen Anda. Ribuan printer yang telah menjadi rekanan Wakprint, dapat diakses oleh Anda dengan mudah. Kirimkan dokumen dan ambil serta bayar dokumen anda langsung ke rekanan kami. Sekarang, mencetak dokumen dapat dilakukan di mana pun dengan mudah pada jaringan printer di Wakprint.com. Untuk informasi lebih lanjut dapat Anda lihat selengkapnya di sosial media kami dibawah dan support terus karya anak bangsa untuk Indonesia lebih maju dan sejahtera.')}}
     </p>
     <div class="row justify-content-left mb-5 ml-0 mr-0">
         <div class="col-md-auto ml-0">

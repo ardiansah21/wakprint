@@ -40,39 +40,4 @@ class Chat extends Model
     {
         return $this->belongsTo('App\Pengelola_Percetakan');
     }
-
-    // /////
-
-    // // public function userFrom()
-    // // {
-    // //     Log::info($this->id_pesanan);
-    // //     if ($this->from === "member") {
-    // //         return $this->belongsTo(Member::class, 'id_member', 'from_id');
-    // //         // return $this->belo;
-    // //     } else {
-    // //         return $this->belongsTo('App\Pengelola_Percetakan', 'from_id');
-    // //     }
-    // // }
-    // // public function userTo()
-    // // {
-    // //     if ($this->from === 'member') {
-    // //         return $this->belongsTo('App\Pengelola_Percetakan', 'to_id');
-    // //     }
-    // //     return $this->belongsTo('App\Member', 'to_id');
-    // // }
-
-    // public function users()
-    // {
-    //     return $this->belongsTo(Member::class, 'from_id');
-    // }
-
-    // public function userFrom()
-    // {
-    //     return $this->belongsTo(Member::class, 'from_id');
-    // }
-
-    // public function userTo()
-    // {
-    //     return $this->belongsTo(Member::class, 'to_id');
-    // }
 }

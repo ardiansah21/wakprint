@@ -1,8 +1,6 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
-
 <div class="pt-5 pb-5 img-responsive d-flex justify-content-center pl-0 pr-0" style="background-image: url(img/bg-unggah.png);background-size: cover;">
     <div ondragover="" id="areaUnggah" class="row border border-white text-white align-self-center ml-5 mr-5" style="width:250px;height:250px; background-color:transparent !important;">
         <form action="{{ route('upload.file.home') }}" class="dropzone" method="POST" enctype="multipart/form-data" style="width:100% ;background-color:transparent !important;">
@@ -161,23 +159,9 @@
             clickable: true,
             timeout:180000,
         });
-        // myDropzone.on("success", function(pdf){
-
-        //     // window.location.href = "{{route('konfigurasi.file',['pdf'=>"v"])}}";
-        //     // if (myDropzone.getUploadingFiles().length === 0 && myDropzone.getQueuedFiles().length === 0) {
-        //         alert('sukses'));
-        //     // }
-        //     // document.body.innerHTML += <form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"><input type="hidden" name="file" value="+pdf}}"></form>';
-        //     // document.getElementById("Form").submit();
-        // });
         myDropzone.on("success", function(file, xhr, formData){
-                // document.body.innerHTML += '<form id="Form"action="{{ route('upload.test') }}" method="POST" enctype="multipart/form-data"> @csrf <input type="text" name="namaFile" value="'+xhr.pdf.namaFile+'"> <input type="text" name="jumlahHalaman" value="'+xhr.pdf.jumlahHalaman+'"> <input type="text" name="jumlahHalBerwarna" value="'+xhr.pdf.jumlahHalBerwarna+'"> <input type="text" name="jumlahHalHitamPutih" value="'+xhr.pdf.jumlahHalHitamPutih+'"> <input type="text" name="path" value="'+xhr.pdf.path+'"></form>';
-                // document.getElementById("Form").submit();
                 window.location.href="/konfigurasi-file";
         });
-    //     myDropzone.on("sending", function(file, xhr, formData) {
-    //         formData.append("filesize", file.size);
-    //    });
 </script>
 <script>
     $(document).ready(function(){

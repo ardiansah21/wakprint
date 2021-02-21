@@ -31,11 +31,6 @@ class PartnerForgotPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    // protected function broker()
-    // {
-    //     return Password::broker('partner');
-    // }
-
     /**
      * Display the form to request a password reset link.
      *

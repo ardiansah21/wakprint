@@ -13,15 +13,6 @@ use stdClass;
 
 class ChatController extends Controller
 {
-    /**
-     * Instantiate a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
 
     //untuk member
     public function index()
@@ -31,19 +22,6 @@ class ChatController extends Controller
 
     public function pesanan()
     {
-        // if (auth()->guard('partner')->check()) {
-        //     $pesanans = auth()->guard('partner')->user()->pesanan;
-        // } else {
-        //     $pesanans = Auth::user()->pesanans;
-        // }
-
-        // if (auth()->guard('partner')->check()) {
-        //     $pesanans = auth()->guard('partner')->user()->pesanan;
-        // } elseif (auth()->guard('partner-api')->check()) {
-        //     $pesanans = auth()->guard('partner-api')->user()->pesanan;
-        // } else {
-        //     $pesanans = Auth::user()->pesanans;
-        // }
         if (!activeGuard()) {
             return response()->json(['error' => "Unauthenticated."], 401);
         }
@@ -55,7 +33,6 @@ class ChatController extends Controller
 
             if ($pesanan->isPaid() && $pesanan->status !== null) {
                 $data = new stdClass();
-                // if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
                 if (auth(activeGuard())->user() instanceof Member) {
                     $data->id = $pesanan->id_pesanan;
                     $data->nama_toko = $pesanan->partner->nama_toko;
@@ -103,17 +80,11 @@ class ChatController extends Controller
         $chat = Chat::where('id_pesanan', $id)->orderBy("created_at", "desc")->get();
         if (!$chat->isEmpty()) {
             if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
-                // $count = Chat::where('id_pesanan', $id)
-                //     ->where('from_user', "member")
-                //     ->whereNull('read_at')->count();
                 Chat::where('id_pesanan', $id)
                     ->where('from_user', "member")
                     ->whereNull('read_at')
                     ->update(['read_at' => now()]);
             } else {
-                // $count = Chat::where('id_pesanan', $id)
-                //     ->where('from_user', "partner")
-                //     ->whereNull('read_at')->count();
                 Chat::where('id_pesanan', $id)
                     ->where('from_user', "partner")
                     ->whereNull('read_at')
@@ -163,8 +134,6 @@ class ChatController extends Controller
 
     protected function read($id)
     {
-        // return auth(activeGuard())->user()->pesanan;
-
         if (Auth::guard('partner')->check() || auth('partner-api')->check()) {
             Chat::where('id_pesanan', $id)
                 ->where('from_user', "member")

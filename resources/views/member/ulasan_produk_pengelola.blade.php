@@ -1,4 +1,3 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
@@ -23,7 +22,6 @@
                     share
                 </i>
         </a>
-        {{-- <i class="material-icons md-32 cursor-pointer ml-4">share</i> --}}
     </div>
     @php
         $urutkanRating = array('Semua', 'Rating Tertinggi ke Terendah', 'Rating Terendah ke Tertinggi');
@@ -78,7 +76,6 @@
                     dataType: 'json',
 
                     beforeSend: function() {
-                        // $('.ulasanProduk').css('color', '#dfecf6');
                         $('.ulasanProduk').html(
                             '<div class="mx-auto" style="position:relative; left:40%;"><img id="imgLoading" style="" src="/img/loading.gif" /></div>'
                         );

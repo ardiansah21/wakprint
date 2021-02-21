@@ -54,7 +54,6 @@ class AtkController extends Controller
             'harga' => (int) str_replace('.', '', $request->harga),
             'jumlah' => $request->jumlah,
         ]);
-        // $atk->clearMediaCollection();
         if ($request->hasFile('foto_atk')) {
             $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
         }

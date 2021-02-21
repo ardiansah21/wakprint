@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +18,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -39,15 +38,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function showLoginForm() //Go web.php then you will find this route
+
     {
         return view('admin.login');
     }
 
     public function login(Request $request) //Go web.php then you will find this route
+
     {
-         $this->validateLogin($request);
+        $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);
@@ -59,12 +60,11 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->guard('admin')->logout();
-
         $request->session()->invalidate();
 
         return redirect('admin/login');
     }
-    protected function guard() 
+    protected function guard()
     {
         return Auth::guard('admin');
     }

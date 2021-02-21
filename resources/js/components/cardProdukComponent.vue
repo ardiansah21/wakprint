@@ -27,7 +27,6 @@
                     >
                 </div>
             </div>
-            <!-- <span>{{this.$root.member.nama_lengkap}}</span> -->
             <button
                 v-show="Object.keys(this.$root.user_login).length !== 0"
                 class="btn fa fa-heart fa-2x fa-responsive cursor-pointer"

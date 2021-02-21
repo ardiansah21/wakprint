@@ -1,4 +1,3 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')

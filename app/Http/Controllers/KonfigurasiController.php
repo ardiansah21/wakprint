@@ -31,7 +31,6 @@ class KonfigurasiController extends Controller
         $path = public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR) . $fileName;
 
         $countPage = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
-        // $countPage = 5;
         $fileUpload = new stdClass();
         $fileUpload->name = $fileName;
         $fileUpload->path = $path;
@@ -144,11 +143,6 @@ class KonfigurasiController extends Controller
             $media = $konfigurasi->getFirstMedia('file_konfigurasi');
             $media->delete();
             $konfigurasi->addMedia($request->fileKonfigurasi)->toMediaCollection('file_konfigurasi');
-            // if ($request->session()->has('produkKonfigurasiFile')) {
-            //     $konfigurasi->addMedia($konfigurasi->getFirstMedia('file_konfigurasi'))->toMediaCollection('file_konfigurasi');
-            // } else {
-            //     $konfigurasi->addMedia($request->fileKonfigurasi)->toMediaCollection('file_konfigurasi');
-            // }
         }
 
         $request->session()->forget('fileUpload');
@@ -217,9 +211,7 @@ class KonfigurasiController extends Controller
     {
         $member = Auth::user();
         $konfigurasi = $member->konfigurasi->first()->find($id);
-        // $pesanan = $konfigurasi->pesanan;
         $konfigurasi->delete();
-        // $pesanan->delete();
         return response()->json(['status' => 'success'], 204);
     }
 

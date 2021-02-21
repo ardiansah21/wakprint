@@ -1,4 +1,3 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
@@ -13,7 +12,6 @@
             <div class="row mt-5">
                 <div class="col-md-4">
                     <div class="card shadow mb-2" style="border-radius: 10px;">
-                        {{-- <a class="text-decoration-none" href="{{ route('detail.produk',$produk->id_produk) }}" style="color: black;"> --}}
                             @if ($produk->status_diskon === 'Tersedia' && !empty($produk->jumlah_diskon))
                                 <div class="text-center" style="position: relative;">
                                     <div class="bg-promo" style="position: absolute; top: 55%; left: 10%;
@@ -134,7 +132,6 @@
                                     </div>
                                 </div>
                             </div>
-                        {{-- </a> --}}
                     </div>
                 </div>
                 <div class="col-md-8">

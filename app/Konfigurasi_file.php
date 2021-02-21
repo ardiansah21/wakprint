@@ -13,18 +13,6 @@ class Konfigurasi_file extends Model implements HasMedia
     protected $table = "konfigurasi_file";
     protected $primaryKey = 'id_konfigurasi';
     protected $guarded = [];
-    // protected $fillable = ['id_konfigurasi','id_member','id_produk','nama_file','jumlah_halaman_berwarna','jumlah_halaman_hitamputih','halaman_terpilih','jumlah_salinan','paksa_hitamputih','biaya','catatan_tambahan','nama_produk','fitur_terpilih','waktu'];
-
-    // /**
-    //  * The attributes that should be cast to native types.
-    //  *
-    //  * @var array
-    //  */
-    // protected $casts = [
-    //     'halaman_terpilih' => 'array',
-    // ];
-
-    //
 
     public function registerMediaCollections(): void
     {

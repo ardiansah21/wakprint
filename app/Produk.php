@@ -66,20 +66,9 @@ class Produk extends Model implements HasMedia
             return $this->getMedia('foto_produk')->map(function ($media) {
                 return $media->getFullUrl();
             });
-            // return 'https://wakprint.online' . $this->getFirstMediaUrl('foto_produk');
         }
         return ['https://ui-avatars.com/api/?name=' . trim($this->nama, " ") . '&background=BC41BE&color=F2FF58'];
     }
-
-    // public function fotoProduk()
-    // {
-    //     return $this->hasMany(Media::class, 'model_id', 'foto_produk');
-    // }
-
-    // public function getFotoProdukUrlAttribute()
-    // {
-    //     return $this->fotoProduk->getUrl('foto_produk');
-    // }
 
     public function isFavoritProduct()
     {
@@ -97,14 +86,11 @@ class Produk extends Model implements HasMedia
     public function partner()
     {
         return $this->belongsTo('App\Pengelola_Percetakan', 'id_pengelola');
-        // return $this->belongsTo(Pengelola_Percetakan::all());
     }
 
     public function konfigurasiFile()
     {
-        // return $this->hasOne('App\Konfigurasi_file', 'id_konfigurasi');
         return $this->hasOne('App\Konfigurasi_file', 'id_produk');
-        // return $this->belongsTo(Pengelola_Percetakan::all());
     }
 
     public function atks()

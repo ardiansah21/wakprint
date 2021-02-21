@@ -127,13 +127,14 @@ class PesananController extends Controller
         $data->biaya = $pesanan->biaya;
         $data->jumlah_file = count($pesanan->konfigurasiFile);
         $data->nama_file = $pesanan->konfigurasiFile->pluck('nama_file')->all();
+
         if ($pesanan->atk_terpilih[0][0] != "") {
             $data->atk_terpilih = json_decode($pesanan->atk_terpilih, true);
         }
+
         $data->updated_at = $pesanan->updated_at;
         $data->konfigurasi_file = $pesanan->konfigurasiFile;
 
-        $arrFiturTerpilih = [];
         foreach ($data->konfigurasi_file as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
@@ -177,7 +178,6 @@ class PesananController extends Controller
         $pesanan->nama_lengkap = $pesanan->member->nama_lengkap;
         $pesanan->alamat_toko = $pesanan->partner->alamat_toko;
 
-        $arrFiturTerpilih = [];
         foreach ($pesanan->konfigurasi_file as $k) {
             $k->halaman_terpilih = json_decode($k->halaman_terpilih, true);
             $k->fitur_terpilih = json_decode($k->fitur_terpilih, true);
@@ -235,7 +235,6 @@ class PesananController extends Controller
                         ->where('status', $request->status_pesanan)
                         ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                         ->orWhere('id_pesanan', $request->keyword_filter)
-                    // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                         ->orderBy('updated_at', 'desc')
                         ->get();
 
@@ -244,7 +243,6 @@ class PesananController extends Controller
                         ->where('status', $request->status_pesanan)
                         ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                         ->orWhere('id_pesanan', $request->keyword_filter)
-                    // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                         ->orderBy('biaya', 'desc')
                         ->get();
                 } else if ($request->urutkan_pesanan === 'Harga Terendah') {
@@ -252,7 +250,6 @@ class PesananController extends Controller
                         ->where('status', $request->status_pesanan)
                         ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                         ->orWhere('id_pesanan', $request->keyword_filter)
-                    // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                         ->orderBy('biaya', 'asc')
                         ->get();
                 } else {
@@ -261,7 +258,6 @@ class PesananController extends Controller
                             ->where('status', $request->status_pesanan)
                             ->where('metode_penerimaan', 'like', '%' . $request->keyword_filter . '%')
                             ->orWhere('id_pesanan', $request->keyword_filter)
-                        // ->orWhere('nama_lengkap', 'like', '%' . $request->keyword_filter . '%')
                             ->get();
                     }
                 }

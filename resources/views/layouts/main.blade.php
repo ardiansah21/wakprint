@@ -17,18 +17,17 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('dropzone/dist/min/dropzone.min.css')}}">
-    
-     <!-- Fonts -->
-     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
-     <link href="https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_bZF3gnD_g.woff2" rel="stylesheet">
-     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
+    <link href="https://fonts.gstatic.com/s/montserrat/v14/JTURjIg1_i6t8kCHKm45_bZF3gnD_g.woff2" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous" />
 
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
 
 </head>
 <body>
@@ -56,9 +55,7 @@
     <script>
         $(document).on('ajaxComplete ready', function () {
             $('.modalMd').off('click').on('click', function (e) {
-                //
-                
-                $("#modalMd").modal('show');    
+                $("#modalMd").modal('show');
                 $('#modalMdContent').load($(this).attr('href'));
                 alert("jhjhghfyt");
                 $('#modalMdTitle').html($(this).attr('title'));

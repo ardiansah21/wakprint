@@ -1,4 +1,3 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
@@ -103,6 +102,7 @@
             </div>
             <label style="font-size: 16px;">{{ __('Silahkan tambahkan alamat pengiriman Anda') }}</label>
         @endif
+
         {{-- popup modal tambah alamat --}}
         <div class="modal fade" id="tambahAlamatModal" tabindex="-1" role="dialog" aria-labelledby="alamatModalLabel"
             aria-hidden="true">

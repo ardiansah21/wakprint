@@ -1,4 +1,3 @@
-<!-- Menghubungkan dengan view template master -->
 @extends('layouts.member')
 
 @section('content')
@@ -85,19 +84,6 @@
             </div>
         </form>
         <div class="mb-2">
-            {{-- <label class="row justify-content-center mb-0"
-            style="font-size: 18px; text-align:center">
-                {{__('Atau')}}
-            </label>
-            <br>
-            <button class="btn btn-outline-danger btn-lg btn-block font-weight-bold mb-4"
-            style="border-radius:30px;font-size: 24px;">
-                {{__('Daftar dengan Google')}}
-            </button>
-            <button class="btn btn-outline-primary btn-lg btn-block font-weight-bold mb-4"
-            style="border-radius:30px;font-size: 24px;">
-                {{__('Daftar dengan Facebook')}}
-            </button> --}}
             <label class="row justify-content-center mb-4"
             style="font-size: 18px;">
                 {{__('Sudah punya akun ?')}}

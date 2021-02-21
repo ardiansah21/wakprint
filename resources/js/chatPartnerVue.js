@@ -5,7 +5,6 @@ window.Vue = require("vue");
 Vue.component("chat-partner-component", {
     data() {
         return {
-            // user_login: document.querySelector('meta[name="user_login"]').content,
             id: document.querySelector('meta[name="user_id"]').content,
             pesanans: [],
             isActive: null,

@@ -36,10 +36,6 @@
                     <th scope="col-md-auto"></th>
                 </tr>
             </thead>
-            <!-- <div
-                class="table-scrollbar pl-0 pr-2 mb-5"
-                style="max-height: 270px"
-            > -->
             <tbody style="font-size: 14px">
                 <tr v-for="(f, idx) in konFiles" :key="idx">
                     <td scope="row">
@@ -81,7 +77,6 @@
                     </td>
                 </tr>
             </tbody>
-            <!-- </div> -->
         </table>
     </div>
 </template>
@@ -92,7 +87,7 @@ export default {
     data() {
         return {
             isCheckAll: true,
-            konFileTerpilih: [], //id
+            konFileTerpilih: [],
             pesanan: {},
         };
     },
@@ -101,7 +96,6 @@ export default {
             this.isCheckAll = !this.isCheckAll;
             this.konFileTerpilih = [];
             if (this.isCheckAll) {
-                // Check all
                 for (var key in this.konFiles) {
                     this.konFileTerpilih.push(
                         this.konFiles[key].id_konfigurasi
@@ -122,7 +116,6 @@ export default {
         this.konFiles.forEach((v) => {
             this.konFileTerpilih.push(v.id_konfigurasi);
         });
-        // this.$root.$data.current_pesanan
     },
 };
 </script>

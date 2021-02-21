@@ -26,21 +26,11 @@ use Validator;
 
 class MemberController extends Controller
 {
-
-    private $idProduk;
-    private $f;
-
-    public function __construct()
-    {
-
-    }
-
-////
-
     public function member()
     {
         return response()->json(Auth::user(), 200);
     }
+
     public function uploadPdf(Request $request)
     {
         $file = $request->file('file');
@@ -64,8 +54,6 @@ class MemberController extends Controller
 
         return view('member.konfigurasi_file_lanjutan', compact('pdf', 'produk'));
     }
-
-////
 
     public function index(Request $request)
     {
@@ -564,7 +552,6 @@ class MemberController extends Controller
         $atk = Atk::all();
         $ulasan = Ulasan::all();
         $ratingPartner = $produk->where('id_pengelola', $idProduk)->avg('rating');
-        // $ratingProduk = $ulasan->where('id_produk', $produk->id_produk)->avg('rating');
 
         if (empty($ratingPartner)) {
             $ratingPartner = $partner->rating_toko;
@@ -597,54 +584,12 @@ class MemberController extends Controller
 
     public function upload(Request $request)
     {
-        // $this->validate($request, [
-        //     'file' => 'required',
-        // ]);
-        // $file = $request->file('file');
-        // // $k = Konfigurasi_file::insertGetId([
-        // //     'nama_file' => $file->getClientOriginalName(),
-        // //     'waktu' => now(),
-        // // ]);
-        // // $idProdukd = $k;
-        // $path = $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload'), $file->getClientOriginalName());
-        // $pdf = $this->cekWarna($file, $path);
-
-        // $produk = Produk::all();
-        // $partner = Pengelola_Percetakan::all();
-
-        // return response()->json([
-        //     'original_name' => $file->getClientOriginalName(),
-        //     'request' => $request,
-        // ]);
-
-        // if ($path) {
-        //     return Response::json([
-        //         'pdf'=> $pdf,
-        //     ], 200);
-        // } else {
-        //     return Response::json('error', 400);
-        // }
-
-        // return response()->json([
-        //     'original_name' => $file->getClientOriginalName(),
-        //     'request' => $request,
-        // ]);
-
-        // if ($path) {
-        //     return Response::json([
-        //         'pdf'=> $pdf,
-        //     ], 200);
-        // } else {
-        //     return Response::json('error', 400);
-        // }
-
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
         $file->move(public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR), $fileName);
         $path = public_path('tmp' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR) . $fileName;
 
         $countPage = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
-        // $countPage = 5;
         $fileUpload = new stdClass();
         $fileUpload->name = $fileName;
         $fileUpload->path = $path;
@@ -662,16 +607,11 @@ class MemberController extends Controller
 
     public function cekWarna(\Illuminate\Http\UploadedFile $file, $path)
     {
-        //TODO merapikan struktur code dan storage
-
         $gray = 0;
         $notgray = 0;
         $RandomNum = time();
         $FileName = $file->getClientOriginalName();
         $output_dir = public_path('tempCekwarna/') . $FileName;
-        // if (!File::exists(public_path('tempCekwarna/') . $FileName)) {
-        //     $output_dir = File::makeDirectory(public_path('tempCekwarna/') . $FileName, 0777, true);
-        // }
         $jumlahHal = preg_match_all("/\/Page\W/", file_get_contents($path), $dummy);
 
         $name = $path;
@@ -753,13 +693,11 @@ class MemberController extends Controller
 
     public function produk()
     {
-        //dd(getDateBorn());
         return view('member.detail_produk');
     }
 
     public function laporProduk($idProduk)
     {
-        //dd(getDateBorn());
         $member = Auth::user();
         $produk = Produk::find($idProduk);
         $atk = Atk::all();
@@ -769,20 +707,17 @@ class MemberController extends Controller
 
     public function storeLapor(Request $request, $idProduk)
     {
-        //dd(getDateBorn());
         $member = Auth::user();
         $produk = Produk::find($idProduk);
         $laporProduk = Lapor_produk::all();
 
         $pesan = $request->pesan;
         $status = $laporProduk->status = 'Pending';
-        // $waktu = $laporProduk->waktu = Carbon::now()->format('Y:m:d H:i:s');
 
         Lapor_produk::create([
             'id_produk' => $produk->id_produk,
             'id_member' => $member->id_member,
             'pesan' => $pesan,
-            // 'waktu' => $waktu,
             'status' => $status,
         ]);
 
@@ -824,12 +759,9 @@ class MemberController extends Controller
     public function saldo()
     {
         $member = Auth::user();
-        // $idProduk = Pengelola_Percetakan::find(Auth::id());
         $transaksi_saldo = Transaksi_saldo::all();
-        // $idProduk = Auth::user($transaksi_saldo->id_pengelola);
         return view('member.topup_saldo', [
             'member' => $member,
-            // 'id' => $idProduk,
             'transaksi_saldo' => $transaksi_saldo,
         ]);
     }
@@ -1211,7 +1143,6 @@ class MemberController extends Controller
         }
 
         $member->produk_favorit = json_decode(json_encode($produkFavorit), true);
-        // $member->produk_favorit = $produkFavorit;
         $member->save();
         $member->push();
 
@@ -1289,7 +1220,6 @@ class MemberController extends Controller
                 foreach ($ulasan as $up => $value) {
                     array_push($arrayProdukUlasan, $value->produk);
                     $arrayFotoProdukUlasan = $value->produk->foto_produk;
-                    // array_push($arrayFotoProdukUlasan, $value->produk->foto_produk);
                     array_push($arrayPartnerProduk, $value->produk->partner);
                 }
 
@@ -1298,7 +1228,6 @@ class MemberController extends Controller
                 foreach ($arrayBelumDiulas as $abd => $value) {
                     array_push($arrayProdukUlasan, $value->product);
                     $arrayFotoProdukUlasan = $value->product->foto_produk;
-                    // array_push($arrayFotoProdukUlasan, $value->product->foto_produk);
                     array_push($arrayPartnerProduk, $value->product->partner);
                     array_push($arrayPesananUlasan, $value->pesanan);
                 }
@@ -1321,7 +1250,6 @@ class MemberController extends Controller
     {
         $member = Auth::user();
         $produk = Produk::find($idProduk);
-        // $pesanan = Pesanan::find($idPesanan);
         $ulasan = Ulasan::create([
             'id_produk' => $produk->id_produk,
             'id_member' => $member->id_member,
@@ -1365,25 +1293,17 @@ class MemberController extends Controller
                 $ulasan = Ulasan::where('id_produk', $produk->id_produk)
                     ->orderBy('rating', 'desc')
                     ->get();
-                // $fotoUlasan = $ulasan->getFirstMediaUrl('foto_ulasan');
-                // $member = $ulasan->member;
             } else if ($request->filterUrutkan === 'Rating Terendah ke Tertinggi') {
                 $produk = Produk::find($request->idProduk);
                 $ulasan = Ulasan::where('id_produk', $produk->id_produk)
                     ->orderBy('rating', 'asc')
                     ->get();
-
-                // $fotoUlasan = $ulasan->getFirstMediaUrl('foto_ulasan');
-                // $member = $ulasan->member;
             } else {
                 $produk = Produk::find($request->idProduk);
                 $ulasan = Ulasan::where('id_produk', $produk->id_produk)->get();
-                // $fotoUlasan = $ulasan->getFirstMediaUrl('foto_ulasan');
-                // $member = $ulasan->member;
             }
             return response()->json([
                 'ulasan' => $ulasan,
-                // 'fotoUlasan' => $fotoUlasan,
             ], 200);
         }
     }
@@ -1404,7 +1324,6 @@ class MemberController extends Controller
         $pesanan = Pesanan::find(1);
         $member->notify(new PesananNotification('pembayaranPending', $pesanan));
         return "udahh dikirim";
-        // Notification::send($member, new PesananNotification($pesanan));
     }
 
 }

@@ -37,15 +37,12 @@
                             </label>
                             <br>
                             <label class="mb-2" style="font-size:18px;">
-                                {{-- {{ count(explode(',', $k->halaman_terpilih)) }} Halaman
-                                --}}
                                 @php
                                 if(count(explode(',', $k->halaman_terpilih)) == $k->jumlah_halaman_berwarna +
                                 $k->jumlah_halaman_hitamputih )
                                 echo "Semua halaman";
                                 else echo json_decode($k->halaman_terpilih)
                                 @endphp
-
                             </label>
                         </div>
                         <div class="mb-4">
@@ -90,14 +87,6 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        {{-- <label class="SemiBold mb-3" style="font-size:24px;">
-                            {{ __('Catatan Tambahan') }}
-                        </label>
-                        <div class="card pt-2 pb-2 pl-4 pr-4 mb-5" style="width:370px; min-height:120px; font-size:18px;">
-                            <p class="mb-2">
-                                {{ $k->catatan_tambahan }}
-                            </p>
-                        </div> --}}
                         <label class="SemiBold mb-1" style="font-size:24px;">
                             {{ __('Halaman Hitam-Putih') }}
                         </label>
@@ -310,11 +299,9 @@
             }
         @endphp
             <div class="row justify-content-end mb-5 mr-0">
-                {{-- <form id="deleteKonfirmasiPesananForm" action="{{ route('konfirmasi.pesanan.delete', $idPesanan) }}" method="DELETE" enctype="multipart/form-data"> --}}
-                    <button id="batalkanBtn" class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4" style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
-                        {{ __('Batalkan Pemesanan') }}
-                    </button>
-                {{-- </form> --}}
+                <button id="batalkanBtn" class="btn btn-outline-danger-primary btn-lg text-primary-danger font-weight-bold mr-4" style="border-radius:30px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      font-size:24px;">
+                    {{ __('Batalkan Pemesanan') }}
+                </button>
                 <form action="{{ route('konfirmasi.pesanan.update', $idPesanan) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -349,7 +336,6 @@
                                 swal("Pesanan telah berhasil dihapus !", {
                                     icon: "success",
                                 }).then(function() {
-                                    // $("#deleteKonfirmasiPesananForm").submit();
                                     window.location.href = "{{ route('konfirmasi.pesanan.delete','') }}" + "/" + $('#idPesanan').val();
                                 });
                             }
@@ -362,7 +348,6 @@
                         });
                     });
                 });
-
             </script>
     </div>
 @endsection
