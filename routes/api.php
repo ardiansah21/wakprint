@@ -11,8 +11,6 @@
 |
  */
 
-use App\Http\Controllers\API\Member\KonfigurasiController;
-
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 //member

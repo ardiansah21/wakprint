@@ -49,7 +49,7 @@ class AtkController extends Controller
 
         if ($request->hasFile('foto_atk')) {
             $atk->addMedia($request->file('foto_atk'))->toMediaCollection();
-        } //code...
+        }
 
         return responseSuccess('Anda berhasil menambahkan item Atk yang baru', $atk, 201);
     }

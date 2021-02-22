@@ -1,13 +1,7 @@
 <?php
 
-use App\Member;
-use App\Produk;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\StoreProductRequest;
-use App\Http\Controllers\MemberController;
-use Illuminate\Notifications\Notification;
-use App\Http\Controllers\KonFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +18,6 @@ Auth::routes(['verify' => true]);
 Route::post('/upload-pdf', 'MemberController@uploadPdf')->name('upload.pdf');
 Route::post('/uploaddd', 'MemberController@uploadtes')->name('upload.test');
 Route::get('/member', 'MemberController@member');
-
-// temp dropzone
-Route::post('/users/fileupload/', 'MemberController@fileupload')->name('users.fileupload');
 
 Route::get('produk', 'MemberController@produk')->name('produk');
 Route::any('pencarian', 'MemberController@pencarian')->name('pencarian');
@@ -90,9 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/konfirmasi-pembayaran/cancel/{idPesanan}', 'KonfigurasiController@cancelPesanan')->name('konfirmasi.pesanan.cancel');
     Route::get('/konfirmasi-pembayaran/selesai/{idPesanan}', 'KonfigurasiController@selesaikanPesanan')->name('konfirmasi.pesanan.selesai');
 
-    //tes notifikasi
-    Route::get('/tesnotif', 'MemberController@notif');
-
 });
 
 //Pengelola percetakan
@@ -140,9 +128,6 @@ Route::namespace ('Partner')->prefix('partner')->name('partner.')->group(functio
         Route::post('ubah-status', 'PartnerController@statusToko')->name('ubah-status');
         Route::post('filter/riwayat', 'PartnerController@filterSaldo')->name('filter.riwayat');
         Route::post('search/produk', 'PromoController@searchProdukPartner')->name('search.produk');
-
-        //tes notif partner
-        Route::get('/tesnotifpartner', 'PartnerController@notif');
     });
 });
 
@@ -188,22 +173,10 @@ Route::group(['prefix' => 'chat'], function () {
     Route::post('message', 'ChatController@send');
 });
 
-//TEMP
-Route::resource('pdf', 'PdfController');
-
-Route::post('store2', 'PdfController@store2')->name('store2');
-
 //PENGUJIAN
 Route::get('pengujian', 'PengujianController@index')->name('pengujian');
 Route::post('pengujian/store', 'PengujianController@store')->name('pengujian.store');
 Route::post('pengujian/proses', 'PengujianController@proses')->name('pengujian.proses');
-
-//Testing seasion
-Route::get('session', 'SessionController@index');
-Route::get('session/put', 'SessionController@put');
-Route::get('session/push', 'SessionController@push');
-Route::get('session/del', 'SessionController@delete');
-Route::get('session/tes', 'SessionController@tes');
 
 //Notifikasi
 Route::prefix('/notif')->group(function () {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Lapor_produk;
 use App\Mail\TanggapiKeluhanMail;
@@ -13,7 +12,6 @@ use App\Notifications\PesananPartnerNotification;
 use App\Notifications\TarikSaldoNotification;
 use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
-use App\Pesanan;
 use App\Transaksi_saldo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
