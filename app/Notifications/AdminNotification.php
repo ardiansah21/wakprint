@@ -38,17 +38,17 @@ class AdminNotification extends Notification implements ShouldQueue
                 case 'pendaftaranPartner':
                     $this->title = "Ada Partner yang baru mendaftar";
                     $this->description = "Silahkan lakukan verifikasi partner yah";
-                    $this->url = route('partner.detail', $id);
+                    $this->url = route('admin.partner.detail', $id);
                     break;
                 case 'topupSaldoMember':
                     $this->title = "Ada Member yang baru topup saldo";
                     $this->description = "Silahkan verifikasi dan konfirmasi yah";
-                    $this->url = route('saldo');
+                    $this->url = route('admin.saldo');
                     break;
                 case 'tarikSaldoPartner':
                     $this->title = "Ada Partner yang baru tarik saldo";
                     $this->description = "Silahkan verifikasi dan konfirmasi yah";
-                    $this->url = route('saldo');
+                    $this->url = route('admin.saldo');
                     break;
                 default:
                     break;
