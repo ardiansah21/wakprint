@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API\Partner;
 
+use App\Admin;
 use App\Http\Controllers\Controller;
+use App\Notifications\AdminNotification;
 use App\Pengelola_Percetakan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -39,11 +41,14 @@ class AuthController extends Controller
         $new_user->alamat_toko = $request->alamat_toko;
         $new_user->deskripsi_toko = $request->deskripsi_toko;
         $new_user->save();
+        $new_user->push();
 
         $data = [
             'token' => $new_user->createToken($request->device_name)->plainTextToken,
             'user' => $new_user,
         ];
+
+        Admin::find(1)->notify(new AdminNotification('pendaftaranPartner', $new_user->id_pengelola));
         return responseSuccess('Hay ' . $request->get('nama_lengkap') . ' Anda telah terdaftar', $data, 201);
     }
 

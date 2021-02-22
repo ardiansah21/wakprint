@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API\Member;
 
+use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Lapor_produk;
 use App\Member;
+use App\Notifications\AdminNotification;
 use App\Notifications\TopUpNotification;
 use App\Pengelola_Percetakan;
 use App\Pesanan;
@@ -339,6 +341,8 @@ class MemberController extends Controller
         ]);
 
         $member->notify(new TopUpNotification('pending', $transaksi));
+        Admin::find(1)->notify(new AdminNotification('topupSaldoMember', 0));
+
         return responseSuccess('Top Up Anda Sedang Diproses Silahkan Periksa Riwayat Halaman Pembayaran !', $transaksi);
     }
 

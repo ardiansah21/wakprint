@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API\Partner;
 
+use App\Admin;
 use App\Http\Controllers\Controller;
+use App\Notifications\AdminNotification;
 use App\Notifications\TarikSaldoNotification;
 use App\Pengelola_Percetakan;
 use App\Transaksi_saldo;
@@ -181,6 +183,7 @@ class PartnerController extends Controller
             ]);
 
             $partner->notify(new TarikSaldoNotification('pending', $transaksiSaldo));
+            Admin::find(1)->notify(new AdminNotification('tarikSaldoPartner', 0));
             return responseSuccess("Penarikan Saldo Anda Sedang Diproses", $transaksiSaldo, 201);
         }
     }

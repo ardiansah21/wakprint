@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Partner\Auth;
 
+use App\Admin;
 use App\Http\Controllers\Controller;
+use App\Notifications\AdminNotification;
 use App\Pengelola_Percetakan;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -106,6 +108,7 @@ class RegisterController extends Controller
 
         if (empty($this->guard()->user()->email_verified_at)) {
             alert()->info('Menunggu Konfirmasi', 'Akun Anda telah berhasil dibuat, silahkan tunggu verifikasi akun Anda dari Admin kami yah');
+            Admin::find(1)->notify(new AdminNotification('pendaftaranPartner', $partner->id_pengelola));
             return redirect()->back();
         }
 
