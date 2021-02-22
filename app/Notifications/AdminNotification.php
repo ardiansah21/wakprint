@@ -12,7 +12,7 @@ class AdminNotification extends Notification implements ShouldQueue
     use Queueable;
 
     private $opsi;
-    private $id;
+    public $id;
     private $opsiArr = [
         'pendaftaranPartner',
         'topupSaldoMember',
